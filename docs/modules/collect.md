@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [bank, sacco, psp, fintech]
-depends_on: [identity, rails, recon-observability, mandates]
+depends_on: [identity, rails, recon-observability, mandates, messaging]
 consumed_by: [mfi, sacco]
 review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060]
 last_reviewed: 2026-10-01
@@ -76,6 +76,7 @@ at most, pending FS-052, and must not be raised without evidence.
 | CO-14 | Automated compliance reporting | Planned | Claimed in the one-pager; no specification — FS-053 | later |
 | CO-15 | Maker-checker on partner and institution actions | Planned | MFI PRD FR-6 names Collect as a future consumer of the mandate engine | 2 |
 | CO-16 | PesaLink as a deposit and withdrawal channel | Planned | Listed as a channel in the API; trust accounts with the PesaLink sponsor bank not yet in place (8 Jun) | 3 |
+| CO-18 | Notifications to the end customer when a deposit lands, through messaging | Planned | Owner, 2026-10-02 (FS-315) | 1 |
 | CO-17 | Loan management | Planned | The technical documentation's overview lists it; no API for it exists in the document. Belongs to mfi / sacco — FS-055 | — |
 
 ## 4 · Where it sits
@@ -211,9 +212,10 @@ control — FS-059.
 
 - Hold funds, a wallet or a ledger of its own.
 - Lend. Loan management sits in mfi and sacco (CO-17).
-- Send SMS, email or push messages to end users. The technical
-  documentation leaves this to the institution's existing notification
-  infrastructure.
+- Leave customers uninformed. Deposit notifications go through Dibon's
+  messaging (CO-18, FS-315); the technical documentation's note that the
+  institution's own notification service sends them is superseded, unless
+  an institution prefers its own.
 - License the partner. Partners still sit inside the institution's
   framework, under whatever approval FS-057 settles.
 - Fraud detection, compliance reporting and maker-checker are not

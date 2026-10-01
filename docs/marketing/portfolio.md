@@ -146,6 +146,24 @@ all digital. Neither party, nor Dibon, can release funds alone.
 
 *Maturity:* in design.
 
+### Kapu Core — a hosted core banking system
+
+For MFIs, Saccos and tier-3 banks whose current system is basic, or
+absent. Clients, savings, shares, loans, the general ledger, tellers and
+end-of-day on Apache Fineract, hosted in Kenya, with every Kapu product
+running on top. The money stays in the institution's own accounts; Kapu
+Core is its ledger.
+
+- Savings and current accounts, fixed deposits; interest posted
+  automatically
+- Shares for Saccos; loans with schedules, charges and repayment splits
+- A general ledger that is right every day
+- Mobile-money deposits and repayments posted in real time
+- Maker-checker on every transaction that needs it
+- Migration from spreadsheets, Mifos or a previous core, signed off
+
+*Built on:* Apache Fineract.
+
 ### Kapu MFI — loan management for growing lenders
 
 For lenders moving off spreadsheets, paper and ageing systems. It covers
