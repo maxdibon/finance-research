@@ -74,7 +74,8 @@ own payments first, and insights runs on our own data first (FS-033).
 - [Recon & Observability](modules/recon-observability.md) — the matching
   engine, the exception queue, and the monitoring of everything that moves
   money
-- Mandates, CRB, identity, notifications, rails, insights *(modules to
+- [Mandates](modules/mandates.md) — signing and debit mandates, one engine
+- CRB, identity, notifications, rails, insights *(modules to
   write)*
 
 **Channels**
