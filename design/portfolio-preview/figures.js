@@ -1,7 +1,7 @@
-// Inserts one mechanism diagram per product after its opening paragraph.
+// One mechanism diagram per product. Run directly, it inserts each after its
+// product's opening paragraph in the preview page; required, it exports the
+// figures so the PDF build draws the same diagrams.
 const fs = require('fs');
-const file = process.argv[2];
-let html = fs.readFileSync(file, 'utf8');
 
 const defs = (id) => `<defs><marker id="${id}-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="mk-money"/></marker><marker id="${id}-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="mk-ctl"/></marker></defs>`;
 
@@ -155,13 +155,19 @@ F['Omni-channel banking'] = figure('oc', 640, 210,
   ctl('oc', 460, 172, 382, 118) + label(432, 128, 'fetched-at time', 'middle', true),
   'Three channels, one API, one answer. Anything that moves money passes step-up and a SIM-swap check first.');
 
-let count = 0;
-for (const [title, fig] of Object.entries(F)) {
-  const at = html.indexOf(`<h3>${title}</h3>`);
-  if (at < 0) throw new Error(`product not found: ${title}`);
-  const p = html.indexOf('</p>', at);
-  html = html.slice(0, p + 4) + fig + html.slice(p + 4);
-  count++;
+module.exports = { F };
+
+if (require.main === module) {
+  const file = process.argv[2];
+  let html = fs.readFileSync(file, 'utf8');
+  let count = 0;
+  for (const [title, fig] of Object.entries(F)) {
+    const at = html.indexOf(`<h3>${title}</h3>`);
+    if (at < 0) throw new Error(`product not found: ${title}`);
+    const p = html.indexOf('</p>', at);
+    html = html.slice(0, p + 4) + fig + html.slice(p + 4);
+    count++;
+  }
+  fs.writeFileSync(file, html);
+  console.log(`inserted ${count} figures`);
 }
-fs.writeFileSync(file, html);
-console.log(`inserted ${count} figures`);

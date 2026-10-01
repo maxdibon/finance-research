@@ -69,7 +69,7 @@ p { margin: 0 0 3mm; }
 .toc li { display: grid; grid-template-columns: 1fr 13mm; align-items: center; gap: 4mm; font: 600 11.5pt/1.2 var(--display); color: var(--aubergine); padding-bottom: 2.4mm; border-bottom: 0.3mm solid var(--line); }
 .toc li.sub { font: 500 10pt/1.2 var(--display); color: var(--muted); padding-left: 7mm; border-bottom: 0; padding-bottom: 0; }
 .toc .n { justify-self: end; width: 11mm; height: 7mm; display: grid; place-items: center; background: var(--amber); color: var(--aubergine); font: 700 9.5pt/1 var(--display); }
-.toc li.sub .n { background: transparent; color: var(--amber-text); width: auto; height: auto; }
+.toc li.sub .n { background: transparent; color: var(--amber-text); box-shadow: inset 0 0 0 0.35mm var(--amber); width: 11mm; height: 6mm; font-size: 8.5pt; }
 
 /* Page 3 · who we are */
 .mvv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin: 2mm 0 7mm; }
@@ -117,6 +117,46 @@ p { margin: 0 0 3mm; }
 .band p { margin: 0; max-width: 135mm; font: 700 14pt/1.35 var(--display); }
 .band p span { color: var(--amber); }
 .band small { display: block; margin-top: 2.5mm; font: 400 9.5pt/1.4 var(--body); color: #f0dfe6; max-width: 135mm; }
+/* Diagrams: the same language as the web preview. */
+.dg { display: block; width: 100%; height: auto; color: var(--ink); }
+.dg text { font: 600 12px var(--display); fill: currentColor; }
+.dg text.s { font: 400 11px var(--body); fill: var(--muted); }
+.dg text.on { fill: var(--cream); }
+.dg .box { fill: #ffffff; stroke: #cdb6bf; stroke-width: 1.5; }
+.dg .dibon { fill: var(--plum); }
+.dg .funds { fill: var(--money-bg); stroke: var(--money); stroke-width: 2.25; }
+.dg .money { stroke: var(--money); stroke-width: 2.5; fill: none; }
+.dg .ctl { stroke: currentColor; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+.dg .step { stroke: currentColor; stroke-width: 1.4; fill: none; }
+.dg .mk-money { fill: var(--money); }
+.dg .mk-ctl { fill: currentColor; }
+.dg-fig { margin: 0 0 5mm; }
+.dg-fig figcaption { font-size: 9pt; color: var(--muted); margin-top: 2mm; }
+
+/* Illustrations: line art in brand colours. */
+.illo { display: block; }
+.illo .ln { fill: none; stroke: var(--plum); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.illo .am { fill: none; stroke: var(--amber); stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 3 3; }
+.illo .mn { fill: none; stroke: var(--money); stroke-width: 2.2; stroke-linecap: round; }
+.illo .fill-a { fill: var(--amber); }
+.illo .fill-p { fill: var(--plum); }
+.illo .fill-w { fill: #ffffff; }
+.illo text { font-family: var(--display); }
+
+/* Product page */
+.prod-tag { font: 600 12pt/1.35 var(--display); color: var(--amber-text); margin: -2mm 0 4mm; }
+.prod-cols { display: grid; grid-template-columns: 1fr 62mm; gap: 8mm; align-items: start; }
+.spine { list-style: none; margin: 0; padding: 0 0 0 0.5mm; position: relative; display: grid; gap: 2.4mm; }
+.spine::before { content: ""; position: absolute; left: 2.6mm; top: 1.5mm; bottom: 1.5mm; border-left: 0.5mm dashed #cdb6bf; }
+.spine li { position: relative; padding-left: 9mm; font-size: 10pt; }
+.spine li::before { content: ""; position: absolute; left: 0; top: 0.4mm; width: 5mm; height: 5mm; border-radius: 50%; background: var(--paper); border: 0.5mm solid var(--amber); box-sizing: border-box; }
+.spine li::after { content: ""; position: absolute; left: 1.8mm; top: 1.3mm; width: 1.2mm; height: 2.2mm; border: solid var(--amber-text); border-width: 0 0.45mm 0.45mm 0; transform: rotate(45deg); }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin-top: 4mm; }
+.facts > div { border-top: 0.8mm solid var(--amber); padding-top: 2.5mm; }
+.facts b { display: block; font: 700 7pt/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-text); margin-bottom: 1.5mm; }
+.facts span { font: 600 9.5pt/1.35 var(--display); color: var(--aubergine); }
+.mock-cap { font-size: 8pt; color: var(--muted); margin-top: 2mm; text-align: center; }
+
 .stack-cap { font-size: 9pt; color: var(--muted); margin-top: 3mm; }
 </style>
 </head>
@@ -130,6 +170,20 @@ p { margin: 0 0 3mm; }
     <path d="M150 0 L 172 22 L 210 22"/>
     <circle class="faint" cx="186" cy="62" r="11"/>
     <path class="faint" d="M0 230 C 40 214, 70 236, 110 222"/>
+  </svg>
+  <!-- Cover illustration: the green line runs from a phone to a bank; Dibon only instructs and confirms. -->
+  <svg class="illo" viewBox="0 0 90 62" style="position:absolute; right:18mm; top:178mm; width:86mm; height:auto;" aria-hidden="true">
+    <rect x="4" y="16" width="20" height="38" rx="3.2" fill="none" stroke="#fff2eb" stroke-width="1.3"/>
+    <rect x="7.5" y="22" width="13" height="18" rx="1" fill="none" stroke="#fff2eb" stroke-width="0.8" opacity="0.6"/>
+    <path d="M10 27h8M10 31h5" stroke="#fbb236" stroke-width="1" stroke-linecap="round"/>
+    <rect x="9.5" y="34" width="9" height="3.6" rx="1" fill="#fbb236"/>
+    <path d="M12 49.5h4" stroke="#fff2eb" stroke-width="1" stroke-linecap="round"/>
+    <path d="M62 30 74 23l12 7M63.5 30h21M66 31v14M70.5 31v14M75 31v14M79.5 31v14M62.5 47.5h23" fill="none" stroke="#fff2eb" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M24 44 C 38 52, 50 52, 62 44" fill="none" stroke="#3fc495" stroke-width="2" stroke-linecap="round"/>
+    <path d="M58.5 42.2 62.6 43.6 60.6 47.4" fill="none" stroke="#3fc495" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="44,2 51,6 51,14 44,18 37,14 37,6" fill="#460d4d" stroke="#fbb236" stroke-width="1"/>
+    <path d="M41.5 7v6M41.5 7h2.2a3 3 0 0 1 0 6h-2.2" fill="none" stroke="#fff2eb" stroke-width="1" stroke-linecap="round"/>
+    <path d="M37 13 L 24 24M51 13 L 62 24" fill="none" stroke="#fbb236" stroke-width="1" stroke-dasharray="2 2"/>
   </svg>
   <div class="top">
     <img class="logo" alt="Dibon" src="__LOGO__">
@@ -185,7 +239,7 @@ p { margin: 0 0 3mm; }
     <h2>One technology partner, not one product</h2>
     <p class="lede">Dibon Consulting builds the software that banks, Saccos, microfinance institutions, payment providers and the businesses around them use to collect, lend, hold and reconcile money. Payments, deposit-taking, lending, escrow and reconciliation come together with monitoring, messaging, identity and ERP integration, so an institution works with one partner rather than five.</p>
     <div class="mvv">
-      <div><b>Mission</b><p>Driving scalable business expansion through immersive, customised software solutions.</p></div>
+      <div><b>Mission</b><p>Driving scalable business expansion through immersive, customized technology solutions.</p></div>
       <div><b>Vision</b><p>Shaping the future through transformative partnerships, harnessing emerging technologies and world-class resources.</p></div>
       <div><b>Values</b><p>Innovation, a client-centric approach, excellence, collaboration, integrity, continuous learning, agility and social responsibility.</p></div>
     </div>
@@ -196,10 +250,29 @@ p { margin: 0 0 3mm; }
       <div><div class="big">PRSP</div><div class="lbl">licensed by the Communications Authority of Kenya</div></div>
     </div>
     <div class="two">
-      <div><h3>Built for the markets we serve</h3><p>Mobile money first. Statement files where banks do not yet offer APIs. USSD alongside apps, because not every member has a smartphone. Designed in Nairobi.</p></div>
-      <div><h3>Ready to travel</h3><p>Every product runs on your premises or in an in-country cloud, so it can follow our customers from Kenya into Uganda, Tanzania, Rwanda, Zambia, Zimbabwe and Nigeria, under each country's own rules.</p></div>
+      <div>
+        <h3>Built for the markets we serve</h3><p>Mobile money first. Statement files where banks do not yet offer APIs. USSD alongside apps, because not every member has a smartphone. Designed in Nairobi.</p>
+        <h3 style="margin-top:5mm">Ready to travel</h3><p>Every product runs on your premises or in an in-country cloud, so it can follow our customers from Kenya into Uganda, Tanzania, Rwanda, Zambia, Zimbabwe and Nigeria, under each country's own rules.</p>
+      </div>
+      <figure style="margin:0">
+        <svg class="illo" viewBox="0 0 84 60" style="width:100%;height:auto" role="img" aria-label="Kenya at the centre, linked to Nigeria, Uganda, Rwanda, Tanzania, Zambia and Zimbabwe.">
+          <g class="am">
+            <path d="M62 23 L 10 15"/><path d="M62 23 L 50 18"/><path d="M62 23 L 45 29"/><path d="M62 23 L 56 36"/><path d="M62 23 L 43 45"/><path d="M62 23 L 52 53"/>
+          </g>
+          <g font-size="3.4" font-weight="700" text-anchor="middle">
+            <circle cx="10" cy="15" r="4.6" class="fill-w" stroke="#460d4d" stroke-width="0.8"/><text x="10" y="16.2" fill="#460d4d">NG</text>
+            <circle cx="50" cy="18" r="4.6" class="fill-w" stroke="#460d4d" stroke-width="0.8"/><text x="50" y="19.2" fill="#460d4d">UG</text>
+            <circle cx="45" cy="29" r="4.6" class="fill-w" stroke="#460d4d" stroke-width="0.8"/><text x="45" y="30.2" fill="#460d4d">RW</text>
+            <circle cx="56" cy="36" r="4.6" class="fill-w" stroke="#460d4d" stroke-width="0.8"/><text x="56" y="37.2" fill="#460d4d">TZ</text>
+            <circle cx="43" cy="45" r="4.6" class="fill-w" stroke="#460d4d" stroke-width="0.8"/><text x="43" y="46.2" fill="#460d4d">ZM</text>
+            <circle cx="52" cy="53" r="4.6" class="fill-w" stroke="#460d4d" stroke-width="0.8"/><text x="52" y="54.2" fill="#460d4d">ZW</text>
+            <circle cx="62" cy="23" r="6.2" class="fill-a"/><text x="62" y="24.3" fill="#280430" font-size="4">KE</text>
+          </g>
+          <text x="62" y="13.6" font-size="3" font-weight="700" fill="#8a5a00" letter-spacing="0.2" text-anchor="middle">KENYA FIRST</text>
+        </svg>
+        <figcaption style="font-size:8.5pt;color:var(--muted);margin-top:1.5mm">Kenya first, then six more markets. Positions are indicative, not to scale.</figcaption>
+      </figure>
     </div>
-    <div class="band"><p>We never hold our customers' money. <span>We make sure they always know where it is.</span></p><small>Every product is built so that funds stay with the bank, the Sacco, the lender or the merchant, and every shilling can be traced.</small></div>
   </div>
   <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">03</span></footer>
 </section>
@@ -283,6 +356,62 @@ p { margin: 0 0 3mm; }
     <div class="band"><p>Follow the green line. <span>It never passes through Dibon.</span></p><small>In every product diagram that follows, a solid green line is money moving. It runs from payer to account, between institutions and their customers, and never through our software.</small></div>
   </div>
   <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">05</span></footer>
+</section>
+
+<!-- 7 · Kapu Collect (sample product page) -->
+<section class="page">
+  <svg class="lineart corner" viewBox="0 0 70 40" aria-hidden="true"><path d="M22 0 C 26 16, 46 24, 70 22"/><path d="M52 34 L 70 34"/></svg>
+  <div class="content">
+    <p class="eyebrow">Products · 1 of 8</p>
+    <svg class="rule" viewBox="0 0 42 2.4" aria-hidden="true"><rect x="0" y="0" width="9" height="0.8" fill="#280430"/><rect x="0" y="1.6" width="9" height="0.8" fill="#280430"/><rect x="11.5" y="0" width="30.5" height="0.8" fill="#fbb236"/><rect x="11.5" y="1.6" width="30.5" height="0.8" fill="#fbb236"/></svg>
+    <h2>Kapu Collect</h2>
+    <p class="prod-tag">Deposits collected by partners, held at your bank</p>
+    <p class="lede" style="font-size:11pt;margin-bottom:5mm">Kapu Collect lets a bank take deposits gathered by collection firms, high-volume SMEs and funds-holding operators. Partners connect through Kapu's APIs; every deposit lands in a real account at the bank, in the end customer's name. The bank gains low-cost deposits, and the partner a regulated home for its customers' money.</p>
+    __FIG_COLLECT__
+    <div class="prod-cols" style="grid-template-columns: 1fr 44mm">
+      <ul class="spine">
+        <li>Account and sub-account opening, gated on IPRS identity checks</li>
+        <li>Deposits by mobile-money prompt; withdrawals to mobile, till or paybill</li>
+        <li>Account-to-account transfers, balances and statements</li>
+        <li>Partner and bank management portals</li>
+        <li>Asynchronous callbacks, idempotent requests and queries by reference</li>
+        <li>Daily reconciliation against the bank's core</li>
+      </ul>
+      <figure style="margin:0">
+        <svg class="illo" viewBox="0 0 62 112" style="width:100%;height:auto" role="img" aria-label="Illustrative partner app screen: a deposit of KES 2,500 received, confirmed by the rail and posted to the bank, with the bank's reference and the time it was fetched.">
+          <rect x="2" y="2" width="58" height="108" rx="7" fill="#ffffff" stroke="#460d4d" stroke-width="1.2"/>
+          <rect x="24" y="5" width="14" height="2.2" rx="1.1" fill="#ead9dc"/>
+          <rect x="6" y="10" width="50" height="92" rx="2" fill="#fffaf6"/>
+          <rect x="6" y="10" width="50" height="12" rx="2" fill="#280430"/>
+          <rect x="6" y="18" width="50" height="4" fill="#280430"/>
+          <text x="10" y="17.6" font-size="3.4" font-weight="700" fill="#fff2eb">Partner app</text>
+          <circle cx="51" cy="16" r="1.6" fill="#fbb236"/>
+          <text x="10" y="30" font-size="3.4" font-weight="700" fill="#280430">Deposit received</text>
+          <text x="10" y="39" font-size="6.6" font-weight="800" fill="#280430">KES 2,500</text>
+          <text x="10" y="44" font-size="2.7" fill="#5e4c66">to account ending 2002</text>
+          <g font-size="2.9" font-weight="600" fill="#280430">
+            <circle cx="12" cy="51.2" r="2.2" fill="none" stroke="#fbb236" stroke-width="0.7"/><path d="M11 51.2l.8.8 1.4-1.6" fill="none" stroke="#8a5a00" stroke-width="0.6"/><text x="16" y="52.2">Prompt sent</text>
+            <circle cx="12" cy="58.2" r="2.2" fill="none" stroke="#fbb236" stroke-width="0.7"/><path d="M11 58.2l.8.8 1.4-1.6" fill="none" stroke="#8a5a00" stroke-width="0.6"/><text x="16" y="59.2">Confirmed by the rail</text>
+            <circle cx="12" cy="65.2" r="2.2" fill="none" stroke="#0e7f5a" stroke-width="0.7"/><path d="M11 65.2l.8.8 1.4-1.6" fill="none" stroke="#0e7f5a" stroke-width="0.6"/><text x="16" y="66.2">Posted at the bank</text>
+          </g>
+          <path d="M12 53.6v2.4M12 60.6v2.4" stroke="#cdb6bf" stroke-width="0.5"/>
+          <rect x="9" y="71" width="44" height="12" rx="1.5" fill="#ffffff" stroke="#ead9dc" stroke-width="0.5"/>
+          <text x="11" y="75.5" font-size="2.5" fill="#5e4c66">Bank reference</text>
+          <text x="11" y="80.2" font-size="3.1" font-weight="700" fill="#280430">KP-2026-004318</text>
+          <text x="10" y="89" font-size="2.5" fill="#5e4c66">Balance fetched 10:42 today</text>
+          <rect x="10" y="92" width="42" height="7" rx="3.5" fill="#fbb236"/>
+          <text x="31" y="96.6" font-size="3" font-weight="700" fill="#280430" text-anchor="middle">View statement</text>
+        </svg>
+        <figcaption class="mock-cap">Illustrative screen</figcaption>
+      </figure>
+    </div>
+    <div class="facts">
+      <div><b>Channels</b><span>M-Pesa, Airtel Money, T-Kash; PesaLink</span></div>
+      <div><b>Runs</b><span>Inside the bank, or in-country cloud</span></div>
+      <div><b>For</b><span>Tier-2 and tier-3 banks; their partners</span></div>
+    </div>
+  </div>
+  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">07</span></footer>
 </section>
 
 </body>
