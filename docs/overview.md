@@ -68,7 +68,7 @@ own payments first, and insights runs on our own data first (FS-033).
 - Kapu MFI — loan management for informal lenders *(module to write; the
   PRD exists)*
 - Kapu Sacco — deposit-taking and credit-only Saccos *(module to write)*
-- SME Recon — reconciliation inside the SME's own ERP *(module to write)*
+- [SME Recon](modules/sme-recon.md) — reconciliation inside the SME's own ERP
 
 **Shared services**
 

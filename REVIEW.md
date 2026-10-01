@@ -138,3 +138,9 @@ A row does not change status silently.
 | FS-127 | Claude | Ask Safaricom whether a third party may operate on a client's shortcode with the client's consent (delegated access). Gateway pass-through and sme-recon both depend on it | OPEN | In the M-Pesa draft |
 | FS-128 | Claude | The GateKeepr brief holds six M-Pesa clarifications prepared on 23 Sep and not yet asked. One meeting could cover both | OPEN | Not in this repository; to be merged by the owner |
 | FS-129 | Claude | T-Kash is a direct mobile-money integration too under FS-124, but it is not in the outreach list | ANSWERED | Email 4 added to docs/outreach/api-requests.md |
+| FS-130 | Claude | Odoo wrapper form: an installed module, or Odoo's external API. Hosted Odoo Online may not allow custom modules, and its external API may need a higher plan. That decides which Odoo customers SME Recon can serve, and what they pay | OPEN | From memory; to verify against Odoo's current plans. Bears on FS-026 (customer cost) |
+| FS-131 | Claude | SME Recon native mode (no ERP): do we implement Odoo for the business, as integration partners? It turns a recon sale into an ERP implementation | OPEN | sme-recon.md §4 |
+| FS-132 | Claude | An approval in the ERP is made in a login session, which does not show who approved at that moment. Payment execution waits for re-authentication with us, or for the bank's own approval | OPEN | docs/architecture.md §7 |
+| FS-133 | Claude | SME Recon writes into the ERP, unlike GateKeepr's read-only integrated mode. An edit made afterwards in the ERP is an event to read, never one to overwrite | OPEN | Proposed rule, sme-recon.md §4 and §8 |
+| FS-134 | Claude | Which ERPs after Odoo and Zoho? A market question: no source here says what Kenyan SMEs use | OPEN | |
+| FS-135 | Claude | Odoo Enterprise has its own bank synchronisation. Where it already covers a Kenyan bank, SME Recon must not duplicate it, or must say why it is better | OPEN | Coverage to verify |
