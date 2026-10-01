@@ -185,3 +185,17 @@ its own entry.
 - **Costs (inferred):** campaigns bring marketing-consent rules into a
   service that otherwise sent only transactional messages. The two paths
   must stay separate inside it (FS-155).
+
+## FS-178 · Become a core-system vendor for deposit-taking Saccos
+
+- **Chose:** offer native mode to deposit-taking Saccos, with Fineract as
+  their core and Dibon as the core vendor under SASRA's rules.
+- **Argued against:** Claude flagged it as the heavier decision (FS-062):
+  members' withdrawable savings on a core we host.
+- **Costs (inferred, partly from the reported SASRA requirements):**
+  twice-yearly contract audits and a full IT audit; SASRA's unfettered
+  access to our systems; 24/7 monitoring with 12-hour incident reporting;
+  a bank guarantee per Sacco of at least 10% of its mobile-money float;
+  possibly a cap on how many Saccos we serve (FS-179 to FS-181). Prudential
+  returns move into launch scope (FS-184). In return: Dibon becomes the
+  core, not a layer around someone else's.

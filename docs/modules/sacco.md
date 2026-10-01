@@ -104,11 +104,13 @@ register outside its system of record.
 | What the customer must provide | Core API access, or at least extracts and a posting route | Its bylaws, products, fee and dividend rules; its member data for migration |
 | Who it suits | Larger Saccos, most deposit-taking ones | Small credit-only Saccos |
 
-**For a deposit-taking Sacco, native mode is a heavier decision.** It
-would put members' withdrawable savings on a core we host, under SASRA's
-requirements for core systems and their vendors (FS-062). **A third mode
-is likely here:** deposits stay in the Sacco's core while loans move to
-Fineract (FS-066).
+**For a deposit-taking Sacco, native mode makes Dibon a core-system
+vendor, and that is now the intent (FS-178).** Members' withdrawable
+savings would sit on a core we host, under SASRA's requirements for
+third-party system vendors (FS-179 to FS-185). Those requirements apply to
+the vendor before its first deposit-taking Sacco goes live, not after.
+**A third mode is likely here:** deposits stay in the Sacco's core while
+loans move to Fineract (FS-066).
 
 ## 5 · How it works
 
@@ -156,8 +158,10 @@ Fineract (FS-066).
 - **Licence relied on:** the Sacco's. Deposit-taking Saccos are licensed
   by SASRA. The regime for credit-only Saccos depends on their size and
   type, and the cooperatives law is under review — FS-175.
-- **Native mode for a deposit-taking Sacco** puts us in the position of
-  core-system vendor under SASRA's rules — FS-062.
+- **Native mode for a deposit-taking Sacco** makes us a core-system
+  vendor under SASRA's rules for third-party system vendors. This is the
+  intent (FS-178). What it requires of us — audits, SASRA's access, a bank
+  guarantee per Sacco, incident reporting — is FS-179 to FS-185.
 - **Regulators:** SASRA; the Commissioner for Cooperative Development;
   ODPC for members' data.
 - **Data:** members' records, balances and guarantees are Confidential.

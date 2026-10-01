@@ -68,6 +68,26 @@ not keep them apart.
 | **Odoo** — who, and what is owed | Parties, memberships, roles, obligations (invoices, fees, charges), payments *as records of obligations met*, tickets, documents, signatures (Odoo Sign) | Balances of funds; transaction-level rail events; matching state |
 | **Recon engine** — what happened between them | Ingested rail and bank events, statements, matches, exceptions, the audit of every resolution | Parties; obligations; balances as an authority |
 
+### Whose parties Odoo holds
+
+**Odoo is the authority for parties that no core already holds** (FS-172).
+Where an institution has a core banking system, **the core is the
+authority for that institution's own customers and members, with their
+KYC.** Their accounts and their identity are one regulated record, and
+splitting them would put a bank's or a Sacco's customer file in two
+systems. In that case Odoo holds the institution itself as *our*
+customer: its contract, users, tickets and invoices.
+
+| Who | Authority |
+|---|---|
+| An institution, as Dibon's customer | Odoo |
+| A bank's customers, a Sacco's members, a collector's end users | The institution's core, or Fineract in native mode |
+| An SME's customers and suppliers | The SME's ERP |
+| Parties in a product with no core — escrow parties, merchants, Dibon's own contacts | Odoo |
+
+Collect, Sacco and MFI already work this way. In native mode, Fineract is
+the core and holds the members.
+
 ### The rule to defend
 
 **Reference by id; never copy.** A system may refer to another's record by
@@ -153,8 +173,9 @@ configuration, so the mode is not a fork of the code.
 **Integrated comes first, always.** Integrating with a core is a read.
 Replacing one means migrating somebody's history, and that is a separate
 decision with a separate agreement. A deposit-taking Sacco in native mode
-holds members' deposits in Fineract under SASRA's rules. That makes it a
-heavier decision than the same mode for an MFI — FS-062.
+holds members' deposits in Fineract under SASRA's rules, which makes Dibon
+a core-system vendor. That is the intent (FS-178), and its requirements
+fall on us before the first such Sacco goes live (FS-179).
 
 **A third mode is likely and is not assumed yet:** a core that holds
 deposits but has no loan module, so loans go to Fineract and deposits stay
