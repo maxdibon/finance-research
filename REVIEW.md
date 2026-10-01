@@ -137,4 +137,4 @@ A row does not change status silently.
 | FS-126 | Claude | Ask as a customer for access to Dibon's own accounts, and keep the partnership pitch for a separate conversation. A customer's request for its own data is the easiest yes a bank can give; mixing in a partnership routes it to a slower desk | OPEN | Applied in the drafts; the partnership paragraph is optional |
 | FS-127 | Claude | Ask Safaricom whether a third party may operate on a client's shortcode with the client's consent (delegated access). Gateway pass-through and sme-recon both depend on it | OPEN | In the M-Pesa draft |
 | FS-128 | Claude | The GateKeepr brief holds six M-Pesa clarifications prepared on 23 Sep and not yet asked. One meeting could cover both | OPEN | Not in this repository; to be merged by the owner |
-| FS-129 | Claude | T-Kash is a direct mobile-money integration too under FS-124, but it is not in the outreach list | OPEN | |
+| FS-129 | Claude | T-Kash is a direct mobile-money integration too under FS-124, but it is not in the outreach list | ANSWERED | Email 4 added to docs/outreach/api-requests.md |

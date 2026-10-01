@@ -154,6 +154,43 @@ Limited
 
 ---
 
+## Email 4 · Telkom — T-Kash
+
+Address it to Telkom Kenya's T-Kash merchant or enterprise team, and copy
+the API or developer team, if you have a contact there.
+
+**Subject:** T-Kash API access and statements — Dibon Company Limited
+
+> Dear [Contact],
+>
+> Dibon Company Limited is integrating mobile money directly into our
+> payment and reconciliation systems. We would like to add T-Kash alongside
+> M-Pesa and Airtel Money, so that customers can pay us, and our clients,
+> on the network they use.
+>
+> We are asking about four things:
+>
+> 1. **A merchant account for Dibon,** if we do not already hold one, and
+>    the steps to open it.
+> 2. **Production API access:** collections (push payment prompts),
+>    disbursements, transaction enquiry, account balance and reversals,
+>    with callbacks for each completed transaction.
+> 3. **Automated statements:** scheduled delivery or an API for our
+>    merchant account's statement, for daily reconciliation.
+> 4. **Acting for our clients:** whether Dibon may integrate with a
+>    client's own T-Kash merchant account, with that client's written
+>    consent.
+>
+> The attached checklist has the technical detail. Could we arrange a call
+> to go through it?
+>
+> Kind regards,
+> [Name]
+> [Title], Dibon Company Limited
+> [Phone] · [Email]
+
+---
+
 ## Appendix A · Technical checklist (attach to every email)
 
 **Dibon — integration checklist: accounts, statements and APIs**
