@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
-depends_on: [access, recon-observability]
+depends_on: [access, recon-observability, collect, gateway, escrow, mfi, sacco, sme-recon, omni-channel, business-suite]
 consumed_by: []
 review_ids: [FS-006, FS-033, FS-043, FS-048, FS-151, FS-156, FS-157, FS-159, FS-220, FS-223, FS-224, FS-225, FS-226, FS-227, FS-228, FS-229]
 last_reviewed: 2026-10-01
@@ -73,7 +73,9 @@ number, traceable to a transaction.
 ## 4 · Where it sits
 
 **Depends on:** access (who is asking, and what they may see),
-recon-observability (data feeds; platform health).
+recon-observability (data feeds; platform health), and every product it
+reads from: collect, gateway, escrow, mfi, sacco, sme-recon, omni-channel
+and business-suite (FS-301).
 **Used by:** customers and their AI clients directly. Each product's
 dashboards are built on its metrics.
 

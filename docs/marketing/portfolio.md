@@ -228,16 +228,17 @@ white-labelled for each institution, on one channel API. A balance is the
 same on every channel. Members can check balances and statements, apply
 for loans, accept guarantor requests, contribute and pay. Anything that
 moves money asks the member to confirm who they are at that moment, and a
-SIM-swap check runs first. USSD works on any phone.
+SIM-swap check runs first, where the operator offers one. USSD works on
+any phone.
 
 *Maturity:* in design.
 
-### Business Suite, on Odoo — the ERP, connected
+### Business Suite, on Odoo and Zoho — the ERP, connected
 
 For SMEs and fintechs without an ERP, and for Saccos, MFIs and banks that
 want their own back office in order. Dibon implements Odoo as an Odoo
-Ready Partner: CRM, helpdesk, accounting, e-signatures, a customer portal
-and campaigns. It comes already connected to the products: bank and
+Ready Partner, and Zoho as a Zoho partner: CRM, helpdesk, accounting, HR
+and payroll, e-signatures, a customer portal and campaigns. It comes already connected to the products: bank and
 mobile-money statements reconciled into the books, campaigns delivered
 through Dibon's messaging, and one sign-on across every system. An
 institution's customer accounts stay in its core; Odoo receives the daily
@@ -325,8 +326,9 @@ the other services are in design.
 
 1. **Discovery.** A working session with your team on the process that
    costs you most today.
-2. **Your numbers.** Give us one business day of extracts, and we will
-   show the product running on your own data before we meet again.
+2. **Your numbers.** Give us extracts for one full cycle of your process,
+   a day, a week or a month, and we will show the product running on your
+   own data before we meet again.
 3. **Pilot.** One product, one process, measured against an agreed
    outcome.
 4. **Rollout.** Further products on the same platform, with the same

@@ -1,6 +1,6 @@
 ---
 id: business-suite
-name: Business Suite, on Odoo
+name: Business Suite, on Odoo and Zoho
 kind: product
 version: 0.1.0
 owner: Product lead, business suite
@@ -12,16 +12,17 @@ review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-
 last_reviewed: 2026-10-01
 ---
 
-# Business Suite, on Odoo
+# Business Suite, on Odoo and Zoho
 
 ## 1 · In one paragraph
 
-The Business Suite is Odoo, implemented by Dibon and connected to the Kapu
-products. It gives an institution or a business its CRM, helpdesk,
-accounting, e-signatures, customer portal and campaigns, with bank and
+The Business Suite is Odoo or Zoho, implemented by Dibon and connected to
+the Kapu products (FS-306). It gives an institution or a business its CRM, helpdesk,
+accounting, HR and payroll, e-signatures, customer portal and campaigns, with bank and
 mobile-money feeds already reconciled into its books. It is not software
 Dibon builds. Dibon implements, configures and integrates Odoo as an Odoo
-Ready Partner, working towards Silver (FS-288). It completes the
+Ready Partner, working towards Silver (FS-288), and Zoho as a Zoho partner
+(tier to confirm, FS-312). It completes the
 portfolio's promise of one partner rather than five: the ERP is usually
 the fifth. Dibon runs on it first, for its own CRM, helpdesk and accounting
 (FS-002).
@@ -66,6 +67,8 @@ customer implementation is live.
 | BS-08 | For institutions with a core: the core's daily totals posted to Odoo's general ledger as summarised journal entries; customer accounts stay in the core | Planned | FS-290 | 2 |
 | BS-09 | Approvals inside Odoo for workflows that move no money; anything that moves money goes through the mandate engine | Planned | FS-145 | 1 |
 | BS-10 | Migration from spreadsheets or a previous accounting system, with a signed-off opening balance | Planned | FS-131 | 1 |
+| BS-12 | HR and payroll: contracts, leave, attendance and monthly payroll; for a Sacco or MFI, its own staff | Planned | FS-304 | 1 |
+| BS-13 | Zoho implementations for businesses that prefer it, with SME Recon's Zoho wrapper for statements | Planned | FS-306; sme-recon SR-13 | 2 |
 | BS-11 | Managed Odoo hosting on OPA, Dibon's own Odoo management platform: instances, backups, staging, upgrades | Built | Owner, 2026-10-01 (FS-293); public site opa.dibon.co.ke. Liquid hosting planned | 1 |
 
 ## 4 · Where it sits

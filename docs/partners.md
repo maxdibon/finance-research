@@ -72,6 +72,7 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 | PT-29 | IPRS — National Registration Bureau | Government register | Identity lookups in Kenya | KE | KE (government) | Onboarding | 2026-06-08: integration not final | Confirm who holds the access agreement (FS-202) | Product lead | FS-088, FS-202 |
 | PT-30 | Smile ID | Identity verification vendor | Liveness, face match, document checks | Pan-African | None | Candidate | 2026-10-01: shortlisted by Claude | Verify coverage, data residency and licence terms | Architect | FS-204 |
 | PT-31 | Odoo | Software vendor; partner programme | Business Suite implementations; Dibon's own ERP | Global | Ready tier (owner) | Live | 2026-10-01: Dibon is an Odoo Ready Partner, working towards Silver | Confirm Silver requirements and timeline (FS-292) | Commercial lead | FS-026, FS-288, FS-292 |
+| PT-32 | Zoho | Software vendor; partner programme | Business Suite implementations; SME Recon's Zoho wrapper | Global | Partner (owner); tier not recorded | Live | 2026-10-02: owner confirms Dibon partners with Zoho | Record the tier; check where Zoho hosts Kenyan customers' data (FS-312) | Commercial lead | FS-306, FS-312 |
 
 ---
 

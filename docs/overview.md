@@ -68,7 +68,7 @@ own payments first, and insights runs on our own data first (FS-033).
 - [Kapu MFI](modules/mfi.md) — loan management for informal lenders
 - [Kapu Sacco](modules/sacco.md) — deposit-taking and credit-only Saccos
 - [SME Recon](modules/sme-recon.md) — reconciliation inside the SME's own ERP
-- [Business Suite, on Odoo](modules/business-suite.md) — CRM, helpdesk, accounting, Sign and portal, implemented by Dibon as an Odoo partner
+- [Business Suite, on Odoo and Zoho](modules/business-suite.md) — CRM, helpdesk, accounting, HR and payroll, Sign and portal, implemented by Dibon as an Odoo and Zoho partner
 
 **Shared services**
 
