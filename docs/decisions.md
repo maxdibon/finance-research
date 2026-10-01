@@ -133,18 +133,6 @@ its own entry.
 - **Costs (inferred):** each module describes two behaviours. A likely third
   model (FS-066) is noted but not assumed.
 
-## FS-124 · Mobile money by direct API integration
-
-- **Chose:** integrate each mobile-money operator directly (partners.md
-  SD-05), starting with M-Pesa and Airtel Money in Kenya.
-- **Argued against:** reaching mobile money through the aggregator chosen
-  in SD-01, which would mean one integration across many operators and
-  countries.
-- **Costs (inferred):** one integration and one agreement per operator,
-  per country, as the footprint grows. In return: lower fees, our own
-  callbacks and statements, the best data for recon, and no partner
-  between us and the payer.
-
 ## FS-079 · Anonymised meeting notes in git; the original kept out
 
 - **Chose:** a role-based rewrite tracked in git. The original and the role
@@ -162,3 +150,15 @@ its own entry.
   own threshold.
 - **Costs (inferred):** every commit waits on the checks. A check that is
   wrong blocks honest work until it is fixed.
+
+## FS-124 · Mobile money by direct API integration
+
+- **Chose:** integrate each mobile-money operator directly (partners.md
+  SD-05), starting with M-Pesa and Airtel Money in Kenya.
+- **Argued against:** reaching mobile money through the aggregator chosen
+  in SD-01, which would mean one integration across many operators and
+  countries.
+- **Costs (inferred):** one integration and one agreement per operator,
+  per country, as the footprint grows. In return: lower fees, our own
+  callbacks and statements, the best data for recon, and no partner
+  between us and the payer.
