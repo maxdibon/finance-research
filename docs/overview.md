@@ -65,8 +65,7 @@ own payments first, and insights runs on our own data first (FS-033).
   for every rail a merchant takes
 - [Kapu Escrow](modules/escrow.md) — funds held at a bank until the agreed
   conditions are met
-- Kapu MFI — loan management for informal lenders *(module to write; the
-  PRD exists)*
+- [Kapu MFI](modules/mfi.md) — loan management for informal lenders
 - Kapu Sacco — deposit-taking and credit-only Saccos *(module to write)*
 - [SME Recon](modules/sme-recon.md) — reconciliation inside the SME's own ERP
 
