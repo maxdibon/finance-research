@@ -226,6 +226,22 @@ Matching rules that hold on every rail:
 - **Insights:** reads from the three authorities through a semantic layer
   of governed metric definitions. **It never writes.** Every answer shows
   the definition and query behind it. The model is not chosen yet — FS-043.
+- **Access and identity:** Keycloak for login, roles and step-up (access);
+  IPRS and verification vendors for who a person is (identity).
+
+### 6.1 · Licences
+
+Decided 2026-10-01 (FS-223):
+
+| Licence | Allowed | Condition |
+|---|---|---|
+| Apache-2.0, MIT, BSD-2, BSD-3, ISC | Yes | — |
+| AGPL-3.0 | Yes, **for services run unmodified and separately** | We do not change their source, and we do not link them into our code. A change to an AGPL service's source is a decision that triggers publishing that source to its network users, so it is never made in passing |
+| GPL, LGPL, SSPL, and anything unlisted | Not without a decision | Recorded in docs/decisions.md |
+
+Today's AGPL services: Grafana, Loki and Tempo (observability), and
+Metabase if insights chooses it. **CNCF projects are Apache-2.0**, so they
+are the default where they fit (FS-217).
 
 ---
 

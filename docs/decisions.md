@@ -213,3 +213,15 @@ its own entry.
   every institution; federation work per bank. In return: one login for
   every system, step-up at the act, and FAPI profiles without building
   them.
+
+## FS-223 · Unmodified AGPL services allowed
+
+- **Chose:** AGPL-3.0 services may run if unmodified and separate from our
+  code (docs/architecture.md §6.1).
+- **Argued against:** the copyleft exclusion carried over from GateKeepr,
+  which came from shipping a phone app; and Apache-2.0-only alternatives
+  (Jaeger, Thanos or Cortex, Superset).
+- **Costs (inferred):** any change to Grafana, Loki, Tempo or Metabase
+  source means publishing it to their network users, so patches wait for
+  upstream. In return: the Grafana stack the proposal and the Kapu
+  documentation already assume.
