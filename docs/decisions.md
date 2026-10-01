@@ -236,3 +236,15 @@ its own entry.
 - **Costs (inferred):** Superset is harder for business users to build
   their own questions in. Natural-language questions come from our own
   insights layer, not from the dashboard tool.
+
+## FS-261 · Amber is Dibon's brand accent
+
+- **Chose:** amber (#fbb236) for the brand frame, rules and accents, with
+  aubergine, plum and cream. Green is kept only as the meaning "money
+  moves" in diagrams, in a shade distinct from the customer green it
+  replaced (FS-260).
+- **Argued against:** the July deck's green, which turned out to be
+  specific to a customer (FS-256 corrected FS-248).
+- **Costs (inferred):** amber fails contrast as text on white (1.8:1), so
+  text uses a darkened amber; amber itself is for shapes, rules and fills
+  only (FS-259).

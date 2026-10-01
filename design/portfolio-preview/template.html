@@ -1,147 +1,178 @@
 <title>Dibon Financial Services</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
 <style>
-/* Layout: an aubergine masthead in Dibon's brand, then one reading column; products as a typed register with maturity pills; platform and audience as tables. */
+/* Layout: the Dibon deck's page frame on the web — aubergine masthead and footer band with amber corners, an aubergine-and-amber double rule over every section heading, amber line-art in section corners. Patterns from the deck: a triad for principles, a feature spine for product features, chevron bands for real sequences, tiles for the platform, alternating rows for security. Amber is the brand accent; green appears only as "money moving" in diagrams. */
 :root {
   --aubergine: #280430;
   --plum: #460d4d;
-  --green: #10ad5d;
-  --violet: #6f52eb;
+  --amber: #fbb236;
   --cream: #fff2eb;
   --bg: #fffaf6;
   --surface: #ffffff;
   --fg: #23122a;
   --muted: #5e4c66;
   --line: #ead9dc;
-  --link: #5a3fd6;
-  --pill-done-bg: #dff5e9;
-  --pill-done-fg: #0b6b3a;
-  --pill-design-bg: #ece8fd;
-  --pill-design-fg: #4a33b8;
-  --banner-bg: #fff0d6;
-  --banner-fg: #6b4300;
-  --dibon: #460d4d;
-  --on-dibon: #fff2eb;
-  --funds-bg: #e3f6ec;
+  --heading: #280430;
+  --rule-dark: #280430;
+  --amber-text: #8a5a00;
+  --link: #460d4d;
+  --tile: #280430;
+  --pill-done-bg: #fff1d1; --pill-done-fg: #7a4f00;
+  --pill-design-bg: #f3e6f4; --pill-design-fg: #460d4d;
+  --money: #0e7f5a; --money-bg: #e2f3ec;
+  --dibon: #460d4d; --on-dibon: #fff2eb;
   --line-strong: #cdb6bf;
   --icon: #460d4d;
   --display: "Montserrat", "Segoe UI", system-ui, sans-serif;
   --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #17031c; --surface: #210629; --fg: #f6ebee; --muted: #c4b1c9;
-    --line: #3d1a45; --link: #b3a5ff;
-    --pill-done-bg: #0f3a25; --pill-done-fg: #8fe3b5;
-    --pill-design-bg: #2a1f5c; --pill-design-fg: #c9bfff;
-    --banner-bg: #3a2a08; --banner-fg: #ffd98a;
-    --dibon: #6e2c79; --funds-bg: #0f3a25; --line-strong: #5a3463; --icon: #e7b8e8;
+    --bg: #17031c; --surface: #210629; --fg: #f6ebee; --muted: #c4b1c9; --line: #3d1a45;
+    --heading: #fff2eb; --rule-dark: #e7b8e8; --amber-text: #fbb236; --link: #fbb236; --tile: #2e0838;
+    --pill-done-bg: #3a2a08; --pill-done-fg: #ffd98a; --pill-design-bg: #3a1840; --pill-design-fg: #e7b8e8;
+    --money: #3fc495; --money-bg: #0f3a2b; --dibon: #6e2c79; --line-strong: #5a3463; --icon: #fbb236;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #17031c; --surface: #210629; --fg: #f6ebee; --muted: #c4b1c9;
-  --line: #3d1a45; --link: #b3a5ff;
-  --pill-done-bg: #0f3a25; --pill-done-fg: #8fe3b5;
-  --pill-design-bg: #2a1f5c; --pill-design-fg: #c9bfff;
-  --banner-bg: #3a2a08; --banner-fg: #ffd98a;
-  --dibon: #6e2c79; --funds-bg: #0f3a25; --line-strong: #5a3463; --icon: #e7b8e8;
+  --bg: #17031c; --surface: #210629; --fg: #f6ebee; --muted: #c4b1c9; --line: #3d1a45;
+  --heading: #fff2eb; --rule-dark: #e7b8e8; --amber-text: #fbb236; --link: #fbb236; --tile: #2e0838;
+  --pill-done-bg: #3a2a08; --pill-done-fg: #ffd98a; --pill-design-bg: #3a1840; --pill-design-fg: #e7b8e8;
+  --money: #3fc495; --money-bg: #0f3a2b; --dibon: #6e2c79; --line-strong: #5a3463; --icon: #fbb236;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--fg); font: 400 1.0625rem/1.6 var(--body); margin: 0; }
+body { background: var(--bg); color: var(--fg); font: 400 1.0625rem/1.6 var(--body); margin: 0; overflow-x: hidden; }
 a { color: var(--link); }
-a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; border-radius: 4px; }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; border-radius: 4px; }
+p { max-width: 65ch; }
+strong { font-weight: 600; }
 
-.banner { background: var(--banner-bg); color: var(--banner-fg); font: 600 0.8125rem/1.4 var(--display); letter-spacing: 0.02em; padding: 0.6rem 1rem; text-align: center; }
+.banner { background: var(--plum); color: var(--cream); font: 600 0.8125rem/1.4 var(--display); letter-spacing: 0.02em; padding: 0.55rem 1rem; text-align: center; }
 
-.masthead { background: var(--aubergine); color: var(--cream); padding-inline: 1rem; }
-.masthead-inner { max-width: 68rem; margin: 0 auto; padding-block: 2.5rem 3rem; display: grid; gap: 1.5rem; }
+/* Frame: masthead */
+.masthead { position: relative; overflow: hidden; background: var(--aubergine); color: var(--cream); padding-inline: 1rem; }
+.masthead::after { content: ""; position: absolute; right: 0; bottom: 0; width: 9rem; height: 4.5rem; background: var(--amber); clip-path: polygon(38% 0, 100% 0, 100% 100%, 0 100%); }
+.masthead-inner { position: relative; z-index: 1; max-width: 68rem; margin: 0 auto; padding-block: 2.5rem 3.25rem; display: grid; gap: 1.4rem; }
 .brand { display: flex; align-items: center; gap: 0.9rem; }
 .brand img { height: 3rem; width: auto; }
-.brand .wordmark { font: 700 1rem/1 var(--display); letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); opacity: 0.85; }
-.masthead h1 { font: 800 clamp(2rem, 5vw, 3.4rem)/1.05 var(--display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
-.masthead h1 span { color: var(--green); }
+.brand .wordmark { font: 700 0.8rem/1.15 var(--display); letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); }
+.masthead h1 { font: 800 clamp(2rem, 5vw, 3.4rem)/1.05 var(--display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; max-width: 18ch; }
+.masthead h1 span { color: var(--amber); }
 .masthead p { margin: 0; max-width: 40rem; font-size: 1.2rem; color: #f0dfe6; }
 .masthead nav { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font: 600 0.8125rem/1 var(--display); letter-spacing: 0.08em; text-transform: uppercase; }
 .masthead nav a { color: var(--cream); text-decoration: none; border-bottom: 2px solid transparent; padding-block: 0.3rem; }
-.masthead nav a:hover { border-color: var(--green); }
+.masthead nav a:hover { border-color: var(--amber); }
+.lineart { position: absolute; pointer-events: none; fill: none; stroke: var(--amber); stroke-width: 1.5; }
+.masthead .lineart { top: -1.5rem; right: -2rem; width: 22rem; height: auto; stroke-width: 2.25; }
 
+/* Frame: sections and the double rule */
 main { padding-inline: 1rem; }
 .wrap { max-width: 68rem; margin: 0 auto; }
-section { padding-block: 3rem 0.5rem; }
-.eyebrow { font: 700 0.75rem/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin: 0 0 0.6rem; }
-h2 { font: 800 clamp(1.5rem, 3vw, 2.1rem)/1.15 var(--display); margin: 0 0 1rem; text-wrap: balance; }
-h3 { font: 700 1.25rem/1.25 var(--display); margin: 0; text-wrap: balance; }
+section { position: relative; padding-block: 3.25rem 0.5rem; }
+section > .lineart { top: 1rem; right: -1rem; width: 13rem; height: auto; opacity: 0.8; }
+.eyebrow { font: 700 0.75rem/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-text); margin: 0 0 0.75rem; }
+h2 { font: 800 clamp(1.55rem, 3vw, 2.15rem)/1.15 var(--display); color: var(--heading); margin: 0 0 1rem; text-wrap: balance; max-width: 30ch; }
+h2::before {
+  content: ""; display: block; width: 9.5rem; height: 0.6rem; margin-bottom: 0.8rem;
+  background:
+    linear-gradient(var(--rule-dark) 0 0) 0 0 / 2.1rem 3px no-repeat,
+    linear-gradient(var(--rule-dark) 0 0) 0 100% / 2.1rem 3px no-repeat,
+    linear-gradient(var(--amber) 0 0) 2.6rem 0 / 6.9rem 3px no-repeat,
+    linear-gradient(var(--amber) 0 0) 2.6rem 100% / 6.9rem 3px no-repeat;
+}
+h3 { font: 700 1.2rem/1.25 var(--display); color: var(--heading); margin: 0; text-wrap: balance; }
 .lede { max-width: 65ch; color: var(--muted); font-size: 1.125rem; margin: 0 0 1.5rem; }
-p { max-width: 65ch; }
 
-.problems { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; list-style: none; padding: 0; margin: 0; }
-.problems li { border-top: 3px solid var(--plum); padding-top: 0.75rem; }
-.problems strong { display: block; font: 700 1rem/1.3 var(--display); margin-bottom: 0.3rem; }
+/* Icons: one line set */
+.ico { width: 1.6rem; height: 1.6rem; fill: none; stroke: var(--icon); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+.problems { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 1.25rem; list-style: none; padding: 0; margin: 0; }
+.problems li { display: grid; gap: 0.35rem; align-content: start; }
+.problems .ico { width: 2rem; height: 2rem; margin-bottom: 0.2rem; }
+.problems strong { font: 700 1rem/1.3 var(--display); color: var(--heading); }
 .problems span { color: var(--muted); }
 
-.principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
-.principle h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
-.principle p { margin: 0; color: var(--muted); }
+/* Pattern: triad (deck p. 13) */
+.triad { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.75rem; margin-bottom: 2.25rem; }
+.triad > div { display: grid; gap: 0.6rem; align-content: start; }
+.triad .disc { width: 4.25rem; height: 4.25rem; border-radius: 50%; border: 2px solid var(--amber); display: grid; place-items: center; }
+.triad .disc .ico { width: 2.1rem; height: 2.1rem; }
+.triad .key { font: 800 0.95rem/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-text); text-decoration: underline; text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 5px; }
+.triad p { margin: 0; color: var(--muted); }
 
 .stack { display: grid; gap: 0.5rem; max-width: 52rem; font-family: var(--display); }
-.layer { display: grid; grid-template-columns: 8.5rem 1fr; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 6px; background: var(--surface); border: 1px solid var(--line); }
-.layer b { font: 700 0.75rem/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.layer { display: grid; grid-template-columns: 8.5rem 1fr; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 6px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--amber); }
+.layer b { font: 700 0.72rem/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
 .layer span { font-weight: 600; }
 .records { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
-.record { background: var(--aubergine); color: var(--cream); border-radius: 6px; padding: 0.9rem 1rem; }
-.record b { display: block; font: 700 0.75rem/1.2 var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: #9be8c0; margin-bottom: 0.3rem; }
+.record { background: var(--tile); color: var(--cream); border-radius: 6px; padding: 0.9rem 1rem; }
+.record b { display: block; font: 700 0.72rem/1.2 var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.3rem; }
 .record span { font: 600 0.95rem/1.35 var(--display); }
 
-.legend { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; color: var(--muted); font-size: 0.95rem; margin: 0 0 1.5rem; align-items: center; }
-.pill { display: inline-flex; align-items: center; gap: 0.4rem; font: 700 0.7rem/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.6rem; border-radius: 999px; white-space: nowrap; }
+/* Products */
+.legend { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; color: var(--muted); font-size: 0.95rem; margin: 0 0 1.25rem; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 0.4rem; font: 700 0.7rem/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.6rem; border-radius: 999px; white-space: nowrap; justify-self: start; }
 .pill::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: currentColor; }
 .pill.done { background: var(--pill-done-bg); color: var(--pill-done-fg); }
 .pill.design { background: var(--pill-design-bg); color: var(--pill-design-fg); }
 .pill.design::before { background: transparent; border: 2px solid currentColor; width: 0.45rem; height: 0.45rem; }
 
-.products { display: grid; gap: 0; border-top: 1px solid var(--line); }
-.product { display: grid; grid-template-columns: minmax(0, 18rem) minmax(0, 1fr); gap: 0.5rem 2.5rem; padding-block: 1.75rem; border-bottom: 1px solid var(--line); }
+.products { display: grid; border-top: 2px solid var(--rule-dark); }
+.product { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); gap: 0.5rem 2.5rem; padding-block: 2rem; border-bottom: 1px solid var(--line); }
 .product header { display: grid; gap: 0.6rem; align-content: start; }
-.product .tag { font: 600 0.95rem/1.35 var(--display); color: var(--plum); }
-:root[data-theme="dark"] .product .tag { color: #e7b8e8; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .product .tag { color: #e7b8e8; } }
-.product .body p { margin: 0 0 0.9rem; }
-.product ul { margin: 0 0 0.9rem; padding-left: 1.1rem; display: grid; gap: 0.25rem; }
-.product li::marker { color: var(--green); }
+.product .tag { font: 600 0.95rem/1.35 var(--display); color: var(--amber-text); }
+.product .body > p { margin: 0 0 1rem; }
+
+/* Pattern: feature spine (deck p. 10) */
+.spine { list-style: none; margin: 0 0 1rem; padding: 0 0 0 0.2rem; position: relative; display: grid; gap: 0.55rem; }
+.spine::before { content: ""; position: absolute; left: 0.62rem; top: 0.5rem; bottom: 0.5rem; border-left: 2px dashed var(--line-strong); }
+.spine li { position: relative; padding-left: 2.1rem; }
+.spine li::before { content: ""; position: absolute; left: 0; top: 0.2rem; width: 1.25rem; height: 1.25rem; border-radius: 50%; background: var(--bg); border: 2px solid var(--amber); }
+.spine li::after { content: ""; position: absolute; left: 0.42rem; top: 0.42rem; width: 0.3rem; height: 0.55rem; border: solid var(--amber-text); border-width: 0 2px 2px 0; transform: rotate(45deg); }
 .meta { display: flex; flex-wrap: wrap; gap: 0.3rem 1.25rem; font-size: 0.95rem; color: var(--muted); }
 .meta b { color: var(--fg); font-weight: 600; }
 
-.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+/* Pattern: chevron band (deck p. 11) */
+.chevrons { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 0.2rem; }
+.chevrons li { display: grid; gap: 0.5rem; align-content: start; }
+.chevrons b { display: grid; place-items: center; min-height: 3rem; padding: 0.5rem 1.4rem 0.5rem 1.6rem; background: var(--tile); color: var(--cream); font: 700 0.78rem/1.15 var(--display); letter-spacing: 0.08em; text-transform: uppercase; text-align: center; clip-path: polygon(0 0, calc(100% - 0.9rem) 0, 100% 50%, calc(100% - 0.9rem) 100%, 0 100%, 0.9rem 50%); }
+.chevrons li:first-child b { clip-path: polygon(0 0, calc(100% - 0.9rem) 0, 100% 50%, calc(100% - 0.9rem) 100%, 0 100%); padding-left: 1rem; }
+.chevrons li:nth-child(even) b { background: var(--plum); }
+.chevrons li:last-child b { background: var(--amber); color: var(--aubergine); }
+.chevrons span { font-size: 0.9rem; color: var(--muted); padding-inline: 0.3rem; }
+
+/* Pattern: tiles (deck p. 16) */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0.75rem; }
+.tile { background: var(--tile); color: var(--cream); border-radius: 8px; padding: 1.15rem 1.2rem; display: grid; grid-template-columns: auto 1fr; gap: 0.35rem 0.9rem; align-content: start; }
+.tile .ico { grid-row: span 2; width: 2rem; height: 2rem; stroke: var(--amber); margin-top: 0.15rem; }
+.tile h3 { color: var(--cream); font-size: 1.05rem; }
+.tile p { margin: 0; font-size: 0.95rem; color: #ead7e3; }
+.note { color: var(--muted); font-size: 0.95rem; margin-top: 0.75rem; }
+
+.table-wrap { overflow-x: auto; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); }
 table { border-collapse: collapse; width: 100%; min-width: 34rem; }
 th, td { text-align: left; vertical-align: top; padding: 0.8rem 1rem; border-bottom: 1px solid var(--line); }
 tr:last-child td { border-bottom: 0; }
-th { font: 700 0.75rem/1.2 var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
-td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
-.note { color: var(--muted); font-size: 0.95rem; margin-top: 0.75rem; }
+th { font: 700 0.72rem/1.2 var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream); background: var(--tile); }
+td:first-child { font: 700 0.95rem/1.4 var(--display); color: var(--heading); white-space: nowrap; }
 
-.security { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem 2rem; list-style: none; padding: 0; margin: 0; }
-.security li strong { display: block; font: 700 0.95rem/1.3 var(--display); margin-bottom: 0.2rem; }
-.security li span { color: var(--muted); }
-.tech { font-family: var(--mono); font-size: 0.85rem; }
-
-.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem; list-style: none; padding: 0; margin: 0; counter-reset: step; }
-.steps li { counter-increment: step; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1rem; }
-.steps li::before { content: counter(step); display: inline-grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--aubergine); color: var(--cream); font: 700 0.85rem/1 var(--display); margin-bottom: 0.6rem; }
-.steps strong { display: block; font: 700 1rem/1.3 var(--display); margin-bottom: 0.25rem; }
-.steps span { color: var(--muted); }
-
-.contact { background: var(--aubergine); color: var(--cream); margin-top: 3.5rem; padding-inline: 1rem; }
-.contact .wrap { padding-block: 2.5rem; display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; justify-content: space-between; }
-.contact h2 { color: var(--cream); margin: 0; }
-.contact dl { display: grid; grid-template-columns: auto auto; gap: 0.3rem 1rem; margin: 0; font: 600 1rem/1.4 var(--display); }
-.contact dt { color: #9be8c0; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; align-self: center; }
-.contact dd { margin: 0; user-select: all; }
+/* Pattern: alternating rows (deck p. 20) */
+.rows { list-style: none; padding: 0; margin: 0; display: grid; }
+.rows li { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 1.25rem; align-items: center; padding-block: 1.1rem; position: relative; }
+.rows li::after { content: ""; position: absolute; bottom: 0; left: 0; width: 72%; border-bottom: 2px solid var(--rule-dark); }
+.rows li:nth-child(even) { grid-template-columns: minmax(0, 1fr) 4rem; }
+.rows li:nth-child(even) .disc { order: 2; }
+.rows li:nth-child(even)::after { left: auto; right: 0; }
+.rows li:last-child::after { display: none; }
+.rows .disc { width: 3.6rem; height: 3.6rem; border-radius: 50%; border: 2px solid var(--amber); display: grid; place-items: center; }
+.rows .disc .ico { width: 1.8rem; height: 1.8rem; }
+.rows strong { display: block; font: 700 1rem/1.3 var(--display); color: var(--amber-text); margin-bottom: 0.15rem; }
+.rows span { color: var(--fg); }
 
 /* Diagrams: one visual language across every product. */
 .dg-fig { margin: 0 0 1.1rem; }
@@ -152,23 +183,41 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
 .dg text.on { fill: var(--on-dibon); }
 .dg .box { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.5; }
 .dg .dibon { fill: var(--dibon); }
-.dg .funds { fill: var(--funds-bg); stroke: var(--green); stroke-width: 2.25; }
-.dg .money { stroke: var(--green); stroke-width: 2.5; fill: none; }
+.dg .funds { fill: var(--money-bg); stroke: var(--money); stroke-width: 2.25; }
+.dg .money { stroke: var(--money); stroke-width: 2.5; fill: none; }
 .dg .ctl { stroke: currentColor; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
 .dg .step { stroke: currentColor; stroke-width: 1.4; fill: none; }
-.dg .mk-money { fill: var(--green); }
+.dg .mk-money { fill: var(--money); }
 .dg .mk-ctl { fill: currentColor; }
 .dg-fig figcaption { color: var(--muted); font-size: 0.92rem; margin-top: 0.45rem; max-width: 60ch; }
 .dg-legend { margin: 0 0 1.75rem; }
 .dg-legend .dg { min-width: 30rem; max-width: 40rem; }
 
-.problems svg { width: 30px; height: 30px; stroke: var(--icon); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; display: block; margin-bottom: 0.5rem; }
+/* Frame: footer band */
+.contact { position: relative; overflow: hidden; background: var(--aubergine); color: var(--cream); margin-top: 3.75rem; padding-inline: 1rem; }
+.contact::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 8rem; background: var(--amber); clip-path: polygon(45% 0, 100% 0, 100% 100%, 0 100%); }
+.contact .wrap { position: relative; z-index: 1; padding-block: 2.25rem; display: flex; flex-wrap: wrap; gap: 1.25rem 2.5rem; align-items: center; justify-content: space-between; padding-right: 7rem; }
+.contact .brand img { height: 2.4rem; }
+.contact h2 { color: var(--cream); margin: 0; font-size: 1.5rem; }
+.contact h2::before { display: none; }
+.contact dl { display: grid; grid-template-columns: auto auto; gap: 0.3rem 1rem; margin: 0; font: 600 1rem/1.4 var(--display); }
+.contact dt { color: var(--amber); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; align-self: center; }
+.contact dd { margin: 0; user-select: all; }
 
 @media (max-width: 44rem) {
   .product { grid-template-columns: minmax(0, 1fr); }
   .records { grid-template-columns: minmax(0, 1fr); }
   .layer { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; }
   td:first-child { white-space: normal; }
+  .chevrons { grid-auto-flow: row; }
+  .chevrons b, .chevrons li:first-child b { clip-path: none; border-radius: 6px; padding: 0.6rem 1rem; }
+  .rows li, .rows li:nth-child(even) { grid-template-columns: 3.6rem minmax(0, 1fr); }
+  .rows li:nth-child(even) .disc { order: 0; }
+  .rows li::after, .rows li:nth-child(even)::after { width: 100%; left: 0; right: auto; }
+  .masthead .lineart { width: 14rem; }
+  section > .lineart { width: 8rem; }
+  .contact .wrap { padding-right: 4rem; }
+  .contact::after { width: 4rem; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .masthead nav a { transition: border-color 0.15s ease; }
@@ -178,10 +227,11 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
 <div class="banner" role="note">Preview draft. Not yet for distribution: product availability is being confirmed.</div>
 
 <header class="masthead">
+  <svg class="lineart" viewBox="0 0 360 240" aria-hidden="true"><path d="M30 0 C 60 120, 200 170, 360 150"/><path d="M120 0 L 200 70 L 300 70 L 360 20"/></svg>
   <div class="masthead-inner">
     <div class="brand">
       <img id="logo" alt="Dibon" width="131" height="57" src="data:image/png;base64,__LOGO__">
-      <span class="wordmark">Consulting</span>
+      <span class="wordmark">Dibon<br>Consulting</span>
     </div>
     <h1>Financial services <span>infrastructure</span></h1>
     <p>For institutions that take in, lend, hold and move money, and need to prove where every shilling went.</p>
@@ -200,6 +250,7 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
   <div class="wrap">
 
     <section aria-labelledby="who-we-are">
+      <svg class="lineart" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 10 L 60 10 L 110 60 L 200 60"/><circle cx="160" cy="25" r="18"/></svg>
       <p class="eyebrow">Who we are</p>
       <h2 id="who-we-are">One technology partner, not one product</h2>
       <p class="lede">Dibon Consulting designs and builds software for banks, Saccos, microfinance institutions, payment providers and the businesses that work with them. Payments, deposit-taking, lending, escrow and reconciliation come together with monitoring, messaging, identity and ERP integration, so an institution deals with one partner rather than five.</p>
@@ -210,21 +261,37 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
       <p class="eyebrow">The problems we solve</p>
       <h2 id="problems">Where money gets lost in the work</h2>
       <ul class="problems">
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="7.5" height="16" rx="1.2"/><rect x="13.5" y="4" width="7.5" height="16" rx="1.2"/><path d="M5.5 9h3M5.5 12.5h3M16 9h3M16 12.5h3"/></svg><strong>Reconciliation by hand</strong><span>Statements downloaded from every bank and mobile-money portal, then matched line by line. Breaks found late and resolved without a trail.</span></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6l5 7M3 12h11M3 19h6l5-7M14 12h7M18 9l3 3-3 3"/></svg><strong>Channels that disagree</strong><span>M-Pesa, Airtel Money, bank transfers and cards each arrive in a different place, in a different format, with a different idea of when a payment is final.</span></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H10l-4 4v-4H4z"/><path d="M10 9.2a2 2 0 1 1 2.6 1.9c-.4.2-.6.5-.6.9M12 13.4v.1"/></svg><strong>Approvals with no record</strong><span>Loans and payments approved in conversation. Nobody can show who approved what, and when.</span></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/><path d="M10.6 8.2a1.5 1.5 0 1 1 1.9 1.4c-.3.1-.5.4-.5.7M12 12.4v.1"/></svg><strong>Customers who cannot see their money</strong><span>Members phone in to ask a balance, a loan limit, or whether a contribution arrived.</span></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l3 3v13H7z"/><path d="M5 6v15h11"/><path d="M10 9h5M10 12.5h5M10 16h3"/></svg><strong>Growth held back by paperwork</strong><span>Paper KYC, paper mandates, and monthly credit-bureau files assembled by hand.</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="7.5" height="16" rx="1.2"/><rect x="13.5" y="4" width="7.5" height="16" rx="1.2"/><path d="M5.5 9h3M5.5 12.5h3M16 9h3M16 12.5h3"/></svg><strong>Reconciliation by hand</strong><span>Statements downloaded from every bank and mobile-money portal, then matched line by line. Breaks found late and resolved without a trail.</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6l5 7M3 12h11M3 19h6l5-7M14 12h7M18 9l3 3-3 3"/></svg><strong>Channels that disagree</strong><span>M-Pesa, Airtel Money, bank transfers and cards each arrive in a different place, in a different format, with a different idea of when a payment is final.</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H10l-4 4v-4H4z"/><path d="M10 9.2a2 2 0 1 1 2.6 1.9c-.4.2-.6.5-.6.9M12 13.4v.1"/></svg><strong>Approvals with no record</strong><span>Loans and payments approved in conversation. Nobody can show who approved what, and when.</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/><path d="M10.6 8.2a1.5 1.5 0 1 1 1.9 1.4c-.3.1-.5.4-.5.7M12 12.4v.1"/></svg><strong>Customers who cannot see their money</strong><span>Members phone in to ask a balance, a loan limit, or whether a contribution arrived.</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l3 3v13H7z"/><path d="M5 6v15h11"/><path d="M10 9h5M10 12.5h5M10 16h3"/></svg><strong>Growth held back by paperwork</strong><span>Paper KYC, paper mandates, and monthly credit-bureau files assembled by hand.</span></li>
       </ul>
     </section>
 
     <section id="approach" aria-labelledby="approach-h">
+      <svg class="lineart" viewBox="0 0 200 120" aria-hidden="true"><path d="M20 0 C 40 70, 120 100, 200 90"/></svg>
       <p class="eyebrow">How we build</p>
       <h2 id="approach-h">Three principles in every product</h2>
-      <div class="principles">
-        <div class="principle"><h3>We do not hold your money</h3><p>Funds stay in your accounts, at your bank, or with a licensed partner. Our software prompts, instructs, matches and reports, which keeps regulated custody where it belongs.</p></div>
-        <div class="principle"><h3>Every record has one home</h3><p>Money lives in your core. Customers and what they owe live in your ERP. Every match and every exception lives in our reconciliation engine. Nothing is quietly copied.</p></div>
-        <div class="principle"><h3>Nothing is guessed</h3><p>An unmatched payment stays visible until evidence places it. An unconfirmed payment is pending, not failed and not successful. Every number traces back to one transaction.</p></div>
+      <div class="triad">
+        <div>
+          <span class="disc"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5M4.5 9.5h15M6 10v7M10 10v7M14 10v7M18 10v7M3.5 20h17"/></svg></span>
+          <span class="key">Your money stays yours</span>
+          <h3>We do not hold your money</h3>
+          <p>Funds stay in your accounts, at your bank, or with a licensed partner. Our software prompts, instructs, matches and reports, which keeps regulated custody where it belongs.</p>
+        </div>
+        <div>
+          <span class="disc"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.5"/><path d="M5 6v12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg></span>
+          <span class="key">One source</span>
+          <h3>Every record has one home</h3>
+          <p>Money lives in your core. Customers and what they owe live in your ERP. Every match and every exception lives in our reconciliation engine. Nothing is quietly copied.</p>
+        </div>
+        <div>
+          <span class="disc"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5.5 5.5M8 10.5l2 2 3.5-4"/></svg></span>
+          <span class="key">Evidence</span>
+          <h3>Nothing is guessed</h3>
+          <p>An unmatched payment stays visible until evidence places it. An unconfirmed payment is pending, not failed and not successful. Every number traces back to one transaction.</p>
+        </div>
       </div>
       <div class="stack" role="img" aria-label="Channels, products and platform services sit above three systems of record: your core, your ERP, and the reconciliation engine.">
         <div class="layer"><b>Channels</b><span>Mobile app · Internet banking · USSD</span></div>
@@ -270,7 +337,7 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
           <header><h3>Kapu Collect</h3><div class="tag">Deposits collected by partners, held at your bank</div><span class="pill done">Specification complete</span></header>
           <div class="body">
             <p>For banks and other regulated institutions reaching the large pool of collections that sits outside formal banking. Collection firms, high-volume SMEs and unlicensed funds-holding operators connect through APIs, and every deposit lands in a real account at the bank, in the end customer's name.</p>
-            <ul>
+            <ul class="spine">
               <li>Account and sub-account opening, gated on IPRS identity checks</li>
               <li>Deposits by mobile-money prompt; withdrawals to mobile, till or paybill</li>
               <li>Account-to-account transfers, balances and statements</li>
@@ -286,7 +353,7 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
           <header><h3>Kapu Pay Gateway</h3><div class="tag">One API for every rail a business takes</div><span class="pill design">In design</span></header>
           <div class="body">
             <p>For businesses and fintechs taking payments on more than one rail. One API and one dashboard cover mobile money, bank transfers and cards, and every payment is reconciled against what it paid for. Payments settle into the merchant's own accounts.</p>
-            <ul>
+            <ul class="spine">
               <li>One collections API across M-Pesa, Airtel Money and T-Kash</li>
               <li>Cards and PesaLink</li>
               <li>Payment links, including invoices sent by SMS</li>
@@ -300,7 +367,7 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
           <header><h3>Kapu Escrow</h3><div class="tag">Funds held at a bank until the conditions are met</div><span class="pill design">In design</span></header>
           <div class="body">
             <p>For property, vehicle sales, construction milestones, B2B trade and marketplaces. The buyer's money sits at a partner bank in an escrow account of its own, released to the seller only when the agreed approvers sign off. Neither party, nor Dibon, can release funds alone.</p>
-            <ul>
+            <ul class="spine">
               <li>Digital escrow agreements, signed electronically by both parties</li>
               <li>One bank-held escrow account per agreement</li>
               <li>Milestones with evidence, partial releases, refunds</li>
@@ -314,14 +381,12 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
           <header><h3>Kapu MFI</h3><div class="tag">Loan management for growing lenders</div><span class="pill done">Specification complete</span></header>
           <div class="body">
             <p>For lenders moving off spreadsheets, paper and ageing systems. The whole loan, from a digital application to closure or restructure, with the process enforced and light enough for a team of three.</p>
-            <ul>
-              <li>Digital applications with a full, attributed lifecycle</li>
+            <ul class="spine">
               <li>KYC with IPRS lookup and a completeness gate per product</li>
               <li>Collateral management, vehicles first, with verification evidence</li>
               <li>Approval chains by product and amount, with no self-approval</li>
               <li>Above-limit approvals flagged and tracked as their own cohort</li>
               <li>Repayments split into principal, interest, fees and insurance</li>
-              <li>Rollovers linked back to the original loan</li>
               <li>SMS reminders, a portfolio dashboard, and migration from Mifos</li>
             </ul>
             <div class="meta"><span><b>Built on</b> Apache Fineract</span></div>
@@ -332,10 +397,9 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
           <header><h3>Kapu Sacco</h3><div class="tag">For credit-only and deposit-taking Saccos</div><span class="pill design">In design</span></header>
           <div class="body">
             <p>For Saccos that want contributions, deposits, loans and guarantees in one place, current every day rather than every month-end.</p>
-            <ul>
+            <ul class="spine">
               <li>Membership, share capital and member deposits; withdrawable savings for deposit-taking Saccos</li>
               <li>Contributions by M-Pesa, bank and employer check-off, matched to members</li>
-              <li>Check-off reconciliation against each employer's remittance</li>
               <li>Loan limits from members' deposits; guarantors who can see their exposure</li>
               <li>Credit-committee approval, recorded per member</li>
               <li>Dividends and interest computed from your bylaws, kept for the AGM</li>
@@ -348,11 +412,15 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
           <header><h3>Reconciliation &amp; Observability</h3><div class="tag">Every channel, every cycle, right now</div><span class="pill done">Specification complete</span></header>
           <div class="body">
             <p>Every transaction matched across the rail, the bank and your ledger. Breaks queued by how close they are to their SLA, not by size, and traced hop by hop with evidence from both sides. Suspense is the exception queue seen from the ledger: when the queue is empty, suspense is zero, and the day is closed.</p>
-            <ul>
-              <li>Ingest from callbacks, APIs and statement files (MT940, CAMT, CSV)</li>
-              <li>Matching rules, including three-way matching against what you expected</li>
-              <li>An exception queue ordered by SLA, with owners and ageing</li>
-              <li>Remediation: status queries automatic; reversals approved by a second person</li>
+            <ol class="chevrons" aria-label="How a day is closed">
+              <li><b>Ingest</b><span>Callbacks, APIs, MT940, CAMT, CSV</span></li>
+              <li><b>Match</b><span>Rules, three-way against what you expected</span></li>
+              <li><b>Queue</b><span>Breaks ordered by SLA, with owners</span></li>
+              <li><b>Resolve</b><span>Evidence first; reversals need a second person</span></li>
+              <li><b>Close the day</b><span>Queue empty, suspense zero</span></li>
+            </ol>
+            <ul class="spine">
+              <li>A trace for every transaction, hop by hop</li>
               <li>A ledger view proved two ways: real-time assertions and a nightly batch</li>
               <li>Treasury, float, and branch and till cash by denomination</li>
               <li>Monitoring, alerting and SLOs for everything that moves money</li>
@@ -378,21 +446,17 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
     </section>
 
     <section id="platform" aria-labelledby="platform-h">
+      <svg class="lineart" viewBox="0 0 200 120" aria-hidden="true"><path d="M200 0 L 140 0 L 90 50 L 0 50"/><path d="M150 80 a 30 30 0 1 0 50 0"/></svg>
       <p class="eyebrow">The platform underneath</p>
       <h2 id="platform-h">The same services under every product</h2>
       <p class="lede">A customer who adds a second product gets the same approvals, messages, logins and reports as the first.</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th scope="col">Service</th><th scope="col">What it does</th></tr></thead>
-          <tbody>
-            <tr><td>Approvals and mandates</td><td>Approval chains by product, amount and risk flag; no self-approval; every decision attributed when it is made. Debit mandates with the payer's consent and right to cancel.</td></tr>
-            <tr><td>Messaging</td><td>SMS, WhatsApp, Telegram and app push, for reminders, receipts, alerts and campaigns. In Kenya, SMS goes directly to the operators under Dibon's PRSP licence. A message's status says only what its channel reported.</td></tr>
-            <tr><td>Identity and access</td><td>One login for every system, with passkeys and one-time codes; re-authentication before any act that moves money; financial-grade API security. Identity checks against IPRS, documents and liveness.</td></tr>
-            <tr><td>Credit bureaus</td><td>Monthly submissions generated from the ledger and reconciled against what the bureau accepted. Lookups at vetting, purpose recorded first. Corrections when a borrower settles.</td></tr>
-            <tr><td>Payment rails</td><td>M-Pesa, Airtel Money, T-Kash, PesaLink, bank APIs and statement files, and cards, behind one interface. An unconfirmed payment is pending until the rail confirms it.</td></tr>
-            <tr><td>Insights</td><td>Every metric defined once, used by dashboards and by questions asked in plain language. Every answer shows how it was calculated and how fresh the data is.</td></tr>
-          </tbody>
-        </table>
+      <div class="tiles">
+        <div class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5z"/><path d="m8 9 1.5 1.5L12 8M8 14l1.5 1.5L12 13M14 9.5h2.5M14 14.5h2.5"/></svg><h3>Approvals and mandates</h3><p>Chains by product, amount and risk; no self-approval; every decision attributed when made. Debit mandates with the payer's consent.</p></div>
+        <div class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H10l-4 4v-4H4z"/><path d="M8 9h8M8 12h5"/></svg><h3>Messaging</h3><p>SMS, WhatsApp, Telegram and app push. In Kenya, SMS goes direct to the operators under Dibon's PRSP licence.</p></div>
+        <div class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="4"/><path d="M3 20c.8-3.4 3.2-5 6-5s5.2 1.6 6 5M15 11l2 2 4-4"/></svg><h3>Identity and access</h3><p>One login for every system; re-authentication before money moves; financial-grade API security; IPRS and liveness checks.</p></div>
+        <div class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M9 16v-3M12 16v-6M15 16v-4"/></svg><h3>Credit bureaus</h3><p>Monthly submissions from the ledger, reconciled; lookups with the purpose recorded first; corrections on settlement.</p></div>
+        <div class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h14M13 3l4 4-4 4M21 17H7M11 13l-4 4 4 4"/></svg><h3>Payment rails</h3><p>M-Pesa, Airtel Money, T-Kash, PesaLink, bank APIs and files, and cards behind one interface. Unconfirmed means pending.</p></div>
+        <div class="tile"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16"/><path d="m7 15 4-4 3 3 5-6"/></svg><h3>Insights</h3><p>Every metric defined once, for dashboards and plain-language questions. Each answer shows how it was calculated.</p></div>
       </div>
       <p class="note">Approvals, payment rails and identity are partly specified; the other services are in design.</p>
     </section>
@@ -436,26 +500,27 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
     </section>
 
     <section id="security" aria-labelledby="security-h">
+      <svg class="lineart" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 0 C 30 60, 110 90, 200 70"/><path d="M110 0 L 200 0"/></svg>
       <p class="eyebrow">Deployment and security</p>
       <h2 id="security-h">Built to be audited</h2>
-      <ul class="security">
-        <li><strong>Where it runs</strong><span>On your premises, or in an in-country cloud. Kenya first; designed to follow our customers across East and Southern Africa and Nigeria.</span></li>
-        <li><strong>How it runs</strong><span>Cloud-native on Kubernetes, mostly on permissively licensed open source: <span class="tech">Apache Fineract · Keycloak · Kafka · Prometheus · OpenTelemetry · Apache Superset</span>.</span></li>
-        <li><strong>Who can act</strong><span>One login per person, never shared; re-authentication at the moment of any act that moves money; a second approver for payments, reversals and role changes.</span></li>
-        <li><strong>What is recorded</strong><span>Every action, append-only. Nothing is edited after the fact; a correction is a new entry.</span></li>
-        <li><strong>How data is handled</strong><span>Designed in line with Kenya's Data Protection Act, 2019. Data is classified; the most sensitive never appears in logs or on a phone. Credentials never leave our servers.</span></li>
-        <li><strong>How it is watched</strong><span>Monitoring, alerting and service-level objectives for every system that moves money.</span></li>
+      <ul class="rows">
+        <li><span class="disc"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg></span><div><strong>Where it runs</strong><span>On your premises, or in an in-country cloud. Kenya first; designed to follow our customers across East and Southern Africa and Nigeria.</span></div></li>
+        <li><span class="disc"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9z"/><path d="M12 12 20 7.5M12 12v9M12 12 4 7.5"/></svg></span><div><strong>How it runs</strong><span>Cloud-native on Kubernetes, mostly on permissively licensed open source: Apache Fineract, Keycloak, Kafka, Prometheus, OpenTelemetry and Apache Superset.</span></div></li>
+        <li><span class="disc"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="3.5"/><path d="M11.5 12H21M17 12v3M20 12v2"/></svg></span><div><strong>Who can act</strong><span>One login per person, never shared; re-authentication at the moment of any act that moves money; a second approver for payments, reversals and role changes.</span></div></li>
+        <li><span class="disc"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></span><div><strong>What is recorded</strong><span>Every action, append-only. Nothing is edited after the fact; a correction is a new entry.</span></div></li>
+        <li><span class="disc"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg></span><div><strong>How data is handled</strong><span>Designed in line with Kenya's Data Protection Act, 2019. Data is classified; the most sensitive never appears in logs or on a phone. Credentials never leave our servers.</span></div></li>
+        <li><span class="disc"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2.5-6 4 12 2.5-6H21"/></svg></span><div><strong>How it is watched</strong><span>Monitoring, alerting and service-level objectives for every system that moves money.</span></div></li>
       </ul>
     </section>
 
     <section id="engage" aria-labelledby="engage-h">
       <p class="eyebrow">Working with us</p>
       <h2 id="engage-h">From your process to your numbers</h2>
-      <ol class="steps">
-        <li><strong>Discovery</strong><span>A working session with your team on the process that costs you most today.</span></li>
-        <li><strong>Your numbers</strong><span>Give us one business day of extracts; we show the product running on your own data before we meet again.</span></li>
-        <li><strong>Pilot</strong><span>One product, one process, measured against an agreed outcome.</span></li>
-        <li><strong>Rollout</strong><span>Further products on the same platform, with the same logins, approvals and reports.</span></li>
+      <ol class="chevrons" aria-label="How we engage">
+        <li><b>Discovery</b><span>A working session on the process that costs you most today.</span></li>
+        <li><b>Your numbers</b><span>One business day of extracts; we show the product running on your data.</span></li>
+        <li><b>Pilot</b><span>One product, one process, measured against an agreed outcome.</span></li>
+        <li><b>Rollout</b><span>Further products on the same platform, logins, approvals and reports.</span></li>
       </ol>
     </section>
 
@@ -464,6 +529,10 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
 
 <footer class="contact">
   <div class="wrap">
+    <div class="brand">
+      <img id="logo2" alt="Dibon" width="131" height="57" src="data:image/png;base64,__LOGO__">
+      <span class="wordmark">Dibon<br>Consulting</span>
+    </div>
     <h2>Talk to us</h2>
     <dl>
       <dt>Email</dt><dd>info@dibon.co.ke</dd>
@@ -477,8 +546,7 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
 // Recover its shape: each pixel's distance from white becomes its opacity,
 // drawn in the brand cream. If anything fails, the original image stays.
 (function () {
-  var img = document.getElementById('logo');
-  function recover() {
+  function recover(img) {
     try {
       var w = img.naturalWidth, h = img.naturalHeight;
       if (!w || !h) return;
@@ -495,6 +563,10 @@ td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
       img.src = c.toDataURL('image/png');
     } catch (e) { /* keep the original */ }
   }
-  if (img.complete) recover(); else img.addEventListener('load', recover, { once: true });
+  ['logo', 'logo2'].forEach(function (id) {
+    var img = document.getElementById(id);
+    if (!img) return;
+    if (img.complete) recover(img); else img.addEventListener('load', function () { recover(img); }, { once: true });
+  });
 })();
 </script>
