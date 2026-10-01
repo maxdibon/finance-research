@@ -162,3 +162,26 @@ its own entry.
   per country, as the footprint grows. In return: lower fees, our own
   callbacks and statements, the best data for recon, and no partner
   between us and the payer.
+
+## FS-160 · SMS direct to the operators in Kenya; partners elsewhere
+
+- **Chose:** SMPP connections to Safaricom, Airtel and Telkom under
+  Dibon's PRSP licence in Kenya. Partners such as Meliora and Africa's
+  Talking in other countries, and as the fallback route in Kenya.
+- **Argued against:** staying on a partner gateway everywhere, which is
+  how Dibon works today. Claude also raised (FS-154) that direct
+  connection needs a licence. The owner answered that Dibon holds one in
+  Kenya.
+- **Costs (inferred):** three operator binds to run, monitor and keep
+  registered, plus sender-ID registration per institution with each
+  operator. In return: lower cost, first-hand delivery reports, and
+  messages that stay in-country.
+
+## FS-158 · Notifications becomes messaging
+
+- **Chose:** one messaging service for transactional messages and
+  campaigns, on every channel. Machine-to-machine callbacks stay with each
+  product's API.
+- **Costs (inferred):** campaigns bring marketing-consent rules into a
+  service that otherwise sent only transactional messages. The two paths
+  must stay separate inside it (FS-155).

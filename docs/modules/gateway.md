@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [sme, fintech, mfi, sacco]
-depends_on: [rails, recon-observability, notifications, mandates, identity]
+depends_on: [rails, recon-observability, messaging, mandates, identity]
 consumed_by: [sme-recon, mfi, sacco]
 review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102]
 last_reviewed: 2026-10-01
@@ -74,7 +74,7 @@ outstanding go-live work — FS-088.
 ## 4 · Where it sits
 
 **Depends on:** rails (every channel), recon-observability (GW-06, GW-09),
-notifications (merchant callbacks, payment-link SMS), mandates (payout
+messaging (payment-link SMS; merchant callbacks stay in the Gateway API), mandates (payout
 approval, if GW-11 is in scope), identity (merchant onboarding checks —
 FS-090).
 **Used by:** sme-recon, for incoming funds; mfi and sacco, for repayments

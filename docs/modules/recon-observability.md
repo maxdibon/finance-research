@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
-depends_on: [rails, notifications, mandates]
+depends_on: [rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon]
 review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103]
 last_reviewed: 2026-10-01
@@ -82,7 +82,7 @@ running — FS-099, FS-100.
 
 ## 4 · Where it sits
 
-**Depends on:** rails (feeds), notifications (alerts), mandates
+**Depends on:** rails (feeds), messaging (alerts to people), mandates
 (maker-checker for reversals and reposts).
 **Used by:** collect (end-of-day against the core), gateway (every
 merchant payment), mfi and sacco (repayments against Fineract), sme-recon

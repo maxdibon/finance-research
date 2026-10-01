@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [bank, sme, fintech]
-depends_on: [collect, mandates, recon-observability, notifications, rails, identity]
+depends_on: [collect, mandates, recon-observability, messaging, rails, identity]
 consumed_by: []
 review_ids: [FS-042, FS-104, FS-107, FS-108, FS-114, FS-115, FS-116, FS-117]
 last_reviewed: 2026-10-01
@@ -74,7 +74,7 @@ same gap as the GateKeepr brief's second-leg problem.
 ## 4 · Where it sits
 
 **Depends on:** collect (sub-accounts, deposits), mandates (release
-approvals), recon-observability (ES-10), notifications (ES-09), rails
+approvals), recon-observability (ES-10), messaging (ES-09), rails
 (funding and release), identity (KYC on both parties).
 **Used by:** none yet. GateKeepr's deposit and service-charge flows are a
 possible consumer.

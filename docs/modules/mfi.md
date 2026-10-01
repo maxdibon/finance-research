@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [mfi]
-depends_on: [mandates, identity, rails, notifications, recon-observability, crb]
+depends_on: [mandates, identity, rails, messaging, recon-observability, crb]
 consumed_by: []
 review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141]
 last_reviewed: 2026-10-01
@@ -88,7 +88,7 @@ rather than restated. The PRD calls several underlying integrations
 ## 4 · Where it sits
 
 **Depends on:** mandates (MF-07, MF-11), identity (IPRS), rails (M-Pesa,
-Airtel Money, bank transfer), notifications (MF-13), recon-observability
+Airtel Money, bank transfer), messaging (MF-13), recon-observability
 (MF-10, MF-12), crb (MF-19).
 **Used by:** none. It is the product an MFI buys.
 

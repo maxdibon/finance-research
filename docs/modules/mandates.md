@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]
-depends_on: [identity, notifications, rails]
+depends_on: [identity, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability]
 review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146]
 last_reviewed: 2026-10-01
@@ -77,7 +77,7 @@ owner's request (FS-042).
 
 ## 4 · Where it sits
 
-**Depends on:** identity (who the approver is), notifications (reminders,
+**Depends on:** identity (who the approver is), messaging (reminders,
 pre-debit notices), rails (debit registration and pulls).
 **Used by:** mfi, sacco, collect, gateway, sme-recon, escrow,
 recon-observability (reversals and reposts).

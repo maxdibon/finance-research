@@ -60,6 +60,12 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 | PT-17 | Ecobank | Bank, regional | Escrow, trust and settlement accounts across the footprint | KE UG TZ RW ZM ZW NG | None | Candidate | 2026-10-01: shortlisted by Claude | Assess with SD-04 | Commercial lead | FS-107, FS-112 |
 | PT-18 | NCBA | Bank — holds Dibon's own accounts | APIs and statement feeds for Dibon's accounts (Dibon as first customer); a possible partner bank later | KE | KE (Dibon is a customer) | Candidate | 2026-10-01: owner to request APIs and statement feeds | Send the request (Email 1) | Architect | FS-033, FS-125, FS-126 |
 | PT-19 | KCB | Bank — holds Dibon's own accounts | As PT-18 | KE (and its regional subsidiaries) | KE (Dibon is a customer) | Candidate | 2026-10-01: owner to request APIs and statement feeds | Send the request (Email 1) | Architect | FS-033, FS-125, FS-126 |
+| PT-20 | Meliora — Tiara gateway | Messaging partner | SMS outside Kenya; fallback route in Kenya | Not known | KE (current partner) | Live | 2026-10-01: Dibon is a current partner | Confirm which countries and channels Tiara covers | Architect | FS-148, FS-160 |
+| PT-21 | Africa's Talking | Messaging partner | SMS, and possibly USSD, outside Kenya | KE UG TZ RW ZM NG | None | Candidate | 2026-10-01: named by the owner | Verify coverage and sender-ID support per country | Architect | FS-160 |
+| PT-22 | Safaricom — SMS (SMPP) | Operator, messaging | Direct A2P SMS in Kenya under our PRSP licence | KE | KE (operator) | Candidate | 2026-10-01: direct connection decided | Request an SMPP bind and sender-ID registration | Architect | FS-160 |
+| PT-23 | Airtel — SMS (SMPP) | Operator, messaging | As PT-22 | KE | KE (operator) | Candidate | 2026-10-01: direct connection decided | As PT-22 | Architect | FS-160 |
+| PT-24 | Telkom — SMS (SMPP) | Operator, messaging | As PT-22 | KE | KE (operator) | Candidate | 2026-10-01: direct connection decided | As PT-22 | Architect | FS-160 |
+| PT-25 | Meta — WhatsApp Business Platform | Messaging platform | WhatsApp templates and replies | Global | None | Candidate | 2026-10-01: WhatsApp named as a channel | Decide the route (SD-09); business verification | Architect | FS-147, FS-161, FS-165 |
 
 ---
 
@@ -77,6 +83,8 @@ Statuses: **OPEN** · **DECIDED** (recorded in docs/decisions.md) ·
 | SD-05 | Mobile money: direct or through the aggregator, per country | PT-02, PT-03, PT-04, PT-11, PT-12, PT-13 | C2 C4 C8 | — | DECIDED | **Direct API integration** (FS-124). The aggregator (SD-01) covers cards and merchants without shortcodes, not mobile money. Outreach to all three Kenyan operators drafted (FS-125, FS-129) |
 | SD-06 | Cross-border and international transfer | PT-14, PT-15 | C1 C2 C4 C5 | — | OPEN | Includes the stablecoin research assigned 8 Jun |
 | SD-07 | Hosting partner | PT-01 | C5 C11 | — | OPEN | FS-048, FS-110 |
+| SD-08 | SMS route per country | PT-20, PT-21, PT-22, PT-23, PT-24 | C4 C5 C12 C13 | — | OPEN | Kenya: direct to the operators (FS-160), with a partner as fallback. Elsewhere: a partner until volume justifies a licence and direct binds |
+| SD-09 | WhatsApp route: Meta directly, or a business solution provider | PT-25, PT-20, PT-21 | C4 C5 C7 | — | OPEN | FS-161 |
 
 ## 3 · Criteria
 
@@ -93,3 +101,5 @@ Statuses: **OPEN** · **DECIDED** (recorded in docs/decisions.md) ·
 | C9 | Card scope stays with the partner: hosted page or tokenisation | Keeps us out of the cardholder-data environment |
 | C10 | Sub-account and mandate APIs | Escrow depends on both (escrow ES-02, ES-05) |
 | C11 | In-country presence of the hosting stack, and model or GPU options | Hosting and insights (FS-043) |
+| C12 | Delivery-report quality: per message, timely, passed on unaltered | A status is only as truthful as the report behind it (messaging MS-09) |
+| C13 | Sender ID per institution | Each institution messages under its own name (messaging MS-03) |
