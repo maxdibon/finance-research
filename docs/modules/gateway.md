@@ -8,7 +8,7 @@ classification: Internal
 audience: [sme, fintech, mfi, sacco]
 depends_on: [rails, recon-observability, notifications, mandates, identity]
 consumed_by: [sme-recon, mfi, sacco]
-review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094]
+review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102]
 last_reviewed: 2026-10-01
 ---
 
@@ -155,7 +155,8 @@ and are written once there — FS-093.
 - **Licence relied on:** in pass-through, none of ours; each merchant uses
   its own shortcodes. For aggregation: the PSP licence (FS-031), or in the
   meantime a payment-facilitator agreement with a licensed gateway
-  provider — whether that covers it is FS-061.
+  provider — whether that covers it is FS-061. A processing partner that
+  settles to merchants under its own licence is a third route (FS-102).
 - **Cards:** card numbers never touch our systems. The acquirer's hosted
   payment page or tokenisation keeps us out of the cardholder-data
   environment. This is a design constraint that holds whichever acquirer
@@ -197,7 +198,8 @@ not a decision.
 
 ## 11 · Open questions
 
-FS-011, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094.
+FS-011, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094,
+FS-102.
 
 ## 12 · Sources
 
