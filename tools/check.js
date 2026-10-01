@@ -274,6 +274,29 @@ function checkPartners(root) {
   return failures;
 }
 
+// ── public ───────────────────────────────────────────────────────────────
+// Documents in docs/marketing/ go to prospects (FS-244). They may not carry
+// internal references: register ids, partner or decision ids, or paths
+// into this repository.
+const PUBLIC_DIR = path.join('docs', 'marketing');
+const INTERNAL = /\b(FS-\d{3}|PT-\d{2}|SD-\d{2}|[A-Z]{2}-\d{2})\b|REVIEW\.md|sources\/|clients\/|docs\/(modules|architecture|partners|decisions)/;
+
+function checkPublic(root) {
+  const dir = path.join(root, PUBLIC_DIR);
+  if (!fs.existsSync(dir)) return [];
+  const failures = [];
+  for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.md'))) {
+    const rel = path.join(PUBLIC_DIR, f);
+    const body = read(root, rel).replace(/^---\n[\s\S]*?\n---\n/, '');
+    const offset = read(root, rel).split('\n').length - body.split('\n').length;
+    body.split('\n').forEach((text, i) => {
+      const m = text.match(INTERNAL);
+      if (m) failures.push(fail('public', rel, i + 1 + offset, `internal reference "${m[0]}" in a public document`));
+    });
+  }
+  return failures;
+}
+
 // ── counts ───────────────────────────────────────────────────────────────
 function counts(root) {
   const tally = (xs) => xs.reduce((m, x) => ((m[x] = (m[x] || 0) + 1), m), {});
@@ -304,6 +327,7 @@ function runAll(root) {
     ...checkCapabilities(root),
     ...checkDiagrams(root, files),
     ...checkPartners(root),
+    ...checkPublic(root),
   ];
 }
 

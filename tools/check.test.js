@@ -182,3 +182,16 @@ test('assemble: a README without the rules section refuses rather than publishin
   const r = assembleWith((d) => patch(d, 'README.md', (t) => t.replace('## How to work here', '## Working notes')));
   assert.ok(r.error && /How to work here/.test(r.error.message));
 });
+
+const PORTFOLIO = path.join('docs', 'marketing', 'portfolio.md');
+
+test('public: a register id in a marketing document fails', () => {
+  const missing = ['FS', '001'].join('-');
+  const f = runWith((d) => patch(d, PORTFOLIO, (t) => `${t}\nSee ${missing}.\n`));
+  assert.deepStrictEqual(names(f), ['public']);
+});
+
+test('public: a capability id in a marketing document fails', () => {
+  const f = runWith((d) => patch(d, PORTFOLIO, (t) => `${t}\nAs in ${['CO', '01'].join('-')}.\n`));
+  assert.deepStrictEqual(names(f), ['public']);
+});
