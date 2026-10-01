@@ -232,6 +232,24 @@ SIM-swap check runs first. USSD works on any phone.
 
 *Maturity:* in design.
 
+### Business Suite, on Odoo — the ERP, connected
+
+For SMEs and fintechs without an ERP, and for Saccos, MFIs and banks that
+want their own back office in order. Dibon implements Odoo as an Odoo
+Ready Partner: CRM, helpdesk, accounting, e-signatures, a customer portal
+and campaigns. It comes already connected to the products: bank and
+mobile-money statements reconciled into the books, campaigns delivered
+through Dibon's messaging, and one sign-on across every system. An
+institution's customer accounts stay in its core; Odoo receives the daily
+totals for the general ledger.
+
+- CRM, helpdesk with SLAs, accounting and invoicing
+- Odoo Sign for agreements, mandates and consents
+- A customer portal for invoices, statements and tickets
+- Statements reconciled into accounting through SME Reconciliation
+- Campaigns and SMS through Dibon's messaging
+- Migration from spreadsheets or a previous system
+
 ---
 
 ## The platform underneath
@@ -264,7 +282,7 @@ the other services are in design.
 | An MFI | MFI | Credit bureaus; omni-channel |
 | A money-transfer operator or PSP | Reconciliation | Gateway; insights |
 | A fintech | Gateway | Reconciliation; Collect, through a partner bank |
-| An SME | SME Reconciliation | Gateway; escrow |
+| An SME | SME Reconciliation, or the Business Suite if there is no ERP yet | Gateway; escrow |
 
 ---
 
@@ -275,7 +293,7 @@ the other services are in design.
 | Mobile money | M-Pesa (Daraja), Airtel Money, T-Kash — integrated directly |
 | Banks | Bank APIs, statement files (MT940, CAMT.053, CSV), PesaLink |
 | Cards | Through acquirers and processors; card numbers never touch our systems |
-| ERP | Odoo first, then Zoho |
+| ERP | Odoo first, then Zoho; Odoo implemented by Dibon as an Odoo Ready Partner |
 | Identity | IPRS; document and liveness checks |
 | Credit bureaus | Every licensed bureau in Kenya |
 | Core banking | Your core, through an adapter; or Apache Fineract, hosted for you |

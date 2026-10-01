@@ -29,7 +29,7 @@ Draft, pending FS-034.
 | Layer | Contents |
 |---|---|
 | **Channels** | omni-channel — mobile apps, internet banking, USSD |
-| **Products** | collect · gateway · escrow · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) |
+| **Products** | collect · gateway · escrow · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) · business-suite (Odoo, implemented by Dibon) |
 | **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification) · messaging (SMS, WhatsApp, Telegram, app; transactional and campaigns) · rails · insights |
 | **Systems of record** | institution core / Fineract · Odoo · recon engine — §2 |
 

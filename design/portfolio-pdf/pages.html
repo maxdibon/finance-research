@@ -69,6 +69,7 @@ p { margin: 0 0 3mm; }
 .toc li { display: grid; grid-template-columns: 1fr 13mm; align-items: center; gap: 4mm; font: 600 11.5pt/1.2 var(--display); color: var(--aubergine); padding-bottom: 2.4mm; border-bottom: 0.3mm solid var(--line); }
 .toc li.sub { font: 500 10pt/1.2 var(--display); color: var(--muted); padding-left: 7mm; border-bottom: 0; padding-bottom: 0; }
 .toc .n { justify-self: end; width: 11mm; height: 7mm; display: grid; place-items: center; background: var(--amber); color: var(--aubergine); font: 700 9.5pt/1 var(--display); }
+.toc a { color: inherit; text-decoration: none; }
 .toc li.sub .n { background: transparent; color: var(--amber-text); box-shadow: inset 0 0 0 0.35mm var(--amber); width: 11mm; height: 6mm; font-size: 8.5pt; }
 
 /* Page 3 · who we are */
@@ -207,12 +208,12 @@ p { margin: 0 0 3mm; }
     <svg class="rule" viewBox="0 0 42 2.4" aria-hidden="true"><rect x="0" y="0" width="9" height="0.8" fill="#280430"/><rect x="0" y="1.6" width="9" height="0.8" fill="#280430"/><rect x="11.5" y="0" width="30.5" height="0.8" fill="#fbb236"/><rect x="11.5" y="1.6" width="30.5" height="0.8" fill="#fbb236"/></svg>
     <h2>Contents</h2>
     <ol class="toc">
-      <li>Who we are<span class="n">03</span></li>
-      <li>The problems we solve<span class="n">04</span></li>
-      <li>How we build<span class="n">05</span></li>
+      <li><a href="#p03">Who we are</a><a class="n" href="#p03">03</a></li>
+      <li><a href="#p04">The problems we solve</a><a class="n" href="#p04">04</a></li>
+      <li><a href="#p05">How we build</a><a class="n" href="#p05">05</a></li>
       <li>The platform at a glance<span class="n">06</span></li>
       <li>Products<span class="n">07</span></li>
-      <li class="sub">Kapu Collect<span class="n">07</span></li>
+      <li class="sub"><a href="#p07">Kapu Collect</a><a class="n" href="#p07">07</a></li>
       <li class="sub">Kapu Pay Gateway<span class="n">08</span></li>
       <li class="sub">Kapu Escrow<span class="n">09</span></li>
       <li class="sub">Kapu MFI<span class="n">10</span></li>
@@ -220,18 +221,19 @@ p { margin: 0 0 3mm; }
       <li class="sub">Reconciliation &amp; Observability<span class="n">12</span></li>
       <li class="sub">SME Reconciliation<span class="n">13</span></li>
       <li class="sub">Omni-channel banking<span class="n">14</span></li>
-      <li>Platform services<span class="n">15</span></li>
-      <li>Who it is for<span class="n">16</span></li>
-      <li>Integrations<span class="n">17</span></li>
-      <li>Deployment and security<span class="n">18</span></li>
-      <li>Working with us<span class="n">19</span></li>
+      <li>Business suite, on Odoo<span class="n">15</span></li>
+      <li>Platform services<span class="n">16</span></li>
+      <li>Who it is for<span class="n">17</span></li>
+      <li>Integrations<span class="n">18</span></li>
+      <li>Deployment and security<span class="n">19</span></li>
+      <li>Working with us<span class="n">20</span></li>
     </ol>
   </div>
   <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">02</span></footer>
 </section>
 
 <!-- 3 · Who we are -->
-<section class="page">
+<section class="page" id="p03">
   <svg class="lineart corner" viewBox="0 0 70 40" aria-hidden="true"><path d="M8 0 L 26 16 L 70 16"/><circle cx="54" cy="30" r="5"/></svg>
   <div class="content">
     <p class="eyebrow">Who we are</p>
@@ -278,7 +280,7 @@ p { margin: 0 0 3mm; }
 </section>
 
 <!-- 4 · The problems we solve -->
-<section class="page">
+<section class="page" id="p04">
   <svg class="lineart corner" viewBox="0 0 70 40" aria-hidden="true"><path d="M30 0 C 34 14, 52 20, 70 18"/><path d="M48 0 L 70 0"/></svg>
   <div class="content">
     <p class="eyebrow">The problems we solve</p>
@@ -316,7 +318,7 @@ p { margin: 0 0 3mm; }
 </section>
 
 <!-- 5 · How we build -->
-<section class="page">
+<section class="page" id="p05">
   <svg class="lineart corner" viewBox="0 0 70 40" aria-hidden="true"><path d="M70 6 L 44 6 L 30 20 L 0 20"/><path d="M40 40 a 12 12 0 0 1 24 0"/></svg>
   <div class="content">
     <p class="eyebrow">How we build</p>
@@ -359,7 +361,7 @@ p { margin: 0 0 3mm; }
 </section>
 
 <!-- 7 · Kapu Collect (sample product page) -->
-<section class="page">
+<section class="page" id="p07">
   <svg class="lineart corner" viewBox="0 0 70 40" aria-hidden="true"><path d="M22 0 C 26 16, 46 24, 70 22"/><path d="M52 34 L 70 34"/></svg>
   <div class="content">
     <p class="eyebrow">Products · 1 of 8</p>

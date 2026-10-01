@@ -248,3 +248,22 @@ its own entry.
 - **Costs (inferred):** amber fails contrast as text on white (1.8:1), so
   text uses a darkened amber; amber itself is for shapes, rules and fills
   only (FS-259).
+
+## FS-281 · Odoo as a business suite, not a shared service
+
+- **Chose:** a product module of its own, "Business Suite, on Odoo",
+  presented after the eight Dibon-built products.
+- **Argued against:** placing it among the shared services. Those are
+  Dibon's own building blocks that products call; Odoo is a third-party
+  product Dibon implements.
+- **Costs (inferred):** a services line with its own economics (Odoo
+  licences, implementation effort, upgrade maintenance), and partner-tier
+  obligations. In return: the portfolio covers the ERP, usually the fifth
+  partner a customer would otherwise need.
+
+## FS-288 · The portfolio PDF is digital only
+
+- **Chose:** digital distribution only.
+- **Costs (inferred):** no professional print run without rework (bleed,
+  CMYK). In return: clickable contents, RGB colours as designed, and no
+  print constraints on the layout.
