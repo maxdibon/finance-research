@@ -287,4 +287,4 @@ A row does not change status silently.
 | FS-276 | Claude | Proof points: the July deck had an "Our clients" page. Client names or logos need each client's permission; outcomes need a source. Without them the document asserts but never shows | OPEN | |
 | FS-277 | Claude | Illustrative screens must stay labelled as illustrative until real screenshots exist, and must not imitate operators' own interfaces or trademarks (no M-Pesa or Airtel look-alikes). Third-party marks named in text only | OPEN | Applied on page 7 |
 | FS-278 | Claude | Contact page: website, physical address, the contact role, and possibly a QR code to a demo request. None of these is in this repository except email and phone | OPEN | |
-| FS-279 | Claude | The 2025 compliance one-pager with the 10× pricing error (FS-016) should be withdrawn before this portfolio circulates beside it | OPEN | |
+| FS-279 | Claude | The undated compliance one-pager with the 10× pricing error (FS-016) should be withdrawn before this portfolio circulates beside it | OPEN | |
