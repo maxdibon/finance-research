@@ -16,20 +16,21 @@ docs/                the work. The only place we edit
   architecture.md    who holds what: the three authorities, the custody
                      line, ledger modes, feeds, hosting
   decisions.md       what each decision cost, and what was argued against
-  overview.md        the portfolio; links modules, restates nothing (to do)
+  partners.md        partner candidates, conversations, selection decisions
+  overview.md        the portfolio story; links modules, restates nothing
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
   packs/             one manifest per buyer type (to do)
   commercials/       parked (FS-024); the one home for prices later
 design/              look and feel: tokens, HTML/CSS template (to do)
-build/               generated HTML and PDF — git-ignored, never edited
+build/               generated: master.md; later HTML, PDF — git-ignored
 sources/             inputs as received — never edited
   dibon/             recon proposal, Kapu compliance one-pager
   kapu/              MFI PRD, 8 Jun 2026 meeting notes
   gatekeepr/         snapshots of GateKeepr briefs — git-ignored
   confidential/      client-specific documents — git-ignored
 clients/             real prospect and customer material — git-ignored
-tools/               check.js and its break tests
+tools/               check.js, assemble.js, and their break tests
 .githooks/           pre-commit: runs the checks
 ```
 
@@ -39,6 +40,7 @@ tools/               check.js and its break tests
 git config core.hooksPath .githooks   # once per clone
 node tools/check.js --counts          # every check, plus computed counts
 node --test tools/check.test.js       # breaks each check on purpose
+node tools/assemble.js                # builds build/master.md; refuses if a check fails
 ```
 
 The names check reads `sources/confidential/protected-names.txt`, which is

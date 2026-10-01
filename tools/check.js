@@ -223,6 +223,57 @@ function checkDiagrams(root, files) {
   return failures;
 }
 
+// ── partners ─────────────────────────────────────────────────────────────
+// docs/partners.md: candidates have a stage from the vocabulary; decisions
+// name only candidates, criteria and decisions that exist.
+const PARTNERS_FILE = path.join('docs', 'partners.md');
+const STAGES = ['Candidate', 'Contacted', 'In discussion', 'Onboarding', 'Live',
+  'Unconfirmed', 'Parked', 'Declined'];
+const DECISION_STATUSES = ['OPEN', 'DECIDED', 'PARKED'];
+
+function parsePartners(root) {
+  const out = { candidates: [], decisions: [], criteria: [] };
+  if (!fs.existsSync(path.join(root, PARTNERS_FILE))) return out;
+  read(root, PARTNERS_FILE).split('\n').forEach((text, i) => {
+    const cells = text.split('|').slice(1, -1).map((c) => c.trim());
+    if (!cells.length) return;
+    const row = { line: i + 1, id: cells[0], cells };
+    if (/^PT-\d{2}$/.test(cells[0])) out.candidates.push(row);
+    else if (/^SD-\d{2}$/.test(cells[0])) out.decisions.push(row);
+    else if (/^C\d+$/.test(cells[0])) out.criteria.push(row);
+  });
+  return out;
+}
+
+function checkPartners(root) {
+  const failures = [];
+  const { candidates, decisions, criteria } = parsePartners(root);
+  const f = (line, msg) => failures.push(fail('partners', PARTNERS_FILE, line, msg));
+  const sequence = (rows, prefix) => rows.forEach((r, i) => {
+    const want = `${prefix}-${String(i + 1).padStart(2, '0')}`;
+    if (r.id !== want) f(r.line, `${r.id} out of sequence; expected ${want}`);
+  });
+  sequence(candidates, 'PT');
+  sequence(decisions, 'SD');
+  for (const r of candidates) {
+    if (r.cells.length !== 11) f(r.line, `${r.id} has ${r.cells.length} cells; expected 11`);
+    if (!STAGES.includes(r.cells[6])) f(r.line, `${r.id} stage "${r.cells[6]}" not in ${STAGES.join('/')}`);
+    if (!r.cells[5]) f(r.line, `${r.id} has no Verified entry; write "None" if nothing is verified`);
+    if (!r.cells[7]) f(r.line, `${r.id} has no last event`);
+  }
+  const pt = new Set(candidates.map((r) => r.id));
+  const sd = new Set(decisions.map((r) => r.id));
+  const cr = new Set(criteria.map((r) => r.id));
+  for (const r of decisions) {
+    if (r.cells.length !== 7) f(r.line, `${r.id} has ${r.cells.length} cells; expected 7`);
+    for (const m of (r.cells[2] || '').matchAll(/PT-\d{2}/g)) if (!pt.has(m[0])) f(r.line, `${r.id} names ${m[0]}, which is not a candidate`);
+    for (const m of (r.cells[3] || '').matchAll(/C\d+/g)) if (!cr.has(m[0])) f(r.line, `${r.id} uses criterion ${m[0]}, which is not defined`);
+    for (const m of (r.cells[4] || '').matchAll(/SD-\d{2}/g)) if (!sd.has(m[0])) f(r.line, `${r.id} depends on ${m[0]}, which does not exist`);
+    if (!DECISION_STATUSES.includes(r.cells[5])) f(r.line, `${r.id} status "${r.cells[5]}" not in ${DECISION_STATUSES.join('/')}`);
+  }
+  return failures;
+}
+
 // ── counts ───────────────────────────────────────────────────────────────
 function counts(root) {
   const tally = (xs) => xs.reduce((m, x) => ((m[x] = (m[x] || 0) + 1), m), {});
@@ -231,9 +282,15 @@ function counts(root) {
   for (const file of moduleFiles(root)) {
     modules[path.basename(file, '.md')] = tally(capabilityRows(read(root, file)).map((r) => r.status));
   }
+  const p = parsePartners(root);
   return {
     register: { rows: rows.length, byStatus: tally(rows.map((r) => r.status)), byRaiser: tally(rows.map((r) => r.raisedBy)) },
     modules,
+    partners: {
+      candidates: p.candidates.length,
+      byStage: tally(p.candidates.map((r) => r.cells[6])),
+      decisions: tally(p.decisions.map((r) => r.cells[5])),
+    },
   };
 }
 
@@ -246,10 +303,11 @@ function runAll(root) {
     ...checkTemplate(root),
     ...checkCapabilities(root),
     ...checkDiagrams(root, files),
+    ...checkPartners(root),
   ];
 }
 
-module.exports = { runAll, counts };
+module.exports = { runAll, counts, moduleFiles };
 
 if (require.main === module) {
   const args = process.argv.slice(2);

@@ -29,7 +29,7 @@ Draft, pending FS-034.
 | Layer | Contents |
 |---|---|
 | **Channels** | omni-channel — mobile apps, internet banking, USSD |
-| **Products** | collect · gateway · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) |
+| **Products** | collect · gateway · escrow · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) |
 | **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · identity · notifications · rails · insights |
 | **Systems of record** | institution core / Fineract · Odoo · recon engine — §2 |
 
@@ -39,7 +39,7 @@ Draft, pending FS-034.
  +--------------------------------------------------------------------+
                                   |
  +--------------------------------------------------------------------+
- | PRODUCTS     collect . gateway . mfi . sacco . sme-recon           |
+ | PRODUCTS     collect . gateway . escrow . mfi . sacco . sme-recon  |
  +--------------------------------------------------------------------+
                                   |
  +--------------------------------------------------------------------+
@@ -129,6 +129,7 @@ whether we caused a payment.
 | sacco | Pass-through: the Sacco's own accounts | — |
 | sme-recon | Pass-through for matching; initiation for execution | FS-037 |
 | mandates (debit) | Initiation | FS-046 |
+| escrow | Initiation: the partner bank holds each escrow in its own sub-account; we instruct release on the agreed approvals | FS-107, FS-108 — if Dibon held the funds, it would be aggregation |
 
 **Rail and bank credentials stay on the server.** Channel apps ask our
 server, and our server calls the rail. Daraja keys, bank API credentials

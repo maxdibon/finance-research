@@ -122,3 +122,63 @@ test('diagrams: a long line in a fence with a language is not a diagram', () => 
   const f = runWith((d) => patch(d, 'README.md', (t) => `${t}\n\`\`\`bash\n${'x'.repeat(100)}\n\`\`\`\n`));
   assert.deepStrictEqual(f, []);
 });
+
+const PARTNERS = path.join('docs', 'partners.md');
+
+test('partners: a stage outside the vocabulary fails', () => {
+  const f = runWith((d) => patch(d, PARTNERS, (t) => t.replace(/(\| PT-07 \|(?:[^|]*\|){5}) Candidate \|/, '$1 Warm |')));
+  assert.deepStrictEqual(names(f), ['partners']);
+});
+
+test('partners: a decision naming a candidate that does not exist fails', () => {
+  const f = runWith((d) => patch(d, PARTNERS, (t) => t.replace('| SD-07 | Hosting partner | PT-01 |', '| SD-07 | Hosting partner | PT-99 |')));
+  assert.deepStrictEqual(names(f), ['partners']);
+});
+
+test('partners: an undefined criterion fails', () => {
+  const f = runWith((d) => patch(d, PARTNERS, (t) => t.replace('| PT-01 | C5 C11 |', '| PT-01 | C5 C42 |')));
+  assert.deepStrictEqual(names(f), ['partners']);
+});
+
+test('partners: a candidate out of sequence fails', () => {
+  const f = runWith((d) => patch(d, PARTNERS, (t) => t.replace('| PT-02 |', '| PT-03 |')));
+  assert.ok(names(f).includes('partners'));
+});
+
+// ── assemble ─────────────────────────────────────────────────────────────
+const { assemble } = require('./assemble');
+
+function assembleWith(edit) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-assemble-'));
+  for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
+  edit(dir);
+  try {
+    const { outFile } = assemble(dir);
+    return { text: fs.readFileSync(outFile, 'utf8') };
+  } catch (e) {
+    return { error: e };
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+test('assemble: refuses to build from failing sources', () => {
+  const missing = ['FS', '999'].join('-');
+  const r = assembleWith((d) => patch(d, 'README.md', (t) => `${t}\nSee ${missing}.\n`));
+  assert.ok(r.error && /checks failing/.test(r.error.message));
+});
+
+test('assemble: includes every module and a non-empty rules section', () => {
+  const r = assembleWith(() => {});
+  assert.ifError(r.error);
+  for (const f of fs.readdirSync(path.join(ROOT, 'docs', 'modules')).filter((x) => !x.startsWith('_'))) {
+    const title = fs.readFileSync(path.join(ROOT, 'docs', 'modules', f), 'utf8').match(/^# (.+)$/m)[1];
+    assert.ok(r.text.includes(`## ${title}`), `missing ${title}`);
+  }
+  assert.match(r.text, /### How to work here\n\n1\. /);
+});
+
+test('assemble: a README without the rules section refuses rather than publishing nothing', () => {
+  const r = assembleWith((d) => patch(d, 'README.md', (t) => t.replace('## How to work here', '## Working notes')));
+  assert.ok(r.error && /How to work here/.test(r.error.message));
+});
