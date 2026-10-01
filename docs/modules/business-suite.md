@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, messaging, sme-recon, mandates, insights]
 consumed_by: []
-review_ids: [FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292]
+review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292]
 last_reviewed: 2026-10-01
 ---
 
@@ -66,6 +66,7 @@ customer implementation is live.
 | BS-08 | For institutions with a core: the core's daily totals posted to Odoo's general ledger as summarised journal entries; customer accounts stay in the core | Planned | FS-290 | 2 |
 | BS-09 | Approvals inside Odoo for workflows that move no money; anything that moves money goes through the mandate engine | Planned | FS-145 | 1 |
 | BS-10 | Migration from spreadsheets or a previous accounting system, with a signed-off opening balance | Planned | FS-131 | 1 |
+| BS-11 | Managed Odoo hosting on OPA, Dibon's own Odoo management platform: instances, backups, staging, upgrades | Built | Owner, 2026-10-01 (FS-293); public site opa.dibon.co.ke. Liquid hosting planned | 1 |
 
 ## 4 · Where it sits
 
@@ -138,8 +139,8 @@ accounts, or a ledger of funds that a core already holds.
 - **Licensing:** Odoo Enterprise, per internal user. Portal users and
   external signers are not counted (FS-026). Whether the Enterprise
   Agreement limits serving internal work through them is open (FS-036).
-- **Hosting:** self-hosted on Liquid's Azure Stack keeps data in-country.
-  Odoo's own cloud hosts it abroad — FS-289.
+- **Hosting:** on OPA, hosted on Liquid's Azure Stack, so data stays
+  in-country (FS-289, FS-293).
 - **Data:** customers, invoices and tickets are Confidential. Signed
   documents may carry ID numbers, which are Restricted.
 
@@ -156,9 +157,10 @@ accounts, or a ledger of funds that a core already holds.
 
 ## 9 · Deployment
 
-Odoo Enterprise, self-hosted per customer on Liquid's Azure Stack
-(FS-032), or on the customer's premises. Odoo's own hosted editions are an
-option where the customer accepts data held abroad (FS-289).
+Odoo Enterprise, run and managed on **OPA**, Dibon's own Odoo management
+platform (BS-11), hosted locally on Liquid's Azure Stack (FS-289,
+FS-293). On a customer's premises where it requires. Odoo's own cloud is
+not the default: it holds data abroad.
 
 ## 10 · What it does not do
 
