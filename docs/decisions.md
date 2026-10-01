@@ -199,3 +199,17 @@ its own entry.
   possibly a cap on how many Saccos we serve (FS-179 to FS-181). Prudential
   returns move into launch scope (FS-184). In return: Dibon becomes the
   core, not a layer around someone else's.
+
+## FS-193, FS-194 · Access and identity split; Keycloak for access
+
+- **Chose:** two modules — access (who may log in and act) on Keycloak,
+  and identity (verifying who a person is). Keycloak subject to a spike on
+  tenancy and step-up.
+- **Argued against:** Ory, Zitadel (licence unchecked), Appwrite's
+  built-in login, and cloud identity services (outside the boundary)
+  (FS-196).
+- **Costs (inferred):** a Java service to run highly available, since its
+  outage stops every login; realm or organisation administration for
+  every institution; federation work per bank. In return: one login for
+  every system, step-up at the act, and FAPI profiles without building
+  them.

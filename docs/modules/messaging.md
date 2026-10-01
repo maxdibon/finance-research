@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
-depends_on: [identity]
+depends_on: [access]
 consumed_by: [mfi, sacco, gateway, escrow, mandates, recon-observability, sme-recon]
 review_ids: [FS-147, FS-148, FS-149, FS-150, FS-152, FS-153, FS-155, FS-156, FS-158, FS-159, FS-160, FS-161, FS-162, FS-163, FS-164, FS-165, FS-166]
 last_reviewed: 2026-10-01
@@ -80,7 +80,7 @@ clients break its terms (FS-152).
 
 ## 4 · Where it sits
 
-**Depends on:** identity (who a recipient is).
+**Depends on:** access (institutions' API and MCP clients).
 **Used by:** mfi (reminders), sacco, gateway (payment links), escrow (state
 changes), mandates (approval nudges, pre-debit notices),
 recon-observability (alerts to people), sme-recon.

@@ -30,7 +30,7 @@ Draft, pending FS-034.
 |---|---|
 | **Channels** | omni-channel — mobile apps, internet banking, USSD |
 | **Products** | collect · gateway · escrow · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) |
-| **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · identity · messaging (SMS, WhatsApp, Telegram, app; transactional and campaigns) · rails · insights |
+| **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification) · messaging (SMS, WhatsApp, Telegram, app; transactional and campaigns) · rails · insights |
 | **Systems of record** | institution core / Fineract · Odoo · recon engine — §2 |
 
 ```
@@ -43,8 +43,8 @@ Draft, pending FS-034.
  +--------------------------------------------------------------------+
                                   |
  +--------------------------------------------------------------------+
- | SHARED       recon-observability . mandates . crb . identity       |
- | SERVICES     messaging . rails . insights                          |
+ | SHARED       recon-observability . mandates . crb . access .       |
+ | SERVICES     identity . messaging . rails . insights               |
  +--------------------------------------------------------------------+
           |                       |                        |
  +------------------+   +-------------------+   +--------------------+

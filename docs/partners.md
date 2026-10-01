@@ -60,7 +60,7 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 | PT-17 | Ecobank | Bank, regional | Escrow, trust and settlement accounts across the footprint | KE UG TZ RW ZM ZW NG | None | Candidate | 2026-10-01: shortlisted by Claude | Assess with SD-04 | Commercial lead | FS-107, FS-112 |
 | PT-18 | NCBA | Bank — holds Dibon's own accounts | APIs and statement feeds for Dibon's accounts (Dibon as first customer); a possible partner bank later | KE | KE (Dibon is a customer) | Candidate | 2026-10-01: owner to request APIs and statement feeds | Send the request (Email 1) | Architect | FS-033, FS-125, FS-126 |
 | PT-19 | KCB | Bank — holds Dibon's own accounts | As PT-18 | KE (and its regional subsidiaries) | KE (Dibon is a customer) | Candidate | 2026-10-01: owner to request APIs and statement feeds | Send the request (Email 1) | Architect | FS-033, FS-125, FS-126 |
-| PT-20 | Meliora — Tiara gateway | Messaging partner | SMS outside Kenya; fallback route in Kenya | Not known | KE (current partner) | Live | 2026-10-01: Dibon is a current partner | Confirm which countries and channels Tiara covers | Architect | FS-148, FS-160 |
+| PT-20 | Meliora — Tiara gateway | Messaging partner; SMS gateway product | SMS outside Kenya; fallback route in Kenya; possibly a product to deploy rather than build | Not known | KE (current partner) | Live | 2026-10-01: product page read — enterprise SMS gateway, multi-operator routing, 14 deployments, SMS only | Confirm countries; ask whether Tiara can be licensed for our own deployment | Architect | FS-148, FS-160, FS-207 |
 | PT-21 | Africa's Talking | Messaging partner | SMS, and possibly USSD, outside Kenya | KE UG TZ RW ZM NG | None | Candidate | 2026-10-01: named by the owner | Verify coverage and sender-ID support per country | Architect | FS-160 |
 | PT-22 | Safaricom — SMS (SMPP) | Operator, messaging | Direct A2P SMS in Kenya under our PRSP licence | KE | KE (operator) | Candidate | 2026-10-01: direct connection decided | Request an SMPP bind and sender-ID registration | Architect | FS-160 |
 | PT-23 | Airtel — SMS (SMPP) | Operator, messaging | As PT-22 | KE | KE (operator) | Candidate | 2026-10-01: direct connection decided | As PT-22 | Architect | FS-160 |
@@ -69,6 +69,8 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 | PT-26 | Metropol | Credit reference bureau | Submission and lookups | KE | None | Candidate | 2026-10-01: CRB module written | Obtain formats, API and subscriber terms (FS-187) | Architect | FS-186, FS-187 |
 | PT-27 | TransUnion Kenya | Credit reference bureau | As PT-26 | KE | None | Candidate | 2026-10-01: CRB module written | As PT-26 | Architect | FS-186, FS-187 |
 | PT-28 | Creditinfo Kenya | Credit reference bureau | As PT-26 | KE | None | Candidate | 2026-10-01: CRB module written | As PT-26 | Architect | FS-186, FS-187 |
+| PT-29 | IPRS — National Registration Bureau | Government register | Identity lookups in Kenya | KE | KE (government) | Onboarding | 2026-06-08: integration not final | Confirm who holds the access agreement (FS-202) | Product lead | FS-088, FS-202 |
+| PT-30 | Smile ID | Identity verification vendor | Liveness, face match, document checks | Pan-African | None | Candidate | 2026-10-01: shortlisted by Claude | Verify coverage, data residency and licence terms | Architect | FS-204 |
 
 ---
 
@@ -89,6 +91,7 @@ Statuses: **OPEN** · **DECIDED** (recorded in docs/decisions.md) ·
 | SD-08 | SMS route per country | PT-20, PT-21, PT-22, PT-23, PT-24 | C4 C5 C12 C13 | — | OPEN | Kenya: direct to the operators (FS-160), with a partner as fallback. Elsewhere: a partner until volume justifies a licence and direct binds |
 | SD-09 | WhatsApp route: Meta directly, or a business solution provider | PT-25, PT-20, PT-21 | C4 C5 C7 | — | OPEN | FS-161 |
 | SD-10 | CRB connections | PT-26, PT-27, PT-28 | C1 C2 C4 C5 C7 | — | OPEN | Proposed: connect to every licensed bureau, not one. Lenders may be required to share with all of them |
+| SD-11 | Liveness and face-match vendor | PT-30 | C4 C5 C7 | — | OPEN | Biometric data: residency and retention weigh most (FS-203). One candidate so far |
 
 ## 3 · Criteria
 
