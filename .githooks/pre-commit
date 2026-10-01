@@ -1,0 +1,7 @@
+#!/bin/sh
+# Runs the document checks before every commit (FS-074).
+# Enable once per clone:  git config core.hooksPath .githooks
+node tools/check.js || {
+  echo "pre-commit: checks failed; nothing committed. Fix, or see tools/check.js."
+  exit 1
+}

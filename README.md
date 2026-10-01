@@ -15,6 +15,7 @@ REVIEW.md            the intake register — every point raised, with an id
 docs/                the work. The only place we edit
   architecture.md    who holds what: the three authorities, the custody
                      line, ledger modes, feeds, hosting
+  decisions.md       what each decision cost, and what was argued against
   overview.md        the portfolio; links modules, restates nothing (to do)
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
@@ -28,7 +29,21 @@ sources/             inputs as received — never edited
   gatekeepr/         snapshots of GateKeepr briefs — git-ignored
   confidential/      client-specific documents — git-ignored
 clients/             real prospect and customer material — git-ignored
+tools/               check.js and its break tests
+.githooks/           pre-commit: runs the checks
 ```
+
+## Checks
+
+```bash
+git config core.hooksPath .githooks   # once per clone
+node tools/check.js --counts          # every check, plus computed counts
+node --test tools/check.test.js       # breaks each check on purpose
+```
+
+The names check reads `sources/confidential/protected-names.txt`, which is
+not tracked. **Without that file the check fails rather than passing** — a
+fresh clone needs the list before it can commit.
 
 ## How to work here
 
