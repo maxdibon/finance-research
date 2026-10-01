@@ -101,7 +101,7 @@ A row does not change status silently.
 | FS-090 | Claude | Merchant onboarding and KYB checks are specified nowhere. An aggregator needs them before its first merchant | OPEN | |
 | FS-091 | Claude | No card acquirer is chosen. Whichever is chosen, card numbers must not touch our systems (hosted page or tokenisation) | OPEN | gateway §7 |
 | FS-092 | Claude | Gateway deployment is not stated. Inferred: a multi-tenant service we operate on Liquid's Azure Stack, unlike Collect, which runs inside an institution | OPEN | An inference, not a decision |
-| FS-093 | Claude | Collect and Gateway share the rail integrations. They belong in the rails module, written once | OPEN | |
+| FS-093 | Claude | Collect and Gateway share the rail integrations. They belong in the rails module, written once | ANSWERED | docs/modules/rails.md |
 | FS-094 | Claude | The commercially attractive mode (aggregation, for merchants with no shortcode of their own) is the regulated one. The Gateway's business case and the PSP licence are coupled | OPEN | Belongs with the business-model work (FS-024) |
 | FS-095 | Eric | Does recon-observability cover the SME use case? | ANSWERED | The engine does; the product does not. sme-recon runs on the same engine behind an ERP, matching against invoices and expenses instead of a ledger. recon-observability.md §4 |
 | FS-096 | Eric | Consider working with payment-processing partners, such as Paystack and the gateway provider from 8 Jun | OPEN | FS-102 |
@@ -216,3 +216,8 @@ A row does not change status silently.
 | FS-205 | Claude | Whether the tax authority's PIN check, the business registration service, and operators' name lookups are available by API to us | OPEN | To verify |
 | FS-206 | Claude | Granting a role in Keycloak changes who may approve money. Role grants need a second person's approval, as mandate changes do (FS-144) | OPEN | access.md §8 |
 | FS-207 | Claude | Correction: Meliora's page was reported as unreadable because it renders in JavaScript. The built-in browser read it on the first try and should have been used then. Tiara is an enterprise SMS gateway: several applications connect, traffic routes to several operators with delivery-guarantee schemes, plus bulk campaigns, ad riders and customer-experience surveys; 14 deployments; SMS only on that page | ANSWERED | partners.md PT-20 updated. Tiara is a product we could deploy, which bears on build-versus-partner for the Kenya gateway (FS-160) |
+| FS-208 | Claude | The rail adapter interface needs a specification: operations, the normalised event, error and pending semantics, idempotency. It is what every product codes against | OPEN | Proposed next design artefact for rails |
+| FS-209 | Claude | How each rail authenticates its callbacks: signatures, fixed source addresses, mutual TLS, or nothing. Where nothing, a status query confirms before the event is final | OPEN | To verify per rail; not from memory |
+| FS-210 | Claude | SASRA's 2023 letter, as reported, says Saccos and vendors integrating with M-Pesa operate under an umbrella fraud detection provider. Who that is, and what joining requires | OPEN | Bears on sacco and on FS-179 |
+| FS-211 | Claude | A simulator per rail that can produce every outcome, including a callback that never arrives. The prospect demo's best moment depends on that case | OPEN | |
+| FS-212 | Claude | RTGS and bank clearing are reached through banks' APIs, not directly; Dibon is not a bank participant | OPEN | Confirm |

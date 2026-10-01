@@ -79,7 +79,8 @@ own payments first, and insights runs on our own data first (FS-033).
 - [CRB](modules/crb.md) — submissions to, and lookups from, every licensed bureau
 - [Access](modules/access.md) — login, roles and step-up, on Keycloak
 - [Identity](modules/identity.md) — verifying who a person or business is
-- Rails, insights *(modules to
+- [Rails](modules/rails.md) — every payment-rail and bank connection, behind one interface
+- Insights *(module to
   write)*
 
 **Channels**
