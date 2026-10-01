@@ -225,3 +225,14 @@ its own entry.
   source means publishing it to their network users, so patches wait for
   upstream. In return: the Grafana stack the proposal and the Kapu
   documentation already assume.
+
+## FS-230 · Superset for dashboards
+
+- **Chose:** Apache Superset (Apache-2.0, Apache Software Foundation).
+- **Argued against:** Metabase. Its open-source edition is AGPL-3.0, which
+  FS-223 now allows. Its fuller features, including natural-language
+  ones, sit in paid editions (FS-231 — the accurate reason; the owner's
+  shorthand was "licensed").
+- **Costs (inferred):** Superset is harder for business users to build
+  their own questions in. Natural-language questions come from our own
+  insights layer, not from the dashboard tool.

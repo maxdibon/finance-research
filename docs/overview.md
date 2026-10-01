@@ -84,8 +84,7 @@ own payments first, and insights runs on our own data first (FS-033).
 
 **Channels**
 
-- Omni-channel banking: mobile apps, internet banking, USSD *(module to
-  write)*
+- [Omni-channel](modules/omni-channel.md) — mobile apps, internet banking and USSD
 
 ## How to read the rest
 

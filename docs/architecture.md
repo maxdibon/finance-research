@@ -239,8 +239,8 @@ Decided 2026-10-01 (FS-223):
 | AGPL-3.0 | Yes, **for services run unmodified and separately** | We do not change their source, and we do not link them into our code. A change to an AGPL service's source is a decision that triggers publishing that source to its network users, so it is never made in passing |
 | GPL, LGPL, SSPL, and anything unlisted | Not without a decision | Recorded in docs/decisions.md |
 
-Today's AGPL services: Grafana, Loki and Tempo (observability), and
-Metabase if insights chooses it. **CNCF projects are Apache-2.0**, so they
+Today's AGPL services: Grafana, Loki and Tempo (observability). Insights
+uses Superset, which is Apache-2.0 (FS-230). **CNCF projects are Apache-2.0**, so they
 are the default where they fit (FS-217).
 
 ---

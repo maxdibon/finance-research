@@ -234,7 +234,16 @@ A row does not change status silently.
 | FS-223 | Eric | Allow unmodified AGPL services | DECIDED | docs/architecture.md §6.1: AGPL-3.0 allowed for services run unmodified and separately; a source change is a decision |
 | FS-224 | Eric | Go ahead with insights on the proposed path | DECIDED | docs/modules/insights.md |
 | FS-225 | Claude | Semantic layer: Cube or dbt's semantic layer. Licences to confirm; Cube Core is Apache-2.0 from memory | OPEN | For a spike |
-| FS-226 | Claude | Dashboards: Superset (Apache-2.0) or Metabase (AGPL-3.0, now allowed by FS-223). Metabase is easier for business users; Superset is more flexible | OPEN | For a spike |
+| FS-226 | Claude | Dashboards: Superset (Apache-2.0) or Metabase (AGPL-3.0, now allowed by FS-223). Metabase is easier for business users; Superset is more flexible | DECIDED | Superset (FS-230) |
 | FS-227 | Claude | Which open-weight model, sized to the GPUs Liquid can provide | OPEN | Depends on FS-048 |
 | FS-228 | Claude | The analytical store for the copies: a Postgres replica, or a column store such as ClickHouse (Apache-2.0) | OPEN | |
 | FS-229 | Claude | The insights evaluation set: questions with known answers, per product, run on every change and broken on purpose | OPEN | IN-13 |
+| FS-230 | Eric | Superset for dashboards, because it is fully open source while Metabase is licensed | DECIDED | insights IN-04 |
+| FS-231 | Claude | On the reason: Metabase's open-source edition is open source too (AGPL-3.0), and its fuller features sit in paid editions. Superset is Apache-2.0 under the Apache Software Foundation, with no paid edition holding features back. The decision stands; the record should carry the accurate reason | ANSWERED | Recorded in docs/decisions.md |
+| FS-232 | Claude | One white-labelled app per institution, published under its name, or one Dibon app that members of many institutions use? Branding, store accounts and lending-app rules differ | OPEN | |
+| FS-233 | Claude | USSD: codes come from the Communications Authority and each operator. Whether Dibon's PRSP licence covers USSD, and what each operator charges and requires | OPEN | With FS-160 |
+| FS-234 | Claude | SIM-swap checks: which operators offer them by API, and on what terms. SIM swap is a common route to mobile-money fraud | OPEN | To verify |
+| FS-235 | Claude | App framework. Flutter is a candidate: one codebase for Android, iOS and web, and Dibon's GateKeepr work already uses it | OPEN | |
+| FS-236 | Claude | Google Play's rules for lending apps in Kenya may require proof of the lender's licence. Sacco and MFI apps are lending apps | OPEN | To verify against current Play policy |
+| FS-237 | Claude | Omni-channel is the first module with screens, so it is where a drawn screen reference starts (FS-075): no screen built without a drawing, updated in the same change | OPEN | Proposed: the next design artefact |
+| FS-238 | Claude | The app backend: Appwrite behind Keycloak, or our own channel API service. Decided after the spike in FS-168 | OPEN | |

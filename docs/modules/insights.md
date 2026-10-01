@@ -58,7 +58,7 @@ number, traceable to a transaction.
 | IN-01 | Dibon first: Odoo 20's MCP server, read-only, for our own CRM, helpdesk and sales data, one API key per person | Planned | FS-151, FS-156, FS-220 | 1 |
 | IN-02 | Semantic layer: every metric defined once, with its owner, its source authority and its grain | Planned | FS-006, FS-220 — FS-225 | 2 |
 | IN-03 | Analytical copies of the three authorities, read-only and stamped with how fresh they are | Planned | docs/architecture.md §2 — FS-228 | 2 |
-| IN-04 | Dashboards per product, built only on semantic-layer metrics | Planned | FS-220 — FS-226 | 2 |
+| IN-04 | Dashboards per product in Apache Superset, built only on semantic-layer metrics | Planned | FS-220, FS-230 | 2 |
 | IN-05 | Natural-language questions answered only through the semantic layer; each answer shows the definition, the query and the freshness | Planned | FS-006 | 2 |
 | IN-06 | "Cannot answer from governed metrics" as an answer, with the nearest metric that exists | Planned | GateKeepr STANDARDS.md §6, carried over | 2 |
 | IN-07 | An MCP server over the semantic layer, for institutions' AI clients | Planned | FS-159 | 2 |
@@ -149,8 +149,8 @@ authority would need to correct here as well as at home.
 - **Profiling:** questions about named individuals, such as a member's
   history, are personal data processing. They run under the asker's
   access and are logged.
-- **Licences:** if Metabase is chosen, it is AGPL-3.0, run unmodified
-  (docs/architecture.md §6.1).
+- **Licences:** Superset is Apache-2.0 (FS-230). No AGPL component in
+  insights today (docs/architecture.md §6.1).
 - **Data:** answers inherit the class of the data behind them.
 
 ## 8 · Controls
