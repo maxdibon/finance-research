@@ -335,3 +335,4 @@ A row does not change status silently.
 | FS-324 | Claude | FS-305 was applied to the page text but missed in the omni-channel diagram: its caption, printed on the page, and its alt text still promised a SIM-swap check without "where the operator offers one" | ANSWERED | design/portfolio-preview/figures.js |
 | FS-325 | Eric | Cover: use the d from the Dibon logo | DECIDED | The hand-drawn D in the cover illustration's hexagon is replaced by the script d, cropped from design/brand/dibon_logo_white.png at x 0–416 (the stub of its stroke into the i is kept). No new image file |
 | FS-326 | Eric | Page 3 values: "a client-centric approach" becomes "customer-centricity" | DECIDED | design/portfolio-pdf/pages.html. The values appear nowhere else in the docs |
+| FS-327 | Eric | Cover: make the d in the hexagon a little smaller for a cleaner fit | DECIDED | Scaled from 9.6 to 8.0 units wide (about 83%), centred on the hexagon's centre |
