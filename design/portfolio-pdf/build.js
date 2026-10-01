@@ -5,7 +5,8 @@
 //
 // Output goes to build/portfolio/, which git ignores. The logo is the
 // 1000-pixel transparent original extracted from Dibon's own July proposal
-// (design/brand/extract-logo.js). Diagrams come from the same script as the
+// (design/brand/extract-logo.js). Pages 6 and 8 to 20 come from pages-rest.js.
+// Diagrams come from the same script as the
 // web preview, so the two never draw a product differently. Headless Chrome
 // prints the pages to A4.
 
@@ -24,11 +25,17 @@ const CHROME = [
 if (!CHROME) throw new Error('No Chrome or Edge found for headless printing');
 
 const { F } = require(path.join(ROOT, 'design', 'portfolio-preview', 'figures.js'));
+const { rest, CSS } = require(path.join(__dirname, 'pages-rest.js'));
+const R = rest({ F });
 const logo = `data:image/png;base64,${fs.readFileSync(path.join(ROOT, 'design', 'brand', 'dibon_logo_white.png')).toString('base64')}`;
 
 const html = fs.readFileSync(path.join(__dirname, 'pages.html'), 'utf8')
   .split('__LOGO__').join(logo)
-  .split('__FIG_COLLECT__').join(F['Kapu Collect']);
+  .split('__REST_CSS__').join(CSS)
+  .split('__PAGE_06__').join(R.page06)
+  .split('__PAGES_08_20__').join(R.pages0820)
+  .split('__FIG_COLLECT__').join(F['Kapu Collect'])
+  .split('__LOGO__').join(logo);
 const left = html.match(/__[A-Z_]+__/);
 if (left) throw new Error(`unfilled placeholder ${left[0]}`);
 
