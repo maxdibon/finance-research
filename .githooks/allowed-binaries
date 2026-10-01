@@ -1,0 +1,7 @@
+# Binary files that may be committed, one path per line (FS-245).
+# Anything else binary is refused by .githooks/pre-commit. Add a path here
+# only after checking the file is Dibon's own and names no client.
+sources/dibon/Automated Channels Reconciliation And Exception Handling System.pdf
+sources/dibon/Kapu Pay Compliance Solutions (1).pdf
+sources/kapu/kapu-pay-mfi-prd-section.pdf
+design/brand/dibon_logo.png

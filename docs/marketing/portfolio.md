@@ -17,7 +17,7 @@ money — and need to prove where every shilling went.**
 
 ## Who we are
 
-Dibon designs and builds software for banks, Saccos, microfinance
+Dibon Consulting designs and builds software for banks, Saccos, microfinance
 institutions, payment providers and the businesses that work with them.
 We are a technology partner, not a single product. Payments,
 deposit-taking, lending, escrow and reconciliation come together with
@@ -318,4 +318,4 @@ the other services are in design.
 
 ## Contact
 
-**Dibon** · info@dibon.co.ke · +254 792 745 509
+**Dibon Consulting** · info@dibon.co.ke · +254 792 745 509

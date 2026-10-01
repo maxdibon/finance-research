@@ -1,6 +1,23 @@
 #!/bin/sh
-# Runs the document checks before every commit (FS-074).
+# Runs before every commit (FS-074, FS-245).
 # Enable once per clone:  git config core.hooksPath .githooks
+
+# 1. Binary files only from the allow-list. A client's PDF was once swept in
+#    by "git add -A"; the names check cannot read PDFs, so this guard does.
+allowed=".githooks/allowed-binaries"
+bad=0
+git diff --cached --name-only --diff-filter=AM -z | while IFS= read -r -d '' f; do
+  case "$f" in
+    *.pdf|*.PDF|*.png|*.jpg|*.jpeg|*.gif|*.docx|*.xlsx|*.pptx|*.zip|*.txt.gz)
+      if ! grep -Fxq -- "$f" "$allowed"; then
+        echo "pre-commit: binary file not on $allowed: $f"
+        exit 1
+      fi ;;
+  esac
+done || bad=1
+[ "$bad" -eq 0 ] || { echo "pre-commit: nothing committed."; exit 1; }
+
+# 2. The document checks.
 node tools/check.js || {
   echo "pre-commit: checks failed; nothing committed. Fix, or see tools/check.js."
   exit 1
