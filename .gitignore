@@ -6,8 +6,6 @@ clients/
 
 # Confidential source documents (FS-015, FS-069).
 sources/confidential/
-# Until it can be moved into sources/confidential/ — it was locked at move time.
-/Kapu Pay Technical Documentation.pdf
 
 # GateKeepr documents are snapshots. Their authoritative copies live in the
 # GateKeepr repository, and they name a real estate and its correspondence.
