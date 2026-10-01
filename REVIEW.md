@@ -96,3 +96,10 @@ A row does not change status silently.
 | FS-085 | Claude | The prospect name FlexMoney appears in FS-011, FS-012 and FS-069. It is not on the protected list, because the owner uses it in conversation | OPEN | Confirm whether prospect names belong in the register |
 | FS-086 | Eric | At what point should the Markdown version of the Master be built? | OPEN | FS-087 |
 | FS-087 | Claude | Proposal: docs/ already is the reference, spread across files. Don't hand-write a single master.md, because it would restate the modules. At three modules, write overview.md (links only) and generate build/master.md from docs/ with a contents list and computed counts. It becomes a Master in the building-a-master sense only when something built is checked against it, e.g. the Kapu API spec against Collect §3 | OPEN | Proposed in reply |
+| FS-088 | Claude | The MFI PRD calls the Daraja, Airtel Money, PesaLink and IPRS integrations "existing". The 8 Jun meeting lists the Safaricom go-live, the PesaLink trust accounts and IPRS as outstanding. Which is true decides several statuses in collect, gateway and mfi | OPEN | Overlaps FS-052 |
+| FS-089 | Claude | Are payouts (refunds, disbursements to a merchant's customers) part of the Gateway? No source says | OPEN | gateway GW-11 |
+| FS-090 | Claude | Merchant onboarding and KYB checks are specified nowhere. An aggregator needs them before its first merchant | OPEN | |
+| FS-091 | Claude | No card acquirer is chosen. Whichever is chosen, card numbers must not touch our systems (hosted page or tokenisation) | OPEN | gateway §7 |
+| FS-092 | Claude | Gateway deployment is not stated. Inferred: a multi-tenant service we operate on Liquid's Azure Stack, unlike Collect, which runs inside an institution | OPEN | An inference, not a decision |
+| FS-093 | Claude | Collect and Gateway share the rail integrations. They belong in the rails module, written once | OPEN | |
+| FS-094 | Claude | The commercially attractive mode (aggregation, for merchants with no shortcode of their own) is the regulated one. The Gateway's business case and the PSP licence are coupled | OPEN | Belongs with the business-model work (FS-024) |
