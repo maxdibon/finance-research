@@ -6,9 +6,9 @@
 // Output goes to build/portfolio/, which git ignores. The logo is the
 // 1000-pixel transparent original extracted from Dibon's own July proposal
 // (design/brand/extract-logo.js). Pages 6 and 8 onwards come from
-// pages-rest.js. Diagrams come from the same script as the web preview, so
-// the two never draw a product differently. Headless Chrome prints the pages
-// to A4.
+// pages-rest.js, and the diagrams from design/portfolio-preview/figures.js.
+// Headless Chrome prints the pages to A4. The same pages, scaled to the
+// screen, become the web preview (build/portfolio/portfolio-web.html).
 
 'use strict';
 
@@ -64,3 +64,44 @@ try {
   fs.renameSync(tmp, alt);
   console.log(`${path.basename(pdfOut)} is locked (open in a viewer?); wrote ${path.relative(ROOT, alt)} instead`);
 }
+
+// The web preview is the same pages, laid out as sheets and scaled to the
+// screen, so it cannot drift from the PDF (FS-323). The artifact host adds
+// the document skeleton, so this keeps only the head's links and styles and
+// the body's pages.
+const between = (s, a, b) => s.slice(s.indexOf(a) + a.length, s.indexOf(b));
+const head = between(html, '<head>', '</head>')
+  .replace(/<meta[^>]*>\s*/g, '')
+  .replace(/<title>[^<]*<\/title>/, '<title>Dibon Financial Services</title>');
+const pages = (html.match(/<section class="page/g) || []).length;
+const SCREEN = `<style>
+/* Screen only: the PDF's sheets on a desk, scaled to fit the width. The sheets keep their print colours in both themes; the desk follows the viewer's. */
+:root { --desk: #eee4e3; --desk-ink: #4f3d55; --sheet-shadow: 0 1px 2px rgba(40, 4, 48, 0.14), 0 10px 28px rgba(40, 4, 48, 0.10); --fit: 1; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --desk: #170a1b; --desk-ink: #cdbcd2; --sheet-shadow: 0 10px 30px rgba(0, 0, 0, 0.55); color-scheme: dark; } }
+:root[data-theme="dark"] { --desk: #170a1b; --desk-ink: #cdbcd2; --sheet-shadow: 0 10px 30px rgba(0, 0, 0, 0.55); color-scheme: dark; }
+@media screen {
+  html, body { background: var(--desk); }
+  body { padding-block: 24px 40px; padding-inline: 16px; }
+  .desk-head { width: calc(793.7px * var(--fit)); max-width: 100%; margin: 0 auto 14px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; font: 600 11px/1.4 var(--display); letter-spacing: 0.1em; text-transform: uppercase; color: var(--desk-ink); }
+  .page { margin: 0 auto 24px; box-shadow: var(--sheet-shadow); zoom: var(--fit); }
+}
+</style>`;
+const FIT = `<script>
+(function () {
+  var root = document.documentElement;
+  function fit() {
+    var cs = getComputedStyle(document.body);
+    var room = document.body.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    root.style.setProperty('--fit', Math.min(1, room / 793.7).toFixed(4));
+  }
+  fit();
+  addEventListener('resize', fit);
+})();
+</script>`;
+const web = `${head}${SCREEN}
+<header class="desk-head"><span>Dibon Financial Services · Review draft</span><span>${pages} pages, the same as the PDF</span></header>
+${between(html, '<body>', '</body>')}${FIT}
+`;
+const webOut = path.join(OUT, 'portfolio-web.html');
+fs.writeFileSync(webOut, web);
+console.log(`built ${path.relative(ROOT, webOut)} (${pages} pages)`);
