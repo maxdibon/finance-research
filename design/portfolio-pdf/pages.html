@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dibon Consulting — Financial Services Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Print layout: A4 pages in the Dibon deck's frame. Amber is the brand accent; green appears only as money in diagrams. */
+@page { size: A4; margin: 0; }
+:root {
+  --aubergine: #280430; --plum: #460d4d; --amber: #fbb236; --cream: #fff2eb;
+  --paper: #fffaf6; --ink: #23122a; --muted: #5e4c66; --line: #ead9dc;
+  --amber-text: #8a5a00; --money: #0e7f5a; --money-bg: #e2f3ec;
+  --display: "Montserrat", "Segoe UI", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #ffffff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font: 400 10.5pt/1.5 var(--body); color: var(--ink); }
+
+.page { width: 210mm; height: 297mm; position: relative; overflow: hidden; background: var(--paper); break-after: page; }
+.page:last-child { break-after: auto; }
+.content { position: absolute; left: 18mm; right: 18mm; top: 26mm; bottom: 34mm; }
+
+/* Frame: corner line-art, heading rule, footer band */
+.lineart { position: absolute; fill: none; stroke: var(--amber); stroke-width: 1.6; }
+.corner { top: 0; right: 0; width: 70mm; height: 40mm; }
+.footer { position: absolute; left: 0; right: 0; bottom: 0; height: 22mm; background: var(--aubergine); display: flex; align-items: center; padding-left: 14mm; }
+.footer .brand img { height: 9mm; }
+.footer .wordmark { font: 700 6.5pt/1.2 var(--display); letter-spacing: 0.22em; color: var(--cream); text-transform: uppercase; margin-left: 3mm; }
+.footer .draft { margin-left: auto; margin-right: 44mm; font: 600 6.5pt/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: #cdb3c9; }
+.footer::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 38mm; background: var(--amber); clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%); }
+.footer .num { position: absolute; right: 9mm; z-index: 1; font: 700 11pt/1 var(--display); color: var(--aubergine); }
+.brand { display: flex; align-items: center; }
+
+.rule { display: block; width: 42mm; height: 2.4mm; margin-bottom: 4mm; }
+h1, h2, h3 { font-family: var(--display); color: var(--aubergine); margin: 0; }
+h2 { font-weight: 800; font-size: 25pt; line-height: 1.1; margin-bottom: 5mm; max-width: 174mm; text-wrap: balance; }
+h3 { font-weight: 700; font-size: 11.5pt; line-height: 1.25; }
+.eyebrow { font: 700 7.5pt/1 var(--display); letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-text); margin: 0 0 3mm; }
+.lede { font-size: 12pt; line-height: 1.5; color: var(--ink); max-width: 160mm; margin: 0 0 6mm; }
+p { margin: 0 0 3mm; }
+.ico { fill: none; stroke: var(--plum); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Page 1 · cover */
+.cover { background: var(--aubergine); color: var(--cream); }
+.cover .art { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cover .art path, .cover .art circle { fill: none; stroke: var(--amber); stroke-width: 1.4; }
+.cover .art .faint { stroke: #6b2a75; }
+.cover .top { position: absolute; left: 20mm; top: 22mm; display: flex; align-items: center; }
+.cover .top img { height: 17mm; }
+.cover .top .wordmark { font: 700 8.5pt/1.25 var(--display); letter-spacing: 0.24em; text-transform: uppercase; color: var(--cream); margin-left: 4mm; }
+.cover .title { position: absolute; left: 20mm; right: 20mm; top: 108mm; }
+.cover .kicker { font: 700 9pt/1 var(--display); letter-spacing: 0.22em; text-transform: uppercase; color: var(--amber); margin-bottom: 7mm; }
+.cover h1 { color: var(--cream); font-weight: 800; font-size: 44pt; line-height: 1.02; letter-spacing: -0.01em; max-width: 150mm; }
+.cover h1 span { color: var(--amber); }
+.cover .sub { font: 400 14pt/1.45 var(--body); color: #f0dfe6; max-width: 130mm; margin-top: 8mm; }
+.cover .lineup { position: absolute; left: 20mm; right: 64mm; bottom: 24mm; display: flex; flex-wrap: wrap; row-gap: 1mm; font: 600 8pt/1.6 var(--display); letter-spacing: 0.06em; color: var(--cream); }
+.cover .lineup b { flex-basis: 100%; font-weight: 700; font-size: 7pt; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 1.5mm; }
+.cover .lineup span { white-space: nowrap; }
+.cover .lineup span { margin-right: 4.5mm; display: inline-flex; align-items: center; }
+.cover .lineup span::before { content: ""; width: 1.3mm; height: 1.3mm; background: var(--amber); margin-right: 1.8mm; }
+.cover::after { content: ""; position: absolute; right: 0; bottom: 0; width: 62mm; height: 38mm; background: var(--amber); clip-path: polygon(45% 0, 100% 0, 100% 100%, 0 100%); }
+
+/* Page 2 · contents */
+.toc { list-style: none; padding: 0; margin: 6mm 0 0; display: grid; gap: 2.4mm; max-width: 150mm; }
+.toc li { display: grid; grid-template-columns: 1fr 13mm; align-items: center; gap: 4mm; font: 600 11.5pt/1.2 var(--display); color: var(--aubergine); padding-bottom: 2.4mm; border-bottom: 0.3mm solid var(--line); }
+.toc li.sub { font: 500 10pt/1.2 var(--display); color: var(--muted); padding-left: 7mm; border-bottom: 0; padding-bottom: 0; }
+.toc .n { justify-self: end; width: 11mm; height: 7mm; display: grid; place-items: center; background: var(--amber); color: var(--aubergine); font: 700 9.5pt/1 var(--display); }
+.toc li.sub .n { background: transparent; color: var(--amber-text); width: auto; height: auto; }
+
+/* Page 3 · who we are */
+.mvv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin: 2mm 0 7mm; }
+.mvv > div { background: var(--aubergine); color: var(--cream); padding: 5mm 5mm 5.5mm; border-radius: 1.5mm; }
+.mvv b { display: block; font: 700 7.5pt/1 var(--display); letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); margin-bottom: 2.5mm; }
+.mvv p { margin: 0; font-size: 10pt; color: #f0dfe6; }
+.glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; margin: 0 0 7mm; }
+.glance > div { border-top: 0.8mm solid var(--amber); padding-top: 3mm; }
+.glance .big { font: 800 22pt/1 var(--display); color: var(--aubergine); }
+.glance .lbl { font: 600 8.5pt/1.3 var(--display); color: var(--muted); margin-top: 1.5mm; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+.two h3 { margin-bottom: 2mm; }
+.two p { color: var(--muted); }
+
+/* Page 4 · problems */
+.pairs { display: grid; gap: 4.2mm; margin-top: 2mm; }
+.pair { display: grid; grid-template-columns: 14mm 1fr 1fr; gap: 5mm; align-items: start; padding-bottom: 4.2mm; border-bottom: 0.3mm solid var(--line); }
+.pair:last-child { border-bottom: 0; }
+.pair .disc { width: 13mm; height: 13mm; border-radius: 50%; border: 0.6mm solid var(--amber); display: grid; place-items: center; }
+.pair .disc svg { width: 7mm; height: 7mm; }
+.pair h3 { margin-bottom: 1.2mm; }
+.pair .prob p { color: var(--muted); margin: 0; font-size: 10pt; }
+.pair .ans { background: #fff; border-left: 0.9mm solid var(--amber); padding: 2.5mm 3.5mm; }
+.pair .ans b { display: block; font: 700 7pt/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-text); margin-bottom: 1.5mm; }
+.pair .ans p { margin: 0; font-size: 10pt; }
+.pair .ans em { font-style: normal; font-weight: 600; color: var(--aubergine); }
+
+/* Page 5 · how we build */
+.triad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7mm; margin: 2mm 0 8mm; }
+.triad > div { display: grid; gap: 2.2mm; align-content: start; }
+.triad .disc { width: 16mm; height: 16mm; border-radius: 50%; border: 0.6mm solid var(--amber); display: grid; place-items: center; }
+.triad .disc svg { width: 8.5mm; height: 8.5mm; }
+.triad .key { font: 800 8pt/1 var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber-text); text-decoration: underline; text-decoration-color: var(--amber); text-decoration-thickness: 0.6mm; text-underline-offset: 1.5mm; margin-top: 1mm; }
+.triad p { margin: 0; color: var(--muted); font-size: 10pt; }
+.stack { display: grid; gap: 2mm; }
+.layer { display: grid; grid-template-columns: 30mm 1fr; align-items: center; gap: 4mm; padding: 3mm 4mm; background: #fff; border: 0.3mm solid var(--line); border-left: 1.2mm solid var(--amber); border-radius: 1mm; }
+.layer b { font: 700 7pt/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.layer span { font: 600 10pt/1.35 var(--display); color: var(--aubergine); }
+.records { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2mm; }
+.record { background: var(--aubergine); color: var(--cream); padding: 3.5mm 4mm; border-radius: 1mm; }
+.record b { display: block; font: 700 7pt/1.2 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 1mm; }
+.record span { font: 600 9.5pt/1.35 var(--display); }
+.band { margin-top: 9mm; background: var(--aubergine); color: var(--cream); padding: 6mm 7mm; border-radius: 1.5mm; position: relative; overflow: hidden; }
+.band::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 18mm; background: var(--amber); clip-path: polygon(55% 0, 100% 0, 100% 100%, 0 100%); }
+.band p { margin: 0; max-width: 135mm; font: 700 14pt/1.35 var(--display); }
+.band p span { color: var(--amber); }
+.band small { display: block; margin-top: 2.5mm; font: 400 9.5pt/1.4 var(--body); color: #f0dfe6; max-width: 135mm; }
+.stack-cap { font-size: 9pt; color: var(--muted); margin-top: 3mm; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Cover -->
+<section class="page cover">
+  <svg class="art" viewBox="0 0 210 297" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M120 0 C 135 60, 180 85, 210 88"/>
+    <path class="faint" d="M95 0 C 115 75, 175 105, 210 110"/>
+    <path d="M150 0 L 172 22 L 210 22"/>
+    <circle class="faint" cx="186" cy="62" r="11"/>
+    <path class="faint" d="M0 230 C 40 214, 70 236, 110 222"/>
+  </svg>
+  <div class="top">
+    <img class="logo" alt="Dibon" src="__LOGO__">
+    <span class="wordmark">Dibon<br>Consulting</span>
+  </div>
+  <div class="title">
+    <div class="kicker">Financial services portfolio · 2026</div>
+    <h1>Financial services <span>infrastructure</span></h1>
+    <p class="sub">For institutions that take in, lend, hold and move money, and need to prove where every shilling went.</p>
+  </div>
+  <div class="lineup">
+    <b>The portfolio</b>
+    <span>Kapu Collect</span><span>Kapu Pay Gateway</span><span>Kapu Escrow</span><span>Kapu MFI</span><span>Kapu Sacco</span><span>Reconciliation &amp; Observability</span><span>SME Reconciliation</span><span>Omni-channel banking</span>
+  </div>
+</section>
+
+<!-- 2 · Contents -->
+<section class="page">
+  <svg class="lineart corner" viewBox="0 0 70 40" aria-hidden="true"><path d="M18 0 C 24 18, 48 28, 70 26"/></svg>
+  <div class="content">
+    <svg class="rule" viewBox="0 0 42 2.4" aria-hidden="true"><rect x="0" y="0" width="9" height="0.8" fill="#280430"/><rect x="0" y="1.6" width="9" height="0.8" fill="#280430"/><rect x="11.5" y="0" width="30.5" height="0.8" fill="#fbb236"/><rect x="11.5" y="1.6" width="30.5" height="0.8" fill="#fbb236"/></svg>
+    <h2>Contents</h2>
+    <ol class="toc">
+      <li>Who we are<span class="n">03</span></li>
+      <li>The problems we solve<span class="n">04</span></li>
+      <li>How we build<span class="n">05</span></li>
+      <li>The platform at a glance<span class="n">06</span></li>
+      <li>Products<span class="n">07</span></li>
+      <li class="sub">Kapu Collect<span class="n">07</span></li>
+      <li class="sub">Kapu Pay Gateway<span class="n">08</span></li>
+      <li class="sub">Kapu Escrow<span class="n">09</span></li>
+      <li class="sub">Kapu MFI<span class="n">10</span></li>
+      <li class="sub">Kapu Sacco<span class="n">11</span></li>
+      <li class="sub">Reconciliation &amp; Observability<span class="n">12</span></li>
+      <li class="sub">SME Reconciliation<span class="n">13</span></li>
+      <li class="sub">Omni-channel banking<span class="n">14</span></li>
+      <li>Platform services<span class="n">15</span></li>
+      <li>Who it is for<span class="n">16</span></li>
+      <li>Integrations<span class="n">17</span></li>
+      <li>Deployment and security<span class="n">18</span></li>
+      <li>Working with us<span class="n">19</span></li>
+    </ol>
+  </div>
+  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">02</span></footer>
+</section>
+
+<!-- 3 · Who we are -->
+<section class="page">
+  <svg class="lineart corner" viewBox="0 0 70 40" aria-hidden="true"><path d="M8 0 L 26 16 L 70 16"/><circle cx="54" cy="30" r="5"/></svg>
+  <div class="content">
+    <p class="eyebrow">Who we are</p>
+    <svg class="rule" viewBox="0 0 42 2.4" aria-hidden="true"><rect x="0" y="0" width="9" height="0.8" fill="#280430"/><rect x="0" y="1.6" width="9" height="0.8" fill="#280430"/><rect x="11.5" y="0" width="30.5" height="0.8" fill="#fbb236"/><rect x="11.5" y="1.6" width="30.5" height="0.8" fill="#fbb236"/></svg>
+    <h2>One technology partner, not one product</h2>
+    <p class="lede">Dibon Consulting builds the software that banks, Saccos, microfinance institutions, payment providers and the businesses around them use to collect, lend, hold and reconcile money. Payments, deposit-taking, lending, escrow and reconciliation come together with monitoring, messaging, identity and ERP integration, so an institution works with one partner rather than five.</p>
+    <div class="mvv">
+      <div><b>Mission</b><p>Driving scalable business expansion through immersive, customised software solutions.</p></div>
+      <div><b>Vision</b><p>Shaping the future through transformative partnerships, harnessing emerging technologies and world-class resources.</p></div>
+      <div><b>Values</b><p>Innovation, a client-centric approach, excellence, collaboration, integrity, continuous learning, agility and social responsibility.</p></div>
+    </div>
+    <div class="glance">
+      <div><div class="big">8</div><div class="lbl">products on one platform</div></div>
+      <div><div class="big">6</div><div class="lbl">shared platform services</div></div>
+      <div><div class="big">3</div><div class="lbl">mobile-money networks, integrated directly</div></div>
+      <div><div class="big">PRSP</div><div class="lbl">licensed by the Communications Authority of Kenya</div></div>
+    </div>
+    <div class="two">
+      <div><h3>Built for the markets we serve</h3><p>Mobile money first. Statement files where banks do not yet offer APIs. USSD alongside apps, because not every member has a smartphone. Designed in Nairobi.</p></div>
+      <div><h3>Ready to travel</h3><p>Every product runs on your premises or in an in-country cloud, so it can follow our customers from Kenya into Uganda, Tanzania, Rwanda, Zambia, Zimbabwe and Nigeria, under each country's own rules.</p></div>
+    </div>
+    <div class="band"><p>We never hold our customers' money. <span>We make sure they always know where it is.</span></p><small>Every product is built so that funds stay with the bank, the Sacco, the lender or the merchant, and every shilling can be traced.</small></div>
+  </div>
+  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">03</span></footer>
+</section>
+
+<!-- 4 · The problems we solve -->
+<section class="page">
+  <svg class="lineart corner" viewBox="0 0 70 40" aria-hidden="true"><path d="M30 0 C 34 14, 52 20, 70 18"/><path d="M48 0 L 70 0"/></svg>
+  <div class="content">
+    <p class="eyebrow">The problems we solve</p>
+    <svg class="rule" viewBox="0 0 42 2.4" aria-hidden="true"><rect x="0" y="0" width="9" height="0.8" fill="#280430"/><rect x="0" y="1.6" width="9" height="0.8" fill="#280430"/><rect x="11.5" y="0" width="30.5" height="0.8" fill="#fbb236"/><rect x="11.5" y="1.6" width="30.5" height="0.8" fill="#fbb236"/></svg>
+    <h2>Where money gets lost in the work</h2>
+    <div class="pairs">
+      <div class="pair">
+        <span class="disc"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="7.5" height="16" rx="1.2"/><rect x="13.5" y="4" width="7.5" height="16" rx="1.2"/><path d="M5.5 9h3M5.5 12.5h3M16 9h3M16 12.5h3"/></svg></span>
+        <div class="prob"><h3>Reconciliation by hand</h3><p>Statements downloaded from every bank and mobile-money portal, matched line by line. Breaks found late, resolved without a trail.</p></div>
+        <div class="ans"><b>With Dibon</b><p><em>Reconciliation &amp; Observability</em> matches every channel automatically and queues each break by its SLA, with evidence from both sides.</p></div>
+      </div>
+      <div class="pair">
+        <span class="disc"><svg class="ico" viewBox="0 0 24 24"><path d="M3 5h6l5 7M3 12h11M3 19h6l5-7M14 12h7M18 9l3 3-3 3"/></svg></span>
+        <div class="prob"><h3>Channels that disagree</h3><p>M-Pesa, Airtel Money, bank transfers and cards each arrive in a different place, in a different format, with a different idea of when a payment is final.</p></div>
+        <div class="ans"><b>With Dibon</b><p><em>Kapu Pay Gateway</em> puts every rail behind one API. A payment the rail has not confirmed is pending, never assumed.</p></div>
+      </div>
+      <div class="pair">
+        <span class="disc"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5h16v10H10l-4 4v-4H4z"/><path d="M10 9.2a2 2 0 1 1 2.6 1.9c-.4.2-.6.5-.6.9M12 13.4v.1"/></svg></span>
+        <div class="prob"><h3>Approvals with no record</h3><p>Loans and payments approved in conversation. Nobody can show who approved what, and when.</p></div>
+        <div class="ans"><b>With Dibon</b><p><em>Approvals and mandates</em> route every decision by product and amount, with no self-approval, and record who decided at the moment they decided.</p></div>
+      </div>
+      <div class="pair">
+        <span class="disc"><svg class="ico" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/><path d="M10.6 8.2a1.5 1.5 0 1 1 1.9 1.4c-.3.1-.5.4-.5.7M12 12.4v.1"/></svg></span>
+        <div class="prob"><h3>Customers who cannot see their money</h3><p>Members phone in to ask a balance, a loan limit, or whether a contribution arrived.</p></div>
+        <div class="ans"><b>With Dibon</b><p><em>Omni-channel banking</em> gives every member an app, internet banking and USSD under your brand, with the same answer on each.</p></div>
+      </div>
+      <div class="pair">
+        <span class="disc"><svg class="ico" viewBox="0 0 24 24"><path d="M7 3h8l3 3v13H7z"/><path d="M5 6v15h11"/><path d="M10 9h5M10 12.5h5M10 16h3"/></svg></span>
+        <div class="prob"><h3>Growth held back by paperwork</h3><p>Paper KYC, paper mandates, and monthly credit-bureau files assembled by hand.</p></div>
+        <div class="ans"><b>With Dibon</b><p><em>Identity, e-signatures and credit-bureau automation</em> take onboarding, consent and bureau submissions off paper.</p></div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">04</span></footer>
+</section>
+
+<!-- 5 · How we build -->
+<section class="page">
+  <svg class="lineart corner" viewBox="0 0 70 40" aria-hidden="true"><path d="M70 6 L 44 6 L 30 20 L 0 20"/><path d="M40 40 a 12 12 0 0 1 24 0"/></svg>
+  <div class="content">
+    <p class="eyebrow">How we build</p>
+    <svg class="rule" viewBox="0 0 42 2.4" aria-hidden="true"><rect x="0" y="0" width="9" height="0.8" fill="#280430"/><rect x="0" y="1.6" width="9" height="0.8" fill="#280430"/><rect x="11.5" y="0" width="30.5" height="0.8" fill="#fbb236"/><rect x="11.5" y="1.6" width="30.5" height="0.8" fill="#fbb236"/></svg>
+    <h2>Three principles in every product</h2>
+    <div class="triad">
+      <div>
+        <span class="disc"><svg class="ico" viewBox="0 0 24 24"><path d="M3 9.5 12 4l9 5.5M4.5 9.5h15M6 10v7M10 10v7M14 10v7M18 10v7M3.5 20h17"/></svg></span>
+        <span class="key">Your money stays yours</span>
+        <h3>We do not hold your money</h3>
+        <p>Funds stay in your accounts, at your bank, or with a licensed partner. Our software prompts, instructs, matches and reports, so regulated custody stays where it belongs.</p>
+      </div>
+      <div>
+        <span class="disc"><svg class="ico" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="2.5"/><path d="M5 6v12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg></span>
+        <span class="key">One source</span>
+        <h3>Every record has one home</h3>
+        <p>Money lives in your core. Customers and what they owe live in your ERP. Every match and every exception lives in our reconciliation engine. Nothing is quietly copied.</p>
+      </div>
+      <div>
+        <span class="disc"><svg class="ico" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5.5 5.5M8 10.5l2 2 3.5-4"/></svg></span>
+        <span class="key">Evidence</span>
+        <h3>Nothing is guessed</h3>
+        <p>An unmatched payment stays visible until evidence places it. An unconfirmed payment is pending, not failed and not successful. Every number traces back to one transaction.</p>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="layer"><b>Channels</b><span>Mobile app · Internet banking · USSD</span></div>
+      <div class="layer"><b>Products</b><span>Collect · Gateway · Escrow · MFI · Sacco · Reconciliation · SME Reconciliation</span></div>
+      <div class="layer"><b>Platform</b><span>Approvals · Messaging · Identity and access · Credit bureaus · Payment rails · Insights</span></div>
+      <div class="records">
+        <div class="record"><b>Your core, or ours</b><span>Money: accounts, balances, loans</span></div>
+        <div class="record"><b>Your ERP</b><span>Customers, invoices, what is owed</span></div>
+        <div class="record"><b>Reconciliation engine</b><span>Every match, every exception</span></div>
+      </div>
+    </div>
+    <p class="stack-cap">Channels and products sit on shared platform services, above three systems of record. Each record has exactly one.</p>
+    <div class="band"><p>Follow the green line. <span>It never passes through Dibon.</span></p><small>In every product diagram that follows, a solid green line is money moving. It runs from payer to account, between institutions and their customers, and never through our software.</small></div>
+  </div>
+  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">05</span></footer>
+</section>
+
+</body>
+</html>
