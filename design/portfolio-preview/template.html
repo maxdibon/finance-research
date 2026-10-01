@@ -1,0 +1,500 @@
+<title>Dibon Financial Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: an aubergine masthead in Dibon's brand, then one reading column; products as a typed register with maturity pills; platform and audience as tables. */
+:root {
+  --aubergine: #280430;
+  --plum: #460d4d;
+  --green: #10ad5d;
+  --violet: #6f52eb;
+  --cream: #fff2eb;
+  --bg: #fffaf6;
+  --surface: #ffffff;
+  --fg: #23122a;
+  --muted: #5e4c66;
+  --line: #ead9dc;
+  --link: #5a3fd6;
+  --pill-done-bg: #dff5e9;
+  --pill-done-fg: #0b6b3a;
+  --pill-design-bg: #ece8fd;
+  --pill-design-fg: #4a33b8;
+  --banner-bg: #fff0d6;
+  --banner-fg: #6b4300;
+  --dibon: #460d4d;
+  --on-dibon: #fff2eb;
+  --funds-bg: #e3f6ec;
+  --line-strong: #cdb6bf;
+  --icon: #460d4d;
+  --display: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17031c; --surface: #210629; --fg: #f6ebee; --muted: #c4b1c9;
+    --line: #3d1a45; --link: #b3a5ff;
+    --pill-done-bg: #0f3a25; --pill-done-fg: #8fe3b5;
+    --pill-design-bg: #2a1f5c; --pill-design-fg: #c9bfff;
+    --banner-bg: #3a2a08; --banner-fg: #ffd98a;
+    --dibon: #6e2c79; --funds-bg: #0f3a25; --line-strong: #5a3463; --icon: #e7b8e8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17031c; --surface: #210629; --fg: #f6ebee; --muted: #c4b1c9;
+  --line: #3d1a45; --link: #b3a5ff;
+  --pill-done-bg: #0f3a25; --pill-done-fg: #8fe3b5;
+  --pill-design-bg: #2a1f5c; --pill-design-fg: #c9bfff;
+  --banner-bg: #3a2a08; --banner-fg: #ffd98a;
+  --dibon: #6e2c79; --funds-bg: #0f3a25; --line-strong: #5a3463; --icon: #e7b8e8;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 400 1.0625rem/1.6 var(--body); margin: 0; }
+a { color: var(--link); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; border-radius: 4px; }
+
+.banner { background: var(--banner-bg); color: var(--banner-fg); font: 600 0.8125rem/1.4 var(--display); letter-spacing: 0.02em; padding: 0.6rem 1rem; text-align: center; }
+
+.masthead { background: var(--aubergine); color: var(--cream); padding-inline: 1rem; }
+.masthead-inner { max-width: 68rem; margin: 0 auto; padding-block: 2.5rem 3rem; display: grid; gap: 1.5rem; }
+.brand { display: flex; align-items: center; gap: 0.9rem; }
+.brand img { height: 3rem; width: auto; }
+.brand .wordmark { font: 700 1rem/1 var(--display); letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); opacity: 0.85; }
+.masthead h1 { font: 800 clamp(2rem, 5vw, 3.4rem)/1.05 var(--display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.masthead h1 span { color: var(--green); }
+.masthead p { margin: 0; max-width: 40rem; font-size: 1.2rem; color: #f0dfe6; }
+.masthead nav { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font: 600 0.8125rem/1 var(--display); letter-spacing: 0.08em; text-transform: uppercase; }
+.masthead nav a { color: var(--cream); text-decoration: none; border-bottom: 2px solid transparent; padding-block: 0.3rem; }
+.masthead nav a:hover { border-color: var(--green); }
+
+main { padding-inline: 1rem; }
+.wrap { max-width: 68rem; margin: 0 auto; }
+section { padding-block: 3rem 0.5rem; }
+.eyebrow { font: 700 0.75rem/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin: 0 0 0.6rem; }
+h2 { font: 800 clamp(1.5rem, 3vw, 2.1rem)/1.15 var(--display); margin: 0 0 1rem; text-wrap: balance; }
+h3 { font: 700 1.25rem/1.25 var(--display); margin: 0; text-wrap: balance; }
+.lede { max-width: 65ch; color: var(--muted); font-size: 1.125rem; margin: 0 0 1.5rem; }
+p { max-width: 65ch; }
+
+.problems { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; list-style: none; padding: 0; margin: 0; }
+.problems li { border-top: 3px solid var(--plum); padding-top: 0.75rem; }
+.problems strong { display: block; font: 700 1rem/1.3 var(--display); margin-bottom: 0.3rem; }
+.problems span { color: var(--muted); }
+
+.principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+.principle h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+.principle p { margin: 0; color: var(--muted); }
+
+.stack { display: grid; gap: 0.5rem; max-width: 52rem; font-family: var(--display); }
+.layer { display: grid; grid-template-columns: 8.5rem 1fr; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 6px; background: var(--surface); border: 1px solid var(--line); }
+.layer b { font: 700 0.75rem/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.layer span { font-weight: 600; }
+.records { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+.record { background: var(--aubergine); color: var(--cream); border-radius: 6px; padding: 0.9rem 1rem; }
+.record b { display: block; font: 700 0.75rem/1.2 var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: #9be8c0; margin-bottom: 0.3rem; }
+.record span { font: 600 0.95rem/1.35 var(--display); }
+
+.legend { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; color: var(--muted); font-size: 0.95rem; margin: 0 0 1.5rem; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 0.4rem; font: 700 0.7rem/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.6rem; border-radius: 999px; white-space: nowrap; }
+.pill::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: currentColor; }
+.pill.done { background: var(--pill-done-bg); color: var(--pill-done-fg); }
+.pill.design { background: var(--pill-design-bg); color: var(--pill-design-fg); }
+.pill.design::before { background: transparent; border: 2px solid currentColor; width: 0.45rem; height: 0.45rem; }
+
+.products { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.product { display: grid; grid-template-columns: minmax(0, 18rem) minmax(0, 1fr); gap: 0.5rem 2.5rem; padding-block: 1.75rem; border-bottom: 1px solid var(--line); }
+.product header { display: grid; gap: 0.6rem; align-content: start; }
+.product .tag { font: 600 0.95rem/1.35 var(--display); color: var(--plum); }
+:root[data-theme="dark"] .product .tag { color: #e7b8e8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .product .tag { color: #e7b8e8; } }
+.product .body p { margin: 0 0 0.9rem; }
+.product ul { margin: 0 0 0.9rem; padding-left: 1.1rem; display: grid; gap: 0.25rem; }
+.product li::marker { color: var(--green); }
+.meta { display: flex; flex-wrap: wrap; gap: 0.3rem 1.25rem; font-size: 0.95rem; color: var(--muted); }
+.meta b { color: var(--fg); font-weight: 600; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 34rem; }
+th, td { text-align: left; vertical-align: top; padding: 0.8rem 1rem; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+th { font: 700 0.75rem/1.2 var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+td:first-child { font: 700 0.95rem/1.4 var(--display); white-space: nowrap; }
+.note { color: var(--muted); font-size: 0.95rem; margin-top: 0.75rem; }
+
+.security { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem 2rem; list-style: none; padding: 0; margin: 0; }
+.security li strong { display: block; font: 700 0.95rem/1.3 var(--display); margin-bottom: 0.2rem; }
+.security li span { color: var(--muted); }
+.tech { font-family: var(--mono); font-size: 0.85rem; }
+
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem; list-style: none; padding: 0; margin: 0; counter-reset: step; }
+.steps li { counter-increment: step; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1rem; }
+.steps li::before { content: counter(step); display: inline-grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--aubergine); color: var(--cream); font: 700 0.85rem/1 var(--display); margin-bottom: 0.6rem; }
+.steps strong { display: block; font: 700 1rem/1.3 var(--display); margin-bottom: 0.25rem; }
+.steps span { color: var(--muted); }
+
+.contact { background: var(--aubergine); color: var(--cream); margin-top: 3.5rem; padding-inline: 1rem; }
+.contact .wrap { padding-block: 2.5rem; display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; justify-content: space-between; }
+.contact h2 { color: var(--cream); margin: 0; }
+.contact dl { display: grid; grid-template-columns: auto auto; gap: 0.3rem 1rem; margin: 0; font: 600 1rem/1.4 var(--display); }
+.contact dt { color: #9be8c0; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; align-self: center; }
+.contact dd { margin: 0; user-select: all; }
+
+/* Diagrams: one visual language across every product. */
+.dg-fig { margin: 0 0 1.1rem; }
+.dg-scroll { overflow-x: auto; }
+.dg { display: block; width: 100%; height: auto; min-width: 34rem; color: var(--fg); }
+.dg text { font: 600 12px var(--display); fill: currentColor; }
+.dg text.s { font: 400 11px var(--body); fill: var(--muted); }
+.dg text.on { fill: var(--on-dibon); }
+.dg .box { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.5; }
+.dg .dibon { fill: var(--dibon); }
+.dg .funds { fill: var(--funds-bg); stroke: var(--green); stroke-width: 2.25; }
+.dg .money { stroke: var(--green); stroke-width: 2.5; fill: none; }
+.dg .ctl { stroke: currentColor; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+.dg .step { stroke: currentColor; stroke-width: 1.4; fill: none; }
+.dg .mk-money { fill: var(--green); }
+.dg .mk-ctl { fill: currentColor; }
+.dg-fig figcaption { color: var(--muted); font-size: 0.92rem; margin-top: 0.45rem; max-width: 60ch; }
+.dg-legend { margin: 0 0 1.75rem; }
+.dg-legend .dg { min-width: 30rem; max-width: 40rem; }
+
+.problems svg { width: 30px; height: 30px; stroke: var(--icon); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; display: block; margin-bottom: 0.5rem; }
+
+@media (max-width: 44rem) {
+  .product { grid-template-columns: minmax(0, 1fr); }
+  .records { grid-template-columns: minmax(0, 1fr); }
+  .layer { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; }
+  td:first-child { white-space: normal; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .masthead nav a { transition: border-color 0.15s ease; }
+}
+</style>
+
+<div class="banner" role="note">Preview draft. Not yet for distribution: product availability is being confirmed.</div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <img id="logo" alt="Dibon" width="131" height="57" src="data:image/png;base64,__LOGO__">
+      <span class="wordmark">Consulting</span>
+    </div>
+    <h1>Financial services <span>infrastructure</span></h1>
+    <p>For institutions that take in, lend, hold and move money, and need to prove where every shilling went.</p>
+    <nav aria-label="Sections">
+      <a href="#approach">Approach</a>
+      <a href="#products">Products</a>
+      <a href="#platform">Platform</a>
+      <a href="#who">Who it is for</a>
+      <a href="#security">Security</a>
+      <a href="#engage">Working with us</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <section aria-labelledby="who-we-are">
+      <p class="eyebrow">Who we are</p>
+      <h2 id="who-we-are">One technology partner, not one product</h2>
+      <p class="lede">Dibon Consulting designs and builds software for banks, Saccos, microfinance institutions, payment providers and the businesses that work with them. Payments, deposit-taking, lending, escrow and reconciliation come together with monitoring, messaging, identity and ERP integration, so an institution deals with one partner rather than five.</p>
+      <p>We work from Nairobi, and we design for the markets we serve: mobile money first, statement files where APIs do not yet exist, and feature phones alongside smartphones.</p>
+    </section>
+
+    <section aria-labelledby="problems">
+      <p class="eyebrow">The problems we solve</p>
+      <h2 id="problems">Where money gets lost in the work</h2>
+      <ul class="problems">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="7.5" height="16" rx="1.2"/><rect x="13.5" y="4" width="7.5" height="16" rx="1.2"/><path d="M5.5 9h3M5.5 12.5h3M16 9h3M16 12.5h3"/></svg><strong>Reconciliation by hand</strong><span>Statements downloaded from every bank and mobile-money portal, then matched line by line. Breaks found late and resolved without a trail.</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6l5 7M3 12h11M3 19h6l5-7M14 12h7M18 9l3 3-3 3"/></svg><strong>Channels that disagree</strong><span>M-Pesa, Airtel Money, bank transfers and cards each arrive in a different place, in a different format, with a different idea of when a payment is final.</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H10l-4 4v-4H4z"/><path d="M10 9.2a2 2 0 1 1 2.6 1.9c-.4.2-.6.5-.6.9M12 13.4v.1"/></svg><strong>Approvals with no record</strong><span>Loans and payments approved in conversation. Nobody can show who approved what, and when.</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/><path d="M10.6 8.2a1.5 1.5 0 1 1 1.9 1.4c-.3.1-.5.4-.5.7M12 12.4v.1"/></svg><strong>Customers who cannot see their money</strong><span>Members phone in to ask a balance, a loan limit, or whether a contribution arrived.</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l3 3v13H7z"/><path d="M5 6v15h11"/><path d="M10 9h5M10 12.5h5M10 16h3"/></svg><strong>Growth held back by paperwork</strong><span>Paper KYC, paper mandates, and monthly credit-bureau files assembled by hand.</span></li>
+      </ul>
+    </section>
+
+    <section id="approach" aria-labelledby="approach-h">
+      <p class="eyebrow">How we build</p>
+      <h2 id="approach-h">Three principles in every product</h2>
+      <div class="principles">
+        <div class="principle"><h3>We do not hold your money</h3><p>Funds stay in your accounts, at your bank, or with a licensed partner. Our software prompts, instructs, matches and reports, which keeps regulated custody where it belongs.</p></div>
+        <div class="principle"><h3>Every record has one home</h3><p>Money lives in your core. Customers and what they owe live in your ERP. Every match and every exception lives in our reconciliation engine. Nothing is quietly copied.</p></div>
+        <div class="principle"><h3>Nothing is guessed</h3><p>An unmatched payment stays visible until evidence places it. An unconfirmed payment is pending, not failed and not successful. Every number traces back to one transaction.</p></div>
+      </div>
+      <div class="stack" role="img" aria-label="Channels, products and platform services sit above three systems of record: your core, your ERP, and the reconciliation engine.">
+        <div class="layer"><b>Channels</b><span>Mobile app · Internet banking · USSD</span></div>
+        <div class="layer"><b>Products</b><span>Collect · Gateway · Escrow · MFI · Sacco · Reconciliation · SME Reconciliation</span></div>
+        <div class="layer"><b>Platform</b><span>Approvals · Messaging · Identity and access · Credit bureaus · Payment rails · Insights</span></div>
+        <div class="records">
+          <div class="record"><b>Your core, or ours</b><span>Money: accounts, balances, loans</span></div>
+          <div class="record"><b>Your ERP</b><span>Customers, invoices, what is owed</span></div>
+          <div class="record"><b>Reconciliation engine</b><span>Every match, every exception</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" aria-labelledby="products-h">
+      <p class="eyebrow">Products</p>
+      <h2 id="products-h">Eight products on one platform</h2>
+      <div class="legend">
+        <span class="pill done">Specification complete</span><span>The full functional design is written.</span>
+        <span class="pill design">In design</span><span>Scope is set; detailed design is under way.</span>
+      </div>
+      <figure class="dg-fig dg-legend">
+        <div class="dg-scroll">
+          <svg class="dg" viewBox="0 0 560 40" role="img" aria-label="How to read the diagrams: a solid green line is money moving; a dashed line is Dibon instructing or reading; a green-edged box is where funds rest; a plum box is Dibon's software.">
+            <defs>
+              <marker id="lg-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="mk-money"/></marker>
+              <marker id="lg-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="mk-ctl"/></marker>
+            </defs>
+            <line class="money" x1="0" y1="20" x2="34" y2="20" marker-end="url(#lg-m)"/>
+            <text x="42" y="24">money moves</text>
+            <line class="ctl" x1="140" y1="20" x2="174" y2="20" marker-end="url(#lg-c)"/>
+            <text x="182" y="24">Dibon instructs or reads</text>
+            <rect class="funds" x="340" y="10" width="26" height="20" rx="4"/>
+            <text x="374" y="24">funds rest here</text>
+            <rect class="dibon" x="468" y="10" width="26" height="20" rx="4"/>
+            <text x="502" y="24">Dibon</text>
+          </svg>
+        </div>
+        <figcaption>How to read the diagrams below. Follow the green lines: they never pass through Dibon.</figcaption>
+      </figure>
+
+      <div class="products">
+        <article class="product">
+          <header><h3>Kapu Collect</h3><div class="tag">Deposits collected by partners, held at your bank</div><span class="pill done">Specification complete</span></header>
+          <div class="body">
+            <p>For banks and other regulated institutions reaching the large pool of collections that sits outside formal banking. Collection firms, high-volume SMEs and unlicensed funds-holding operators connect through APIs, and every deposit lands in a real account at the bank, in the end customer's name.</p>
+            <ul>
+              <li>Account and sub-account opening, gated on IPRS identity checks</li>
+              <li>Deposits by mobile-money prompt; withdrawals to mobile, till or paybill</li>
+              <li>Account-to-account transfers, balances and statements</li>
+              <li>Partner and bank management portals</li>
+              <li>Asynchronous callbacks, idempotent requests, queries by reference</li>
+              <li>Daily reconciliation against the bank's core</li>
+            </ul>
+            <div class="meta"><span><b>Channels</b> M-Pesa, Airtel Money, T-Kash; PesaLink to follow</span><span><b>Runs</b> inside the bank, or in-country cloud</span></div>
+          </div>
+        </article>
+
+        <article class="product">
+          <header><h3>Kapu Pay Gateway</h3><div class="tag">One API for every rail a business takes</div><span class="pill design">In design</span></header>
+          <div class="body">
+            <p>For businesses and fintechs taking payments on more than one rail. One API and one dashboard cover mobile money, bank transfers and cards, and every payment is reconciled against what it paid for. Payments settle into the merchant's own accounts.</p>
+            <ul>
+              <li>One collections API across M-Pesa, Airtel Money and T-Kash</li>
+              <li>Cards and PesaLink</li>
+              <li>Payment links, including invoices sent by SMS</li>
+              <li>A merchant dashboard: every payment matched, every exception listed</li>
+              <li>Signed callbacks and idempotent requests</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="product">
+          <header><h3>Kapu Escrow</h3><div class="tag">Funds held at a bank until the conditions are met</div><span class="pill design">In design</span></header>
+          <div class="body">
+            <p>For property, vehicle sales, construction milestones, B2B trade and marketplaces. The buyer's money sits at a partner bank in an escrow account of its own, released to the seller only when the agreed approvers sign off. Neither party, nor Dibon, can release funds alone.</p>
+            <ul>
+              <li>Digital escrow agreements, signed electronically by both parties</li>
+              <li>One bank-held escrow account per agreement</li>
+              <li>Milestones with evidence, partial releases, refunds</li>
+              <li>Disputes frozen and decided by a named arbiter</li>
+              <li>A daily tie-out of every escrow account against its agreement</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="product">
+          <header><h3>Kapu MFI</h3><div class="tag">Loan management for growing lenders</div><span class="pill done">Specification complete</span></header>
+          <div class="body">
+            <p>For lenders moving off spreadsheets, paper and ageing systems. The whole loan, from a digital application to closure or restructure, with the process enforced and light enough for a team of three.</p>
+            <ul>
+              <li>Digital applications with a full, attributed lifecycle</li>
+              <li>KYC with IPRS lookup and a completeness gate per product</li>
+              <li>Collateral management, vehicles first, with verification evidence</li>
+              <li>Approval chains by product and amount, with no self-approval</li>
+              <li>Above-limit approvals flagged and tracked as their own cohort</li>
+              <li>Repayments split into principal, interest, fees and insurance</li>
+              <li>Rollovers linked back to the original loan</li>
+              <li>SMS reminders, a portfolio dashboard, and migration from Mifos</li>
+            </ul>
+            <div class="meta"><span><b>Built on</b> Apache Fineract</span></div>
+          </div>
+        </article>
+
+        <article class="product">
+          <header><h3>Kapu Sacco</h3><div class="tag">For credit-only and deposit-taking Saccos</div><span class="pill design">In design</span></header>
+          <div class="body">
+            <p>For Saccos that want contributions, deposits, loans and guarantees in one place, current every day rather than every month-end.</p>
+            <ul>
+              <li>Membership, share capital and member deposits; withdrawable savings for deposit-taking Saccos</li>
+              <li>Contributions by M-Pesa, bank and employer check-off, matched to members</li>
+              <li>Check-off reconciliation against each employer's remittance</li>
+              <li>Loan limits from members' deposits; guarantors who can see their exposure</li>
+              <li>Credit-committee approval, recorded per member</li>
+              <li>Dividends and interest computed from your bylaws, kept for the AGM</li>
+              <li>Alongside your existing core, or as your core</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="product">
+          <header><h3>Reconciliation &amp; Observability</h3><div class="tag">Every channel, every cycle, right now</div><span class="pill done">Specification complete</span></header>
+          <div class="body">
+            <p>Every transaction matched across the rail, the bank and your ledger. Breaks queued by how close they are to their SLA, not by size, and traced hop by hop with evidence from both sides. Suspense is the exception queue seen from the ledger: when the queue is empty, suspense is zero, and the day is closed.</p>
+            <ul>
+              <li>Ingest from callbacks, APIs and statement files (MT940, CAMT, CSV)</li>
+              <li>Matching rules, including three-way matching against what you expected</li>
+              <li>An exception queue ordered by SLA, with owners and ageing</li>
+              <li>Remediation: status queries automatic; reversals approved by a second person</li>
+              <li>A ledger view proved two ways: real-time assertions and a nightly batch</li>
+              <li>Treasury, float, and branch and till cash by denomination</li>
+              <li>Monitoring, alerting and SLOs for everything that moves money</li>
+            </ul>
+            <div class="meta"><span><b>Built on</b> Kubernetes, Prometheus, OpenTelemetry, Grafana</span></div>
+          </div>
+        </article>
+
+        <article class="product">
+          <header><h3>SME Reconciliation</h3><div class="tag">Your bank and mobile money, inside your ERP</div><span class="pill design">In design</span></header>
+          <div class="body">
+            <p>For businesses on Odoo, with Zoho and others to follow. Bank, mobile-money and card statements flow into the ERP. Incoming money is matched to invoices, outgoing money to bills and expenses, and payments approved in the ERP are executed by bank API or mobile money. Nothing unmatched is hidden in suspense.</p>
+          </div>
+        </article>
+
+        <article class="product">
+          <header><h3>Omni-channel banking</h3><div class="tag">App, web and USSD, under your brand</div><span class="pill design">In design</span></header>
+          <div class="body">
+            <p>A mobile app, internet banking and USSD menus, white-labelled for each institution, on one channel API, so a balance is the same everywhere. Members check balances, apply for loans, accept guarantor requests, contribute and pay. Anything that moves money asks the member to confirm who they are at that moment, after a SIM-swap check. USSD works on any phone.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="platform" aria-labelledby="platform-h">
+      <p class="eyebrow">The platform underneath</p>
+      <h2 id="platform-h">The same services under every product</h2>
+      <p class="lede">A customer who adds a second product gets the same approvals, messages, logins and reports as the first.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Service</th><th scope="col">What it does</th></tr></thead>
+          <tbody>
+            <tr><td>Approvals and mandates</td><td>Approval chains by product, amount and risk flag; no self-approval; every decision attributed when it is made. Debit mandates with the payer's consent and right to cancel.</td></tr>
+            <tr><td>Messaging</td><td>SMS, WhatsApp, Telegram and app push, for reminders, receipts, alerts and campaigns. In Kenya, SMS goes directly to the operators under Dibon's PRSP licence. A message's status says only what its channel reported.</td></tr>
+            <tr><td>Identity and access</td><td>One login for every system, with passkeys and one-time codes; re-authentication before any act that moves money; financial-grade API security. Identity checks against IPRS, documents and liveness.</td></tr>
+            <tr><td>Credit bureaus</td><td>Monthly submissions generated from the ledger and reconciled against what the bureau accepted. Lookups at vetting, purpose recorded first. Corrections when a borrower settles.</td></tr>
+            <tr><td>Payment rails</td><td>M-Pesa, Airtel Money, T-Kash, PesaLink, bank APIs and statement files, and cards, behind one interface. An unconfirmed payment is pending until the rail confirms it.</td></tr>
+            <tr><td>Insights</td><td>Every metric defined once, used by dashboards and by questions asked in plain language. Every answer shows how it was calculated and how fresh the data is.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Approvals, payment rails and identity are partly specified; the other services are in design.</p>
+    </section>
+
+    <section id="who" aria-labelledby="who-h">
+      <p class="eyebrow">Who it is for</p>
+      <h2 id="who-h">Where to start</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">You are</th><th scope="col">Start with</th><th scope="col">Add</th></tr></thead>
+          <tbody>
+            <tr><td>A tier-2 or tier-3 bank</td><td>Collect; Reconciliation</td><td>Escrow; omni-channel</td></tr>
+            <tr><td>A deposit-taking Sacco</td><td>Sacco; Reconciliation (check-off)</td><td>Omni-channel; credit bureaus</td></tr>
+            <tr><td>A credit-only Sacco</td><td>Sacco</td><td>Omni-channel; messaging</td></tr>
+            <tr><td>An MFI</td><td>MFI</td><td>Credit bureaus; omni-channel</td></tr>
+            <tr><td>A money-transfer operator or PSP</td><td>Reconciliation</td><td>Gateway; insights</td></tr>
+            <tr><td>A fintech</td><td>Gateway</td><td>Reconciliation; Collect, through a partner bank</td></tr>
+            <tr><td>An SME</td><td>SME Reconciliation</td><td>Gateway; escrow</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="integrations-h">
+      <p class="eyebrow">Integrations</p>
+      <h2 id="integrations-h">What the design connects to</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Area</th><th scope="col">Covered</th></tr></thead>
+          <tbody>
+            <tr><td>Mobile money</td><td>M-Pesa (Daraja), Airtel Money, T-Kash, integrated directly</td></tr>
+            <tr><td>Banks</td><td>Bank APIs, statement files (MT940, CAMT.053, CSV), PesaLink</td></tr>
+            <tr><td>Cards</td><td>Through acquirers and processors; card numbers never touch our systems</td></tr>
+            <tr><td>ERP</td><td>Odoo first, then Zoho</td></tr>
+            <tr><td>Identity</td><td>IPRS; document and liveness checks</td></tr>
+            <tr><td>Credit bureaus</td><td>Every licensed bureau in Kenya</td></tr>
+            <tr><td>Core banking</td><td>Your core, through an adapter; or Apache Fineract, hosted for you</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="security" aria-labelledby="security-h">
+      <p class="eyebrow">Deployment and security</p>
+      <h2 id="security-h">Built to be audited</h2>
+      <ul class="security">
+        <li><strong>Where it runs</strong><span>On your premises, or in an in-country cloud. Kenya first; designed to follow our customers across East and Southern Africa and Nigeria.</span></li>
+        <li><strong>How it runs</strong><span>Cloud-native on Kubernetes, mostly on permissively licensed open source: <span class="tech">Apache Fineract · Keycloak · Kafka · Prometheus · OpenTelemetry · Apache Superset</span>.</span></li>
+        <li><strong>Who can act</strong><span>One login per person, never shared; re-authentication at the moment of any act that moves money; a second approver for payments, reversals and role changes.</span></li>
+        <li><strong>What is recorded</strong><span>Every action, append-only. Nothing is edited after the fact; a correction is a new entry.</span></li>
+        <li><strong>How data is handled</strong><span>Designed in line with Kenya's Data Protection Act, 2019. Data is classified; the most sensitive never appears in logs or on a phone. Credentials never leave our servers.</span></li>
+        <li><strong>How it is watched</strong><span>Monitoring, alerting and service-level objectives for every system that moves money.</span></li>
+      </ul>
+    </section>
+
+    <section id="engage" aria-labelledby="engage-h">
+      <p class="eyebrow">Working with us</p>
+      <h2 id="engage-h">From your process to your numbers</h2>
+      <ol class="steps">
+        <li><strong>Discovery</strong><span>A working session with your team on the process that costs you most today.</span></li>
+        <li><strong>Your numbers</strong><span>Give us one business day of extracts; we show the product running on your own data before we meet again.</span></li>
+        <li><strong>Pilot</strong><span>One product, one process, measured against an agreed outcome.</span></li>
+        <li><strong>Rollout</strong><span>Further products on the same platform, with the same logins, approvals and reports.</span></li>
+      </ol>
+    </section>
+
+  </div>
+</main>
+
+<footer class="contact">
+  <div class="wrap">
+    <h2>Talk to us</h2>
+    <dl>
+      <dt>Email</dt><dd>info@dibon.co.ke</dd>
+      <dt>Phone</dt><dd>+254 792 745 509</dd>
+    </dl>
+  </div>
+</footer>
+
+<script>
+// The logo file is white script flattened onto white, without transparency.
+// Recover its shape: each pixel's distance from white becomes its opacity,
+// drawn in the brand cream. If anything fails, the original image stays.
+(function () {
+  var img = document.getElementById('logo');
+  function recover() {
+    try {
+      var w = img.naturalWidth, h = img.naturalHeight;
+      if (!w || !h) return;
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      var ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      var d = ctx.getImageData(0, 0, w, h), p = d.data;
+      for (var i = 0; i < p.length; i += 4) {
+        var a = Math.min(255, (255 - p[i]) * 36);
+        p[i] = 255; p[i + 1] = 242; p[i + 2] = 235; p[i + 3] = a;
+      }
+      ctx.putImageData(d, 0, 0);
+      img.src = c.toDataURL('image/png');
+    } catch (e) { /* keep the original */ }
+  }
+  if (img.complete) recover(); else img.addEventListener('load', recover, { once: true });
+})();
+</script>
