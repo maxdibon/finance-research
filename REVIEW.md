@@ -194,3 +194,9 @@ A row does not change status silently.
 | FS-183 | Claude | Collect the primary documents before building to them: the 6 Jun 2023 letter, SASRA's risk-management and ICT guidelines, the deposit-taking Sacco regulations, and any later circulars | OPEN | A sources/external/ folder, as GateKeepr keeps for CBK's PSP checklist |
 | FS-184 | Claude | As a core vendor, SASRA's prudential returns, loan classification and provisioning, and liquidity reporting move from "later" to launch scope for deposit-taking Saccos | OPEN | sacco SC-17 |
 | FS-185 | Claude | A fit-gap of Fineract against a deposit-taking Sacco's needs (withdrawable savings, BOSA and FOSA, dividends, guarantors, SASRA returns) before committing to it as the deposit core | OPEN | Proposed spike |
+| FS-186 | Claude | Who may subscribe to a CRB: unregistered MFIs, credit-only Saccos, SMEs checking customers. And whether Dibon may subscribe on their behalf | OPEN | Extends FS-019. To verify against CBK's CRB regulations |
+| FS-187 | Claude | Each bureau's submission format, delivery channel, lookup API and fees. Obtain from each bureau | OPEN | Candidate for an outreach email, as for the banks and operators |
+| FS-188 | Claude | Borrowers' rights under the CRB regulations: pre-listing notice period, dispute deadlines, any minimum amount for listing, retention of negative information | OPEN | To verify; the module names none of the figures |
+| FS-189 | Claude | What we keep of a retrieved credit report. Proposed: a reference, the score, the date and the summary used in the decision; never the bureau's whole file | OPEN | crb.md §4 |
+| FS-190 | Claude | Licensed digital-credit providers may be obliged to share with the bureaus. Links the MFI licensing question (FS-137) to CRB scope | OPEN | |
+| FS-191 | Claude | Submission frequency and form: monthly full-file, incremental, or real-time — whatever each bureau and the regulations require | OPEN | |

@@ -66,6 +66,9 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 | PT-23 | Airtel — SMS (SMPP) | Operator, messaging | As PT-22 | KE | KE (operator) | Candidate | 2026-10-01: direct connection decided | As PT-22 | Architect | FS-160 |
 | PT-24 | Telkom — SMS (SMPP) | Operator, messaging | As PT-22 | KE | KE (operator) | Candidate | 2026-10-01: direct connection decided | As PT-22 | Architect | FS-160 |
 | PT-25 | Meta — WhatsApp Business Platform | Messaging platform | WhatsApp templates and replies | Global | None | Candidate | 2026-10-01: WhatsApp named as a channel | Decide the route (SD-09); business verification | Architect | FS-147, FS-161, FS-165 |
+| PT-26 | Metropol | Credit reference bureau | Submission and lookups | KE | None | Candidate | 2026-10-01: CRB module written | Obtain formats, API and subscriber terms (FS-187) | Architect | FS-186, FS-187 |
+| PT-27 | TransUnion Kenya | Credit reference bureau | As PT-26 | KE | None | Candidate | 2026-10-01: CRB module written | As PT-26 | Architect | FS-186, FS-187 |
+| PT-28 | Creditinfo Kenya | Credit reference bureau | As PT-26 | KE | None | Candidate | 2026-10-01: CRB module written | As PT-26 | Architect | FS-186, FS-187 |
 
 ---
 
@@ -85,6 +88,7 @@ Statuses: **OPEN** · **DECIDED** (recorded in docs/decisions.md) ·
 | SD-07 | Hosting partner | PT-01 | C5 C11 | — | OPEN | FS-048, FS-110 |
 | SD-08 | SMS route per country | PT-20, PT-21, PT-22, PT-23, PT-24 | C4 C5 C12 C13 | — | OPEN | Kenya: direct to the operators (FS-160), with a partner as fallback. Elsewhere: a partner until volume justifies a licence and direct binds |
 | SD-09 | WhatsApp route: Meta directly, or a business solution provider | PT-25, PT-20, PT-21 | C4 C5 C7 | — | OPEN | FS-161 |
+| SD-10 | CRB connections | PT-26, PT-27, PT-28 | C1 C2 C4 C5 C7 | — | OPEN | Proposed: connect to every licensed bureau, not one. Lenders may be required to share with all of them |
 
 ## 3 · Criteria
 
