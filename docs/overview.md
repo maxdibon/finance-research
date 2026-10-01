@@ -66,7 +66,7 @@ own payments first, and insights runs on our own data first (FS-033).
 - [Kapu Escrow](modules/escrow.md) — funds held at a bank until the agreed
   conditions are met
 - [Kapu MFI](modules/mfi.md) — loan management for informal lenders
-- Kapu Sacco — deposit-taking and credit-only Saccos *(module to write)*
+- [Kapu Sacco](modules/sacco.md) — deposit-taking and credit-only Saccos
 - [SME Recon](modules/sme-recon.md) — reconciliation inside the SME's own ERP
 
 **Shared services**
