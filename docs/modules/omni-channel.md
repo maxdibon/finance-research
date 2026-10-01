@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, fintech]
 depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco]
 consumed_by: []
-review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238]
+review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320]
 last_reviewed: 2026-10-01
 ---
 
@@ -178,7 +178,8 @@ the in-country deployment.
 
 - Hold balances, or decide anything a product decides.
 - Field-officer or agent apps, and offline collection. Excluded at launch
-  (MFI PRD §6).
+  (MFI PRD §6); the field-officer app follows in phase 2 (core KC-14,
+  FS-320).
 - Staff back-office screens. Those are each product's portals.
 
 ## 11 · Open questions

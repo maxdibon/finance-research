@@ -71,7 +71,7 @@ in the MFI PRD; the rest is **Planned** until a deployment is live.
 | KC-11 | Migration from spreadsheets, Mifos or a previous core, with a signed-off reconciliation | Designed | MFI PRD FR-13 | 1 |
 | KC-12 | Hosted per institution, isolated, on Liquid's Azure Stack | Planned | FS-032 | 1 |
 | KC-13 | Open APIs for the institution's own apps and partners | Planned | FS-316 | 1 |
-| KC-14 | Field-officer app with offline capture | Planned | FS-320: excluded at launch in MFI PRD §6; the benchmark leads with one | later |
+| KC-14 | Field-officer app with offline capture | Planned | FS-320: moved up to phase 2. Outside launch scope in MFI PRD §6; the benchmark leads with one | 2 |
 
 ## 4 · Where it sits
 
@@ -159,11 +159,11 @@ institution's premises where it requires.
 
 - Hold money.
 - Replace a core an institution wants to keep. Integrated first, always.
-- Field-officer offline collection, at launch (KC-14).
+- Field-officer offline collection, at launch. It follows in phase 2 (KC-14, FS-320).
 
 ## 11 · Open questions
 
-FS-066, FS-185, FS-320, FS-321.
+FS-066, FS-185, FS-321.
 
 ## 12 · Sources
 

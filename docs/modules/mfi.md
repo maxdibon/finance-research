@@ -8,7 +8,7 @@ classification: Internal
 audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb]
 consumed_by: []
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141]
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320]
 last_reviewed: 2026-10-01
 ---
 
@@ -201,7 +201,8 @@ ops-provisioned through Odoo CRM.
 At launch (MFI PRD §6): group lending, programmatic NTSA, field-officer
 and offline collection, deposits and savings, CBK regulatory reporting, a
 borrower app or USSD, automated credit scoring, and CRB submission. It
-does not decide who gets a loan.
+does not decide who gets a loan. Field-officer and offline collection
+follow in phase 2 (core KC-14, FS-320).
 
 ## 11 · Open questions
 
