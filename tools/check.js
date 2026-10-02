@@ -297,6 +297,111 @@ function checkPublic(root) {
   return failures;
 }
 
+// ── onboarding ───────────────────────────────────────────────────────────
+// Everything the portfolio sells has an onboarding checklist (FS-343,
+// FS-353). The products are read from the PDF's own list, so a product added
+// to the portfolio without a checklist fails here.
+const PAGES_REST = path.join('design', 'portfolio-pdf', 'pages-rest.js');
+const ONBOARDING = path.join('docs', 'onboarding.md');
+
+function portfolioProducts(root) {
+  const m = read(root, PAGES_REST).match(/const products = \[([\s\S]*?)\];/);
+  return m ? [...m[1].matchAll(/\['([a-z-]+)',/g)].map((x) => x[1]) : null;
+}
+
+function checkOnboarding(root) {
+  const products = portfolioProducts(root);
+  if (!products) return [fail('onboarding', PAGES_REST, 0, 'portfolio product list not found; the check cannot run')];
+  if (!fs.existsSync(path.join(root, ONBOARDING))) return [fail('onboarding', ONBOARDING, 0, 'onboarding checklist missing')];
+  const failures = [];
+  const linked = new Map();
+  read(root, ONBOARDING).split('\n').forEach((text, i) => {
+    const m = text.match(/^Module: \[[^\]]+\]\(modules\/([a-z-]+)\.md\)/);
+    if (!m) return;
+    linked.set(m[1], i + 1);
+    if (!fs.existsSync(path.join(root, 'docs', 'modules', `${m[1]}.md`))) {
+      failures.push(fail('onboarding', ONBOARDING, i + 1, `links module ${m[1]}, which does not exist`));
+    }
+  });
+  for (const p of products) {
+    if (!linked.has(p)) failures.push(fail('onboarding', ONBOARDING, 0, `no checklist for ${p}, which the portfolio sells`));
+  }
+  return failures;
+}
+
+// ── claims ───────────────────────────────────────────────────────────────
+// Every integration the PDF shows as integrated (a chip without "~" on the
+// integrations page) is listed in claims.json with its basis: "live", backed
+// by a partner at stage Live or a capability that is Live or Built, or "v1",
+// the owner's decision to present a working v1 (FS-263). Nothing is claimed
+// that the records do not back or the owner has not chosen (FS-353).
+const CLAIMS = path.join('design', 'portfolio-pdf', 'claims.json');
+
+function integratedChips(root) {
+  const m = read(root, PAGES_REST).match(/const integ = \[([\s\S]*?)\]\];/);
+  if (!m) return null;
+  const chips = [];
+  for (const row of m[1].matchAll(/\['[a-z]+', '[^']+', \[([^\]]*)\]/g)) {
+    for (const c of row[1].matchAll(/'((?:[^'\\]|\\.)*)'/g)) if (!c[1].startsWith('~')) chips.push(c[1]);
+  }
+  return chips;
+}
+
+function checkClaims(root) {
+  const chips = integratedChips(root);
+  if (!chips) return [fail('claims', PAGES_REST, 0, 'integrations list not found; the check cannot run')];
+  if (!fs.existsSync(path.join(root, CLAIMS))) return [fail('claims', CLAIMS, 0, 'claims register missing')];
+  let claims;
+  try { claims = JSON.parse(read(root, CLAIMS)); } catch (e) { return [fail('claims', CLAIMS, 0, `not valid JSON: ${e.message}`)]; }
+  const failures = [];
+  const f = (msg) => failures.push(fail('claims', CLAIMS, 0, msg));
+  const byName = new Map(claims.map((c) => [c.claim, c]));
+  const live = new Set(parsePartners(root).candidates.filter((r) => r.cells[6] === 'Live').map((r) => r.id));
+  const caps = new Map();
+  for (const file of moduleFiles(root)) for (const r of capabilityRows(read(root, file))) caps.set(r.id, r.status);
+  for (const chip of chips) if (!byName.has(chip)) f(`"${chip}" is shown as integrated but has no claim`);
+  for (const c of claims) {
+    if (!chips.includes(c.claim)) f(`"${c.claim}" is claimed but no longer shown as integrated; remove it`);
+    if (c.basis === 'v1') {
+      if (!/FS-263/.test(c.ref || '')) f(`"${c.claim}" rests on v1 framing but does not cite the owner's decision`);
+    } else if (c.basis === 'live') {
+      const ok = (c.evidence || []).some((e) => live.has(e) || ['Live', 'Built'].includes(caps.get(e)));
+      if (!ok) f(`"${c.claim}" is claimed live, but none of its evidence is a Live partner or a Live or Built capability`);
+    } else {
+      f(`"${c.claim}" has basis "${c.basis}"; expected live or v1`);
+    }
+  }
+  return failures;
+}
+
+// ── decisions ────────────────────────────────────────────────────────────
+// A register row marked [decision] has an entry in docs/decisions.md, and
+// every entry there belongs to a marked row that was decided (FS-353).
+const DECISIONS = path.join('docs', 'decisions.md');
+
+function checkDecisions(root) {
+  const failures = [];
+  const rows = parseRegister(root);
+  const byId = new Map(rows.map((r) => [r.id, r]));
+  const entries = new Map();
+  read(root, DECISIONS).split('\n').forEach((text, i) => {
+    if (!text.startsWith('## ')) return;
+    for (const m of text.matchAll(/FS-\d{3}/g)) entries.set(m[0], i + 1);
+  });
+  for (const r of rows) {
+    if (r.notes.includes('[decision]') && !entries.has(r.id)) {
+      failures.push(fail('decisions', 'REVIEW.md', r.line, `${r.id} is marked [decision] but has no entry in docs/decisions.md`));
+    }
+  }
+  for (const [id, line] of entries) {
+    const r = byId.get(id);
+    if (!r) continue; // review-ids reports unknown ids
+    if (!r.notes.includes('[decision]')) failures.push(fail('decisions', DECISIONS, line, `${id} has an entry, but its register row is not marked [decision]`));
+    if (!['DECIDED', 'ANSWERED'].includes(r.status)) failures.push(fail('decisions', DECISIONS, line, `${id} has an entry but is ${r.status} in the register`));
+  }
+  return failures;
+}
+
 // ── counts ───────────────────────────────────────────────────────────────
 function counts(root) {
   const tally = (xs) => xs.reduce((m, x) => ((m[x] = (m[x] || 0) + 1), m), {});
@@ -328,6 +433,9 @@ function runAll(root) {
     ...checkDiagrams(root, files),
     ...checkPartners(root),
     ...checkPublic(root),
+    ...checkOnboarding(root),
+    ...checkClaims(root),
+    ...checkDecisions(root),
   ];
 }
 

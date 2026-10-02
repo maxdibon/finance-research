@@ -13,7 +13,7 @@ const test = require('node:test');
 const { runAll } = require('./check');
 
 const ROOT = path.join(__dirname, '..');
-const COPY = ['README.md', 'REVIEW.md', 'docs', path.join('sources', 'kapu'),
+const COPY = ['README.md', 'REVIEW.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'),
   path.join('sources', 'confidential', 'protected-names.txt')];
 
 // A fresh copy of the checked files, perturbed by `edit`, then checked.
@@ -71,7 +71,8 @@ test('register: a row with an extra cell fails', () => {
 });
 
 test('register: an unknown status fails', () => {
-  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-001 \|[^|]*\|[^|]*\|) DECIDED \|/m, '$1 DONE |')));
+  // FS-002 has no decisions entry, so only the register check is involved.
+  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-002 \|[^|]*\|[^|]*\|) DECIDED \|/m, '$1 DONE |')));
   assert.deepStrictEqual(names(f), ['register']);
 });
 
@@ -194,4 +195,44 @@ test('public: a register id in a marketing document fails', () => {
 test('public: a capability id in a marketing document fails', () => {
   const f = runWith((d) => patch(d, PORTFOLIO, (t) => `${t}\nAs in ${['CO', '01'].join('-')}.\n`));
   assert.deepStrictEqual(names(f), ['public']);
+});
+
+// ── onboarding, claims, decisions (FS-353) ───────────────────────────────
+const ONBOARDING = path.join('docs', 'onboarding.md');
+const PAGES_REST = path.join('design', 'portfolio-pdf', 'pages-rest.js');
+const CLAIMS = path.join('design', 'portfolio-pdf', 'claims.json');
+
+test('onboarding: a product the portfolio sells with no checklist fails', () => {
+  const f = runWith((d) => patch(d, ONBOARDING, (t) => t.replace(/^Module: \[escrow\].*\n/m, '')));
+  assert.deepStrictEqual(names(f), ['onboarding']);
+});
+
+test('onboarding: a checklist linking a module that does not exist fails', () => {
+  const f = runWith((d) => patch(d, ONBOARDING, (t) => t.replace('Module: [escrow](modules/escrow.md)', 'Module: [escrow](modules/escrow.md)\n\nModule: [lending](modules/lending.md)')));
+  assert.deepStrictEqual(names(f), ['onboarding']);
+});
+
+test('claims: an integration shown as integrated with no claim fails', () => {
+  const f = runWith((d) => patch(d, PAGES_REST, (t) => t.replace("'~Bank APIs'", "'Bank APIs'")));
+  assert.deepStrictEqual(names(f), ['claims']);
+});
+
+test('claims: a live claim whose evidence is not live fails', () => {
+  const f = runWith((d) => patch(d, CLAIMS, (t) => t.replace('"evidence": ["PT-31"]', '"evidence": ["PT-30"]')));
+  assert.deepStrictEqual(names(f), ['claims']);
+});
+
+test('claims: a v1 claim that does not cite the owner\'s decision fails', () => {
+  const f = runWith((d) => patch(d, CLAIMS, (t) => t.replace('{"claim": "T-Kash", "basis": "v1", "ref": "FS-263"', '{"claim": "T-Kash", "basis": "v1", "ref": ""')));
+  assert.deepStrictEqual(names(f), ['claims']);
+});
+
+test('decisions: a row marked [decision] with no entry fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'decisions.md'), (t) => t.replace('## FS-230 · Superset for dashboards', '## Superset for dashboards')));
+  assert.deepStrictEqual(names(f), ['decisions']);
+});
+
+test('decisions: an entry whose row is not marked fails', () => {
+  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-230 \|.*?) \[decision\] \|$/m, '$1 |')));
+  assert.deepStrictEqual(names(f), ['decisions']);
 });

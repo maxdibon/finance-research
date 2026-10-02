@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-02
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -44,6 +44,9 @@ its own entry.
 - **Costs (inferred):** nothing polished to show prospects in the meantime.
   The existing Canva PDFs stay in circulation, including the pricing error
   in FS-016.
+- **Replaced (2026-10-02):** the owner asked for the first PDF pages
+  (FS-264), then a full v1.0 (FS-263, FS-333). Designs still go to Markdown
+  or a preview first; the PDF follows each agreed round.
 
 ## FS-021 · Park Kapu Circle
 
@@ -267,3 +270,77 @@ its own entry.
 - **Costs (inferred):** no professional print run without rework (bleed,
   CMYK). In return: clickable contents, RGB colours as designed, and no
   print constraints on the layout.
+
+## FS-263 · Present the products as a working v1
+
+- **Chose:** the portfolio describes every product as working today.
+- **Argued against (argued):** Claude raised that no source in this
+  repository shows a capability built or live (FS-242), and that a bank's
+  due diligence will test the claim. The owner decided.
+- **Costs (inferred):** every claim the PDF makes is exposed to a
+  prospect's checking. The integrations claimed on this basis are listed
+  in design/portfolio-pdf/claims.json, so the gap stays visible (FS-353).
+  In return: a portfolio that sells, not a roadmap.
+
+## FS-311 · Kapu Core: the native mode becomes a product
+
+- **Chose:** a hosted core on Apache Fineract, sold as a product of its
+  own, with every Kapu product on top (FS-316).
+- **Argued against:** keeping the native mode as plumbing beneath the
+  other products, never sold on its own.
+- **Costs (inferred):** Dibon becomes a core vendor, with SASRA's vendor
+  rules for deposit-taking Saccos (FS-179) and what CBK expects of a bank's
+  core vendor (FS-321). Fineract must be confirmed against each segment
+  (FS-185). In return: a door into institutions that cannot integrate
+  with what they run today.
+
+## FS-323 · The web preview is generated from the PDF
+
+- **Chose:** the build writes the web preview from the same pages as the
+  PDF; the hand-built preview was retired.
+- **Argued against:** a separate, responsive web page.
+- **Costs (inferred):** on a phone the pages are small and need zooming.
+  In return: the preview cannot drift from the PDF.
+
+## FS-328 · In an escrow dispute, the arbiter decides and the bank still checks
+
+- **Chose:** the named arbiter can direct a release alone, within the
+  agreement; the account's mandate names the arbiter, so the bank checks
+  the instruction like any other.
+- **Argued against:** the arbiter only advising, with both parties still
+  signing; or Dibon acting as arbiter.
+- **Costs (inferred):** each partner bank must accept a mandate that names
+  a third party, at onboarding. In return: a dispute can always end.
+
+## FS-333 · Document control: an id, a version and a distribution log
+
+- **Chose:** every page carries the document id and version
+  (DC-FS-PF-001 · v1.0); the filename reads as words with the version and
+  date; v0.x is internal and v1.0 the first external copy; each copy sent
+  is logged on the CRM opportunity. Names never enter git.
+- **Argued against (argued):** an ISO-style number as the filename. The
+  owner wanted a name a person can read.
+- **Costs (inferred):** every change after a copy goes out means a new
+  version and a new log line. In return: we always know which version
+  each recipient holds.
+
+## FS-343 · Onboarding checklists as a template; progress lives in Odoo
+
+- **Chose:** docs/onboarding.md holds what every customer and every
+  product needs; each customer's progress is an Odoo project made from it.
+- **Argued against:** tracking customers in this repository.
+- **Costs (inferred):** two places to look, and the template must be
+  copied into Odoo by hand until that is automated. In return: no
+  customer names in git, and the checklist is checked against the
+  products (FS-353).
+
+## FS-354 · Write every document as if a customer will read it
+
+- **Chose:** internal documents use the same customer-safe framing as the
+  marketing: what a customer is working towards, not what is wrong with
+  their systems.
+- **Argued against (argued):** Claude suggested internal documents could
+  describe customers' systems plainly. The owner pointed out that internal
+  language ends up in customer meetings.
+- **Costs (inferred):** some bluntness is lost where a gap needs naming.
+  Gaps are still stated, as the work to be done rather than as a judgement.

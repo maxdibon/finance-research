@@ -6,7 +6,8 @@ FS-339, FS-343
 What we need from a customer before each product goes live. The common part
 applies to every customer; each product adds its own. Items come from each
 module's "What the customer must provide" row, so a change there belongs
-here too.
+here too. Every product the portfolio sells must have a section here; the
+check tool fails if one is missing (FS-353).
 
 This file is the template. A customer's progress against it is tracked in
 Odoo, as a project created from this list when the deal is won. Customer
@@ -36,6 +37,8 @@ in docs/partners.md, under each partner's next step.
 
 ## Kapu Collect
 
+Module: [collect](modules/collect.md)
+
 | Id | What we need | From | Why |
 |---|---|---|---|
 | OB-CO-01 | Its licence to take deposits, or the partner bank that holds the accounts | Compliance lead | collect §7 |
@@ -44,6 +47,8 @@ in docs/partners.md, under each partner's next step.
 | OB-CO-04 | Deposit notification wording and channels | Operations lead | collect CO-18 |
 
 ## Kapu Pay Gateway
+
+Module: [gateway](modules/gateway.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -54,6 +59,8 @@ in docs/partners.md, under each partner's next step.
 
 ## Kapu Escrow
 
+Module: [escrow](modules/escrow.md)
+
 | Id | What we need | From | Why |
 |---|---|---|---|
 | OB-ES-01 | The partner bank's escrow product, with sub-account and mandate APIs | Partner bank | escrow §4 |
@@ -62,6 +69,8 @@ in docs/partners.md, under each partner's next step.
 | OB-ES-04 | The arbiters it accepts, per agreement type | Customer's legal lead | escrow ES-08 |
 
 ## Kapu Core
+
+Module: [core](modules/core.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -73,6 +82,8 @@ in docs/partners.md, under each partner's next step.
 
 ## Kapu MFI
 
+Module: [mfi](modules/mfi.md)
+
 | Id | What we need | From | Why |
 |---|---|---|---|
 | OB-MF-01 | Its shortcode and bank access | Finance lead | mfi §4 |
@@ -81,6 +92,8 @@ in docs/partners.md, under each partner's next step.
 | OB-MF-04 | Collateral types it accepts | Credit lead | mfi MF-03 |
 
 ## Kapu Sacco
+
+Module: [sacco](modules/sacco.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -91,6 +104,8 @@ in docs/partners.md, under each partner's next step.
 
 ## Reconciliation & Observability
 
+Module: [recon-observability](modules/recon-observability.md)
+
 | Id | What we need | From | Why |
 |---|---|---|---|
 | OB-RO-01 | A posting-event feed, or a ledger extract on its cycle | IT lead | recon-observability §4 |
@@ -100,12 +115,16 @@ in docs/partners.md, under each partner's next step.
 
 ## SME Reconciliation
 
+Module: [sme-recon](modules/sme-recon.md)
+
 | Id | What we need | From | Why |
 |---|---|---|---|
 | OB-SR-01 | ERP API access, or an Odoo subscription | IT lead | sme-recon §4 |
 | OB-SR-02 | Bank and shortcode credentials, or delegated access | Finance lead | sme-recon §4 |
 
 ## Omni-channel banking
+
+Module: [omni-channel](modules/omni-channel.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -115,6 +134,8 @@ in docs/partners.md, under each partner's next step.
 | OB-OC-04 | A USSD code, from the operators | Operations lead | FS-233 |
 
 ## Business suite
+
+Module: [business-suite](modules/business-suite.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
