@@ -734,6 +734,9 @@ ISO/IEC 20000-1; ITIL 4; NIST Cybersecurity Framework 2.0; OWASP ASVS; FAPI
 **Registered label:** Registered and licensed
 **Registered:** Data processor, Office of the Data Protection Commissioner;
 PRSP licence, Communications Authority of Kenya
+**Working towards label:** Working towards
+**Working towards:** SASRA's requirements for Sacco system vendors; ISO/IEC
+27001 certification
 **How it runs:** Cloud-native on Kubernetes, mostly on permissively licensed
 open source: Apache Fineract, Keycloak, Kafka, Prometheus, OpenTelemetry
 and Apache Superset.
@@ -775,7 +778,8 @@ give an order, not dates: each step follows our customers.
 ### Assurance
 
 **Now:** PRSP licence; registered with the Data Commissioner
-**Next:** ISO/IEC 27001 certification
+**Next:** ISO/IEC 27001 certification; SASRA's requirements for Sacco system
+vendors
 **Later:** A payment service provider licence
 
 ## Where we are going, closing

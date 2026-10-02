@@ -458,6 +458,7 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
     <ul class="secg">${sec.map(([k, x, y]) => `<li><span class="disc">${ico(k)}</span><div><b>${x}</b><span>${y}</span></div></li>`).join('')}</ul>
     ${chipRow(SE.get('Standards label'), SE.get('Standards'))}
     ${chipRow(SE.get('Registered label'), SE.get('Registered'))}
+    ${chipRow(SE.get('Working towards label'), SE.get('Working towards')).replace('<div class="chips">', '<div class="chips towards">')}
     <p class="runs">${inline(SE.get('How it runs'))}</p>
     <div class="band" style="margin-top:5mm"><p>${ico('evidence', 'bi')}${inline(SE.get('Band'))}</p><small>${inline(SE.get('Band text'))}</small></div>
   </div>
@@ -625,6 +626,7 @@ const CSS = `
 .secg span { font-size: 9pt; line-height: 1.4; }
 .strip { display: grid; grid-template-columns: 30mm 1fr; gap: 3mm; align-items: start; margin-top: 4mm; }
 .strip em { font-style: normal; font: 700 7pt/1.3 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-text); padding-top: 1.4mm; }
+.chips.towards span { border-style: dashed; }
 .runs { font-size: 8.5pt; color: var(--muted); margin: 4mm 0 0; }
 .rows { list-style: none; padding: 0; margin: 2mm 0 0; display: grid; }
 .rows li { display: grid; grid-template-columns: 15mm 1fr; gap: 5mm; align-items: center; padding: 6mm 0; position: relative; }
