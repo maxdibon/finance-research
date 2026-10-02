@@ -1,20 +1,24 @@
 #!/usr/bin/env node
-// Builds the marketing PDF from pages.html (FS-264).
+// Builds the portfolio PDFs and web previews (FS-264).
 //
-//   node design/portfolio-pdf/build.js
+//   node design/portfolio-pdf/build.js                      every edition
+//   node design/portfolio-pdf/build.js --edition short      one edition
 //   node design/portfolio-pdf/build.js --for "Recipient name"
+//   node design/portfolio-pdf/build.js --html-only          pages, no PDF
 //
-// The document id, version and issue date come from document.json (FS-333).
+// Every word comes from docs/marketing/portfolio.md (FS-352). document.json
+// names each edition: its id, title, version, issue date and the pages it
+// carries (FS-333, FS-362). Pages are numbered by position in the edition,
+// and the contents page lists what that edition carries.
+//
 // A named copy carries "Prepared for" on the cover and the name in its
 // filename, and is not published as the web preview. Record every named
 // copy in the distribution log on the CRM opportunity; names never go in git.
 //
 // Output goes to build/portfolio/, which git ignores. The logo is the
 // 1000-pixel transparent original extracted from Dibon's own July proposal
-// (design/brand/extract-logo.js). Pages 6 and 8 onwards come from
-// pages-rest.js, and the diagrams from design/portfolio-preview/figures.js.
-// Headless Chrome prints the pages to A4. The same pages, scaled to the
-// screen, become the web preview (build/portfolio/portfolio-web.html).
+// (design/brand/extract-logo.js). Headless Chrome prints the pages to A4;
+// the same pages, scaled to the screen, become the web preview.
 
 'use strict';
 
@@ -35,17 +39,21 @@ const { rest, CSS } = require(path.join(__dirname, 'pages-rest.js'));
 const { load: loadCopy, inline, pair } = require(path.join(__dirname, 'copy.js'));
 const copy = loadCopy();
 const R = rest({ F, copy });
+const arg = (name) => { const i = process.argv.indexOf(name); return i > 0 ? (process.argv[i + 1] || '').trim() : null; };
 const htmlOnly = process.argv.includes('--html-only');
+const recipient = arg('--for');
+if (recipient === '') throw new Error('--for needs a name');
+const DOC = JSON.parse(fs.readFileSync(path.join(__dirname, 'document.json'), 'utf8'));
+const only = arg('--edition');
+if (only && !DOC.editions[only]) throw new Error(`no edition "${only}"; document.json has ${Object.keys(DOC.editions).join(', ')}`);
 
-// Every word comes from docs/marketing/portfolio.md (FS-352). pages.html
-// refers to it as {{Section|Field}}, a card's title {{Section|#n}}, a card's
-// field {{Section|#n|Field}}, a list entry {{...|Field|n}}, or the halves of a
-// "Label: text" entry {{...|Field|n|label}} and {{...|Field|n|text}}. An
-// "em:" prefix highlights with <em> instead of <span>. A list the page shows
-// entry by entry must have exactly as many entries as the page has room for.
-const PAGE = { 'Who we are': '03', 'The problems we solve': '04', 'How we build': '05', 'The portfolio at a glance': '06',
-  Products: '07', 'Business suite': '16', 'Platform services': '17', 'Who it is for': '18', Integrations: '19',
-  'Deployment and security': '20', 'Working with us': '21' };
+// ── Fill pages.html from the copy ────────────────────────────────────────
+// pages.html refers to the copy as {{Section|Field}}, a card's title
+// {{Section|#n}}, a card's field {{Section|#n|Field}}, a list entry
+// {{...|Field|n}}, or the halves of a "Label: text" entry {{...|Field|n|label}}
+// and {{...|Field|n|text}}. An "em:" prefix highlights with <em> instead of
+// <span>. A list the page shows entry by entry must have exactly as many
+// entries as the page has room for.
 const counted = (s) => s.replace('{products}', R.counts.products).replace('{services}', R.counts.services).replace('{Products}', R.word);
 const prods = copy.section('Products').items();
 const listUse = new Map();
@@ -69,21 +77,8 @@ function resolve(ref) {
   const [label, text] = pair(value[n - 1]);
   return parts[0] === 'label' ? label : text;
 }
-const toc = [];
-for (const s of copy.sections) {
-  if (!('Contents' in s.fields)) continue;
-  const id = PAGE[s.title];
-  if (!id) throw new Error(`portfolio copy: "${s.title}" has a contents entry but no page in the layout`);
-  toc.push(`      <li><a href="#p${id}">${inline(s.fields.Contents)}</a><a class="n" href="#p${id}">${id}</a></li>`);
-  if (s.title === 'Products') {
-    prods.forEach((it, i) => {
-      const n = String(7 + i).padStart(2, '0');
-      toc.push(`      <li class="sub"><a href="#p${n}">${inline(it.title)}</a><a class="n" href="#p${n}">${n}</a></li>`);
-    });
-  }
-}
 const SPECIAL = {
-  toc: () => toc.join('\n'),
+  toc: () => '__TOC__',
   lineup: () => prods.map((it) => `<span>${inline(it.title)}</span>`).join(''),
 };
 const pagesHtml = fs.readFileSync(path.join(__dirname, 'pages.html'), 'utf8').replace(/\{\{(em:)?([^}]+)\}\}/g, (m, em, ref) => {
@@ -93,44 +88,101 @@ const pagesHtml = fs.readFileSync(path.join(__dirname, 'pages.html'), 'utf8').re
 for (const [key, u] of listUse) {
   if (u.max !== u.length) throw new Error(`portfolio copy: "${key.split('|').join(' › ')}" has ${u.length} entries; the page has room for ${u.max}. Change the design first, then the copy`);
 }
-const DOC = JSON.parse(fs.readFileSync(path.join(__dirname, 'document.json'), 'utf8'));
-const at = process.argv.indexOf('--for');
-const recipient = at > 0 ? (process.argv[at + 1] || '').trim() : '';
-if (at > 0 && !recipient) throw new Error('--for needs a name');
-const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const longDate = new Date(`${DOC.issued}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
-const docRef = `${DOC.id} · v${DOC.version}`;
-const prepared = recipient ? `<div class="prepared"><span>${inline(copy.section('Labels').get('Prepared for'))}</span>${esc(recipient)} · ${longDate}</div>` : '';
 const logo = `data:image/png;base64,${fs.readFileSync(path.join(ROOT, 'design', 'brand', 'dibon_logo_white.png')).toString('base64')}`;
-
 // Counts are computed by pages-rest.js from the pages it builds, never typed.
-const html = pagesHtml
+const all = pagesHtml
   .split('__N_PRODUCTS__').join(String(R.counts.products))
   .split('__N_SERVICES__').join(String(R.counts.services))
   .split('__REST_CSS__').join(CSS)
   .split('__PAGE_06__').join(R.page06)
   .split('__PAGES_07_21__').join(R.pages0721)
-  .split('__DOC_TITLE__').join(`${DOC.title}, ${docRef}`)
-  .split('__DOCREF__').join(docRef)
-  .split('__PREPARED__').join(prepared)
   .split('__LOGO__').join(logo);
-const left = html.match(/__[A-Z0-9_]+__/);
-if (left) throw new Error(`unfilled placeholder ${left[0]}`);
 
-fs.mkdirSync(OUT, { recursive: true });
-const htmlOut = path.join(OUT, 'portfolio.html');
-fs.writeFileSync(htmlOut, html);
+// ── Pages, by key ────────────────────────────────────────────────────────
+// Each page is found by its layout id and given a key; an edition lists the
+// keys it carries. The contents entry for a page is its copy section's
+// "Contents" field.
+const KEY_OF = { p03: 'who', p04: 'problems', p05: 'how', p06: 'glance', p16: 'suite', p17: 'platform', p18: 'who-for',
+  p19: 'integrations', p20a: 'deployment', p20b: 'service', p20c: 'security', p21: 'working' };
+const SECTION_OF = { who: 'Who we are', problems: 'The problems we solve', how: 'How we build', glance: 'The portfolio at a glance',
+  products: 'Products', suite: 'Business suite', platform: 'Platform services', 'who-for': 'Who it is for', integrations: 'Integrations',
+  deployment: 'Deployment options', service: 'Support and service levels', security: 'Security and standards', working: 'Working with us' };
+const first = all.indexOf('<section class="page');
+const last = all.lastIndexOf('</section>') + '</section>'.length;
+const blocks = all.slice(first, last).match(/<section class="page[\s\S]*?<\/section>/g);
+let productIndex = 0;
+const pages = blocks.map((html) => {
+  const id = (html.match(/^<section class="page[^"]*" id="(p\w+)"/) || [])[1];
+  if (/^<section class="page cover"/.test(html)) return { key: 'cover', html };
+  if (html.includes('<ol class="toc">')) return { key: 'contents', html };
+  if (/^p(0[7-9]|1[0-5])$/.test(id)) return { key: 'products', html, id, product: prods[productIndex++].title };
+  if (!KEY_OF[id]) throw new Error(`page ${id} has no key in build.js`);
+  return { key: KEY_OF[id], html, id };
+});
+
+function edition(name) {
+  const E = DOC.editions[name];
+  for (const k of E.pages) if (!pages.some((p) => p.key === k)) throw new Error(`edition "${name}" lists page "${k}", which the layout does not have`);
+  const kept = pages.filter((p) => E.pages.includes(p.key));
+  // Number by position: the cover is unnumbered, the rest count from 2.
+  let n = 1;
+  const numbered = kept.map((p) => (p.key === 'cover' ? { ...p, num: null } : { ...p, num: String(++n).padStart(2, '0') }));
+  const toc = [];
+  for (const p of numbered) {
+    if (p.key === 'cover' || p.key === 'contents') continue;
+    const entry = (cls, title) => `      <li${cls}><a href="#p${p.num}">${title}</a><a class="n" href="#p${p.num}">${p.num}</a></li>`;
+    if (p.key === 'products') {
+      if (p.product === prods[0].title) toc.push(entry('', inline(copy.section('Products').get('Contents'))));
+      toc.push(entry(' class="sub"', inline(p.product)));
+    } else toc.push(entry('', inline(copy.section(SECTION_OF[p.key]).get('Contents'))));
+  }
+  const docRef = `${E.id} · v${E.version}`;
+  const longDate = new Date(`${E.issued}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const prepared = recipient ? `<div class="prepared"><span>${inline(copy.section('Labels').get('Prepared for'))}</span>${esc(recipient)} · ${longDate}</div>` : '';
+  const body = numbered.map((p) => {
+    let h = p.html;
+    if (p.num) {
+      h = h.replace(/^(<section class="page[^"]*")( id="p\w+")?/, `$1 id="p${p.num}"`)
+        .replace(/<span class="num">[^<]*<\/span>/, `<span class="num">${p.num}</span>`);
+    }
+    return h;
+  }).join('\n\n');
+  const html = (all.slice(0, first) + body + all.slice(last))
+    .split('__TOC__').join(toc.join('\n'))
+    .split('__DOC_TITLE__').join(`${E.title}, ${docRef}`)
+    .split('__DOCREF__').join(docRef)
+    .split('__PREPARED__').join(prepared);
+  const left = html.match(/__[A-Z0-9_]+__/);
+  if (left) throw new Error(`unfilled placeholder ${left[0]}`);
+  return { E, html, docRef, count: numbered.length };
+}
+
 // A filename a person can read: title, version, issue date, and the
 // recipient for a named copy. Hyphens, not spaces, so links do not break.
 const slug = (s) => s.normalize('NFKD').replace(/[^\w\s.-]/g, '').trim().replace(/\s+/g, '-');
-const pdfOut = path.join(OUT, `${slug(DOC.title)}-v${DOC.version}-${DOC.issued}${recipient ? `-for-${slug(recipient)}` : ''}.pdf`);
-if (htmlOnly) console.log(`built ${path.relative(ROOT, htmlOut)}; no PDF printed (--html-only)`);
-else printPdf();
+
+fs.mkdirSync(OUT, { recursive: true });
+for (const name of only ? [only] : Object.keys(DOC.editions)) {
+  const { E, html, docRef, count } = edition(name);
+  const htmlOut = path.join(OUT, `portfolio-${name}.html`);
+  fs.writeFileSync(htmlOut, html);
+  const pdfOut = path.join(OUT, `${slug(E.title)}-v${E.version}-${E.issued}${recipient ? `-for-${slug(recipient)}` : ''}.pdf`);
+  if (htmlOnly) console.log(`built ${path.relative(ROOT, htmlOut)} (${count} pages); no PDF printed (--html-only)`);
+  else printPdf(htmlOut, pdfOut);
+  if (recipient) {
+    console.log(`distribution log: ${E.id} v${E.version}, ${E.issued}, for ${recipient}, file ${path.basename(pdfOut)}`);
+    continue;
+  }
+  const webOut = path.join(OUT, `portfolio-${name}-web.html`);
+  fs.writeFileSync(webOut, web(html, `${E.title} · ${docRef}`, count));
+  console.log(`built ${path.relative(ROOT, webOut)} (${count} pages)`);
+}
 
 // Print to a fresh file, then move it into place. Chrome exits quietly when
 // it cannot write, for example while the PDF is open in a viewer, so the
 // build checks that a new file exists rather than trusting the exit (FS-322).
-function printPdf() {
+function printPdf(htmlOut, pdfOut) {
   const tmp = path.join(OUT, `print-${process.pid}.pdf`);
   execFileSync(CHROME, [
     '--headless=new', '--disable-gpu', '--no-pdf-header-footer', '--virtual-time-budget=8000',
@@ -148,21 +200,16 @@ function printPdf() {
   }
 }
 
-if (recipient) {
-  console.log(`distribution log: ${DOC.id} v${DOC.version}, ${DOC.issued}, for ${recipient}, file ${path.basename(pdfOut)}`);
-  process.exit(0);
-}
-
 // The web preview is the same pages, laid out as sheets and scaled to the
 // screen, so it cannot drift from the PDF (FS-323). The artifact host adds
 // the document skeleton, so this keeps only the head's links and styles and
 // the body's pages.
-const between = (s, a, b) => s.slice(s.indexOf(a) + a.length, s.indexOf(b));
-const head = between(html, '<head>', '</head>')
-  .replace(/<meta[^>]*>\s*/g, '')
-  .replace(/<title>[^<]*<\/title>/, '<title>Dibon Financial Services</title>');
-const pages = (html.match(/<section class="page/g) || []).length;
-const SCREEN = `<style>
+function web(html, label, count) {
+  const between = (s, a, b) => s.slice(s.indexOf(a) + a.length, s.indexOf(b));
+  const head = between(html, '<head>', '</head>')
+    .replace(/<meta[^>]*>\s*/g, '')
+    .replace(/<title>[^<]*<\/title>/, '<title>Dibon Financial Services</title>');
+  const SCREEN = `<style>
 /* Screen only: the PDF's sheets on a desk, scaled to fit the width. The sheets keep their print colours in both themes; the desk follows the viewer's. */
 :root { --desk: #eee4e3; --desk-ink: #4f3d55; --sheet-shadow: 0 1px 2px rgba(40, 4, 48, 0.14), 0 10px 28px rgba(40, 4, 48, 0.10); --fit: 1; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --desk: #170a1b; --desk-ink: #cdbcd2; --sheet-shadow: 0 10px 30px rgba(0, 0, 0, 0.55); color-scheme: dark; } }
@@ -174,7 +221,7 @@ const SCREEN = `<style>
   .page { margin: 0 auto 24px; box-shadow: var(--sheet-shadow); zoom: var(--fit); }
 }
 </style>`;
-const FIT = `<script>
+  const FIT = `<script>
 (function () {
   var root = document.documentElement;
   function fit() {
@@ -186,10 +233,8 @@ const FIT = `<script>
   addEventListener('resize', fit);
 })();
 </script>`;
-const web = `${head}${SCREEN}
-<header class="desk-head"><span>Dibon Financial Services · Review draft</span><span>${pages} pages, the same as the PDF</span></header>
+  return `${head}${SCREEN}
+<header class="desk-head"><span>${label}</span><span>${count} pages, the same as the PDF</span></header>
 ${between(html, '<body>', '</body>')}${FIT}
 `;
-const webOut = path.join(OUT, 'portfolio-web.html');
-fs.writeFileSync(webOut, web);
-console.log(`built ${path.relative(ROOT, webOut)} (${pages} pages)`);
+}

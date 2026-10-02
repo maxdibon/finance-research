@@ -4,8 +4,9 @@ The consolidated documents for Dibon's financial-services offerings. There
 is one portfolio overview, built from modules, and buyer packs assembled
 from the same modules (FS-001).
 
-**Status:** the portfolio is issued as DC-FS-PF-001 v1.0, a PDF and a web
-preview, both built from the Markdown (FS-333, FS-352). Designs still go to
+**Status:** the portfolio is issued in two editions built from the same
+Markdown: the full portfolio (DC-FS-PF-001) and a short overview
+(DC-FS-PF-002), each as a PDF and a web preview (FS-333, FS-352, FS-362). Designs still go to
 Markdown or a preview before they reach the PDF (FS-009).
 
 ## Where things live
@@ -49,7 +50,8 @@ git config core.hooksPath .githooks   # once per clone
 node tools/check.js --counts          # every check, plus computed counts
 node --test tools/check.test.js       # breaks each check on purpose
 node tools/assemble.js                # builds build/master.md; refuses if a check fails
-node design/portfolio-pdf/build.js    # the portfolio PDF and web preview
+node design/portfolio-pdf/build.js    # both editions: PDFs and web previews
+node design/portfolio-pdf/build.js --edition short   # one edition
 node design/portfolio-pdf/build.js --html-only   # pages only, no PDF
 ```
 

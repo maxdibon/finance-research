@@ -10,8 +10,9 @@ last_reviewed: 2026-10-02
 
 # Dibon Financial Services portfolio
 
-Every word in the portfolio comes from this file. The PDF and the web
-preview are built from it, so edit the words here and nowhere else.
+Every word in the portfolio comes from this file. Both editions, the full
+portfolio and the short overview, and their web previews are built from it,
+so edit the words here and nowhere else.
 
 **How to edit.** Each `##` heading is a page and each `###` heading is a
 card, product or row on that page, in the order they appear. Change the
@@ -23,7 +24,8 @@ removing a card changes the layout, so the build stops and says so rather
 than squeezing it in.
 
 On a few cards the label is also the visible heading: Mission, Vision,
-Values, Email and Phone.
+Values, Email, Phone, the support tiers' Hours, How and For, and "Every tier
+includes".
 
 Diagrams and illustrative screens, including the words drawn inside them,
 are part of the design and live with it.
@@ -573,28 +575,150 @@ upgrade
 **Diagram caption:** Each rail and each system is integrated once, in the
 platform, and every product uses it.
 
-## Deployment and security
+## Deployment options
 
-**Contents:** Deployment and security
-**Eyebrow:** Deployment and security
+**Contents:** Deployment options
+**Eyebrow:** Deployment options
+**Heading:** Where it runs, and who runs it
+**Intro:** Every option runs the same software with the same controls. What
+changes is where it runs, and how much of the running Dibon takes on.
+**Columns:**
+- You run it
+- Dibon runs it
+**Rows:**
+- Your premises
+- In-country cloud
+
+### Self-managed on your premises
+
+**Text:** Your team runs the platform in your own data centre. Dibon
+supplies the software, updates and documentation, with the support tier
+you choose.
+
+### Managed on your premises
+
+**Text:** The platform and your data stay in your building. Dibon operates
+it remotely, through access you grant, watch and can withdraw at any time.
+
+### Self-managed in the cloud
+
+**Text:** Your own tenancy in an in-country cloud, today Liquid's Azure
+Stack in Kenya. Your team runs it, with Dibon's support behind it.
+
+### Managed by Dibon
+
+**Text:** Dibon hosts and runs the platform in-country, at the level of
+service you choose: Hosted, Managed or Operated.
+
+## Deployment options, managed levels
+
+**Heading:** When Dibon runs it
+**Takes on label:** Dibon takes on
+**Keeps label:** You keep
+
+### Hosted
+
+**Takes on:** Infrastructure, backups, security patches and uptime
+monitoring
+**Keeps:** Running the application: users, configuration and upgrades
+
+### Managed
+
+**Takes on:** All of Hosted, plus upgrades, configuration changes, user
+requests, and watching integrations and incidents
+**Keeps:** Day-to-day operations
+
+### Operated
+
+**Takes on:** All of Managed, plus daily operations: reconciliation breaks,
+end-of-day checks, liaison with rails and partners, and preparing returns
+**Keeps:** Decisions, approvals and regulatory responsibility, which stay
+yours in every option
+
+## Deployment options, closing
+
+**Band:** Change your mind, *without a rebuild.*
+**Band text:** Start self-managed and move to Dibon-managed later, or bring a
+cloud deployment onto your premises: each move is a migration onto the same
+software, not a new system.
+
+## Support and service levels
+
+**Contents:** Support and service levels
+**Eyebrow:** Support and service levels
+**Heading:** Support that matches how you run
+**Intro:** Every option comes with one of three support tiers. Response and
+resolution times are agreed in your contract, so each one has people
+behind it.
+
+### Standard
+
+**Hours:** Business hours, Monday to Friday
+**How:** Service desk by portal and email
+**For:** Institutions with their own operations team
+
+### Extended
+
+**Hours:** Longer weekday hours and Saturdays
+**How:** Portal, email and phone
+**For:** Institutions open beyond office hours
+
+### Critical
+
+**Hours:** Around the clock for severity 1
+**How:** Portal, email and a phone line that is always answered
+**For:** Institutions where money moves at all hours
+
+## Support and service levels, severities
+
+**Heading:** How an incident is ranked
+**Severities:**
+- Severity 1: Money cannot move, or a balance is wrong
+- Severity 2: A product or channel is degraded, but money still moves
+- Severity 3: One user or one function is affected
+- Severity 4: A question or a change request
+**Every tier includes:**
+- Software updates and security patches
+- A service desk that logs and tracks every request
+- A written incident report after every severity 1
+**Band:** Response times, *in your contract.*
+**Band text:** We publish how support works; the times are agreed with each
+institution, so every promise we make is one we staff.
+
+## Security and standards
+
+**Contents:** Security and standards
+**Eyebrow:** Security and standards
 **Heading:** Built to be audited
 **Rows:**
-- Where it runs: On your premises, or in an in-country cloud. Kenya first;
-  designed to follow our customers across East and Southern Africa and
-  Nigeria.
-- How it runs: Cloud-native on Kubernetes, mostly on permissively licensed
-  open source: Apache Fineract, Keycloak, Kafka, Prometheus, OpenTelemetry
-  and Apache Superset.
 - Who can act: One login per person, never shared; re-authentication at the
   moment of any act that moves money; a second approver for payments,
   reversals and role changes.
 - What is recorded: Every action, append-only. Nothing is edited after the
   fact; a correction is a new entry.
+- How data is protected: Encrypted in transit and at rest, with keys held
+  in a managed key store and never in the code.
+- How institutions are kept apart: Each institution has its own isolated
+  instance; no institution's data is reachable from another's.
+- How it is tested: Security testing in every release, and independent
+  penetration tests before go-live.
+- How it recovers: Backups taken and restores tested; recovery-time and
+  data-loss targets agreed in your contract.
+- How it is watched: Monitoring and alerting for every system that moves
+  money, with an incident process from first alert to written report.
 - How data is handled: Designed in line with Kenya's Data Protection Act,
   2019. Data is classified; the most sensitive never appears in logs or on
-  a phone. Credentials never leave our servers.
-- How it is watched: Monitoring, alerting and service-level objectives for
-  every system that moves money.
+  a phone.
+**Standards label:** Designed in line with
+**Standards:** ISO/IEC 27001; ISO/IEC 27017; ISO/IEC 27018; ISO 22301;
+ISO/IEC 20000-1; NIST Cybersecurity Framework 2.0; OWASP ASVS; FAPI 2.0;
+CIS Benchmarks
+**Registered label:** Registered and licensed
+**Registered:** Data processor, Office of the Data Protection Commissioner;
+PRSP licence, Communications Authority of Kenya
+**How it runs:** Cloud-native on Kubernetes, mostly on permissively licensed
+open source: Apache Fineract, Keycloak, Kafka, Prometheus, OpenTelemetry
+and Apache Superset.
 **Band:** Evidence, *not assertions.*
 **Band text:** Every number traces to a transaction, every approval to a
 person at a moment, and every correction is a new entry an auditor can

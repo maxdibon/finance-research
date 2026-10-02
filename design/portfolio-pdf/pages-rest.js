@@ -393,18 +393,70 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
   ${footer('19')}
 </section>`;
 
-  const DS = copy.section('Deployment and security');
-  const sec = byOrder(['pin', 'cube', 'key', 'log', 'shield', 'pulse'],
-    DS.get('Rows').map(pair).map(([a, b]) => [inline(a), inline(b)]), 'Deployment and security › Rows');
-  const page19 = `
-<section class="page" id="p20">
+  // Deployment options: where it runs, by who runs it (FS-359), and the
+  // three levels of Dibon-managed service (FS-360).
+  const DO = copy.section('Deployment options');
+  const DL = copy.section('Deployment options, managed levels');
+  const cells = DO.items(4);
+  const cols = DO.get('Columns');
+  const rowsDo = byOrder(['store', 'server'], DO.get('Rows').map((r) => [inline(r)]), 'Deployment options › Rows');
+  if (cols.length !== 2) throw new Error('portfolio copy: Deployment options › Columns needs two entries');
+  const cell = (it, dibon) => `<div class="dc${dibon ? ' dib' : ''}"><b>${inline(it.title)}</b><span>${inline(it.get('Text'))}</span></div>`;
+  const pageDeploy = `
+<section class="page" id="p20a">
   ${corner(1)}
   <div class="content">
-    <p class="eyebrow">${inline(DS.get('Eyebrow'))}</p>
+    <p class="eyebrow">${inline(DO.get('Eyebrow'))}</p>
     ${RULE}
-    <h2>${inline(DS.get('Heading'))}</h2>
-    <ul class="rows">${sec.map(([k, a, b]) => `<li><span class="disc">${ico(k)}</span><div><b>${a}</b><span>${b}</span></div></li>`).join('')}</ul>
-    <div class="band" style="margin-top:6mm"><p>${ico('evidence', 'bi')}${inline(DS.get('Band'))}</p><small>${inline(DS.get('Band text'))}</small></div>
+    <h2>${inline(DO.get('Heading'))}</h2>
+    <p class="lede">${inline(DO.get('Intro'))}</p>
+    <div class="dgrid"><div></div>${cols.map((c) => `<div class="dh">${inline(c)}</div>`).join('')}${rowsDo.map(([k, r], i) => `<div class="dr">${ico(k)}<span>${r}</span></div>${cell(cells[i * 2], false)}${cell(cells[i * 2 + 1], true)}`).join('')}</div>
+    <p class="sub-h">${inline(DL.get('Heading'))}</p>
+    <div class="levels">${DL.items(3).map((it) => `<div class="lvl"><b>${inline(it.title)}</b><em>${inline(DL.get('Takes on label'))}</em><span>${inline(it.get('Takes on'))}</span><em>${inline(DL.get('Keeps label'))}</em><span>${inline(it.get('Keeps'))}</span></div>`).join('')}</div>
+    <div class="band" style="margin-top:8mm"><p>${ico('route', 'bi')}${inline(copy.section('Deployment options, closing').get('Band'))}</p><small>${inline(copy.section('Deployment options, closing').get('Band text'))}</small></div>
+  </div>
+  ${footer('20')}
+</section>`;
+
+  // Support tiers and severities (FS-360). Times are agreed per contract.
+  const SV = copy.section('Support and service levels');
+  const SS = copy.section('Support and service levels, severities');
+  const pageService = `
+<section class="page svc" id="p20b">
+  ${corner(3)}
+  <div class="content">
+    <p class="eyebrow">${inline(SV.get('Eyebrow'))}</p>
+    ${RULE}
+    <h2>${inline(SV.get('Heading'))}</h2>
+    <p class="lede">${inline(SV.get('Intro'))}</p>
+    <div class="levels">${SV.items(3).map((it) => `<div class="lvl"><b>${inline(it.title)}</b>${['Hours', 'How', 'For'].map((k) => `<em>${k}</em><span>${inline(it.get(k))}</span>`).join('')}</div>`).join('')}</div>
+    <div class="svc-two">
+      <div><p class="sub-h">${inline(SS.get('Heading'))}</p><ul class="sevs">${SS.get('Severities').map(pair).map(([s, d]) => `<li><b>${inline(s)}</b><span>${inline(d)}</span></li>`).join('')}</ul></div>
+      <div><p class="sub-h">Every tier includes</p>${spine(SS.get('Every tier includes').map((s) => inline(s)))}</div>
+    </div>
+    <div class="band" style="margin-top:7mm"><p>${ico('chat', 'bi')}${inline(SS.get('Band'))}</p><small>${inline(SS.get('Band text'))}</small></div>
+  </div>
+  ${footer('20')}
+</section>`;
+
+  // Security and standards (FS-361): standards are "designed in line with",
+  // never certified; only what Dibon holds is listed as held.
+  const SE = copy.section('Security and standards');
+  const sec = byOrder(['key', 'log', 'shield', 'cube', 'evidence', 'server', 'pulse', 'identity'],
+    SE.get('Rows').map(pair).map(([x, y]) => [inline(x), inline(y)]), 'Security and standards › Rows');
+  const chipRow = (label, list) => `<div class="strip"><em>${inline(label)}</em><div class="chips">${list.split('; ').map((s) => `<span>${inline(s.trim())}</span>`).join('')}</div></div>`;
+  const pageSecurity = `
+<section class="page" id="p20c">
+  ${corner(1)}
+  <div class="content">
+    <p class="eyebrow">${inline(SE.get('Eyebrow'))}</p>
+    ${RULE}
+    <h2>${inline(SE.get('Heading'))}</h2>
+    <ul class="secg">${sec.map(([k, x, y]) => `<li><span class="disc">${ico(k)}</span><div><b>${x}</b><span>${y}</span></div></li>`).join('')}</ul>
+    ${chipRow(SE.get('Standards label'), SE.get('Standards'))}
+    ${chipRow(SE.get('Registered label'), SE.get('Registered'))}
+    <p class="runs">${inline(SE.get('How it runs'))}</p>
+    <div class="band" style="margin-top:5mm"><p>${ico('evidence', 'bi')}${inline(SE.get('Band'))}</p><small>${inline(SE.get('Band text'))}</small></div>
   </div>
   ${footer('20')}
 </section>`;
@@ -429,7 +481,7 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
 </section>`;
 
   // N_PRODUCTS is set above, before page 6 is assembled.
-  return { counts: { products: N_PRODUCTS, services: svc.length }, word: WORD[N_PRODUCTS], page06: page06.split('${N_PRODUCTS}').join(String(N_PRODUCTS)), pages0721: P.map(productPage).join('\n') + page15 + page16 + page17 + page18 + page19 + page20 };
+  return { counts: { products: N_PRODUCTS, services: svc.length }, word: WORD[N_PRODUCTS], page06: page06.split('${N_PRODUCTS}').join(String(N_PRODUCTS)), pages0721: P.map(productPage).join('\n') + page15 + page16 + page17 + page18 + pageDeploy + pageService + pageSecurity + page20 };
 }
 
 const CSS = `
@@ -504,6 +556,40 @@ const CSS = `
 .chip-key .k-on { border: 0.3mm solid var(--amber); background: #fff; color: var(--aubergine); }
 .chip-key .k-next { border: 0.3mm dashed #cdb6bf; color: var(--muted); }
 /* Page 19 · rows */
+/* Deployment options, support tiers, security (FS-359 to FS-361) */
+.dgrid { display: grid; grid-template-columns: 30mm 1fr 1fr; gap: 3mm; margin-top: 1mm; }
+.dgrid .dh { font: 700 7.5pt/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-text); align-self: end; padding-bottom: 1.5mm; border-bottom: 0.8mm solid var(--amber); }
+.dgrid .dr { font: 700 10.5pt/1.25 var(--display); color: var(--aubergine); display: flex; align-items: center; gap: 2.2mm; }
+.dgrid .dr .ico { width: 7mm; height: 7mm; flex: none; }
+.dc { background: #fff; border: 0.3mm solid var(--line); border-radius: 1.2mm; padding: 3.2mm 3.6mm; display: grid; gap: 1.2mm; align-content: start; }
+.dc b { font: 700 10pt/1.2 var(--display); color: var(--aubergine); }
+.dc span { font-size: 9.3pt; line-height: 1.4; }
+.dc.dib { background: var(--aubergine); border-color: var(--aubergine); }
+.dc.dib b { color: var(--amber); }
+.dc.dib span { color: #f0dfe6; }
+.sub-h { font: 700 12pt/1.2 var(--display); color: var(--aubergine); margin: 7mm 0 3mm; }
+.levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+.lvl { background: #fff; border: 0.3mm solid var(--line); border-top: 1mm solid var(--amber); border-radius: 1mm; padding: 3mm 3.4mm; display: grid; gap: 1.2mm; align-content: start; }
+.lvl b { font: 700 11pt/1.2 var(--display); color: var(--aubergine); }
+.lvl em { font-style: normal; font: 700 6.8pt/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-text); margin-top: 1.2mm; }
+.lvl span { font-size: 9.2pt; line-height: 1.4; }
+.svc .lvl { padding: 4mm 4mm 4.5mm; gap: 1.6mm; }
+.svc .lvl span { font-size: 9.8pt; }
+.svc .sevs li { padding: 3.2mm 0; font-size: 10pt; }
+.svc .sub-h { margin-top: 10mm; }
+.svc-two { display: grid; grid-template-columns: 1.25fr 1fr; gap: 8mm; }
+.sevs { list-style: none; margin: 0; padding: 0; display: grid; }
+.sevs li { display: grid; grid-template-columns: 25mm 1fr; gap: 3mm; align-items: center; padding: 2mm 0; border-bottom: 0.3mm solid var(--line); font-size: 9.5pt; }
+.sevs b { justify-self: start; font: 700 7.4pt/1 var(--display); color: var(--aubergine); background: var(--cream); border: 0.3mm solid #f1d9a6; border-radius: 3mm; padding: 1.3mm 2.3mm; }
+.secg { list-style: none; margin: 1mm 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 7mm; }
+.secg li { display: grid; grid-template-columns: 10mm 1fr; gap: 3mm; align-items: start; padding: 2.6mm 0; border-bottom: 0.3mm solid var(--line); }
+.secg .disc { width: 10mm; height: 10mm; border-radius: 50%; border: 0.5mm solid var(--amber); display: grid; place-items: center; }
+.secg .disc svg { width: 5.5mm; height: 5.5mm; }
+.secg b { display: block; font: 700 9.8pt/1.25 var(--display); color: var(--amber-text); margin-bottom: 0.8mm; }
+.secg span { font-size: 9pt; line-height: 1.4; }
+.strip { display: grid; grid-template-columns: 30mm 1fr; gap: 3mm; align-items: start; margin-top: 4mm; }
+.strip em { font-style: normal; font: 700 7pt/1.3 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-text); padding-top: 1.4mm; }
+.runs { font-size: 8.5pt; color: var(--muted); margin: 4mm 0 0; }
 .rows { list-style: none; padding: 0; margin: 2mm 0 0; display: grid; }
 .rows li { display: grid; grid-template-columns: 15mm 1fr; gap: 5mm; align-items: center; padding: 6mm 0; position: relative; }
 .rows li::after { content: ""; position: absolute; bottom: 0; left: 0; width: 72%; border-bottom: 0.6mm solid var(--aubergine); }
