@@ -356,3 +356,27 @@ its own entry.
   and a build that fails when a section is missing. In return: copy edited
   where reviewers can read it, reusable in buyer packs and proposals, and
   no drift between the PDF and the Markdown (FS-251).
+
+## FS-359 · Four deployment options: where it runs, by who runs it
+
+- **Chose:** your premises or an in-country cloud (Liquid's Azure Stack for
+  now), each either run by the customer or by Dibon. Dibon-managed service
+  comes in three levels (Hosted, Managed, Operated, FS-360); support tiers
+  apply to every option.
+- **Argued against (argued):** only two on-premises options, both
+  self-managed. Claude added Dibon-managed on the customer's premises, for
+  institutions that must keep data in their building but lack the staff.
+- **Costs (inferred):** remote operations on customers' premises need
+  secure access paths into each site and an operations team that can run
+  many environments. Every level and tier is a promise that needs staff
+  and response times behind it.
+
+## FS-362 · Two editions of the portfolio, from one copy
+
+- **Chose:** a short edition for a 20 to 25 minute meeting and the full
+  edition for 45 to 60 minutes, both built from docs/marketing/portfolio.md.
+  Neither is narrowed to a segment yet.
+- **Argued against:** one long PDF presented page by page; segment packs
+  first (FS-001 still allows them later).
+- **Costs (inferred):** two documents to version and log. In return: a
+  meeting gets a document sized for it, and the two cannot disagree.
