@@ -24,7 +24,7 @@ removing a card changes the layout, so the build stops and says so rather
 than squeezing it in.
 
 On a few cards the label is also the visible heading: Mission, Vision,
-Values, Email, Phone, the support tiers' Hours, How and For, and "Every tier
+Values, Email, Phone, the support tiers' Hours, How and Reviews, and "Every tier
 includes".
 
 Diagrams and illustrative screens, including the words drawn inside them,
@@ -647,27 +647,27 @@ software, not a new system.
 **Contents:** Support and service levels
 **Eyebrow:** Support and service levels
 **Heading:** Support that matches how you run
-**Intro:** Every option comes with one of three support tiers. Response and
-resolution times are agreed in your contract, so each one has people
-behind it.
+**Intro:** Every option comes with one of three support tiers, all with the
+same core. Response and resolution times are agreed in your contract, so
+each has people behind it.
 
 ### Standard
 
 **Hours:** Business hours, Monday to Friday
 **How:** Service desk by portal and email
-**For:** Institutions with their own operations team
+**Reviews:** A service review every year
 
 ### Extended
 
 **Hours:** Longer weekday hours and Saturdays
 **How:** Portal, email and phone
-**For:** Institutions open beyond office hours
+**Reviews:** A service review every quarter
 
-### Critical
+### Complete
 
-**Hours:** Around the clock for severity 1
-**How:** Portal, email and a phone line that is always answered
-**For:** Institutions where money moves at all hours
+**Hours:** Extended hours, with out-of-hours cover agreed in your contract
+**How:** Portal, email, phone and a named service manager
+**Reviews:** A service review every month
 
 ## Support and service levels, severities
 
@@ -680,10 +680,23 @@ behind it.
 **Every tier includes:**
 - Software updates and security patches
 - A service desk that logs and tracks every request
+- Training for your team, twice a year
+- A recovery test with you, twice a year
 - A written incident report after every severity 1
-**Band:** Response times, *in your contract.*
-**Band text:** We publish how support works; the times are agreed with each
-institution, so every promise we make is one we staff.
+
+## Support and service levels, changes
+
+**Heading:** How changes reach you
+**Changes:**
+- Release notes before every release, so nothing arrives unannounced
+- Every change classed as standard, normal or emergency, and approved to
+  match its risk
+- Tested on your test environment first, with a way back for every change
+- Released in windows agreed with you, never during your end-of-day or
+  month-end close
+- A review after any change that causes an incident
+**Basis:** Change enablement and release management, run in line with
+ITIL 4.
 
 ## Security and standards
 
@@ -702,8 +715,8 @@ institution, so every promise we make is one we staff.
   instance; no institution's data is reachable from another's.
 - How it is tested: Security testing in every release, and independent
   penetration tests before go-live.
-- How it recovers: Backups taken and restores tested; recovery-time and
-  data-loss targets agreed in your contract.
+- How it recovers: Backups taken, and recovery tested with you twice a year;
+  recovery-time and data-loss targets agreed in your contract.
 - How it is watched: Monitoring and alerting for every system that moves
   money, with an incident process from first alert to written report.
 - How data is handled: Designed in line with Kenya's Data Protection Act,
@@ -711,8 +724,8 @@ institution, so every promise we make is one we staff.
   a phone.
 **Standards label:** Designed in line with
 **Standards:** ISO/IEC 27001; ISO/IEC 27017; ISO/IEC 27018; ISO 22301;
-ISO/IEC 20000-1; NIST Cybersecurity Framework 2.0; OWASP ASVS; FAPI 2.0;
-CIS Benchmarks
+ISO/IEC 20000-1; ITIL 4; NIST Cybersecurity Framework 2.0; OWASP ASVS; FAPI
+2.0; CIS Benchmarks
 **Registered label:** Registered and licensed
 **Registered:** Data processor, Office of the Data Protection Commissioner;
 PRSP licence, Communications Authority of Kenya

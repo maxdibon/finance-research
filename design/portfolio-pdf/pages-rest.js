@@ -421,6 +421,7 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
   // Support tiers and severities (FS-360). Times are agreed per contract.
   const SV = copy.section('Support and service levels');
   const SS = copy.section('Support and service levels, severities');
+  const SC = copy.section('Support and service levels, changes');
   const pageService = `
 <section class="page svc" id="p20b">
   ${corner(3)}
@@ -429,12 +430,14 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
     ${RULE}
     <h2>${inline(SV.get('Heading'))}</h2>
     <p class="lede">${inline(SV.get('Intro'))}</p>
-    <div class="levels">${SV.items(3).map((it) => `<div class="lvl"><b>${inline(it.title)}</b>${['Hours', 'How', 'For'].map((k) => `<em>${k}</em><span>${inline(it.get(k))}</span>`).join('')}</div>`).join('')}</div>
+    <div class="levels">${SV.items(3).map((it) => `<div class="lvl"><b>${inline(it.title)}</b>${['Hours', 'How', 'Reviews'].map((k) => `<em>${k}</em><span>${inline(it.get(k))}</span>`).join('')}</div>`).join('')}</div>
     <div class="svc-two">
       <div><p class="sub-h">${inline(SS.get('Heading'))}</p><ul class="sevs">${SS.get('Severities').map(pair).map(([s, d]) => `<li><b>${inline(s)}</b><span>${inline(d)}</span></li>`).join('')}</ul></div>
       <div><p class="sub-h">Every tier includes</p>${spine(SS.get('Every tier includes').map((s) => inline(s)))}</div>
     </div>
-    <div class="band" style="margin-top:7mm"><p>${ico('chat', 'bi')}${inline(SS.get('Band'))}</p><small>${inline(SS.get('Band text'))}</small></div>
+    <p class="sub-h">${inline(SC.get('Heading'))}</p>
+    <ul class="spine chg">${SC.get('Changes').map((s) => `<li>${inline(s)}</li>`).join('')}</ul>
+    <p class="runs">${inline(SC.get('Basis'))}</p>
   </div>
   ${footer('20')}
 </section>`;
@@ -577,6 +580,8 @@ const CSS = `
 .svc .lvl span { font-size: 9.8pt; }
 .svc .sevs li { padding: 3.2mm 0; font-size: 10pt; }
 .svc .sub-h { margin-top: 10mm; }
+.chg { grid-template-columns: 1fr 1fr; column-gap: 8mm; row-gap: 2.6mm; }
+.chg::before { display: none; }
 .svc-two { display: grid; grid-template-columns: 1.25fr 1fr; gap: 8mm; }
 .sevs { list-style: none; margin: 0; padding: 0; display: grid; }
 .sevs li { display: grid; grid-template-columns: 25mm 1fr; gap: 3mm; align-items: center; padding: 2mm 0; border-bottom: 0.3mm solid var(--line); font-size: 9.5pt; }
