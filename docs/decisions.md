@@ -344,3 +344,15 @@ its own entry.
   language ends up in customer meetings.
 - **Costs (inferred):** some bluntness is lost where a gap needs naming.
   Gaps are still stated, as the work to be done rather than as a judgement.
+
+## FS-352 · The marketing Markdown is the single source of the copy
+
+- **Chose:** docs/marketing/portfolio.md holds every word of the
+  portfolio, in a strict format; the PDF build reads it. Layout, diagrams
+  and illustrative screens stay in design/.
+- **Argued against (argued):** generating the Markdown from the PDF's own
+  text, about half a day cheaper to build.
+- **Costs (inferred):** a stricter Markdown format that the build parses,
+  and a build that fails when a section is missing. In return: copy edited
+  where reviewers can read it, reusable in buyer packs and proposals, and
+  no drift between the PDF and the Markdown (FS-251).
