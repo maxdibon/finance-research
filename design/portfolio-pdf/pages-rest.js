@@ -464,6 +464,27 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
   ${footer('20')}
 </section>`;
 
+  // Where we are going (FS-374): an order, not dates. Now is solid, Next
+  // is dashed like the "coming soon" chips, Later is faint.
+  const WG = copy.section('Where we are going');
+  const WGE = copy.section('Where we are going, closing');
+  const wcols = WG.get('Columns');
+  if (wcols.length !== 3) throw new Error('portfolio copy: Where we are going › Columns needs three entries');
+  const themes = byOrder(['pin', 'rails', 'layers', 'shield'], WG.items().map((it) => [it]), 'Where we are going');
+  const pageRoadmap = `
+<section class="page" id="p20d">
+  ${corner(4)}
+  <div class="content">
+    <p class="eyebrow">${inline(WG.get('Eyebrow'))}</p>
+    ${RULE}
+    <h2>${inline(WG.get('Heading'))}</h2>
+    <p class="lede">${inline(WG.get('Intro'))}</p>
+    <div class="rgrid"><div></div>${wcols.map((c, i) => `<div class="dh rh${i}">${inline(c)}</div>`).join('')}${themes.map(([k, it]) => `<div class="dr">${ico(k)}<span>${inline(it.title)}</span></div>${wcols.map((c, i) => `<div class="rc rc${i}">${inline(it.get(c))}</div>`).join('')}`).join('')}</div>
+    <div class="band" style="margin-top:9mm"><p>${ico('compass', 'bi')}${inline(WGE.get('Band'))}</p><small>${inline(WGE.get('Band text'))}</small></div>
+  </div>
+  ${footer('20')}
+</section>`;
+
   const WW = copy.section('Working with us');
   const CT = copy.section('Working with us, contact');
   const steps = WW.items(4).map((it) => [inline(it.title), inline(it.get('What happens')), inline(it.get('You get'))]);
@@ -484,7 +505,7 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
 </section>`;
 
   // N_PRODUCTS is set above, before page 6 is assembled.
-  return { counts: { products: N_PRODUCTS, services: svc.length }, word: WORD[N_PRODUCTS], page06: page06.split('${N_PRODUCTS}').join(String(N_PRODUCTS)), pages0721: P.map(productPage).join('\n') + page15 + page16 + page17 + page18 + pageDeploy + pageService + pageSecurity + page20 };
+  return { counts: { products: N_PRODUCTS, services: svc.length }, word: WORD[N_PRODUCTS], page06: page06.split('${N_PRODUCTS}').join(String(N_PRODUCTS)), pages0721: P.map(productPage).join('\n') + page15 + page16 + page17 + page18 + pageDeploy + pageService + pageSecurity + pageRoadmap + page20 };
 }
 
 const CSS = `
@@ -496,7 +517,7 @@ const CSS = `
 .chev li:last-child { background: var(--amber); color: var(--aubergine); }
 /* Built on: one row per product (FS-332) */
 .builton { margin-top: 4mm; }
-.bo { display: grid; grid-template-columns: 30mm 15mm 1fr; align-items: center; padding: 0.9mm 0; border-bottom: 0.3mm solid var(--line); }
+.bo { display: grid; grid-template-columns: 30mm 15mm 1fr; align-items: center; padding: 0.75mm 0; border-bottom: 0.3mm solid var(--line); }
 .bo b { font: 700 9pt/1.2 var(--display); color: var(--aubergine); }
 .bo em { font: 400 8.5pt/1 var(--body); font-style: normal; color: var(--muted); }
 .bo span { display: flex; flex-wrap: wrap; gap: 1.2mm; }
@@ -582,6 +603,16 @@ const CSS = `
 .svc .sub-h { margin-top: 10mm; }
 .chg { grid-template-columns: 1fr 1fr; column-gap: 8mm; row-gap: 2.6mm; }
 .chg::before { display: none; }
+.rgrid { display: grid; grid-template-columns: 28mm 1fr 1fr 1fr; gap: 3mm; margin-top: 2mm; }
+.rgrid .dh { font: 700 7.5pt/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-text); align-self: end; padding-bottom: 1.5mm; border-bottom: 0.8mm solid var(--amber); }
+.rgrid .rh1 { border-bottom-style: dashed; }
+.rgrid .rh2 { border-bottom-color: #e6cfa3; color: var(--muted); }
+.rgrid .dr { font: 700 10.5pt/1.25 var(--display); color: var(--aubergine); display: flex; align-items: center; gap: 2.2mm; }
+.rgrid .dr .ico { width: 7mm; height: 7mm; flex: none; }
+.rc { border-radius: 1.2mm; padding: 4mm 3.6mm; font: 600 9.6pt/1.4 var(--display); min-height: 33mm; display: flex; align-items: center; }
+.rc0 { background: var(--aubergine); color: var(--cream); }
+.rc1 { background: #fff; border: 0.4mm dashed var(--amber); color: var(--aubergine); }
+.rc2 { background: transparent; border: 0.3mm solid var(--line); color: var(--muted); }
 .svc-two { display: grid; grid-template-columns: 1.25fr 1fr; gap: 8mm; }
 .sevs { list-style: none; margin: 0; padding: 0; display: grid; }
 .sevs li { display: grid; grid-template-columns: 25mm 1fr; gap: 3mm; align-items: center; padding: 2mm 0; border-bottom: 0.3mm solid var(--line); font-size: 9.5pt; }

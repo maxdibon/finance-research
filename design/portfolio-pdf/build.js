@@ -103,10 +103,10 @@ const all = pagesHtml
 // keys it carries. The contents entry for a page is its copy section's
 // "Contents" field.
 const KEY_OF = { p03: 'who', p04: 'problems', p05: 'how', p06: 'glance', p16: 'suite', p17: 'platform', p18: 'who-for',
-  p19: 'integrations', p20a: 'deployment', p20b: 'service', p20c: 'security', p21: 'working' };
+  p19: 'integrations', p20a: 'deployment', p20b: 'service', p20c: 'security', p20d: 'roadmap', p21: 'working' };
 const SECTION_OF = { who: 'Who we are', problems: 'The problems we solve', how: 'How we build', glance: 'The portfolio at a glance',
   products: 'Products', suite: 'Business suite', platform: 'Platform services', 'who-for': 'Who it is for', integrations: 'Integrations',
-  deployment: 'Deployment options', service: 'Support and service levels', security: 'Security and standards', working: 'Working with us' };
+  deployment: 'Deployment options', service: 'Support and service levels', security: 'Security and standards', roadmap: 'Where we are going', working: 'Working with us' };
 const first = all.indexOf('<section class="page');
 const last = all.lastIndexOf('</section>') + '</section>'.length;
 const blocks = all.slice(first, last).match(/<section class="page[\s\S]*?<\/section>/g);

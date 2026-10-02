@@ -380,3 +380,13 @@ its own entry.
   first (FS-001 still allows them later).
 - **Costs (inferred):** two documents to version and log. In return: a
   meeting gets a document sized for it, and the two cannot disagree.
+
+## FS-374 · Show the ambition as now, next and later, without dates
+
+- **Chose:** a "Where we are going" page in the full edition, by theme
+  (markets, rails, services, assurance), each in Now, Next and Later; the
+  messaging card names the direction too.
+- **Argued against:** a dated roadmap; leaving the ambition to the
+  scattered "coming soon" labels.
+- **Costs (inferred):** every "Next" is read as intent, so moving an item
+  back is visible. In return: the gaps a prospect sees read as a plan.

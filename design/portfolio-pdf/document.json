@@ -7,7 +7,7 @@
       "issued": "2026-10-02",
       "minutes": "45 to 60",
       "pages": ["cover", "contents", "who", "problems", "how", "glance", "products", "suite", "platform", "who-for",
-        "integrations", "deployment", "service", "security", "working"]
+        "integrations", "deployment", "service", "security", "roadmap", "working"]
     },
     "short": {
       "id": "DC-FS-PF-002",

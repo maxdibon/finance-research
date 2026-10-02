@@ -24,7 +24,7 @@ removing a card changes the layout, so the build stops and says so rather
 than squeezing it in.
 
 On a few cards the label is also the visible heading: Mission, Vision,
-Values, Email, Phone, the support tiers' Hours, How and Reviews, and "Every tier
+Values, Email, Phone, Now, Next and Later, the support tiers' Hours, How and Reviews, and "Every tier
 includes".
 
 Diagrams and illustrative screens, including the words drawn inside them,
@@ -72,7 +72,9 @@ smartphone. Designed in Nairobi.
 **Travel:** Every product runs on your premises or in an in-country cloud,
 so it can follow our customers from Kenya into Uganda, Tanzania, Rwanda,
 Zambia, Zimbabwe and Nigeria, under each country's own rules.
-**Map caption:** Kenya first, then six more markets. Positions are
+**Map line:** Home market: Kenya · Ready to deploy: Uganda, Tanzania,
+Rwanda, Zambia, Zimbabwe, Nigeria
+**Map caption:** Built in Nairobi, ready for the region. Positions are
 indicative, not to scale.
 
 ## The problems we solve
@@ -412,10 +414,11 @@ totals for the general ledger.
 - Migration: From spreadsheets or an earlier system, balances signed off
 **Diagram caption:** Odoo is the back office around your core, never a
 second core.
-**Band:** Odoo on OLP, *in Kenya.*
-**Band text:** Instances, backups, staging and upgrades managed on Dibon's
-own Odoo platform, on in-country infrastructure. Zoho runs on Zoho's own
-cloud. One sign-on with the rest of the Dibon platform.
+**Band:** Odoo on OLP, *set up for Kenya.*
+**Band text:** eTIMS invoicing, Kenyan payroll and M-Pesa payments, hosted in
+Kenya and supported from Nairobi. Each market we enter gets the same: its
+tax, its payroll, its rails. Zoho runs on Zoho's own cloud; both share one
+sign-on with the rest of the Dibon platform.
 
 ## Platform services
 
@@ -428,9 +431,9 @@ messages, logins and reports as the first.
 - Approvals and mandates: Chains by product, amount and risk; no
   self-approval; every decision attributed when it is made. Debit mandates
   with the payer's consent and right to cancel.
-- Messaging: SMS, WhatsApp, Telegram and app push. In Kenya, SMS goes direct
-  to the operators under Dibon's PRSP licence. A status says only what the
-  channel reported.
+- Messaging: SMS, WhatsApp, Telegram and app push: direct to Kenya's
+  operators under our PRSP licence, through partners in each new market. A
+  status says only what the channel reported.
 - Identity and access: One login for every system; re-authentication before
   money moves; financial-grade API security; IPRS, document and liveness
   checks.
@@ -653,20 +656,21 @@ each has people behind it.
 
 ### Standard
 
-**Hours:** Business hours, Monday to Friday
-**How:** Service desk by portal and email
+**Hours:** People on the desk in business hours, Monday to Friday
+**How:** Portal and email, and a named person for your account
 **Reviews:** A service review every year
 
 ### Extended
 
-**Hours:** Longer weekday hours and Saturdays
-**How:** Portal, email and phone
+**Hours:** People on the desk longer weekday hours and Saturdays
+**How:** Portal, email and phone, and a named person for your account
 **Reviews:** A service review every quarter
 
 ### Complete
 
-**Hours:** Extended hours, with out-of-hours cover agreed in your contract
-**How:** Portal, email, phone and a named service manager
+**Hours:** Extended hours, and out-of-hours cover by people agreed in your
+contract
+**How:** Portal, email, phone and a named senior service manager
 **Reviews:** A service review every month
 
 ## Support and service levels, severities
@@ -679,7 +683,8 @@ each has people behind it.
 - Severity 4: A question or a change request
 **Every tier includes:**
 - Software updates and security patches
-- A service desk that logs and tracks every request
+- A service desk open 24/7: an AI agent answers first, logs every request
+  and hands it to a person
 - Training for your team, twice a year
 - A recovery test with you, twice a year
 - A written incident report after every severity 1
@@ -736,6 +741,49 @@ and Apache Superset.
 **Band text:** Every number traces to a transaction, every approval to a
 person at a moment, and every correction is a new entry an auditor can
 read.
+
+## Where we are going
+
+**Contents:** Where we are going
+**Eyebrow:** Where we are going
+**Heading:** Growing with our customers
+**Intro:** What we offer today, what comes next, and where we are headed. We
+give an order, not dates: each step follows our customers.
+**Columns:**
+- Now
+- Next
+- Later
+
+### Markets
+
+**Now:** Kenya, our home market
+**Next:** Uganda, Tanzania and Rwanda
+**Later:** Zambia, Zimbabwe and Nigeria
+
+### Rails
+
+**Now:** M-Pesa, Airtel Money and T-Kash, integrated directly
+**Next:** Bank connections, PesaLink and cards
+**Later:** The mobile-money networks of each new market
+
+### Services
+
+**Now:** Nine products on one platform, and the Business suite
+**Next:** Credit-bureau submissions and lookups
+**Later:** Messaging partners and identity registers in each new market
+
+### Assurance
+
+**Now:** PRSP licence; registered with the Data Commissioner
+**Next:** ISO/IEC 27001 certification
+**Later:** A payment service provider licence
+
+## Where we are going, closing
+
+**Band:** We enter a market *when a customer takes us there.*
+**Band text:** And we arrive with its rails, its rules and its regulators
+already mapped, so the first institution there is not the one that teaches
+us.
 
 ## Working with us
 

@@ -78,6 +78,7 @@ p { margin: 0 0 3mm; }
 .mvv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin: 2mm 0 7mm; }
 .mvv > div { background: var(--aubergine); color: var(--cream); padding: 5mm 5mm 5.5mm; border-radius: 1.5mm; }
 .mvv b { display: block; font: 700 7.5pt/1 var(--display); letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); margin-bottom: 2.5mm; }
+.map-line { margin: 0 0 2.5mm; font: 700 7.2pt/1.5 var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber-text); }
 .mvv b { display: flex; align-items: center; gap: 2.2mm; }
 .mvv b svg { width: 5.5mm; height: 5.5mm; flex: none; fill: none; stroke: var(--amber); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .mvv p { margin: 0; font-size: 10pt; color: #f0dfe6; }
@@ -248,6 +249,7 @@ __REST_CSS__
         <h3 style="margin-top:5mm">{{Who we are|Travel heading}}</h3><p>{{Who we are|Travel}}</p>
       </div>
       <figure style="margin:0">
+        <p class="map-line">{{Who we are|Map line}}</p>
         <svg class="illo" viewBox="0 0 84 60" style="width:100%;height:auto" role="img" aria-label="Kenya at the centre, linked to Nigeria, Uganda, Rwanda, Tanzania, Zambia and Zimbabwe.">
           <g class="am">
             <path d="M62 23 L 10 15"/><path d="M62 23 L 50 18"/><path d="M62 23 L 45 29"/><path d="M62 23 L 56 36"/><path d="M62 23 L 43 45"/><path d="M62 23 L 52 53"/>
@@ -261,7 +263,6 @@ __REST_CSS__
             <circle cx="52" cy="53" r="4.6" class="fill-w" stroke="#460d4d" stroke-width="0.8"/><text x="52" y="54.2" fill="#460d4d">ZW</text>
             <circle cx="62" cy="23" r="6.2" class="fill-a"/><text x="62" y="24.3" fill="#280430" font-size="4">KE</text>
           </g>
-          <text x="62" y="13.6" font-size="3" font-weight="700" fill="#8a5a00" letter-spacing="0.2" text-anchor="middle">KENYA FIRST</text>
         </svg>
         <figcaption style="font-size:8.5pt;color:var(--muted);margin-top:1.5mm">{{Who we are|Map caption}}</figcaption>
       </figure>
