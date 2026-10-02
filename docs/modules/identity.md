@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341]
 last_reviewed: 2026-10-01
 ---
 
@@ -50,10 +50,10 @@ requirements (MFI PRD §2, problem 5).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| ID-01 | IPRS lookup: national ID, passport, alien ID | Designed | Kapu technical documentation (account opening); MFI PRD FR-2.1. Integration not final at 8 Jun — FS-088 | 1 |
+| ID-01 | IPRS lookup: national ID, passport, alien ID | Designed | Kapu technical documentation (account opening); MFI PRD FR-2.1. Coverage of passports, alien and refugee IDs disputed by a reviewer; to confirm against IPRS and Maisha (FS-329, FS-341). Integration not final at 8 Jun — FS-088 | 1 |
 | ID-02 | Document checklist per product, with a completeness gate | Designed | MFI PRD FR-2.2 to FR-2.4 | 1 |
 | ID-03 | Re-verification when documents expire, for repeat customers | Designed | MFI PRD FR-1.4 | 1 |
-| ID-04 | Liveness and face match against the ID photo | Planned | FS-204 — vendor not chosen | 2 |
+| ID-04 | Liveness and face match against the ID photo | Planned | FS-204 — vendor not chosen; candidates Smile ID (PT-30) and MetaMap (PT-33), FS-340 | 2 |
 | ID-05 | Phone-number ownership: a one-time code, and the name the operator holds for the number | Planned | FS-205 | 1 |
 | ID-06 | Tax PIN validation | Planned | FS-205 | 2 |
 | ID-07 | Business verification: registration, directors, beneficial owners | Planned | FS-090 | 2 |

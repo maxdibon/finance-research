@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sme, fintech]
 depends_on: [collect, mandates, recon-observability, messaging, rails, identity]
 consumed_by: []
-review_ids: [FS-042, FS-104, FS-107, FS-108, FS-114, FS-115, FS-116, FS-117]
+review_ids: [FS-042, FS-104, FS-107, FS-108, FS-114, FS-115, FS-116, FS-117, FS-328]
 last_reviewed: 2026-10-01
 ---
 
@@ -164,6 +164,12 @@ that would let Dibon release funds without the agreed approvers.
   and refunding are each authenticated when they happen.
 - **Disputes freeze funds.** Only the arbiter, or both parties together,
   can unfreeze them. Nothing auto-resolves on a deadline — FS-117.
+- **In a dispute the arbiter decides alone, and the bank still checks.**
+  The arbiter can direct a release without either party, but only within
+  the agreement: to the named parties' accounts, up to the disputed
+  amount. The account's signing mandate names the arbiter as one valid
+  release path, so the bank checks the instruction as it checks any other
+  (FS-328). The arbiter is never Dibon.
 - **The tie-out never adjusts.** A balance that differs from the
   agreement is a recon exception, not a correction.
 

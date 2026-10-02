@@ -70,9 +70,10 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 | PT-27 | TransUnion Kenya | Credit reference bureau | As PT-26 | KE | None | Candidate | 2026-10-01: CRB module written | As PT-26 | Architect | FS-186, FS-187 |
 | PT-28 | Creditinfo Kenya | Credit reference bureau | As PT-26 | KE | None | Candidate | 2026-10-01: CRB module written | As PT-26 | Architect | FS-186, FS-187 |
 | PT-29 | IPRS — National Registration Bureau | Government register | Identity lookups in Kenya | KE | KE (government) | Onboarding | 2026-06-08: integration not final | Confirm who holds the access agreement (FS-202) | Product lead | FS-088, FS-202 |
-| PT-30 | Smile ID | Identity verification vendor | Liveness, face match, document checks | Pan-African | None | Candidate | 2026-10-01: shortlisted by Claude | Verify coverage, data residency and licence terms | Architect | FS-204 |
+| PT-30 | Smile ID | Identity verification vendor | Liveness, face match, document checks | Pan-African | None | Candidate | 2026-10-01: shortlisted by Claude | Verify coverage, data residency and licence terms | Architect | FS-204, FS-340 |
 | PT-31 | Odoo | Software vendor; partner programme | Business Suite implementations; Dibon's own ERP | Global | Ready tier (owner) | Live | 2026-10-01: Dibon is an Odoo Ready Partner, working towards Silver | Confirm Silver requirements and timeline (FS-292) | Commercial lead | FS-026, FS-288, FS-292 |
 | PT-32 | Zoho | Software vendor; partner programme | Business Suite implementations; SME Recon's Zoho wrapper | Global | Partner (owner); tier not recorded | Live | 2026-10-02: owner confirms Dibon partners with Zoho | Record the tier; check where Zoho hosts Kenyan customers' data (FS-312) | Commercial lead | FS-306, FS-312 |
+| PT-33 | MetaMap | Identity verification vendor | Document checks, liveness, face match, as an alternative to PT-30 | Claimed multi-country; Africa coverage to verify | None | Candidate | 2026-10-02: named by the owner | Compare with PT-30: Kenyan documents covered (national ID, Maisha, alien, refugee, passport), business checks, where Kenyan data is processed, per-check price | Architect | FS-340, FS-331 |
 
 ---
 

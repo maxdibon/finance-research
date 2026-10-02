@@ -8,7 +8,7 @@ classification: Internal
 audience: [sme, fintech, mfi, sacco]
 depends_on: [rails, recon-observability, messaging, mandates, identity]
 consumed_by: [sme-recon, mfi, sacco]
-review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102]
+review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339]
 last_reviewed: 2026-10-01
 ---
 
@@ -101,7 +101,7 @@ itself an institution.
 
 | | Integrated — the customer has its own ledger | Native — it does not |
 |---|---|---|
-| Where funds are posted | The merchant's own shortcodes and accounts. For an institution, its core | **Pass-through still**: the merchant's own shortcodes. A merchant with none cannot be served until aggregation is licensed (FS-094) |
+| Where funds are posted | The merchant's own shortcodes and accounts, including a bank collection account ("Lipa na Bank": the bank's paybill, the merchant's account number, FS-339). For an institution, its core | **Pass-through still**: the merchant's own shortcodes, or its bank's collection account. A merchant with neither cannot be served until aggregation is licensed (FS-094) |
 | What differs in this module | Matched payments are pushed into the merchant's ERP or core through sme-recon or a core adapter | The dashboard and exports are the merchant's only record |
 | What the customer must provide | Its shortcodes or till numbers, rail credentials or delegated access, ERP access | Its shortcodes or till numbers |
 | Who it suits | SMEs on Odoo or Zoho; MFIs and Saccos with a core | Small merchants without an ERP |
