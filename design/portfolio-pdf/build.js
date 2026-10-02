@@ -88,8 +88,6 @@ const SPECIAL = {
 };
 const pagesHtml = fs.readFileSync(path.join(__dirname, 'pages.html'), 'utf8').replace(/\{\{(em:)?([^}]+)\}\}/g, (m, em, ref) => {
   if (SPECIAL[ref]) return SPECIAL[ref]();
-  const pe = ref.match(/^product-eyebrow:(\d+)$/);
-  if (pe) return inline(copy.section('Products').get('Eyebrow').replace('{n}', pe[1]).replace('{total}', R.counts.products));
   return inline(counted(resolve(ref)), em ? 'em' : 'span');
 });
 for (const [key, u] of listUse) {
@@ -111,8 +109,7 @@ const html = pagesHtml
   .split('__N_SERVICES__').join(String(R.counts.services))
   .split('__REST_CSS__').join(CSS)
   .split('__PAGE_06__').join(R.page06)
-  .split('__PAGES_08_20__').join(R.pages0820)
-  .split('__FIG_COLLECT__').join(R.figCollect)
+  .split('__PAGES_07_21__').join(R.pages0721)
   .split('__DOC_TITLE__').join(`${DOC.title}, ${docRef}`)
   .split('__DOCREF__').join(docRef)
   .split('__PREPARED__').join(prepared)

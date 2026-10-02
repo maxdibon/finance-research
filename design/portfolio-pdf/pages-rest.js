@@ -76,6 +76,31 @@ const tick = (x, y, col = C.am) => `<circle cx="${x}" cy="${y}" r="1.9" fill="no
 const pill = (x, y, w, txt, fill, fg) => `<rect x="${x}" y="${y - 2.6}" width="${w}" height="3.6" rx="1.8" fill="${fill}"/>${T(x + w / 2, y - 0.1, 2.2, 700, fg, txt, 'middle')}`;
 
 const MOCK = {
+  // The partner app on page 7, the first product page.
+  collect: `<svg class="illo" viewBox="0 0 62 112" style="width:100%;height:auto" role="img" aria-label="Illustrative partner app screen: a deposit of KES 2,500 received, confirmed by the rail and posted to the bank, with the bank's reference and the time it was fetched.">
+  <rect x="2" y="2" width="58" height="108" rx="7" fill="#ffffff" stroke="#460d4d" stroke-width="1.2"/>
+  <rect x="24" y="5" width="14" height="2.2" rx="1.1" fill="#ead9dc"/>
+  <rect x="6" y="10" width="50" height="92" rx="2" fill="#fffaf6"/>
+  <rect x="6" y="10" width="50" height="12" rx="2" fill="#280430"/>
+  <rect x="6" y="18" width="50" height="4" fill="#280430"/>
+  <text x="10" y="17.6" font-size="3.4" font-weight="700" fill="#fff2eb">Partner app</text>
+  <circle cx="51" cy="16" r="1.6" fill="#fbb236"/>
+  <text x="10" y="30" font-size="3.4" font-weight="700" fill="#280430">Deposit received</text>
+  <text x="10" y="39" font-size="6.6" font-weight="800" fill="#280430">KES 2,500</text>
+  <text x="10" y="44" font-size="2.7" fill="#5e4c66">to account ending 2002</text>
+  <g font-size="2.9" font-weight="600" fill="#280430">
+    <circle cx="12" cy="51.2" r="2.2" fill="none" stroke="#fbb236" stroke-width="0.7"/><path d="M11 51.2l.8.8 1.4-1.6" fill="none" stroke="#8a5a00" stroke-width="0.6"/><text x="16" y="52.2">Prompt sent</text>
+    <circle cx="12" cy="58.2" r="2.2" fill="none" stroke="#fbb236" stroke-width="0.7"/><path d="M11 58.2l.8.8 1.4-1.6" fill="none" stroke="#8a5a00" stroke-width="0.6"/><text x="16" y="59.2">Confirmed by the rail</text>
+    <circle cx="12" cy="65.2" r="2.2" fill="none" stroke="#0e7f5a" stroke-width="0.7"/><path d="M11 65.2l.8.8 1.4-1.6" fill="none" stroke="#0e7f5a" stroke-width="0.6"/><text x="16" y="66.2">Posted at the bank</text>
+  </g>
+  <path d="M12 53.6v2.4M12 60.6v2.4" stroke="#cdb6bf" stroke-width="0.5"/>
+  <rect x="9" y="71" width="44" height="12" rx="1.5" fill="#ffffff" stroke="#ead9dc" stroke-width="0.5"/>
+  <text x="11" y="75.5" font-size="2.5" fill="#5e4c66">Bank reference</text>
+  <text x="11" y="80.2" font-size="3.1" font-weight="700" fill="#280430">KP-2026-004318</text>
+  <text x="10" y="89" font-size="2.5" fill="#5e4c66">Balance fetched 10:42 today</text>
+  <rect x="10" y="92" width="42" height="7" rx="3.5" fill="#fbb236"/>
+  <text x="31" y="96.6" font-size="3" font-weight="700" fill="#280430" text-anchor="middle">View statement</text>
+</svg>`,
   core: screen('Member account',
     `${T(5, 16, 2.4, 700, C.mu, 'SAVINGS · ACCOUNT ENDING 2002')}${T(5, 24, 5.6, 800, C.au, 'KES 145,000')}${T(5, 28.5, 2.3, 400, C.mu, 'interest accrued KES 412 · posts month-end')}
 ${T(60, 16, 2.4, 700, C.mu, 'LOAN 0412')}${T(60, 24, 4.2, 800, C.au, 'KES 61,300')}${T(60, 28.5, 2.3, 400, C.mu, 'next due 05 Nov')}
@@ -183,9 +208,9 @@ const BS_FLOW = `<figure class="dg-fig" style="margin-top:6mm"><svg class="dg" v
 // Integrations: the hub. Everything connects through the platform once.
 const HUB = `<figure class="dg-fig" style="margin-top:12mm"><svg class="dg" viewBox="0 0 640 200" role="img" aria-label="Mobile money, banks and cards connect once to Dibon's platform, which connects to your core, your ERP, the credit bureaus and identity registers.">
 <defs><marker id="hb-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="mk-ctl"/></marker></defs>
-${[['Mobile money', 20, ''], ['Banks', 80, 'coming soon'], ['Cards', 140, 'coming soon']].map(([n, y, s]) => `<rect class="box" x="16" y="${y}" width="140" height="40" rx="6"${s ? ' stroke-dasharray="5 4"' : ''}/><text x="86" y="${y + (s ? 20 : 24)}" text-anchor="middle">${n}</text>${s ? `<text class="s" x="86" y="${y + 33}" text-anchor="middle">${s}</text>` : ''}<line class="ctl" x1="156" y1="${y + 20}" x2="243" y2="100" marker-end="url(#hb-c)"/>`).join('')}
-<rect class="dibon" x="245" y="70" width="150" height="60" rx="6"/><text class="on" x="320" y="96" text-anchor="middle">Dibon platform</text><text class="s on" x="320" y="112" text-anchor="middle">one connection each</text>
-${[['Your core', 10, ''], ['Your ERP', 60, ''], ['Credit bureaus', 110, 'coming soon'], ['Identity registers', 160, '']].map(([n, y, s]) => `<rect class="box" x="484" y="${y}" width="140" height="34" rx="6"${s ? ' stroke-dasharray="5 4"' : ''}/><text x="554" y="${y + (s ? 16 : 21)}" text-anchor="middle">${n}</text>${s ? `<text class="s" x="554" y="${y + 28}" text-anchor="middle">${s}</text>` : ''}<line class="ctl" x1="395" y1="100" x2="482" y2="${y + 17}" marker-end="url(#hb-c)" marker-start="url(#hb-c)"/>`).join('')}
+${[['Mobile money', 20, ''], ['Banks', 80, 'coming soon'], ['Cards', 140, 'coming soon']].map(([n, y, s]) => `<rect class="box" x="16" y="${y}" width="140" height="40" rx="6"${s ? ' stroke-dasharray="5 4"' : ''}/><text x="86" y="${y + (s ? 20 : 24)}" text-anchor="middle">${n}</text>${s ? `<text class="s" x="86" y="${y + 33}" text-anchor="middle">${s}</text>` : ''}<line class="ctl" x1="156" y1="${y + 20}" x2="278" y2="100" marker-end="url(#hb-c)"/>`).join('')}
+<polygon points="320,56 358.5,78 358.5,122 320,144 281.5,122 281.5,78" fill="#460d4d" stroke="#fbb236" stroke-width="2.5"/><svg x="298" y="76.9" width="44" height="46.2" viewBox="0 0 416 436"><image href="__LOGO__" width="1000" height="436"/></svg><text class="s" x="320" y="164" text-anchor="middle">one connection each</text>
+${[['Your core', 10, ''], ['Your ERP', 60, ''], ['Credit bureaus', 110, 'coming soon'], ['Identity registers', 160, '']].map(([n, y, s]) => `<rect class="box" x="484" y="${y}" width="140" height="34" rx="6"${s ? ' stroke-dasharray="5 4"' : ''}/><text x="554" y="${y + (s ? 16 : 21)}" text-anchor="middle">${n}</text>${s ? `<text class="s" x="554" y="${y + 28}" text-anchor="middle">${s}</text>` : ''}<line class="ctl" x1="362" y1="100" x2="482" y2="${y + 17}" marker-end="url(#hb-c)" marker-start="url(#hb-c)"/>`).join('')}
 </svg><figcaption>Each rail and each system is integrated once, in the platform, and every product uses it.</figcaption></figure>`;
 
 const WORD = { 8: 'Eight', 9: 'Nine', 10: 'Ten', 11: 'Eleven' };
@@ -217,7 +242,7 @@ function productPage(p) {
     : `<div class="prod-cols" style="grid-template-columns: 1fr ${p.mockW || '44mm'}">${spine(p.spine)}${mock}</div>`;
   return `
 <section class="page" id="p${p.n}">
-  ${corner(+p.n)}
+  ${corner(p.corner === undefined ? +p.n : p.corner)}
   <div class="content">
     <p class="eyebrow">${p.eyebrow}</p>
     ${RULE}
@@ -240,6 +265,7 @@ function rest({ F, copy }) {
   const products = copy.section('Products');
   const prods = products.items(9);
   const LAYOUT = {
+    'Kapu Collect': { fig: F['Kapu Collect'], mock: MOCK.collect, figW: '88%', corner: 4 },
     'Kapu Pay Gateway': { fig: F['Kapu Pay Gateway'], mock: MOCK.gateway, mockW: '90mm', flip: true },
     'Kapu Escrow': { fig: F['Kapu Escrow'], mock: MOCK.escrow, figW: '86%' },
     'Kapu Core': { fig: CORE_FIG, mock: MOCK.core, mockW: '88mm', flip: true },
@@ -251,12 +277,11 @@ function rest({ F, copy }) {
   };
   N_PRODUCTS = prods.length;
   const eyebrow = (i) => inline(products.get('Eyebrow').replace('{n}', i).replace('{total}', N_PRODUCTS));
-  // Page 7 (Collect) is the hand-built template in pages.html; the rest follow it.
-  const P = prods.slice(1).map((it, i) => {
+  const P = prods.map((it, i) => {
     const lay = LAYOUT[it.title];
     if (!lay) throw new Error(`portfolio copy: product "${it.title}" has no layout; add its diagram and screen to pages-rest.js`);
     return {
-      n: String(8 + i).padStart(2, '0'), eyebrow: eyebrow(i + 2), screenLabel: inline(L.get('Illustrative screen')),
+      n: String(7 + i).padStart(2, '0'), eyebrow: eyebrow(i + 1), corner: lay.corner, screenLabel: inline(L.get('Illustrative screen')),
       name: inline(it.title), tag: inline(it.get('Tagline')), lede: inline(it.get('Intro')),
       fig: withCaption(lay.fig, it.get('Diagram caption')), mock: lay.mock, mockW: lay.mockW, flip: lay.flip, figW: lay.figW,
       before: lay.steps ? reconBand(it.get('Steps')) : undefined,
@@ -404,7 +429,7 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
 </section>`;
 
   // N_PRODUCTS is set above, before page 6 is assembled.
-  return { counts: { products: N_PRODUCTS, services: svc.length }, word: WORD[N_PRODUCTS], figCollect: withCaption(F['Kapu Collect'], prods[0].get('Diagram caption')), page06: page06.split('${N_PRODUCTS}').join(String(N_PRODUCTS)), pages0820: P.map(productPage).join('\n') + page15 + page16 + page17 + page18 + page19 + page20 };
+  return { counts: { products: N_PRODUCTS, services: svc.length }, word: WORD[N_PRODUCTS], page06: page06.split('${N_PRODUCTS}').join(String(N_PRODUCTS)), pages0721: P.map(productPage).join('\n') + page15 + page16 + page17 + page18 + page19 + page20 };
 }
 
 const CSS = `
@@ -440,6 +465,7 @@ const CSS = `
 .gsuite span { font-size: 9.5pt; color: #e7d3df; }
 .gbase { margin-top: 4mm; background: var(--amber); color: var(--aubergine); border-radius: 1.5mm; padding: 3.5mm 4mm; }
 .bi { width: 6mm; height: 6mm; vertical-align: -1.3mm; margin-right: 2.6mm; fill: none; stroke: var(--amber); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.bi.money { stroke: #3fc495; }
 .gbase b .bi { width: 4.4mm; height: 4.4mm; vertical-align: -1mm; margin-right: 1.8mm; stroke: var(--aubergine); }
 .gbase b { display: block; font: 800 7.5pt/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1.5mm; }
 .gbase span { font: 600 10pt/1.4 var(--display); }

@@ -165,7 +165,7 @@ their customers, and never through our software.
 
 ## The portfolio at a glance
 
-**Contents:** The platform at a glance
+**Contents:** The portfolio at a glance
 **Eyebrow:** The portfolio at a glance
 **Heading:** {Products} products, one platform, one partner
 **Suite title:** Also from Dibon: Business suite, on Odoo and Zoho
@@ -256,8 +256,8 @@ against the account’s own mandate.
 ### Kapu Core
 
 **Tagline:** A hosted core banking system, on Apache Fineract
-**Intro:** For MFIs, Saccos and tier-3 banks whose current system is basic,
-or absent. Clients, savings, shares, loans, the general ledger, tellers and
+**Intro:** For MFIs, Saccos and tier-3 banks ready for a modern core, or
+running without one. Clients, savings, shares, loans, the general ledger, tellers and
 end-of-day, hosted in Kenya, with every Kapu product running on top. The
 money stays in your own accounts; Kapu Core is your ledger.
 **Diagram caption:** The green line never touches the core: the money stays
@@ -278,7 +278,7 @@ in your accounts, and Kapu Core is the ledger that records it.
 ### Kapu MFI
 
 **Tagline:** Loan management for growing lenders
-**Intro:** For lenders moving off spreadsheets, paper and ageing systems.
+**Intro:** For lenders moving off spreadsheets, paper or an earlier system.
 The whole loan, from a digital application to closure or restructure, with
 the process enforced and light enough for a team of three.
 **Diagram caption:** The loan’s path, with gates that cannot be skipped.
@@ -408,7 +408,7 @@ totals for the general ledger.
 - Sign: Agreements, mandates and consents signed online
 - Portal: Invoices, statements and tickets for customers
 - Campaigns: Delivered through Dibon's messaging, status written back
-- Migration: From spreadsheets or an old system, balances signed off
+- Migration: From spreadsheets or an earlier system, balances signed off
 **Diagram caption:** Odoo is the back office around your core, never a
 second core.
 **Band:** Odoo on OLP, *in Kenya.*
@@ -477,7 +477,8 @@ services it is built on.
 ### Tier-3 banks
 
 **Start with:** Collect; Reconciliation
-**Add:** Escrow; omni-channel; Kapu Core where the core is basic
+**Add:** Escrow; omni-channel; Kapu Core, if a core upgrade is on your
+roadmap
 
 ### Deposit-taking Saccos
 
@@ -489,17 +490,17 @@ services it is built on.
 **Start with:** Sacco
 **Add:** Omni-channel; messaging
 
-### MFIs on spreadsheets
+### MFIs moving off spreadsheets
 
 **Start with:** MFI, on Kapu Core
 **Add:** Omni-channel; credit bureaus, coming soon
 
-### MFIs with a legacy back office
+### MFIs modernising their back office
 
 **Start with:** MFI on your existing core; Reconciliation
 **Add:** The Business suite; Kapu Core when you are ready to move
 
-### Institutions on a basic core
+### Institutions planning a core upgrade
 
 **Start with:** Kapu Core
 **Add:** MFI or Sacco; Reconciliation; omni-channel
@@ -565,7 +566,8 @@ suggest where to begin, on your own data.
 ### Core banking
 
 **Integrated:** Your core, by adapter; Kapu Core, on Apache Fineract
-**Note:** Integrated first; Kapu Core where yours is basic
+**Note:** Integrated with your core first; Kapu Core when you choose to
+upgrade
 
 ## Integrations, closing
 
