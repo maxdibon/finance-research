@@ -1,0 +1,124 @@
+# Customer onboarding checklists
+
+**Owner:** Delivery lead · **Classification:** Internal · **Review ids:**
+FS-339, FS-343
+
+What we need from a customer before each product goes live. The common part
+applies to every customer; each product adds its own. Items come from each
+module's "What the customer must provide" row, so a change there belongs
+here too.
+
+This file is the template. A customer's progress against it is tracked in
+Odoo, as a project created from this list when the deal is won. Customer
+names never go in this repository.
+
+**Partner onboarding** (banks, registries, bureaus) is tracked separately,
+in docs/partners.md, under each partner's next step.
+
+## Common to every customer
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-COM-01 | Signed agreement and order form | Customer's signatory | Odoo Sign (business-suite) |
+| OB-COM-02 | The customer's own company documents: registration, directors, beneficial owners | Customer's company secretary | Our KYB of the customer |
+| OB-COM-03 | Its licence and regulator (CBK, SASRA, or none), and whether it works through a partner bank | Customer's compliance lead | Decides the custody pattern (docs/architecture.md) |
+| OB-COM-04 | A data processing agreement; both parties' registration with the Data Commissioner | Both compliance leads | Kenya Data Protection Act; Dibon is a processor |
+| OB-COM-05 | Ledger mode: its own core (name, API or extracts) or Kapu Core | Customer's IT lead | Integrated or native mode |
+| OB-COM-06 | Deployment: in-country cloud or its own premises | Customer's IT lead | Hosting (FS-032) |
+| OB-COM-07 | User list, role structure, and single sign-on details if it federates | Customer's IT lead | access |
+| OB-COM-08 | Approval chains and mandate rules, by product and amount | Customer's operations lead | mandates |
+| OB-COM-09 | Sender ID, channels and message templates | Customer's operations lead | messaging |
+| OB-COM-10 | **Payment channels: its own paybill or till, or its bank's collection account ("Lipa na Bank")?** Plus each bank account and access to its statements | Customer's finance lead | rails; FS-339. A bank's paybill confirms to the bank, so matching on it waits for that bank's feed |
+| OB-COM-11 | Who pays for identity and business checks | Commercial lead | Open: FS-331 |
+| OB-COM-12 | Data for migration, and opening balances it will sign off | Customer's finance lead | Every product that holds records |
+| OB-COM-13 | Named contacts for operations, finance, IT and compliance, and an escalation path | Customer's sponsor | Support |
+| OB-COM-14 | Go-live sign-off after a first full cycle reconciles | Customer's sponsor | recon-observability |
+
+## Kapu Collect
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-CO-01 | Its licence to take deposits, or the partner bank that holds the accounts | Compliance lead | collect §7 |
+| OB-CO-02 | Core API access, a sandbox and its product codes (integrated mode) | IT lead | collect §4 |
+| OB-CO-03 | Account-opening rules: documents per customer type, including foreigners, refugees and companies | Compliance lead | identity; FS-329 |
+| OB-CO-04 | Deposit notification wording and channels | Operations lead | collect CO-18 |
+
+## Kapu Pay Gateway
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-GW-01 | **Its own paybill or till, or its bank's?** Shortcodes, or the bank's paybill and its account number | Finance lead | gateway §4; FS-339 |
+| OB-GW-02 | Rail credentials, or delegated access to them | IT lead | gateway §6 |
+| OB-GW-03 | Callback URLs and its own reference format | IT lead | Idempotent requests |
+| OB-GW-04 | ERP access, if payments post to its ERP | IT lead | sme-recon |
+
+## Kapu Escrow
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-ES-01 | The partner bank's escrow product, with sub-account and mandate APIs | Partner bank | escrow §4 |
+| OB-ES-02 | The bank's legal sign-off on the agreement template | Partner bank's legal team | escrow §7 |
+| OB-ES-03 | An account mandate that names the arbiter as one release path | Partner bank | FS-328 |
+| OB-ES-04 | The arbiters it accepts, per agreement type | Customer's legal lead | escrow ES-08 |
+
+## Kapu Core
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-KC-01 | Products: savings, loans and shares, with interest, fee and charge rules | Operations lead | core KC-02 to KC-04 |
+| OB-KC-02 | Chart of accounts | Finance lead | core KC-05 |
+| OB-KC-03 | Branches, tellers and tills | Operations lead | core KC-06 |
+| OB-KC-04 | End-of-day cycle and the returns it files | Finance lead | core KC-07, KC-10 |
+| OB-KC-05 | Data from its current system, and a signed-off migration reconciliation | Finance lead | core KC-11 |
+
+## Kapu MFI
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-MF-01 | Its shortcode and bank access | Finance lead | mfi §4 |
+| OB-MF-02 | Loan products and fee structures | Credit lead | mfi §3 |
+| OB-MF-03 | Approval chains, vetting limits and the override authority | Credit lead | mfi MF-06, MF-07 |
+| OB-MF-04 | Collateral types it accepts | Credit lead | mfi MF-03 |
+
+## Kapu Sacco
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-SC-01 | Bylaws, products, and fee and dividend rules | Sacco's management | sacco §4 |
+| OB-SC-02 | Member data for migration | Operations lead | sacco §4 |
+| OB-SC-03 | Check-off employers and their remittance files | Finance lead | Reconciliation (check-off) |
+| OB-SC-04 | Core API access, or extracts and a posting route (integrated mode) | IT lead | sacco §4 |
+
+## Reconciliation & Observability
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-RO-01 | A posting-event feed, or a ledger extract on its cycle | IT lead | recon-observability §4 |
+| OB-RO-02 | Chart-of-accounts mapping | Finance lead | recon-observability §4 |
+| OB-RO-03 | Rail credentials or statements, for every channel | Finance lead | recon-observability §6 |
+| OB-RO-04 | The response time it expects for each type of break | Operations lead | Break queues by SLA |
+
+## SME Reconciliation
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-SR-01 | ERP API access, or an Odoo subscription | IT lead | sme-recon §4 |
+| OB-SR-02 | Bank and shortcode credentials, or delegated access | Finance lead | sme-recon §4 |
+
+## Omni-channel banking
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-OC-01 | Its brand: name, logo, colours | Marketing lead | White-labelled per institution (FS-232) |
+| OB-OC-02 | Channel limits by transaction type | Operations lead | omni-channel §4 |
+| OB-OC-03 | Its app store accounts, or consent to publish under Dibon's | Marketing lead | FS-232 |
+| OB-OC-04 | A USSD code, from the operators | Operations lead | FS-233 |
+
+## Business suite
+
+| Id | What we need | From | Why |
+|---|---|---|---|
+| OB-BS-01 | Which apps: CRM, helpdesk, accounting, HR and payroll, Sign, portal | Customer's sponsor | business-suite §3 |
+| OB-BS-02 | Odoo or Zoho, and the subscription | Commercial lead | business-suite BS-13 |
+| OB-BS-03 | Chart of accounts, and the core's daily totals if it has a core | Finance lead | business-suite §4 |
+| OB-BS-04 | Data for migration | Finance lead | business-suite BS-10 |

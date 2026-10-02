@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Dibon Consulting — Financial Services Portfolio</title>
+<title>__DOC_TITLE__</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:wght@400;600&display=swap">
@@ -52,6 +52,8 @@ p { margin: 0 0 3mm; }
 .cover .top { position: absolute; left: 20mm; top: 22mm; display: flex; align-items: center; }
 .cover .top img { height: 17mm; }
 .cover .top .wordmark { font: 700 8.5pt/1.25 var(--display); letter-spacing: 0.24em; text-transform: uppercase; color: var(--cream); margin-left: 4mm; }
+.cover .prepared { position: absolute; left: 20mm; top: 92mm; font: 600 9.5pt/1.4 var(--display); color: var(--cream); }
+.cover .prepared span { font-size: 7.5pt; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-right: 2mm; }
 .cover .title { position: absolute; left: 20mm; right: 20mm; top: 108mm; }
 .cover .kicker { font: 700 9pt/1 var(--display); letter-spacing: 0.22em; text-transform: uppercase; color: var(--amber); margin-bottom: 7mm; }
 .cover h1 { color: var(--cream); font-weight: 800; font-size: 44pt; line-height: 1.02; letter-spacing: -0.01em; max-width: 150mm; }
@@ -76,6 +78,8 @@ p { margin: 0 0 3mm; }
 .mvv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin: 2mm 0 7mm; }
 .mvv > div { background: var(--aubergine); color: var(--cream); padding: 5mm 5mm 5.5mm; border-radius: 1.5mm; }
 .mvv b { display: block; font: 700 7.5pt/1 var(--display); letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); margin-bottom: 2.5mm; }
+.mvv b { display: flex; align-items: center; gap: 2.2mm; }
+.mvv b svg { width: 5.5mm; height: 5.5mm; flex: none; fill: none; stroke: var(--amber); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .mvv p { margin: 0; font-size: 10pt; color: #f0dfe6; }
 .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; margin: 0 0 7mm; }
 .glance > div { border-top: 0.8mm solid var(--amber); padding-top: 3mm; }
@@ -192,6 +196,7 @@ __REST_CSS__
     <img class="logo" alt="Dibon" src="__LOGO__">
     <span class="wordmark">Dibon<br>Consulting</span>
   </div>
+  __PREPARED__
   <div class="title">
     <div class="kicker">Financial services portfolio · 2026</div>
     <h1>Financial services <span>infrastructure</span></h1>
@@ -232,7 +237,7 @@ __REST_CSS__
       <li><a href="#p21">Working with us</a><a class="n" href="#p21">21</a></li>
     </ol>
   </div>
-  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">02</span></footer>
+  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">__DOCREF__</span><span class="num">02</span></footer>
 </section>
 
 <!-- 3 · Who we are -->
@@ -244,9 +249,9 @@ __REST_CSS__
     <h2>One technology partner, not one product</h2>
     <p class="lede">Dibon Consulting builds the software that banks, Saccos, microfinance institutions, payment providers and the businesses around them use to collect, lend, hold and reconcile money. Payments, deposit-taking, lending, escrow and reconciliation come together with monitoring, messaging, identity and ERP integration, so an institution works with one partner rather than five.</p>
     <div class="mvv">
-      <div><b>Mission</b><p>Driving scalable business expansion through immersive, customized technology solutions.</p></div>
-      <div><b>Vision</b><p>Shaping the future through transformative partnerships, harnessing emerging technologies and world-class resources.</p></div>
-      <div><b>Values</b><p>Innovation, customer-centricity, excellence, collaboration, integrity, continuous learning, agility and social responsibility.</p></div>
+      <div><b><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path d="M12 12l6.5-6.5M15.5 4.5h3v3"/></svg>Mission</b><p>Driving scalable business expansion through immersive, customized technology solutions.</p></div>
+      <div><b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17h18M7 17a5 5 0 0 1 10 0M12 9V6.5M6.3 11.3 4.6 9.8M17.7 11.3l1.7-1.5M7.5 20.5h9"/></svg>Vision</b><p>Shaping the future through transformative partnerships, harnessing emerging technologies and world-class resources.</p></div>
+      <div><b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M8.8 12.2l2.2 2.2 4.4-4.6"/></svg>Values</b><p>Innovation, customer-centricity, excellence, collaboration, integrity, continuous learning, agility and social responsibility.</p></div>
     </div>
     <div class="glance">
       <div><div class="big">__N_PRODUCTS__</div><div class="lbl">products on one platform</div></div>
@@ -279,7 +284,7 @@ __REST_CSS__
       </figure>
     </div>
   </div>
-  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">03</span></footer>
+  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">__DOCREF__</span><span class="num">03</span></footer>
 </section>
 
 <!-- 4 · The problems we solve -->
@@ -313,11 +318,11 @@ __REST_CSS__
       <div class="pair">
         <span class="disc"><svg class="ico" viewBox="0 0 24 24"><path d="M7 3h8l3 3v13H7z"/><path d="M5 6v15h11"/><path d="M10 9h5M10 12.5h5M10 16h3"/></svg></span>
         <div class="prob"><h3>Growth held back by paperwork</h3><p>Paper KYC, paper mandates, and monthly credit-bureau files assembled by hand.</p></div>
-        <div class="ans"><b>With Dibon</b><p><em>Identity, e-signatures and credit-bureau automation</em> take onboarding, consent and bureau submissions off paper.</p></div>
+        <div class="ans"><b>With Dibon</b><p><em>Identity and e-signatures</em> take onboarding and consent off paper, with credit-bureau submissions coming soon.</p></div>
       </div>
     </div>
   </div>
-  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">04</span></footer>
+  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">__DOCREF__</span><span class="num">04</span></footer>
 </section>
 
 <!-- 5 · How we build -->
@@ -349,10 +354,10 @@ __REST_CSS__
     </div>
     <div class="stack">
       <div class="layer"><b>Channels</b><span>Mobile app · Internet banking · USSD</span></div>
-      <div class="layer"><b>Products</b><span>Collect · Gateway · Escrow · Core · MFI · Sacco · Reconciliation · SME Reconciliation</span></div>
+      <div class="layer"><b>Products</b><span>Collect · Gateway · Escrow · Core banking (Kapu Core) · MFI · Sacco · Reconciliation · SME Reconciliation</span></div>
       <div class="layer"><b>Platform</b><span>Approvals · Messaging · Identity and access · Credit bureaus · Payment rails · Insights</span></div>
       <div class="records">
-        <div class="record"><b>Your core, or ours</b><span>Money: accounts, balances, loans</span></div>
+        <div class="record"><b>Your core, or Kapu Core</b><span>Money: accounts, balances, loans</span></div>
         <div class="record"><b>Your ERP</b><span>Customers, invoices, what is owed</span></div>
         <div class="record"><b>Reconciliation engine</b><span>Every match, every exception</span></div>
       </div>
@@ -360,7 +365,7 @@ __REST_CSS__
     <p class="stack-cap">Channels and products sit on shared platform services, above three systems of record. Each record has exactly one.</p>
     <div class="band"><p>Follow the green line. <span>It never passes through Dibon.</span></p><small>In every product diagram that follows, a solid green line is money moving. It runs from payer to account, between institutions and their customers, and never through our software.</small></div>
   </div>
-  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">05</span></footer>
+  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">__DOCREF__</span><span class="num">05</span></footer>
 </section>
 
 __PAGE_06__
@@ -414,12 +419,12 @@ __PAGE_06__
       </figure>
     </div>
     <div class="facts">
-      <div><b>Channels</b><span>M-Pesa, Airtel Money, T-Kash; PesaLink next</span></div>
+      <div><b>Channels</b><span>M-Pesa, Airtel Money, T-Kash; PesaLink coming soon</span></div>
       <div><b>Runs</b><span>Inside the partner bank (being onboarded), or in-country cloud</span></div>
       <div><b>For</b><span>Tier-2 and tier-3 banks; their partners</span></div>
     </div>
   </div>
-  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">07</span></footer>
+  <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">__DOCREF__</span><span class="num">07</span></footer>
 </section>
 
 __PAGES_08_20__

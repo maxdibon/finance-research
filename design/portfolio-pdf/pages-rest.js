@@ -13,7 +13,7 @@ const CORNERS = [
   '<path d="M22 0 C 26 16, 46 24, 70 22"/><path d="M52 34 L 70 34"/>',
 ];
 const corner = (i) => `<svg class="lineart corner" viewBox="0 0 70 40" aria-hidden="true">${CORNERS[i % CORNERS.length]}</svg>`;
-const footer = (n) => `<footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">Review draft</span><span class="num">${n}</span></footer>`;
+const footer = (n) => `<footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">__DOCREF__</span><span class="num">${n}</span></footer>`;
 const spine = (items) => `<ul class="spine">${items.map((i) => `<li>${i}</li>`).join('')}</ul>`;
 const facts = (rows) => `<div class="facts">${rows.map(([k, v]) => `<div><b>${k}</b><span>${v}</span></div>`).join('')}</div>`;
 
@@ -152,9 +152,8 @@ function serviceMatrix() {
   // when insights reads from the product (FS-301). Other services that
   // depend on a product (CRB on recon) do not make the product use them.
   const uses = (p, s) => (Array.isArray(s) ? s : [s]).some((x) => (deps[p] || []).includes(x) || (x === 'insights' && (deps.insights || []).includes(p)));
-  const head = `<tr><th></th>${services.map(([, n]) => `<th>${n}</th>`).join('')}</tr>`;
-  const rows = products.map(([id, n]) => `<tr><td>${n}</td>${services.map(([s]) => `<td>${uses(id, s) ? '<span class="tk"></span>' : ''}</td>`).join('')}</tr>`).join('');
-  return `<table class="matrix">${head}${rows}</table><p class="mx-cap">Read from each product's design: a tick means the product is built on that service.</p>`;
+  const rows = products.map(([id, n]) => `<div class="bo"><b>${n}</b><em>built on</em><span>${services.filter(([s]) => uses(id, s)).map(([, sn]) => `<i>${sn}</i>`).join('')}</span></div>`).join('');
+  return `<div class="builton">${rows}</div><p class="mx-cap">Read from each product's design: the platform services it is built on.</p>`;
 }
 
 // Business suite: how Odoo sits among the products (diagram language FS-253).
@@ -163,7 +162,7 @@ const BS_FLOW = `<figure class="dg-fig" style="margin-top:6mm"><svg class="dg" v
 <rect class="box" x="16" y="16" width="150" height="48" rx="6"/><text x="91" y="37" text-anchor="middle">Statements</text><text class="s" x="91" y="52" text-anchor="middle">bank · M-Pesa · card</text>
 <rect class="dibon" x="245" y="16" width="150" height="48" rx="6"/><text class="on" x="320" y="44" text-anchor="middle">SME Recon</text>
 <rect class="box" x="16" y="106" width="150" height="48" rx="6"/><text x="91" y="127" text-anchor="middle">Your core</text><text class="s" x="91" y="142" text-anchor="middle">customer accounts stay here</text>
-<rect class="box" x="474" y="56" width="150" height="58" rx="6"/><text x="549" y="80" text-anchor="middle">Odoo</text><text class="s" x="549" y="96" text-anchor="middle">hosted on OPA, in Kenya</text>
+<rect class="box" x="474" y="56" width="150" height="58" rx="6"/><text x="549" y="80" text-anchor="middle">Odoo</text><text class="s" x="549" y="96" text-anchor="middle">hosted on OLP, in Kenya</text>
 <rect class="dibon" x="245" y="116" width="150" height="38" rx="6"/><text class="on" x="320" y="139" text-anchor="middle">Access · Messaging</text>
 <line class="ctl" x1="166" y1="40" x2="243" y2="40" marker-end="url(#bs-c)"/>
 <line class="ctl" x1="395" y1="40" x2="472" y2="72" marker-end="url(#bs-c)"/><text x="440" y="46" text-anchor="middle">matches</text>
@@ -174,9 +173,9 @@ const BS_FLOW = `<figure class="dg-fig" style="margin-top:6mm"><svg class="dg" v
 // Integrations: the hub. Everything connects through the platform once.
 const HUB = `<figure class="dg-fig" style="margin-top:12mm"><svg class="dg" viewBox="0 0 640 200" role="img" aria-label="Mobile money, banks and cards connect once to Dibon's platform, which connects to your core, your ERP, the credit bureaus and identity registers.">
 <defs><marker id="hb-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="mk-ctl"/></marker></defs>
-${[['Mobile money', 20, ''], ['Banks', 80, 'next'], ['Cards', 140, 'next']].map(([n, y, s]) => `<rect class="box" x="16" y="${y}" width="140" height="40" rx="6"${s ? ' stroke-dasharray="5 4"' : ''}/><text x="86" y="${y + (s ? 20 : 24)}" text-anchor="middle">${n}</text>${s ? `<text class="s" x="86" y="${y + 33}" text-anchor="middle">${s}</text>` : ''}<line class="ctl" x1="156" y1="${y + 20}" x2="243" y2="100" marker-end="url(#hb-c)"/>`).join('')}
+${[['Mobile money', 20, ''], ['Banks', 80, 'coming soon'], ['Cards', 140, 'coming soon']].map(([n, y, s]) => `<rect class="box" x="16" y="${y}" width="140" height="40" rx="6"${s ? ' stroke-dasharray="5 4"' : ''}/><text x="86" y="${y + (s ? 20 : 24)}" text-anchor="middle">${n}</text>${s ? `<text class="s" x="86" y="${y + 33}" text-anchor="middle">${s}</text>` : ''}<line class="ctl" x1="156" y1="${y + 20}" x2="243" y2="100" marker-end="url(#hb-c)"/>`).join('')}
 <rect class="dibon" x="245" y="70" width="150" height="60" rx="6"/><text class="on" x="320" y="96" text-anchor="middle">Dibon platform</text><text class="s on" x="320" y="112" text-anchor="middle">one connection each</text>
-${[['Your core', 10], ['Your ERP', 60], ['Credit bureaus', 110], ['Identity registers', 160]].map(([n, y]) => `<rect class="box" x="484" y="${y}" width="140" height="34" rx="6"/><text x="554" y="${y + 21}" text-anchor="middle">${n}</text><line class="ctl" x1="395" y1="100" x2="482" y2="${y + 17}" marker-end="url(#hb-c)" marker-start="url(#hb-c)"/>`).join('')}
+${[['Your core', 10, ''], ['Your ERP', 60, ''], ['Credit bureaus', 110, 'coming soon'], ['Identity registers', 160, '']].map(([n, y, s]) => `<rect class="box" x="484" y="${y}" width="140" height="34" rx="6"${s ? ' stroke-dasharray="5 4"' : ''}/><text x="554" y="${y + (s ? 16 : 21)}" text-anchor="middle">${n}</text>${s ? `<text class="s" x="554" y="${y + 28}" text-anchor="middle">${s}</text>` : ''}<line class="ctl" x1="395" y1="100" x2="482" y2="${y + 17}" marker-end="url(#hb-c)" marker-start="url(#hb-c)"/>`).join('')}
 </svg><figcaption>Each rail and each system is integrated once, in the platform, and every product uses it.</figcaption></figure>`;
 
 const WORD = { 8: 'Eight', 9: 'Nine', 10: 'Ten', 11: 'Eleven' };
@@ -224,14 +223,14 @@ function productPage(p) {
 function rest({ F }) {
   const P = [
     { n: '08', idx: 2, name: 'Kapu Pay Gateway', tag: 'One API for every rail a business takes',
-      lede: 'For businesses and fintechs that take payments on more than one rail. One API and one dashboard cover mobile money today, with bank transfers and cards next, and every payment is reconciled against what it paid for. Payments settle into the merchant\'s own accounts.',
+      lede: 'For businesses and fintechs that take payments on more than one rail. One API and one dashboard cover mobile money today, with bank transfers and cards coming soon, and every payment is reconciled against what it paid for. You bring your own paybill or account, and payments settle straight into it; we never hold the money. Already have a business collection account at your bank, often called Lipa na Bank? The Gateway works with it, with matching as each bank comes online.',
       fig: F['Kapu Pay Gateway'], mock: MOCK.gateway, mockW: '90mm', flip: true,
-      spine: ['One collections API across M-Pesa, Airtel Money and T-Kash', 'Cards and PesaLink, next', 'Payment links, including invoices sent by SMS', 'A merchant dashboard: every payment matched, every exception listed', 'Signed callbacks and idempotent requests'],
-      facts: [['Channels', 'M-Pesa, Airtel Money, T-Kash; cards and PesaLink next'], ['Settles', 'Into the merchant\'s own accounts'], ['For', 'SMEs, fintechs, MFIs and Saccos']] },
+      spine: ['One collections API across M-Pesa, Airtel Money and T-Kash', 'Cards and PesaLink, coming soon', 'Payment links, including invoices sent by SMS', 'A merchant dashboard: every payment matched, every exception listed', 'Signed callbacks and idempotent requests'],
+      facts: [['Channels', 'M-Pesa, Airtel Money, T-Kash; cards and PesaLink coming soon'], ['Settles', 'Into the merchant\'s own accounts'], ['For', 'SMEs, fintechs, MFIs and Saccos']] },
     { n: '09', idx: 3, name: 'Kapu Escrow', tag: 'Funds held at a bank until the conditions are met',
       lede: 'For property, vehicle sales, construction milestones, B2B trade and marketplaces. The buyer\'s money sits at a partner bank in an escrow account of its own, released to the seller only when the agreed approvers sign off. Neither party, nor Dibon, can release funds alone. Our first partner bank is being onboarded.',
       fig: F['Kapu Escrow'], mock: MOCK.escrow, figW: '86%',
-      spine: ['Digital escrow agreements, signed electronically by both parties', 'One bank-held escrow account per agreement', 'Milestones with evidence, partial releases and refunds', 'Disputes frozen and decided by a named arbiter', 'A daily tie-out of every escrow account against its agreement'],
+      spine: ['Digital escrow agreements, signed electronically by both parties', 'One bank-held escrow account per agreement', 'Milestones with evidence, partial releases and refunds', 'Disputes frozen and decided by a named arbiter; the bank still checks the mandate', 'A daily tie-out of every escrow account against its agreement'],
       facts: [['Held at', 'A partner bank (being onboarded), one account per agreement'], ['Released', 'Only on the agreed approvals'], ['For', 'Property, vehicles, construction, trade']] },
     { n: '10', idx: 4, name: 'Kapu Core', tag: 'A hosted core banking system, on Apache Fineract',
       lede: 'For MFIs, Saccos and tier-3 banks whose current system is basic, or absent. Clients, savings, shares, loans, the general ledger, tellers and end-of-day, hosted in Kenya, with every Kapu product running on top. The money stays in your own accounts; Kapu Core is your ledger.',
@@ -242,7 +241,7 @@ function rest({ F }) {
       lede: 'For lenders moving off spreadsheets, paper and ageing systems. The whole loan, from a digital application to closure or restructure, with the process enforced and light enough for a team of three.',
       fig: F['Kapu MFI'], mock: MOCK.mfi, mockW: '66mm', flip: true, extra: MFI_DASH, figW: '84%',
       spine: ['KYC with IPRS lookup and a completeness gate per product', 'Collateral management, vehicles first, with verification evidence', 'Approval chains by product and amount, with no self-approval', 'Above-limit approvals flagged and tracked as their own cohort', 'Repayments split into principal, interest, fees and insurance', 'SMS reminders, a portfolio dashboard, and migration from Mifos'],
-      facts: [['Built on', 'Apache Fineract'], ['Disburse and repay', 'M-Pesa now; bank transfer next'], ['For', 'Lenders with 2 to 15 staff']] },
+      facts: [['Built on', 'Apache Fineract'], ['Disburse and repay', 'M-Pesa now; bank transfer coming soon'], ['For', 'Lenders with 2 to 15 staff']] },
     { n: '12', idx: 6, name: 'Kapu Sacco', tag: 'For credit-only and deposit-taking Saccos',
       lede: 'For Saccos that want contributions, deposits, loans and guarantees in one place, current every day rather than every month-end.',
       fig: F['Kapu Sacco'], mock: MOCK.sacco, figW: '88%',
@@ -254,10 +253,10 @@ function rest({ F }) {
       spine: ['Ingest from callbacks, APIs and MT940, CAMT and CSV files', 'Rules, including three-way matching against what you expected', 'Remediation: status queries automatic; reversals approved by a second person', 'A ledger view proved two ways: real-time assertions and a nightly batch', 'Treasury, float, and branch and till cash by denomination'],
       facts: [['Built on', 'Kubernetes, Prometheus, OpenTelemetry, Grafana'], ['Closes the day', 'Queue empty, suspense zero'], ['For', 'Banks, IMTs, PSPs, Saccos, MFIs']] },
     { n: '14', idx: 8, name: 'SME Reconciliation', tag: 'Your bank and mobile money, inside your ERP',
-      lede: 'For businesses on Odoo, with Zoho and others to follow. Bank, mobile-money and card statements flow into the ERP; incoming money is matched to invoices, outgoing money to bills and expenses, and payments approved in the ERP are executed by mobile money, with bank APIs next.',
+      lede: 'For businesses on Odoo, with Zoho and others to follow. Bank, mobile-money and card statements flow into the ERP; incoming money is matched to invoices, outgoing money to bills and expenses, and payments approved in the ERP are executed by mobile money, with bank APIs coming soon.',
       fig: F['SME Reconciliation'], mock: MOCK.sme, mockW: '92mm',
-      spine: ['Bank statements by file today; bank APIs next', 'M-Pesa, Airtel Money and T-Kash on your own shortcodes', 'Incoming money matched to invoices, including partial payments', 'Outgoing money matched to bills; bank charges posted as expenses', 'Unmatched money stays unapplied and visible, never in suspense'],
-      facts: [['ERPs', 'Odoo first, then Zoho'], ['Pays', 'By mobile money once approved; bank APIs next'], ['For', 'SMEs and fintechs']] },
+      spine: ['Bank statements by file today; bank APIs coming soon', 'M-Pesa, Airtel Money and T-Kash on your own shortcodes', 'Incoming money matched to invoices, including partial payments', 'Outgoing money matched to bills; bank charges posted as expenses', 'Unmatched money stays unapplied and visible, never in suspense'],
+      facts: [['ERPs', 'Odoo first, then Zoho'], ['Pays', 'By mobile money once approved; bank APIs coming soon'], ['For', 'SMEs and fintechs']] },
     { n: '15', idx: 9, name: 'Omni-channel banking', tag: 'App, web and USSD, under your brand',
       lede: 'A mobile app, internet banking and USSD menus, white-labelled for each institution, on one channel API, so a balance is the same everywhere. Anything that moves money asks the member to confirm who they are at that moment, and runs a SIM-swap check where the operator offers one.',
       fig: F['Omni-channel banking'], mock: MOCK.omni, mockW: '100mm', flip: true,
@@ -294,7 +293,7 @@ function rest({ F }) {
   const svc = [['approvals', 'Approvals and mandates', 'Chains by product, amount and risk; no self-approval; every decision attributed when it is made. Debit mandates with the payer\'s consent and right to cancel.'],
     ['messaging', 'Messaging', 'SMS, WhatsApp, Telegram and app push. In Kenya, SMS goes direct to the operators under Dibon\'s PRSP licence. A status says only what the channel reported.'],
     ['identity', 'Identity and access', 'One login for every system; re-authentication before money moves; financial-grade API security; IPRS, document and liveness checks.'],
-    ['bureau', 'Credit bureaus', 'Monthly submissions generated from the ledger and reconciled; lookups with the purpose recorded first; corrections when a borrower settles.'],
+    ['bureau', 'Credit bureaus', 'Coming soon. Monthly submissions generated from the ledger and reconciled; lookups with the purpose recorded first; corrections when a borrower settles.'],
     ['rails', 'Payment rails', 'M-Pesa, Airtel Money, T-Kash, PesaLink, bank APIs and files, and cards behind one interface. Unconfirmed means pending, never assumed.'],
     ['insights', 'Insights', 'Every metric defined once, for dashboards and plain-language questions. Each answer shows how it was calculated and how fresh the data is.']];
 
@@ -306,12 +305,12 @@ function rest({ F }) {
     ${RULE}
     <h2>Business suite, on Odoo and Zoho</h2>
     <p class="prod-tag">The ERP, implemented by Dibon and connected to every product</p>
-    <p class="lede" style="font-size:11pt">For SMEs and fintechs without an ERP, and for Saccos, MFIs and banks that want their own back office in order. Dibon implements Odoo, as an Odoo Ready Partner, and Zoho, as a Zoho partner. Odoo runs on OPA, our own Odoo management platform, hosted in Kenya. An institution's customer accounts stay in its core; Odoo receives the daily totals for the general ledger.</p>
+    <p class="lede" style="font-size:11pt">For SMEs and fintechs without an ERP, and for Saccos, MFIs and banks that want their own back office in order. Dibon implements Odoo, as an Odoo Ready Partner, and Zoho, as a Zoho partner. Odoo runs on OLP, Odoo Launch Pad, our own Odoo management platform, hosted in Kenya. An institution's customer accounts stay in its core; Odoo receives the daily totals for the general ledger.</p>
     <div class="mods">
       ${[['insights', 'CRM', 'Leads, accounts and pipeline in one place'], ['messaging', 'Helpdesk', 'Tickets with SLAs, linked to the customer'], ['log', 'Accounting', 'Statements already reconciled by SME Reconciliation'], ['people', 'HR and payroll', 'Contracts, leave, attendance and monthly payroll'], ['approvals', 'Sign', 'Agreements, mandates and consents signed online'], ['store', 'Portal', 'Invoices, statements and tickets for customers'], ['pulse', 'Campaigns', 'Delivered through Dibon\'s messaging, status written back'], ['rails', 'Migration', 'From spreadsheets or an old system, balances signed off']].map(([k, a, b]) => `<div class="mod">${ico(k)}<b>${a}</b><span>${b}</span></div>`).join('')}
     </div>
     ${BS_FLOW}
-    <div class="band" style="margin-top:5mm"><p>Odoo on OPA, <span>in Kenya.</span></p><small>Instances, backups, staging and upgrades managed on Dibon's own Odoo platform, on in-country infrastructure. Zoho runs on Zoho's own cloud. One sign-on with the rest of the Dibon platform.</small></div>
+    <div class="band" style="margin-top:5mm"><p>Odoo on OLP, <span>in Kenya.</span></p><small>Instances, backups, staging and upgrades managed on Dibon's own Odoo platform, on in-country infrastructure. Zoho runs on Zoho's own cloud. One sign-on with the rest of the Dibon platform.</small></div>
   </div>
   ${footer('16')}
 </section>`;
@@ -330,10 +329,12 @@ function rest({ F }) {
   ${footer('17')}
 </section>`;
 
-  const seg = [['bank', 'Tier-2 and tier-3 banks', 'Collect; Reconciliation', 'Escrow; omni-channel'],
-    ['sacco', 'Deposit-taking Saccos', 'Sacco; Reconciliation (check-off)', 'Omni-channel; credit bureaus'],
+  const seg = [['bank', 'Tier-2 banks with a core but a manual back office', 'Reconciliation, with approvals and mandates', 'The Business suite for helpdesk, HR and procurement; Collect'],
+    ['bank', 'Tier-3 banks', 'Collect; Reconciliation', 'Escrow; omni-channel; Kapu Core where the core is basic'],
+    ['sacco', 'Deposit-taking Saccos', 'Sacco; Reconciliation (check-off)', 'Omni-channel; credit bureaus, coming soon'],
     ['people', 'Credit-only Saccos', 'Sacco', 'Omni-channel; messaging'],
-    ['mfi', 'MFIs', 'MFI, on Kapu Core', 'Credit bureaus; omni-channel'],
+    ['mfi', 'MFIs on spreadsheets', 'MFI, on Kapu Core', 'Omni-channel; credit bureaus, coming soon'],
+    ['mfi', 'MFIs with a legacy back office', 'MFI on your existing core; Reconciliation', 'The Business suite; Kapu Core when you are ready to move'],
     ['cube', 'Institutions on a basic core', 'Kapu Core', 'MFI or Sacco; Reconciliation; omni-channel'],
     ['rails', 'Money-transfer operators and PSPs', 'Reconciliation', 'Gateway; insights'],
     ['gateway', 'Fintechs', 'Gateway', 'Reconciliation; Collect, through a partner bank'],
@@ -346,16 +347,17 @@ function rest({ F }) {
     ${RULE}
     <h2>Where to start</h2>
     <div class="segs">${seg.map(([k, a, b, c]) => `<div class="seg"><span class="disc">${ico(k)}</span><div><b>${a}</b><p><em>Start with</em> ${b}</p><p><em>Add</em> ${c}</p></div></div>`).join('')}</div>
+    <div class="band" style="margin-top:8mm"><p>Not on this list? <span>Start with your process.</span></p><small>Tell us where money gets lost in your work, and we will suggest where to begin, on your own data.</small></div>
   </div>
   ${footer('18')}
 </section>`;
 
   const integ = [['phone', 'Mobile money', ['M-Pesa (Daraja)', 'Airtel Money', 'T-Kash'], 'Integrated directly'],
-    ['bank', 'Banks', ['~Bank APIs', '~MT940', '~CAMT.053', '~CSV', '~PesaLink'], 'Next: Dibon\'s own banks first'],
-    ['key', 'Cards', ['~Acquirers', '~Processors'], 'Next. Card numbers will never touch our systems'],
+    ['bank', 'Banks', ['~Bank APIs', '~MT940', '~CAMT.053', '~CSV', '~PesaLink'], 'Coming soon: Dibon\'s own banks first'],
+    ['key', 'Cards', ['~Acquirers', '~Processors'], 'Coming soon. Card numbers will never touch our systems'],
     ['suite', 'ERP', ['Odoo', 'Zoho'], 'Implemented by Dibon, a partner of both'],
-    ['identity', 'Identity', ['IPRS', 'Documents', 'Liveness'], 'Checked before an account opens'],
-    ['bureau', 'Credit bureaus', ['Every licensed bureau in Kenya'], 'Submissions and lookups'],
+    ['identity', 'Identity', ['IPRS', 'Documents', 'Liveness', '~Business registration'], 'Checked before an account opens'],
+    ['bureau', 'Credit bureaus', ['~Every licensed bureau in Kenya'], 'Coming soon: submissions and lookups'],
     ['cube', 'Core banking', ['Your core, by adapter', 'Kapu Core, on Apache Fineract'], 'Integrated first; Kapu Core where yours is basic']];
   const page18 = `
 <section class="page" id="p19">
@@ -364,7 +366,7 @@ function rest({ F }) {
     <p class="eyebrow">Integrations</p>
     ${RULE}
     <h2>What the platform connects to</h2>
-    <p class="chip-key"><span class="k-on">Integrated</span><span class="k-next">Next</span></p>
+    <p class="chip-key"><span class="k-on">Integrated</span><span class="k-next">Coming soon</span></p>
     <div class="integ">${integ.map(([k, a, chips, note]) => `<div class="int"><span class="disc">${ico(k)}</span><div><b>${a}</b><div class="chips">${chips.map((c) => (c.startsWith('~') ? `<span class="next">${c.slice(1)}</span>` : `<span>${c}</span>`)).join('')}</div><small>${note}</small></div></div>`).join('')}</div>
     ${HUB}
   </div>
@@ -421,14 +423,13 @@ const CSS = `
 .chev li:first-child { clip-path: polygon(0 0, calc(100% - 3mm) 0, 100% 50%, calc(100% - 3mm) 100%, 0 100%); padding-left: 3mm; }
 .chev li:nth-child(even) { background: var(--plum); }
 .chev li:last-child { background: var(--amber); color: var(--aubergine); }
-/* Service matrix */
-.matrix { width: 100%; border-collapse: collapse; margin-top: 4mm; font: 600 9pt/1.2 var(--display); }
-.matrix th { font: 700 7pt/1.1 var(--display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--cream); background: var(--aubergine); padding: 2.2mm 1.5mm; text-align: center; }
-.matrix th:first-child { background: transparent; }
-.matrix td { border-bottom: 0.3mm solid var(--line); padding: 1.1mm 1.5mm; text-align: center; color: var(--aubergine); }
-.matrix td:first-child { text-align: left; }
-.matrix .tk { display: inline-block; width: 3.6mm; height: 3.6mm; border-radius: 50%; background: var(--amber); position: relative; vertical-align: middle; }
-.matrix .tk::after { content: ; position: absolute; left: 1.25mm; top: 0.55mm; width: 0.9mm; height: 1.7mm; border: solid var(--aubergine); border-width: 0 0.4mm 0.4mm 0; transform: rotate(45deg); }
+/* Built on: one row per product (FS-332) */
+.builton { margin-top: 4mm; }
+.bo { display: grid; grid-template-columns: 30mm 15mm 1fr; align-items: center; padding: 0.9mm 0; border-bottom: 0.3mm solid var(--line); }
+.bo b { font: 700 9pt/1.2 var(--display); color: var(--aubergine); }
+.bo em { font: 400 8.5pt/1 var(--body); font-style: normal; color: var(--muted); }
+.bo span { display: flex; flex-wrap: wrap; gap: 1.2mm; }
+.bo i { font: 600 7.4pt/1 var(--display); font-style: normal; color: var(--aubergine); background: var(--cream); border: 0.3mm solid #f1d9a6; border-radius: 3mm; padding: 1.1mm 2.3mm; }
 .mx-cap { font-size: 8.5pt; color: var(--muted); margin-top: 2mm; }
 .tline .get { margin-top: 2mm; background: #fff4dc; border-left: 0.9mm solid var(--amber); border-radius: 1mm; padding: 2mm 3mm; color: var(--aubergine); font: 600 9.5pt/1.4 var(--display); max-width: 130mm; }
 .tline .get em { font-style: normal; font: 700 6.8pt/1 var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--aubergine); background: #fff; border: 0.3mm solid var(--amber); border-radius: 3mm; padding: 1.1mm 2.2mm; margin-right: 2mm; display: inline-block; }
@@ -462,11 +463,12 @@ const CSS = `
 .stile b { font: 700 11pt/1.2 var(--display); }
 .stile span { font-size: 9.5pt; color: #e7d3df; }
 /* Page 17 · segments */
-.segs { display: grid; gap: 2.2mm; margin-top: 1mm; }
-.seg { display: grid; grid-template-columns: 13mm 1fr; gap: 4.5mm; align-items: center; padding: 2mm 0 4mm; border-bottom: 0.3mm solid var(--line); }
-.seg:last-child { border-bottom: 0; }
+.segs { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8mm; row-gap: 2.2mm; margin-top: 1mm; }
+.seg { display: grid; grid-template-columns: 11mm 1fr; gap: 3.5mm; align-items: start; padding: 2mm 0 4mm; border-bottom: 0.3mm solid var(--line); }
+.seg:nth-last-child(-n+2) { border-bottom: 0; }
 .seg .disc, .int .disc { width: 12mm; height: 12mm; border-radius: 50%; border: 0.6mm solid var(--amber); display: grid; place-items: center; }
 .seg .disc svg, .int .disc svg { width: 6.5mm; height: 6.5mm; }
+.seg .disc { width: 10.5mm; height: 10.5mm; }
 .seg b { display: block; font: 700 11pt/1.25 var(--display); color: var(--aubergine); margin-bottom: 1mm; }
 .seg p { margin: 0; font-size: 10pt; }
 .seg em { font-style: normal; font: 700 7pt/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-text); margin-right: 1.5mm; }

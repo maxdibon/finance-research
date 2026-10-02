@@ -2,6 +2,12 @@
 // Builds the marketing PDF from pages.html (FS-264).
 //
 //   node design/portfolio-pdf/build.js
+//   node design/portfolio-pdf/build.js --for "Recipient name"
+//
+// The document id, version and issue date come from document.json (FS-333).
+// A named copy carries "Prepared for" on the cover and the name in its
+// filename, and is not published as the web preview. Record every named
+// copy in the distribution log on the CRM opportunity; names never go in git.
 //
 // Output goes to build/portfolio/, which git ignores. The logo is the
 // 1000-pixel transparent original extracted from Dibon's own July proposal
@@ -27,6 +33,14 @@ if (!CHROME) throw new Error('No Chrome or Edge found for headless printing');
 const { F } = require(path.join(ROOT, 'design', 'portfolio-preview', 'figures.js'));
 const { rest, CSS } = require(path.join(__dirname, 'pages-rest.js'));
 const R = rest({ F });
+const DOC = JSON.parse(fs.readFileSync(path.join(__dirname, 'document.json'), 'utf8'));
+const at = process.argv.indexOf('--for');
+const recipient = at > 0 ? (process.argv[at + 1] || '').trim() : '';
+if (at > 0 && !recipient) throw new Error('--for needs a name');
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const longDate = new Date(`${DOC.issued}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const docRef = `${DOC.id} · v${DOC.version}`;
+const prepared = recipient ? `<div class="prepared"><span>Prepared for</span>${esc(recipient)} · ${longDate}</div>` : '';
 const logo = `data:image/png;base64,${fs.readFileSync(path.join(ROOT, 'design', 'brand', 'dibon_logo_white.png')).toString('base64')}`;
 
 // Counts are computed by pages-rest.js from the pages it builds, never typed.
@@ -37,6 +51,9 @@ const html = fs.readFileSync(path.join(__dirname, 'pages.html'), 'utf8')
   .split('__PAGE_06__').join(R.page06)
   .split('__PAGES_08_20__').join(R.pages0820)
   .split('__FIG_COLLECT__').join(F['Kapu Collect'])
+  .split('__DOC_TITLE__').join(`${DOC.title}, ${docRef}`)
+  .split('__DOCREF__').join(docRef)
+  .split('__PREPARED__').join(prepared)
   .split('__LOGO__').join(logo);
 const left = html.match(/__[A-Z0-9_]+__/);
 if (left) throw new Error(`unfilled placeholder ${left[0]}`);
@@ -48,7 +65,10 @@ fs.writeFileSync(htmlOut, html);
 // Print to a fresh file, then move it into place. Chrome exits quietly when
 // it cannot write, for example while the PDF is open in a viewer, so the
 // build checks that a new file exists rather than trusting the exit (FS-322).
-const pdfOut = path.join(OUT, 'dibon-financial-services-portfolio-review.pdf');
+// A filename a person can read: title, version, issue date, and the
+// recipient for a named copy. Hyphens, not spaces, so links do not break.
+const slug = (s) => s.normalize('NFKD').replace(/[^\w\s.-]/g, '').trim().replace(/\s+/g, '-');
+const pdfOut = path.join(OUT, `${slug(DOC.title)}-v${DOC.version}-${DOC.issued}${recipient ? `-for-${slug(recipient)}` : ''}.pdf`);
 const tmp = path.join(OUT, `print-${process.pid}.pdf`);
 execFileSync(CHROME, [
   '--headless=new', '--disable-gpu', '--no-pdf-header-footer', '--virtual-time-budget=8000',
@@ -63,6 +83,11 @@ try {
   const alt = pdfOut.replace(/\.pdf$/, `-${stamp}.pdf`);
   fs.renameSync(tmp, alt);
   console.log(`${path.basename(pdfOut)} is locked (open in a viewer?); wrote ${path.relative(ROOT, alt)} instead`);
+}
+
+if (recipient) {
+  console.log(`distribution log: ${DOC.id} v${DOC.version}, ${DOC.issued}, for ${recipient}, file ${path.basename(pdfOut)}`);
+  process.exit(0);
 }
 
 // The web preview is the same pages, laid out as sheets and scaled to the
