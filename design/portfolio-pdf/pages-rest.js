@@ -201,7 +201,7 @@ const BS_FLOW = `<figure class="dg-fig" style="margin-top:6mm"><svg class="dg" v
 <rect class="dibon" x="245" y="116" width="150" height="38" rx="6"/><text class="on" x="320" y="139" text-anchor="middle">Access · Messaging</text>
 <line class="ctl" x1="166" y1="40" x2="243" y2="40" marker-end="url(#bs-c)"/>
 <line class="ctl" x1="395" y1="40" x2="472" y2="72" marker-end="url(#bs-c)"/><text x="440" y="46" text-anchor="middle">matches</text>
-<line class="ctl" x1="166" y1="124" x2="472" y2="92" marker-end="url(#bs-c)"/><text class="s" x="205" y="104" text-anchor="middle">daily totals to the general ledger</text>
+<path class="ctl" d="M166 118 H 212 V 88 H 472" fill="none" marker-end="url(#bs-c)"/><text class="s" x="342" y="82" text-anchor="middle">daily totals to the general ledger</text>
 <line class="ctl" x1="395" y1="135" x2="472" y2="106" marker-end="url(#bs-c)" marker-start="url(#bs-c)"/><text class="s" x="430" y="140" text-anchor="start">sign-on, campaigns</text>
 </svg><figcaption>Odoo is the back office around your core, never a second core.</figcaption></figure>`;
 
