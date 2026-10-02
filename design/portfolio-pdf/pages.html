@@ -116,10 +116,12 @@ p { margin: 0 0 3mm; }
 .records { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2mm; }
 .record { background: var(--aubergine); color: var(--cream); padding: 3.5mm 4mm; border-radius: 1mm; }
 .record b { display: block; font: 700 7pt/1.2 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 1mm; }
+.record b { display: flex; align-items: center; gap: 1.8mm; }
+.record b svg { width: 4.6mm; height: 4.6mm; flex: none; fill: none; stroke: var(--amber); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .record span { font: 600 9.5pt/1.35 var(--display); }
 .band { margin-top: 9mm; background: var(--aubergine); color: var(--cream); padding: 6mm 7mm; border-radius: 1.5mm; position: relative; overflow: hidden; }
 .band::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 18mm; background: var(--amber); clip-path: polygon(55% 0, 100% 0, 100% 100%, 0 100%); }
-.band p { margin: 0; max-width: 135mm; font: 700 14pt/1.35 var(--display); }
+.band p { margin: 0; max-width: 148mm; font: 700 14pt/1.35 var(--display); }
 .band p span { color: var(--amber); }
 .band small { display: block; margin-top: 2.5mm; font: 400 9.5pt/1.4 var(--body); color: #f0dfe6; max-width: 135mm; }
 /* Diagrams: the same language as the web preview. */
@@ -354,16 +356,16 @@ __REST_CSS__
     </div>
     <div class="stack">
       <div class="layer"><b>Channels</b><span>Mobile app · Internet banking · USSD</span></div>
-      <div class="layer"><b>Products</b><span>Collect · Gateway · Escrow · Core banking (Kapu Core) · MFI · Sacco · Reconciliation · SME Reconciliation</span></div>
+      <div class="layer"><b>Products</b><span>Collect · Gateway · Escrow · Core banking · MFI · Sacco · Reconciliation · SME Reconciliation</span></div>
       <div class="layer"><b>Platform</b><span>Approvals · Messaging · Identity and access · Credit bureaus · Payment rails · Insights</span></div>
       <div class="records">
-        <div class="record"><b>Your core, or Kapu Core</b><span>Money: accounts, balances, loans</span></div>
-        <div class="record"><b>Your ERP</b><span>Customers, invoices, what is owed</span></div>
-        <div class="record"><b>Reconciliation engine</b><span>Every match, every exception</span></div>
+        <div class="record"><b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9z"/><path d="M12 12 20 7.5M12 12v9M12 12 4 7.5"/></svg>Your core, or ours</b><span>Money: accounts, balances, loans</span></div>
+        <div class="record"><b><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>Your ERP</b><span>Customers, invoices, what is owed</span></div>
+        <div class="record"><b><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="7.5" height="16" rx="1.2"/><rect x="13.5" y="4" width="7.5" height="16" rx="1.2"/><path d="M5.5 9h3M16 9h3M5.5 12.5h3M16 12.5h3"/></svg>Reconciliation engine</b><span>Every match, every exception</span></div>
       </div>
     </div>
     <p class="stack-cap">Channels and products sit on shared platform services, above three systems of record. Each record has exactly one.</p>
-    <div class="band"><p>Follow the green line. <span>It never passes through Dibon.</span></p><small>In every product diagram that follows, a solid green line is money moving. It runs from payer to account, between institutions and their customers, and never through our software.</small></div>
+    <div class="band"><p><svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="18" r="2"/><circle cx="19" cy="6" r="2"/><path d="M7 18h6a3 3 0 0 0 0-6h-2a3 3 0 0 1 0-6h6"/></svg>Follow the green line. <span>It never passes through Dibon.</span></p><small>In every product diagram that follows, a solid green line is money moving. It runs from payer to account, between institutions and their customers, and never through our software.</small></div>
   </div>
   <footer class="footer"><span class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></span><span class="draft">__DOCREF__</span><span class="num">05</span></footer>
 </section>

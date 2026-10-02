@@ -31,6 +31,12 @@ const ICON = {
   approvals: '<path d="M5 4h14v16H5z"/><path d="m8 9 1.5 1.5L12 8M8 14l1.5 1.5L12 13M14 9.5h2.5M14 14.5h2.5"/>',
   messaging: '<path d="M4 5h16v10H10l-4 4v-4H4z"/><path d="M8 9h8M8 12h5"/>',
   identity: '<circle cx="9" cy="9" r="4"/><path d="M3 20c.8-3.4 3.2-5 6-5s5.2 1.6 6 5M15 11l2 2 4-4"/>',
+  route: '<circle cx="5" cy="18" r="2"/><circle cx="19" cy="6" r="2"/><path d="M7 18h6a3 3 0 0 0 0-6h-2a3 3 0 0 1 0-6h6"/>',
+  server: '<rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><path d="M8 7h.01M8 17h.01"/>',
+  compass: '<circle cx="12" cy="12" r="8.5"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+  evidence: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20M7.8 10.6l1.9 1.9 3.4-3.6"/>',
+  chat: '<path d="M4 5h16v11H9l-4 3.5V16H4z"/><path d="M8 9.5h8M8 12.5h5"/>',
+  layers: '<path d="M12 3 21 8l-9 5-9-5z"/><path d="M3 12.5l9 5 9-5M3 16.5l9 5 9-5"/>',
   bureau: '<path d="M6 3h9l3 3v15H6z"/><path d="M9 16v-3M12 16v-6M15 16v-4"/>',
   rails: '<path d="M3 7h14M13 3l4 4-4 4M21 17H7M11 13l-4 4 4 4"/>',
   insights: '<path d="M4 20V4M4 20h16"/><path d="m7 15 4-4 3 3 5-6"/>',
@@ -285,7 +291,7 @@ function rest({ F }) {
       ${tile('omni', 'Omni-channel banking', 'App, web and USSD, under your brand')}
     </div>
     <div class="gsuite">${ico('suite')}<div><b>Also from Dibon: Business suite, on Odoo and Zoho</b><span>CRM, helpdesk, accounting, HR and payroll, e-signatures and a customer portal, implemented by Dibon as an Odoo and Zoho partner and connected to every product.</span></div></div>
-    <div class="gbase"><b>One platform underneath</b><span>Approvals and mandates · Messaging · Identity and access · Credit bureaus · Payment rails · Insights</span></div>
+    <div class="gbase"><b>${ico('layers', 'bi')}One platform underneath</b><span>Approvals and mandates · Messaging · Identity and access · Credit bureaus · Payment rails · Insights</span></div>
   </div>
   ${footer('06')}
 </section>`;
@@ -310,7 +316,7 @@ function rest({ F }) {
       ${[['insights', 'CRM', 'Leads, accounts and pipeline in one place'], ['messaging', 'Helpdesk', 'Tickets with SLAs, linked to the customer'], ['log', 'Accounting', 'Statements already reconciled by SME Reconciliation'], ['people', 'HR and payroll', 'Contracts, leave, attendance and monthly payroll'], ['approvals', 'Sign', 'Agreements, mandates and consents signed online'], ['store', 'Portal', 'Invoices, statements and tickets for customers'], ['pulse', 'Campaigns', 'Delivered through Dibon\'s messaging, status written back'], ['rails', 'Migration', 'From spreadsheets or an old system, balances signed off']].map(([k, a, b]) => `<div class="mod">${ico(k)}<b>${a}</b><span>${b}</span></div>`).join('')}
     </div>
     ${BS_FLOW}
-    <div class="band" style="margin-top:5mm"><p>Odoo on OLP, <span>in Kenya.</span></p><small>Instances, backups, staging and upgrades managed on Dibon's own Odoo platform, on in-country infrastructure. Zoho runs on Zoho's own cloud. One sign-on with the rest of the Dibon platform.</small></div>
+    <div class="band" style="margin-top:5mm"><p>${ico('server', 'bi')}Odoo on OLP, <span>in Kenya.</span></p><small>Instances, backups, staging and upgrades managed on Dibon's own Odoo platform, on in-country infrastructure. Zoho runs on Zoho's own cloud. One sign-on with the rest of the Dibon platform.</small></div>
   </div>
   ${footer('16')}
 </section>`;
@@ -347,7 +353,7 @@ function rest({ F }) {
     ${RULE}
     <h2>Where to start</h2>
     <div class="segs">${seg.map(([k, a, b, c]) => `<div class="seg"><span class="disc">${ico(k)}</span><div><b>${a}</b><p><em>Start with</em> ${b}</p><p><em>Add</em> ${c}</p></div></div>`).join('')}</div>
-    <div class="band" style="margin-top:8mm"><p>Not on this list? <span>Start with your process.</span></p><small>Tell us where money gets lost in your work, and we will suggest where to begin, on your own data.</small></div>
+    <div class="band" style="margin-top:8mm"><p>${ico('compass', 'bi')}Not on this list? <span>Start with your process.</span></p><small>Tell us where money gets lost in your work, and we will suggest where to begin, on your own data.</small></div>
   </div>
   ${footer('18')}
 </section>`;
@@ -387,7 +393,7 @@ function rest({ F }) {
     ${RULE}
     <h2>Built to be audited</h2>
     <ul class="rows">${sec.map(([k, a, b]) => `<li><span class="disc">${ico(k)}</span><div><b>${a}</b><span>${b}</span></div></li>`).join('')}</ul>
-    <div class="band" style="margin-top:6mm"><p>Evidence, <span>not assertions.</span></p><small>Every number traces to a transaction, every approval to a person at a moment, and every correction is a new entry an auditor can read.</small></div>
+    <div class="band" style="margin-top:6mm"><p>${ico('evidence', 'bi')}Evidence, <span>not assertions.</span></p><small>Every number traces to a transaction, every approval to a person at a moment, and every correction is a new entry an auditor can read.</small></div>
   </div>
   ${footer('20')}
 </section>`;
@@ -405,7 +411,7 @@ function rest({ F }) {
     <h2>From your process to your numbers</h2>
     <ol class="tline">${steps.map(([a, b, c], i) => `<li><span class="dot">${i + 1}</span><div><b>${a}</b><p>${b}</p><p class="get"><em>You get</em> ${c}</p></div></li>`).join('')}</ol>
     <div class="contact-card">
-      <div><b>Talk to us</b><p>Tell us the process that costs you most. We will come back with a session date and what to bring.</p></div>
+      <div><b>${ico('chat', 'bi')}Talk to us</b><p>Tell us the process that costs you most. We will come back with a session date and what to bring.</p></div>
       <dl><dt>Email</dt><dd>info@dibon.co.ke</dd><dt>Phone</dt><dd>+254 792 745 509</dd></dl>
     </div>
   </div>
@@ -448,6 +454,8 @@ const CSS = `
 .gsuite b { display: block; font: 700 11pt/1.2 var(--display); color: var(--amber); margin-bottom: 1mm; }
 .gsuite span { font-size: 9.5pt; color: #e7d3df; }
 .gbase { margin-top: 4mm; background: var(--amber); color: var(--aubergine); border-radius: 1.5mm; padding: 3.5mm 4mm; }
+.bi { width: 6mm; height: 6mm; vertical-align: -1.3mm; margin-right: 2.6mm; fill: none; stroke: var(--amber); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.gbase b .bi { width: 4.4mm; height: 4.4mm; vertical-align: -1mm; margin-right: 1.8mm; stroke: var(--aubergine); }
 .gbase b { display: block; font: 800 7.5pt/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1.5mm; }
 .gbase span { font: 600 10pt/1.4 var(--display); }
 /* Page 15 · business suite */
