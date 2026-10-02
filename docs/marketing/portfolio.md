@@ -233,11 +233,11 @@ confirmation and the reconciliation.
 ### Kapu Escrow
 
 **Tagline:** Funds held at a bank until the conditions are met
-**Intro:** For property, vehicle sales, construction milestones, B2B trade
-and marketplaces. The buyer's money sits at a partner bank in an escrow
-account of its own, released to the seller only when the agreed approvers
-sign off. Neither party, nor Dibon, can release funds alone. Our first
-partner bank is being onboarded.
+**Intro:** The buyer's money sits at a partner bank in an escrow account of
+its own, released to the seller only when the agreed approvers sign off.
+Neither party, nor Dibon, can release funds alone; in a dispute, the named
+arbiter decides, and the bank still checks the release against the
+account's mandate. Our first partner bank is being onboarded.
 **Diagram caption:** The money waits in its own account at the bank.
 Release needs the agreed approvals, and the bank checks the instruction
 against the account’s own mandate.
@@ -245,8 +245,7 @@ against the account’s own mandate.
 - Digital escrow agreements, signed electronically by both parties
 - One bank-held escrow account per agreement
 - Milestones with evidence, partial releases and refunds
-- Disputes frozen and decided by a named arbiter; the bank still checks the
-  mandate
+- Disputes frozen and decided by a named arbiter
 - A daily tie-out of every escrow account against its agreement
 **Facts:**
 - Held at: A partner bank (being onboarded), one account per agreement
