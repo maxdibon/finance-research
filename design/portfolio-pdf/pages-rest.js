@@ -103,14 +103,14 @@ const MOCK = {
 </svg>`,
   core: screen('Member account',
     `${T(5, 16, 2.4, 700, C.mu, 'SAVINGS · ACCOUNT ENDING 2002')}${T(5, 24, 5.6, 800, C.au, 'KES 145,000')}${T(5, 28.5, 2.3, 400, C.mu, 'interest accrued KES 412 · posts month-end')}
-${T(60, 16, 2.4, 700, C.mu, 'LOAN 0412')}${T(60, 24, 4.2, 800, C.au, 'KES 61,300')}${T(60, 28.5, 2.3, 400, C.mu, 'next due 05 Nov')}
+${T(60, 16, 2.4, 700, C.mu, 'LOAN 0396')}${T(60, 24, 4.2, 800, C.au, 'KES 61,300')}${T(60, 28.5, 2.3, 400, C.mu, 'next due 05 Nov')}
 ${[['M-Pesa deposit', '+ 2,500', C.mn], ['Loan repayment: principal', '- 1,850', C.au], ['Loan repayment: interest', '- 600', C.au], ['Fee', '- 50', C.au]].map(([a, b, c], i) => `<line x1="5" y1="${33.5 + i * 8}" x2="95" y2="${33.5 + i * 8}" stroke="${C.li}" stroke-width="0.4"/>${T(5, 38.5 + i * 8, 2.7, 600, C.au, a)}${T(95, 38.5 + i * 8, 2.8, 700, c, b, 'end')}`).join('')}
 ${T(5, 67, 2.3, 400, C.mu, 'Posted 10:42 today · general ledger balanced')}`,
     'Illustrative member account: savings with interest accrued, a loan with its next due date, and postings split by component.'),
   gateway: screen('Merchant dashboard',
-    `${[['Received', '412', C.au], ['Matched', '398', C.mn], ['Exceptions', '5', C.amt]].map(([k, v, c], i) => `<rect x="${5 + i * 31}" y="14" width="28" height="15" rx="1.5" fill="${C.pa}" stroke="${C.li}" stroke-width="0.4"/>${T(8 + i * 31, 19.5, 2.4, 600, C.mu, k)}${T(8 + i * 31, 26.5, 5.4, 800, c, v)}`).join('')}
-${[['INV-2041', 'M-Pesa', 'matched', C.mnb, C.mn], ['INV-2042', 'Card', 'matched', C.mnb, C.mn], ['INV-2043', 'Airtel Money', 'pending', '#fff1d1', C.amt], ['INV-2044', 'T-Kash', 'matched', C.mnb, C.mn]].map(([a, b, s, f, g], i) => `<line x1="5" y1="${37 + i * 8}" x2="95" y2="${37 + i * 8}" stroke="${C.li}" stroke-width="0.4"/>${T(6, 42 + i * 8, 2.8, 700, C.au, a)}${T(30, 42 + i * 8, 2.8, 400, C.mu, b)}${pill(76, 42.4 + i * 8, 16, s, f, g)}`).join('')}`,
-    'Illustrative merchant dashboard: payments received, matched and in exception, with invoices matched by rail.'),
+    `${[['Received', '412', C.au], ['Matched', '398', C.mn], ['Pending', '9', C.amt], ['Exceptions', '5', C.pl]].map(([k, v, c], i) => `<rect x="${5 + i * 22.75}" y="14" width="20.25" height="15" rx="1.5" fill="${C.pa}" stroke="${C.li}" stroke-width="0.4"/>${T(7.5 + i * 22.75, 19.5, 2.3, 600, C.mu, k)}${T(7.5 + i * 22.75, 26.5, 5.2, 800, c, v)}`).join('')}
+${[['INV-2041', 'M-Pesa', 'matched', C.mnb, C.mn], ['INV-2042', 'M-Pesa', 'matched', C.mnb, C.mn], ['INV-2043', 'Airtel Money', 'pending', '#fff1d1', C.amt], ['INV-2044', 'T-Kash', 'matched', C.mnb, C.mn]].map(([a, b, s, f, g], i) => `<line x1="5" y1="${37 + i * 8}" x2="95" y2="${37 + i * 8}" stroke="${C.li}" stroke-width="0.4"/>${T(6, 42 + i * 8, 2.8, 700, C.au, a)}${T(30, 42 + i * 8, 2.8, 400, C.mu, b)}${pill(76, 42.4 + i * 8, 16, s, f, g)}`).join('')}`,
+    'Illustrative merchant dashboard: 412 payments received, 398 matched, 9 pending confirmation and 5 in exception, with invoices matched by rail.'),
   escrow: phone('Kapu Escrow',
     `${T(10, 30, 3.2, 700, C.au, 'Plot sale agreement')}${T(10, 38.5, 6, 800, C.au, 'KES 1.2M')}${T(10, 43.5, 2.6, 400, C.mu, 'held at the partner bank')}
 ${tick(12, 51.5)}${T(16, 52.5, 2.8, 600, C.au, 'Agreement signed')}${tick(12, 58.5)}${T(16, 59.5, 2.8, 600, C.au, 'Buyer funded escrow')}${tick(12, 65.5)}${T(16, 66.5, 2.8, 600, C.au, 'Title search complete')}

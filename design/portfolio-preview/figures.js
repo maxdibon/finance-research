@@ -49,7 +49,7 @@ F['Kapu Collect'] = figure('co', 640, 214,
 F['Kapu Pay Gateway'] = figure('gw', 640, 214,
   'Payments move from the payer over the rail into the merchant’s own account. The Gateway prompts the payer, receives the confirmation and reconciles each payment for the merchant’s dashboard and ERP.',
   box('box', 16, 24, 150, 48, 'Payer', 'any rail') +
-  box('box', 245, 24, 150, 48, 'Rail', 'M-Pesa · Airtel · card') +
+  box('box', 245, 24, 150, 48, 'Rail', 'M-Pesa · Airtel · T-Kash') +
   box('funds', 474, 24, 150, 48, 'Merchant’s account', 'its own shortcode') +
   box('box', 16, 150, 150, 48, 'Merchant system', 'app · shop · ERP') +
   box('dibon', 245, 150, 150, 48, 'Kapu Gateway') +
