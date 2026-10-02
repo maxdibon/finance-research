@@ -65,7 +65,7 @@ own payments first, and insights runs on our own data first (FS-033).
   for every rail a merchant takes
 - [Kapu Escrow](modules/escrow.md) — funds held at a bank until the agreed
   conditions are met
-- [Kapu Core](modules/core.md) — a hosted core banking system on Apache Fineract, for institutions whose system is basic
+- [Kapu Core](modules/core.md) — a hosted core banking system on Apache Fineract, for institutions ready for a modern core
 - [Kapu MFI](modules/mfi.md) — loan management for informal lenders
 - [Kapu Sacco](modules/sacco.md) — deposit-taking and credit-only Saccos
 - [SME Recon](modules/sme-recon.md) — reconciliation inside the SME's own ERP

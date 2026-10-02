@@ -8,7 +8,7 @@ classification: Internal
 audience: [mfi, sacco, bank]
 depends_on: [access, identity, mandates, messaging, rails, recon-observability]
 consumed_by: [mfi, sacco, collect, omni-channel, insights]
-review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321]
+review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354]
 last_reviewed: 2026-10-02
 ---
 
@@ -16,10 +16,10 @@ last_reviewed: 2026-10-02
 
 ## 1 · In one paragraph
 
-Kapu Core is a hosted core banking system for institutions whose current
-system is basic, or absent: MFIs on spreadsheets or old Mifos
-installations, Saccos on desktop software, tier-3 banks on systems that
-cannot keep up (FS-303). It runs on Apache Fineract, hosted in Kenya on
+Kapu Core is a hosted core banking system for institutions ready for a
+modern core, or running without one: MFIs moving off spreadsheets or an
+earlier Mifos installation, Saccos moving off desktop software, tier-3
+banks planning a core upgrade (FS-303, FS-354). It runs on Apache Fineract, hosted in Kenya on
 Liquid's Azure Stack: clients, savings, shares, loans, the general ledger,
 tellers and end-of-day. Every Kapu product runs on top of it: MFI, Sacco,
 Collect, omni-channel, reconciliation. It is the native mode of the
@@ -28,17 +28,17 @@ stays in the institution's own accounts; Kapu Core is its ledger.**
 
 ## 2 · Who it is for
 
-**Segments:** MFIs and Saccos replacing spreadsheets, paper or legacy
-systems. Tier-3 banks and deposit-taking Saccos whose core is basic and
-cannot support mobile money, APIs or real-time reporting. Lenders who want
+**Segments:** MFIs and Saccos moving off spreadsheets, paper or an earlier
+system. Tier-3 banks and deposit-taking Saccos planning a core upgrade so
+they can offer mobile money, open APIs and real-time reporting. Lenders who want
 loans on a modern core while deposits stay where they are (the split
 mode, FS-066).
 
-**The problem, concretely:** the core cannot take a mobile-money payment
-without someone keying it in. Interest is posted by hand at month-end.
-The general ledger is rebuilt in a spreadsheet for the board. Every new
-channel or product needs the core vendor, and the core vendor is slow or
-gone.
+**The problem, concretely:** a mobile-money payment reaches the ledger
+only when someone keys it in. Interest is posted by hand at month-end.
+The general ledger is rebuilt in a spreadsheet for the board. Each new
+channel or product is a project with the core vendor, so growth waits on
+someone else's roadmap.
 
 **People who use it:**
 

@@ -8,7 +8,7 @@ classification: Internal
 audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb]
 consumed_by: []
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320]
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354]
 last_reviewed: 2026-10-01
 ---
 
@@ -17,8 +17,8 @@ last_reviewed: 2026-10-01
 ## 1 · In one paragraph
 
 Kapu MFI is loan management for small, unregistered, non-deposit-taking
-lenders that run their book on Excel, paper and sometimes old Mifos
-installations. It covers the whole loan, from origination to closure or
+lenders moving their book off spreadsheets, paper or an earlier Mifos
+installation. It covers the whole loan, from origination to closure or
 restructure: a digital application, KYC with a completeness gate,
 collateral with verification evidence, vetting with flagged overrides, an
 approval chain, disbursement and repayment by M-Pesa or bank, and income
@@ -110,7 +110,7 @@ money PIN or credentials.
 
 | | Integrated — the MFI has a core | Native — no core; Fineract is the ledger |
 |---|---|---|
-| Where funds are posted | **Not offered at launch.** An MFI on legacy Mifos is migrated (MF-16), which makes it native | Fineract |
+| Where funds are posted | **Not offered at launch.** An MFI on an earlier Mifos installation is migrated (MF-16), which makes it native | Fineract |
 | What differs in this module | — | The default. No end-of-day reconciliation against an outside core |
 | What the customer must provide | — | Its shortcode and bank access; its loan products and fee structures; its approval chains |
 | Who it suits | Registered lenders with a core, if the product moves up-market — FS-141 | Unregistered lenders on Excel, paper or Mifos |
