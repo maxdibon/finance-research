@@ -188,12 +188,13 @@ const PORTFOLIO = path.join('docs', 'marketing', 'portfolio.md');
 
 test('public: a register id in a marketing document fails', () => {
   const missing = ['FS', '001'].join('-');
-  const f = runWith((d) => patch(d, PORTFOLIO, (t) => `${t}\nSee ${missing}.\n`));
+  // Inside a labelled field: the copy's strict format rejects unlabelled text.
+  const f = runWith((d) => patch(d, PORTFOLIO, (t) => t.replace('**Kicker:** Financial services portfolio · 2026', `**Kicker:** Financial services portfolio · 2026, see ${missing}`)));
   assert.deepStrictEqual(names(f), ['public']);
 });
 
 test('public: a capability id in a marketing document fails', () => {
-  const f = runWith((d) => patch(d, PORTFOLIO, (t) => `${t}\nAs in ${['CO', '01'].join('-')}.\n`));
+  const f = runWith((d) => patch(d, PORTFOLIO, (t) => t.replace('**Kicker:** Financial services portfolio · 2026', `**Kicker:** Financial services portfolio · 2026, as in ${['CO', '01'].join('-')}`)));
   assert.deepStrictEqual(names(f), ['public']);
 });
 
@@ -212,8 +213,13 @@ test('onboarding: a checklist linking a module that does not exist fails', () =>
   assert.deepStrictEqual(names(f), ['onboarding']);
 });
 
+test('copy: a line with no label in the portfolio copy fails', () => {
+  const f = runWith((d) => patch(d, PORTFOLIO, (t) => t.replace('## Cover\n', '## Cover\n\nA stray sentence.\n')));
+  assert.deepStrictEqual(names(f), ['copy']);
+});
+
 test('claims: an integration shown as integrated with no claim fails', () => {
-  const f = runWith((d) => patch(d, PAGES_REST, (t) => t.replace("'~Bank APIs'", "'Bank APIs'")));
+  const f = runWith((d) => patch(d, PORTFOLIO, (t) => t.replace('**Coming soon:** Bank APIs; MT940', '**Integrated:** Bank APIs\n**Coming soon:** MT940')));
   assert.deepStrictEqual(names(f), ['claims']);
 });
 

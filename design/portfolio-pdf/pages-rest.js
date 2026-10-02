@@ -1,7 +1,10 @@
-// Generates portfolio pages 6 and 8–20 in the page-7 template (FS-293).
-// build.js inserts the output into pages.html. Content follows
-// docs/marketing/portfolio.md; diagrams come from the shared figures.js.
+// Generates portfolio pages 6 and 8–21 in the page-7 template (FS-293).
+// build.js inserts the output into pages.html. Every word comes from
+// docs/marketing/portfolio.md (FS-352); this file holds the layout, the
+// icons, the illustrative screens, and the diagrams from figures.js.
 'use strict';
+
+const { inline, pair } = require('./copy.js');
 
 const RULE = '<svg class="rule" viewBox="0 0 42 2.4" aria-hidden="true"><rect x="0" y="0" width="9" height="0.8" fill="#280430"/><rect x="0" y="1.6" width="9" height="0.8" fill="#280430"/><rect x="11.5" y="0" width="30.5" height="0.8" fill="#fbb236"/><rect x="11.5" y="1.6" width="30.5" height="0.8" fill="#fbb236"/></svg>';
 
@@ -127,7 +130,7 @@ ${T(48, 36, 2.2, 700, C.amt, 'same', 'middle')}${T(48, 39, 2.2, 700, C.amt, 'ans
 };
 
 // Reconciliation: the day as a chevron band (deck p. 11 pattern).
-const RECON_BAND = `<ol class="chev">${['Ingest', 'Match', 'Queue', 'Resolve', 'Close the day'].map((s) => `<li>${s}</li>`).join('')}</ol>`;
+const reconBand = (steps) => `<ol class="chev">${steps.map((s) => `<li>${inline(s)}</li>`).join('')}</ol>`;
 
 // MFI: an illustrative portfolio dashboard, full width under the columns.
 const MFI_DASH = `<figure style="margin:4mm auto 0;width:86%">
@@ -142,7 +145,7 @@ ${T(140, 23, 2.2, 400, C.mu, 'interest · fees · insurance')}${T(5, 35, 2.2, 40
 
 // Which product uses which platform service, read from each module's
 // declared dependencies (docs/modules/*.md), not typed.
-function serviceMatrix() {
+function serviceMatrix(builtOn, caption, short) {
   const fs = require('fs');
   const path = require('path');
   const dir = path.join(__dirname, '..', '..', 'docs', 'modules');
@@ -152,14 +155,15 @@ function serviceMatrix() {
     const m = t.match(/^depends_on:\s*\[([^\]]*)\]/m);
     deps[f.replace('.md', '')] = m ? m[1].split(',').map((s) => s.trim()).filter(Boolean) : [];
   }
-  const products = [['collect', 'Collect'], ['gateway', 'Gateway'], ['escrow', 'Escrow'], ['core', 'Kapu Core'], ['mfi', 'MFI'], ['sacco', 'Sacco'], ['recon-observability', 'Reconciliation'], ['sme-recon', 'SME Recon'], ['omni-channel', 'Omni-channel'], ['business-suite', 'Business suite']];
-  const services = [['mandates', 'Approvals'], ['messaging', 'Messaging'], [['access', 'identity'], 'Identity'], ['crb', 'Bureaus'], ['rails', 'Rails'], ['insights', 'Insights']];
+  // Ids are the modules; names are the copy's keys, shown by their short names.
+  const products = [['collect', 'Kapu Collect'], ['gateway', 'Kapu Pay Gateway'], ['escrow', 'Kapu Escrow'], ['core', 'Kapu Core'], ['mfi', 'Kapu MFI'], ['sacco', 'Kapu Sacco'], ['recon-observability', 'Reconciliation & Observability'], ['sme-recon', 'SME Reconciliation'], ['omni-channel', 'Omni-channel banking'], ['business-suite', 'Business suite']];
+  const services = [['mandates', 'Approvals and mandates'], ['messaging', 'Messaging'], [['access', 'identity'], 'Identity and access'], ['crb', 'Credit bureaus'], ['rails', 'Payment rails'], ['insights', 'Insights']];
   // A tick when the product depends on the service, or, for insights alone,
   // when insights reads from the product (FS-301). Other services that
   // depend on a product (CRB on recon) do not make the product use them.
   const uses = (p, s) => (Array.isArray(s) ? s : [s]).some((x) => (deps[p] || []).includes(x) || (x === 'insights' && (deps.insights || []).includes(p)));
-  const rows = products.map(([id, n]) => `<div class="bo"><b>${n}</b><em>built on</em><span>${services.filter(([s]) => uses(id, s)).map(([, sn]) => `<i>${sn}</i>`).join('')}</span></div>`).join('');
-  return `<div class="builton">${rows}</div><p class="mx-cap">Read from each product's design: the platform services it is built on.</p>`;
+  const rows = products.map(([id, n]) => `<div class="bo"><b>${short(n)}</b><em>${builtOn}</em><span>${services.filter(([s]) => uses(id, s)).map(([, sn]) => `<i>${short(sn)}</i>`).join('')}</span></div>`).join('');
+  return `<div class="builton">${rows}</div><p class="mx-cap">${caption}</p>`;
 }
 
 // Business suite: how Odoo sits among the products (diagram language FS-253).
@@ -202,9 +206,12 @@ const CORE_FIG = `<figure class="dg-fig"><svg class="dg" viewBox="0 0 640 196" r
 <line class="ctl" x1="243" y1="152" x2="168" y2="152" marker-end="url(#kc-c)"/>
 </svg><figcaption>The green line never touches the core: the money stays in your accounts, and Kapu Core is the ledger that records it.</figcaption></figure>`;
 
+// A diagram's caption is copy: it comes from the Markdown (FS-352).
+const withCaption = (fig, text) => fig.replace(/<figcaption>[\s\S]*?<\/figcaption>/, () => `<figcaption>${inline(text)}</figcaption>`);
+
 function productPage(p) {
   const fig = p.fig;
-  const mock = `<figure style="margin:0">${p.mock}<figcaption class="mock-cap">Illustrative screen</figcaption></figure>`;
+  const mock = `<figure style="margin:0">${p.mock}<figcaption class="mock-cap">${p.screenLabel}</figcaption></figure>`;
   const cols = p.flip
     ? `<div class="prod-cols" style="grid-template-columns: ${p.mockW || '44mm'} 1fr">${mock}${spine(p.spine)}</div>`
     : `<div class="prod-cols" style="grid-template-columns: 1fr ${p.mockW || '44mm'}">${spine(p.spine)}${mock}</div>`;
@@ -212,7 +219,7 @@ function productPage(p) {
 <section class="page" id="p${p.n}">
   ${corner(+p.n)}
   <div class="content">
-    <p class="eyebrow">Products · ${p.idx} of ${N_PRODUCTS}</p>
+    <p class="eyebrow">${p.eyebrow}</p>
     ${RULE}
     <h2>${p.name}</h2>
     <p class="prod-tag">${p.tag}</p>
@@ -226,97 +233,87 @@ function productPage(p) {
 </section>`;
 }
 
-function rest({ F }) {
-  const P = [
-    { n: '08', idx: 2, name: 'Kapu Pay Gateway', tag: 'One API for every rail a business takes',
-      lede: 'For businesses and fintechs that take payments on more than one rail. One API and one dashboard cover mobile money today, with bank transfers and cards coming soon, and every payment is reconciled against what it paid for. You bring your own paybill or account, and payments settle straight into it; we never hold the money. Already have a business collection account at your bank, often called Lipa na Bank? The Gateway works with it, with matching as each bank comes online.',
-      fig: F['Kapu Pay Gateway'], mock: MOCK.gateway, mockW: '90mm', flip: true,
-      spine: ['One collections API across M-Pesa, Airtel Money and T-Kash', 'Cards and PesaLink, coming soon', 'Payment links, including invoices sent by SMS', 'A merchant dashboard: every payment matched, every exception listed', 'Signed callbacks and idempotent requests'],
-      facts: [['Channels', 'M-Pesa, Airtel Money, T-Kash; cards and PesaLink coming soon'], ['Settles', 'Into the merchant\'s own accounts'], ['For', 'SMEs, fintechs, MFIs and Saccos']] },
-    { n: '09', idx: 3, name: 'Kapu Escrow', tag: 'Funds held at a bank until the conditions are met',
-      lede: 'For property, vehicle sales, construction milestones, B2B trade and marketplaces. The buyer\'s money sits at a partner bank in an escrow account of its own, released to the seller only when the agreed approvers sign off. Neither party, nor Dibon, can release funds alone. Our first partner bank is being onboarded.',
-      fig: F['Kapu Escrow'], mock: MOCK.escrow, figW: '86%',
-      spine: ['Digital escrow agreements, signed electronically by both parties', 'One bank-held escrow account per agreement', 'Milestones with evidence, partial releases and refunds', 'Disputes frozen and decided by a named arbiter; the bank still checks the mandate', 'A daily tie-out of every escrow account against its agreement'],
-      facts: [['Held at', 'A partner bank (being onboarded), one account per agreement'], ['Released', 'Only on the agreed approvals'], ['For', 'Property, vehicles, construction, trade']] },
-    { n: '10', idx: 4, name: 'Kapu Core', tag: 'A hosted core banking system, on Apache Fineract',
-      lede: 'For MFIs, Saccos and tier-3 banks whose current system is basic, or absent. Clients, savings, shares, loans, the general ledger, tellers and end-of-day, hosted in Kenya, with every Kapu product running on top. The money stays in your own accounts; Kapu Core is your ledger.',
-      fig: CORE_FIG, mock: MOCK.core, mockW: '88mm', flip: true,
-      spine: ['Savings and current accounts, fixed deposits; interest posted automatically', 'Shares for Saccos; loans with schedules, charges and repayment splits', 'A general ledger that is right every day, not rebuilt at month-end', 'Mobile-money deposits and repayments posted in real time', 'Maker-checker on every transaction that needs it', 'Migration from spreadsheets, Mifos or a previous core, signed off'],
-      facts: [['Built on', 'Apache Fineract'], ['Hosted', 'In Kenya, one isolated instance per institution'], ['For', 'MFIs, Saccos, tier-3 banks']] },
-    { n: '11', idx: 5, name: 'Kapu MFI', tag: 'Loan management for growing lenders',
-      lede: 'For lenders moving off spreadsheets, paper and ageing systems. The whole loan, from a digital application to closure or restructure, with the process enforced and light enough for a team of three.',
-      fig: F['Kapu MFI'], mock: MOCK.mfi, mockW: '66mm', flip: true, extra: MFI_DASH, figW: '84%',
-      spine: ['KYC with IPRS lookup and a completeness gate per product', 'Collateral management, vehicles first, with verification evidence', 'Approval chains by product and amount, with no self-approval', 'Above-limit approvals flagged and tracked as their own cohort', 'Repayments split into principal, interest, fees and insurance', 'SMS reminders, a portfolio dashboard, and migration from Mifos'],
-      facts: [['Built on', 'Apache Fineract'], ['Disburse and repay', 'M-Pesa now; bank transfer coming soon'], ['For', 'Lenders with 2 to 15 staff']] },
-    { n: '12', idx: 6, name: 'Kapu Sacco', tag: 'For credit-only and deposit-taking Saccos',
-      lede: 'For Saccos that want contributions, deposits, loans and guarantees in one place, current every day rather than every month-end.',
-      fig: F['Kapu Sacco'], mock: MOCK.sacco, figW: '88%',
-      spine: ['Membership, share capital and member deposits; withdrawable savings for deposit-taking Saccos', 'Contributions by M-Pesa, bank and employer check-off, matched to members', 'Loan limits from members\' deposits; guarantors who can see their exposure', 'Credit-committee approval, recorded per member', 'Dividends and interest computed from your bylaws, kept for the AGM', 'Your own HR, payroll and accounting through the Business suite'],
-      facts: [['Runs', 'Alongside your core, or as your core'], ['Contributions', 'M-Pesa, bank, employer check-off'], ['For', 'Credit-only and deposit-taking Saccos']] },
-    { n: '13', idx: 7, name: 'Reconciliation &amp; Observability', tag: 'Every channel, every cycle, right now',
-      lede: 'Every transaction matched across the rail, the bank and your ledger. Breaks are queued by how close they are to their SLA, not by size, and traced hop by hop with evidence from both sides. When the queue is empty, suspense is zero, and the day is closed.',
-      fig: F['Reconciliation &amp; Observability'], mock: MOCK.recon, mockW: '80mm', flip: true, before: RECON_BAND,
-      spine: ['Ingest from callbacks, APIs and MT940, CAMT and CSV files', 'Rules, including three-way matching against what you expected', 'Remediation: status queries automatic; reversals approved by a second person', 'A ledger view proved two ways: real-time assertions and a nightly batch', 'Treasury, float, and branch and till cash by denomination'],
-      facts: [['Built on', 'Kubernetes, Prometheus, OpenTelemetry, Grafana'], ['Closes the day', 'Queue empty, suspense zero'], ['For', 'Banks, IMTs, PSPs, Saccos, MFIs']] },
-    { n: '14', idx: 8, name: 'SME Reconciliation', tag: 'Your bank and mobile money, inside your ERP',
-      lede: 'For businesses on Odoo, with Zoho and others to follow. Bank, mobile-money and card statements flow into the ERP; incoming money is matched to invoices, outgoing money to bills and expenses, and payments approved in the ERP are executed by mobile money, with bank APIs coming soon.',
-      fig: F['SME Reconciliation'], mock: MOCK.sme, mockW: '92mm',
-      spine: ['Bank statements by file today; bank APIs coming soon', 'M-Pesa, Airtel Money and T-Kash on your own shortcodes', 'Incoming money matched to invoices, including partial payments', 'Outgoing money matched to bills; bank charges posted as expenses', 'Unmatched money stays unapplied and visible, never in suspense'],
-      facts: [['ERPs', 'Odoo first, then Zoho'], ['Pays', 'By mobile money once approved; bank APIs coming soon'], ['For', 'SMEs and fintechs']] },
-    { n: '15', idx: 9, name: 'Omni-channel banking', tag: 'App, web and USSD, under your brand',
-      lede: 'A mobile app, internet banking and USSD menus, white-labelled for each institution, on one channel API, so a balance is the same everywhere. Anything that moves money asks the member to confirm who they are at that moment, and runs a SIM-swap check where the operator offers one.',
-      fig: F['Omni-channel banking'], mock: MOCK.omni, mockW: '100mm', flip: true,
-      spine: ['Balances, statements, contributions and payments', 'Loan applications and guarantor requests', 'Step-up confirmation before money moves; a SIM-swap check where available', 'Every balance shown with when it was fetched', 'USSD on any phone, with lower limits than the app'],
-      facts: [['Channels', 'App, internet banking, USSD'], ['Brand', 'White-labelled per institution'], ['For', 'Saccos, MFIs and banks']] },
-  ];
+function rest({ F, copy }) {
+  // Every word comes from docs/marketing/portfolio.md (FS-352). This file
+  // holds only the layout: which diagram, screen and icon goes where.
+  const L = copy.section('Labels');
+  const products = copy.section('Products');
+  const prods = products.items(9);
+  const LAYOUT = {
+    'Kapu Pay Gateway': { fig: F['Kapu Pay Gateway'], mock: MOCK.gateway, mockW: '90mm', flip: true },
+    'Kapu Escrow': { fig: F['Kapu Escrow'], mock: MOCK.escrow, figW: '86%' },
+    'Kapu Core': { fig: CORE_FIG, mock: MOCK.core, mockW: '88mm', flip: true },
+    'Kapu MFI': { fig: F['Kapu MFI'], mock: MOCK.mfi, mockW: '66mm', flip: true, dash: true, figW: '84%' },
+    'Kapu Sacco': { fig: F['Kapu Sacco'], mock: MOCK.sacco, figW: '88%' },
+    'Reconciliation & Observability': { fig: F['Reconciliation &amp; Observability'], mock: MOCK.recon, mockW: '80mm', flip: true, steps: true },
+    'SME Reconciliation': { fig: F['SME Reconciliation'], mock: MOCK.sme, mockW: '92mm' },
+    'Omni-channel banking': { fig: F['Omni-channel banking'], mock: MOCK.omni, mockW: '100mm', flip: true },
+  };
+  N_PRODUCTS = prods.length;
+  const eyebrow = (i) => inline(products.get('Eyebrow').replace('{n}', i).replace('{total}', N_PRODUCTS));
+  // Page 7 (Collect) is the hand-built template in pages.html; the rest follow it.
+  const P = prods.slice(1).map((it, i) => {
+    const lay = LAYOUT[it.title];
+    if (!lay) throw new Error(`portfolio copy: product "${it.title}" has no layout; add its diagram and screen to pages-rest.js`);
+    return {
+      n: String(8 + i).padStart(2, '0'), eyebrow: eyebrow(i + 2), screenLabel: inline(L.get('Illustrative screen')),
+      name: inline(it.title), tag: inline(it.get('Tagline')), lede: inline(it.get('Intro')),
+      fig: withCaption(lay.fig, it.get('Diagram caption')), mock: lay.mock, mockW: lay.mockW, flip: lay.flip, figW: lay.figW,
+      before: lay.steps ? reconBand(it.get('Steps')) : undefined,
+      extra: lay.dash ? MFI_DASH.replace('Illustrative screen: the portfolio dashboard', () => inline(it.get('Dashboard caption'))) : undefined,
+      spine: it.get('Features').map((s) => inline(s)),
+      facts: it.get('Facts').map(pair).map(([a, b]) => [inline(a), inline(b)]),
+    };
+  });
 
-  N_PRODUCTS = 1 + P.length; // page 7 (Collect) plus the generated product pages
   const tile = (k, name, line) => `<div class="gtile">${ico(k)}<b>${name}</b><span>${line}</span></div>`;
+  const TILE_ICON = { 'Kapu Collect': 'collect', 'Kapu Pay Gateway': 'gateway', 'Kapu Escrow': 'escrow', 'Kapu Core': 'cube', 'Kapu MFI': 'mfi',
+    'Kapu Sacco': 'sacco', 'Reconciliation & Observability': 'recon', 'SME Reconciliation': 'sme', 'Omni-channel banking': 'omni' };
+  const G = copy.section('The portfolio at a glance');
   const page06 = `
 <section class="page glance-page" id="p06">
   <svg class="art" viewBox="0 0 210 297" preserveAspectRatio="none" aria-hidden="true"><path d="M150 0 C 160 40, 190 55, 210 56"/><path class="faint" d="M0 262 C 50 248, 90 270, 140 256"/></svg>
   <div class="content">
-    <p class="eyebrow" style="color:#fbb236">The portfolio at a glance</p>
+    <p class="eyebrow" style="color:#fbb236">${inline(G.get('Eyebrow'))}</p>
     ${RULE.replace(/#280430/g, '#fff2eb')}
-    <h2 style="color:#fff2eb">${WORD[N_PRODUCTS]} products, one platform, one partner</h2>
+    <h2 style="color:#fff2eb">${inline(G.get('Heading').replace('{Products}', WORD[N_PRODUCTS]))}</h2>
     <div class="gtiles">
-      ${tile('collect', 'Kapu Collect', 'Deposits collected by partners, held at your bank')}
-      ${tile('gateway', 'Kapu Pay Gateway', 'One API for every rail a business takes')}
-      ${tile('escrow', 'Kapu Escrow', 'Funds held at a bank until the conditions are met')}
-      ${tile('cube', 'Kapu Core', 'A hosted core banking system, on Apache Fineract')}
-      ${tile('mfi', 'Kapu MFI', 'Loan management for growing lenders')}
-      ${tile('sacco', 'Kapu Sacco', 'For credit-only and deposit-taking Saccos')}
-      ${tile('recon', 'Reconciliation &amp; Observability', 'Every channel, every cycle, right now')}
-      ${tile('sme', 'SME Reconciliation', 'Your bank and mobile money, inside your ERP')}
-      ${tile('omni', 'Omni-channel banking', 'App, web and USSD, under your brand')}
+${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(it.get('Tagline')))}`).join('\n')}
     </div>
-    <div class="gsuite">${ico('suite')}<div><b>Also from Dibon: Business suite, on Odoo and Zoho</b><span>CRM, helpdesk, accounting, HR and payroll, e-signatures and a customer portal, implemented by Dibon as an Odoo and Zoho partner and connected to every product.</span></div></div>
-    <div class="gbase"><b>${ico('layers', 'bi')}One platform underneath</b><span>Approvals and mandates · Messaging · Identity and access · Credit bureaus · Payment rails · Insights</span></div>
+    <div class="gsuite">${ico('suite')}<div><b>${inline(G.get('Suite title'))}</b><span>${inline(G.get('Suite text'))}</span></div></div>
+    <div class="gbase"><b>${ico('layers', 'bi')}${inline(G.get('Platform title'))}</b><span>${inline(G.get('Platform'))}</span></div>
   </div>
   ${footer('06')}
 </section>`;
 
-  const svc = [['approvals', 'Approvals and mandates', 'Chains by product, amount and risk; no self-approval; every decision attributed when it is made. Debit mandates with the payer\'s consent and right to cancel.'],
-    ['messaging', 'Messaging', 'SMS, WhatsApp, Telegram and app push. In Kenya, SMS goes direct to the operators under Dibon\'s PRSP licence. A status says only what the channel reported.'],
-    ['identity', 'Identity and access', 'One login for every system; re-authentication before money moves; financial-grade API security; IPRS, document and liveness checks.'],
-    ['bureau', 'Credit bureaus', 'Coming soon. Monthly submissions generated from the ledger and reconciled; lookups with the purpose recorded first; corrections when a borrower settles.'],
-    ['rails', 'Payment rails', 'M-Pesa, Airtel Money, T-Kash, PesaLink, bank APIs and files, and cards behind one interface. Unconfirmed means pending, never assumed.'],
-    ['insights', 'Insights', 'Every metric defined once, for dashboards and plain-language questions. Each answer shows how it was calculated and how fresh the data is.']];
+  // One icon per card, in page order; the count is a layout decision.
+  const byOrder = (icons, rows, what) => {
+    if (rows.length !== icons.length) throw new Error(`portfolio copy: ${what} has ${rows.length} entries; the layout has room for ${icons.length}. Change the design first, then the copy`);
+    return rows.map((r, i) => [icons[i], ...r]);
+  };
+  const PS = copy.section('Platform services');
+  const SHORT = new Map([...PS.get('Short product names'), ...PS.get('Short service names')].map(pair));
+  const shortName = (full) => { if (!SHORT.has(full)) throw new Error(`portfolio copy: no short name for "${full}" under Platform services`); return inline(SHORT.get(full)); };
+  const svc = byOrder(['approvals', 'messaging', 'identity', 'bureau', 'rails', 'insights'],
+    PS.get('Services').map(pair).map(([a, b]) => [inline(a), inline(b)]), 'Platform services › Services');
 
+  const BS = copy.section('Business suite');
+  const apps = byOrder(['insights', 'messaging', 'log', 'people', 'approvals', 'store', 'pulse', 'rails'],
+    BS.get('Apps').map(pair).map(([a, b]) => [inline(a), inline(b)]), 'Business suite › Apps');
   const page15 = `
 <section class="page" id="p16">
   ${corner(2)}
   <div class="content">
-    <p class="eyebrow">Also from Dibon</p>
+    <p class="eyebrow">${inline(BS.get('Eyebrow'))}</p>
     ${RULE}
-    <h2>Business suite, on Odoo and Zoho</h2>
-    <p class="prod-tag">The ERP, implemented by Dibon and connected to every product</p>
-    <p class="lede" style="font-size:11pt">For SMEs and fintechs without an ERP, and for Saccos, MFIs and banks that want their own back office in order. Dibon implements Odoo, as an Odoo Ready Partner, and Zoho, as a Zoho partner. Odoo runs on OLP, Odoo Launch Pad, our own Odoo management platform, hosted in Kenya. An institution's customer accounts stay in its core; Odoo receives the daily totals for the general ledger.</p>
+    <h2>${inline(BS.get('Heading'))}</h2>
+    <p class="prod-tag">${inline(BS.get('Tagline'))}</p>
+    <p class="lede" style="font-size:11pt">${inline(BS.get('Intro'))}</p>
     <div class="mods">
-      ${[['insights', 'CRM', 'Leads, accounts and pipeline in one place'], ['messaging', 'Helpdesk', 'Tickets with SLAs, linked to the customer'], ['log', 'Accounting', 'Statements already reconciled by SME Reconciliation'], ['people', 'HR and payroll', 'Contracts, leave, attendance and monthly payroll'], ['approvals', 'Sign', 'Agreements, mandates and consents signed online'], ['store', 'Portal', 'Invoices, statements and tickets for customers'], ['pulse', 'Campaigns', 'Delivered through Dibon\'s messaging, status written back'], ['rails', 'Migration', 'From spreadsheets or an old system, balances signed off']].map(([k, a, b]) => `<div class="mod">${ico(k)}<b>${a}</b><span>${b}</span></div>`).join('')}
+      ${apps.map(([k, a, b]) => `<div class="mod">${ico(k)}<b>${a}</b><span>${b}</span></div>`).join('')}
     </div>
-    ${BS_FLOW}
-    <div class="band" style="margin-top:5mm"><p>${ico('server', 'bi')}Odoo on OLP, <span>in Kenya.</span></p><small>Instances, backups, staging and upgrades managed on Dibon's own Odoo platform, on in-country infrastructure. Zoho runs on Zoho's own cloud. One sign-on with the rest of the Dibon platform.</small></div>
+    ${withCaption(BS_FLOW, BS.get('Diagram caption'))}
+    <div class="band" style="margin-top:5mm"><p>${ico('server', 'bi')}${inline(BS.get('Band'))}</p><small>${inline(BS.get('Band text'))}</small></div>
   </div>
   ${footer('16')}
 </section>`;
@@ -325,101 +322,89 @@ function rest({ F }) {
 <section class="page" id="p17">
   ${corner(3)}
   <div class="content">
-    <p class="eyebrow">Platform services</p>
+    <p class="eyebrow">${inline(PS.get('Eyebrow'))}</p>
     ${RULE}
-    <h2>The same services under every product</h2>
-    <p class="lede">A customer who adds a second product gets the same approvals, messages, logins and reports as the first.</p>
+    <h2>${inline(PS.get('Heading'))}</h2>
+    <p class="lede">${inline(PS.get('Intro'))}</p>
     <div class="stiles">${svc.map(([k, a, b]) => `<div class="stile">${ico(k)}<b>${a}</b><span>${b}</span></div>`).join('')}</div>
-    ${serviceMatrix()}
+    ${serviceMatrix(inline(L.get('Built on')), inline(PS.get('Built-on caption')), shortName)}
   </div>
   ${footer('17')}
 </section>`;
 
-  const seg = [['bank', 'Tier-2 banks with a core but a manual back office', 'Reconciliation, with approvals and mandates', 'The Business suite for helpdesk, HR and procurement; Collect'],
-    ['bank', 'Tier-3 banks', 'Collect; Reconciliation', 'Escrow; omni-channel; Kapu Core where the core is basic'],
-    ['sacco', 'Deposit-taking Saccos', 'Sacco; Reconciliation (check-off)', 'Omni-channel; credit bureaus, coming soon'],
-    ['people', 'Credit-only Saccos', 'Sacco', 'Omni-channel; messaging'],
-    ['mfi', 'MFIs on spreadsheets', 'MFI, on Kapu Core', 'Omni-channel; credit bureaus, coming soon'],
-    ['mfi', 'MFIs with a legacy back office', 'MFI on your existing core; Reconciliation', 'The Business suite; Kapu Core when you are ready to move'],
-    ['cube', 'Institutions on a basic core', 'Kapu Core', 'MFI or Sacco; Reconciliation; omni-channel'],
-    ['rails', 'Money-transfer operators and PSPs', 'Reconciliation', 'Gateway; insights'],
-    ['gateway', 'Fintechs', 'Gateway', 'Reconciliation; Collect, through a partner bank'],
-    ['store', 'SMEs', 'SME Reconciliation, or the Business suite', 'Gateway; escrow']];
+  const WHO = copy.section('Who it is for');
+  const WHO_END = copy.section('Who it is for, closing');
+  const seg = byOrder(['bank', 'bank', 'sacco', 'people', 'mfi', 'mfi', 'cube', 'rails', 'gateway', 'store'],
+    WHO.items().map((it) => [inline(it.title), inline(it.get('Start with')), inline(it.get('Add'))]), 'Who it is for');
   const page17 = `
 <section class="page" id="p18">
   ${corner(4)}
   <div class="content">
-    <p class="eyebrow">Who it is for</p>
+    <p class="eyebrow">${inline(WHO.get('Eyebrow'))}</p>
     ${RULE}
-    <h2>Where to start</h2>
-    <div class="segs">${seg.map(([k, a, b, c]) => `<div class="seg"><span class="disc">${ico(k)}</span><div><b>${a}</b><p><em>Start with</em> ${b}</p><p><em>Add</em> ${c}</p></div></div>`).join('')}</div>
-    <div class="band" style="margin-top:8mm"><p>${ico('compass', 'bi')}Not on this list? <span>Start with your process.</span></p><small>Tell us where money gets lost in your work, and we will suggest where to begin, on your own data.</small></div>
+    <h2>${inline(WHO.get('Heading'))}</h2>
+    <div class="segs">${seg.map(([k, a, b, c]) => `<div class="seg"><span class="disc">${ico(k)}</span><div><b>${a}</b><p><em>${inline(L.get('Start with'))}</em> ${b}</p><p><em>${inline(L.get('Add'))}</em> ${c}</p></div></div>`).join('')}</div>
+    <div class="band" style="margin-top:8mm"><p>${ico('compass', 'bi')}${inline(WHO_END.get('Band'))}</p><small>${inline(WHO_END.get('Band text'))}</small></div>
   </div>
   ${footer('18')}
 </section>`;
 
-  const integ = [['phone', 'Mobile money', ['M-Pesa (Daraja)', 'Airtel Money', 'T-Kash'], 'Integrated directly'],
-    ['bank', 'Banks', ['~Bank APIs', '~MT940', '~CAMT.053', '~CSV', '~PesaLink'], 'Coming soon: Dibon\'s own banks first'],
-    ['key', 'Cards', ['~Acquirers', '~Processors'], 'Coming soon. Card numbers will never touch our systems'],
-    ['suite', 'ERP', ['Odoo', 'Zoho'], 'Implemented by Dibon, a partner of both'],
-    ['identity', 'Identity', ['IPRS', 'Documents', 'Liveness', '~Business registration'], 'Checked before an account opens'],
-    ['bureau', 'Credit bureaus', ['~Every licensed bureau in Kenya'], 'Coming soon: submissions and lookups'],
-    ['cube', 'Core banking', ['Your core, by adapter', 'Kapu Core, on Apache Fineract'], 'Integrated first; Kapu Core where yours is basic']];
+  // Integrated chips first, then coming-soon chips, which are marked "~".
+  const INT = copy.section('Integrations');
+  const list = (it, key) => (it.has(key) ? it.get(key).split('; ').map((s) => s.trim()) : []);
+  const integ = byOrder(['phone', 'bank', 'key', 'suite', 'identity', 'bureau', 'cube'],
+    INT.items().map((it) => [inline(it.title), [...list(it, 'Integrated').map((s) => inline(s)), ...list(it, 'Coming soon').map((s) => `~${inline(s)}`)], inline(it.get('Note'))]), 'Integrations');
   const page18 = `
 <section class="page" id="p19">
   ${corner(0)}
   <div class="content">
-    <p class="eyebrow">Integrations</p>
+    <p class="eyebrow">${inline(INT.get('Eyebrow'))}</p>
     ${RULE}
-    <h2>What the platform connects to</h2>
-    <p class="chip-key"><span class="k-on">Integrated</span><span class="k-next">Coming soon</span></p>
+    <h2>${inline(INT.get('Heading'))}</h2>
+    <p class="chip-key"><span class="k-on">${inline(L.get('Integrated'))}</span><span class="k-next">${inline(L.get('Coming soon'))}</span></p>
     <div class="integ">${integ.map(([k, a, chips, note]) => `<div class="int"><span class="disc">${ico(k)}</span><div><b>${a}</b><div class="chips">${chips.map((c) => (c.startsWith('~') ? `<span class="next">${c.slice(1)}</span>` : `<span>${c}</span>`)).join('')}</div><small>${note}</small></div></div>`).join('')}</div>
-    ${HUB}
+    ${withCaption(HUB, copy.section('Integrations, closing').get('Diagram caption'))}
   </div>
   ${footer('19')}
 </section>`;
 
-  const sec = [['pin', 'Where it runs', 'On your premises, or in an in-country cloud. Kenya first; designed to follow our customers across East and Southern Africa and Nigeria.'],
-    ['cube', 'How it runs', 'Cloud-native on Kubernetes, mostly on permissively licensed open source: Apache Fineract, Keycloak, Kafka, Prometheus, OpenTelemetry and Apache Superset.'],
-    ['key', 'Who can act', 'One login per person, never shared; re-authentication at the moment of any act that moves money; a second approver for payments, reversals and role changes.'],
-    ['log', 'What is recorded', 'Every action, append-only. Nothing is edited after the fact; a correction is a new entry.'],
-    ['shield', 'How data is handled', 'Designed in line with Kenya\'s Data Protection Act, 2019. Data is classified; the most sensitive never appears in logs or on a phone. Credentials never leave our servers.'],
-    ['pulse', 'How it is watched', 'Monitoring, alerting and service-level objectives for every system that moves money.']];
+  const DS = copy.section('Deployment and security');
+  const sec = byOrder(['pin', 'cube', 'key', 'log', 'shield', 'pulse'],
+    DS.get('Rows').map(pair).map(([a, b]) => [inline(a), inline(b)]), 'Deployment and security › Rows');
   const page19 = `
 <section class="page" id="p20">
   ${corner(1)}
   <div class="content">
-    <p class="eyebrow">Deployment and security</p>
+    <p class="eyebrow">${inline(DS.get('Eyebrow'))}</p>
     ${RULE}
-    <h2>Built to be audited</h2>
+    <h2>${inline(DS.get('Heading'))}</h2>
     <ul class="rows">${sec.map(([k, a, b]) => `<li><span class="disc">${ico(k)}</span><div><b>${a}</b><span>${b}</span></div></li>`).join('')}</ul>
-    <div class="band" style="margin-top:6mm"><p>${ico('evidence', 'bi')}Evidence, <span>not assertions.</span></p><small>Every number traces to a transaction, every approval to a person at a moment, and every correction is a new entry an auditor can read.</small></div>
+    <div class="band" style="margin-top:6mm"><p>${ico('evidence', 'bi')}${inline(DS.get('Band'))}</p><small>${inline(DS.get('Band text'))}</small></div>
   </div>
   ${footer('20')}
 </section>`;
 
-  const steps = [['Discovery', 'A working session with your team on the process that costs you most today.', 'A written map of the process, where money is lost, and what we would change'],
-    ['Your numbers', 'Give us extracts for one full cycle of your process, a day, a week or a month; we show the product running on your own data before we meet again.', 'Your own transactions, matched, with the breaks and their causes'],
-    ['Pilot', 'One product, one process, measured against an agreed outcome.', 'A measured result against the outcome agreed at the start'],
-    ['Rollout', 'Further products on the same platform, with the same logins, approvals and reports.', 'One platform, one sign-on, one set of approvals and reports']];
+  const WW = copy.section('Working with us');
+  const CT = copy.section('Working with us, contact');
+  const steps = WW.items(4).map((it) => [inline(it.title), inline(it.get('What happens')), inline(it.get('You get'))]);
   const page20 = `
 <section class="page" id="p21">
   ${corner(2)}
   <div class="content">
-    <p class="eyebrow">Working with us</p>
+    <p class="eyebrow">${inline(WW.get('Eyebrow'))}</p>
     ${RULE}
-    <h2>From your process to your numbers</h2>
-    <ol class="tline">${steps.map(([a, b, c], i) => `<li><span class="dot">${i + 1}</span><div><b>${a}</b><p>${b}</p><p class="get"><em>You get</em> ${c}</p></div></li>`).join('')}</ol>
+    <h2>${inline(WW.get('Heading'))}</h2>
+    <ol class="tline">${steps.map(([a, b, c], i) => `<li><span class="dot">${i + 1}</span><div><b>${a}</b><p>${b}</p><p class="get"><em>${inline(L.get('You get'))}</em> ${c}</p></div></li>`).join('')}</ol>
     <div class="contact-card">
-      <div><b>${ico('chat', 'bi')}Talk to us</b><p>Tell us the process that costs you most. We will come back with a session date and what to bring.</p></div>
-      <dl><dt>Email</dt><dd>info@dibon.co.ke</dd><dt>Phone</dt><dd>+254 792 745 509</dd></dl>
+      <div><b>${ico('chat', 'bi')}${inline(CT.get('Title'))}</b><p>${inline(CT.get('Text'))}</p></div>
+      <dl><dt>Email</dt><dd>${inline(CT.get('Email'))}</dd><dt>Phone</dt><dd>${inline(CT.get('Phone'))}</dd></dl>
     </div>
   </div>
   ${footer('21')}
 </section>`;
 
   // N_PRODUCTS is set above, before page 6 is assembled.
-  return { counts: { products: N_PRODUCTS, services: svc.length }, page06: page06.split('${N_PRODUCTS}').join(String(N_PRODUCTS)), pages0820: P.map(productPage).join('\n') + page15 + page16 + page17 + page18 + page19 + page20 };
+  return { counts: { products: N_PRODUCTS, services: svc.length }, word: WORD[N_PRODUCTS], figCollect: withCaption(F['Kapu Collect'], prods[0].get('Diagram caption')), page06: page06.split('${N_PRODUCTS}').join(String(N_PRODUCTS)), pages0820: P.map(productPage).join('\n') + page15 + page16 + page17 + page18 + page19 + page20 };
 }
 
 const CSS = `

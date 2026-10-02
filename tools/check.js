@@ -330,26 +330,26 @@ function checkOnboarding(root) {
 }
 
 // ── claims ───────────────────────────────────────────────────────────────
-// Every integration the PDF shows as integrated (a chip without "~" on the
-// integrations page) is listed in claims.json with its basis: "live", backed
-// by a partner at stage Live or a capability that is Live or Built, or "v1",
-// the owner's decision to present a working v1 (FS-263). Nothing is claimed
-// that the records do not back or the owner has not chosen (FS-353).
+// Every integration the portfolio shows as integrated (an "Integrated:" entry
+// on the Integrations page of the copy) is listed in claims.json with its
+// basis: "live", backed by a partner at stage Live or a capability that is
+// Live or Built, or "v1", the owner's decision to present a working v1
+// (FS-263). Nothing is claimed that the records do not back or the owner has
+// not chosen (FS-353). The copy is the single source of the words (FS-352).
 const CLAIMS = path.join('design', 'portfolio-pdf', 'claims.json');
+const COPY = path.join('docs', 'marketing', 'portfolio.md');
 
 function integratedChips(root) {
-  const m = read(root, PAGES_REST).match(/const integ = \[([\s\S]*?)\]\];/);
-  if (!m) return null;
-  const chips = [];
-  for (const row of m[1].matchAll(/\['[a-z]+', '[^']+', \[([^\]]*)\]/g)) {
-    for (const c of row[1].matchAll(/'((?:[^'\\]|\\.)*)'/g)) if (!c[1].startsWith('~')) chips.push(c[1]);
-  }
-  return chips;
+  const { parse } = require(path.join(root, 'design', 'portfolio-pdf', 'copy.js'));
+  const integ = parse(read(root, COPY), path.join(root, COPY)).find((s) => s.title === 'Integrations');
+  if (!integ) return null;
+  return integ.items.flatMap((it) => (it.fields.Integrated ? it.fields.Integrated.split('; ').map((s) => s.trim()) : []));
 }
 
 function checkClaims(root) {
-  const chips = integratedChips(root);
-  if (!chips) return [fail('claims', PAGES_REST, 0, 'integrations list not found; the check cannot run')];
+  let chips;
+  try { chips = integratedChips(root); } catch (e) { return []; } // the copy check reports it
+  if (!chips) return [fail('claims', COPY, 0, 'no Integrations page in the copy; the check cannot run')];
   if (!fs.existsSync(path.join(root, CLAIMS))) return [fail('claims', CLAIMS, 0, 'claims register missing')];
   let claims;
   try { claims = JSON.parse(read(root, CLAIMS)); } catch (e) { return [fail('claims', CLAIMS, 0, `not valid JSON: ${e.message}`)]; }
@@ -372,6 +372,15 @@ function checkClaims(root) {
     }
   }
   return failures;
+}
+
+// ── copy ─────────────────────────────────────────────────────────────────
+// The portfolio copy parses in its strict format (FS-352), so a stray line
+// fails here rather than at build time.
+function checkCopy(root) {
+  const { parse } = require(path.join(root, 'design', 'portfolio-pdf', 'copy.js'));
+  try { parse(read(root, COPY), path.join(root, COPY)); } catch (e) { return [fail('copy', COPY, 0, e.message)]; }
+  return [];
 }
 
 // ── decisions ────────────────────────────────────────────────────────────
@@ -434,6 +443,7 @@ function runAll(root) {
     ...checkPartners(root),
     ...checkPublic(root),
     ...checkOnboarding(root),
+    ...checkCopy(root),
     ...checkClaims(root),
     ...checkDecisions(root),
   ];

@@ -4,8 +4,9 @@ The consolidated documents for Dibon's financial-services offerings. There
 is one portfolio overview, built from modules, and buyer packs assembled
 from the same modules (FS-001).
 
-**Status: in design.** Everything is Markdown. No PDF is produced until the
-designs are agreed (FS-009).
+**Status:** the portfolio is issued as DC-FS-PF-001 v1.0, a PDF and a web
+preview, both built from the Markdown (FS-333, FS-352). Designs still go to
+Markdown or a preview before they reach the PDF (FS-009).
 
 ## Where things live
 
@@ -18,12 +19,19 @@ docs/                the work. The only place we edit
   decisions.md       what each decision cost, and what was argued against
   partners.md        partner candidates, conversations, selection decisions
   overview.md        the portfolio story; links modules, restates nothing
+  onboarding.md      what each customer and product needs to go live
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
+  marketing/
+    portfolio.md     every word of the portfolio PDF; the build reads it
+  business/          market sizing (a workbook)
+  outreach/          email templates to banks, operators and partners
   packs/             one manifest per buyer type (to do)
   commercials/       parked (FS-024); the one home for prices later
-design/              look and feel: tokens, HTML/CSS template (to do)
-build/               generated: master.md; later HTML, PDF — git-ignored
+design/              layout, diagrams and illustrative screens; no copy
+  portfolio-pdf/     build.js, page layout, document.json, claims.json
+build/               generated: master.md, the portfolio PDF and web
+                     preview — git-ignored
 sources/             inputs as received — never edited
   dibon/             recon proposal, Kapu compliance one-pager
   kapu/              MFI PRD, 8 Jun 2026 meeting notes
@@ -41,6 +49,8 @@ git config core.hooksPath .githooks   # once per clone
 node tools/check.js --counts          # every check, plus computed counts
 node --test tools/check.test.js       # breaks each check on purpose
 node tools/assemble.js                # builds build/master.md; refuses if a check fails
+node design/portfolio-pdf/build.js    # the portfolio PDF and web preview
+node design/portfolio-pdf/build.js --html-only   # pages only, no PDF
 ```
 
 The names check reads `sources/confidential/protected-names.txt`, which is
