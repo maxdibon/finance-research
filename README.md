@@ -21,6 +21,7 @@ docs/                the work. The only place we edit
   partners.md        partner candidates, conversations, selection decisions
   overview.md        the portfolio story; links modules, restates nothing
   onboarding.md      what each customer and product needs to go live
+  compliance.md      licences, registrations and certifications
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
   marketing/
