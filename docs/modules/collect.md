@@ -60,24 +60,24 @@ at most, pending FS-052, and must not be raised without evidence.
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| CO-01 | Partner authentication (token issued per system identity) | Designed | Technical documentation, Authentication API | 1 |
-| CO-02 | Individual account opening, gated on an identity check (national ID, passport, alien ID) | Designed | Technical documentation, Account Opening; IPRS integration not yet final (8 Jun) | 1 |
-| CO-03 | Sub-account opening under an existing customer | Designed | Technical documentation, Sub-Account Opening | 1 |
-| CO-04 | Balance, account info, account list, statement for a period | Designed | Technical documentation, Account Management | 1 |
+| CO-01 | Partner authentication (token issued per system identity) | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Authentication API | 1 |
+| CO-02 | Individual account opening, gated on an identity check (national ID, passport, alien ID) | Designed | Technical documentation, Account Opening; IPRS integration not yet final (8 Jun). Account opening ran in production at Onit Bank (FS-390), checking document-number formats only; the IPRS gate is not in the production specification | 1 |
+| CO-03 | Sub-account opening under an existing customer | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Sub-Account Opening | 1 |
+| CO-04 | Balance, account info, account list, statement for a period | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Account Management | 1 |
 | CO-05 | Deposit by mobile-money push prompt, posted to the core on confirmation | Built | Technical documentation, Deposits; Safaricom go-live outstanding (8 Jun). M-Pesa push-prompt deposits ran in production at a Kenyan bank, Feb 2025 to Jun 2026 (FS-384) | 1 |
-| CO-06 | Withdrawal to mobile, till or paybill | Designed | Technical documentation, Withdrawals. Ordering defect — FS-054. Withdrawal to mobile (B2C) ran in production, Feb 2025 to Jun 2026 (FS-384); till and paybill (B2B) did not | 1 |
-| CO-07 | Account-to-account transfer, synchronous | Designed | Technical documentation, Funds Transfer | 1 |
-| CO-08 | Transaction query by bank reference or by the partner's own request id; duplicate request ids refused | Designed | Technical documentation, Query Transaction; response code 5001 | 1 |
-| CO-09 | Asynchronous callbacks to the partner | Designed | Technical documentation, Components | 1 |
+| CO-06 | Withdrawal to mobile, till or paybill | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390): withdrawal to mobile, till and paybill (B2C and B2B). Technical documentation, Withdrawals. Ordering defect — FS-054. Withdrawal to mobile (B2C) ran in production, Feb 2025 to Jun 2026 (FS-384); till and paybill (B2B) did not | 1 |
+| CO-07 | Account-to-account transfer, synchronous | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Funds Transfer | 1 |
+| CO-08 | Transaction query by bank reference or by the partner's own request id; duplicate request ids refused | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Query Transaction; response code 5001 | 1 |
+| CO-09 | Asynchronous callbacks to the partner | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Components | 1 |
 | CO-10 | Management portal (institution) and partner portal | Designed | Technical documentation, Components. No screen specification in this folder | 1 |
-| CO-11 | Metrics, logs and dashboards for the institution's operations team | Designed | Technical documentation, Operations & Support | 1 |
+| CO-11 | Metrics, logs and dashboards for the institution's operations team | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Operations & Support | 1 |
 | CO-12 | End-of-day reconciliation against the core banking system | Planned | Named in MFI PRD §1 ("the EOD reconciliation layer"); no specification. Delivered by recon-observability | 1 |
 | CO-13 | Real-time transaction monitoring and automated fraud detection | Planned | **Both sources describe this as operating continuously; neither specifies it.** 8 Jun: fraud detection "must be designed in from the start" — FS-053 | 1 |
 | CO-14 | Automated compliance reporting | Planned | Claimed in the one-pager; no specification — FS-053 | later |
 | CO-15 | Maker-checker on partner and institution actions | Planned | MFI PRD FR-6 names Collect as a future consumer of the mandate engine | 2 |
 | CO-16 | PesaLink as a deposit and withdrawal channel | Planned | Listed as a channel in the API; trust accounts with the PesaLink sponsor bank not yet in place (8 Jun) | 3 |
 | CO-18 | Notifications to the end customer when a deposit lands, through messaging | Planned | Owner, 2026-10-02 (FS-315) | 1 |
-| CO-17 | Loan management | Planned | The technical documentation's overview lists it; no API for it exists in the document. Belongs to mfi / sacco — FS-055 | — |
+| CO-17 | Loans on the bank's core: request, repayment, loan statement, loan balance, credit-limit check | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390), §2.6 | — |
 | CO-19 | The recipient's registered name confirmed with M-Pesa Hakikisha before every withdrawal to mobile | Planned | Owner, 2026-10-03 (FS-388); rails RL-21 | 1 |
 | CO-20 | A deposit whose confirmation never arrives is found with M-Pesa Pull Transactions and posted, not left unmatched | Planned | Owner, 2026-10-03 (FS-388); rails RL-20 | 1 |
 
@@ -155,11 +155,11 @@ These describe different products — FS-054.
 
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
-| M-Pesa (C2B push, B2C, B2B) | in / out | real-time callback | Designed; Safaricom go-live outstanding (8 Jun) |
+| M-Pesa (C2B push, B2C, B2B) | in / out | real-time callback | Built: ran in production at Onit Bank, Feb 2025 to Jun 2026 (FS-390). The 8 Jun note of an outstanding go-live is unexplained (FS-088) |
 | Airtel Money | in / out | real-time callback | Designed |
 | T-Kash | in / out | real-time callback | Designed (listed in the API; added to the suite 8 Jun) |
 | PesaLink | in / out | to establish | Planned — CO-16 |
-| Institution core banking system | read / post | API | Designed |
+| Institution core banking system | read / post | API | Built: Onit Bank's core, through stored procedures (FS-390) |
 | IPRS | read | API | Designed; integration not final (8 Jun) |
 | Rail statements for end-of-day matching | in | statement file / API pull | Planned — CO-12, FS-038 |
 

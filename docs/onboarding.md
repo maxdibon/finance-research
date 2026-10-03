@@ -53,7 +53,7 @@ Module: [gateway](modules/gateway.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
-| OB-GW-01 | **Its own paybill or till, or its bank's?** Shortcodes, or the bank's paybill and its account number | Finance lead | gateway §4; FS-339 |
+| OB-GW-01 | **Its own paybill or till, its bank's, or a new collection account with our partner bank?** Shortcodes; or the bank's paybill and its account number; or the account opened with the partner bank. A merchant that wants none of these goes through the licensed aggregator | Finance lead | gateway §4; FS-339, FS-385 |
 | OB-GW-02 | Rail credentials, or delegated access to them | IT lead | gateway §6 |
 | OB-GW-03 | Callback URLs and its own reference format | IT lead | Idempotent requests |
 | OB-GW-04 | ERP access, if payments post to its ERP | IT lead | sme-recon |

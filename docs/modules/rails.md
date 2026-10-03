@@ -73,7 +73,7 @@ disputed between sources (FS-088), so nothing is higher than Designed.
 | RL-16 | Debit-mandate registration, where a rail supports it | Planned | mandates MD-14; FS-046 | 2 |
 | RL-17 | A simulator per rail, for tests and demos, that can produce every outcome including silence | Planned | FS-211 | 1 |
 | RL-18 | Rails in other countries: MTN MoMo, Vodacom M-Pesa, EcoCash, the Airtel group | Planned | partners.md PT-11 to PT-13, PT-03 | later |
-| RL-19 | M-Pesa (Daraja) B2B: payments to another paybill or till | Designed | Kapu technical documentation: deposit and withdrawal flows; collect CO-05, CO-06. Outreach Email 2 | 1 |
+| RL-19 | M-Pesa (Daraja) B2B: payments to another paybill or till | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390): the B2C service also carried B2B | 1 |
 | RL-20 | M-Pesa Pull Transactions: fetch a shortcode's transactions, so a missed callback is found and matched, not lost | Planned | Daraja API list (FS-387); recon-observability | 1 |
 | RL-21 | M-Pesa Hakikisha (B2C and B2B): the recipient's registered name before a payout is sent | Planned | Daraja API list (FS-387); identity ID-05 | 1 |
 | RL-22 | Safaricom SIM-swap query and IMSI check before money moves | Planned | Daraja security APIs for authorised partners (FS-386, FS-387); omni-channel step-up | 1 |

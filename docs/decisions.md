@@ -281,6 +281,9 @@ its own entry.
   prospect's checking. The integrations claimed on this basis are listed
   in design/portfolio-pdf/claims.json, so the gap stays visible (FS-353).
   In return: a portfolio that sells, not a roadmap.
+- **Update (2026-10-03):** Collect and the Gateway ran in production at
+  Onit Bank from February 2025 to June 2026 (FS-384, FS-390). M-Pesa now
+  rests on that record, not on this decision; the other claims still do.
 
 ## FS-311 · Kapu Core: the native mode becomes a product
 

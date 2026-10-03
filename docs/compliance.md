@@ -33,6 +33,8 @@ application; this file tracks them.
 | LC-09 | ISO 22301 business continuity | Planned | Backs the twice-yearly recovery tests | One KENAS-accredited body (Cert-Trust), for financial intermediation | After LC-04 | Compliance lead | FS-365 |
 | LC-10 | ISO/IEC 20000-1 service management | Planned | Backs the support tiers and ITIL practice | No KENAS-accredited body found; SGS advertises it in Kenya | Stay "in line with" until a route is confirmed | Delivery lead | FS-365 |
 | LC-11 | PCI DSS | Planned | When cards arrive | Depends on Dibon's role: as a merchant, SAQ A with a processor-hosted page; hosting payment pages for merchants makes Dibon a service provider (SAQ D, if the card brands allow self-assessment) | Ask the chosen acquirer what validation it requires | Architect | FS-091 |
+| LC-12 | Direct access to the national register (NPDM, formerly IPRS) | Needed | The authoritative, cheapest national ID check | Letter of intent, signed MOU, KRA tax compliance certificate, business permit, Data Commissioner registration, security policy. KES 50,000 to connect, KES 20 a check | Send the letter of intent | Compliance lead | FS-382 |
+| LC-13 | Safaricom authorisation for the Daraja security APIs (SIM swap, IMSI) | Needed | The SIM-swap check the portfolio promises "where the operator offers one" | Authorised-partner approval from Safaricom; may need to be held per bank or Sacco customer | Ask Safaricom what authorisation it requires | Architect | FS-386, FS-387 |
 
 ## What this changes elsewhere
 

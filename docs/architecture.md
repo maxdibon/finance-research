@@ -221,7 +221,7 @@ Matching rules that hold on every rail:
   maker-checker, committee chains) and for the records behind debit
   mandates. Designed in MFI PRD FR-6 as a platform service; Collect, Sacco,
   Gateway and sme-recon are its consumers.
-- **Identity:** IPRS lookup on onboarding. The result is stored on the
+- **Identity:** national register lookup (NPDM, formerly IPRS) on onboarding. The result is stored on the
   party in its authority, not copied into consumers.
 - **Insights:** reads from the three authorities through a semantic layer
   of governed metric definitions. **It never writes.** Every answer shows

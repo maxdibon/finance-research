@@ -99,7 +99,8 @@ test('template: an id that does not match the file name fails', () => {
 });
 
 test('capabilities: a status outside the vocabulary fails', () => {
-  const f = runWith((d) => patch(d, COLLECT, (t) => t.replace(/^(\| CO-01 \|[^|]*\|) Designed \|/m, '$1 Ready |')));
+  // Replaces whatever status the row has, so the test survives status changes.
+  const f = runWith((d) => patch(d, COLLECT, (t) => t.replace(/^(\| CO-01 \|[^|]*\|) \w+ \|/m, '$1 Ready |')));
   assert.deepStrictEqual(names(f), ['capabilities']);
 });
 

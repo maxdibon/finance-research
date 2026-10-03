@@ -17,3 +17,5 @@ sources/gatekeepr/
 
 # Local tool configuration (paths are machine-specific).
 .claude/
+# Holds internal addresses, a sample password and a person's name (FS-390).
+sources/Onit API Technical Documentation.docx.pdf

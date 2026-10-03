@@ -50,11 +50,11 @@ requirements (MFI PRD §2, problem 5).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| ID-01 | IPRS lookup: national ID, passport, alien ID | Designed | Kapu technical documentation (account opening); MFI PRD FR-2.1. Coverage of passports, alien and refugee IDs disputed by a reviewer; to confirm against IPRS and Maisha (FS-329, FS-341). Integration not final at 8 Jun — FS-088 | 1 |
+| ID-01 | National register lookup (NPDM, formerly IPRS): national ID, passport, alien ID | Designed | Kapu technical documentation (account opening); MFI PRD FR-2.1. Coverage of passports, alien and refugee IDs disputed by a reviewer; to confirm against IPRS and Maisha (FS-329, FS-341). Integration not final at 8 Jun — FS-088. Direct access open to private firms: KES 50,000 to connect, KES 20 a check (partners PT-29, FS-382) | 1 |
 | ID-02 | Document checklist per product, with a completeness gate | Designed | MFI PRD FR-2.2 to FR-2.4 | 1 |
 | ID-03 | Re-verification when documents expire, for repeat customers | Designed | MFI PRD FR-1.4 | 1 |
 | ID-04 | Liveness and face match against the ID photo | Planned | FS-204 — vendor not chosen; candidates Smile ID (PT-30) and MetaMap (PT-33), FS-340 | 2 |
-| ID-05 | Phone-number ownership: a one-time code, and the name the operator holds for the number | Planned | FS-205 | 1 |
+| ID-05 | Phone-number ownership: a one-time code, and the name the operator holds for the number | Planned | FS-205. For M-Pesa numbers, Safaricom's Hakikisha returns the registered name (rails RL-21, FS-387) | 1 |
 | ID-06 | Tax PIN validation | Planned | FS-205 | 2 |
 | ID-07 | Business verification: registration, directors, beneficial owners | Planned | FS-090 | 2 |
 | ID-08 | Sanctions and politically-exposed-person screening | Planned | FS-098. May sit in a compliance service instead | 2 |
@@ -111,17 +111,17 @@ mode, to Fineract.
 
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
-| IPRS (Kenya) | read | API | Designed (ID-01). Access agreement — FS-202 |
+| NPDM, formerly IPRS (Kenya) | read | API | Designed (ID-01). Direct access by MOU — partners PT-29, FS-202 |
 | Liveness and face-match vendor | read | API or SDK | Planned (ID-04) — partners.md SD-11 |
-| Mobile-network operators | read | operator name lookup; one-time code | Planned (ID-05) |
-| Tax authority PIN check | read | API, if available | Planned (ID-06) — FS-205 |
+| Mobile-network operators | read | Hakikisha name lookup (Safaricom); one-time code | Planned (ID-05) — rails RL-21 |
+| Tax authority PIN check | read | KRA GavaConnect API | Planned (ID-06) — partners PT-35 |
 | Business registration service | read | API, if available | Planned (ID-07) — FS-205 |
 | Other countries' registers | read | per country | Planned (ID-09) |
 
 ## 7 · Regulatory position
 
 - **Custody:** none.
-- **Access to IPRS** needs an agreement. Whether it is held by each
+- **Access to the national register (NPDM, formerly IPRS)** needs an agreement: an MOU, open to private firms (FS-382). Whether it is held by each
   institution or by Dibon on their behalf is open — FS-202.
 - **Biometric data is sensitive personal data** under the Data Protection
   Act. Liveness and face match need a lawful basis, a data protection

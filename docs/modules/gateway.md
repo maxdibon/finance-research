@@ -103,7 +103,7 @@ itself an institution.
 
 | | Integrated — the customer has its own ledger | Native — it does not |
 |---|---|---|
-| Where funds are posted | The merchant's own shortcodes and accounts, including a bank collection account ("Lipa na Bank": the bank's paybill, the merchant's account number, FS-339). For an institution, its core | **Pass-through still**: the merchant's own shortcodes, or its bank's collection account. A merchant with neither cannot be served until aggregation is licensed (FS-094) |
+| Where funds are posted | The merchant's own shortcodes and accounts, including a bank collection account ("Lipa na Bank": the bank's paybill, the merchant's account number, FS-339). For an institution, its core | **Pass-through still**: the merchant's own shortcodes, its bank's collection account, or a collection account opened with a partner bank (FS-385). A merchant that wants none of these goes through a licensed aggregator such as Paystack (PT-07, FS-381) until our own licence (FS-094) |
 | What differs in this module | Matched payments are pushed into the merchant's ERP or core through sme-recon or a core adapter | The dashboard and exports are the merchant's only record |
 | What the customer must provide | Its shortcodes or till numbers, rail credentials or delegated access, ERP access | Its shortcodes or till numbers |
 | Who it suits | SMEs on Odoo or Zoho; MFIs and Saccos with a core | Small merchants without an ERP |

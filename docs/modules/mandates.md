@@ -69,7 +69,7 @@ owner's request (FS-042).
 | MD-10 | Each decision re-authenticated at the moment it is made (PIN or one-time code) | Planned | docs/architecture.md §7; FS-132 | 1 |
 | MD-11 | Bank-side mirror: the signing mandate registered on the bank account, and our instruction checked against it | Planned | FS-122. Depends on the bank's mandate API (partners.md C10) | 2 |
 | MD-12 | Consumers beyond MFI: Sacco committees, Collect and Gateway maker-checker, SME Recon payments, Escrow releases, recon reversals | Planned | MFI PRD FR-6 platform note; FS-097, FS-107 | 1–2 |
-| MD-13 | Debit mandate record: payer, payee, amount (fixed or capped), frequency, start and end, rail; consent captured and signed | Planned | FS-042 | 2 |
+| MD-13 | Debit mandate record: payer, payee, amount (fixed or capped), frequency, start and end, rail; consent captured and signed | Planned | FS-042. On M-Pesa: Ratiba standing orders (rails RL-23, FS-387) | 2 |
 | MD-14 | Debit mandate registered with the rail: bank direct debit, M-Pesa standing orders, card tokens | Planned | FS-046 — rails unconfirmed | 2 |
 | MD-15 | Scheduled pulls, each preceded by a notice to the payer | Planned | FS-042 | 2 |
 | MD-16 | Cancellation by the payer at any time; any change re-consented | Planned | FS-042 | 2 |
