@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, escrow, mandates, recon-observability]
-review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387]
-last_reviewed: 2026-10-01
+review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-403]
+last_reviewed: 2026-10-03
 ---
 
 # Rails — payment and bank integrations
@@ -66,7 +66,7 @@ disputed between sources (FS-088), so nothing is higher than Designed.
 | RL-09 | Processor settlement reports, gross to net of fees | Planned | FS-102; recon-observability RO-20 | 2 |
 | RL-10 | **Unknown is a state.** A timeout is pending until a status query or a statement settles it | Designed | Prospect prototype, Transaction Trace; docs/architecture.md §5 | 1 |
 | RL-11 | A callback the rail does not sign is confirmed by status query, or by source checks, before it is final | Planned | FS-209 | 1 |
-| RL-12 | Credentials per customer, held server-side in a vault; never on a device, in an app or in a browser | Designed | docs/architecture.md §3 | 1 |
+| RL-12 | Credentials per customer, held server-side in OpenBao; never on a device, in an app or in a browser | Designed | docs/architecture.md §3 and §6; OpenBao, not HashiCorp Vault, for licence reasons (FS-403). The Onit Bank deployment used Vault; OpenBao keeps its API | 1 |
 | RL-13 | Delegated access to a customer's own shortcode or bank account, under its written consent | Planned | FS-127 | 1 |
 | RL-14 | Idempotency: our request id carried to the rail's own idempotency key where it has one; a repeat never pays twice | Planned | collect §8 (code 5001) | 1 |
 | RL-15 | Rail health, latency and failure rates to observability; a degraded rail is paused, not hammered | Planned | recon-observability RO-16, RO-17 | 1 |
@@ -96,11 +96,11 @@ remediation).
 | Funds | The rail or bank, in the account of whoever owns the shortcode or account | **Never holds.** Instructs on the owner's credentials |
 | Rail events, normalised | Recon engine | Emits them, once each |
 | Every call to a rail: request, response, timing | **Rails** | Holds. Append-only; no secrets in it |
-| Credentials per customer and rail | **Rails, in a vault** | Holds. Restricted |
+| Credentials per customer and rail | **Rails, in OpenBao** | Holds. Restricted |
 | Which customer owns which shortcode or account | Odoo (the contract) and access (the delegation) | References by id |
 
 **What this module never stores:** a balance as an authority, or a
-credential outside the vault.
+credential outside OpenBao.
 
 **Under each ledger mode:** rails never post to a ledger. The product that
 called it posts to the core in integrated mode, or to Fineract in native
@@ -121,7 +121,7 @@ mode.
      |          |          |          |           |             |
      +----------+----------+----------+-----------+-------------+
                               |
-                credentials from the vault, per customer
+                credentials from OpenBao, per customer
                               |
       outcome:  confirmed ---------> normalised event --> recon
                 rejected  ---------> normalised event --> recon

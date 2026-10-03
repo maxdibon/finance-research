@@ -2,11 +2,11 @@
 id: architecture
 name: Platform architecture — who holds what
 kind: architecture
-version: 0.1.0
+version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063]
-last_reviewed: 2026-10-01
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403]
+last_reviewed: 2026-10-03
 ---
 
 # Platform architecture — who holds what
@@ -154,7 +154,8 @@ whether we caused a payment.
 **Rail and bank credentials stay on the server.** Channel apps ask our
 server, and our server calls the rail. Daraja keys, bank API credentials
 and signing keys are never placed in a mobile app, a USSD gateway
-configuration or a browser, because anyone can unpack an app.
+configuration or a browser, because anyone can unpack an app. On the
+server they are held in OpenBao (§6, FS-403).
 
 ---
 
@@ -214,6 +215,11 @@ Matching rules that hold on every rail:
 ## 6 · Shared services and the bus
 
 - **Event bus:** Kafka between services.
+- **Secrets:** OpenBao holds rail and bank credentials, signing keys and
+  service secrets, per customer, in every deployment option. It is the
+  Linux Foundation fork of HashiCorp Vault, under MPL-2.0, with the same
+  API. Vault itself has been under the Business Source License since
+  August 2023, which §6.1 does not allow without a decision (FS-403).
 - **Observability:** Prometheus (metrics), Loki (logs), Tempo or Jaeger
   (traces), Grafana (dashboards, alerting, SLOs). Grafana is for
   operations. Business BI is insights, a separate module.
@@ -231,15 +237,17 @@ Matching rules that hold on every rail:
 
 ### 6.1 · Licences
 
-Decided 2026-10-01 (FS-223):
+Decided 2026-10-01 (FS-223); MPL-2.0 added 2026-10-03 (FS-403):
 
 | Licence | Allowed | Condition |
 |---|---|---|
 | Apache-2.0, MIT, BSD-2, BSD-3, ISC | Yes | — |
 | AGPL-3.0 | Yes, **for services run unmodified and separately** | We do not change their source, and we do not link them into our code. A change to an AGPL service's source is a decision that triggers publishing that source to its network users, so it is never made in passing |
-| GPL, LGPL, SSPL, and anything unlisted | Not without a decision | Recorded in docs/decisions.md |
+| MPL-2.0 | Yes, **used unmodified** | MPL's copyleft is per file: a change to one of its files is published with that file. We do not make such changes in passing |
+| GPL, LGPL, SSPL, BSL, and anything unlisted | Not without a decision | Recorded in docs/decisions.md |
 
-Today's AGPL services: Grafana, Loki and Tempo (observability). Insights
+Today's AGPL services: Grafana, Loki and Tempo (observability). Today's
+MPL service: OpenBao (secrets). Insights
 uses Superset, which is Apache-2.0 (FS-230). **CNCF projects are Apache-2.0**, so they
 are the default where they fit (FS-217).
 

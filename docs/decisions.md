@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-02
+last_reviewed: 2026-10-03
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -407,3 +407,20 @@ its own entry.
 - **Costs (inferred):** Dibon forgoes the deposit margin and owning the
   end customer. If the idea returns, the staged route is a partner-bank
   neobank first, then a microfinance bank in a separate company.
+
+## FS-403 · Secrets in OpenBao, not HashiCorp Vault
+
+- **Chose:** OpenBao for credentials, signing keys and service secrets in
+  every deployment, and MPL-2.0 allowed for components used unmodified
+  (architecture §6.1).
+- **Argued against:** HashiCorp Vault under its Business Source License,
+  with a recorded acceptance. Vault ran in production at Onit Bank and the
+  lending client's requirement document names it. The licence most likely
+  allows our use, since it bars products that compete with HashiCorp's
+  rather than embedding, but that is a reading, its owner can change the
+  terms for future releases, and every bank's due diligence would ask.
+- **Costs (inferred):** moving the Onit-era integration from Vault to
+  OpenBao. The API is the same, so the work is configuration and testing,
+  not a rewrite; but OpenBao's feature set and release pace are a smaller
+  project's, and any enterprise-only Vault feature we later want is not
+  there. The lending client's document needs its Vault reference changed.
