@@ -52,6 +52,9 @@ into Uganda, Tanzania, Rwanda, Zambia, Zimbabwe and Nigeria (FS-105). Each
 country brings its own licence, data rules and partners (FS-109;
 docs/partners.md).
 
+Collect and the Gateway ran in production at Onit Bank, with W-Harambee,
+from February 2025 to June 2026 (FS-390).
+
 Dibon is the first customer of its own products: the Gateway carries our
 own payments first, and insights runs on our own data first (FS-033).
 

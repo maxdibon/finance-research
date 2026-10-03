@@ -53,10 +53,12 @@ until one does (FS-051).
 
 ## 3 · What it does
 
-**No source in this folder states what is built or live.** The technical
-documentation (v1.0, Apr 2026) specifies the API. The 8 Jun meeting lists
-open pre-launch dependencies. The statuses below are therefore **Designed**
-at most, pending FS-052, and must not be raised without evidence.
+**Collect ran in production at Onit Bank, with W-Harambee, from February
+2025 to June 2026 (FS-390).** Rows that the Onit API technical
+documentation (Feb 2025) and that deployment support are **Built**; the rest stay
+Designed or Planned, and are not raised without evidence (FS-052). The
+technical documentation (v1.0, Apr 2026) and the 8 Jun meeting remain the
+sources for the rest.
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
@@ -160,7 +162,7 @@ These describe different products — FS-054.
 | T-Kash | in / out | real-time callback | Designed (listed in the API; added to the suite 8 Jun) |
 | PesaLink | in / out | to establish | Planned — CO-16 |
 | Institution core banking system | read / post | API | Built: Onit Bank's core, through stored procedures (FS-390) |
-| IPRS | read | API | Designed; integration not final (8 Jun) |
+| IPRS | read | API | Designed; integration not final (8 Jun). At Onit Bank the gate was the operators' number-and-name check, with no IPRS call (FS-392) |
 | Rail statements for end-of-day matching | in | statement file / API pull | Planned — CO-12, FS-038 |
 
 ## 7 · Regulatory position

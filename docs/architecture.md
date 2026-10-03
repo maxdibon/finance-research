@@ -233,7 +233,8 @@ Matching rules that hold on every rail:
   of governed metric definitions. **It never writes.** Every answer shows
   the definition and query behind it. The model is not chosen yet — FS-043.
 - **Access and identity:** Keycloak for login, roles and step-up (access);
-  IPRS and verification vendors for who a person is (identity).
+  the national register (NPDM, formerly IPRS) and verification vendors for
+  who a person is (identity).
 
 ### 6.1 · Licences
 
