@@ -192,8 +192,8 @@ Credit bureaus · Payment rails · Insights
 firms, high-volume SMEs and funds-holding operators. Partners connect
 through Kapu's APIs; every deposit lands in a real account at the bank, in
 the end customer's name. The bank gains low-cost deposits, and the partner
-a regulated home for its customers' money. Our first partner bank is being
-onboarded.
+a regulated home for its customers' money. We are in discussion with
+partner banks.
 **Diagram caption:** The deposit goes from the payer to the bank’s own
 paybill and into the customer’s account. Kapu prompts, confirms and posts;
 it never holds the money.
@@ -207,7 +207,7 @@ it never holds the money.
 - Customers notified the moment a deposit lands
 **Facts:**
 - Channels: M-Pesa, Airtel Money, T-Kash; PesaLink coming soon
-- Runs: Inside the partner bank (being onboarded), or in-country cloud
+- Runs: Inside the partner bank, or in-country cloud
 - For: Tier-2 and tier-3 banks; their partners
 
 ### Kapu Pay Gateway
@@ -241,7 +241,7 @@ confirmation and the reconciliation.
 its own, released to the seller only when the agreed approvers sign off.
 Neither party, nor Dibon, can release funds alone; in a dispute, the named
 arbiter decides, and the bank still checks the release against the
-account's mandate. Our first partner bank is being onboarded.
+account's mandate. We are in discussion with partner banks.
 **Diagram caption:** The money waits in its own account at the bank.
 Release needs the agreed approvals, and the bank checks the instruction
 against the account’s own mandate.
@@ -252,7 +252,7 @@ against the account’s own mandate.
 - Disputes frozen and decided by a named arbiter
 - A daily tie-out of every escrow account against its agreement
 **Facts:**
-- Held at: A partner bank (being onboarded), one account per agreement
+- Held at: A partner bank, one account per agreement
 - Released: Only on the agreed approvals
 - For: Property, vehicles, construction, trade
 
