@@ -8,7 +8,7 @@ classification: Internal
 audience: [sme, fintech, mfi, sacco]
 depends_on: [rails, recon-observability, messaging, mandates, identity]
 consumed_by: [sme-recon, mfi, sacco]
-review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339]
+review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-388]
 last_reviewed: 2026-10-01
 ---
 
@@ -70,6 +70,8 @@ outstanding go-live work — FS-088.
 | GW-09 | Fraud detection and monitoring, designed in from the start | Planned | 8 Jun: must not be retrofitted | 2 |
 | GW-10 | Settlement to merchants (aggregation) | Planned | 8 Jun: the long-term goal, once a PSP licence is held. Interim route under FS-061 | later |
 | GW-11 | Payouts to the merchant's customers (refunds, disbursements) | Planned | **Not stated for the Gateway in any source** — FS-089 | — |
+| GW-12 | The recipient's registered name confirmed with M-Pesa Hakikisha before every payout | Planned | Owner, 2026-10-03 (FS-388); rails RL-21 | 1 |
+| GW-13 | Payments whose confirmations never arrive are recovered with M-Pesa Pull Transactions and matched | Planned | Owner, 2026-10-03 (FS-388); rails RL-20 | 1 |
 
 ## 4 · Where it sits
 

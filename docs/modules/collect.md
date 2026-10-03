@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, psp, fintech]
 depends_on: [identity, rails, recon-observability, mandates, messaging]
 consumed_by: [mfi, sacco]
-review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384]
+review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388]
 last_reviewed: 2026-10-01
 ---
 
@@ -78,6 +78,8 @@ at most, pending FS-052, and must not be raised without evidence.
 | CO-16 | PesaLink as a deposit and withdrawal channel | Planned | Listed as a channel in the API; trust accounts with the PesaLink sponsor bank not yet in place (8 Jun) | 3 |
 | CO-18 | Notifications to the end customer when a deposit lands, through messaging | Planned | Owner, 2026-10-02 (FS-315) | 1 |
 | CO-17 | Loan management | Planned | The technical documentation's overview lists it; no API for it exists in the document. Belongs to mfi / sacco — FS-055 | — |
+| CO-19 | The recipient's registered name confirmed with M-Pesa Hakikisha before every withdrawal to mobile | Planned | Owner, 2026-10-03 (FS-388); rails RL-21 | 1 |
+| CO-20 | A deposit whose confirmation never arrives is found with M-Pesa Pull Transactions and posted, not left unmatched | Planned | Owner, 2026-10-03 (FS-388); rails RL-20 | 1 |
 
 ## 4 · Where it sits
 

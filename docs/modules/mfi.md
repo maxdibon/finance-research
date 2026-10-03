@@ -8,7 +8,7 @@ classification: Internal
 audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb]
 consumed_by: []
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354]
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388]
 last_reviewed: 2026-10-01
 ---
 
@@ -84,6 +84,7 @@ rather than restated. The PRD calls several underlying integrations
 | MF-17 | Group lending | Planned | MFI PRD §6, Phase 2. The party model is designed for it (FR-1.4) | 2 |
 | MF-18 | Further collateral types: title deeds, chattels, equipment | Planned | MFI PRD §6, Phase 2 | 2 |
 | MF-19 | CRB submission and lookups | Planned | MFI PRD §6, fast-follow. Access for unregistered lenders — FS-019 | 2 |
+| MF-20 | The borrower's registered name confirmed with M-Pesa Hakikisha before a disbursement is sent | Planned | Owner, 2026-10-03 (FS-388); rails RL-21; MF-11 | 1 |
 
 ## 4 · Where it sits
 

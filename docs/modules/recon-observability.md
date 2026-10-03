@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103]
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388]
 last_reviewed: 2026-10-01
 ---
 
@@ -79,6 +79,7 @@ running — FS-099, FS-100.
 | RO-18 | On-call and incident response | Designed | Proposal: Grafana IRM. On-prem availability unverified — FS-101 | 1 |
 | RO-19 | Role-based field masking, MFA, access audit, encryption at rest and in transit | Designed | Proposal: Security Features. Prototype: role-based masking | 1 |
 | RO-20 | Processor settlement reports: gross transactions matched to net, batched settlements after fees | Planned | Needed if payment processors are partners — FS-096, FS-102 | 2 |
+| RO-21 | M-Pesa Pull Transactions as a source: each shortcode's transactions fetched on a schedule and whenever a callback is late, so the ledger is matched against the rail's full record | Planned | Owner, 2026-10-03 (FS-388); rails RL-20; RO-01 | 1 |
 
 ## 4 · Where it sits
 
