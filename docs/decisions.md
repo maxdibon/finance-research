@@ -430,8 +430,8 @@ its own entry.
   every deployment, and MPL-2.0 allowed for components used unmodified
   (architecture §6.1).
 - **Argued against:** HashiCorp Vault under its Business Source License,
-  with a recorded acceptance. Vault ran in production at Onit Bank and the
-  lending client's requirement document names it. The licence most likely
+  with a recorded acceptance. Vault ran in production at Onit Bank and Roan
+  Capital's requirement document names it. The licence most likely
   allows our use, since it bars products that compete with HashiCorp's
   rather than embedding, but that is a reading, its owner can change the
   terms for future releases, and every bank's due diligence would ask.
@@ -439,7 +439,7 @@ its own entry.
   OpenBao. The API is the same, so the work is configuration and testing,
   not a rewrite; but OpenBao's feature set and release pace are a smaller
   project's, and any enterprise-only Vault feature we later want is not
-  there. The lending client's document needs its Vault reference changed.
+  there. Roan Capital's document needs its Vault reference changed.
 
 ## FS-388 · Pull Transactions and Hakikisha in the next release
 
@@ -455,8 +455,8 @@ its own entry.
 
 ## FS-402 · Quorum approval steps at launch
 
-- **Chose:** quorum steps (N of M, mandates MD-09) in phase 1, because the
-  first MFI customer's credit committee approves 3 of 3.
+- **Chose:** quorum steps (N of M, mandates MD-09) in phase 1, because Roan
+  Capital's credit committee approves 3 of 3 (CU-01).
 - **Argued against:** launching with sequential steps only, as the MFI PRD
   planned; three sequential steps give the same outcome for a unanimous
   committee, slower.

@@ -110,7 +110,7 @@ test('capabilities: a row with no evidence fails', () => {
 });
 
 test('capabilities: a duplicated id fails', () => {
-  const f = runWith((d) => patch(d, COLLECT, (t) => t.replace('| CO-02 |', '| CO-01 |')));
+  const f = runWith((d) => patch(d, COLLECT, (t) => t.replace('| CO-04 |', '| CO-03 |')));
   assert.deepStrictEqual(names(f), ['capabilities']);
 });
 
@@ -295,4 +295,14 @@ test('names: a public-only name in outward material fails', () => {
     patch(d, path.join('docs', 'outreach', 'portfolio-share.md'), (t) => `${t}\nAs used by ${SYNTHETIC}.\n`);
   });
   assert.deepStrictEqual(names(f), ['names']);
+});
+
+test('customers: a dependency no module defines fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'customers.md'), (t) => t.replace('| CO-01, CO-02,', '| CO-99, CO-02,')));
+  assert.deepStrictEqual(names(f), ['customers']);
+});
+
+test('customers: a delivery map that drifts from the register fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'customers', 'roan-capital.md'), (t) => t.replace('| RC-13 | Maker-checker throughout: the decider is never the requester | MD-06 |', '| RC-13 | Maker-checker throughout: the decider is never the requester | MD-06, MD-08 |')));
+  assert.deepStrictEqual(names(f), ['customers']);
 });

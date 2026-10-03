@@ -55,7 +55,9 @@ portfolio owner), the accountant (mid-chain approver, income reporting,
 reconciliation), the loan officer (origination, KYC, vetting) and the
 borrower (SMS reminders, payment prompts, disbursements; no app at launch).
 
-Success criteria for the first customer are in MFI PRD §8.
+Success criteria for the first customer are in MFI PRD §8. Roan Capital
+is in delivery on Kapu MFI; its requirements are mapped to these
+capabilities in docs/customers/roan-capital.md (CU-01).
 
 ## 3 · What it does
 

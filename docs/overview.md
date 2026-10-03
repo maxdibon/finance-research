@@ -58,7 +58,8 @@ partners (FS-109; docs/partners.md; docs/compliance.md).
 
 Collect and the Gateway ran in production at Onit Bank, with W-Harambee,
 from February 2025 to June 2026 (FS-390), on M-Pesa. We are in discussion
-with new partner banks (docs/partners.md).
+with new partner banks (docs/partners.md). Roan Capital is in delivery on
+Kapu MFI (docs/customers.md).
 
 Dibon is the first customer of its own products: the Gateway carries our
 own payments first, and insights runs on our own data first (FS-033).
@@ -103,6 +104,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | Who holds which record, and where the licence line is | [architecture.md](architecture.md) |
 | What a product does, and what is built | its module, §3 |
 | Why something was decided, and what it cost | [decisions.md](decisions.md) |
+| Who our customers are, and what we are building for each | [customers.md](customers.md) |
 | Which partners we are talking to | [partners.md](partners.md) |
 | Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
 | What a customer and each product need to go live | [onboarding.md](onboarding.md) |

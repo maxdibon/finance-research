@@ -18,6 +18,8 @@ docs/                the work. The only place we edit
   architecture.md    who holds what: the three authorities, the custody
                      line, ledger modes, feeds, hosting
   decisions.md       what each decision cost, and what was argued against
+  customers.md       customers, their stage and what each depends on
+  customers/         a delivery map per customer, requirement by requirement
   partners.md        partner candidates, conversations, selection decisions
   overview.md        the portfolio story; links modules, restates nothing
   onboarding.md      what each customer and product needs to go live

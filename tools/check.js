@@ -418,6 +418,43 @@ function checkDecisions(root) {
   return failures;
 }
 
+// ── customers ────────────────────────────────────────────────────────────
+// Every capability a customer depends on exists in a module, and a customer
+// with a delivery file depends on exactly the capabilities that file maps
+// its requirements to, so the register cannot drift from the map (FS-413).
+const CUSTOMERS = path.join('docs', 'customers.md');
+const ID_RE = /\b[A-Z]{2}-\d{2}\b/g;
+
+function checkCustomers(root) {
+  if (!fs.existsSync(path.join(root, CUSTOMERS))) return [fail('customers', CUSTOMERS, 0, 'customer register missing')];
+  const known = new Set(moduleFiles(root).flatMap((f) => capabilityRows(read(root, f)).map((r) => r.id)));
+  const failures = [];
+  read(root, CUSTOMERS).split('\n').forEach((line, i) => {
+    const cells = line.split('|').slice(1, -1).map((c) => c.trim());
+    if (!/^CU-\d{2}$/.test(cells[0] || '')) return;
+    if (cells.length !== 11) { failures.push(fail('customers', CUSTOMERS, i + 1, `${cells[0]} has ${cells.length} cells; expected 11`)); return; }
+    const depends = new Set(cells[8].match(ID_RE) || []);
+    for (const id of depends) if (!known.has(id)) failures.push(fail('customers', CUSTOMERS, i + 1, `${cells[0]} depends on ${id}, which no module defines`));
+    const link = cells[9].match(/\]\(([^)]+)\)/);
+    if (!link) return;
+    const rel = path.join('docs', ...link[1].split('/'));
+    if (!fs.existsSync(path.join(root, rel))) { failures.push(fail('customers', CUSTOMERS, i + 1, `${cells[0]} delivery file ${link[1]} missing`)); return; }
+    const mapped = new Set();
+    read(root, rel).split('\n').forEach((l, j) => {
+      const c = l.split('|').slice(1, -1).map((x) => x.trim());
+      if (!/^RC-\d{2}$/.test(c[0] || '') && !/^[A-Z]{2}-\d{2}$/.test(c[0] || '')) return;
+      for (const id of c[2].match(ID_RE) || []) {
+        if (!known.has(id)) failures.push(fail('customers', rel, j + 1, `${c[0]} maps to ${id}, which no module defines`));
+        mapped.add(id);
+      }
+    });
+    const missing = [...mapped].filter((id) => !depends.has(id));
+    const extra = [...depends].filter((id) => !mapped.has(id));
+    if (missing.length || extra.length) failures.push(fail('customers', CUSTOMERS, i + 1, `${cells[0]} "Depends on" differs from its delivery file: missing ${missing.join(', ') || 'none'}; not in the file ${extra.join(', ') || 'none'}`));
+  });
+  return failures;
+}
+
 // ── reviewed ─────────────────────────────────────────────────────────────
 // Every document under docs/ carries last_reviewed, and it is never older
 // than the document's last change: a change being committed counts as
@@ -493,6 +530,7 @@ function runAll(root) {
     ...checkCopy(root),
     ...checkClaims(root),
     ...checkDecisions(root),
+    ...checkCustomers(root),
     ...checkReviewed(root, files),
   ];
 }
