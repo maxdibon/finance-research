@@ -58,7 +58,7 @@ disputed between sources (FS-088), so nothing is higher than Designed.
 | RL-01 | One adapter interface: collect, pay out, status, balance, statement, reversal | Planned | FS-093 — FS-208 | 1 |
 | RL-02 | One normalised event per call, carrying the rail's own reference as a field, never in a note | Designed | docs/architecture.md §2 | 1 |
 | RL-03 | M-Pesa (Daraja): M-Pesa Express push prompt, C2B validation and confirmation, B2C, transaction status, account balance, reversal | Built | Ran in production at a Kenyan bank, Feb 2025 to Jun 2026, in Collect and the Gateway (owner, 2026-10-03, FS-384) | 1 |
-| RL-04 | Airtel Money: collections, disbursements, enquiry, balance, refunds | Designed | Kapu technical documentation lists the channel; MFI PRD §4. Outreach Email 3 | 1 |
+| RL-04 | Airtel Money: collections, disbursements, enquiry, balance, refunds | Designed | Kapu technical documentation lists the channel; MFI PRD §4. Outreach Email 3. Owner, 2026-10-03: the Airtel API integration was probably built for Onit Bank but never launched; to confirm with the technical lead (FS-393) | 1 |
 | RL-05 | T-Kash | Designed | Kapu technical documentation lists the channel. Outreach Email 4 | 1 |
 | RL-06 | PesaLink, through the sponsor bank's API | Planned | 8 Jun: trust accounts outstanding | 2 |
 | RL-07 | Bank APIs and statement files (MT940, CAMT.053, CSV), per bank; Dibon's own banks first | Planned | FS-125; outreach Email 1 | 1 |

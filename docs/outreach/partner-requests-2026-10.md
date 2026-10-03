@@ -10,7 +10,7 @@ last_reviewed: 2026-10-03
 
 # Partner requests, October 2026
 
-Three drafts that follow the partner research of 2026-10-03 (FS-380 to
+Drafts that follow the partner research of 2026-10-03 (FS-380 to
 FS-388). Fill the brackets and send from your own address; names of the
 people you write to stay out of this file. Log each one in docs/partners.md
 under the partner's last event.
@@ -129,6 +129,85 @@ Dibon's banking platform
 >   technology provider or each institution must apply;
 > - the commercial terms, including any free quota; and
 > - the documents you need from us.
+>
+> We hold a PRSP licence from the Communications Authority and are
+> registered with the Data Commissioner as a data processor.
+>
+> With thanks,
+>
+> [Your name]
+> Technology Lead, Dibon Consulting
+> +254 792 745 509 · [your email]
+
+## 4 · Airtel Money: launch, and the same checks
+
+To Airtel Money Kenya's business or API team (rails RL-04, compliance
+LC-13). An Airtel integration was probably built for Onit Bank and never
+launched (FS-393); confirm that with the technical lead before sending, and
+adjust the second paragraph if it was not.
+
+**Subject:** Airtel Money APIs for Dibon's banking platform
+
+> Dear Airtel Money team,
+>
+> Dibon Consulting builds payment and banking software for banks, Saccos
+> and microfinance institutions. Our Collect and Gateway products ran in
+> production at Onit Bank from February 2025 to June 2026 on M-Pesa, and
+> through Onit's own agreement with Airtel we checked customers' phone
+> numbers against their registered names at account opening.
+>
+> We built an Airtel Money integration for that deployment but did not
+> launch it. We would now like to take it live for our next partner bank
+> and our Sacco and MFI customers, and to add:
+>
+> 1. **Collections and disbursements**, with transaction status, balance
+>    and refunds.
+> 2. **A check of a phone number against the registered name**, at account
+>    opening and before every payout.
+> 3. **A SIM-change check**, before money moves, if you offer one.
+> 4. **A way to fetch a wallet's or merchant's transactions**, so that a
+>    payment whose confirmation never arrives is still found and matched.
+>
+> Could you tell us what agreement each needs, whether Dibon can hold it
+> as a technology provider or each institution must, the commercial terms,
+> and the documents you need?
+>
+> We hold a PRSP licence from the Communications Authority and are
+> registered with the Data Commissioner as a data processor.
+>
+> With thanks,
+>
+> [Your name]
+> Technology Lead, Dibon Consulting
+> +254 792 745 509 · [your email]
+
+## 5 · Telkom: T-Kash
+
+To Telkom Kenya's T-Kash business team (rails RL-05). T-Kash appears in
+the Collect API's channel list, but no integration is known to have been
+built (FS-393).
+
+**Subject:** T-Kash APIs for Dibon's banking platform
+
+> Dear T-Kash team,
+>
+> Dibon Consulting builds payment and banking software for banks, Saccos
+> and microfinance institutions. Our products ran in production at Onit
+> Bank from February 2025 to June 2026 on M-Pesa, and T-Kash is the next
+> wallet our customers' members ask for.
+>
+> We would like to integrate T-Kash for:
+>
+> 1. **Collections and disbursements**, with transaction status, balance
+>    and reversals.
+> 2. **A check of a phone number against the registered name**, at account
+>    opening and before payouts.
+> 3. **A SIM-change check** before money moves, if available.
+> 4. **Transaction statements by API**, for daily reconciliation.
+>
+> Could you share your API documentation, the agreement each service
+> needs, whether Dibon can hold it as a technology provider, the commercial
+> terms, and the documents you need?
 >
 > We hold a PRSP licence from the Communications Authority and are
 > registered with the Data Commissioner as a data processor.

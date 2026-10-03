@@ -54,7 +54,7 @@ requirements (MFI PRD §2, problem 5).
 | ID-02 | Document checklist per product, with a completeness gate | Designed | MFI PRD FR-2.2 to FR-2.4 | 1 |
 | ID-03 | Re-verification when documents expire, for repeat customers | Designed | MFI PRD FR-1.4 | 1 |
 | ID-04 | Liveness and face match against the ID photo | Planned | FS-204 — vendor not chosen; candidates Smile ID (PT-30) and MetaMap (PT-33), FS-340 | 2 |
-| ID-05 | Phone-number ownership: a one-time code, and the name the operator holds for the number | Planned | FS-205. For M-Pesa numbers, Safaricom's Hakikisha returns the registered name (rails RL-21, FS-387) | 1 |
+| ID-05 | Phone-number ownership: a one-time code, and the name the operator holds for the number | Planned | FS-205. For M-Pesa numbers, Safaricom's Hakikisha returns the registered name (rails RL-21, FS-387). The operator name check ran at Onit Bank under the bank's own agreements with Safaricom and Airtel (FS-392) | 1 |
 | ID-06 | Tax PIN validation | Planned | FS-205 | 2 |
 | ID-07 | Business verification: registration, directors, beneficial owners | Planned | FS-090 | 2 |
 | ID-08 | Sanctions and politically-exposed-person screening | Planned | FS-098. May sit in a compliance service instead | 2 |
