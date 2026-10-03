@@ -230,9 +230,11 @@ Matching rules that hold on every rail:
 - **Mandates:** one engine for signing mandates (who may approve what,
   maker-checker, committee chains) and for the records behind debit
   mandates. Designed in MFI PRD FR-6 as a platform service; Collect, Sacco,
-  Gateway and sme-recon are its consumers.
-- **Identity:** national register lookup (NPDM, formerly IPRS) on onboarding. The result is stored on the
-  party in its authority, not copied into consumers.
+  MFI (MF-07), Escrow (ES-05), Gateway and sme-recon are its consumers.
+- **Identity:** national register lookup (NPDM, formerly IPRS) on
+  onboarding, or the mobile operator's check of the phone number against
+  the registered name, as at Onit Bank (FS-392). The result is stored on
+  the party in its authority, not copied into consumers.
 - **Insights:** reads from the three authorities through a semantic layer
   of governed metric definitions. **It never writes.** Every answer shows
   the definition and query behind it. The model is not chosen yet — FS-043.
@@ -300,7 +302,12 @@ of an Odoo deployment is internal users, so external people stay external:
 
 ## 9 · Hosting
 
-On-prem in the institution, or on Liquid's Azure Stack (FS-032). **Anything
+Four deployment options: where it runs (the institution's premises, or
+in-country cloud) by who runs it (the institution, or Dibon) (FS-359).
+When Dibon runs it, the managed level is Hosted, Managed or Operated,
+kept separate from the support tiers (FS-360). In-country cloud means
+Liquid's Azure Stack for now (FS-032); Liquid is still a candidate
+partner, not contracted (partners PT-01). **Anything
 that would leave that boundary is named in the module that sends it, with
 its data class.** Today the known candidate is insights' model (FS-043).
 Whether Liquid's Stack offers a hosted model service or GPU capacity is a

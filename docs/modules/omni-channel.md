@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, fintech]
 depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco]
 consumed_by: []
-review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320]
+review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386]
 last_reviewed: 2026-10-03
 ---
 
@@ -59,7 +59,7 @@ balance.
 | OC-03 | USSD menus per institution | Planned | FS-022 — FS-233 | 1 |
 | OC-04 | One channel API over the products: balances, statements, loans, contributions, payments, guarantor requests | Planned | FS-022 | 1 |
 | OC-05 | Login through access: passkeys or device biometrics, one-time codes; step-up for anything that moves money | Planned | access AC-03, AC-05 | 1 |
-| OC-06 | Device binding, and a SIM-swap check before money moves | Planned | FS-234 | 1 |
+| OC-06 | Device binding, and a SIM-swap check before money moves | Planned | FS-234. Safaricom offers the check through Daraja (rails RL-22, FS-386) | 1 |
 | OC-07 | Payments: deposit by mobile-money prompt, withdrawal, transfer, bill payment — through rails, with mandates where the product requires | Planned | rails RL-01; mandates | 2 |
 | OC-08 | Loan applications and guarantor flows | Planned | mfi, sacco | 2 |
 | OC-09 | Self-service KYC: document capture, liveness | Planned | identity ID-02, ID-04 | 2 |
@@ -133,7 +133,7 @@ government ID number on a device.
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
 | Operators' USSD gateways (Safaricom, Airtel, Telkom) | in / out | USSD sessions | Planned (OC-03) — FS-233 |
-| Operators' SIM-swap checks | read | API, where offered | Planned (OC-06) — FS-234 |
+| Operators' SIM-swap checks | read | API: Safaricom through Daraja; other operators to confirm | Planned (OC-06) — rails RL-22, FS-234, FS-386 |
 | Google Play, Apple App Store | out | app distribution | Planned (OC-01) — FS-236 |
 | Access, identity, messaging, rails, mandates | in / out | platform APIs | Planned |
 | Appwrite (if chosen) | in / out | app backend | Planned (OC-15) |
@@ -161,8 +161,8 @@ government ID number on a device.
   the drawing changes in the same commit as the code (FS-237).
 - **Step-up for money.** Login is not an approval (access AC-05).
 - **SIM-swap check before money moves,** where the operator offers one
-  (FS-234). A recent swap blocks the act and routes the member to
-  support.
+  (FS-234). Safaricom does, through Daraja (rails RL-22). A recent swap
+  blocks the act and routes the member to support.
 - **Fetched-at on every figure** (OC-11). A cached balance says so.
 - **USSD stays low-risk** (OC-12): lower limits, and step-up above them.
 - **The same answer on every channel.** All three use one channel API.

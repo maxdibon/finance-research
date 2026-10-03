@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392]
 last_reviewed: 2026-10-03
 ---
 
@@ -18,9 +18,10 @@ last_reviewed: 2026-10-03
 
 Identity verifies that a person or a business is who they claim to be,
 before an account opens, a loan is approved or an escrow is funded. In
-Kenya it starts with IPRS, the national population register, for national
-IDs, passports and alien IDs. It adds document checks, liveness and face
-match, phone-number ownership, tax PIN and business registration checks.
+Kenya it starts with the national population register, NPDM (formerly
+IPRS), for national IDs, passports and alien IDs. It adds document
+checks, liveness and face match, phone-number ownership, tax PIN and
+business registration checks.
 Each product decides which checks it needs. **It keeps the result and the
 evidence, never a copy of the register.** The result is stored on the
 person in their authority — the core, Fineract or Odoo (docs/architecture.md
@@ -50,16 +51,17 @@ requirements (MFI PRD §2, problem 5).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| ID-01 | National register lookup (NPDM, formerly IPRS): national ID, passport, alien ID | Designed | Kapu technical documentation (account opening); MFI PRD FR-2.1. Coverage of passports, alien and refugee IDs disputed by a reviewer; to confirm against IPRS and Maisha (FS-329, FS-341). Integration not final at 8 Jun — FS-088. Direct access open to private firms: KES 50,000 to connect, KES 20 a check (partners PT-29, FS-382) | 1 |
+| ID-01 | National register lookup (NPDM, formerly IPRS): national ID, passport, alien ID | Designed | Kapu technical documentation (account opening); MFI PRD FR-2.1. Coverage of passports, alien and refugee IDs disputed by a reviewer; to confirm against NPDM and Maisha (FS-329, FS-341). Integration not final at 8 Jun — FS-088. Direct access open to private firms: KES 50,000 to connect, KES 20 a check (partners PT-29, FS-382) | 1 |
 | ID-02 | Document checklist per product, with a completeness gate | Designed | MFI PRD FR-2.2 to FR-2.4 | 1 |
 | ID-03 | Re-verification when documents expire, for repeat customers | Designed | MFI PRD FR-1.4 | 1 |
-| ID-04 | Liveness and face match against the ID photo | Planned | FS-204 — vendor not chosen; candidates Smile ID (PT-30) and MetaMap (PT-33), FS-340 | 2 |
-| ID-05 | Phone-number ownership: a one-time code, and the name the operator holds for the number | Planned | FS-205. For M-Pesa numbers, Safaricom's Hakikisha returns the registered name (rails RL-21, FS-387). The operator name check ran at Onit Bank under the bank's own agreements with Safaricom and Airtel (FS-392) | 1 |
+| ID-04 | Liveness and face match against the ID photo | Planned | FS-204 — vendor not chosen; candidates Smile ID (PT-30), MetaMap (PT-33, owned by Incode since June 2024), Spin Mobile (PT-36) and Sumsub (PT-37); FS-340, FS-382 | 2 |
+| ID-05 | Phone-number ownership: the number checked against the name the operator holds for it | Built | Ran in production at Onit Bank, Feb 2025 to Jun 2026, as the gate on collect CO-02's account opening, under the bank's own agreements with Safaricom and Airtel (FS-390, FS-392). A new customer needs its own agreements, or Dibon's (compliance LC-13). For M-Pesa numbers, Safaricom's Hakikisha also returns the registered name (rails RL-21, Planned; FS-387) | 1 |
 | ID-06 | Tax PIN validation | Planned | FS-205 | 2 |
 | ID-07 | Business verification: registration, directors, beneficial owners | Planned | FS-090 | 2 |
 | ID-08 | Sanctions and politically-exposed-person screening | Planned | FS-098. May sit in a compliance service instead | 2 |
 | ID-09 | Registers in other countries, per country | Planned | FS-109 | later |
 | ID-10 | The result, its source reference and the evidence kept; never a copy of the register's record | Planned | docs/architecture.md §6 | 1 |
+| ID-11 | Phone-number ownership by a one-time code sent to the number | Planned | FS-205. Split from ID-05; no record shows it ran | 1 |
 
 ## 4 · Where it sits
 
@@ -71,7 +73,7 @@ requirements (MFI PRD §2, problem 5).
 | Record | System of record | This module |
 |---|---|---|
 | The person and their KYC status | Their authority: the core, Fineract, Odoo | Writes the result there; holds no party record of its own |
-| National register data | IPRS and the other registers | Queries; keeps the reference and the fields the check compared |
+| National register data | NPDM (formerly IPRS) and the other registers | Queries; keeps the reference and the fields the check compared |
 | Verification log: who checked whom, when, why, against what, result | **Identity service** | Holds. Append-only |
 | Evidence: document images, liveness captures | The institution's document store | References by id. Biometric data handled as sensitive (FS-203) |
 
@@ -92,7 +94,7 @@ mode, to Fineract.
                        |
      +-----------+-----+------+------------+------------+
      |           |            |            |            |
-   IPRS      documents    liveness +    phone        tax PIN /
+   NPDM      documents    liveness +    phone        tax PIN /
    lookup    checklist    face match    ownership    business reg.
      |           |            |            |            |
      +-----------+-----+------+------------+------------+
@@ -113,7 +115,9 @@ mode, to Fineract.
 |---|---|---|---|
 | NPDM, formerly IPRS (Kenya) | read | API | Designed (ID-01). Direct access by MOU — partners PT-29, FS-202 |
 | Liveness and face-match vendor | read | API or SDK | Planned (ID-04) — partners.md SD-11 |
-| Mobile-network operators | read | Hakikisha name lookup (Safaricom); one-time code | Planned (ID-05) — rails RL-21 |
+| Mobile-network operators (Safaricom, Airtel) | read | the operator's name for the number | Built (ID-05) at Onit Bank, under its agreements; a new customer needs its own or Dibon's — compliance LC-13 |
+| Safaricom Hakikisha | read | Daraja API | Planned (ID-05) — rails RL-21 |
+| One-time code by SMS | out | messaging | Planned (ID-11) |
 | Tax authority PIN check | read | KRA GavaConnect API | Planned (ID-06) — partners PT-35 |
 | Business registration service | read | API, if available | Planned (ID-07) — FS-205 |
 | Other countries' registers | read | per country | Planned (ID-09) |
@@ -137,8 +141,8 @@ mode, to Fineract.
   FR-2.4).
 - **Every check is attributed** to the person who ran it, with the purpose
   recorded first.
-- **A failed or unavailable check says so.** An IPRS outage is a pending
-  check, never a pass.
+- **A failed or unavailable check says so.** A register (NPDM) outage is a
+  pending check, never a pass.
 - **Minimum retention.** Evidence is kept as long as the KYC obligation
   requires, and no longer.
 

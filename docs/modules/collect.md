@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, psp, fintech]
 depends_on: [identity, rails, recon-observability, mandates, messaging]
 consumed_by: [mfi, sacco]
-review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388]
+review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388, FS-390, FS-392]
 last_reviewed: 2026-10-03
 ---
 
@@ -66,8 +66,8 @@ sources for the rest.
 | CO-02 | Individual account opening, gated on an identity check (national ID, passport, alien ID) | Built | Onit API technical documentation (Feb 2025); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-390). The gate was the phone number checked against the name the operator holds, through Onit's own agreements with Safaricom and Airtel, plus document-number validation; no IPRS call (FS-392). A new bank needs its own operator agreements | 1 |
 | CO-03 | Sub-account opening under an existing customer | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Sub-Account Opening | 1 |
 | CO-04 | Balance, account info, account list, statement for a period | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Account Management | 1 |
-| CO-05 | Deposit by mobile-money push prompt, posted to the core on confirmation | Built | Technical documentation, Deposits; Safaricom go-live outstanding (8 Jun). M-Pesa push-prompt deposits ran in production at a Kenyan bank, Feb 2025 to Jun 2026 (FS-384) | 1 |
-| CO-06 | Withdrawal to mobile, till or paybill | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390): withdrawal to mobile, till and paybill (B2C and B2B). Technical documentation, Withdrawals. Ordering defect — FS-054. Withdrawal to mobile (B2C) ran in production, Feb 2025 to Jun 2026 (FS-384); till and paybill (B2B) did not | 1 |
+| CO-05 | Deposit by mobile-money push prompt, posted to the core on confirmation | Built | Onit API technical documentation (Feb 2025, held outside git); M-Pesa push-prompt deposits ran in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Deposits. The 8 Jun note of an outstanding Safaricom go-live is history, unexplained (FS-088) | 1 |
+| CO-06 | Withdrawal to mobile, till or paybill | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390): withdrawal to mobile, till and paybill (B2C and B2B). Technical documentation, Withdrawals. Ordering defect — FS-054. Rails RL-03 (B2C) and RL-19 (B2B) | 1 |
 | CO-07 | Account-to-account transfer, synchronous | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Funds Transfer | 1 |
 | CO-08 | Transaction query by bank reference or by the partner's own request id; duplicate request ids refused | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Query Transaction; response code 5001 | 1 |
 | CO-09 | Asynchronous callbacks to the partner | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Components | 1 |
@@ -85,7 +85,7 @@ sources for the rest.
 
 ## 4 · Where it sits
 
-**Depends on:** identity (IPRS), rails (M-Pesa, Airtel Money, T-Kash,
+**Depends on:** identity (NPDM, formerly IPRS), rails (M-Pesa, Airtel Money, T-Kash,
 PesaLink), recon-observability (CO-12,
 CO-13), mandates (CO-15).
 **Used by:** mfi and sacco, for deposit and repayment flows into a
@@ -96,7 +96,7 @@ regulated account.
 | Record | System of record | This module |
 |---|---|---|
 | Funds and balances | The institution's core banking system | **Posts via; never holds.** Balances are read from the core on request |
-| Customer KYC | The institution's core banking system | Passes through on account opening; identity result from IPRS |
+| Customer KYC | The institution's core banking system | Passes through on account opening; identity result from the operators' number-and-name check (CO-02, FS-392) |
 | Partner registry, credentials, callback URLs | Collect | Holds |
 | Transaction requests and their states | Collect | Holds, keyed on the partner's request id and the bank's reference |
 | Matches and exceptions | Recon engine | Feeds |
@@ -162,7 +162,7 @@ These describe different products — FS-054.
 | T-Kash | in / out | real-time callback | Designed (listed in the API; added to the suite 8 Jun) |
 | PesaLink | in / out | to establish | Planned — CO-16 |
 | Institution core banking system | read / post | API | Built: Onit Bank's core, through stored procedures (FS-390) |
-| IPRS | read | API | Designed; integration not final (8 Jun). At Onit Bank the gate was the operators' number-and-name check, with no IPRS call (FS-392) |
+| NPDM (formerly IPRS) | read | API | Designed; integration not final (8 Jun). At Onit Bank the gate was the operators' number-and-name check, with no IPRS call (FS-392) |
 | Rail statements for end-of-day matching | in | statement file / API pull | Planned — CO-12, FS-038 |
 
 ## 7 · Regulatory position
@@ -232,6 +232,9 @@ FS-060.
 
 ## 12 · Sources
 
+- Onit API technical documentation, Feb 2025 — the specification of what
+  ran at Onit Bank, Feb 2025 to Jun 2026 (FS-390). *Held outside git;
+  derived, not reproduced.*
 - Kapu Pay Technical Documentation, v1.0, 13 Apr 2026. Prepared for a
   partner bank; Confidential. *Derived, not reproduced.*
 - Kapu Pay — Compliance By Design (one-pager, Canva), undated.

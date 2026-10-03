@@ -60,13 +60,16 @@ Success criteria for the first customer are in MFI PRD §8.
 ## 3 · What it does
 
 **Evidence:** the MFI PRD, Draft v0.2, Jun 2026. Its FR numbers are cited
-rather than restated. The PRD calls several underlying integrations
-"existing", which other sources dispute — FS-088.
+rather than restated. The PRD calls the M-Pesa, Airtel Money, PesaLink and
+national register integrations "existing". M-Pesa has since run in
+production at Onit Bank (rails RL-03, FS-390). For Airtel Money, PesaLink
+and the register (NPDM, formerly IPRS), other sources dispute it — FS-088,
+FS-393.
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
 | MF-01 | Digital loan application with drafts and a timestamped, attributed lifecycle from Draft to Closed, Restructured or Written Off | Designed | MFI PRD FR-1 | 1 |
-| MF-02 | Borrower KYC: IPRS lookup, a document checklist per product, and a completeness gate that cannot be overridden | Designed | MFI PRD FR-2 | 1 |
+| MF-02 | Borrower KYC: national register lookup (NPDM, formerly IPRS), a document checklist per product, and a completeness gate that cannot be overridden | Designed | MFI PRD FR-2 | 1 |
 | MF-03 | Generic collateral model, with vehicle as the first type: coverage ratios, custody log, recovery and forced sale, release on settlement | Designed | MFI PRD FR-3 | 1 |
 | MF-04 | Collateral verification done manually, with an immutable evidence record; a failed check blocks acceptance unless the override authority justifies it | Designed | MFI PRD FR-4.1 to FR-4.4 | 1 |
 | MF-05 | Programmatic NTSA verification as a drop-in replacement for the manual step | Designed | MFI PRD FR-4.5. The access agreement is the long pole | 2 |
@@ -77,7 +80,7 @@ rather than restated. The PRD calls several underlying integrations
 | MF-10 | Repayment by M-Pesa push prompt and paybill with automatic matching; bank transfers matched by the accountant | Designed | MFI PRD FR-9.1, FR-9.2. Whose shortcode — FS-140 | 1 |
 | MF-11 | Disbursement by M-Pesa B2C or bank transfer, only from an approved application, with maker-checker on the disbursement itself | Designed | MFI PRD FR-9.3 | 1 |
 | MF-12 | Payment failures in a retry and exception queue the accountant can see | Designed | MFI PRD FR-9.4. Delivered by recon-observability | 1 |
-| MF-13 | SMS reminders on a configurable schedule, with templates, delivery logs and opt-out | Designed | MFI PRD FR-10. No SMS provider chosen | 1 |
+| MF-13 | SMS reminders on a configurable schedule, with templates, delivery logs and opt-out | Designed | MFI PRD FR-10. Sent through messaging MS-02: direct SMPP under Dibon's PRSP licence (Planned) | 1 |
 | MF-14 | Portfolio dashboard: arrears buckets, PAR30, income by component, the override cohort, pipeline ageing | Designed | MFI PRD FR-11 | 1 |
 | MF-15 | Reports: income by component, portfolio health, borrower statement, collateral register | Designed | MFI PRD FR-12 | 1 |
 | MF-16 | Mifos migration, with a source-against-target reconciliation signed off before cutover | Designed | MFI PRD FR-13. Priced per onboarding (MFI PRD §7) | 1 |
@@ -89,9 +92,9 @@ rather than restated. The PRD calls several underlying integrations
 
 ## 4 · Where it sits
 
-**Depends on:** mandates (MF-07, MF-11), identity (IPRS), rails (M-Pesa,
-Airtel Money, bank transfer), messaging (MF-13), recon-observability
-(MF-10, MF-12), crb (MF-19).
+**Depends on:** mandates (MF-07, MF-11), identity (NPDM, formerly IPRS),
+rails (M-Pesa, Airtel Money, bank transfer), messaging (MF-13),
+recon-observability (MF-10, MF-12), crb (MF-19).
 **Used by:** none. It is the product an MFI buys.
 
 **Who holds which record** (docs/architecture.md §2):
@@ -146,12 +149,12 @@ money PIN or credentials.
 
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
-| M-Pesa (push prompt, paybill, B2C) | in / out | real-time callback | Designed (MF-10, MF-11). Integration status — FS-088 |
+| M-Pesa (push prompt, paybill, B2C) | in / out | real-time callback | Rail Built (rails RL-03); MFI flows Designed (MF-10, MF-11) |
 | Airtel Money | in / out | real-time callback | Designed (MFI PRD §4) |
 | Bank transfer (PesaLink, through the sponsor bank) | in / out | API; manual match on the way in | Planned (rails RL-06, FS-408) |
-| IPRS | read | API | Designed (MF-02) |
+| NPDM, formerly IPRS | read | API | Designed (MF-02) |
 | NTSA | read | manual check now; API in Phase 2 | Designed (MF-04, MF-05) |
-| SMS gateway | out | API | Designed; no provider chosen (MF-13) |
+| SMS: Safaricom, Airtel, Telkom | out | SMPP; delivery reports | Planned (messaging MS-02); MF-13 Designed |
 | CRBs | in / out | API | Planned (MF-19) |
 | Mifos | in | database extract, once | Designed (MF-16) |
 
@@ -169,7 +172,7 @@ money PIN or credentials.
 - **Regulators:** CBK, possibly (FS-137). ODPC for borrowers' data. NTSA
   for collateral searches.
 - **Data:** borrower KYC, statements and loan histories are Confidential.
-  National ID numbers and IPRS results are Restricted. Collateral evidence
+  National ID numbers and national register results are Restricted. Collateral evidence
   includes vehicle ownership records.
 - **Automated decisions:** vetting stays human. The system records and
   enforces; it does not decide (MFI PRD §6; FS-020).

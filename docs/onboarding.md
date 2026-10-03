@@ -33,9 +33,9 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-03 | Its licence and regulator (CBK, SASRA, or none), and whether it works through a partner bank | Customer's compliance lead | Decides the custody pattern (docs/architecture.md) |
 | OB-COM-04 | A data processing agreement; both parties' registration with the Data Commissioner | Both compliance leads | Kenya Data Protection Act; Dibon is a processor |
 | OB-COM-05 | Ledger mode: its own core (name, API or extracts) or Kapu Core | Customer's IT lead | Integrated or native mode |
-| OB-COM-06 | Deployment: in-country cloud or its own premises | Customer's IT lead | Hosting (FS-032) |
+| OB-COM-06 | Deployment: where it runs (its own premises or in-country cloud), who runs it (the institution or Dibon), and if Dibon, the managed level: Hosted, Managed or Operated | Customer's IT lead | Hosting (FS-032, FS-359, FS-360) |
 | OB-COM-07 | User list, role structure, and single sign-on details if it federates | Customer's IT lead | access |
-| OB-COM-08 | Approval chains and mandate rules, by product and amount | Customer's operations lead | mandates |
+| OB-COM-08 | Approval chains and mandate rules, by product and amount, including quorum (N of M) steps where a committee approves | Customer's operations lead | mandates MD-09; FS-402 |
 | OB-COM-09 | Sender ID, channels and message templates | Customer's operations lead | messaging |
 | OB-COM-10 | **Payment channels: its own paybill or till, or its bank's collection account ("Lipa na Bank")?** Plus each bank account and access to its statements | Customer's finance lead | rails; FS-339. A bank's paybill confirms to the bank, so matching on it waits for that bank's feed |
 | OB-COM-11 | Who pays for identity and business checks | Commercial lead | Open: FS-331 |
@@ -54,6 +54,7 @@ Module: [collect](modules/collect.md)
 | OB-CO-02 | Core API access, a sandbox and its product codes (integrated mode) | IT lead | collect §4 |
 | OB-CO-03 | Account-opening rules: documents per customer type, including foreigners, refugees and companies | Compliance lead | identity; FS-329 |
 | OB-CO-04 | Deposit notification wording and channels | Operations lead | collect CO-18 |
+| OB-CO-05 | The operator agreements for the phone-number-to-name check with Safaricom and Airtel: the institution's own, or Dibon's | Compliance lead | compliance LC-13; collect CO-02; FS-392 |
 
 ## Kapu Pay Gateway
 
@@ -96,7 +97,7 @@ Module: [mfi](modules/mfi.md)
 | Id | What we need | From | Why |
 |---|---|---|---|
 | OB-MF-01 | Its shortcode and bank access | Finance lead | mfi §4 |
-| OB-MF-02 | Loan products and fee structures | Credit lead | mfi §3 |
+| OB-MF-02 | Loan products and fee structures, including repayment frequency and overdue charges, within the in duplum cap | Credit lead | mfi §3, MF-21; FS-400 |
 | OB-MF-03 | Approval chains, vetting limits and the override authority | Credit lead | mfi MF-06, MF-07 |
 | OB-MF-04 | Collateral types it accepts | Credit lead | mfi MF-03 |
 

@@ -8,8 +8,8 @@ classification: Internal
 audience: [mfi, sacco, bank]
 depends_on: [access, identity, mandates, messaging, rails, recon-observability]
 consumed_by: [mfi, sacco, collect, omni-channel, insights]
-review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354]
-last_reviewed: 2026-10-02
+review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390]
+last_reviewed: 2026-10-03
 ---
 
 # Kapu Core
@@ -19,10 +19,13 @@ last_reviewed: 2026-10-02
 Kapu Core is a hosted core banking system for institutions ready for a
 modern core, or running without one: MFIs moving off spreadsheets or an
 earlier Mifos installation, Saccos moving off desktop software, tier-3
-banks planning a core upgrade (FS-303, FS-354). It runs on Apache Fineract, hosted in Kenya on
-Liquid's Azure Stack: clients, savings, shares, loans, the general ledger,
-tellers and end-of-day. Every Kapu product runs on top of it: MFI, Sacco,
-Collect, omni-channel, reconciliation. It is the native mode of the
+banks planning a core upgrade (FS-303, FS-354). It runs on Apache
+Fineract, hosted in Kenya on Liquid's Azure Stack: clients, savings,
+shares, loans, the general ledger, tellers and end-of-day. Kapu products
+run on it where the institution has no core of its own: MFI, Sacco,
+Collect, omni-channel, reconciliation. Where the institution has a core,
+they run on that core instead, as Collect did at Onit Bank (the
+integrated mode, FS-390). Kapu Core is the native mode of the
 architecture, packaged as a product (docs/architecture.md §4). **The money
 stays in the institution's own accounts; Kapu Core is its ledger.**
 
@@ -86,7 +89,7 @@ one), omni-channel, insights.
 |---|---|---|
 | The institution's money | **Its own bank accounts and mobile-money shortcodes** | **Never holds** |
 | Accounts, balances, loans, the general ledger | **Kapu Core** | Holds, as the institution's ledger |
-| Members' and customers' KYC | **Kapu Core** (FS-172) | Holds; IPRS results from identity |
+| Members' and customers' KYC | **Kapu Core** (FS-172) | Holds; national register (NPDM) results from identity |
 | The institution as Dibon's customer | Odoo | — |
 | Matches between the ledger and the rails | Recon engine | Feeds |
 

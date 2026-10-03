@@ -193,8 +193,9 @@ built (FS-393).
 >
 > Dibon Consulting builds payment and banking software for banks, Saccos
 > and microfinance institutions. Our products ran in production at Onit
-> Bank from February 2025 to June 2026 on M-Pesa, and T-Kash is the next
-> wallet our customers' members ask for.
+> Bank from February 2025 to June 2026 on M-Pesa. Our bank, Sacco and
+> microfinance customers want their members to pay and be paid on every
+> network, including T-Kash.
 >
 > We would like to integrate T-Kash for:
 >

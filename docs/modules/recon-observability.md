@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388]
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405]
 last_reviewed: 2026-10-03
 ---
 
@@ -55,7 +55,11 @@ can see which breaks are about to breach (July proposal, Introduction).
 Reconciliation proposal (Jul 2026) is a functional specification at a high
 level. The prospect prototype (Aug 2026) is a clickable demo that draws
 every screen. Both count as **Designed** evidence. Neither shows anything
-running — FS-099, FS-100.
+running — FS-099, FS-100. What did run, at Onit Bank from February 2025
+to June 2026, is Collect's operational monitoring: metrics, logs and
+dashboards for the bank's operations team (collect CO-11, Built; FS-390).
+That is monitoring, not reconciliation: collect CO-12, end-of-day
+reconciliation, is Planned (FS-405).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
@@ -74,7 +78,7 @@ running — FS-099, FS-100.
 | RO-13 | Evidence for a period, assembled from traces rather than retyped | Designed | Prototype: Recon Attestation | 2 |
 | RO-14 | Regulatory returns and suspicious-activity reporting | Planned | Prototype: marked "Phase 2 — illustrative"; not real forms | 2 |
 | RO-15 | AML and sanctions screening (sanctions lists, PEP, structuring) | Planned | Prototype: Phase 2, illustrative — FS-098 | 2 |
-| RO-16 | Observability: metrics (Prometheus), logs (Loki), traces (Tempo or Jaeger), dashboards (Grafana) | Designed | Proposal: Observability. Kapu technical documentation uses the same stack | 1 |
+| RO-16 | Observability: metrics (Prometheus), logs (Loki), traces (Tempo or Jaeger), dashboards (Grafana) | Designed | Proposal: Observability. Kapu technical documentation uses the same stack. Metrics, logs and dashboards ran at Onit Bank in Collect (collect CO-11, FS-390); traces are not evidenced there, so the row stays Designed | 1 |
 | RO-17 | Alerting and SLOs, including reconciliation SLOs such as match rate | Designed | Proposal: Alerting & SLO | 1 |
 | RO-18 | On-call and incident response | Designed | Proposal: Grafana IRM. On-prem availability unverified — FS-101 | 1 |
 | RO-19 | Role-based field masking, MFA, access audit, encryption at rest and in transit | Designed | Proposal: Security Features. Prototype: role-based masking | 1 |

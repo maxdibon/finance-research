@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # API and statement-feed requests — banks and mobile money
@@ -76,6 +76,9 @@ contact there.
 
 ## Email 2 · Safaricom — M-Pesa
 
+**Superseded** by docs/outreach/partner-requests-2026-10.md, draft 3
+(FS-411). Kept as history; send the draft instead.
+
 Address it to the Safaricom business or account manager for Dibon's
 shortcode(s), and copy the Daraja or API support team.
 
@@ -119,6 +122,9 @@ shortcode(s), and copy the Daraja or API support team.
 
 ## Email 3 · Airtel Money
 
+**Superseded** by docs/outreach/partner-requests-2026-10.md, draft 4
+(FS-394, FS-411). Kept as history; send the draft instead.
+
 Address it to Airtel Money Kenya's merchant or enterprise team, and copy
 the Open API team.
 
@@ -140,8 +146,8 @@ Limited
 >    merchant account's statement, for daily reconciliation.
 > 3. **Acting for our clients:** whether Dibon may integrate with a
 >    client's own merchant account, with that client's written consent.
-> 4. **Other markets:** we plan to follow our hosting partner into Uganda,
->    Tanzania, Rwanda, Zambia and Nigeria. Is there a group-level route to
+> 4. **Other markets:** we plan to serve customers in Uganda, Tanzania,
+>    Rwanda, Zambia and Nigeria. Is there a group-level route to
 >    the same APIs in those countries?
 >
 > The attached checklist has the technical detail. Could we arrange a call
@@ -155,6 +161,9 @@ Limited
 ---
 
 ## Email 4 · Telkom — T-Kash
+
+**Superseded** by docs/outreach/partner-requests-2026-10.md, draft 5
+(FS-394, FS-411). Kept as history; send the draft instead.
 
 Address it to Telkom Kenya's T-Kash merchant or enterprise team, and copy
 the API or developer team, if you have a contact there.

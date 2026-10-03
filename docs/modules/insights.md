@@ -75,7 +75,7 @@ number, traceable to a transaction.
 **Depends on:** access (who is asking, and what they may see),
 recon-observability (data feeds; platform health), and every product it
 reads from: collect, gateway, escrow, mfi, sacco, sme-recon, omni-channel
-and business-suite (FS-301).
+and business-suite (FS-301), and core, the funds ledger in native mode.
 **Used by:** customers and their AI clients directly. Each product's
 dashboards are built on its metrics.
 

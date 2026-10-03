@@ -60,7 +60,7 @@ same gap as the GateKeepr brief's second-leg problem.
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
 | ES-01 | Escrow agreement: parties, amount, currency, conditions and milestones, arbiter, signed by both parties in Odoo Sign | Planned | FS-104, FS-107 | 1 |
-| ES-02 | One sub-account per escrow at the partner bank, opened through Collect's sub-account design | Planned | FS-107. Collect CO-03 is Designed | 1 |
+| ES-02 | One sub-account per escrow at the partner bank, opened through Collect's sub-account design | Planned | FS-107. Collect CO-03 is Built (FS-390) | 1 |
 | ES-03 | Funding by the buyer on any rail, into the escrow's own sub-account | Planned | FS-107; collect CO-05 | 1 |
 | ES-04 | Milestones tracked with evidence uploads, attributed to whoever uploaded them | Planned | FS-107 | 1 |
 | ES-05 | Release on the agreed approvals through the mandate engine, mirrored in the signing mandate on the bank account | Planned | FS-042 (signing mandates), FS-107 | 1 |

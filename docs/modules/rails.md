@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, escrow, mandates, recon-observability]
-review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-403]
+review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-390, FS-391, FS-393, FS-403]
 last_reviewed: 2026-10-03
 ---
 
@@ -49,15 +49,18 @@ asked the rail directly.
 
 ## 3 · What it does
 
-**Status:** where the Kapu technical documentation describes a rail's
-flows, the row is **Designed**. Whether those integrations are built is
-disputed between sources (FS-088), so nothing is higher than Designed.
+**Status:** RL-03 and RL-19 are **Built**. They ran in production at Onit
+Bank, Feb 2025 to Jun 2026, in Collect and the Gateway; the evidence is
+the Onit API technical documentation (FS-384, FS-390). Where the Kapu
+technical documentation describes another rail's flows, the row is
+**Designed**. Airtel Money was probably built for Onit Bank but never
+launched; its row stays Designed until that is confirmed (FS-393).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
 | RL-01 | One adapter interface: collect, pay out, status, balance, statement, reversal | Planned | FS-093 — FS-208 | 1 |
 | RL-02 | One normalised event per call, carrying the rail's own reference as a field, never in a note | Designed | docs/architecture.md §2 | 1 |
-| RL-03 | M-Pesa (Daraja): M-Pesa Express push prompt, C2B validation and confirmation, B2C, transaction status, account balance, reversal | Built | Ran in production at a Kenyan bank, Feb 2025 to Jun 2026, in Collect and the Gateway (owner, 2026-10-03, FS-384) | 1 |
+| RL-03 | M-Pesa (Daraja): M-Pesa Express push prompt, C2B validation and confirmation, B2C, transaction status, account balance, reversal | Built | Ran in production at Onit Bank, Feb 2025 to Jun 2026, in Collect and the Gateway (owner, 2026-10-03, FS-384, FS-387, FS-391) | 1 |
 | RL-04 | Airtel Money: collections, disbursements, enquiry, balance, refunds | Designed | Kapu technical documentation lists the channel; MFI PRD §4. Outreach Email 3. Owner, 2026-10-03: the Airtel API integration was probably built for Onit Bank but never launched; to confirm with the technical lead (FS-393) | 1 |
 | RL-05 | T-Kash | Designed | Kapu technical documentation lists the channel. Outreach Email 4 | 1 |
 | RL-06 | PesaLink, through the sponsor bank's API | Planned | 8 Jun: trust accounts outstanding | 2 |
@@ -134,7 +137,7 @@ mode.
 
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
-| M-Pesa (Daraja) | in / out | callback; status query; statement | Designed (RL-03) |
+| M-Pesa (Daraja) | in / out | callback; status query; statement | Built (RL-03, RL-19) |
 | Airtel Money | in / out | callback; enquiry; statement | Designed (RL-04) |
 | T-Kash | in / out | callback; statement | Designed (RL-05) |
 | PesaLink | in / out | sponsor bank's API | Planned (RL-06) |
@@ -190,6 +193,9 @@ FS-056, FS-088, FS-127, FS-208, FS-209, FS-210, FS-211, FS-212.
 
 - Kapu Pay Technical Documentation, v1.0, Apr 2026 — channels, deposit and
   withdrawal flows. *Derived, not reproduced.*
+- Onit API technical documentation, Feb 2025 — what ran at Onit Bank,
+  Feb 2025 to Jun 2026 (FS-390). *Held outside git; derived, not
+  reproduced.*
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — §4.
 - Prospect reconciliation prototype, Aug 2026 — Transaction Trace.
   *Derived, not reproduced.*

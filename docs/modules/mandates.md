@@ -65,7 +65,7 @@ owner's request (FS-042).
 | MD-06 | No self-approval: one person cannot complete two consecutive steps, even holding both roles | Designed | MFI PRD FR-6.7 | 1 |
 | MD-07 | Flags route to an authority: a flagged request always ends with the named role, whatever tier it fell in | Designed | MFI PRD FR-6.8 | 1 |
 | MD-08 | Time-in-step SLAs, reminders and escalation | Designed | MFI PRD FR-6.9 | 1 |
-| MD-09 | Quorum steps (N of M) | Planned | MFI PRD FR-6.10: designed as an additive change; launch is sequential only. Owner, 2026-10-03: moved up to phase 1, because the first MFI customer's credit committee approves 3 of 3, unanimously (FS-402) | 1 |
+| MD-09 | Quorum steps (N of M) | Planned | MFI PRD FR-6.10: designed as an additive change; its "launch is sequential only" is superseded by FS-402. Owner, 2026-10-03: moved up to phase 1, because the first MFI customer's credit committee approves 3 of 3, unanimously (FS-402) | 1 |
 | MD-10 | Each decision re-authenticated at the moment it is made (PIN or one-time code) | Planned | docs/architecture.md §7; FS-132 | 1 |
 | MD-11 | Bank-side mirror: the signing mandate registered on the bank account, and our instruction checked against it | Planned | FS-122. Depends on the bank's mandate API (partners.md C10) | 2 |
 | MD-12 | Consumers beyond MFI: Sacco committees, Collect and Gateway maker-checker, SME Recon payments, Escrow releases, recon reversals | Planned | MFI PRD FR-6 platform note; FS-097, FS-107 | 1–2 |
@@ -147,7 +147,7 @@ when native.
 |---|---|---|---|
 | Partner banks — signing-mandate APIs | out | API | Planned (MD-11) |
 | Bank direct debit (clearing house) | out | file or API | Planned — FS-046 |
-| M-Pesa standing orders | out | API, if offered to third parties | Planned — asked in the Safaricom email |
+| M-Pesa Ratiba (standing orders) | out | Daraja API | Planned — rails RL-23 (FS-387) |
 | Card tokens (recurring) | out | through the acquirer | Planned — partners.md SD-03 |
 | Odoo — roles, signed consents | in | API | Planned — FS-142 |
 
@@ -191,7 +191,8 @@ Part of the shared platform, inside each deployment (docs/architecture.md
 
 ## 11 · Open questions
 
-FS-037, FS-046, FS-122, FS-132, FS-142, FS-143, FS-144, FS-145, FS-146.
+FS-037, FS-046, FS-122, FS-132, FS-142, FS-143, FS-144, FS-145. FS-146 is
+decided: quorum steps (MD-09) are phase 1 (FS-402).
 
 ## 12 · Sources
 

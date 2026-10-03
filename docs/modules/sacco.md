@@ -9,7 +9,7 @@ audience: [sacco]
 depends_on: [mandates, identity, rails, messaging, recon-observability, collect, crb]
 consumed_by: []
 review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177]
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # Kapu Sacco
@@ -56,7 +56,7 @@ shape of the segment, not discovery evidence from a named Sacco* — FS-174.
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| SC-01 | Member onboarding with IPRS KYC and membership approval | Planned | FS-023. Reuses mfi MF-02 (Designed) | 1 |
+| SC-01 | Member onboarding with KYC against the national register (NPDM, formerly IPRS) and membership approval | Planned | FS-023. Reuses mfi MF-02 (Designed) | 1 |
 | SC-02 | Share capital accounts, non-withdrawable, transferable as the bylaws allow | Planned | FS-023 | 1 |
 | SC-03 | Member deposits, non-withdrawable, as the basis of loan limits | Planned | FS-023 | 1 |
 | SC-04 | Contributions by M-Pesa, bank transfer or check-off, matched to members | Planned | FS-023; recon-observability RO-02 | 1 |
@@ -64,22 +64,23 @@ shape of the segment, not discovery evidence from a named Sacco* — FS-174.
 | SC-06 | Withdrawable savings accounts, for deposit-taking Saccos only | Planned | FS-023 | 2 |
 | SC-07 | Loan products with limits set as a multiple of deposits | Planned | FS-023 | 1 |
 | SC-08 | Guarantors: deposits pledged per loan, exposure visible to the guarantor, released on repayment, recovered on default | Planned | FS-023 | 1 |
-| SC-09 | Credit-committee approval through the mandate engine | Planned | MFI PRD FR-6 platform note; quorum — FS-146 | 1 |
+| SC-09 | Credit-committee approval through the mandate engine | Planned | MFI PRD FR-6 platform note; quorum steps are mandates MD-09, phase 1 (FS-146, FS-402) | 1 |
 | SC-10 | Repayments split by component | Planned | Reuses mfi MF-08 (Designed) | 1 |
 | SC-11 | Annual dividend on shares and interest on deposits: computed by the bylaws' rules, approved at the AGM, then paid or capitalised | Planned | FS-176 | 2 |
 | SC-12 | Member exit: notice, loans offset against deposits, refund of the balance | Planned | FS-023 | 2 |
 | SC-13 | Member self-service: balances, statements, eligibility, guarantor requests | Planned | Depends on omni-channel | 2 |
 | SC-14 | Contribution and repayment reminders | Planned | Reuses mfi MF-13 (Designed) | 1 |
 | SC-15 | Migration from the Sacco's current system, with a signed-off reconciliation | Planned | Reuses mfi MF-16 (Designed) | 1 |
-| SC-16 | Third-party collection into members' accounts, for deposit-taking Saccos | Planned | Reuses collect CO-05 (Designed) | 2 |
+| SC-16 | Third-party collection into members' accounts, for deposit-taking Saccos | Planned | Reuses collect CO-05 (Built) | 2 |
 | SC-17 | Regulatory returns to SASRA, for deposit-taking Saccos | Planned | FS-175 | later |
 | SC-18 | CRB sharing | Planned | Depends on crb | later |
 
 ## 4 · Where it sits
 
 **Depends on:** mandates (committee approval, disbursement maker-checker),
-identity (IPRS), rails, messaging (reminders, statements), recon-
-observability (contributions, check-off), collect (SC-16), crb (SC-18).
+identity (NPDM, formerly IPRS), rails, messaging (reminders,
+statements), recon-observability (contributions, check-off), collect
+(SC-16), crb (SC-18).
 **Used by:** none. It is the product a Sacco buys.
 
 **Who holds which record** (docs/architecture.md §2):
@@ -148,7 +149,7 @@ loans move to Fineract (FS-066).
 | Bank transfer | in / out | statement file; API | Planned |
 | Employer check-off | in | remittance file and schedule, per employer | Planned (SC-05) |
 | Sacco core (integrated) | read / post | API or extracts, per vendor | Planned |
-| IPRS | read | API | Planned (SC-01) |
+| NPDM, formerly IPRS | read | API | Planned (SC-01) |
 | SASRA returns | out | as prescribed | Planned (SC-17) |
 
 ## 7 · Regulatory position
@@ -200,7 +201,8 @@ Liquid's Azure Stack.
 
 ## 11 · Open questions
 
-FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177.
+FS-062, FS-066, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177. FS-146
+is decided: quorum steps (mandates MD-09) are phase 1 (FS-402).
 
 ## 12 · Sources
 

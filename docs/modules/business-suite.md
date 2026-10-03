@@ -52,8 +52,9 @@ hand.
 ## 3 · What it does
 
 **No specification exists; Odoo's features are Odoo's.** Rows describe
-what Dibon implements and integrates. Every row is **Planned** until a
-customer implementation is live.
+what Dibon implements and integrates. Every row except BS-11 is
+**Planned** until a customer implementation is live. BS-11, managed Odoo
+hosting on OLP, is **Built** (FS-293).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
@@ -142,8 +143,8 @@ accounts, or a ledger of funds that a core already holds.
 - **Licensing:** Odoo Enterprise, per internal user. Portal users and
   external signers are not counted (FS-026). Whether the Enterprise
   Agreement limits serving internal work through them is open (FS-036).
-- **Hosting:** on OLP, hosted on Liquid's Azure Stack, so data stays
-  in-country (FS-289, FS-293).
+- **Hosting:** on OLP, to be hosted on Liquid's Azure Stack so that data
+  stays in-country (FS-289, FS-293).
 - **Data:** customers, invoices and tickets are Confidential. Signed
   documents may carry ID numbers, which are Restricted.
 
@@ -161,8 +162,8 @@ accounts, or a ledger of funds that a core already holds.
 ## 9 · Deployment
 
 Odoo Enterprise, run and managed on **OLP** (Odoo Launch Pad), Dibon's own Odoo management
-platform (BS-11), hosted locally on Liquid's Azure Stack (FS-289,
-FS-293). On a customer's premises where it requires. Odoo's own cloud is
+platform (BS-11). OLP is to be hosted locally on Liquid's Azure Stack
+(FS-289, FS-293). On a customer's premises where it requires. Odoo's own cloud is
 not the default: it holds data abroad.
 
 ## 10 · What it does not do

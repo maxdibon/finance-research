@@ -309,6 +309,9 @@ its own entry.
   core vendor (FS-321). Fineract must be confirmed against each segment
   (FS-185). In return: a door into institutions that cannot integrate
   with what they run today.
+- **Update (2026-10-03):** "every Kapu product on top" holds where the
+  institution has no core. Where it has one, products run on that core, as
+  Collect did at Onit Bank (FS-390, core.md §1).
 
 ## FS-323 · The web preview is generated from the PDF
 
