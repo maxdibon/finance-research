@@ -65,7 +65,7 @@ at most, pending FS-052, and must not be raised without evidence.
 | CO-03 | Sub-account opening under an existing customer | Designed | Technical documentation, Sub-Account Opening | 1 |
 | CO-04 | Balance, account info, account list, statement for a period | Designed | Technical documentation, Account Management | 1 |
 | CO-05 | Deposit by mobile-money push prompt, posted to the core on confirmation | Built | Technical documentation, Deposits; Safaricom go-live outstanding (8 Jun). M-Pesa push-prompt deposits ran in production at a Kenyan bank, Feb 2025 to Jun 2026 (FS-384) | 1 |
-| CO-06 | Withdrawal to mobile, till or paybill | Designed | Technical documentation, Withdrawals. Ordering defect — FS-054 | 1 |
+| CO-06 | Withdrawal to mobile, till or paybill | Designed | Technical documentation, Withdrawals. Ordering defect — FS-054. Withdrawal to mobile (B2C) ran in production, Feb 2025 to Jun 2026 (FS-384); till and paybill (B2B) did not | 1 |
 | CO-07 | Account-to-account transfer, synchronous | Designed | Technical documentation, Funds Transfer | 1 |
 | CO-08 | Transaction query by bank reference or by the partner's own request id; duplicate request ids refused | Designed | Technical documentation, Query Transaction; response code 5001 | 1 |
 | CO-09 | Asynchronous callbacks to the partner | Designed | Technical documentation, Components | 1 |

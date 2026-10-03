@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, escrow, mandates, recon-observability]
-review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384]
+review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387]
 last_reviewed: 2026-10-01
 ---
 
@@ -57,7 +57,7 @@ disputed between sources (FS-088), so nothing is higher than Designed.
 |---|---|---|---|---|
 | RL-01 | One adapter interface: collect, pay out, status, balance, statement, reversal | Planned | FS-093 — FS-208 | 1 |
 | RL-02 | One normalised event per call, carrying the rail's own reference as a field, never in a note | Designed | docs/architecture.md §2 | 1 |
-| RL-03 | M-Pesa (Daraja) collections: push prompt, C2B validation and confirmation | Built | Ran in production at a Kenyan bank, Feb 2025 to Jun 2026, in Collect and the Gateway (owner, 2026-10-03, FS-384) | 1 |
+| RL-03 | M-Pesa (Daraja): M-Pesa Express push prompt, C2B validation and confirmation, B2C, transaction status, account balance, reversal | Built | Ran in production at a Kenyan bank, Feb 2025 to Jun 2026, in Collect and the Gateway (owner, 2026-10-03, FS-384) | 1 |
 | RL-04 | Airtel Money: collections, disbursements, enquiry, balance, refunds | Designed | Kapu technical documentation lists the channel; MFI PRD §4. Outreach Email 3 | 1 |
 | RL-05 | T-Kash | Designed | Kapu technical documentation lists the channel. Outreach Email 4 | 1 |
 | RL-06 | PesaLink, through the sponsor bank's API | Planned | 8 Jun: trust accounts outstanding | 2 |
@@ -73,7 +73,13 @@ disputed between sources (FS-088), so nothing is higher than Designed.
 | RL-16 | Debit-mandate registration, where a rail supports it | Planned | mandates MD-14; FS-046 | 2 |
 | RL-17 | A simulator per rail, for tests and demos, that can produce every outcome including silence | Planned | FS-211 | 1 |
 | RL-18 | Rails in other countries: MTN MoMo, Vodacom M-Pesa, EcoCash, the Airtel group | Planned | partners.md PT-11 to PT-13, PT-03 | later |
-| RL-19 | M-Pesa (Daraja) payouts and operations: B2C, B2B, transaction status, balance, reversal | Designed | Kapu technical documentation: deposit and withdrawal flows; collect CO-05, CO-06. Outreach Email 2 | 1 |
+| RL-19 | M-Pesa (Daraja) B2B: payments to another paybill or till | Designed | Kapu technical documentation: deposit and withdrawal flows; collect CO-05, CO-06. Outreach Email 2 | 1 |
+| RL-20 | M-Pesa Pull Transactions: fetch a shortcode's transactions, so a missed callback is found and matched, not lost | Planned | Daraja API list (FS-387); recon-observability | 1 |
+| RL-21 | M-Pesa Hakikisha (B2C and B2B): the recipient's registered name before a payout is sent | Planned | Daraja API list (FS-387); identity ID-05 | 1 |
+| RL-22 | Safaricom SIM-swap query and IMSI check before money moves | Planned | Daraja security APIs for authorised partners (FS-386, FS-387); omni-channel step-up | 1 |
+| RL-23 | M-Pesa Ratiba: standing orders the customer authorises on M-Pesa, for loan repayments and contributions | Planned | Daraja API list (FS-387); mandates MD-14, RL-16 | 2 |
+| RL-24 | M-Pesa Dynamic QR, B2B Express Checkout and Business to Pochi, for merchant and small-trader payments | Planned | Daraja API list (FS-387); gateway | 2 |
+| RL-25 | M-Pesa Bill Manager and Tax Remittance: invoices with reminders, and KRA payments from a shortcode | Planned | Daraja API list (FS-387); sme-recon, business-suite | 2 |
 
 ## 4 · Where it sits
 
