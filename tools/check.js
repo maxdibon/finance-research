@@ -23,6 +23,8 @@ const SKIP_DIRS = new Set([
 ]);
 const TEXT_EXT = new Set(['.md', '.txt', '.html', '.js', '.json', '.gitignore']);
 const NAMES_FILE = path.join('sources', 'confidential', 'protected-names.txt');
+// Material that leaves Dibon: the portfolio and its design, and outreach drafts.
+const PUBLIC_PATHS = [path.join('docs', 'marketing'), path.join('docs', 'outreach'), 'design'];
 
 const STATUSES = ['Live', 'Built', 'Designed', 'Planned'];
 const REVIEW_STATUSES = ['OPEN', 'DECIDED', 'ANSWERED', 'DECLINED'];
@@ -58,15 +60,20 @@ function checkNames(root, files) {
   if (!fs.existsSync(listPath)) {
     return [fail('names', NAMES_FILE, 0, 'protected-names list missing; the check cannot run')];
   }
-  const terms = read(root, NAMES_FILE).split('\n')
+  const lines = read(root, NAMES_FILE).split('\n')
     .map((t) => t.trim()).filter((t) => t && !t.startsWith('#'));
-  const escaped = terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  const pattern = new RegExp(`(?<![\\w-])(${escaped.join('|')})(?![\\w-])`, 'i');
+  // A line starting "public:" names a customer the owner allows in internal
+  // documents but not in anything that leaves Dibon (FS-414).
+  const pattern = (terms) => terms.length && new RegExp(`(?<![\\w-])(${terms
+    .map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})(?![\\w-])`, 'i');
+  const everywhere = pattern(lines.filter((t) => !/^public:/i.test(t)));
+  const outward = pattern(lines.filter((t) => /^public:/i.test(t)).map((t) => t.replace(/^public:\s*/i, '')));
   const failures = [];
   for (const file of files) {
+    const isOutward = PUBLIC_PATHS.some((p) => (file + path.sep).startsWith(p + path.sep));
     read(root, file).split('\n').forEach((text, i) => {
-      const m = text.match(pattern);
-      if (m) failures.push(fail('names', file, i + 1, `protected name "${m[1]}"`));
+      const m = (everywhere && text.match(everywhere)) || (isOutward && outward && text.match(outward));
+      if (m) failures.push(fail('names', file, i + 1, `protected name "${m[1]}"${isOutward && !(everywhere && text.match(everywhere)) ? ' in outward material' : ''}`));
     });
   }
   return failures;

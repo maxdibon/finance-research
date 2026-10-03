@@ -280,3 +280,19 @@ test('reviewed: a document with no last_reviewed fails', () => {
   const f = runInRepo((d) => patch(d, path.join('docs', 'modules', 'crb.md'), (t) => t.replace(/^last_reviewed: .*\n/m, '')));
   assert.ok(names(f).includes('reviewed'));
 });
+
+test('names: a public-only name is allowed in an internal document', () => {
+  const f = runWith((d) => {
+    patch(d, path.join('sources', 'confidential', 'protected-names.txt'), (t) => `${t}\npublic: ${SYNTHETIC}\n`);
+    patch(d, 'README.md', (t) => `${t}\nWorking with ${SYNTHETIC}.\n`);
+  });
+  assert.deepStrictEqual(f, []);
+});
+
+test('names: a public-only name in outward material fails', () => {
+  const f = runWith((d) => {
+    patch(d, path.join('sources', 'confidential', 'protected-names.txt'), (t) => `${t}\npublic: ${SYNTHETIC}\n`);
+    patch(d, path.join('docs', 'outreach', 'portfolio-share.md'), (t) => `${t}\nAs used by ${SYNTHETIC}.\n`);
+  });
+  assert.deepStrictEqual(names(f), ['names']);
+});

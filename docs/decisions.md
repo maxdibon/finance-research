@@ -463,3 +463,16 @@ its own entry.
 - **Costs (inferred):** the mandate engine's first release carries a
   second step type, with its tests, before the simple chain has run in
   production.
+
+## FS-414 · Name customers in internal documents
+
+- **Chose:** internal documents name Roan Capital, as they name Onit Bank.
+  The names check blocks the name only in material that leaves Dibon: the
+  portfolio, its design files and outreach drafts.
+- **Argued against:** keeping the name out of git entirely (FS-397), with
+  the delivery detail only in clients/, where no check reaches it and the
+  register cannot point to it.
+- **Costs (inferred):** the repository now holds a customer's name, so its
+  access must stay limited to Dibon, and anyone given access later sees
+  it. A document copied from docs/ into a meeting must be read for names
+  first, because the check only guards the outward folders.

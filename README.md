@@ -72,7 +72,10 @@ fresh clone needs the list before it can commit.
    portfolio copy is the exception (FS-263); its claims are listed in
    `design/portfolio-pdf/claims.json`.
 4. **No figure without a source.** Pricing appears nowhere in the modules.
-5. **Roles, never names.** Nothing from `clients/` or
+5. **Roles, never names, for people.** Customers the owner has released
+   are named in internal documents (Onit Bank, Roan Capital; FS-414), but
+   not in the portfolio, its design or outreach until they agree (FS-401);
+   the names check enforces both. Nothing from `clients/` or
    `sources/confidential/` is reproduced in `docs/`. Material from those
    folders is written about, never copied.
 6. **ASCII diagrams**, at most 78 characters wide (FS-064).
