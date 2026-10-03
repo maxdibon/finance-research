@@ -192,8 +192,9 @@ Credit bureaus · Payment rails · Insights
 firms, high-volume SMEs and funds-holding operators. Partners connect
 through Kapu's APIs; every deposit lands in a real account at the bank, in
 the end customer's name. The bank gains low-cost deposits, and the partner
-a regulated home for its customers' money. We are in discussion with
-partner banks.
+a regulated home for its customers' money. It ran in production at Onit
+Bank, with W-Harambee, from February 2025 to June 2026, and we are in
+discussion with new partner banks.
 **Diagram caption:** The deposit goes from the payer to the bank’s own
 paybill and into the customer’s account. Kapu prompts, confirms and posts;
 it never holds the money.
@@ -219,7 +220,8 @@ transfers and cards coming soon, and every payment is reconciled against
 what it paid for. You bring your own paybill or account, and payments
 settle straight into it; we never hold the money. Already have a business
 collection account at your bank, often called Lipa na Bank? The Gateway
-works with it, with matching as each bank comes online.
+works with it, with matching as each bank comes online. Proven in
+production at Onit Bank, 2025 to 2026.
 **Diagram caption:** One API for every rail. The money settles straight
 into the merchant’s own account; the Gateway handles the prompt, the
 confirmation and the reconciliation.
