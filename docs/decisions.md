@@ -390,3 +390,17 @@ its own entry.
   scattered "coming soon" labels.
 - **Costs (inferred):** every "Next" is read as intent, so moving an item
   back is visible. In return: the gaps a prospect sees read as a plan.
+
+## FS-379 · Stay a platform for licensed institutions; do not become a bank
+
+- **Chose:** park becoming a neobank. Explore a neobank-in-a-box offer
+  instead: Saccos, microfinance banks and smaller banks launch digital
+  banking under their own brand on Dibon's platform.
+- **Argued against (argued):** a licence of Dibon's own. A new commercial
+  bank needs KSh 10 billion of core capital; a microfinance bank KSh 60
+  million today, with KSh 250 million proposed. Holding deposits would
+  make Dibon a competitor to the institutions it sells to, and end "we do
+  not hold your money".
+- **Costs (inferred):** Dibon forgoes the deposit margin and owning the
+  end customer. If the idea returns, the staged route is a partner-bank
+  neobank first, then a microfinance bank in a separate company.
