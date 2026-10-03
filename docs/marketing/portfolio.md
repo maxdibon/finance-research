@@ -199,7 +199,7 @@ discussion with new partner banks.
 paybill and into the customer’s account. Kapu prompts, confirms and posts;
 it never holds the money.
 **Features:**
-- Account and sub-account opening, gated on a national-register or mobile-operator name check
+- Account and sub-account opening, gated on IPRS identity checks; Smile ID, MetaMap, Spin Mobile and Sumsub coming soon
 - Deposits by mobile-money prompt; withdrawals to mobile, till or paybill
 - Account-to-account transfers, balances and statements
 - Partner and bank management portals
@@ -442,9 +442,9 @@ messages, logins and reports as the first.
 - Credit bureaus: Coming soon. Monthly submissions generated from the
   ledger and reconciled; lookups with the purpose recorded first;
   corrections when a borrower settles.
-- Payment rails: M-Pesa, Airtel Money, T-Kash, PesaLink, bank APIs and
-  files, and cards behind one interface. Unconfirmed means pending, never
-  assumed.
+- Payment rails: M-Pesa, Airtel Money and T-Kash behind one interface,
+  with PesaLink, bank APIs and files, and cards coming soon. Unconfirmed
+  means pending, never assumed.
 - Insights: Every metric defined once, for dashboards and plain-language
   questions. Each answer shows how it was calculated and how fresh the data
   is.
@@ -767,8 +767,8 @@ give an order, not dates: each step follows our customers.
 
 ### Rails
 
-**Now:** M-Pesa, integrated directly
-**Next:** Airtel Money, T-Kash, bank connections, PesaLink and cards
+**Now:** M-Pesa, Airtel Money and T-Kash, integrated directly
+**Next:** Bank connections, PesaLink and cards
 **Later:** The mobile-money networks of each new market
 
 ### Services

@@ -284,6 +284,11 @@ its own entry.
 - **Update (2026-10-03):** Collect and the Gateway ran in production at
   Onit Bank from February 2025 to June 2026 (FS-384, FS-390). M-Pesa now
   rests on that record, not on this decision; the other claims still do.
+- **Update (2026-10-03):** the owner keeps Airtel Money and T-Kash in v1
+  although only M-Pesa ran in production (FS-393, FS-407), and keeps the
+  national register (IPRS) as v1 for account opening, with verification
+  vendors shown as coming soon (FS-409). PesaLink is shown as coming soon
+  everywhere (FS-408).
 
 ## FS-311 · Kapu Core: the native mode becomes a product
 

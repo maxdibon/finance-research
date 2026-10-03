@@ -148,7 +148,7 @@ money PIN or credentials.
 |---|---|---|---|
 | M-Pesa (push prompt, paybill, B2C) | in / out | real-time callback | Designed (MF-10, MF-11). Integration status — FS-088 |
 | Airtel Money | in / out | real-time callback | Designed (MFI PRD §4) |
-| Bank transfer (PesaLink, through the sponsor bank) | in / out | API; manual match on the way in | Designed |
+| Bank transfer (PesaLink, through the sponsor bank) | in / out | API; manual match on the way in | Planned (rails RL-06, FS-408) |
 | IPRS | read | API | Designed (MF-02) |
 | NTSA | read | manual check now; API in Phase 2 | Designed (MF-04, MF-05) |
 | SMS gateway | out | API | Designed; no provider chosen (MF-13) |

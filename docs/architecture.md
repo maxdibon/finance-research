@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410]
 last_reviewed: 2026-10-03
 ---
 
@@ -29,9 +29,9 @@ Draft, pending FS-034.
 | Layer | Contents |
 |---|---|
 | **Channels** | omni-channel — mobile apps, internet banking, USSD |
-| **Products** | collect · gateway · escrow · core (hosted Fineract) · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) · business-suite (Odoo or Zoho, implemented by Dibon) |
+| **Products** | collect · gateway · escrow · core (Kapu Core: hosted core banking on Apache Fineract) · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) · business-suite (Odoo or Zoho, implemented by Dibon) |
 | **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification) · messaging (SMS, WhatsApp, Telegram, app; transactional and campaigns) · rails · insights |
-| **Systems of record** | institution core / Fineract · Odoo · recon engine — §2 |
+| **Systems of record** | the institution's core, or Kapu Core · Odoo · recon engine — §2 |
 
 ```
  +--------------------------------------------------------------------+
@@ -39,7 +39,8 @@ Draft, pending FS-034.
  +--------------------------------------------------------------------+
                                   |
  +--------------------------------------------------------------------+
- | PRODUCTS     collect . gateway . escrow . mfi . sacco . sme-recon  |
+ | PRODUCTS     collect . gateway . escrow . mfi . sacco .            |
+ |              sme-recon . core . business-suite                     |
  +--------------------------------------------------------------------+
                                   |
  +--------------------------------------------------------------------+
@@ -50,7 +51,8 @@ Draft, pending FS-034.
  +------------------+   +-------------------+   +--------------------+
  | FUNDS LEDGER     |   | ODOO              |   | RECON ENGINE       |
  | institution core |   | who, and what is  |   | matches and        |
- | or Fineract      |   | owed              |   | exceptions         |
+ | or Kapu Core     |   | owed              |   | exceptions         |
+ | (Fineract)       |   |                   |   |                    |
  +------------------+   +-------------------+   +--------------------+
 ```
 
@@ -64,7 +66,7 @@ not keep them apart.
 
 | Authority | Holds | Never holds |
 |---|---|---|
-| **Funds ledger** — the institution's core banking system; or Fineract where the institution has none (§4) | Accounts, balances, postings, loan schedules, deposits | Parties' contact details beyond what the core needs; tickets; matching state |
+| **Funds ledger** — the institution's core banking system; or Kapu Core, on Apache Fineract, where the institution has none or is replacing it (§4) | Accounts, balances, postings, loan schedules, deposits | Parties' contact details beyond what the core needs; tickets; matching state |
 | **Odoo** — who, and what is owed | Parties, memberships, roles, obligations (invoices, fees, charges), payments *as records of obligations met*, tickets, documents, signatures (Odoo Sign) | Balances of funds; transaction-level rail events; matching state |
 | **Recon engine** — what happened between them | Ingested rail and bank events, statements, matches, exceptions, the audit of every resolution | Parties; obligations; balances as an authority |
 
@@ -81,11 +83,11 @@ customer: its contract, users, tickets and invoices.
 | Who | Authority |
 |---|---|
 | An institution, as Dibon's customer | Odoo |
-| A bank's customers, a Sacco's members, a collector's end users | The institution's core, or Fineract in native mode |
+| A bank's customers, a Sacco's members, a collector's end users | The institution's core, or Kapu Core in native mode |
 | An SME's customers and suppliers | The SME's ERP |
 | Parties in a product with no core — escrow parties, merchants, Dibon's own contacts | Odoo |
 
-Collect, Sacco and MFI already work this way. In native mode, Fineract is
+Collect, Sacco and MFI already work this way. In native mode, Kapu Core is
 the core and holds the members.
 
 ### The rule to defend
@@ -168,8 +170,8 @@ configuration, so the mode is not a fork of the code.
 
 | Mode | When | What we do |
 |---|---|---|
-| **Integrated** | The institution has a core banking system | **The core stays authoritative.** We read and post through its API. Any copy we keep is a cache with a fetched-at time |
-| **Native** | No digital ledger exists — an unregistered MFI, a small credit-only Sacco | **Fineract is the funds ledger.** One authority, so there is no core to reconcile against (MFI PRD §1) |
+| **Integrated** | The institution has a core banking system | **The core stays authoritative.** We read and post through its API. Any copy we keep is a cache with a fetched-at time. At Onit Bank, Collect posted to the bank's own core through its stored procedures (FS-390) |
+| **Native** | No digital ledger exists, or the institution is replacing its core — an unregistered MFI, a small credit-only Sacco, a tier-3 bank upgrading | **Kapu Core is the funds ledger**: Apache Fineract, hosted and sold as a product (docs/modules/core.md, FS-311). One authority, so there is no core to reconcile against (MFI PRD §1) |
 
 **Integrated comes first, always.** Integrating with a core is a read.
 Replacing one means migrating somebody's history, and that is a separate
@@ -179,9 +181,11 @@ a core-system vendor. That is the intent (FS-178), and its requirements
 fall on us before the first such Sacco goes live (FS-179).
 
 **A third mode is likely and is not assumed yet:** a core that holds
-deposits but has no loan module, so loans go to Fineract and deposits stay
-in the core. That splits the funds ledger across two systems, and recon
-then has to tie them together (FS-066).
+deposits but has no loan module, so loans go to Kapu Core and deposits
+stay in the core. That splits the funds ledger across two systems, and
+recon then has to tie them together (FS-066). Kapu Core already offers
+this to lenders (docs/modules/core.md §2), so the design is owed before
+the first such customer signs.
 
 The same pattern applies to ERPs: sme-recon has **one interface and one
 implementation per ERP** — Odoo first, then Zoho and others (FS-027).
