@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, psp, fintech]
 depends_on: [identity, rails, recon-observability, mandates, messaging]
 consumed_by: [mfi, sacco]
-review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060]
+review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384]
 last_reviewed: 2026-10-01
 ---
 
@@ -64,7 +64,7 @@ at most, pending FS-052, and must not be raised without evidence.
 | CO-02 | Individual account opening, gated on an identity check (national ID, passport, alien ID) | Designed | Technical documentation, Account Opening; IPRS integration not yet final (8 Jun) | 1 |
 | CO-03 | Sub-account opening under an existing customer | Designed | Technical documentation, Sub-Account Opening | 1 |
 | CO-04 | Balance, account info, account list, statement for a period | Designed | Technical documentation, Account Management | 1 |
-| CO-05 | Deposit by mobile-money push prompt, posted to the core on confirmation | Designed | Technical documentation, Deposits; Safaricom go-live outstanding (8 Jun) | 1 |
+| CO-05 | Deposit by mobile-money push prompt, posted to the core on confirmation | Built | Technical documentation, Deposits; Safaricom go-live outstanding (8 Jun). M-Pesa push-prompt deposits ran in production at a Kenyan bank, Feb 2025 to Jun 2026 (FS-384) | 1 |
 | CO-06 | Withdrawal to mobile, till or paybill | Designed | Technical documentation, Withdrawals. Ordering defect — FS-054 | 1 |
 | CO-07 | Account-to-account transfer, synchronous | Designed | Technical documentation, Funds Transfer | 1 |
 | CO-08 | Transaction query by bank reference or by the partner's own request id; duplicate request ids refused | Designed | Technical documentation, Query Transaction; response code 5001 | 1 |

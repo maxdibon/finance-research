@@ -1,5 +1,5 @@
 [
-  {"claim": "M-Pesa (Daraja)", "basis": "v1", "ref": "FS-263", "status_in_records": "rails RL-03 Designed; go-live outstanding at 8 Jun (FS-088)"},
+  {"claim": "M-Pesa (Daraja)", "basis": "live", "evidence": ["RL-03"], "status_in_records": "rails RL-03 Built: collections ran in production, Feb 2025 to Jun 2026 (FS-384)"},
   {"claim": "Airtel Money", "basis": "v1", "ref": "FS-263", "status_in_records": "rails RL-04 Designed"},
   {"claim": "T-Kash", "basis": "v1", "ref": "FS-263", "status_in_records": "rails RL-05 Designed"},
   {"claim": "Odoo", "basis": "live", "evidence": ["PT-31"], "status_in_records": "Dibon is an Odoo Ready Partner"},
