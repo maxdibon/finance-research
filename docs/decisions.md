@@ -46,7 +46,8 @@ its own entry.
   in FS-016.
 - **Replaced (2026-10-02):** the owner asked for the first PDF pages
   (FS-264), then a full v1.0 (FS-263, FS-333). Designs still go to Markdown
-  or a preview first; the PDF follows each agreed round.
+  or a preview first; the PDF follows each agreed round. The Markdown copy
+  became the single source of the PDF's words (FS-352).
 
 ## FS-021 · Park Kapu Circle
 
@@ -99,6 +100,10 @@ its own entry.
 - **Costs (inferred):** rules out hosted model services unless Liquid
   offers one on its Stack (FS-043, FS-048). Every deployment is ours to
   operate.
+- **Replaced in part (2026-10-02):** deployments may also be
+  self-managed by the institution, on its premises or its own tenancy,
+  with tiered support from Dibon (FS-359). Not every deployment is ours to
+  operate.
 
 ## FS-033 · Natural-language BI is a product and an internal tool; Dibon first
 
@@ -121,6 +126,9 @@ its own entry.
   follows the status.
 - **Costs (inferred):** the material reads less impressively than the
   current pitch documents. Collect today has no capability above Designed.
+- **Update (2026-10-03):** Collect and the Gateway ran in production at
+  Onit Bank, February 2025 to June 2026 (FS-390). Rows with that evidence
+  are Built; the rest keep their status.
 
 ## FS-064 · ASCII diagrams
 
@@ -429,3 +437,26 @@ its own entry.
   not a rewrite; but OpenBao's feature set and release pace are a smaller
   project's, and any enterprise-only Vault feature we later want is not
   there. The lending client's document needs its Vault reference changed.
+
+## FS-388 · Pull Transactions and Hakikisha in the next release
+
+- **Chose:** M-Pesa Pull Transactions (rails RL-20) and Hakikisha name
+  confirmation (RL-21) in phase 1, used by Collect, the Gateway, MFI and
+  reconciliation.
+- **Argued against:** leaving both for later, and relying on callbacks
+  alone to learn about payments.
+- **Costs (inferred):** phase 1 grows by two Daraja integrations and the
+  flows that use them, before any partner bank has signed. In return: a
+  payment whose callback never arrives is still found, and a payout goes
+  only to the name the payer expects.
+
+## FS-402 · Quorum approval steps at launch
+
+- **Chose:** quorum steps (N of M, mandates MD-09) in phase 1, because the
+  first MFI customer's credit committee approves 3 of 3.
+- **Argued against:** launching with sequential steps only, as the MFI PRD
+  planned; three sequential steps give the same outcome for a unanimous
+  committee, slower.
+- **Costs (inferred):** the mandate engine's first release carries a
+  second step type, with its tests, before the simple chain has run in
+  production.
