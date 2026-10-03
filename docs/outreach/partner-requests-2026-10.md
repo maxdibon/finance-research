@@ -34,7 +34,7 @@ with volume comes with it (PT-40).
 >
 > Collect ran in production at Onit Bank from February 2025 to June 2026,
 > with W-Harambee as the partner, on M-Pesa collections and payouts,
-> account opening, statements and reconciliation. Onit has since moved to
+> account opening, statements and operational monitoring. Onit has since moved to
 > more traditional banking, and we are looking for a bank that makes
 > partnerships like this its business. Your API banking offer is the
 > closest match we have found.
