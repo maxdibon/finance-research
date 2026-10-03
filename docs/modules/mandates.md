@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability]
-review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146]
+review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402]
 last_reviewed: 2026-10-01
 ---
 
@@ -65,7 +65,7 @@ owner's request (FS-042).
 | MD-06 | No self-approval: one person cannot complete two consecutive steps, even holding both roles | Designed | MFI PRD FR-6.7 | 1 |
 | MD-07 | Flags route to an authority: a flagged request always ends with the named role, whatever tier it fell in | Designed | MFI PRD FR-6.8 | 1 |
 | MD-08 | Time-in-step SLAs, reminders and escalation | Designed | MFI PRD FR-6.9 | 1 |
-| MD-09 | Quorum steps (N of M) | Planned | MFI PRD FR-6.10: designed as an additive change; launch is sequential only. The first MFI customer's credit committee approves 3 of 3, unanimously (FS-399): until this is built, three sequential steps give the same outcome, slower | 2 |
+| MD-09 | Quorum steps (N of M) | Planned | MFI PRD FR-6.10: designed as an additive change; launch is sequential only. Owner, 2026-10-03: moved up to phase 1, because the first MFI customer's credit committee approves 3 of 3, unanimously (FS-402) | 1 |
 | MD-10 | Each decision re-authenticated at the moment it is made (PIN or one-time code) | Planned | docs/architecture.md §7; FS-132 | 1 |
 | MD-11 | Bank-side mirror: the signing mandate registered on the bank account, and our instruction checked against it | Planned | FS-122. Depends on the bank's mandate API (partners.md C10) | 2 |
 | MD-12 | Consumers beyond MFI: Sacco committees, Collect and Gateway maker-checker, SME Recon payments, Escrow releases, recon reversals | Planned | MFI PRD FR-6 platform note; FS-097, FS-107 | 1–2 |
