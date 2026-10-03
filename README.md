@@ -27,16 +27,16 @@ docs/                the work. The only place we edit
   marketing/
     portfolio.md     every word of the portfolio PDF; the build reads it
   business/          market sizing (a workbook)
-  outreach/          email templates to banks, operators and partners
+  outreach/          drafts to banks, operators, partners and regulators
   packs/             one manifest per buyer type (to do)
   commercials/       parked (FS-024); the one home for prices later
 design/              layout, diagrams and illustrative screens; no copy
   portfolio-pdf/     build.js, page layout, document.json, claims.json
 build/               generated: master.md, the portfolio PDF and web
-                     preview — git-ignored
+                     previews, the NPS Bill comments — git-ignored
 sources/             inputs as received — never edited
   dibon/             recon proposal, Kapu compliance one-pager
-  kapu/              MFI PRD, 8 Jun 2026 meeting notes
+  kapu/              MFI PRD, 8 Jun 2026 meeting notes (anonymised)
   gatekeepr/         snapshots of GateKeepr briefs — git-ignored
   confidential/      client-specific documents — git-ignored
 clients/             real prospect and customer material — git-ignored
@@ -68,7 +68,9 @@ fresh clone needs the list before it can commit.
    `architecture.md` rather than restating it. Packs list modules; they do
    not copy them.
 3. **Tense follows status.** Every capability is Live, Built, Designed or
-   Planned, with evidence. Present tense only for Live or Built.
+   Planned, with evidence. Present tense only for Live or Built. The
+   portfolio copy is the exception (FS-263); its claims are listed in
+   `design/portfolio-pdf/claims.json`.
 4. **No figure without a source.** Pricing appears nowhere in the modules.
 5. **Roles, never names.** Nothing from `clients/` or
    `sources/confidential/` is reproduced in `docs/`. Material from those

@@ -2,10 +2,10 @@
 id: overview
 name: Dibon financial services — the portfolio
 kind: overview
-version: 0.1.0
+version: 0.2.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # Dibon financial services — the portfolio
@@ -36,8 +36,11 @@ money instead of five that disagree.
    who owes what, and the recon engine holds what happened between them
    (docs/architecture.md §2).
 3. **Nothing is guessed.** An unmatched payment stays visible until
-   evidence places it. A capability we have not built is not described as
-   though we had.
+   evidence places it. In these documents, a capability we have not built
+   is not described as though we had. The customer-facing portfolio is the
+   one exception: it presents each product as a working v1 (FS-263), and
+   every integration it claims on that basis is listed in
+   design/portfolio-pdf/claims.json.
 
 ## Who it is for
 
@@ -45,15 +48,17 @@ Banks, deposit-taking and credit-only Saccos, MFIs, international money
 transfer operators, PSPs, fintechs and SMEs. We start with the smaller
 institutions, to build the product and the brand (FS-029). For unlicensed
 deposit-taking and funds-holding operators, we are the route into a
-regulated framework, through a partner bank (FS-045).
+regulated framework, through a partner bank (FS-045). We stay a platform
+for licensed institutions; Dibon does not become a bank (FS-379).
 
-Kenya comes first. The plan is to follow Liquid's Azure Stack footprint
-into Uganda, Tanzania, Rwanda, Zambia, Zimbabwe and Nigeria (FS-105). Each
-country brings its own licence, data rules and partners (FS-109;
-docs/partners.md).
+Kenya is our home market. Uganda, Tanzania, Rwanda, Zambia, Zimbabwe and
+Nigeria are ready markets, following Liquid's Azure Stack footprint
+(FS-105, FS-371). Each country brings its own licence, data rules and
+partners (FS-109; docs/partners.md; docs/compliance.md).
 
 Collect and the Gateway ran in production at Onit Bank, with W-Harambee,
-from February 2025 to June 2026 (FS-390).
+from February 2025 to June 2026 (FS-390), on M-Pesa. We are in discussion
+with new partner banks (docs/partners.md).
 
 Dibon is the first customer of its own products: the Gateway carries our
 own payments first, and insights runs on our own data first (FS-033).
@@ -99,6 +104,11 @@ own payments first, and insights runs on our own data first (FS-033).
 | What a product does, and what is built | its module, §3 |
 | Why something was decided, and what it cost | [decisions.md](decisions.md) |
 | Which partners we are talking to | [partners.md](partners.md) |
+| Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
+| What a customer and each product need to go live | [onboarding.md](onboarding.md) |
+| Every word of the portfolio PDF | [marketing/portfolio.md](marketing/portfolio.md) |
+| How big each market segment is | business/market-sizing.xlsx |
+| Drafts to partners, operators and regulators | outreach/ |
 | Everything still open | [REVIEW.md](../REVIEW.md) |
 
 Packs for each buyer type will sit in packs/ and will list modules rather
