@@ -9,7 +9,7 @@ audience: [sme, fintech]
 depends_on: [access, recon-observability, rails, mandates, messaging]
 consumed_by: []
 review_ids: [FS-026, FS-027, FS-028, FS-033, FS-036, FS-037, FS-038, FS-095, FS-124, FS-125, FS-127, FS-130, FS-131, FS-132, FS-133, FS-134, FS-135]
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # SME Recon

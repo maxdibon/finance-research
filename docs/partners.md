@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # Partners — candidates, conversations and selection decisions

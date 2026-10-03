@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability]
 review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402]
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # Mandates — signing and debit

@@ -1,7 +1,15 @@
-# Customer onboarding checklists
+---
+id: onboarding
+name: Customer onboarding checklists
+kind: checklist
+version: 0.1.0
+owner: Delivery lead
+classification: Internal
+review_ids: [FS-339, FS-343]
+last_reviewed: 2026-10-03
+---
 
-**Owner:** Delivery lead · **Classification:** Internal · **Review ids:**
-FS-339, FS-343
+# Customer onboarding checklists
 
 What we need from a customer before each product goes live. The common part
 applies to every customer; each product adds its own. Items come from each

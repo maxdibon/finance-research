@@ -9,7 +9,7 @@ audience: [sme, fintech, mfi, sacco]
 depends_on: [rails, recon-observability, messaging, mandates, identity]
 consumed_by: [sme-recon, mfi, sacco]
 review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-388]
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # Kapu Pay Gateway

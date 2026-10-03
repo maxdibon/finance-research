@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb]
 review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341]
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # Identity — verifying who a person is

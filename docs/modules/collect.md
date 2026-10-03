@@ -9,7 +9,7 @@ audience: [bank, sacco, psp, fintech]
 depends_on: [identity, rails, recon-observability, mandates, messaging]
 consumed_by: [mfi, sacco]
 review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388]
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # Kapu Collect

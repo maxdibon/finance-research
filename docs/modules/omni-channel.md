@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, fintech]
 depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco]
 consumed_by: []
 review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320]
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # Omni-channel — apps, internet banking and USSD

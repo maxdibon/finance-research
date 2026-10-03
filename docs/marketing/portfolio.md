@@ -5,7 +5,7 @@ kind: marketing
 version: 0.2.0
 owner: Commercial lead
 classification: Public once approved
-last_reviewed: 2026-10-02
+last_reviewed: 2026-10-03
 ---
 
 # Dibon Financial Services portfolio
@@ -199,7 +199,7 @@ discussion with new partner banks.
 paybill and into the customer’s account. Kapu prompts, confirms and posts;
 it never holds the money.
 **Features:**
-- Account and sub-account opening, gated on IPRS identity checks
+- Account and sub-account opening, gated on a national-register or mobile-operator name check
 - Deposits by mobile-money prompt; withdrawals to mobile, till or paybill
 - Account-to-account transfers, balances and statements
 - Partner and bank management portals
@@ -767,8 +767,8 @@ give an order, not dates: each step follows our customers.
 
 ### Rails
 
-**Now:** M-Pesa, Airtel Money and T-Kash, integrated directly
-**Next:** Bank connections, PesaLink and cards
+**Now:** M-Pesa, integrated directly
+**Next:** Airtel Money, T-Kash, bank connections, PesaLink and cards
 **Later:** The mobile-money networks of each new market
 
 ### Services

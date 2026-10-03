@@ -411,6 +411,46 @@ function checkDecisions(root) {
   return failures;
 }
 
+// ── reviewed ─────────────────────────────────────────────────────────────
+// Every document under docs/ carries last_reviewed, and it is never older
+// than the document's last change: a change being committed counts as
+// today, otherwise the date of the last commit that touched it (FS-406).
+// History lives in git, so a copy that is not a repository has nothing to
+// compare against and is skipped; the break tests make a repository.
+function localDate(d = new Date()) {
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+
+function git(root, args) {
+  return require('child_process').execFileSync('git', ['-C', root, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+}
+
+function checkReviewed(root, files) {
+  try { if (git(root, ['rev-parse', '--show-toplevel']).trim().replace(/\\/g, '/').toLowerCase() !== path.resolve(root).replace(/\\/g, '/').toLowerCase()) return []; } catch { return []; }
+  const docs = files.filter((f) => f.split(path.sep)[0] === 'docs' && f.endsWith('.md'));
+  const changed = new Map();
+  let date = null;
+  for (const line of git(root, ['log', '--format=%x00%cs', '--name-only', '--', 'docs']).split('\n')) {
+    if (line.startsWith('\0')) date = line.slice(1);
+    else if (line && !changed.has(line)) changed.set(line, date);
+  }
+  const today = localDate();
+  for (const line of git(root, ['status', '--porcelain', '--', 'docs']).split('\n')) {
+    if (line.trim()) changed.set(line.slice(3).split(' -> ').pop().replace(/^"|"$/g, ''), today);
+  }
+  const failures = [];
+  for (const file of docs) {
+    const rel = file.split(path.sep).join('/');
+    const front = read(root, file).match(/^---\n([\s\S]*?)\n---\n/);
+    const m = front && front[1].match(/^last_reviewed: (\d{4}-\d{2}-\d{2})$/m);
+    if (!m) { failures.push(fail('reviewed', file, 1, 'no last_reviewed in the front matter')); continue; }
+    const last = changed.get(rel);
+    if (last && m[1] < last) failures.push(fail('reviewed', file, 1, `changed ${last}, but last_reviewed is ${m[1]}`));
+  }
+  return failures;
+}
+
 // ── counts ───────────────────────────────────────────────────────────────
 function counts(root) {
   const tally = (xs) => xs.reduce((m, x) => ((m[x] = (m[x] || 0) + 1), m), {});
@@ -446,6 +486,7 @@ function runAll(root) {
     ...checkCopy(root),
     ...checkClaims(root),
     ...checkDecisions(root),
+    ...checkReviewed(root, files),
   ];
 }
 

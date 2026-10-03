@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, messaging, sme-recon, mandates, insights]
 consumed_by: []
 review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336]
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-03
 ---
 
 # Business Suite, on Odoo and Zoho

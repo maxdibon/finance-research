@@ -243,3 +243,40 @@ test('decisions: an entry whose row is not marked fails', () => {
   const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-230 \|.*?) \[decision\] \|$/m, '$1 |')));
   assert.deepStrictEqual(names(f), ['decisions']);
 });
+
+// The reviewed check reads git history, so these copies are repositories,
+// committed on a fixed date that no document's last_reviewed predates.
+function runInRepo(edit) {
+  const { execFileSync } = require('child_process');
+  return runWith((d) => {
+    const env = { ...process.env, GIT_AUTHOR_DATE: '2026-10-01T12:00:00', GIT_COMMITTER_DATE: '2026-10-01T12:00:00' };
+    const git = (...a) => execFileSync('git', ['-C', d, '-c', 'user.name=test', '-c', 'user.email=test@example.invalid', '-c', 'core.autocrlf=false', ...a], { env, stdio: 'ignore' });
+    git('init', '-q');
+    git('add', '-A');
+    git('commit', '-q', '--no-verify', '-m', 'base');
+    edit(d);
+  });
+}
+
+test('reviewed: a committed copy passes', () => {
+  assert.deepStrictEqual(runInRepo(() => {}), []);
+});
+
+test('reviewed: a document changed without its date fails', () => {
+  const f = runInRepo((d) => patch(d, path.join('docs', 'modules', 'crb.md'), (t) => `${t}\nA new line.\n`));
+  assert.deepStrictEqual(names(f), ['reviewed']);
+});
+
+test('reviewed: the same change with today\'s date passes', () => {
+  const p = (n) => String(n).padStart(2, '0');
+  const now = new Date();
+  const today = `${now.getFullYear()}-${p(now.getMonth() + 1)}-${p(now.getDate())}`;
+  const f = runInRepo((d) => patch(d, path.join('docs', 'modules', 'crb.md'),
+    (t) => `${t.replace(/^last_reviewed: .*$/m, `last_reviewed: ${today}`)}\nA new line.\n`));
+  assert.deepStrictEqual(f, []);
+});
+
+test('reviewed: a document with no last_reviewed fails', () => {
+  const f = runInRepo((d) => patch(d, path.join('docs', 'modules', 'crb.md'), (t) => t.replace(/^last_reviewed: .*\n/m, '')));
+  assert.ok(names(f).includes('reviewed'));
+});
