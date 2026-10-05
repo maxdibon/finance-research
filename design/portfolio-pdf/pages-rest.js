@@ -362,7 +362,7 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
 
   const WHO = copy.section('Who it is for');
   const WHO_END = copy.section('Who it is for, closing');
-  const seg = byOrder(['bank', 'bank', 'sacco', 'people', 'mfi', 'mfi', 'cube', 'rails', 'gateway', 'store'],
+  const seg = byOrder(['bank', 'bank', 'bank', 'sacco', 'people', 'mfi', 'mfi', 'shield', 'cube', 'rails', 'gateway', 'store'],
     WHO.items().map((it) => [inline(it.title), inline(it.get('Start with')), inline(it.get('Add'))]), 'Who it is for');
   const page17 = `
 <section class="page" id="p18">
@@ -572,14 +572,14 @@ const CSS = `
 .stile b { font: 700 11pt/1.2 var(--display); }
 .stile span { font-size: 9.5pt; color: #e7d3df; }
 /* Page 17 · segments */
-.segs { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8mm; row-gap: 2.2mm; margin-top: 1mm; }
-.seg { display: grid; grid-template-columns: 11mm 1fr; gap: 3.5mm; align-items: start; padding: 2mm 0 4mm; border-bottom: 0.3mm solid var(--line); }
+.segs { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8mm; row-gap: 1.8mm; margin-top: 1mm; }
+.seg { display: grid; grid-template-columns: 11mm 1fr; gap: 3.5mm; align-items: start; padding: 1.6mm 0 2.6mm; border-bottom: 0.3mm solid var(--line); }
 .seg:nth-last-child(-n+2) { border-bottom: 0; }
 .seg .disc, .int .disc { width: 12mm; height: 12mm; border-radius: 50%; border: 0.6mm solid var(--amber); display: grid; place-items: center; }
 .seg .disc svg, .int .disc svg { width: 6.5mm; height: 6.5mm; }
 .seg .disc { width: 10.5mm; height: 10.5mm; }
-.seg b { display: block; font: 700 11pt/1.25 var(--display); color: var(--aubergine); margin-bottom: 1mm; }
-.seg p { margin: 0; font-size: 10pt; }
+.seg b { display: block; font: 700 10.6pt/1.2 var(--display); color: var(--aubergine); margin-bottom: 0.9mm; }
+.seg p { margin: 0; font-size: 9.6pt; line-height: 1.42; }
 .seg em { font-style: normal; font: 700 7pt/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-text); margin-right: 1.5mm; }
 /* Page 18 · integrations */
 .integ { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9mm 7mm; margin-top: 4mm; }

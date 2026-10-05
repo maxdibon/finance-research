@@ -486,6 +486,11 @@ services it is built on.
 **Eyebrow:** Who it is for
 **Heading:** Where to start
 
+### Tier-1 banks
+
+**Start with:** Messaging and USSD; digital-lending channels
+**Add:** Reconciliation; financial-crime screening, coming soon
+
 ### Tier-2 banks with a core but a manual back office
 
 **Start with:** Reconciliation, with approvals and mandates
@@ -516,6 +521,11 @@ roadmap
 
 **Start with:** MFI on your existing core; Reconciliation
 **Add:** The Business suite; Kapu Core when you are ready to move
+
+### Lenders getting licensed by CBK
+
+**Start with:** MFI on Kapu Core, with CBK's lender rules built in
+**Add:** Compliance, coming soon; credit bureaus, coming soon
 
 ### Institutions planning a core upgrade
 
