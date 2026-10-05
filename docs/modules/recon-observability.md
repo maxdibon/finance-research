@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431]
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -82,6 +82,9 @@ reconciliation, is Planned (FS-405).
 | RO-20 | Processor settlement reports: gross transactions matched to net, batched settlements after fees | Planned | Needed if payment processors are partners — FS-096, FS-102 | 2 |
 | RO-21 | M-Pesa Pull Transactions as a source: each shortcode's transactions fetched on a schedule and whenever a callback is late, so the ledger is matched against the rail's full record | Planned | Owner, 2026-10-03 (FS-388); rails RL-20; RO-01 | 1 |
 | RO-22 | Self-service M-Pesa reversal: the customer forwards the payment's SMS; the payment is checked against the wallet and the core and the disputed funds held; the merchant consents by SMS or voice within a set time; the reversal goes through M-Pesa, then the core; a partial recovery is credited and reported; disputes become tickets | Planned | Owner, 2026-10-05 (FS-421). The need is set out in Dibon's M-Pesa reversal technical proposal for KCB (v1.0, Dec 2022, proposed only; clients/kcb/, outside git; FS-418): reversals took 24 to 48 hours through staff, the M-Pesa portal and emails. Builds on the reversal API that ran at Onit Bank (rails RL-03) | 2 |
+| RO-23 | Every transaction carries one identifier end to end, and every processing step is recorded as a signed event: a CloudEvents envelope, signed with the issuing service's own identity (SPIFFE), its keys held in OpenBao | Planned | FS-445, FS-453. All Apache-2.0 (architecture §6.1) | 1 |
+| RO-24 | Each transaction's events are hash-chained, so a change to any step shows, and the chain heads are anchored in an append-only transparency log (Trillian or Rekor) | Planned | FS-445, FS-453 | 1 |
+| RO-25 | A transaction's journey verified by anyone holding our public keys, and exported as evidence for a dispute, an audit or a regulator (with RO-13) | Planned | FS-445, FS-453 | 1 |
 
 ## 4 · Where it sits
 

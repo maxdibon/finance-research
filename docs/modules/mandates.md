@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability]
-review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416]
+review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -74,6 +74,7 @@ owner's request (FS-042).
 | MD-15 | Scheduled pulls, each preceded by a notice to the payer | Planned | FS-042 | 2 |
 | MD-16 | Cancellation by the payer at any time; any change re-consented | Planned | FS-042 | 2 |
 | MD-17 | Failed pulls: a fixed retry limit, then an exception. Never a retry outside the mandate's terms | Planned | FS-042; recon-observability §8 | 2 |
+| MD-18 | Approval from email: the request arrives in Outlook or Gmail with a summary and a single-use, short-lived signed link; anything that moves money is decided only after step-up at the act (MD-10); one click only for approvals that move none; never by replying | Planned | FS-449, FS-453. Outlook actionable messages and Gmail can carry the buttons; the authentication is ours (access AC-05) | 1 |
 
 ## 4 · Where it sits
 

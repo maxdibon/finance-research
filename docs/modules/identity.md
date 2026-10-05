@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, financial-crime]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-431]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-431, FS-448, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -61,6 +61,9 @@ requirements (MFI PRD §2, problem 5).
 | ID-09 | Registers in other countries, per country | Planned | FS-109 | later |
 | ID-10 | The result, its source reference and the evidence kept; never a copy of the register's record | Planned | docs/architecture.md §6 | 1 |
 | ID-11 | Phone-number ownership by a one-time code sent to the number | Planned | FS-205. Split from ID-05; no record shows it ran | 1 |
+| ID-12 | Each account bound at enrolment to the ID number, the phone number and the SIM's IMSI; the phone number alone is never the identity | Planned | FS-448, FS-453 | 1 |
+| ID-13 | An IMSI changed since enrolment, from a swap or a recycled number, holds money movement and credential resets until the customer is re-verified (financial-crime FC-02; rails RL-22) | Planned | FS-448, FS-453. The subscriber regulations do not address recycling (law register LR-22): it is each operator's practice | 1 |
+| ID-14 | The operator's name check (ID-05) re-run on a schedule and whenever a dormant account wakes; a mismatch freezes the mobile channel until the customer is re-verified | Planned | FS-448, FS-453 | 1 |
 
 ## 4 · Where it sits
 

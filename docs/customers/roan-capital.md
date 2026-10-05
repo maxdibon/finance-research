@@ -73,7 +73,7 @@ missing. *Gap* means no capability does it yet.
 | RC-14 | Behaviour score for repeat borrowers, from repayment timing | — | Gap | No capability scores repayment behaviour |
 | RC-15 | A Class A borrower downgraded automatically on a pattern of late payment | — | Gap | Classification is reported (MF-14), not changed by rule |
 | RC-16 | Committee composition and the escalation threshold configurable | MD-01, MD-02 | Covered | Effective-dated and audited |
-| RC-17 | Review dashboards; a committee screen with per-member comments and a vote tracker; an escalation banner | MD-05, MD-09 | Partial | Decisions carry identity, comment and time (MD-05); the vote tracker comes with quorum steps |
+| RC-17 | Review dashboards; a committee screen with per-member comments and a vote tracker; an escalation banner | MD-05, MD-09, MD-18 | Partial | Decisions carry identity, comment and time (MD-05); the vote tracker comes with quorum steps. Committee members can act from Outlook or Gmail, with step-up at the act (MD-18) |
 
 ### Disbursement and repayment (§2.2)
 

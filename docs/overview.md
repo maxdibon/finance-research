@@ -32,9 +32,10 @@ money instead of five that disagree.
 1. **We hold nobody's money unless we are licensed to.** Funds sit at the
    institution, the merchant or a licensed partner. We prompt, instruct,
    match and report (docs/architecture.md §3).
-2. **Every record has one home.** The funds ledger holds money, Odoo holds
-   who owes what, and the recon engine holds what happened between them
-   (docs/architecture.md §2).
+2. **Every record has one home.** The funds ledger holds money and loans:
+   accounts, balances and loan schedules. Odoo holds the parties and the
+   obligations outside the ledger: invoices, fees and charges. The recon
+   engine holds what happened between them (docs/architecture.md §2).
 3. **Nothing is guessed.** An unmatched payment stays visible until
    evidence places it. In these documents, a capability we have not built
    is not described as though we had. The customer-facing portfolio is the

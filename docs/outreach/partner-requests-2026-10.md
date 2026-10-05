@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # Partner requests, October 2026
@@ -122,6 +122,9 @@ Dibon's banking platform
 >    before every payout.
 > 3. **Pull Transactions**, so that a payment whose confirmation never
 >    arrives is still found and matched.
+> 4. **Notice when a number is recycled**, or a way to see how long the
+>    current subscriber has held it, so an account is never taken over by a
+>    number's next owner.
 >
 > Could you tell us:
 >
@@ -167,6 +170,8 @@ adjust the second paragraph if it was not.
 > 3. **A SIM-change check**, before money moves, if you offer one.
 > 4. **A way to fetch a wallet's or merchant's transactions**, so that a
 >    payment whose confirmation never arrives is still found and matched.
+> 5. **Notice when a number is recycled**, or a way to see how long the
+>    current subscriber has held it.
 >
 > Could you tell us what agreement each needs, whether Dibon can hold it
 > as a technology provider or each institution must, the commercial terms,
@@ -205,6 +210,8 @@ built (FS-393).
 >    opening and before payouts.
 > 3. **A SIM-change check** before money moves, if available.
 > 4. **Transaction statements by API**, for daily reconciliation.
+> 5. **Notice when a number is recycled**, or a way to see how long the
+>    current subscriber has held it.
 >
 > Could you share your API documentation, the agreement each service
 > needs, whether Dibon can hold it as a technology provider, the commercial

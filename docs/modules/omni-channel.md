@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, fintech]
 depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco, financial-crime]
 consumed_by: []
-review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431, FS-443, FS-450, FS-452]
+review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431, FS-443, FS-450, FS-452, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -74,9 +74,9 @@ of its own. Rows with that evidence are **Built**; the rest are
 | OC-14 | English and Swahili | Built | KCB release notes 3.2.3 (Dec 2022) and 3.2.34 (Mar 2024) and the MMC API specification v2.7 (Jan 2024), held in clients/kcb/ outside git: menus and messages in English and Swahili (FS-416) | 2 |
 | OC-15 | The app backend: Appwrite behind Keycloak, or our own channel API service | Planned | FS-167 to FS-171 — FS-238 | 1 |
 | OC-16 | Banking by chat, on WhatsApp or Telegram | Planned | messaging MS-06, MS-07. The KCB menu platform is specified for WhatsApp, Telegram and web as well as USSD; only USSD is shown in production (FS-416) | later |
-| OC-17 | Field-officer app, offline first, for low-end Android: onboarding and KYC capture, loan applications and appraisal visits, collateral photos with location and time, visit logs and arrears tasks; synced when a connection returns | Planned | FS-450. The app behind Kapu Core KC-14; used by MFI, Sacco and Core | 2 |
-| OC-18 | Collections in the field: the officer sends a payment prompt to the customer's own phone on M-Pesa, Airtel Money or T-Kash, and the receipt goes by SMS; no cash in the officer's hands where it can be avoided | Planned | FS-450, FS-452. All three wallets from the start, as in v1 (FS-407); rails RL-03, RL-04, RL-05 | 2 |
-| OC-19 | Field controls: the device bound to the officer, remote wipe, every capture attributed and timestamped, and SMS or USSD as a fallback where there is no data | Planned | FS-450 | 2 |
+| OC-17 | Field-officer app, offline first, for low-end Android: onboarding and KYC capture, loan applications and appraisal visits, collateral photos with location and time, visit logs and arrears tasks; synced when a connection returns | Planned | FS-450. The app behind Kapu Core KC-14; used by MFI, Sacco and Core. Owner, 2026-10-05: in v1 (FS-453) | 1 |
+| OC-18 | Collections in the field: the officer sends a payment prompt to the customer's own phone on M-Pesa, Airtel Money or T-Kash, and the receipt goes by SMS; no cash in the officer's hands where it can be avoided | Planned | FS-450, FS-452. All three wallets from the start, as in v1 (FS-407); rails RL-03, RL-04, RL-05. Owner, 2026-10-05: in v1 (FS-453) | 1 |
+| OC-19 | Field controls: the device bound to the officer, remote wipe, every capture attributed and timestamped, and SMS or USSD as a fallback where there is no data | Planned | FS-450. Owner, 2026-10-05: in v1 (FS-453) | 1 |
 
 ## 4 · Where it sits
 

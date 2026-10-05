@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-431]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-431, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -220,6 +220,13 @@ Matching rules that hold on every rail:
 ## 6 · Shared services and the bus
 
 - **Event bus:** Kafka between services.
+- **Traceability:** every transaction carries one identifier end to end;
+  each processing step is a signed event (CloudEvents, signed with the
+  service's SPIFFE identity, keys in OpenBao), hash-chained and anchored in
+  an append-only transparency log (Trillian or Rekor), so its journey can
+  be verified by anyone holding our public keys (recon RO-23 to RO-25,
+  FS-453). OpenTelemetry and Jaeger carry operational traces; they are not
+  the evidence.
 - **Financial crime and compliance:** one service for fraud scoring,
   sanctions and PEP screening, cases and the reports institutions file
   (docs/modules/financial-crime.md, FS-431). **We detect and prepare; the

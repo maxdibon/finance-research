@@ -537,3 +537,18 @@ its own entry.
 - **Costs (inferred):** certified testers and AML-qualified staff before
   the service can be sold; insurance; and a market for assurance that
   shrinks as we win customers, because every customer leaves it.
+
+## FS-453 · Traceability, SIM controls, email approvals and the field channel in v1
+
+- **Chose:** in phase 1: signed, hash-chained, verifiable transaction events
+  (recon RO-23 to RO-25); accounts bound to ID, phone number and IMSI, with
+  holds on an IMSI change and scheduled name checks (identity ID-12 to
+  ID-14, financial-crime FC-02); approval from email with step-up at the
+  act (mandates MD-18); the field-officer app and collections on all three
+  wallets (omni-channel OC-17 to OC-19, Kapu Core KC-14).
+- **Argued against:** leaving traceability to logs and operational traces,
+  which cannot be verified by a third party; treating the phone number as
+  the identity; approving money by email reply; a field app later.
+- **Costs (inferred):** phase 1 gains 7 new capabilities and 5 moved up from
+  phase 2, and with them a signing service, a transparency log and an
+  offline mobile app to build and operate before the first release.

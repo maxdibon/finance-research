@@ -64,7 +64,7 @@ other modules keep their history in the evidence (FS-431).
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
 | FC-01 | Payment risk scoring before money moves: behaviour, device, SIM-swap status, account age and velocity, with hold, step-up or block as the outcome | Planned | Moved from Gateway GW-09 ("must not be retrofitted", 8 Jun). Controls from the youverify guide (FS-422) | 2 |
-| FC-02 | Transfers above a limit held for a set period after a SIM swap, using the operator's SIM-swap check (rails RL-22) | Planned | FS-422; omni-channel OC-06 | 2 |
+| FC-02 | Transfers above a limit held for a set period after a SIM swap, using the operator's SIM-swap check (rails RL-22) | Planned | FS-422; omni-channel OC-06. Owner, 2026-10-05: in v1 (FS-453) | 1 |
 | FC-03 | Integration with an institution's existing fraud system | Planned | Moved from recon RO-12 (the reconciliation proposal: one line, no specification) | 2 |
 | FC-04 | Agent and merchant monitoring: velocity and ratio checks, fake-reversal patterns, networks of mule accounts | Planned | FS-422; the mutual evaluation found agents not adequately risk-assessed (R.14; FS-428) | 2 |
 | FC-05 | Sanctions screening against UN and domestic designations, at onboarding and whenever a list changes, with matches frozen within 24 hours | Planned | Moved from identity ID-08 and recon RO-15 (FS-098). Law register LR-13 to LR-16; lenders under LR-03 reg 64, including Roan Capital. Phase 1 (FS-431) | 1 |
