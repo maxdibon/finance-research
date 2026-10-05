@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -297,6 +297,7 @@ its own entry.
   national register (IPRS) as v1 for account opening, with verification
   vendors shown as coming soon (FS-409). PesaLink is shown as coming soon
   everywhere (FS-408).
+- **Update (2026-10-05):** business registration (BRS) joins v1 (FS-415).
 
 ## FS-311 · Kapu Core: the native mode becomes a product
 

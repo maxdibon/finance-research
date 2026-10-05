@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb]
 review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392]
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # Identity — verifying who a person is
@@ -57,7 +57,7 @@ requirements (MFI PRD §2, problem 5).
 | ID-04 | Liveness and face match against the ID photo | Planned | FS-204 — vendor not chosen; candidates Smile ID (PT-30), MetaMap (PT-33, owned by Incode since June 2024), Spin Mobile (PT-36) and Sumsub (PT-37); FS-340, FS-382 | 2 |
 | ID-05 | Phone-number ownership: the number checked against the name the operator holds for it | Built | Ran in production at Onit Bank, Feb 2025 to Jun 2026, as the gate on collect CO-02's account opening, under the bank's own agreements with Safaricom and Airtel (FS-390, FS-392). A new customer needs its own agreements, or Dibon's (compliance LC-13). For M-Pesa numbers, Safaricom's Hakikisha also returns the registered name (rails RL-21, Planned; FS-387) | 1 |
 | ID-06 | Tax PIN validation | Planned | FS-205 | 2 |
-| ID-07 | Business verification: registration, directors, beneficial owners | Planned | FS-090 | 2 |
+| ID-07 | Business verification: registration, directors, beneficial owners | Planned | FS-090. Owner, 2026-10-05: business registration (BRS) moves to v1 (FS-415) | 1 |
 | ID-08 | Sanctions and politically-exposed-person screening | Planned | FS-098. May sit in a compliance service instead | 2 |
 | ID-09 | Registers in other countries, per country | Planned | FS-109 | later |
 | ID-10 | The result, its source reference and the evidence kept; never a copy of the register's record | Planned | docs/architecture.md §6 | 1 |
@@ -119,7 +119,7 @@ mode, to Fineract.
 | Safaricom Hakikisha | read | Daraja API | Planned (ID-05) — rails RL-21 |
 | One-time code by SMS | out | messaging | Planned (ID-11) |
 | Tax authority PIN check | read | KRA GavaConnect API | Planned (ID-06) — partners PT-35 |
-| Business registration service | read | API, if available | Planned (ID-07) — FS-205 |
+| Business registration service (BRS) | read | API, if available | Planned (ID-07), phase 1 — FS-205, FS-415 |
 | Other countries' registers | read | per country | Planned (ID-09) |
 
 ## 7 · Regulatory position

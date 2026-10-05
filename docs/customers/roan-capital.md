@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414]
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # Roan Capital — delivery map
@@ -49,7 +49,7 @@ missing. *Gap* means no capability does it yet.
 |---|---|---|---|---|
 | RC-01 | Borrowers as individuals, businesses and statement-based entities | KC-01, MF-01 | Partial | Kapu Core holds individuals and businesses; the statement-based entity type is not modelled |
 | RC-02 | National ID and passport checked against IPRS in real time, with the cost of each query logged | ID-01, MF-02 | Partial | The document logs KES 5 a query; direct access is KES 20 a check plus KES 50,000 to connect (partners PT-29, compliance LC-12). Passport coverage unconfirmed (FS-329). Roan Capital provides the credentials (assumption 1) |
-| RC-03 | Company status and directors checked with the Business Registration Service | ID-07 | Gap | ID-07 is phase 2; this document needs it in the MVP. Decide the phase |
+| RC-03 | Company status and directors checked with the Business Registration Service | ID-07 | Covered | ID-07 moved to phase 1, so it is in the MVP (FS-415) |
 | RC-04 | Documents uploaded and stored: ID, KRA PIN, photo, certificate of incorporation, directors' guarantees; status per document | ID-02, MF-02 | Covered | |
 | RC-05 | Bank and M-Pesa statements (3 to 12 months) ingested for appraisal | — | Gap | Reconciliation ingests statements (RO-01) for matching, not for appraisal. Needs a parser feeding RC-11 |
 | RC-06 | No loan account until verification is complete | MF-02 | Covered | The completeness gate cannot be overridden |
@@ -128,7 +128,7 @@ replacement (MF-05).
 | 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules | FS-400 | Open |
 | 3 | 1% a day default interest: within the in duplum rule? | FS-400 | Open; the cap is MF-21 |
 | 4 | The interest rate's unit | FS-395 | Open |
-| 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413 | Open |
+| 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413, FS-415 | BRS answered: v1. Land titles open |
 | 6 | Disbursement banks: NCBA only, or NCBA and Access Bank? (RC-18) | FS-395 | Open |
 | 7 | The role list (RC-34) | FS-395 | Open |
 | 8 | Approval chain and loan products | FS-399, FS-400 | Answered: both are configuration |

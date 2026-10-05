@@ -5,7 +5,7 @@ kind: marketing
 version: 0.2.0
 owner: Commercial lead
 classification: Public once approved
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # Dibon Financial Services portfolio
@@ -560,8 +560,7 @@ suggest where to begin, on your own data.
 
 ### Identity
 
-**Integrated:** IPRS; Documents; Liveness
-**Coming soon:** Business registration
+**Integrated:** IPRS; Business registration; Documents; Liveness
 **Note:** Checked before an account opens
 
 ### Credit bureaus
