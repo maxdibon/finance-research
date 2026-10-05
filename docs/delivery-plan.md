@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477]
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490]
 last_reviewed: 2026-10-05
 ---
 
@@ -18,7 +18,8 @@ builds that at once. This plan cuts it into releases, each started by a
 customer event and finished by a definition of done, so the work in hand
 is always what a signed customer needs next.
 
-**Phases and releases:** a capability's *phase* says whether it is in v1;
+**Phases and releases:** a capability's *phase* says whether it is in v1
+(capped, below);
 its *release* says when it is built. A capability is in the earliest
 release that needs it.
 
@@ -60,6 +61,18 @@ the check keeps the two in step):
 
 The rest of the security baseline (SE-03, SE-06, SE-07, SE-14 to SE-16,
 SE-23 to SE-25) follows in R2, before a bank goes live.
+
+## The v1 rule
+
+**The current scope is the target** (FS-490): v1 is everything in phase 1
+today, and it does not grow by drift.
+
+**v1 cap:** 221 capabilities in phase 1 (FS-490).
+
+Nothing moves into phase 1 unless something of similar size moves out, or
+the team grows to carry it. Raising the cap is a decision: the line above
+changes, citing the register row that decided it. The check tool counts
+phase 1 across the modules and fails when it exceeds the cap.
 
 ## Definition of done, for every release
 

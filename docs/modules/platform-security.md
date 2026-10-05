@@ -135,6 +135,9 @@ recon-observability (metrics, logs and alerting, RO-16 to RO-18).
 **Used by:** every module, which is why no module lists it in its own
 front matter.
 
+**Each institution has its own instance** (architecture §9, FS-491): its
+own namespace, databases, keys and backups, built from the same code.
+
 **Who holds which record** (docs/architecture.md §2):
 
 | Record | System of record | This module |

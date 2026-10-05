@@ -615,6 +615,32 @@ function checkDependencies(root) {
   return failures;
 }
 
+// ── scope ────────────────────────────────────────────────────────────────
+// v1 is capped (FS-490): the number of phase-1 capabilities across the
+// modules may not exceed the cap the delivery plan states. Raising it is a
+// decision recorded on that line.
+const DELIVERY = path.join('docs', 'delivery-plan.md');
+
+function checkScope(root) {
+  if (!fs.existsSync(path.join(root, DELIVERY))) return [fail('scope', DELIVERY, 0, 'delivery plan missing')];
+  const text = read(root, DELIVERY);
+  const m = text.match(/^\*\*v1 cap:\*\* (\d+) capabilities in phase 1 \((FS-\d{3})(?:, FS-\d{3})*\)\.$/m);
+  if (!m) return [fail('scope', DELIVERY, 0, 'no "**v1 cap:** N capabilities in phase 1 (FS-xxx)." line')];
+  const cap = +m[1];
+  let n = 0;
+  for (const file of moduleFiles(root)) {
+    const t = read(root, file);
+    let inSection = false;
+    for (const line of t.split('\n')) {
+      if (/^## /.test(line)) inSection = /^## 3 · /.test(line);
+      if (!inSection) continue;
+      const c = line.split('|').slice(1, -1).map((x) => x.trim());
+      if (/^[A-Z]{2}-\d{2}$/.test(c[0] || '') && c[c.length - 1] === '1') n++;
+    }
+  }
+  return n > cap ? [fail('scope', DELIVERY, 0, `phase 1 has ${n} capabilities; the v1 cap is ${cap}. Move something out, or raise the cap by decision`)] : [];
+}
+
 // ── reviewed ─────────────────────────────────────────────────────────────
 // Every document under docs/ carries last_reviewed, and it is never older
 // than the document's last change: a change being committed counts as
@@ -695,6 +721,7 @@ function runAll(root) {
     ...checkAssurance(root),
     ...checkReferences(root, files),
     ...checkDependencies(root),
+    ...checkScope(root),
     ...checkReviewed(root, files),
   ];
 }

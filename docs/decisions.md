@@ -597,3 +597,27 @@ its own entry.
 - **Costs (inferred):** every new law in scope becomes product work, and
   phase 1 carries rules (the lender regulations, sanctions screening) that
   a lighter product would leave to the customer.
+
+## FS-490 · v1 is capped at today's scope
+
+- **Chose:** the current phase 1 (221 capabilities) as the target, and a
+  cap the check enforces: nothing moves in unless something of similar
+  size moves out or the team grows.
+- **Argued against:** redefining v1 as the first two releases only, which
+  would have narrowed the promise; and letting phase 1 grow as each good
+  idea arrived, which had added a dozen capabilities in two days.
+- **Costs (inferred):** v1 stays large for a team of four builders; the
+  delivery plan's releases, not a smaller v1, carry the sequencing, and
+  dates follow the team.
+
+## FS-491 · Keep the planned stack; an isolated instance per institution
+
+- **Chose:** the full platform stack as designed, and one isolated instance
+  per institution: its own namespace, databases, keys and backups.
+- **Argued against:** a staged, lighter stack for the first release, and a
+  shared control plane with per-institution data, both of which cost less
+  to run.
+- **Costs (inferred):** operating work grows with every institution;
+  automation of instances (GitOps, fleet upgrades) becomes a phase-1 need,
+  and the DevSecOps rota carries more per customer than a shared model
+  would.

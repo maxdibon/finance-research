@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491]
 last_reviewed: 2026-10-05
 ---
 
@@ -382,6 +382,15 @@ Whether Liquid's Stack offers a hosted model service or GPU capacity is a
 question for Liquid (FS-048).
 
 ---
+
+**Tenancy: an isolated instance per institution** (FS-491). Each
+institution runs in its own instance: its own namespace and cluster
+workloads, its own databases, its own keys in OpenBao and its own backups.
+No institution's data is reachable from another's, and a compromise of one
+does not reach the rest (the lesson of shared platforms, FS-469). The cost
+is operating many instances, met by building every instance from the same
+code and configuration (GitOps), upgrading the fleet together, and
+watching all of them in one place (platform-security SE-23; recon RO-16).
 
 ## 10 · What this document does not decide
 

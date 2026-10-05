@@ -369,3 +369,13 @@ test('dependencies: a dependency the §4 prose does not name fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'modules', 'sme-recon.md'), (t) => t.replace(' Also crb (individual lookups from the ERP).', '')));
   assert.deepStrictEqual(names(f), ['dependencies']);
 });
+
+test('scope: a capability moved into phase 1 past the cap fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'modules', 'insights.md'), (t) => t.replace(/^(\| IN-02 \|.*\| )2 \|$/m, '$11 |')));
+  assert.deepStrictEqual(names(f), ['scope']);
+});
+
+test('scope: moving one out keeps the count within the cap', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'modules', 'insights.md'), (t) => t.replace(/^(\| IN-02 \|.*\| )2 \|$/m, '$11 |').replace(/^(\| IN-15 \|.*\| )2 \|$/m, '$12 |').replace(/^(\| IN-01 \|.*\| )1 \|$/m, '$12 |')));
+  assert.deepStrictEqual(f, []);
+});
