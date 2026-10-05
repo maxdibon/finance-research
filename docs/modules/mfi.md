@@ -90,7 +90,7 @@ FS-393.
 | MF-18 | Further collateral types: title deeds, chattels, equipment | Planned | MFI PRD §6, Phase 2 | 2 |
 | MF-19 | CRB submission and lookups | Planned | MFI PRD §6, fast-follow. Access for unregistered lenders — FS-019 | 2 |
 | MF-20 | The borrower's registered name confirmed with M-Pesa Hakikisha before a disbursement is sent | Planned | Owner, 2026-10-03 (FS-388); rails RL-21; MF-11 | 1 |
-| MF-21 | Arrears interest and penalties capped so they never exceed what the law allows (the in duplum rule: interest in arrears no more than the principal outstanding), enforced in the service layer because the core does not | Planned | FS-400. A customer's product charges 1% a day in default | 1 |
+| MF-21 | Arrears interest and penalties capped so they never exceed what the law allows: on a non-performing loan, interest no more than the principal owing when it became non-performing (Banking Act s.44A for banks; CBK lender regulations 2026, reg 29, for non-deposit-taking lenders), reset if the loan performs and falls back; enforced in the service layer because the core does not | Planned | FS-400. A customer's product charges 1% a day in default. 2026-10-05: law register LR-03 reg 29 and LR-04 s.44A; for microfinance banks the courts are split, for Saccos there is no statutory rule, so the cap is on by default for lenders and banks and configurable otherwise (FS-427) | 1 |
 
 ## 4 · Where it sits
 
