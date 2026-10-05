@@ -448,6 +448,9 @@ messages, logins and reports as the first.
 - Insights: Every metric defined once, for dashboards and plain-language
   questions. Each answer shows how it was calculated and how fresh the data
   is.
+- Financial crime and compliance: Coming soon. Payments scored before money
+  moves; sanctions and PEP screening; alerts become cases; suspicious
+  transaction and regulatory reports prepared for the institution to file.
 **Built-on caption:** Read from each product's design: the platform
 services it is built on.
 **Short product names:**
@@ -468,6 +471,7 @@ services it is built on.
 - Credit bureaus: Bureaus
 - Payment rails: Rails
 - Insights: Insights
+- Financial crime and compliance: Compliance
 
 ## Who it is for
 
@@ -773,7 +777,7 @@ give an order, not dates: each step follows our customers.
 ### Services
 
 **Now:** Nine products on one platform, and the Business suite
-**Next:** Credit-bureau submissions and lookups
+**Next:** Credit-bureau submissions and lookups; financial-crime screening and reporting
 **Later:** Messaging partners and identity registers in each new market
 
 ### Assurance

@@ -182,7 +182,7 @@ function serviceMatrix(builtOn, caption, short) {
   }
   // Ids are the modules; names are the copy's keys, shown by their short names.
   const products = [['collect', 'Kapu Collect'], ['gateway', 'Kapu Pay Gateway'], ['escrow', 'Kapu Escrow'], ['core', 'Kapu Core'], ['mfi', 'Kapu MFI'], ['sacco', 'Kapu Sacco'], ['recon-observability', 'Reconciliation & Observability'], ['sme-recon', 'SME Reconciliation'], ['omni-channel', 'Omni-channel banking'], ['business-suite', 'Business suite']];
-  const services = [['mandates', 'Approvals and mandates'], ['messaging', 'Messaging'], [['access', 'identity'], 'Identity and access'], ['crb', 'Credit bureaus'], ['rails', 'Payment rails'], ['insights', 'Insights']];
+  const services = [['mandates', 'Approvals and mandates'], ['messaging', 'Messaging'], [['access', 'identity'], 'Identity and access'], ['crb', 'Credit bureaus'], ['rails', 'Payment rails'], ['insights', 'Insights'], ['financial-crime', 'Financial crime and compliance']];
   // A tick when the product depends on the service, or, for insights alone,
   // when insights reads from the product (FS-301). Other services that
   // depend on a product (CRB on recon) do not make the product use them.
@@ -319,7 +319,7 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
   const PS = copy.section('Platform services');
   const SHORT = new Map([...PS.get('Short product names'), ...PS.get('Short service names')].map(pair));
   const shortName = (full) => { if (!SHORT.has(full)) throw new Error(`portfolio copy: no short name for "${full}" under Platform services`); return inline(SHORT.get(full)); };
-  const svc = byOrder(['approvals', 'messaging', 'identity', 'bureau', 'rails', 'insights'],
+  const svc = byOrder(['approvals', 'messaging', 'identity', 'bureau', 'rails', 'insights', 'shield'],
     PS.get('Services').map(pair).map(([a, b]) => [inline(a), inline(b)]), 'Platform services › Services');
 
   const BS = copy.section('Business suite');
@@ -518,11 +518,11 @@ const CSS = `
 .chev li:last-child { background: var(--amber); color: var(--aubergine); }
 /* Built on: one row per product (FS-332) */
 .builton { margin-top: 4mm; }
-.bo { display: grid; grid-template-columns: 30mm 15mm 1fr; align-items: center; padding: 0.75mm 0; border-bottom: 0.3mm solid var(--line); }
+.bo { display: grid; grid-template-columns: 30mm 15mm 1fr; align-items: center; padding: 0.45mm 0; border-bottom: 0.3mm solid var(--line); }
 .bo b { font: 700 9pt/1.2 var(--display); color: var(--aubergine); }
 .bo em { font: 400 8.5pt/1 var(--body); font-style: normal; color: var(--muted); }
 .bo span { display: flex; flex-wrap: wrap; gap: 1.2mm; }
-.bo i { font: 600 7.4pt/1 var(--display); font-style: normal; color: var(--aubergine); background: var(--cream); border: 0.3mm solid #f1d9a6; border-radius: 3mm; padding: 1.1mm 2.3mm; }
+.bo i { font: 600 7.4pt/1 var(--display); font-style: normal; color: var(--aubergine); background: var(--cream); border: 0.3mm solid #f1d9a6; border-radius: 3mm; padding: 0.9mm 2mm; }
 .mx-cap { font-size: 8.5pt; color: var(--muted); margin-top: 2mm; }
 .tline .get { margin-top: 2mm; background: #fff4dc; border-left: 0.9mm solid var(--amber); border-radius: 1mm; padding: 2mm 3mm; color: var(--aubergine); font: 600 9.5pt/1.4 var(--display); max-width: 130mm; }
 .tline .get em { font-style: normal; font: 700 6.8pt/1 var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--aubergine); background: #fff; border: 0.3mm solid var(--amber); border-radius: 3mm; padding: 1.1mm 2.2mm; margin-right: 2mm; display: inline-block; }
@@ -553,8 +553,11 @@ const CSS = `
 .mod b { font: 700 10pt/1.2 var(--display); color: var(--aubergine); }
 .mod span { font-size: 8.8pt; line-height: 1.35; color: var(--muted); }
 /* Page 16 · platform services */
-.stiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4mm; }
-.stile { background: var(--aubergine); color: var(--cream); border-radius: 1.5mm; padding: 3mm 3.6mm; display: grid; grid-template-columns: 9mm 1fr; column-gap: 3.5mm; row-gap: 1mm; }
+.stiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3mm; }
+/* An odd last service runs the full width as a strip: title beside its text. */
+.stiles .stile:last-child:nth-child(odd) { grid-column: 1 / -1; grid-template-columns: 9mm 46mm 1fr; align-items: center; }
+.stiles .stile:last-child:nth-child(odd) .ico { grid-row: auto; }
+.stile { background: var(--aubergine); color: var(--cream); border-radius: 1.5mm; padding: 2.4mm 3.4mm; display: grid; grid-template-columns: 9mm 1fr; column-gap: 3.5mm; row-gap: 1mm; }
 .stile .ico { grid-row: span 2; width: 8mm; height: 8mm; stroke: var(--amber); }
 .stile b { font: 700 11pt/1.2 var(--display); }
 .stile span { font-size: 9.5pt; color: #e7d3df; }
