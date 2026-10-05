@@ -12,8 +12,8 @@ last_reviewed: 2026-10-06
 # Delivery plan — phase 1 in releases
 
 **Why this exists:** phase 1 in the modules is the whole of v1, not a
-release (FS-473). On 2026-10-05 it held 218 capability rows: 16 Built, 47
-Designed, 155 Planned (computed from the modules' §3 tables). No team
+release (FS-473). On 2026-10-06 it held 222 capability rows: 16 Built, 47
+Designed, 159 Planned (computed from the modules' §3 tables). No team
 builds that at once. This plan cuts it into releases, each started by a
 customer event and finished by a definition of done, so the work in hand
 is always what a signed customer needs next.
@@ -103,10 +103,10 @@ Four people lead the build (FS-477):
 |---|---|
 | The system developer | Kapu Core and Kapu MFI on Fineract: products, schedules, charges, the lender rules (MF-21 to MF-26), disbursement and repayment on M-Pesa and bank transfer, reusing the M-Pesa code that ran at Onit Bank (rails RL-03) |
 | An Odoo engineer | Everything Odoo does for Roan Capital: leads and the public "Request a loan" page and calculator (BS-01; Roan RC-28, RC-29), documents, the service desk (docs/operating-model.md) |
-| A DevSecOps engineer | The platform: Kubernetes, Keycloak (AC-01, AC-02, AC-08), OpenBao, the build pipeline, backups and the security minimum (SE rows above) |
+| A DevSecOps engineer | The platform: Kubernetes, Keycloak (AC-01, AC-02, AC-08), OpenBao, the document vault (ID-15), the build pipeline, backups and the security minimum (SE rows above) |
 | The CTIO | Architecture and reviews; the approval engine's design (MD-01 to MD-18); security lead; Roan Capital's acceptance with the project manager |
 
-**Building less is the plan.** Four people cannot build 66 capabilities
+**Building less is the plan.** Four people cannot build 67 capabilities
 from scratch, so R1 uses what already exists and builds only what does
 not:
 
