@@ -109,6 +109,13 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
     ...modules.map((m) => ({ rel: m.rel })),
     { rel: path.join('docs', 'decisions.md') },
     { rel: path.join('docs', 'partners.md') },
+    // Every other register and plan in docs/ (FS-480): the Master holds all
+    // of it. Outreach drafts and marketing copy are outward, not the design.
+    ...fs.readdirSync(path.join(root, 'docs')).filter((f) => f.endsWith('.md')
+      && !['overview.md', 'architecture.md', 'decisions.md', 'partners.md'].includes(f)).sort()
+      .map((f) => ({ rel: path.join('docs', f) })),
+    ...(fs.existsSync(path.join(root, 'docs', 'customers')) ? fs.readdirSync(path.join(root, 'docs', 'customers'))
+      .filter((f) => f.endsWith('.md')).sort().map((f) => ({ rel: path.join('docs', 'customers', f) })) : []),
   ].map((d) => {
     const { fields, body } = frontMatter(read(root, d.rel));
     return { ...d, fields, body };

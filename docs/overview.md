@@ -27,7 +27,7 @@ reconciliation come together with monitoring, messaging, CRM and an ERP.
 Our customers get one partner instead of five, and one account of their
 money instead of five that disagree.
 
-**Three ideas run through every product:**
+**Four ideas run through every product:**
 
 1. **We hold nobody's money unless we are licensed to.** Funds sit at the
    institution, the merchant or a licensed partner. We prompt, instruct,
@@ -42,6 +42,10 @@ money instead of five that disagree.
    one exception: it presents each product as a working v1 (FS-263), and
    every integration it claims on that basis is listed in
    design/portfolio-pdf/claims.json.
+4. **Compliance built in, not bolted on.** What our customers answer to,
+   the lender rules, sanctions screening, data protection, records, is a
+   capability in the product, checked like any other, not a report added
+   later (financial-crime; mfi MF-21 to MF-29; docs/regulation.md; FS-484).
 
 ## Who it is for
 

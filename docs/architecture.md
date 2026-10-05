@@ -228,6 +228,32 @@ Matching rules that hold on every rail:
 
 ## 6 · Shared services and the bus
 
+```
+  PRODUCTS AND CHANNELS
+  collect . gateway . escrow . core . mfi . sacco . sme-recon . omni-channel
+      |  requests (API, synchronous)            ^  events, signed
+      v                                         |  (traceability)
+ +--------------------------------------------------------------------+
+ |                EVENT BUS: Kafka, CloudEvents envelopes             |
+ +--------------------------------------------------------------------+
+      |           |          |           |           |           |
+  mandates    identity   messaging     rails     financial-   recon-
+  approvals,  KYC, NPDM, SMS, chat,   M-Pesa,    crime        observ-
+  quorum,     BRS, SIM   one-time     Airtel,    screening,   ability
+  email       binding    codes        T-Kash,    cases,       matching,
+  approval                            banks      reports      traces
+      |           |          |           |           |           |
+ +--------------------------------------------------------------------+
+ | access (Keycloak): every login, role and step-up                  |
+ | OpenBao: every key and secret     platform security: every layer  |
+ | insights: reads the three authorities and the bus; never writes   |
+ +--------------------------------------------------------------------+
+```
+
+Products ask shared services to act by API, and every state change is
+published once on the bus as a signed event, so reconciliation, financial
+crime and insights read the same facts without asking each product.
+
 - **Event bus:** Kafka between services.
 - **Security baseline:** perimeter, cluster, data, backup, vulnerability
   management, the build pipeline, round-the-clock detection and endpoints

@@ -489,3 +489,9 @@ A row does not change status silently.
 | FS-476 | Eric | AI-first service desk: where do we start? | ANSWERED | Plan in docs/operating-model.md; answer in chat |
 | FS-477 | Eric | The build is led by the system developer, one Odoo engineer, one DevSecOps engineer and the CTIO | ANSWERED | Delivery plan and operating model updated; consequences in chat |
 | FS-478 | Eric | Are the Markdown files updated and in sync? | ANSWERED | Mostly. Fixed 2026-10-05: 33 one-sided dependency links between modules and 10 modules whose §4 prose lagged their front matter (the last sweep had made them two-way in one direction only); "SE-01 to SE-19" in the architecture and the approval pack; onboarding OB-COM-13 now asks for security and incident contacts. New dependencies check keeps both in step |
+| FS-479 | Eric | Add an ASCII diagram for the shared services and the bus | ANSWERED | architecture §6 |
+| FS-480 | Eric | Privacy: is it covered, and is it included in the Master builder? | OPEN | Answer in chat **2026-10-05:** the Master built from 23 documents and left out every register and plan; it now builds from all of docs/ but outreach drafts and marketing copy (34). Privacy: covered in parts, no single place; proposal in chat |
+| FS-481 | Eric | Review what we need to confirm with Liquid | ANSWERED | One list in docs/outreach/liquid-partner-request.md |
+| FS-482 | Eric | How have we considered business continuity (BCP)? | OPEN | Answer in chat **2026-10-05:** covered in parts (recovery objectives, backups, safe mode, drills, incident commitments); no business continuity plan; proposal in chat |
+| FS-483 | Eric | Which portfolio updates are pending? Suggestion: page 17 as pillars instead of pills for service dependencies | OPEN | List in chat **2026-10-05:** list in chat |
+| FS-484 | Eric | Adopt the principle "compliance built in, not bolted on" | DECIDED | A fourth idea in the overview [decision] |

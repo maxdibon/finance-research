@@ -586,3 +586,14 @@ its own entry.
   guideline sets 2 hours; until the 1-hour target is reached, such a
   customer waits or we staff up first. Recovery objectives for failures
   are unchanged and rely on automatic failover.
+
+## FS-484 · Compliance built in, not bolted on
+
+- **Chose:** a fourth idea that runs through every product: the rules
+  customers answer to are capabilities, with ids, statuses, evidence and
+  tests, from the law register to the module rows they drive.
+- **Argued against:** compliance as a reporting layer added after the
+  product, which is how most vendors sell it and how gaps hide.
+- **Costs (inferred):** every new law in scope becomes product work, and
+  phase 1 carries rules (the lender regulations, sanctions screening) that
+  a lighter product would leave to the customer.
