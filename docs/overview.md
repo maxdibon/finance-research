@@ -5,7 +5,7 @@ kind: overview
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Dibon financial services — the portfolio
@@ -116,6 +116,7 @@ own payments first, and insights runs on our own data first (FS-033).
 
 | If you want | Read |
 |---|---|
+| Where to start, if you are new | [start-here.md](start-here.md) |
 | Who holds which record, and where the licence line is | [architecture.md](architecture.md) |
 | What a product does, and what is built | its module, §3 |
 | Why something was decided, and what it cost | [decisions.md](decisions.md) |

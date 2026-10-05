@@ -15,6 +15,7 @@ Markdown or a preview before they reach the PDF (FS-009).
 README.md            this file
 REVIEW.md            the intake register — every point raised, with an id
 docs/                the work. The only place we edit
+  start-here.md      a first week here: reading order by role, the rules
   architecture.md    who holds what: the three authorities, the custody
                      line, ledger modes, feeds, hosting
   decisions.md       what each decision cost, and what was argued against
@@ -33,6 +34,7 @@ docs/                the work. The only place we edit
   approval-pack.md   what customers file with their regulator about us
   assurance.md       testing for institutions we do not supply; conflicts
   bank-channel.md    banks offering SME Recon and Odoo to their SMEs
+  specs/             build specifications, one per R1 component
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
   marketing/
