@@ -139,19 +139,20 @@ F['SME Reconciliation'] = figure('sm', 640, 224,
   'Statements in, matches into the ERP. Payments approved in the ERP leave the business’s own account; Dibon only instructs.');
 
 F['Omni-channel banking'] = figure('oc', 640, 210,
-  'The mobile app, internet banking and USSD all call one channel API. Before money moves, it runs step-up authentication, and a SIM-swap check where the operator offers one. It calls the products, which post to and read from your core; balances come back with the time they were fetched.',
-  box('box', 16, 12, 130, 44, 'Mobile app') +
-  box('box', 16, 82, 130, 44, 'Internet banking') +
-  box('box', 16, 152, 130, 44, 'USSD', 'any phone') +
+  'The mobile app, internet banking, USSD and WhatsApp with its chatbot all call one channel API. Before money moves, it runs step-up authentication, and a SIM-swap check where the operator offers one. It calls the products, which post to and read from your core; balances come back with the time they were fetched.',
+  box('box', 16, 6, 130, 40, 'Mobile app') +
+  box('box', 16, 56, 130, 40, 'Internet banking') +
+  box('box', 16, 106, 130, 40, 'USSD', 'any phone') +
+  box('box', 16, 156, 130, 40, 'WhatsApp', 'and a chatbot') +
   box('dibon', 220, 82, 160, 44, 'Channel API') +
   box('box', 220, 156, 160, 44, 'Step-up · SIM swap', 'before money moves') +
   box('box', 460, 12, 164, 44, 'Products', 'Collect · MFI · Sacco') +
   box('funds', 460, 152, 164, 44, 'Your core', 'the balances') +
-  ctl('oc', 146, 34, 218, 96) + ctl('oc', 146, 104, 218, 104) + ctl('oc', 146, 174, 218, 112) +
+  ctl('oc', 146, 26, 218, 94) + ctl('oc', 146, 76, 218, 100) + ctl('oc', 146, 126, 218, 108) + ctl('oc', 146, 176, 218, 116) +
   ctl('oc', 300, 126, 300, 154, true) +
   ctl('oc', 380, 96, 458, 40) + label(410, 60, 'calls', 'end') +
   ctl('oc', 542, 56, 542, 150) + label(550, 106, 'posts · reads', 'start') +
   ctl('oc', 460, 172, 382, 118) + label(432, 128, 'fetched-at time', 'middle', true),
-  'Three channels, one API, one answer. Anything that moves money passes step-up first, and a SIM-swap check where the operator offers one.');
+  'Four channels, one API, one answer. Anything that moves money passes step-up first, and a SIM-swap check where the operator offers one.');
 
 module.exports = { F };

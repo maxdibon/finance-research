@@ -112,7 +112,7 @@ they decided.
 **Problem:** Members phone in to ask a balance, a loan limit, or whether a
 contribution arrived.
 **With Dibon:** *Omni-channel banking* gives every member an app, internet
-banking and USSD under your brand, with the same answer on each.
+banking, USSD and WhatsApp under your brand, with the same answer on each.
 
 ### Growth held back by paperwork
 
@@ -151,7 +151,7 @@ traces back to one transaction.
 ## How we build, the stack
 
 **Layers:**
-- Channels: Mobile app · Internet banking · USSD
+- Channels: Mobile app · Internet banking · USSD · WhatsApp and a chatbot
 - Products: Collect · Gateway · Escrow · Core banking · MFI · Sacco ·
   Reconciliation · SME Reconciliation
 - Platform: Approvals · Messaging · Identity and access · Credit bureaus ·
@@ -379,13 +379,13 @@ in the ERP leave the business’s own account; Dibon only instructs.
 
 ### Omni-channel banking
 
-**Tagline:** App, web and USSD, under your brand
-**Intro:** A mobile app, internet banking and USSD menus, white-labelled for
-each institution, on one channel API, so a balance is the same everywhere.
+**Tagline:** App, web, USSD and chat, under your brand
+**Intro:** A mobile app, internet banking, USSD menus and WhatsApp with a
+chatbot, white-labelled for each institution, on one channel API, so a balance is the same everywhere.
 Anything that moves money asks the member to confirm who they are at that
 moment, and is held if the phone's SIM has changed. Field officers work
 offline in an app of their own.
-**Diagram caption:** Three channels, one API, one answer. Anything that
+**Diagram caption:** Four channels, one API, one answer. Anything that
 moves money passes step-up first, and a SIM-swap check where the operator
 offers one.
 **Features:**
@@ -396,7 +396,7 @@ offers one.
   Money and T-Kash
 - USSD on any phone, with lower limits than the app
 **Facts:**
-- Channels: App, internet banking, USSD, field app
+- Channels: App, web, USSD, WhatsApp, chatbot, field app
 - Brand: White-labelled per institution
 - For: Saccos, MFIs and banks
 

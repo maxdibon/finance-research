@@ -228,7 +228,7 @@ const CORE_FIG = `<figure class="dg-fig"><svg class="dg" viewBox="0 0 640 196" r
 <rect class="dibon" x="245" y="128" width="150" height="48" rx="6"/><text class="on" x="320" y="149" text-anchor="middle">Kapu Core</text><text class="s on" x="320" y="164" text-anchor="middle">the ledger</text>
 <line class="ctl" x1="320" y1="68" x2="320" y2="126" marker-end="url(#kc-c)"/><text x="328" y="101" text-anchor="start">posts, in real time</text>
 <rect class="box" x="474" y="104" width="150" height="34" rx="6"/><text x="549" y="125" text-anchor="middle">Kapu MFI · Sacco</text>
-<rect class="box" x="474" y="148" width="150" height="34" rx="6"/><text x="549" y="169" text-anchor="middle">Apps · USSD</text>
+<rect class="box" x="474" y="146" width="150" height="44" rx="6"/><text x="549" y="165" text-anchor="middle">Apps · USSD</text><text class="s" x="549" y="179" text-anchor="middle">WhatsApp · chatbot</text>
 <line class="ctl" x1="395" y1="146" x2="472" y2="121" marker-end="url(#kc-c)" marker-start="url(#kc-c)"/><line class="ctl" x1="395" y1="160" x2="472" y2="165" marker-end="url(#kc-c)" marker-start="url(#kc-c)"/>
 <rect class="box" x="16" y="128" width="150" height="48" rx="6"/><text x="91" y="149" text-anchor="middle">Recon</text><text class="s" x="91" y="164" text-anchor="middle">ledger against the rails, daily</text>
 <line class="ctl" x1="243" y1="152" x2="168" y2="152" marker-end="url(#kc-c)"/>

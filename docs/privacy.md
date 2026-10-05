@@ -71,6 +71,7 @@ officer and the institution (FS-063).
 | PR-13 | Security events, access logs and endpoint telemetry | access AC-11; platform-security SE-13, SE-18 | Staff, customers' users | Confidential | Legitimate interest and legal obligation (security) | Open (FS-063) | Not needed | Telemetry to the managed-detection service: where it is processed is to confirm (Liquid list, item 9) |
 | PR-14 | Signed transaction events for traceability | recon-observability RO-23 to RO-25 | Payers and payees | Confidential; never Restricted values in an event | Legal obligation (records) | 7 years, as PR-02 | Covered by PR-02 | No |
 | PR-15 | Backups of all the above | platform-security SE-10, SE-20 to SE-22 | All of the above | As the source | As the source | Expire with the source's retention; nothing restored beyond it | Covered by its source | No: two Kenyan sites |
+| PR-16 | Banking by chat and the chatbot on WhatsApp | omni-channel OC-16, OC-20; messaging MS-06 | Customers, members | Confidential (balances, statements, loan status); never Restricted | Contract; consent to use WhatsApp for banking | Open (FS-063) | Needed (a transfer out of Kenya, and an AI agent) | **Yes:** the WhatsApp Business Platform is Meta's and processes outside Kenya; proof of safeguards to the Data Commissioner before it starts (s.48), and the member told (FS-487) |
 
 ## Open
 

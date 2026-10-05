@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access]
 consumed_by: [mfi, sacco, gateway, escrow, mandates, recon-observability, sme-recon, collect, core, crb, financial-crime, omni-channel, access, business-suite, identity]
-review_ids: [FS-147, FS-148, FS-149, FS-150, FS-152, FS-153, FS-155, FS-156, FS-158, FS-159, FS-160, FS-161, FS-162, FS-163, FS-164, FS-165, FS-166, FS-416, FS-419]
+review_ids: [FS-147, FS-148, FS-149, FS-150, FS-152, FS-153, FS-155, FS-156, FS-158, FS-159, FS-160, FS-161, FS-162, FS-163, FS-164, FS-165, FS-166, FS-416, FS-419, FS-487]
 last_reviewed: 2026-10-05
 ---
 
@@ -69,7 +69,7 @@ FS-150, FS-160) and the MFI PRD's SMS requirements (FR-10). Every row is
 | MS-03 | A sender ID per institution, registered with each operator | Planned | MFI PRD §7 | 1 |
 | MS-04 | SMS through partners outside Kenya (Meliora, Africa's Talking, others), and as a fallback route in Kenya | Planned | FS-148, FS-160 | 2 |
 | MS-05 | Routing and failover across routes, with cost and delivery-report quality tracked per route | Planned | FS-154 (a) | 1 |
-| MS-06 | WhatsApp through the WhatsApp Business Platform: Meta-approved templates outside the service window, free-form replies inside it | Planned | FS-147. Route — FS-161 | 2 |
+| MS-06 | WhatsApp through the WhatsApp Business Platform: Meta-approved templates outside the service window, free-form replies inside it | Planned | FS-147. Route — FS-161. Phase 1 for banking by chat (omni-channel OC-16, FS-487) | 1 |
 | MS-07 | Telegram bot, for people who have started a chat with it | Planned | FS-147 | 2 |
 | MS-08 | Push notifications to our apps | Planned | FS-147. Depends on omni-channel | 2 |
 | MS-09 | A truthful status per message: accepted, handed to the operator or platform, delivered and read only where the channel reports them, failed | Planned | FS-153 | 1 |
