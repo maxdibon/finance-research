@@ -22,6 +22,7 @@ docs/                the work. The only place we edit
   customers/         a delivery map per customer, requirement by requirement
   partners.md        partner candidates, conversations, selection decisions
   competitors.md     who we meet, and what we learn from each
+  operating-model.md the people who keep the commitments; hiring order
   overview.md        the portfolio story; links modules, restates nothing
   onboarding.md      what each customer and product needs to go live
   compliance.md      licences, registrations and certifications

@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: [collect, gateway, escrow, core, mfi, sacco, sme-recon, omni-channel, business-suite, recon-observability, financial-crime, rails, identity, messaging, mandates, insights, crb]
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468]
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471]
 last_reviewed: 2026-10-05
 ---
 
@@ -49,8 +49,8 @@ with something built.
 
 ## 3 · What it does
 
-**Every row is Planned, and in phase 1** (FS-464): a bank should not go
-live on less.
+**Every row is Planned, and in phase 1** (FS-464, FS-470): a bank should
+not go live on less.
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
@@ -73,6 +73,12 @@ live on less.
 | SE-17 | An independent penetration test every year and before each customer's go-live, by a tester we do not otherwise use for assurance | Planned | FS-464; approval pack item 8; assurance rule 1 | 1 |
 | SE-18 | Security events (logins, admin actions, step-ups) collected and kept; Restricted data never in a log | Planned | FS-464; access AC-11; architecture §7 | 1 |
 | SE-19 | Incident response: severities, a runbook, and the institution told within an agreed time of a confirmed incident, so it can meet its regulator's deadline | Planned | FS-464; recon RO-18; approval pack item 10 | 1 |
+| SE-20 | Backups in a separate security domain: their own accounts, administrators and multi-factor authentication; write-once copies, one of them offline (three copies, two media, one off-site, one offline, verified) | Planned | FS-468, FS-470 | 1 |
+| SE-21 | Backup encryption keys held outside production: split between two people and sealed offline, so backups can be decrypted with OpenBao down or compromised | Planned | FS-468, FS-470 | 1 |
+| SE-22 | Point-in-time recovery: databases archived continuously to write-once storage, restorable to the minute before an attack began | Planned | FS-468, FS-470 | 1 |
+| SE-23 | A clean rebuild from code: infrastructure as code and signed images bring up a fresh environment from nothing, never from a machine that was compromised | Planned | FS-468, FS-470 | 1 |
+| SE-24 | Safe mode, decided in advance: collections keep paying into institutions' own paybills and their cores keep running; new outgoing payments queue and reconcile later; named people decide when to enter and leave it | Planned | FS-468, FS-470 | 1 |
+| SE-25 | A ransomware drill twice a year: a restore into a clean environment against the clock, with backup keys taken from escrow | Planned | FS-468, FS-470 | 1 |
 
 **Recovery objectives** (agreed 2026-10-05, FS-466; approval pack item 9).
 Services are tiered by what they hold, not by product:
@@ -97,17 +103,30 @@ Services are tiered by what they hold, not by product:
 
 | Event | First notice | Updates | Written report |
 |---|---|---|---|
-| Significant security incident: a compromise, or an attack that takes a tier-1 service down | Within 1 hour of confirming it, by phone and email to the institution's named contacts; a strong suspicion counts, labelled "suspected" | Every 4 hours until contained | Preliminary within 12 hours; root cause within 5 working days |
+| Significant security incident: a compromise, or an attack that takes a tier-1 service down | Within 4 hours of confirming it, by phone and email to the institution's named contacts; a strong suspicion counts, labelled "suspected". Target: 1 hour (FS-471) | Every 4 hours until contained | Preliminary within 12 hours; root cause within 5 working days |
 | Personal data breach | Within 24 hours at the latest: half the 48 hours a processor has to tell the controller (Data Protection Act s.43(3), law register LR-17), so the institution can meet the Data Commissioner's 72 | With the incident | As above |
 | Other security events | In the monthly service review | — | — |
 
-- **Conditional:** the 1-hour notice holds once round-the-clock detection
-  (SE-13) and our on-call rota are contracted and staffed; until then it
-  is not signed.
+- **We start at 4 hours** (FS-471): a team of three on call can keep it
+  with managed detection (SE-13) watching around the clock. The 1-hour
+  target is signed once that service is contracted and the rota has at
+  least five people (docs/operating-model.md).
 - CBK's guideline for payment service providers sets those customers' own
   deadline: read as 24 hours or as 2 hours, to verify against the text
-  before a payment provider signs (FS-464). One hour fits under either.
+  before a payment provider signs (FS-464). Four hours meets a 24-hour
+  deadline; if the text says 2 hours, a payment provider needs the 1-hour
+  target first.
 - No service credits yet; commercials are parked (FS-024).
+
+**Recovery after a compromise** (agreed 2026-10-05, FS-468, FS-471): a
+compromise is not a failure. The systems must be proven clean before they
+run again, which takes longer than any failover.
+
+| Kind of compromise | Commitment to start | Target |
+|---|---|---|
+| Contained to one institution or one service | That institution's services restored in a separate, clean environment within 4 hours | 1 hour |
+| Platform-wide | Safe mode within 4 hours, so money keeps moving safely (SE-24); a clean restore of tier 1 within 72 hours (SE-20 to SE-23) | Safe mode in 1 hour; clean restore in 24 hours |
+
 
 ## 4 · Where it sits
 

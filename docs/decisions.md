@@ -573,3 +573,16 @@ its own entry.
   boundary to the provider, to be confirmed in Kenya; proposed recovery
   objectives and an incident commitment that become contract terms once
   confirmed.
+
+## FS-471 · Start the response commitments at 4 hours
+
+- **Chose:** first notice of a significant incident within 4 hours, and
+  recovery after a compromise starting at 4 hours (safe mode, or a
+  contained institution restored), with 1 hour as the target once managed
+  detection is contracted and the rota has at least five people.
+- **Argued against:** the 1-hour commitments from day one, which three
+  people on call cannot keep without burning out.
+- **Costs (inferred):** a payment provider may need faster notice if CBK's
+  guideline sets 2 hours; until the 1-hour target is reached, such a
+  customer waits or we staff up first. Recovery objectives for failures
+  are unchanged and rely on automatic failover.
