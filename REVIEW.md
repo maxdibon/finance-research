@@ -466,3 +466,10 @@ A row does not change status silently.
 | FS-453 | Eric | Add traceability, the SIM controls, email approvals and the field-officer channel to v1; do the rewording | DECIDED | Phase 1 throughout; decision entry. Not in the portfolio yet [decision] |
 | FS-454 | Eric | Update the overview and the other Markdown files | OPEN | Sweep 2026-10-05 against FS-389 to FS-453, by three agents with fixed file sets, reviewed before commit |
 | FS-455 | Eric | Then update the portfolio | ANSWERED | After FS-454 **2026-10-05:** v1.3: tier-1 record (unnamed) and Onit on Who we are; Kapu MFI for licensed or registered lenders, committees and email approvals, the lender rules, all three wallets; Omni-channel field app and SIM hold; Security: signed and chained transactions, email approvals re-authenticate, OpenBao; the cloud is in Kenya, provider unnamed. Every page of both editions checked against its footer |
+| FS-456 | Eric | Consider: Kenyan Wall Street on CBK and mobile-money scams; Creodata on mobile-money AML reporting and its goAML product. What else can we learn from Creodata, and which other competitors should we look at? | OPEN | Research running 2026-10-05 |
+| FS-457 | Eric | How do we become an Azure or a Liquid partner? | OPEN | Research running 2026-10-05 |
+| FS-458 | Eric | Security: Liquid is a Sophos Platinum Partner | OPEN | Research running 2026-10-05 |
+| FS-459 | Eric | End-to-end security and backup, including endpoints such as laptops and self-managed servers | OPEN | Research running 2026-10-05 |
+| FS-460 | Eric | What perimeter, node and data (database, at rest, in transit) protections do we have in place? Is this comprehensive? | OPEN | Research running 2026-10-05 |
+| FS-461 | Eric | Which Azure services should we use? The owner will confirm which are on Liquid's Azure Stack; we keep those and self-host the rest on Stack compute | OPEN | Research running 2026-10-05 |
+| FS-462 | Eric | Which security standards, guidelines and tools should we consider (NIST, CIS, OWASP, CVE, CWE, CVSS, STRIDE)? Which for mobile? | OPEN | Research running 2026-10-05 |
