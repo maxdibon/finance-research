@@ -125,7 +125,7 @@ replacement (MF-05).
 | # | Question | Raised | Status |
 |---|---|---|---|
 | 1 | Remove the prototype's public demo panel (accounts, a shared password, a fixed 2FA code) before anyone outside the team sees it | FS-395 | Open |
-| 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules | FS-400 | Open |
+| 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules. Every non-deposit-taking lender must now be licensed or registered with CBK, applying by about 29 Mar 2027 (NDTCP Regulations 2026, FS-423) | FS-400, FS-423 | Open |
 | 3 | 1% a day default interest: within the in duplum rule? | FS-400 | Open; the cap is MF-21 |
 | 4 | The interest rate's unit | FS-395 | Open |
 | 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413, FS-415 | BRS answered: v1. Land titles open |
