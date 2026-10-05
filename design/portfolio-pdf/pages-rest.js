@@ -187,8 +187,11 @@ function serviceMatrix(builtOn, caption, short) {
   // when insights reads from the product (FS-301). Other services that
   // depend on a product (CRB on recon) do not make the product use them.
   const uses = (p, s) => (Array.isArray(s) ? s : [s]).some((x) => (deps[p] || []).includes(x) || (x === 'insights' && (deps.insights || []).includes(p)));
-  const rows = products.map(([id, n]) => `<div class="bo"><b>${short(n)}</b><em>${builtOn}</em><span>${services.filter(([s]) => uses(id, s)).map(([, sn]) => `<i>${short(sn)}</i>`).join('')}</span></div>`).join('');
-  return `<div class="builton">${rows}</div><p class="mx-cap">${caption}</p>`;
+  // Pillars (FS-485): each service a column, each product a row, a mark
+  // where the product is built on the service.
+  const head = `<div class="pl-row pl-head"><b></b>${services.map(([, sn]) => `<span>${short(sn)}</span>`).join('')}</div>`;
+  const rows = products.map(([id, n]) => `<div class="pl-row"><b>${short(n)}</b>${services.map(([s]) => `<span>${uses(id, s) ? '<i></i>' : ''}</span>`).join('')}</div>`).join('');
+  return `<div class="pillars" style="--n:${services.length}">${head}${rows}</div><p class="mx-cap">${caption}</p>`;
 }
 
 // Business suite: how Odoo sits among the products (diagram language FS-253).
@@ -517,7 +520,14 @@ const CSS = `
 .chev li:nth-child(even) { background: var(--plum); }
 .chev li:last-child { background: var(--amber); color: var(--aubergine); }
 /* Built on: one row per product (FS-332) */
-.builton { margin-top: 4mm; }
+.pillars { margin-top: 3mm; position: relative; }
+.pl-row { display: grid; grid-template-columns: 32mm repeat(var(--n), 1fr); align-items: center; }
+.pl-row > b { font: 700 8.6pt/1.1 var(--display); color: var(--aubergine); padding: 0.5mm 0; border-bottom: 0.3mm solid var(--line); }
+.pl-row > span { display: flex; justify-content: center; align-items: center; height: 100%; min-height: 4.3mm; border-bottom: 0.3mm solid var(--line); }
+.pl-row > span:nth-child(even) { background: #fbf1e3; }
+.pl-head > span { font: 700 7.2pt/1.1 var(--display); color: var(--aubergine); text-align: center; padding: 0.8mm 0.4mm; border-bottom: 0.6mm solid var(--amber); }
+.pl-head > b { border-bottom: 0.6mm solid var(--amber); }
+.pl-row i { width: 2.8mm; height: 2.8mm; border-radius: 50%; background: var(--amber); display: block; }
 .bo { display: grid; grid-template-columns: 30mm 15mm 1fr; align-items: center; padding: 0.45mm 0; border-bottom: 0.3mm solid var(--line); }
 .bo b { font: 700 9pt/1.2 var(--display); color: var(--aubergine); }
 .bo em { font: 400 8.5pt/1 var(--body); font-style: normal; color: var(--muted); }

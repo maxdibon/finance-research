@@ -5,7 +5,7 @@
   {"claim": "Odoo", "basis": "live", "evidence": ["PT-31"], "status_in_records": "Dibon is an Odoo Ready Partner"},
   {"claim": "Zoho", "basis": "live", "evidence": ["PT-32"], "status_in_records": "Dibon partners with Zoho; tier to record (FS-312)"},
   {"claim": "IPRS", "basis": "v1", "ref": "FS-263", "status_in_records": "identity ID-01 Designed; coverage open (FS-329)"},
-  {"claim": "Business registration", "basis": "v1", "ref": "FS-263", "status_in_records": "identity ID-07 Planned, phase 1 (FS-415)"},
+  {"claim": "BRS", "basis": "v1", "ref": "FS-263", "status_in_records": "identity ID-07 Planned, phase 1 (FS-415)"},
   {"claim": "Documents", "basis": "v1", "ref": "FS-263", "status_in_records": "identity ID-02 Designed"},
   {"claim": "Liveness", "basis": "v1", "ref": "FS-263", "status_in_records": "identity ID-04 Planned; no vendor chosen (FS-204)"},
   {"claim": "Your core, by adapter", "basis": "v1", "ref": "FS-263", "status_in_records": "integrated ledger mode; adapters per core not yet built"},

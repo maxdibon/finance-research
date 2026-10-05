@@ -200,7 +200,8 @@ paybill and into the customer’s account. Kapu prompts, confirms and posts;
 it never holds the money.
 **Features:**
 - Account and sub-account opening, gated on IPRS identity checks; Smile ID, MetaMap, Spin Mobile and Sumsub coming soon
-- Deposits by mobile-money prompt; withdrawals to mobile, till or paybill
+- Deposits by mobile-money prompt; withdrawals to mobile, till or paybill,
+  with the recipient's name confirmed first, coming soon
 - Account-to-account transfers, balances and statements
 - Partner and bank management portals
 - Asynchronous callbacks, idempotent requests and queries by reference
@@ -227,7 +228,8 @@ into the merchant’s own account; the Gateway handles the prompt, the
 confirmation and the reconciliation.
 **Features:**
 - One collections API across M-Pesa, Airtel Money and T-Kash
-- Cards and PesaLink, coming soon
+- Cards, PesaLink, name checks before payouts and recovery of missed
+  payments, coming soon
 - Payment links, including invoices sent by SMS
 - A merchant dashboard: every payment matched, every exception listed
 - Signed callbacks and idempotent requests
@@ -283,8 +285,8 @@ in your accounts, and Kapu Core is the ledger that records it.
 ### Kapu MFI
 
 **Tagline:** Loan management for growing lenders
-**Intro:** For lenders licensed or registered with CBK, or applying, moving
-off spreadsheets, paper or an earlier system.
+**Intro:** For lenders licensed or registered with CBK, moving off
+spreadsheets, paper or an earlier system.
 The whole loan, from a digital application to closure or restructure, with
 the process enforced and light enough for a team of three.
 **Diagram caption:** The loan’s path, with gates that cannot be skipped.
@@ -452,7 +454,7 @@ messages, logins and reports as the first.
   means pending, never assumed.
 - Insights: Every metric defined once, for dashboards and plain-language
   questions. Each answer shows how it was calculated and how fresh the data
-  is.
+  is. Superset included, or your own Power BI, Tableau or Metabase.
 - Financial crime and compliance: Coming soon. Payments scored before money
   moves; sanctions and PEP screening; alerts become cases; suspicious
   transaction and regulatory reports prepared for the institution to file.
@@ -569,7 +571,7 @@ suggest where to begin, on your own data.
 
 ### Identity
 
-**Integrated:** IPRS; Business registration; Documents; Liveness
+**Integrated:** IPRS; BRS; Documents; Liveness
 **Note:** Checked before an account opens
 
 ### Credit bureaus
@@ -580,8 +582,7 @@ suggest where to begin, on your own data.
 ### Core banking
 
 **Integrated:** Your core, by adapter; Kapu Core, on Apache Fineract
-**Note:** Integrated with your core first; Kapu Core when you choose to
-upgrade
+**Note:** Your core first; Kapu Core when you choose to upgrade
 
 ## Integrations, closing
 
@@ -731,10 +732,11 @@ ITIL 4.
   instance; no institution's data is reachable from another's.
 - How it is tested: Security testing in every release, and independent
   penetration tests before go-live.
-- How it recovers: Backups taken, and recovery tested with you twice a year;
-  recovery-time and data-loss targets agreed in your contract.
-- How it is watched: Monitoring and alerting for every system that moves
-  money, with an incident process from first alert to written report.
+- How it recovers: Backups at two Kenyan sites, one offline; payments back
+  within 4 hours of losing a site, at most 5 minutes lost; tested with you
+  twice a year.
+- How it is watched: Around the clock; you hear from us within 4 hours of
+  a confirmed security incident, then every 4 hours.
 - How data is handled: Designed in line with Kenya's Data Protection Act,
   2019. Data is classified; the most sensitive never appears in logs or on
   a phone.
@@ -751,7 +753,7 @@ PRSP licence, Communications Authority of Kenya
 **How it runs:** Cloud-native on Kubernetes, mostly on permissively licensed
 open source: Apache Fineract, Keycloak, Kafka, OpenBao, Prometheus,
 OpenTelemetry and Apache Superset.
-**Band:** Evidence, *not assertions.*
+**Band:** Compliance built in, *not bolted on.*
 **Band text:** Every number traces to a transaction, every approval to a
 person at a moment, and every correction is a new entry an auditor can
 read.
