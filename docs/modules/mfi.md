@@ -8,7 +8,7 @@ classification: Internal
 audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime]
 consumed_by: []
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-431]
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-431, FS-435]
 last_reviewed: 2026-10-05
 ---
 
@@ -77,7 +77,7 @@ FS-393.
 | MF-05 | Programmatic NTSA verification as a drop-in replacement for the manual step | Designed | MFI PRD FR-4.5. The access agreement is the long pole | 2 |
 | MF-06 | Vetting with an assessed limit. An approval above it is flagged as an override: immutable, justified, and tracked as a cohort | Designed | MFI PRD FR-5 | 1 |
 | MF-07 | Approval chains by product and amount tier, with no self-approval; overrides always end with the override authority | Designed | MFI PRD FR-6. Belongs to the shared mandates module — FS-138 | 1 |
-| MF-08 | Repayments split automatically by component, in a configurable order, with the breakdown stored on every transaction | Designed | MFI PRD FR-7 | 1 |
+| MF-08 | Repayments split automatically by component, in a configurable order, with the breakdown stored on every transaction | Designed | MFI PRD FR-7. For non-deposit-taking lenders the order is fixed by law: principal, then fees, then interest (MF-22, FS-435) | 1 |
 | MF-09 | Restructure and rollover, with an immutable chain back to the original loan | Designed | MFI PRD FR-8. How Fineract does this is the largest unknown — FS-139 | 1 |
 | MF-10 | Repayment by M-Pesa push prompt and paybill with automatic matching; bank transfers matched by the accountant | Designed | MFI PRD FR-9.1, FR-9.2. Whose shortcode — FS-140 | 1 |
 | MF-11 | Disbursement by M-Pesa B2C or bank transfer, only from an approved application, with maker-checker on the disbursement itself | Designed | MFI PRD FR-9.3 | 1 |
@@ -91,6 +91,14 @@ FS-393.
 | MF-19 | CRB submission and lookups | Planned | MFI PRD §6, fast-follow. Access for unregistered lenders — FS-019 | 2 |
 | MF-20 | The borrower's registered name confirmed with M-Pesa Hakikisha before a disbursement is sent | Planned | Owner, 2026-10-03 (FS-388); rails RL-21; MF-11 | 1 |
 | MF-21 | Arrears interest and penalties capped so they never exceed what the law allows: on a non-performing loan, interest no more than the principal owing when it became non-performing (Banking Act s.44A for banks; CBK lender regulations 2026, reg 29, for non-deposit-taking lenders), reset if the loan performs and falls back; enforced in the service layer because the core does not | Planned | FS-400. A customer's product charges 1% a day in default. 2026-10-05: law register LR-03 reg 29 and LR-04 s.44A; for microfinance banks the courts are split, for Saccos there is no statutory rule, so the cap is on by default for lenders and banks and configurable otherwise (FS-427) | 1 |
+| MF-22 | For non-deposit-taking lenders, each repayment credited on the day it is paid and applied to due principal, then fees and charges, then interest; early repayment in whole or part without notice or penalty, and no interest for the remaining term | Planned | CBK lender regulations 2026 (law register LR-03), reg 56 (FS-435). Overrides MF-08's configurable order for these lenders | 1 |
+| MF-23 | A pricing model with clear parameters, each loan's total cost shown as an annual percentage rate, and a key information document for every product | Planned | CBK lender regulations 2026 (law register LR-03), regs 48 and 59 (FS-435) | 1 |
+| MF-24 | A change to pricing parameters or credit terms held until CBK's written approval is recorded, then 30 days' notice to each customer, applied once accepted | Planned | CBK lender regulations 2026 (law register LR-03), reg 55 (FS-435) | 1 |
+| MF-25 | Loans classified non-performing as the regulations define (for a loan of 30 days or less, 30 days after the amount falls due), feeding the arrears cap (MF-21) | Planned | CBK lender regulations 2026 (law register LR-03), reg 57 (FS-435) | 1 |
+| MF-26 | Collection conduct enforced in reminders and messages: never to a borrower's contacts or phone book, never outside working hours, no shaming language | Planned | CBK lender regulations 2026 (law register LR-03), reg 30 (FS-435); messaging quiet hours (MS-15) | 1 |
+| MF-27 | No negative credit information sent to a bureau for an amount of KES 1,000 or less, and the pre-listing notice observed | Planned | CBK lender regulations 2026 (law register LR-03), reg 33 (FS-435); with CRB submission (MF-19) | 2 |
+| MF-28 | Complaints logged with their clock: acknowledged within seven days where they cannot be resolved promptly | Planned | CBK lender regulations 2026 (law register LR-03), reg 40 (FS-435) | 1 |
+| MF-29 | Where a lending decision is automated, the decision explained to the customer, who is told when dealing with an AI system rather than a person | Planned | CBK lender regulations 2026 (law register LR-03), reg 60 (FS-435) | 2 |
 
 ## 4 · Where it sits
 

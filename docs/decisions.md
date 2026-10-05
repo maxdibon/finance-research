@@ -496,3 +496,22 @@ its own entry.
   release for every lender. In return: one place a regulator, an auditor
   or a bank's due diligence can examine, and a product Kenya's grey-list
   position makes urgent.
+
+## FS-435 · Partner for legal advice; sell compliance operations; build the lender rules
+
+- **Chose:** a law-firm partner, with referrals both ways and no fee
+  sharing, for legal advice to customers and to Dibon; a joint
+  "licence-ready lender" offer ahead of the CBK deadline of about 29 March
+  2027 (the firm applies, our platform meets the rules); compliance
+  operations as a service (FC-15) inside the limits the law sets; the CBK
+  lender regulations as Kapu MFI capabilities (MF-22 to MF-29), with the
+  repayment order fixed by law for those lenders.
+- **Argued against:** advising customers through Dibon's own lawyers, which
+  the Advocates Act appears to rule out (to confirm with counsel) and which
+  would compromise a bank's review of its contract with us; running an
+  institution's reporting officer role, goAML registration or thresholds,
+  which the law keeps with the institution.
+- **Costs (inferred):** a partner to choose and manage, and a conflict to
+  watch when the same firm advises Dibon and a customer; AML-qualified
+  analysts to hire before FC-15 can be sold; and if we run an institution's
+  compliance operations, we cannot also audit them.

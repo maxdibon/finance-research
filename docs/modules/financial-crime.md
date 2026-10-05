@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [identity, recon-observability, rails, mandates, messaging, access]
 consumed_by: [collect, gateway, mfi, sacco, core, omni-channel]
-review_ids: [FS-098, FS-418, FS-422, FS-428, FS-431]
+review_ids: [FS-098, FS-418, FS-422, FS-428, FS-431, FS-433, FS-435]
 last_reviewed: 2026-10-05
 ---
 
@@ -77,6 +77,7 @@ other modules keep their history in the evidence (FS-431).
 | FC-12 | Records kept at least seven years and retrievable for a regulator | Planned | POCAMLA s.46 (LR-13); NPS Act s.26 (LR-11). Retention otherwise open (FS-063). Phase 1: set at go-live | 1 |
 | FC-13 | Regulatory returns assembled from the ledger: CBK returns for banks, microfinance banks and lenders; SASRA forms for Saccos, monthly by the 15th | Planned | Moved from recon RO-14 (returns). Used by Kapu Core KC-10 and Kapu Sacco SC-17. Sacco regulations (LR-09) | 2 |
 | FC-14 | A misdirected M-Pesa payment reported by the customer becomes a case, linked to the self-service reversal | Planned | Recon RO-22 (FS-421); the KCB proposal's needs (FS-418) | 2 |
+| FC-15 | Compliance operations by Dibon's analysts, under the institution's policy and at its reporting officer's direction: first-level review of alerts, case preparation, STR drafting and list management. Never the decisions the law keeps with the institution | Planned | FS-433, FS-435. The reporting officer is the institution's own (POCAML Regulations reg 12, LR-14); a lender may not outsource the determination of compliance (LR-03 reg 31(1)(d)); the institution notifies CBK or seeks approval first (LR-03 reg 31(3); onboarding OB-COM-15). Needs AML-qualified analysts | 2 |
 
 ## 4 · Where it sits
 

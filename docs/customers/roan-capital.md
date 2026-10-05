@@ -113,6 +113,7 @@ missing. *Gap* means no capability does it yet.
 | RC-34 | Roles: Credit Officer, committee members, Head Office Committee, administrator | AC-09 | Partial | The prototype has eight roles (adding CEO, finance, collections, auditor). Agree the list |
 | RC-35 | Monitoring: Prometheus, Grafana, Loki; 99.9% uptime | RO-16, RO-17 | Covered | Ran for Collect at Onit Bank (collect CO-11). Uptime sits with the support tier |
 | RC-36 | AML/CFT duties as a licensed or registered lender: sanctions screening at onboarding and on every list change, records for seven years. Not in the document; required by the CBK lender regulations, reg 64 (law register LR-03) | FC-05, FC-12 | Partial | Added by Dibon (FS-431). Both are phase 1; PEP screening, cases and STR drafting (FC-06, FC-08, FC-09) are phase 2 |
+| RC-37 | Conduct and disclosure rules for a licensed or registered lender: repayment order, APR and key information document, price changes, non-performing classification, collection conduct, complaints. Not in the document; required by the CBK lender regulations (law register LR-03) | MF-22, MF-23, MF-24, MF-25, MF-26, MF-28 | Partial | Added by Dibon (FS-435). The document's day-30 penalty interest and day-47 closure ladder (RC-26, RC-27) must fit within these and the arrears cap (MF-21) |
 
 ## 3 · Out of scope for the MVP (§2.3)
 
