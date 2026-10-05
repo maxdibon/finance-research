@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # Partners — candidates, conversations and selection decisions
@@ -59,8 +59,8 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 | PT-16 | Stanbic / Standard Bank group | Bank, regional | Escrow, trust and settlement accounts across the footprint | KE UG TZ ZM ZW NG | None | Candidate | 2026-10-01: shortlisted by Claude | Assess with SD-04 | Commercial lead | FS-107, FS-112 |
 | PT-17 | Ecobank | Bank, regional | Escrow, trust and settlement accounts across the footprint | KE UG TZ RW ZM ZW NG | None | Candidate | 2026-10-01: shortlisted by Claude | Assess with SD-04 | Commercial lead | FS-107, FS-112 |
 | PT-18 | NCBA | Bank — holds Dibon's own accounts | APIs and statement feeds for Dibon's accounts (Dibon as first customer); a possible partner bank later | KE | KE (Dibon is a customer) | Candidate | 2026-10-01: owner to request APIs and statement feeds | Send the request (Email 1) | Architect | FS-033, FS-125, FS-126 |
-| PT-19 | KCB | Bank — holds Dibon's own accounts | As PT-18 | KE (and its regional subsidiaries) | KE (Dibon is a customer) | Candidate | 2026-10-01: owner to request APIs and statement feeds | Send the request (Email 1) | Architect | FS-033, FS-125, FS-126 |
-| PT-20 | Meliora — Tiara gateway | Messaging partner; SMS gateway product | SMS outside Kenya; fallback route in Kenya; possibly a product to deploy rather than build | Not known | KE (current partner) | Live | 2026-10-01: product page read — enterprise SMS gateway, multi-operator routing, 14 deployments, SMS only | Confirm countries; ask whether Tiara can be licensed for our own deployment | Architect | FS-148, FS-160, FS-207 |
+| PT-19 | KCB | Bank — holds Dibon's own accounts | As PT-18 | KE (and its regional subsidiaries) | KE (Dibon is a customer) | Candidate | 2026-10-01: owner to request APIs and statement feeds. 2026-10-05: also a past customer: USSD platform 2022 to 2025, account mandate API, Meliora SMS (customers CU-03, FS-416) | Send the request (Email 1) | Architect | FS-033, FS-125, FS-126, FS-416 |
+| PT-20 | Meliora — Tiara gateway | Messaging partner; SMS gateway product | SMS outside Kenya; fallback route in Kenya; possibly a product to deploy rather than build. Dibon supplies Meliora's SMS platform and its lightweight CRM (mobi_reg) to banks: KCB for about four years, and a second bank (FS-416, FS-417) | Not known | KE (current partner) | Live | 2026-10-01: product page read — enterprise SMS gateway, multi-operator routing, 14 deployments, SMS only. 2026-10-05: owner: Dibon has supplied Meliora's SMS platform to KCB for about four years, and to a second bank | Confirm countries; ask whether Tiara can be licensed for our own deployment | Architect | FS-148, FS-160, FS-207, FS-416, FS-417 |
 | PT-21 | Africa's Talking | Messaging partner | SMS, and possibly USSD, outside Kenya | KE UG TZ RW ZM NG | None | Candidate | 2026-10-01: named by the owner | Verify coverage and sender-ID support per country | Architect | FS-160 |
 | PT-22 | Safaricom — SMS (SMPP) | Operator, messaging | Direct A2P SMS in Kenya under our PRSP licence | KE | KE (operator) | Candidate | 2026-10-01: direct connection decided | Request an SMPP bind and sender-ID registration | Architect | FS-160 |
 | PT-23 | Airtel — SMS (SMPP) | Operator, messaging | As PT-22 | KE | KE (operator) | Candidate | 2026-10-01: direct connection decided | As PT-22 | Architect | FS-160 |

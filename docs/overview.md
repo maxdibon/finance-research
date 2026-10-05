@@ -5,7 +5,7 @@ kind: overview
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # Dibon financial services — the portfolio
@@ -57,7 +57,9 @@ Nigeria are ready markets, following Liquid's Azure Stack footprint
 partners (FS-109; docs/partners.md; docs/compliance.md).
 
 Collect and the Gateway ran in production at Onit Bank, with W-Harambee,
-from February 2025 to June 2026 (FS-390), on M-Pesa. We are in discussion
+from February 2025 to June 2026 (FS-390), on M-Pesa. Before that, our USSD
+platform carried KCB's digital lending from 2022 to 2025, and we have
+supplied banks with Meliora's SMS platform for about four years (FS-416). We are in discussion
 with new partner banks (docs/partners.md). Roan Capital is in delivery on
 Kapu MFI (docs/customers.md).
 

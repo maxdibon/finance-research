@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability]
-review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402]
-last_reviewed: 2026-10-03
+review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416]
+last_reviewed: 2026-10-05
 ---
 
 # Mandates — signing and debit
@@ -67,7 +67,7 @@ owner's request (FS-042).
 | MD-08 | Time-in-step SLAs, reminders and escalation | Designed | MFI PRD FR-6.9 | 1 |
 | MD-09 | Quorum steps (N of M) | Planned | MFI PRD FR-6.10: designed as an additive change; its "launch is sequential only" is superseded by FS-402. Owner, 2026-10-03: moved up to phase 1, because Roan Capital's credit committee approves 3 of 3, unanimously (FS-402; docs/customers.md CU-01) | 1 |
 | MD-10 | Each decision re-authenticated at the moment it is made (PIN or one-time code) | Planned | docs/architecture.md §7; FS-132 | 1 |
-| MD-11 | Bank-side mirror: the signing mandate registered on the bank account, and our instruction checked against it | Planned | FS-122. Depends on the bank's mandate API (partners.md C10) | 2 |
+| MD-11 | Bank-side mirror: the signing mandate registered on the bank account, and our instruction checked against it | Designed | FS-122. Dibon specified an account mandate API for KCB (v1.1, Nov 2022: accounts registered with approval rules by transaction type and amount, signatories by level, debits initiated, approved, rejected and queried), integrated in KCB's test environment by Jan 2023, never in production (FS-416). Each bank still needs its own (partners.md C10) | 2 |
 | MD-12 | Consumers beyond MFI: Sacco committees, Collect and Gateway maker-checker, SME Recon payments, Escrow releases, recon reversals | Planned | MFI PRD FR-6 platform note; FS-097, FS-107 | 1–2 |
 | MD-13 | Debit mandate record: payer, payee, amount (fixed or capped), frequency, start and end, rail; consent captured and signed | Planned | FS-042. On M-Pesa: Ratiba standing orders (rails RL-23, FS-387) | 2 |
 | MD-14 | Debit mandate registered with the rail: bank direct debit, M-Pesa standing orders, card tokens | Planned | FS-046 — rails unconfirmed | 2 |
@@ -199,6 +199,8 @@ decided: quorum steps (MD-09) are phase 1 (FS-402).
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — FR-6, and §2
   problem 6.
 - REVIEW.md FS-042, FS-097, FS-107, FS-122, FS-132, FS-138.
+- KCB account mandate API specification v1.1, Nov 2022 (clients/kcb/,
+  outside git; FS-416).
 - docs/architecture.md §3, §7.
 - GateKeepr STANDARDS.md §6.2 (attribution at the act; approvals never
   gate a safety alert) — principles carried over, not references.
