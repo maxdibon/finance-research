@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492]
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495]
 last_reviewed: 2026-10-06
 ---
 
@@ -53,9 +53,10 @@ the check keeps the two in step):
 - **Financial crime:** FC-05 (sanctions screening), FC-12 (records).
 
 **Build specifications** for R1 live in docs/specs/: the lender rules
-([specs/lender-rules.md](specs/lender-rules.md)) so far; the approval
-engine, the sanctions adapter, the M-Pesa port and the API contracts are
-to follow (FS-492).
+([specs/lender-rules.md](specs/lender-rules.md)) and the approval engine
+([specs/approval-engine.md](specs/approval-engine.md)); the sanctions
+adapter, the M-Pesa port and the API contracts are to follow (FS-492,
+FS-495).
 
 **The platform and security minimum for any go-live:**
 

@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability, core, crb, financial-crime, omni-channel, business-suite]
-review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453]
+review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453, FS-494, FS-495]
 last_reviewed: 2026-10-06
 ---
 
@@ -78,6 +78,8 @@ owner's request (FS-042).
 | MD-16 | Cancellation by the payer at any time; any change re-consented | Planned | FS-042 | 2 |
 | MD-17 | Failed pulls: a fixed retry limit, then an exception. Never a retry outside the mandate's terms | Planned | FS-042; recon-observability §8 | 2 |
 | MD-18 | Approval from email: the request arrives in Outlook or Gmail with a summary and a single-use, short-lived signed link; anything that moves money is decided only after step-up at the act (MD-10); one click only for approvals that move none; never by replying | Planned | FS-449, FS-453. Outlook actionable messages and Gmail can carry the buttons; the authentication is ours (access AC-05) | 1 |
+| MD-19 | Bill payments: supplier bills from Odoo or Zoho approved by amount tier; new or changed payee details in the last 30 days add an approver; a changed amount or payee re-opens approval | Planned | Owner, 2026-10-06 (FS-494); docs/specs/approval-engine.md §10; sme-recon SR-11 | 2 |
+| MD-20 | Payment triggers after approval: on approval, on the due date or in a scheduled batch; standing approvals for recurring bills within a payee, a cap and an end date; never payment without approval | Planned | Owner, 2026-10-06 (FS-494); approval-engine spec §10; sme-recon SR-11, SR-12 | 2 |
 
 ## 4 · Where it sits
 
@@ -109,6 +111,8 @@ consuming product posts: the institution's core when integrated, Fineract
 when native.
 
 ## 5 · How it works
+
+The build specification for R1 is docs/specs/approval-engine.md (FS-495).
 
 **Signing:**
 
