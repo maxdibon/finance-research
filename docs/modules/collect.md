@@ -7,8 +7,8 @@ owner: Product lead, Kapu
 classification: Internal
 audience: [bank, sacco, psp, fintech]
 depends_on: [identity, rails, recon-observability, mandates, messaging, financial-crime]
-consumed_by: [mfi, sacco]
-review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388, FS-390, FS-392, FS-431]
+consumed_by: [mfi, sacco, escrow, insights]
+review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388, FS-390, FS-392, FS-393, FS-407, FS-431]
 last_reviewed: 2026-10-05
 ---
 
@@ -25,7 +25,10 @@ Collect turns many small, scattered SME cash flows into deposits on its own
 balance sheet. For the partner, it is the route into a regulated framework
 without each partner holding its own licence first. Collect is designed to
 run inside the institution's infrastructure, on-prem or on Liquid's Azure
-Stack, and connects directly to the institution's core banking system.
+Stack, and connects directly to the institution's core banking system. It
+ran in production at Onit Bank, with W-Harambee as the partner, from
+February 2025 to June 2026, on M-Pesa (FS-390); Airtel Money and T-Kash
+are part of v1 (FS-407).
 
 ## 2 · Who it is for
 
@@ -63,7 +66,7 @@ sources for the rest.
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
 | CO-01 | Partner authentication (token issued per system identity) | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Authentication API | 1 |
-| CO-02 | Individual account opening, gated on an identity check (national ID, passport, alien ID) | Built | Onit API technical documentation (Feb 2025); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-390). The gate was the phone number checked against the name the operator holds, through Onit's own agreements with Safaricom and Airtel, plus document-number validation; no IPRS call (FS-392). A new bank needs its own operator agreements | 1 |
+| CO-02 | Individual account opening, gated on an identity check (national ID, passport, alien ID) | Built | Onit API technical documentation (Feb 2025); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-390). The gate was the phone number checked against the name the operator holds, through Onit's own agreements with Safaricom and Airtel, plus document-number validation; no call to the national register, NPDM (formerly IPRS) (FS-392). A new bank needs its own operator agreements | 1 |
 | CO-03 | Sub-account opening under an existing customer | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Sub-Account Opening | 1 |
 | CO-04 | Balance, account info, account list, statement for a period | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Account Management | 1 |
 | CO-05 | Deposit by mobile-money push prompt, posted to the core on confirmation | Built | Onit API technical documentation (Feb 2025, held outside git); M-Pesa push-prompt deposits ran in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Deposits. The 8 Jun note of an outstanding Safaricom go-live is history, unexplained (FS-088) | 1 |
@@ -74,8 +77,8 @@ sources for the rest.
 | CO-10 | Management portal (institution) and partner portal | Designed | Technical documentation, Components. No screen specification in this folder | 1 |
 | CO-11 | Metrics, logs and dashboards for the institution's operations team | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390). Technical documentation, Operations & Support | 1 |
 | CO-12 | End-of-day reconciliation against the core banking system | Planned | Named in MFI PRD §1 ("the EOD reconciliation layer"); no specification. Delivered by recon-observability | 1 |
-| CO-13 | Real-time transaction monitoring and automated fraud detection | Planned | **Both sources describe this as operating continuously; neither specifies it.** 8 Jun: fraud detection "must be designed in from the start" — FS-053 | 1 |
-| CO-14 | Automated compliance reporting | Planned | Claimed in the one-pager; no specification — FS-053 | later |
+| CO-13 | Real-time transaction monitoring and automated fraud detection | Planned | **Both sources describe this as operating continuously; neither specifies it.** 8 Jun: fraud detection "must be designed in from the start" — FS-053. Delivered by financial-crime FC-01 and FC-07 (FS-431) | 1 |
+| CO-14 | Automated compliance reporting | Planned | Claimed in the one-pager; no specification — FS-053. Prepared by financial-crime FC-09 to FC-13; the institution files (FS-431) | later |
 | CO-15 | Maker-checker on partner and institution actions | Planned | MFI PRD FR-6 names Collect as a future consumer of the mandate engine | 2 |
 | CO-16 | PesaLink as a deposit and withdrawal channel | Planned | Listed as a channel in the API; trust accounts with the PesaLink sponsor bank not yet in place (8 Jun) | 3 |
 | CO-18 | Notifications to the end customer when a deposit lands, through messaging | Planned | Owner, 2026-10-02 (FS-315) | 1 |
@@ -85,13 +88,15 @@ sources for the rest.
 
 ## 4 · Where it sits
 
-**Depends on:** identity (NPDM, formerly IPRS), rails (M-Pesa, Airtel Money, T-Kash,
-PesaLink), recon-observability (CO-12,
-CO-13), mandates (CO-15).
+**Depends on:** identity (NPDM, formerly IPRS; the operators' name check,
+ID-05), rails (M-Pesa, Airtel Money, T-Kash; PesaLink later),
+recon-observability (CO-12), mandates (CO-15), messaging (CO-18),
+financial-crime (fraud and monitoring for CO-13, reports for CO-14).
 **Used by:** mfi and sacco, for deposit and repayment flows into a
-regulated account.
+regulated account; escrow, for sub-accounts and deposits (ES-02, ES-03);
+insights, for reporting.
 
-**Who holds which record** (docs/architecture.md, pending):
+**Who holds which record** (docs/architecture.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -158,11 +163,11 @@ These describe different products — FS-054.
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
 | M-Pesa (C2B push, B2C, B2B) | in / out | real-time callback | Built: ran in production at Onit Bank, Feb 2025 to Jun 2026 (FS-390). The 8 Jun note of an outstanding go-live is unexplained (FS-088) |
-| Airtel Money | in / out | real-time callback | Designed |
-| T-Kash | in / out | real-time callback | Designed (listed in the API; added to the suite 8 Jun) |
+| Airtel Money | in / out | real-time callback | Designed; in v1 (FS-407). Probably built for Onit Bank but never launched; to confirm (FS-393, rails RL-04) |
+| T-Kash | in / out | real-time callback | Designed (listed in the API; added to the suite 8 Jun); in v1 (FS-407, rails RL-05) |
 | PesaLink | in / out | to establish | Planned — CO-16 |
 | Institution core banking system | read / post | API | Built: Onit Bank's core, through stored procedures (FS-390) |
-| NPDM (formerly IPRS) | read | API | Designed; integration not final (8 Jun). At Onit Bank the gate was the operators' number-and-name check, with no IPRS call (FS-392) |
+| NPDM (formerly IPRS) | read | API | Designed; integration not final (8 Jun). At Onit Bank the gate was the operators' number-and-name check, with no call to the national register, NPDM (formerly IPRS) (FS-392) |
 | Rail statements for end-of-day matching | in | statement file / API pull | Planned — CO-12, FS-038 |
 
 ## 7 · Regulatory position
@@ -223,7 +228,8 @@ control — FS-059.
 - License the partner. Partners still sit inside the institution's
   framework, under whatever approval FS-057 settles.
 - Fraud detection, compliance reporting and maker-checker are not
-  available yet: CO-13 to CO-15 are Planned.
+  available yet: CO-13 to CO-15 are Planned. Fraud and reporting will come
+  from financial-crime; maker-checker from the mandate engine.
 
 ## 11 · Open questions
 

@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-431, FS-453]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -28,14 +28,15 @@ Draft, pending FS-034.
 
 | Layer | Contents |
 |---|---|
-| **Channels** | omni-channel — mobile apps, internet banking, USSD |
+| **Channels** | omni-channel — mobile apps, internet banking, USSD, the field-officer app |
 | **Products** | collect · gateway · escrow · core (Kapu Core: hosted core banking on Apache Fineract) · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) · business-suite (Odoo or Zoho, implemented by Dibon) |
 | **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification) · messaging (SMS, WhatsApp, Telegram, app; transactional and campaigns) · rails · insights · financial-crime (fraud, AML/CFT, reporting) |
 | **Systems of record** | the institution's core, or Kapu Core · Odoo · recon engine — §2 |
 
 ```
  +--------------------------------------------------------------------+
- | CHANNELS       omni-channel: mobile apps . internet banking . USSD |
+ | CHANNELS     omni-channel: mobile apps . internet banking . USSD . |
+ |              field-officer app                                     |
  +--------------------------------------------------------------------+
                                   |
  +--------------------------------------------------------------------+
@@ -154,6 +155,14 @@ whether we caused a payment.
 | mandates (debit) | Initiation | FS-046 |
 | escrow | Initiation: the partner bank holds each escrow in its own sub-account; we instruct release on the agreed approvals | FS-107, FS-108 — if Dibon held the funds, it would be aggregation |
 
+**Custody is not the only test.** The National Payment System Act defines
+a payment service provider to include whoever processes or stores data on
+behalf of one (s.2), and a reported High Court ruling read that widely
+(FS-428). Dibon may therefore need authorisation even in pass-through.
+Compliance LC-06 now prepares for it, with a legal opinion on the category
+first (FS-444). The custody line still decides who holds money; on its own
+it no longer settles whether Dibon needs a licence.
+
 **Rail and bank credentials stay on the server.** Channel apps ask our
 server, and our server calls the rail. Daraja keys, bank API credentials
 and signing keys are never placed in a mobile app, a USSD gateway
@@ -172,7 +181,7 @@ configuration, so the mode is not a fork of the code.
 | Mode | When | What we do |
 |---|---|---|
 | **Integrated** | The institution has a core banking system | **The core stays authoritative.** We read and post through its API. Any copy we keep is a cache with a fetched-at time. At Onit Bank, Collect posted to the bank's own core through its stored procedures (FS-390) |
-| **Native** | No digital ledger exists, or the institution is replacing its core — an unregistered MFI, a small credit-only Sacco, a tier-3 bank upgrading | **Kapu Core is the funds ledger**: Apache Fineract, hosted and sold as a product (docs/modules/core.md, FS-311). One authority, so there is no core to reconcile against (MFI PRD §1) |
+| **Native** | No digital ledger exists, or the institution is replacing its core — a lender moving off spreadsheets as it is licensed or registered with CBK, a small credit-only Sacco, a tier-3 bank upgrading | **Kapu Core is the funds ledger**: Apache Fineract, hosted and sold as a product (docs/modules/core.md, FS-311). One authority, so there is no core to reconcile against (MFI PRD §1) |
 
 **Integrated comes first, always.** Integrating with a core is a read.
 Replacing one means migrating somebody's history, and that is a separate
@@ -241,16 +250,25 @@ Matching rules that hold on every rail:
   (traces), Grafana (dashboards, alerting, SLOs). Grafana is for
   operations. Business BI is insights, a separate module.
 - **Mandates:** one engine for signing mandates (who may approve what,
-  maker-checker, committee chains) and for the records behind debit
-  mandates. Designed in MFI PRD FR-6 as a platform service; Collect, Sacco,
-  MFI (MF-07), Escrow (ES-05), Gateway and sme-recon are its consumers.
+  maker-checker, committee chains, quorum steps) and for the records behind
+  debit mandates. Designed in MFI PRD FR-6 as a platform service; Collect,
+  Sacco, MFI (MF-07), Escrow (ES-05), Gateway and sme-recon are its
+  consumers. Approvers will be able to act from Outlook or Gmail through a
+  signed, single-use link, with step-up at the act for anything that moves
+  money; never by reply (mandates MD-18, FS-449).
 - **Identity:** national register lookup (NPDM, formerly IPRS) on
   onboarding, or the mobile operator's check of the phone number against
   the registered name, as at Onit Bank (FS-392). The result is stored on
-  the party in its authority, not copied into consumers.
+  the party in its authority, not copied into consumers. **The phone
+  number is never the identity:** each account will be bound to the ID
+  number, the phone number and the SIM's IMSI, and a SIM change, from a
+  swap or a recycled number, will hold money movement until the customer
+  is re-verified (identity ID-12 to ID-14, financial-crime FC-02, FS-448).
 - **Insights:** reads from the three authorities through a semantic layer
   of governed metric definitions. **It never writes.** Every answer shows
-  the definition and query behind it. The model is not chosen yet — FS-043.
+  the definition and query behind it. Superset is the default; a
+  customer's own BI tool will connect through the same layer (insights
+  IN-15, FS-446). The model is not chosen yet — FS-043.
 - **Access and identity:** Keycloak for login, roles and step-up (access);
   the national register (NPDM, formerly IPRS) and verification vendors for
   who a person is (identity).
@@ -332,7 +350,8 @@ question for Liquid (FS-048).
 
 - Product status — each module's §3.
 - Pricing and business models (FS-024).
-- The legal questions it points at: FS-037, FS-049, FS-056, FS-057, FS-061.
+- The legal questions it points at: FS-037, FS-049, FS-056, FS-057, FS-061,
+  FS-428.
 - Whether the portfolio map in §1 is final (FS-034).
 
 ## 11 · Sources

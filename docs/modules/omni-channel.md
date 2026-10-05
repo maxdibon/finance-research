@@ -6,8 +6,8 @@ version: 0.1.0
 owner: Product lead, channels
 classification: Internal
 audience: [bank, sacco, mfi, fintech]
-depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco, financial-crime]
-consumed_by: []
+depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco, financial-crime, core]
+consumed_by: [insights]
 review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431, FS-443, FS-450, FS-452, FS-453]
 last_reviewed: 2026-10-05
 ---
@@ -16,15 +16,20 @@ last_reviewed: 2026-10-05
 
 ## 1 · In one paragraph
 
-Omni-channel is how an institution's members and customers reach their
-money: a **mobile app**, **internet banking** in a browser, and **USSD**
-for any phone without data. All three sit on **one channel API** over the
+Omni-channel is how an institution's members and customers will reach
+their money: a **mobile app**, **internet banking** in a browser, and
+**USSD** for any phone without data. USSD is the part with a production
+record: Dibon's menu platform ran KCB's digital lending on USSD from 2022
+to 2025 (OC-03). All three will sit on **one channel API** over the
 products, so a balance, a loan or a payment behaves the same on every
-channel. Login and step-up come from access (Keycloak); KYC from identity;
-payments from rails, approved through mandates where needed. A balance
-shown on a phone is a read from its authority, **labelled with when it was
-fetched**. The channels are white-labelled per institution. **Nothing is
-drawn yet**, and no screen is built before it is drawn (FS-237).
+channel. Login and step-up will come from access (Keycloak); KYC from
+identity; payments from rails, approved through mandates where needed. A
+balance shown on a phone will be a read from its authority, **labelled
+with when it was fetched**, and the channels will be white-labelled per
+institution. In phase 1, a **field-officer app** will take onboarding,
+appraisal and collections on M-Pesa, Airtel Money and T-Kash to the
+customer (OC-17 to OC-19). **Nothing is drawn yet**, and no screen is
+built before it is drawn (FS-237).
 
 ## 2 · Who it is for
 
@@ -45,6 +50,7 @@ balance.
 | Member or customer, smartphone | Balances, statements, loans, contributions, payments, guarantor requests, KYC on their own |
 | Member, feature phone | The essentials on USSD: balance, mini-statement, contribution, loan status |
 | Guarantor | Requests to accept or decline, and their exposure |
+| Field officer | Onboarding, appraisal visits and collections at the customer's door, working offline (OC-17 to OC-19) |
 | Institution | Its own brand on every channel; what members can do on each, set per channel |
 | Our support team | What the member saw, when, and why it differs from what they expected |
 
@@ -82,8 +88,11 @@ of its own. Rows with that evidence are **Built**; the rest are
 
 **Depends on:** access (login, step-up), identity (self-service KYC),
 messaging (push, one-time codes), rails (payments), mandates (approvals,
-guarantor consents), and the products it shows: collect, mfi, sacco.
-**Used by:** members and customers.
+guarantor consents), financial-crime (the hold after a SIM swap, FC-02),
+core (KC-14, the back end of the field-officer app), and the products it
+shows: collect, mfi, sacco.
+**Used by:** members, customers and field officers; insights reads its
+metrics.
 
 **Who holds which record** (docs/architecture.md §2):
 
@@ -135,11 +144,17 @@ government ID number on a device.
            every figure returned with its fetched-at time
 ```
 
+The field-officer app (OC-17) will use the same channel API, with an
+offline store that syncs when a connection returns, behind Kapu Core
+KC-14. Its collections (OC-18) will be payment prompts to the customer's
+own phone through rails, never cash.
+
 ## 6 · Rails and integrations
 
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
-| Operators' USSD gateways (Safaricom, Airtel, Telkom) | in / out | USSD sessions | Planned (OC-03) — FS-233 |
+| Operators' USSD gateways (Safaricom, Airtel, Telkom) | in / out | USSD sessions | Built (OC-03): Dibon's menu platform behind KCB's USSD code, 2022 to 2025; each new institution's code — FS-233 |
+| M-Pesa, Airtel Money, T-Kash — field collections | out / in | payment prompt; callback | Planned (OC-18) — rails RL-03 Built, RL-04 and RL-05 Designed |
 | Operators' SIM-swap checks | read | API: Safaricom through Daraja; other operators to confirm | Planned (OC-06) — rails RL-22, FS-234, FS-386 |
 | Google Play, Apple App Store | out | app distribution | Planned (OC-01) — FS-236 |
 | Access, identity, messaging, rails, mandates | in / out | platform APIs | Planned |
@@ -153,7 +168,7 @@ government ID number on a device.
 - **App stores:** Google Play has specific rules for lending apps, which
   may require proof of the lender's licence in Kenya — FS-236. Saccos'
   and MFIs' apps are lending apps.
-- **Permissions:** the app asks for nothing it does not need. In
+- **Permissions:** the apps will ask for nothing they do not need. In
   particular, no contact-list or call-log access. Harvesting contacts to
   pressure borrowers is a known abuse, and the Data Protection Act
   forbids it.
@@ -169,7 +184,9 @@ government ID number on a device.
 - **Step-up for money.** Login is not an approval (access AC-05).
 - **SIM-swap check before money moves,** where the operator offers one
   (FS-234). Safaricom does, through Daraja (rails RL-22). A recent swap
-  blocks the act and routes the member to support.
+  will block the act and route the member to support; the account is
+  bound to ID, phone number and IMSI, with a hold on an IMSI change
+  (identity ID-12 to ID-14, financial-crime FC-02; FS-453).
 - **Fetched-at on every figure** (OC-11). A cached balance says so.
 - **USSD stays low-risk** (OC-12): lower limits, and step-up above them.
 - **The same answer on every channel.** All three use one channel API.
@@ -184,9 +201,9 @@ the in-country deployment.
 ## 10 · What it does not do
 
 - Hold balances, or decide anything a product decides.
-- Field-officer or agent apps, and offline collection. Excluded at launch
-  (MFI PRD §6); the field-officer app follows in phase 2 (core KC-14,
-  FS-320).
+- Agent apps. The field-officer app and offline collection, excluded at
+  launch by MFI PRD §6 and then moved to phase 2 (FS-320), are now
+  phase 1 (OC-17 to OC-19, core KC-14; FS-453).
 - Staff back-office screens. Those are each product's portals.
 
 ## 11 · Open questions
@@ -196,7 +213,8 @@ FS-238.
 
 ## 12 · Sources
 
-- REVIEW.md FS-022 (the owner's scope), FS-167 to FS-171.
+- REVIEW.md FS-022 (the owner's scope), FS-167 to FS-171, FS-450,
+  FS-452, FS-453.
 - KCB: MMC API specification v2.7, MMC operations manual v1.1, merchant
   financing menus, release notes 3.2.3 and 3.2.34 (clients/kcb/, outside
   git; FS-416).

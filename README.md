@@ -32,21 +32,30 @@ docs/                the work. The only place we edit
     _template.md     copy this; keep every heading
   marketing/
     portfolio.md     every word of the portfolio PDF; the build reads it
+    bank-channel-proposal.md
+                     every word of the two-page bank channel proposal
   business/          market sizing (a workbook)
   outreach/          drafts to banks, operators, partners and regulators
   packs/             one manifest per buyer type (to do)
   commercials/       parked (FS-024); the one home for prices later
 design/              layout, diagrams and illustrative screens; no copy
   portfolio-pdf/     build.js, page layout, document.json, claims.json
+  portfolio-preview/ the per-product diagrams both editions draw
+  bank-channel-proposal/
+                     build.js for the two-page proposal
+  brand/             the Dibon logo, and the script that extracts it
 build/               generated: master.md, the portfolio PDF and web
-                     previews, the NPS Bill comments — git-ignored
+                     previews, the bank channel proposal, the NPS Bill
+                     comments — git-ignored
 sources/             inputs as received — never edited
   dibon/             recon proposal, Kapu compliance one-pager
   kapu/              MFI PRD, 8 Jun 2026 meeting notes (anonymised)
   gatekeepr/         snapshots of GateKeepr briefs — git-ignored
   confidential/      client-specific documents — git-ignored
-  regulation/ke/     Kenyan legislation, by "as at" date — git-ignored
-clients/             real prospect and customer material — git-ignored
+  regulation/ke/     Kenyan legislation, by "as at" date; reports/ and
+                     superseded/ beside it — git-ignored
+clients/             customer and prospect material, one folder each,
+                     and the KCB and NBK project list — git-ignored
 tools/               check.js, assemble.js, and their break tests
 .githooks/           pre-commit: runs the checks
 ```
@@ -81,9 +90,12 @@ fresh clone needs the list before it can commit.
    `design/portfolio-pdf/claims.json`.
 4. **No figure without a source.** Pricing appears nowhere in the modules.
 5. **Roles, never names, for people.** Customers the owner has released
-   are named in internal documents (Onit Bank, Roan Capital; FS-414), but
-   not in the portfolio, its design or outreach until they agree (FS-401);
-   the names check enforces both. Nothing from `clients/` or
+   are named in internal documents (Onit Bank, Roan Capital, KCB, National
+   Bank of Kenya; FS-414, FS-420). Onit Bank is also named in the
+   portfolio (FS-391). Roan Capital stays out of the portfolio, its design
+   and outreach until it agrees (FS-401), and the names check enforces
+   that; KCB and NBK stay out of them until their contracts are confirmed
+   to allow it (FS-420). Nothing from `clients/` or
    `sources/confidential/` is reproduced in `docs/`. Material from those
    folders is written about, never copied.
 6. **ASCII diagrams**, at most 78 characters wide (FS-064).
@@ -95,6 +107,8 @@ fresh clone needs the list before it can commit.
 ## What git does not see, and why
 
 `clients/`, `sources/confidential/` and `sources/gatekeepr/` are
-git-ignored. They hold a named prospect's real material, a document
-prepared for a specific bank, and snapshots of another project's briefs
+git-ignored. They hold customers' and prospects' real material, documents
+prepared for specific banks, and snapshots of another project's briefs
 that name a real estate. Their authoritative copies are not here.
+`sources/regulation/` is git-ignored for size: the texts are public, and
+are fetched again from the links in docs/regulation.md.

@@ -8,7 +8,7 @@ classification: Internal
 audience: [mfi, sacco, bank]
 depends_on: [access, identity, mandates, messaging, rails, recon-observability, financial-crime]
 consumed_by: [mfi, sacco, collect, omni-channel, insights]
-review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431]
+review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431, FS-450, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -16,18 +16,19 @@ last_reviewed: 2026-10-05
 
 ## 1 · In one paragraph
 
-Kapu Core is a hosted core banking system for institutions ready for a
-modern core, or running without one: MFIs moving off spreadsheets or an
-earlier Mifos installation, Saccos moving off desktop software, tier-3
-banks planning a core upgrade (FS-303, FS-354). It runs on Apache
-Fineract, hosted in Kenya on Liquid's Azure Stack: clients, savings,
-shares, loans, the general ledger, tellers and end-of-day. Kapu products
-run on it where the institution has no core of its own: MFI, Sacco,
-Collect, omni-channel, reconciliation. Where the institution has a core,
+Kapu Core will be a hosted core banking system for institutions ready for
+a modern core, or running without one: MFIs moving on from spreadsheets
+or an earlier Mifos installation, Saccos moving on from desktop software,
+tier-3 banks planning a core upgrade (FS-303, FS-354). It will run on
+Apache Fineract, hosted in Kenya on Liquid's Azure Stack: clients,
+savings, shares, loans, the general ledger, tellers and end-of-day. Kapu
+products will run on it where the institution has no core of its own:
+MFI, Sacco, Collect, omni-channel, reconciliation. Roan Capital's Kapu MFI
+is in delivery on it (customers CU-01). Where the institution has a core,
 they run on that core instead, as Collect did at Onit Bank (the
 integrated mode, FS-390). Kapu Core is the native mode of the
 architecture, packaged as a product (docs/architecture.md §4). **The money
-stays in the institution's own accounts; Kapu Core is its ledger.**
+stays in the institution's own accounts; Kapu Core will be its ledger.**
 
 ## 2 · Who it is for
 
@@ -37,11 +38,12 @@ they can offer mobile money, open APIs and real-time reporting. Lenders who want
 loans on a modern core while deposits stay where they are (the split
 mode, FS-066).
 
-**The problem, concretely:** a mobile-money payment reaches the ledger
-only when someone keys it in. Interest is posted by hand at month-end.
-The general ledger is rebuilt in a spreadsheet for the board. Each new
-channel or product is a project with the core vendor, so growth waits on
-someone else's roadmap.
+**The problem, concretely:** institutions want a mobile-money payment to
+reach the ledger without anyone keying it in, interest posted
+automatically rather than by hand at month-end, and a general ledger the
+board can read directly rather than one rebuilt in a spreadsheet. They
+want to add a channel or a product on their own timetable, not as a
+project on a core vendor's roadmap.
 
 **People who use it:**
 
@@ -79,7 +81,8 @@ in the MFI PRD; the rest is **Planned** until a deployment is live.
 ## 4 · Where it sits
 
 **Depends on:** access, identity, mandates, messaging, rails,
-recon-observability (it ties to its own rails every day).
+recon-observability (it ties to its own rails every day), financial-crime
+(regulatory returns, KC-10; FC-13).
 **Used by:** mfi, sacco, collect (as the core for an institution without
 one), omni-channel, insights.
 
@@ -162,7 +165,8 @@ institution's premises where it requires.
 
 - Hold money.
 - Replace a core an institution wants to keep. Integrated first, always.
-- Field-officer offline collection, at launch. It follows in phase 2 (KC-14, FS-320).
+- Serve field officers on its own. The field-officer app (KC-14), in v1
+  since FS-453, is built in omni-channel (OC-17 to OC-19).
 
 ## 11 · Open questions
 

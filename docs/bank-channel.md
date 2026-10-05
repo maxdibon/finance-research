@@ -5,7 +5,7 @@ kind: partner-model
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-024, FS-439, FS-441]
+review_ids: [FS-024, FS-439, FS-441, FS-443]
 last_reviewed: 2026-10-05
 ---
 
@@ -90,7 +90,8 @@ product up. Move a bank to **bundle** once take-up is shown.
 ## A pilot
 
 - **With:** a bank we already serve or are talking to: KCB or National
-  Bank of Kenya, where we supply SMS today (customers CU-03, CU-04), or
+  Bank of Kenya, customers since 2021 for SMS, USSD and integration work
+  (customers CU-03, CU-04), or
   the banking-as-a-service bank (partners PT-34), where it fits the
   partnership already proposed.
 - **Scope:** referral; SME Recon on Odoo or Zoho; a cohort of the bank's

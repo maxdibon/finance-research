@@ -188,7 +188,9 @@ adjust the second paragraph if it was not.
 
 ## 5 · Telkom: T-Kash
 
-To Telkom Kenya's T-Kash business team (rails RL-05). T-Kash appears in
+To Telkom Kenya's T-Kash business team (rails RL-05, compliance LC-13).
+T-Kash is in v1 (FS-407), and the field-collections prompt uses it
+(omni-channel OC-18). T-Kash appears in
 the Collect API's channel list, but no integration is known to have been
 built (FS-393).
 

@@ -7,7 +7,7 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability, collect, gateway, escrow, mfi, sacco, sme-recon, omni-channel, business-suite, core]
-consumed_by: []
+consumed_by: [business-suite]
 review_ids: [FS-006, FS-033, FS-043, FS-048, FS-151, FS-156, FS-157, FS-159, FS-220, FS-223, FS-224, FS-225, FS-226, FS-227, FS-228, FS-229, FS-446]
 last_reviewed: 2026-10-05
 ---
@@ -16,15 +16,17 @@ last_reviewed: 2026-10-05
 
 ## 1 · In one paragraph
 
-Insights answers business questions — in dashboards and in plain language
-— from **metrics defined once**. A semantic layer holds every metric's
-definition, owner and source authority: PAR30, match rate, float hours
-left, SLA breaches, collections by channel. Dashboards and AI clients both
-ask through it, so a number means the same thing everywhere. Every
-natural-language answer shows the definition, the query and how fresh the
-data is. Where governed metrics cannot answer, it says so rather than
-improvising. **It never writes.** It is both a product and a tool for
-Dibon (FS-033). **Dibon is the first customer**, starting with Odoo 20's
+Insights will answer business questions — in dashboards and in plain
+language — from **metrics defined once**. A semantic layer will hold every
+metric's definition, owner and source authority: PAR30, match rate, float
+hours left, SLA breaches, collections by channel. Dashboards, AI clients
+and the customer's own BI tool (Metabase, Power BI, Tableau, Zoho
+Analytics; Superset the default) will all ask through it, so a number
+means the same thing everywhere. Every natural-language answer will show
+the definition, the query and how fresh the data is; where governed
+metrics cannot answer, it will say so rather than improvise. **It will
+never write.** It is planned as both a product and a tool for Dibon
+(FS-033), with **Dibon as the first customer**, starting with Odoo 20's
 MCP server on our own data (FS-220).
 
 ## 2 · Who it is for
@@ -77,8 +79,9 @@ number, traceable to a transaction.
 recon-observability (data feeds; platform health), and every product it
 reads from: collect, gateway, escrow, mfi, sacco, sme-recon, omni-channel
 and business-suite (FS-301), and core, the funds ledger in native mode.
-**Used by:** customers and their AI clients directly. Each product's
-dashboards are built on its metrics.
+**Used by:** customers, their AI clients and their own BI tools
+(IN-15) directly; business-suite, for questions over Odoo data (IN-01).
+Each product's dashboards will be built on its metrics.
 
 **Who holds which record** (docs/architecture.md §2):
 
@@ -143,6 +146,7 @@ authority would need to correct here as well as at home.
 | Recon engine | in | event store | Planned |
 | KServe-hosted model | out / in | inference API | Planned (IN-08) |
 | Institutions' AI clients | in | MCP | Planned (IN-07) |
+| Customer's BI tool: Metabase, Power BI, Tableau, Zoho Analytics | in | governed metrics through the semantic layer | Planned (IN-15) |
 
 ## 7 · Regulatory position
 
@@ -152,22 +156,24 @@ authority would need to correct here as well as at home.
 - **Profiling:** questions about named individuals, such as a member's
   history, are personal data processing. They run under the asker's
   access and are logged.
-- **Licences:** Superset is Apache-2.0 (FS-230). No AGPL component in
-  insights today (docs/architecture.md §6.1).
+- **Licences:** Superset is Apache-2.0 (FS-230). Metabase's open-source
+  edition, where a customer chooses it (IN-15), is AGPL: run unmodified
+  and separately (docs/architecture.md §6.1).
 - **Data:** answers inherit the class of the data behind them.
 
 ## 8 · Controls
 
-- **No figure without a definition.** A number insights shows names its
-  metric and source.
+- **No figure without a definition.** A number insights shows will name
+  its metric and source.
 - **"Cannot answer" is an answer** (IN-06). It is better than a fluent
   guess.
-- **Freshness is shown.** An analytical copy is labelled with when it was
-  taken.
+- **Freshness is shown.** An analytical copy will be labelled with when it
+  was taken.
 - **Checked by breaking.** The evaluation set (IN-13) must fail when a
   metric definition is perturbed. A test that only passes on correct data
   proves nothing.
-- **Read only.** No MCP tool insights exposes can write.
+- **Read only.** No MCP tool or BI connection insights exposes will be
+  able to write.
 
 ## 9 · Deployment
 

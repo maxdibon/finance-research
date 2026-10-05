@@ -59,11 +59,13 @@ Nigeria are ready markets, following Liquid's Azure Stack footprint
 partners (FS-109; docs/partners.md; docs/compliance.md).
 
 Collect and the Gateway ran in production at Onit Bank, with W-Harambee,
-from February 2025 to June 2026 (FS-390), on M-Pesa. Before that, our USSD
-platform carried KCB's digital lending from 2022 to 2025, and since 2021
-we have supplied KCB and National Bank of Kenya with SMS, CRM, USSD and
-lending work, much of it ongoing (FS-416, FS-419, FS-443). We are in discussion
-with new partner banks (docs/partners.md). Roan Capital is in delivery on
+from February 2025 to June 2026 (FS-390), on M-Pesa. Since 2021 we have
+supplied KCB and National Bank of Kenya. For KCB: a CRM, the SMS gateway,
+work on its loan engine, and the USSD platform that carried its digital
+lending from 2022 to 2025. For NBK: the SMS gateway and its operator
+connections. Much of it is ongoing, with new integration work for KCB and
+shortcodes and USSD for NBK in 2026 (FS-416, FS-419, FS-443). We are in
+discussion with new partner banks (docs/partners.md). Roan Capital is in delivery on
 Kapu MFI (docs/customers.md).
 
 Dibon is the first customer of its own products: the Gateway carries our
@@ -80,7 +82,8 @@ own payments first, and insights runs on our own data first (FS-033).
 - [Kapu Escrow](modules/escrow.md) — funds held at a bank until the agreed
   conditions are met
 - [Kapu Core](modules/core.md) — a hosted core banking system on Apache Fineract, for institutions ready for a modern core
-- [Kapu MFI](modules/mfi.md) — loan management for informal lenders
+- [Kapu MFI](modules/mfi.md) — loan management for non-deposit-taking
+  lenders, licensed or registered with CBK or applying
 - [Kapu Sacco](modules/sacco.md) — deposit-taking and credit-only Saccos
 - [SME Recon](modules/sme-recon.md) — reconciliation inside the SME's own ERP
 - [Business Suite, on Odoo and Zoho](modules/business-suite.md) — CRM, helpdesk, accounting, HR and payroll, Sign and portal, implemented by Dibon as an Odoo and Zoho partner
@@ -101,7 +104,8 @@ own payments first, and insights runs on our own data first (FS-033).
 
 **Channels**
 
-- [Omni-channel](modules/omni-channel.md) — mobile apps, internet banking and USSD
+- [Omni-channel](modules/omni-channel.md) — mobile apps, internet banking,
+  USSD, and the field-officer app
 
 ## How to read the rest
 
@@ -119,6 +123,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | How banks can offer SME Recon and the business suite to their customers | [bank-channel.md](bank-channel.md) |
 | What a customer and each product need to go live | [onboarding.md](onboarding.md) |
 | Every word of the portfolio PDF | [marketing/portfolio.md](marketing/portfolio.md) |
+| Every word of the two-page bank channel proposal | [marketing/bank-channel-proposal.md](marketing/bank-channel-proposal.md) |
 | How big each market segment is | business/market-sizing.xlsx |
 | Drafts to partners, operators and regulators | outreach/ |
 | Everything still open | [REVIEW.md](../REVIEW.md) |

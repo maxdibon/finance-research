@@ -7,9 +7,9 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability]
-consumed_by: [collect, gateway, mfi, sacco, sme-recon, escrow, mandates, recon-observability]
-review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-390, FS-391, FS-393, FS-403]
-last_reviewed: 2026-10-03
+consumed_by: [collect, gateway, mfi, sacco, sme-recon, escrow, mandates, recon-observability, core, omni-channel, financial-crime, identity]
+review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-390, FS-391, FS-393, FS-403, FS-407, FS-408, FS-448, FS-453]
+last_reviewed: 2026-10-05
 ---
 
 # Rails — payment and bank integrations
@@ -17,15 +17,18 @@ last_reviewed: 2026-10-03
 ## 1 · In one paragraph
 
 Rails is where every connection to a payment rail or a bank lives, written
-once and used by every product (FS-093). Mobile money (M-Pesa, Airtel
-Money, T-Kash, by direct integration — FS-124), PesaLink, banks' APIs and
-statement files, card acquiring, and payment processors all sit behind
-**one interface**: collect, pay out, query status, check a balance, fetch
-a statement, reverse. Each call produces **one normalised event**, which
-always carries the rail's own reference. Three rules hold on every rail.
-**An unconfirmed outcome is unknown, never failed or succeeded.**
-Credentials never leave the server. A rail that cannot prove a callback
-came from it gets the callback confirmed before it counts.
+once and used by every product (FS-093). M-Pesa is built: it ran in
+production at Onit Bank, Feb 2025 to Jun 2026 (RL-03, RL-19). Airtel
+Money and T-Kash, integrated directly (FS-124), are designed and part of
+v1 with it (FS-407); PesaLink, banks' APIs and statement files, card
+acquiring and payment processors are coming soon (FS-408). All of them
+will sit behind **one interface**: collect, pay out, query status, check
+a balance, fetch a statement, reverse. Each call is designed to produce
+**one normalised event**, which always carries the rail's own reference.
+Three rules will hold on every rail. **An unconfirmed outcome is
+unknown, never failed or succeeded.** Credentials never leave the
+server. A rail that cannot prove a callback came from it gets the
+callback confirmed before it counts.
 
 ## 2 · Who it is for
 
@@ -79,7 +82,7 @@ launched; its row stays Designed until that is confirmed (FS-393).
 | RL-19 | M-Pesa (Daraja) B2B: payments to another paybill or till | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390): the B2C service also carried B2B | 1 |
 | RL-20 | M-Pesa Pull Transactions: fetch a shortcode's transactions, so a missed callback is found and matched, not lost | Planned | Daraja API list (FS-387); recon-observability | 1 |
 | RL-21 | M-Pesa Hakikisha (B2C and B2B): the recipient's registered name before a payout is sent | Planned | Daraja API list (FS-387); identity ID-05 | 1 |
-| RL-22 | Safaricom SIM-swap query and IMSI check before money moves | Planned | Daraja security APIs for authorised partners (FS-386, FS-387); omni-channel step-up | 1 |
+| RL-22 | Safaricom SIM-swap query and IMSI check before money moves | Planned | Daraja security APIs for authorised partners (FS-386, FS-387); omni-channel step-up. Feeds the SIM controls: identity ID-12 to ID-14 and the hold on an IMSI change, financial-crime FC-02 (FS-448, FS-453) | 1 |
 | RL-23 | M-Pesa Ratiba: standing orders the customer authorises on M-Pesa, for loan repayments and contributions | Planned | Daraja API list (FS-387); mandates MD-14, RL-16 | 2 |
 | RL-24 | M-Pesa Dynamic QR, B2B Express Checkout and Business to Pochi, for merchant and small-trader payments | Planned | Daraja API list (FS-387); gateway | 2 |
 | RL-25 | M-Pesa Bill Manager and Tax Remittance: invoices with reminders, and KRA payments from a shortcode | Planned | Daraja API list (FS-387); sme-recon, business-suite | 2 |
@@ -90,7 +93,9 @@ launched; its row stays Designed until that is confirmed (FS-393).
 recon-observability (events in; health out).
 **Used by:** collect, gateway, mfi, sacco, sme-recon, escrow, mandates (debit
 registration), recon-observability (status queries and statement pulls for
-remediation).
+remediation), core (mobile-money deposits and repayments, KC-09),
+omni-channel (payments and field collections, OC-18)
+and financial-crime (the SIM-swap check, RL-22).
 
 **Who holds which record** (docs/architecture.md §2):
 

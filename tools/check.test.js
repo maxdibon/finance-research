@@ -263,7 +263,10 @@ test('reviewed: a committed copy passes', () => {
 });
 
 test('reviewed: a document changed without its date fails', () => {
-  const f = runInRepo((d) => patch(d, path.join('docs', 'modules', 'crb.md'), (t) => `${t}\nA new line.\n`));
+  // The date is set back explicitly, so the test does not depend on the
+  // file's current last_reviewed being older than today.
+  const f = runInRepo((d) => patch(d, path.join('docs', 'modules', 'crb.md'),
+    (t) => `${t.replace(/^last_reviewed: .*$/m, 'last_reviewed: 2026-10-01')}\nA new line.\n`));
   assert.deepStrictEqual(names(f), ['reviewed']);
 });
 

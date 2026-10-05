@@ -7,9 +7,9 @@ owner: Product lead, business suite
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, messaging, sme-recon, mandates, insights]
-consumed_by: []
+consumed_by: [insights]
 review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336]
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # Business Suite, on Odoo and Zoho
@@ -17,15 +17,16 @@ last_reviewed: 2026-10-03
 ## 1 · In one paragraph
 
 The Business Suite is Odoo or Zoho, implemented by Dibon and connected to
-the Kapu products (FS-306). It gives an institution or a business its CRM, helpdesk,
-accounting, HR and payroll, e-signatures, customer portal and campaigns, with bank and
-mobile-money feeds already reconciled into its books. It is not software
-Dibon builds. Dibon implements, configures and integrates Odoo as an Odoo
-Ready Partner, working towards Silver (FS-288), and Zoho as a Zoho partner
-(tier to confirm, FS-312). It completes the
-portfolio's promise of one partner rather than five: the ERP is usually
-the fifth. Dibon runs on it first, for its own CRM, helpdesk and accounting
-(FS-002).
+the Kapu products (FS-306). It will give an institution or a business its
+CRM, helpdesk, accounting, HR and payroll, e-signatures, customer portal
+and campaigns, with bank and mobile-money feeds reconciled into its books
+through SME Recon. It is not software Dibon builds. Dibon implements,
+configures and integrates Odoo as an Odoo Ready Partner, working towards
+Silver (FS-288), and Zoho as a Zoho partner (tier to confirm, FS-312).
+Managed Odoo hosting on Dibon's own platform, OLP, is built (BS-11); the
+customer implementations are planned. It completes the portfolio's promise
+of one partner rather than five: the ERP is usually the fifth. Dibon will
+run on it first, for its own CRM, helpdesk and accounting (FS-002).
 
 ## 2 · Who it is for
 
@@ -34,10 +35,10 @@ and desktop accounting. Saccos, MFIs and smaller banks for their own back
 office: corporate customers, member complaints, their own books. Customers
 of SME Recon who have no ERP to wrap (FS-131).
 
-**The problem, concretely:** customers live in one tool, complaints in
-another, invoices in a third. Paperwork is signed on paper and scanned. The
-bank and mobile-money statements still have to be keyed into the books by
-hand.
+**The problem, concretely:** businesses want customers, complaints and
+invoices in one place rather than three tools; agreements signed online
+rather than on paper and scanned; and bank and mobile-money statements in
+the books without keying them in by hand.
 
 **People who use it:**
 
@@ -77,8 +78,9 @@ hosting on OLP, is **Built** (FS-293).
 **Depends on:** access (sign-on), messaging (campaigns, SMS), sme-recon
 (statement feeds into accounting), mandates (money approvals), insights
 (questions over Odoo data).
-**Used by:** customers directly. In the architecture, Odoo is also one of
-the three authorities (docs/architecture.md §2).
+**Used by:** customers directly; insights, for questions and dashboards
+over Odoo data. In the architecture, Odoo is also one of the three
+authorities (docs/architecture.md §2).
 
 **Who holds which record** (docs/architecture.md §2):
 

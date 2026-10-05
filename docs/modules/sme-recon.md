@@ -6,31 +6,37 @@ version: 0.1.0
 owner: Product lead, recon
 classification: Internal
 audience: [sme, fintech]
-depends_on: [access, recon-observability, rails, mandates, messaging]
-consumed_by: []
-review_ids: [FS-026, FS-027, FS-028, FS-033, FS-036, FS-037, FS-038, FS-095, FS-124, FS-125, FS-127, FS-130, FS-131, FS-132, FS-133, FS-134, FS-135]
-last_reviewed: 2026-10-03
+depends_on: [access, recon-observability, rails, mandates, messaging, gateway]
+consumed_by: [business-suite, insights]
+review_ids: [FS-026, FS-027, FS-028, FS-033, FS-036, FS-037, FS-038, FS-095, FS-124, FS-125, FS-127, FS-130, FS-131, FS-132, FS-133, FS-134, FS-135, FS-439, FS-441]
+last_reviewed: 2026-10-05
 ---
 
 # SME Recon
 
 ## 1 · In one paragraph
 
-SME Recon connects a business's bank accounts, mobile-money accounts and
-card settlements to the ERP it already uses. Every shilling coming in is
-matched to an invoice or investment, and every shilling going out is
-matched to an expense. Payments the business approves in its ERP are
-executed by bank API or mobile money. It is a standalone product on the
-recon engine (FS-095), wrapped for each ERP: Odoo first, then Zoho and
-others (FS-027). The accountant works inside the ERP's own reconciliation,
-not in a second tool. **Dibon is the first customer** (FS-033): our own
-accounts at NCBA, KCB, M-Pesa, Airtel Money and T-Kash, reconciled into
-our own Odoo (FS-125).
+SME Recon will connect a business's bank accounts, mobile-money accounts
+and card settlements to the ERP it already uses. Every shilling coming in
+will be matched to an invoice or investment, and every shilling going
+out to an expense. Payments the business approves in its ERP will be
+executed by bank API or mobile money. It is planned as a standalone
+product on the recon engine (FS-095), wrapped for each ERP: Odoo first,
+then Zoho and others (FS-027). The accountant will work inside the ERP's
+own reconciliation, not in a second tool. **Dibon will be the first
+customer** (FS-033): our own accounts at NCBA, KCB, M-Pesa, Airtel Money
+and T-Kash, reconciled into our own Odoo (FS-125). Banks may also offer
+it to their SME customers (docs/bank-channel.md).
 
 ## 2 · Who it is for
 
 **Segments:** SMEs that collect on several rails and reconcile by hand.
 Fintechs that need the same for their operating accounts. Dibon first.
+SMEs reached through their bank: a bank, microfinance bank or Sacco
+offers SME Recon to its business customers, by referral first and as a
+bundle once take-up is shown, with the business's books staying its own
+(docs/bank-channel.md; FS-439, FS-441). KCB and National Bank of Kenya,
+current customers, are the first candidates (CU-03, CU-04).
 
 **The problem, concretely:** the accountant downloads statements from
 each bank and each mobile-money portal, then matches them line by line
@@ -72,9 +78,13 @@ Every row is **Planned**.
 
 ## 4 · Where it sits
 
-**Depends on:** recon-observability (the engine), rails (bank, mobile-money
-and card feeds), mandates (approval of payments, SR-11), messaging.
-**Used by:** none. It is the product an SME buys.
+**Depends on:** access (sign-on, and the approver's re-authentication,
+FS-132), recon-observability (the engine), rails (bank, mobile-money and
+card feeds), mandates (approval of payments, SR-11), messaging, gateway
+(incoming merchant payments, for businesses that collect through it).
+**Used by:** business-suite (statement feeds into accounting) and
+insights (its metrics). Otherwise it is the product an SME buys, directly
+or through its bank (docs/bank-channel.md).
 
 **Who holds which record** (docs/architecture.md §2):
 
@@ -214,3 +224,4 @@ FS-037, FS-127, FS-130, FS-131, FS-132, FS-133, FS-134, FS-135.
 - docs/modules/recon-observability.md §4 (institution and SME compared).
 - docs/outreach/api-requests.md (feeds requested for Dibon's own
   accounts).
+- docs/bank-channel.md (banks offering SME Recon to their SME customers).

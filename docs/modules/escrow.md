@@ -7,9 +7,9 @@ owner: Product lead, Kapu
 classification: Internal
 audience: [bank, sme, fintech]
 depends_on: [collect, mandates, recon-observability, messaging, rails, identity]
-consumed_by: []
-review_ids: [FS-042, FS-104, FS-107, FS-108, FS-114, FS-115, FS-116, FS-117, FS-328]
-last_reviewed: 2026-10-03
+consumed_by: [insights]
+review_ids: [FS-042, FS-104, FS-107, FS-108, FS-114, FS-115, FS-116, FS-117, FS-328, FS-407, FS-408]
+last_reviewed: 2026-10-05
 ---
 
 # Kapu Escrow
@@ -76,7 +76,8 @@ same gap as the GateKeepr brief's second-leg problem.
 **Depends on:** collect (sub-accounts, deposits), mandates (release
 approvals), recon-observability (ES-10), messaging (ES-09), rails
 (funding and release), identity (KYC on both parties).
-**Used by:** none yet. GateKeepr's deposit and service-charge flows are a
+**Used by:** insights, which reads its states for reporting. No product
+builds on it yet; GateKeepr's deposit and service-charge flows are a
 possible consumer.
 
 **Who holds which record** (docs/architecture.md §2):
@@ -133,7 +134,8 @@ that would let Dibon release funds without the agreed approvers.
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
 | Partner bank: sub-accounts, mandates, statements | in / out | API; statement file for the daily tie-out | Planned |
-| M-Pesa, Airtel Money, PesaLink, cards | in (funding) | through collect and gateway | Planned |
+| M-Pesa, Airtel Money, T-Kash | in (funding) | through collect and gateway | Planned; the v1 rails (FS-407) |
+| PesaLink, cards | in (funding) | through collect and gateway | Planned; coming soon (FS-408) |
 | Bank transfer, PesaLink | out (release, refund) | through the partner bank | Planned |
 | Odoo and Odoo Sign | in / out | API | Planned |
 
@@ -148,8 +150,9 @@ that would let Dibon release funds without the agreed approvers.
   and whether the bank will, is checked per country — FS-108.
 - **Interest:** who earns interest on escrowed funds, and how unclaimed
   funds are handled — FS-115.
-- **AML:** escrow is a known laundering route. Both parties are identified
-  before an escrow opens, and the bank's own screening applies — FS-116.
+- **AML:** escrow is a known laundering route. Both parties will be
+  identified before an escrow opens, and the bank's own screening applies
+  — FS-116.
 - **Signatures:** whether Odoo Sign is legally sufficient for an escrow
   agreement, per document type — FS-049.
 - **Data:** parties, amounts and agreements are Confidential.
@@ -161,15 +164,16 @@ that would let Dibon release funds without the agreed approvers.
   designed to encode the same rule, so that a defect in our software could
   not release funds the bank would refuse (FS-122).
 - **Attribution at the act:** signing, approving a milestone, releasing
-  and refunding are each authenticated when they happen.
-- **Disputes freeze funds.** Only the arbiter, or both parties together,
-  can unfreeze them. Nothing auto-resolves on a deadline — FS-117.
+  and refunding will each be authenticated when they happen.
+- **Disputes will freeze funds.** Only the arbiter, or both parties
+  together, will be able to unfreeze them. Nothing will auto-resolve on a
+  deadline — FS-117.
 - **In a dispute the arbiter decides alone, and the bank still checks.**
-  The arbiter can direct a release without either party, but only within
-  the agreement: to the named parties' accounts, up to the disputed
-  amount. The account's signing mandate names the arbiter as one valid
-  release path, so the bank checks the instruction as it checks any other
-  (FS-328). The arbiter is never Dibon.
+  The arbiter will be able to direct a release without either party, but
+  only within the agreement: to the named parties' accounts, up to the
+  disputed amount. The account's signing mandate is designed to name the
+  arbiter as one valid release path, so the bank checks the instruction as
+  it checks any other (FS-328). The arbiter is never Dibon.
 - **The tie-out never adjusts.** A balance that differs from the
   agreement is a recon exception, not a correction.
 

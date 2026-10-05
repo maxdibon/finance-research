@@ -29,9 +29,9 @@ VAT and the NPS Bill 2026
 > Dibon Consulting builds software for banks, Saccos, microfinance
 > institutions and lenders in Kenya: collections, a payments gateway,
 > lending and Sacco systems, reconciliation and SMS. Our products ran in
-> production at Onit Bank from February 2025 to June 2026, and we supply
-> SMS services to two tier-1 Kenyan banks today. We never hold customers'
-> funds.
+> production at Onit Bank from February 2025 to June 2026, and since 2021
+> we have supplied SMS, USSD and integration services to two established
+> Kenyan banks, work that continues today. We never hold customers' funds.
 >
 > We would like to instruct your firm on three questions, and first ask
 > you to run a conflict check against Dibon Company Limited. We can share

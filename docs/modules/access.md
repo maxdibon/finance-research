@@ -7,25 +7,26 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [messaging]
-consumed_by: [mandates, collect, gateway, mfi, sacco, sme-recon, escrow, recon-observability, messaging, crb]
-review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206]
-last_reviewed: 2026-10-01
+consumed_by: [mandates, messaging, rails, recon-observability, identity, financial-crime, core, collect, gateway, mfi, sacco, sme-recon, escrow, crb, omni-channel, insights, business-suite]
+review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449]
+last_reviewed: 2026-10-05
 ---
 
 # Access — login, roles and step-up
 
 ## 1 · In one paragraph
 
-Access decides who may log in, as whom, with which roles, and whether the
-person acting right now is the person they claim to be. It is one
+Access will decide who may log in, as whom, with which roles, and whether
+the person acting right now is the person they claim to be. It will be one
 identity provider for the platform, **Keycloak** (FS-194), serving staff,
 members and customers, partners' systems and AI clients. Every
-application logs in through it, Odoo, Fineract and Grafana included. It is
-how re-authentication at the act is built: a payment, an approval or a
-release asks for **step-up authentication** at that moment, not at login.
-An institution with its own identity provider keeps it; we federate to it.
-**Access holds logins, not people.** A person's identity and KYC stay
-with their authority (docs/architecture.md §2).
+application will log in through it, Odoo, Fineract and Grafana included.
+It is how re-authentication at the act will be built: a payment, an
+approval or a release will ask for **step-up authentication** at that
+moment, not at login. An institution with its own identity provider keeps
+it; we will federate to it. **Access will hold logins, not people.** A
+person's identity and KYC stay with their authority (docs/architecture.md
+§2).
 
 ## 2 · Who it is for
 
@@ -60,7 +61,7 @@ reach.
 | AC-02 | Staff single sign-on for Odoo, Fineract, Grafana and our portals | Planned | FS-194 | 1 |
 | AC-03 | Member and customer login for apps and internet banking: passkeys, one-time codes, recovery codes | Planned | Keycloak: WebAuthn and passkeys, OTP, recovery codes | 1 |
 | AC-04 | Partner and merchant API clients: client credentials, mutual TLS, financial-grade API profiles (FAPI 1, FAPI 2, OAuth 2.1) | Planned | Keycloak: built-in FAPI client profiles | 1 |
-| AC-05 | Step-up authentication at the act, by level of authentication — the mechanism behind mandates MD-10 | Planned | Keycloak: step-up authentication; FS-132 | 1 |
+| AC-05 | Step-up authentication at the act, by level of authentication — the mechanism behind mandates MD-10 | Planned | Keycloak: step-up authentication; FS-132. Also the step-up behind approval from email, mandates MD-18 (FS-449, FS-453) | 1 |
 | AC-06 | Approval on a phone for a request started elsewhere (CIBA) | Planned | Keycloak: CIBA policy per realm | 2 |
 | AC-07 | Federation with an institution's own identity provider; directory federation (LDAP) | Planned | Keycloak: identity brokering, user federation; FS-195 | 1 |
 | AC-08 | Tenancy: a realm per institution, or organisations within a realm | Planned | Keycloak: realms, organisations; FS-197 | 1 |

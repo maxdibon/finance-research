@@ -5,7 +5,7 @@ kind: checklist
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-339, FS-343]
+review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -18,8 +18,9 @@ here too. Every product the portfolio sells must have a section here; the
 check tool fails if one is missing (FS-353).
 
 This file is the template. A customer's progress against it is tracked in
-Odoo, as a project created from this list when the deal is won. Customer
-names never go in this repository.
+Odoo, as a project created from this list when the deal is won. This
+template names no customer; customers and their delivery maps are in
+docs/customers.md.
 
 **Partner onboarding** (banks, registries, bureaus) is tracked separately,
 in docs/partners.md, under each partner's next step.
@@ -44,6 +45,8 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-14 | Go-live sign-off after a first full cycle reconciles | Customer's sponsor | recon-observability |
 | OB-COM-15 | The regulator's approval of the arrangement, where one applies: CBK approval for a bank's material outsourcing, 30 days' notice to CBK for a PSP, SASRA's vendor terms for a Sacco. Dibon supplies the due-diligence pack. What goes in it: docs/approval-pack.md | Customer's compliance lead | docs/compliance.md LC-05, LC-08; FS-368, FS-370; FS-440 |
 | OB-COM-16 | Its money laundering reporting officer, its goAML registration with the FRC, and its risk appetite: screening lists, thresholds for holds and alerts | Customer's reporting officer | financial-crime FC-05 to FC-11; FS-431 |
+| OB-COM-17 | Approvers' work email addresses, and which approvals may be acted on from Outlook or Gmail | Customer's operations lead | mandates MD-18; FS-449 |
+| OB-COM-18 | The operator agreements for the SIM-change, IMSI and name checks with Safaricom, Airtel and Telkom: the institution's own, or Dibon's; and the limit and holding period after a SIM change | Customer's compliance lead | identity ID-12 to ID-14, financial-crime FC-02; compliance LC-13; FS-448 |
 
 ## Kapu Collect
 
@@ -98,9 +101,10 @@ Module: [mfi](modules/mfi.md)
 | Id | What we need | From | Why |
 |---|---|---|---|
 | OB-MF-01 | Its shortcode and bank access | Finance lead | mfi §4 |
-| OB-MF-02 | Loan products and fee structures, including repayment frequency and overdue charges, within the in duplum cap | Credit lead | mfi §3, MF-21; FS-400 |
+| OB-MF-02 | Loan products and fee structures, including repayment frequency and overdue charges, within the cap on interest recoverable on a non-performing loan (CBK lender regulations, reg 29) | Credit lead | mfi §3, MF-21; FS-400 |
 | OB-MF-03 | Approval chains, vetting limits and the override authority | Credit lead | mfi MF-06, MF-07 |
 | OB-MF-04 | Collateral types it accepts | Credit lead | mfi MF-03 |
+| OB-MF-05 | Its CBK licence or registration as a lender, or its application (due by about 29 Mar 2027), which decides the conduct and disclosure rules the product applies | Compliance lead | mfi MF-22 to MF-29; law register LR-03; FS-435 |
 
 ## Kapu Sacco
 
@@ -143,6 +147,7 @@ Module: [omni-channel](modules/omni-channel.md)
 | OB-OC-02 | Channel limits by transaction type | Operations lead | omni-channel §4 |
 | OB-OC-03 | Its app store accounts, or consent to publish under Dibon's | Marketing lead | FS-232 |
 | OB-OC-04 | A USSD code, from the operators | Operations lead | FS-233 |
+| OB-OC-05 | Field officers: who they are, the Android devices they will use, and who may wipe a lost device | Operations lead | omni-channel OC-17 to OC-19, core KC-14; FS-450 |
 
 ## Business suite
 

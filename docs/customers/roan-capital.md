@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -92,7 +92,7 @@ missing. *Gap* means no capability does it yet.
 | RC-23 | Ageing report, buckets from 1 to 360+ days, with export | MF-14 | Covered | |
 | RC-24 | Loan classification and a risk portfolio view | MF-14, MF-15 | Partial | Reported; the rule that changes a classification is RC-15 |
 | RC-25 | Internal management P&L: interest, fees, penalties | MF-15 | Covered | Income by component |
-| RC-26 | Loan calculator (rates 1% to 50%), with penalty interest after day 30 | KC-04, MF-21 | Partial | The rate's unit is not stated (a month, a year, flat?). Penalty interest must stay within the in duplum cap (MF-21, phase 1, FS-400) |
+| RC-26 | Loan calculator (rates 1% to 50%), with penalty interest after day 30 | KC-04, MF-21 | Partial | The rate's unit is not stated (a month, a year, flat?). Penalty interest must stay within the arrears cap: for lenders, interest recoverable on a non-performing loan stops at the principal owing (CBK lender regulations reg 29; MF-21, phase 1, FS-400) |
 | RC-27 | Delinquency ladder: reminder day 25, default run days 30 to 40, final warning days 40 to 47, hard closure day 47 | MF-13, MF-14 | Partial | Reminders and arrears buckets exist; tiers that change a loan's collection state by day are new |
 
 ### Public lead capture, calculator and administration (§2.2)
@@ -109,7 +109,7 @@ missing. *Gap* means no capability does it yet.
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
 | RC-32 | Time-based one-time codes (Google Authenticator) for every approver | AC-05, MD-10 | Partial | Step-up at the act is Planned. The prototype accepts a fixed code (123456): production must never |
-| RC-33 | An immutable audit trail of every action, searchable by user, account, date and action | RO-19, MD-05 | Partial | Access audit and decision records exist; one searchable trail across modules is new |
+| RC-33 | An immutable audit trail of every action, searchable by user, account, date and action | RO-19, MD-05, RO-24 | Partial | Access audit and decision records exist. Every step of a transaction is to be signed and hash-chained in v1 (RO-24, FS-453), so a change shows; actions outside transactions, and one searchable trail across modules, are new |
 | RC-34 | Roles: Credit Officer, committee members, Head Office Committee, administrator | AC-09 | Partial | The prototype has eight roles (adding CEO, finance, collections, auditor). Agree the list |
 | RC-35 | Monitoring: Prometheus, Grafana, Loki; 99.9% uptime | RO-16, RO-17 | Covered | Ran for Collect at Onit Bank (collect CO-11). Uptime sits with the support tier |
 | RC-36 | AML/CFT duties as a licensed or registered lender: sanctions screening at onboarding and on every list change, records for seven years. Not in the document; required by the CBK lender regulations, reg 64 (law register LR-03) | FC-05, FC-12 | Partial | Added by Dibon (FS-431). Both are phase 1; PEP screening, cases and STR drafting (FC-06, FC-08, FC-09) are phase 2 |
@@ -128,7 +128,7 @@ replacement (MF-05).
 |---|---|---|---|
 | 1 | Remove the prototype's public demo panel (accounts, a shared password, a fixed 2FA code) before anyone outside the team sees it | FS-395 | Open |
 | 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules. Every non-deposit-taking lender must now be licensed or registered with CBK, applying by about 29 Mar 2027 (NDTCP Regulations 2026, FS-423) | FS-400, FS-423 | Open |
-| 3 | 1% a day default interest: within the in duplum rule? | FS-400 | Open; the cap is MF-21 |
+| 3 | 1% a day default interest: within the in duplum rule? | FS-400 | Answered for the cap: reg 29 of the lender regulations stops recoverable interest at the principal owing, enforced by MF-21. Whether the rate itself fits the pricing and disclosure rules (RC-37) is open |
 | 4 | The interest rate's unit | FS-395 | Open |
 | 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413, FS-415 | BRS answered: v1. Land titles open |
 | 6 | Disbursement banks: NCBA only, or NCBA and Access Bank? (RC-18) | FS-395 | Open |
@@ -145,4 +145,5 @@ inside the table of contents, and misaligned rows in the quality table.
 - The requirement document and the full review: clients/roan-capital/
   (outside git).
 - Capability statuses: the modules named in §2.
-- Decisions: FS-399 to FS-403 in docs/decisions.md and REVIEW.md.
+- Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in
+  docs/decisions.md and REVIEW.md.

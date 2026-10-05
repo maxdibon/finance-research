@@ -7,7 +7,7 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
-consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime]
+consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime, core, escrow, crb, rails, insights]
 review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453]
 last_reviewed: 2026-10-05
 ---
@@ -17,16 +17,20 @@ last_reviewed: 2026-10-05
 ## 1 · In one paragraph
 
 Recon & Observability is a shared service in two parts. **The recon
-engine** matches every transaction across both sides — rails, banks and
-the customer's ledger — and keeps every break open and visible until
-evidence closes it. **The observability layer** watches the systems that
-move the money: their metrics, logs, traces, alerts and on-call. The two
-are loosely coupled but share the same data. Every Kapu product uses the
-service. Institutions also get it with **an operations surface of its
-own**: a control tower, an exception queue, a trace for every
-transaction, and a ledger view in which suspense is the exception queue
-seen from the books. The SME version is a separate product, sme-recon. It
-runs on this same engine behind an ERP — FS-095.
+engine** is designed to match every transaction across both sides —
+rails, banks and the customer's ledger — and to keep every break open
+and visible until evidence closes it. **The observability layer** is
+designed to watch the systems that move the money: their metrics, logs,
+traces, alerts and on-call; its metrics, logs and dashboards ran at Onit
+Bank in Collect (CO-11). In phase 1, every transaction will also carry
+one identifier and a signed, hash-chained record of each processing
+step that anyone holding our public keys can verify (RO-23 to RO-25).
+Every Kapu product will use the service. Institutions will also get it
+with **an operations surface of its own**: a control tower, an exception
+queue, a trace for every transaction, and a ledger view in which
+suspense is the exception queue seen from the books. The SME version is
+a separate product, sme-recon, on this same engine behind an ERP —
+FS-095.
 
 ## 2 · Who it is for
 
@@ -88,11 +92,15 @@ reconciliation, is Planned (FS-405).
 
 ## 4 · Where it sits
 
-**Depends on:** rails (feeds), messaging (alerts to people), mandates
-(maker-checker for reversals and reposts).
+**Depends on:** access (who may see which fields, RO-19), rails (feeds),
+messaging (alerts to people), mandates (maker-checker for reversals and
+reposts).
 **Used by:** collect (end-of-day against the core), gateway (every
 merchant payment), mfi and sacco (repayments against Fineract), sme-recon
-(the same engine behind an ERP).
+(the same engine behind an ERP), core (it ties to its own rails every
+day), escrow, crb, rails (events in, health out), insights (data feeds)
+and financial-crime (duplicate and anomaly detection, RO-11, as a feed;
+FS-431).
 
 **Does this cover the SME use case?** The engine does; the product does
 not (FS-095).
@@ -216,10 +224,10 @@ zero, and that is what closing the day means.
 
 ## 9 · Deployment
 
-Cloud-native on Kubernetes, as the July proposal describes. It runs on the
-customer's premises or on Liquid's Azure Stack (FS-032). For an institution
-it sits beside the core. For Kapu products it runs once, shared, inside
-Kapu's own deployment. Grafana IRM may not be available outside Grafana's
+Cloud-native on Kubernetes, as the July proposal describes. It will run
+on the customer's premises or on Liquid's Azure Stack (FS-032). For an
+institution it will sit beside the core. For Kapu products it will run
+once, shared, inside Kapu's own deployment. Grafana IRM may not be available outside Grafana's
 own cloud — FS-101.
 
 ## 10 · What it does not do
@@ -229,8 +237,8 @@ own cloud — FS-101.
 - Learn fraud patterns. RO-11 is rules; anything statistical is
   unspecified.
 - File regulatory returns, screen for AML, or score fraud. Those are
-  financial-crime (FC-01 to FC-14), fed by RO-11; the prototype's forms are
-  not real.
+  financial-crime (FC-01 to FC-15; RO-12, RO-14 and RO-15 moved there
+  under FS-431), fed by RO-11; the prototype's forms are not real.
 - Serve SMEs directly. That is sme-recon (FS-095).
 
 ## 11 · Open questions
@@ -247,3 +255,5 @@ FS-100, FS-101, FS-102, FS-103.
 - Kapu Pay Technical Documentation, v1.0, Apr 2026 — Operations & Support.
   *Derived, not reproduced.*
 - docs/architecture.md §2, §5, §7.
+- REVIEW.md FS-418, FS-421 (self-service reversal), FS-431
+  (financial-crime), FS-445, FS-453 (traceability).

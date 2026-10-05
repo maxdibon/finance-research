@@ -7,25 +7,28 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access]
-consumed_by: [mfi, sacco, gateway, escrow, mandates, recon-observability, sme-recon]
-review_ids: [FS-147, FS-148, FS-149, FS-150, FS-152, FS-153, FS-155, FS-156, FS-158, FS-159, FS-160, FS-161, FS-162, FS-163, FS-164, FS-165, FS-166]
-last_reviewed: 2026-10-01
+consumed_by: [mfi, sacco, gateway, escrow, mandates, recon-observability, sme-recon, collect, core, crb, financial-crime, omni-channel, access, business-suite, identity]
+review_ids: [FS-147, FS-148, FS-149, FS-150, FS-152, FS-153, FS-155, FS-156, FS-158, FS-159, FS-160, FS-161, FS-162, FS-163, FS-164, FS-165, FS-166, FS-416, FS-419]
+last_reviewed: 2026-10-05
 ---
 
 # Messaging
 
 ## 1 · In one paragraph
 
-Messaging sends and receives messages to people on SMS, WhatsApp, Telegram
-and our apps, for every Kapu product and for institutions' own needs. It
-has two paths. **Transactional** messages — reminders, receipts, alerts,
-approval nudges — are triggered by product events. **Campaigns** are
-defined in Odoo: audience, template, schedule. Messaging delivers both. In
-Kenya, SMS goes **directly to the operators** under Dibon's PRSP licence
-from the Communications Authority (FS-160). Elsewhere it goes through
-partners such as Meliora and Africa's Talking. **Every message's status
-says only what its channel reported** (FS-153). Institutions reach it by
-API and by MCP.
+Messaging will send and receive messages to people on SMS, WhatsApp,
+Telegram and our apps, for every Kapu product and for institutions' own
+needs. It will have two paths. **Transactional** messages — reminders,
+receipts, alerts, approval nudges — will be triggered by product events.
+**Campaigns** will be defined in Odoo: audience, template, schedule.
+Messaging will deliver both. In Kenya, SMS will go **directly to the
+operators** under Dibon's PRSP licence from the Communications Authority
+(FS-160); elsewhere, through partners such as Meliora and Africa's
+Talking. **Every message's status will say only what its channel
+reported** (FS-153). Institutions will reach it by API and by MCP. Dibon
+has run bank SMS since 2021, supplying Meliora's Tiara gateway to KCB
+and National Bank of Kenya (CU-03, CU-04); this service is Dibon's own,
+and is not yet built.
 
 ## 2 · Who it is for
 
@@ -37,6 +40,11 @@ campaigns. Dibon first, through our own Odoo.
 SMS provider, register its own sender IDs and invent its own delivery
 semantics. Campaigns would live in one tool and reminders in another, with
 no shared consent record. A message that silently failed would look sent.
+Dibon's bank SMS work since 2021 — Meliora's Tiara gateway for KCB and
+National Bank of Kenya, transactional and promotional, over SMPP and SDP
+(docs/customers.md CU-03, CU-04; partners PT-20) — is where these needs
+were learned. It is Meliora's platform, so it is evidence of experience,
+not of the rows below.
 
 **People who use it:**
 
@@ -83,7 +91,9 @@ clients break its terms (FS-152).
 **Depends on:** access (institutions' API and MCP clients).
 **Used by:** mfi (reminders), sacco, gateway (payment links), escrow (state
 changes), mandates (approval nudges, pre-debit notices),
-recon-observability (alerts to people), sme-recon.
+recon-observability (alerts to people), sme-recon, collect, core, crb,
+financial-crime, omni-channel, access (one-time codes) and
+business-suite (campaigns).
 **Not covered here:** machine-to-machine callbacks to partners and
 merchants. Those belong to each product's API (collect, gateway).
 

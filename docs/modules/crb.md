@@ -8,38 +8,41 @@ classification: Internal
 audience: [bank, sacco, mfi, fintech, sme]
 depends_on: [mandates, messaging, recon-observability, identity]
 consumed_by: [mfi, sacco, sme-recon]
-review_ids: [FS-004, FS-005, FS-019, FS-020, FS-022, FS-137, FS-186, FS-187, FS-188, FS-189, FS-190, FS-191]
-last_reviewed: 2026-10-01
+review_ids: [FS-004, FS-005, FS-019, FS-020, FS-022, FS-137, FS-186, FS-187, FS-188, FS-189, FS-190, FS-191, FS-447]
+last_reviewed: 2026-10-05
 ---
 
 # CRB — credit bureau connections
 
 ## 1 · In one paragraph
 
-The CRB service connects lenders to Kenya's licensed credit reference
+The CRB service will connect lenders to Kenya's licensed credit reference
 bureaus, in both directions (FS-022). **Batch:** the full monthly
 submission of every credit account, generated from the ledger, validated
 before it leaves, and reconciled against what the bureau accepted.
 **Individual:** a lookup at vetting, an out-of-cycle correction, a
-dispute — done for one person from inside the product or the ERP. It
-connects to every licensed bureau, not just one. A score it fetches is
+dispute — done for one person from inside the product or the ERP. It will
+connect to every licensed bureau, not just one. A score it fetches will be
 evidence for a human decision, never the decision itself (FS-020). Who
-may subscribe is a regulatory question before it is a technical one
-(FS-019), so it comes first.
+may subscribe is set by the CRB Regulations 2020: banks, microfinance
+banks and Saccos; other lenders share under the CBK lender regulations
+(law register LR-06, LR-03; FS-447). Dibon subscribes for no one: it
+processes for the subscriber.
 
 ## 2 · Who it is for
 
 **Segments:** MFIs and Saccos on Kapu, for submission and lookups. Banks
 and lenders with their own core, for lookups and submission quality.
-SMEs, for checking a customer before giving trade credit, if the rules
-allow it (FS-186).
+SMEs, for checking a customer before giving trade credit, only through a
+route the regulations allow: an SME is not among those who may subscribe
+(FS-186, FS-447).
 
-**The problem, concretely:** the monthly submission is assembled by hand
-from the loan book into each bureau's template. Rejected records come back
-as a file nobody reconciles, so the bureau's view and the lender's book
-drift apart. A borrower who has settled stays listed until someone
-remembers to correct it. Lookups happen in each bureau's portal, with no
-record in the lender's system of who looked up whom and why.
+**The problem, concretely:** lenders want the monthly submission produced
+from the loan book rather than assembled by hand into each bureau's
+template; rejected records worked through and reconciled, so the bureau's
+view and the lender's book agree; a settled borrower's listing corrected
+when they settle; and every lookup recorded in their own system, with who
+looked up whom and why, rather than only in each bureau's portal.
 
 **People who use it:**
 
@@ -58,7 +61,7 @@ FS-022) and the MFI PRD's Phase 2 note. Every row is **Planned**.
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| CR-01 | Subscriber connections to every licensed bureau | Planned | FS-005. Bureaus in partners.md SD-10 | 1 |
+| CR-01 | Subscriber connections to every licensed bureau, under the institution's own subscription | Planned | FS-005. Bureaus in partners.md SD-10. Subscribers: banks, microfinance banks and Saccos (LR-06 reg 2; FS-447) | 1 |
 | CR-02 | Individual lookup: report and score at vetting, with consent and purpose recorded first | Planned | FS-022; MFI PRD §6 (fast-follow) | 1 |
 | CR-03 | Batch submission: every credit account, in each bureau's format, generated from the ledger | Planned | FS-022 | 1 |
 | CR-04 | Validation before submission, and the bureau's rejection report parsed into a work queue | Planned | FS-022 | 1 |
@@ -98,7 +101,7 @@ decision used, or a person's bureau history as our own record.
 |---|---|---|
 | Where data comes from | Extracts from the lender's core | Fineract, directly |
 | What differs in this module | Many banks already submit themselves; the service may only do lookups and submission checks | The service produces the whole submission |
-| What the customer must provide | A bureau subscription, or ours to use if permitted (FS-186); core extracts | A bureau subscription; its loan data in Fineract |
+| What the customer must provide | Its own bureau subscription (Dibon holds none, FS-447); core extracts | Its own bureau subscription, or for a lender the sharing route of LR-03 reg 33; its loan data in Fineract |
 | Who it suits | Banks and larger Saccos | MFIs and smaller Saccos |
 
 ## 5 · How it works
@@ -140,11 +143,13 @@ decision used, or a person's bureau history as our own record.
 ## 7 · Regulatory position
 
 - **Custody:** none.
-- **Who may subscribe and submit:** set by CBK's credit reference bureau
-  regulations. Whether unregistered MFIs, credit-only Saccos and SMEs may
-  subscribe, and whether Dibon can subscribe on their behalf, is open —
-  FS-019, FS-186. Lenders under CBK's digital-credit licensing may be
-  obliged to share (FS-137, FS-190).
+- **Who may subscribe and submit:** set by the CRB Regulations 2020 (law
+  register LR-06): only banks, microfinance banks and Saccos may
+  subscribe (reg 2); anyone else furnishing credit data needs CBK approval
+  as a third-party credit information provider. Lenders licensed or
+  registered with CBK, or applying, share under the lender regulations
+  (LR-03 reg 33). Dibon subscribes for no one; it processes for the
+  subscriber (FS-447). Whether SMEs have any route remains FS-186.
 - **Borrowers' rights:** notice before an adverse listing, the right to
   dispute, correction on settlement, retention limits on negative
   information. The specifics come from the regulations — FS-188.
@@ -189,7 +194,8 @@ FS-191.
 
 ## 12 · Sources
 
-- REVIEW.md FS-004, FS-005, FS-019, FS-020, FS-022.
+- REVIEW.md FS-004, FS-005, FS-019, FS-020, FS-022, FS-447.
+- docs/regulation.md LR-03 (reg 33), LR-06 (reg 2).
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — §6 (CRB as fast-follow).
 - docs/modules/mfi.md MF-19, docs/modules/sacco.md SC-18.
 - GateKeepr STANDARDS.md §6.1 (the reason exists before the lookup) —

@@ -7,8 +7,8 @@ owner: Compliance lead
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [identity, recon-observability, rails, mandates, messaging, access]
-consumed_by: [collect, gateway, mfi, sacco, core, omni-channel]
-review_ids: [FS-098, FS-418, FS-422, FS-428, FS-431, FS-433, FS-435]
+consumed_by: [collect, gateway, mfi, sacco, core, omni-channel, identity]
+review_ids: [FS-098, FS-418, FS-422, FS-428, FS-431, FS-433, FS-435, FS-448, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -64,7 +64,7 @@ other modules keep their history in the evidence (FS-431).
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
 | FC-01 | Payment risk scoring before money moves: behaviour, device, SIM-swap status, account age and velocity, with hold, step-up or block as the outcome | Planned | Moved from Gateway GW-09 ("must not be retrofitted", 8 Jun). Controls from the youverify guide (FS-422) | 2 |
-| FC-02 | Transfers above a limit held for a set period after a SIM swap, using the operator's SIM-swap check (rails RL-22) | Planned | FS-422; omni-channel OC-06. Owner, 2026-10-05: in v1 (FS-453) | 1 |
+| FC-02 | Transfers above a limit held for a set period after a SIM swap, using the operator's SIM-swap check (rails RL-22) | Planned | FS-422; omni-channel OC-06. Owner, 2026-10-05: in v1 (FS-453), with identity's IMSI binding and holds (ID-12 to ID-14, FS-448) | 1 |
 | FC-03 | Integration with an institution's existing fraud system | Planned | Moved from recon RO-12 (the reconciliation proposal: one line, no specification) | 2 |
 | FC-04 | Agent and merchant monitoring: velocity and ratio checks, fake-reversal patterns, networks of mule accounts | Planned | FS-422; the mutual evaluation found agents not adequately risk-assessed (R.14; FS-428) | 2 |
 | FC-05 | Sanctions screening against UN and domestic designations, at onboarding and whenever a list changes, with matches frozen within 24 hours | Planned | Moved from identity ID-08 and recon RO-15 (FS-098). Law register LR-13 to LR-16; lenders under LR-03 reg 64, including Roan Capital. Phase 1 (FS-431) | 1 |
@@ -81,12 +81,14 @@ other modules keep their history in the evidence (FS-431).
 
 ## 4 · Where it sits
 
-**Depends on:** identity (who the person or business is), recon-observability
+**Depends on:** identity (who the person or business is; the ID, phone
+number and IMSI bound to an account, ID-12 to ID-14), recon-observability
 (transaction events, and RO-11's duplicate and anomaly detection as a
 feed), rails (the SIM-swap check, RL-22), mandates (decisions that need a
 second person), messaging (contacting the customer on a second channel),
 access (attribution).
-**Used by:** collect, gateway, mfi, sacco, core, omni-channel.
+**Used by:** collect, gateway, mfi, sacco, core, omni-channel; identity,
+whose IMSI-change holds (ID-13) run through FC-02.
 
 **Who holds which record** (docs/architecture.md §2):
 

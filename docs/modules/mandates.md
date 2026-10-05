@@ -7,7 +7,7 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
-consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability]
+consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability, core, crb, financial-crime, omni-channel, business-suite]
 review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453]
 last_reviewed: 2026-10-05
 ---
@@ -18,14 +18,17 @@ last_reviewed: 2026-10-05
 
 Two kinds of mandate, one service (FS-042). **A signing mandate** says who
 must approve an act before it happens: a loan, a disbursement, a payment,
-an escrow release, a reversal. It is an ordered chain of roles, chosen by
-product, amount and flags, with no self-approval. Every decision is
-attributed to the person at the moment they make it. **A debit mandate**
-is a payer's recorded consent to recurring pulls from their own account:
-how much, how often, until when, on which rail, cancellable by the payer
-at any time. The signing engine is specified in the MFI PRD as a platform
-service (FR-6) and lives here so that every product uses one engine
-(FS-138). The debit side has no specification, and its rails are
+an escrow release, a reversal. The engine is designed to resolve an
+ordered chain of roles by product, amount and flags, with no
+self-approval. Quorum steps (N of M) for committees, re-authentication
+of each decision at the moment it is made, and approval from email with
+step-up at the act will join it in phase 1 (MD-09, MD-10, MD-18).
+**A debit mandate**
+will be a payer's recorded consent to recurring pulls from their own
+account: how much, how often, until when, on which rail, cancellable by
+the payer at any time. The signing engine is specified in the MFI PRD as
+a platform service (FR-6) and lives here so that every product uses one
+engine (FS-138). The debit side has no specification, and its rails are
 unconfirmed (FS-046).
 
 ## 2 · Who it is for
@@ -81,7 +84,10 @@ owner's request (FS-042).
 **Depends on:** access (who the approver is, and step-up), messaging (reminders,
 pre-debit notices), rails (debit registration and pulls).
 **Used by:** mfi, sacco, collect, gateway, sme-recon, escrow,
-recon-observability (reversals and reposts).
+recon-observability (reversals and reposts), core (maker-checker), crb
+(who may look up and submit), financial-crime (decisions that need a second person),
+omni-channel (approvals in the channels) and business-suite (money
+approvals).
 
 **Who holds which record** (docs/architecture.md §2):
 
@@ -199,7 +205,8 @@ decided: quorum steps (MD-09) are phase 1 (FS-402).
 
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — FR-6, and §2
   problem 6.
-- REVIEW.md FS-042, FS-097, FS-107, FS-122, FS-132, FS-138.
+- REVIEW.md FS-042, FS-097, FS-107, FS-122, FS-132, FS-138, FS-402,
+  FS-449, FS-453.
 - KCB account mandate API specification v1.1, Nov 2022 (clients/kcb/,
   outside git; FS-416).
 - docs/architecture.md §3, §7.

@@ -7,8 +7,8 @@ owner: Product lead, Kapu
 classification: Internal
 audience: [sacco]
 depends_on: [mandates, identity, rails, messaging, recon-observability, collect, crb, financial-crime]
-consumed_by: []
-review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-431]
+consumed_by: [omni-channel, insights]
+review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -16,16 +16,16 @@ last_reviewed: 2026-10-05
 
 ## 1 · In one paragraph
 
-Kapu Sacco runs a Sacco's member book: membership, share capital,
+Kapu Sacco will run a Sacco's member book: membership, share capital,
 contributions, deposits, loans backed by guarantors, dividends and member
-exit. It serves **credit-only** Saccos, which hold members'
+exit. It will serve **credit-only** Saccos, which hold members'
 non-withdrawable deposits and lend against them, and **deposit-taking**
-Saccos, which also run withdrawable savings accounts (FS-023). It reuses
-most of Kapu MFI: the loan engine, KYC, reminders and migration. It adds
-what makes a Sacco a Sacco: members' own money as the basis of lending,
-guarantors, committee approval, check-off from employers, and an annual
-dividend. **No specification exists**, so every capability is Planned,
-including those that reuse MFI's Designed ones.
+Saccos, which also run withdrawable savings accounts (FS-023). It will
+reuse most of Kapu MFI: the loan engine, KYC, reminders and migration.
+It will add what makes a Sacco a Sacco: members' own money as the basis
+of lending, guarantors, committee approval, check-off from employers,
+and an annual dividend. **No specification exists**, so every capability
+is Planned, including those that reuse MFI's Designed ones.
 
 ## 2 · Who it is for
 
@@ -80,8 +80,10 @@ shape of the segment, not discovery evidence from a named Sacco* — FS-174.
 **Depends on:** mandates (committee approval, disbursement maker-checker),
 identity (NPDM, formerly IPRS), rails, messaging (reminders,
 statements), recon-observability (contributions, check-off), collect
-(SC-16), crb (SC-18).
-**Used by:** none. It is the product a Sacco buys.
+(SC-16), crb (SC-18), financial-crime (SASRA returns, SC-17; FC-13).
+**Used by:** omni-channel (member self-service, SC-13, and the
+field-officer app) and insights (its metrics). Otherwise it is the
+product a Sacco buys.
 
 **Who holds which record** (docs/architecture.md §2):
 
@@ -145,7 +147,7 @@ loans move to Fineract (FS-066).
 
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
-| M-Pesa paybill, Airtel Money | in / out | real-time callback | Planned |
+| M-Pesa paybill, Airtel Money, T-Kash | in / out | real-time callback | Planned (rails RL-03 Built; RL-04, RL-05 Designed, v1) |
 | Bank transfer | in / out | statement file; API | Planned |
 | Employer check-off | in | remittance file and schedule, per employer | Planned (SC-05) |
 | Sacco core (integrated) | read / post | API or extracts, per vendor | Planned |

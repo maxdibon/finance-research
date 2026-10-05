@@ -7,8 +7,8 @@ owner: Product lead, Kapu
 classification: Internal
 audience: [sme, fintech, mfi, sacco]
 depends_on: [rails, recon-observability, messaging, mandates, identity, financial-crime]
-consumed_by: [sme-recon, mfi, sacco]
-review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-431]
+consumed_by: [sme-recon, mfi, sacco, insights]
+review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-407, FS-408, FS-415, FS-431]
 last_reviewed: 2026-10-05
 ---
 
@@ -16,17 +16,19 @@ last_reviewed: 2026-10-05
 
 ## 1 · In one paragraph
 
-The Kapu Pay Gateway gives a merchant one API, and one dashboard, for
-taking payments on every rail it needs: M-Pesa, Airtel Money, T-Kash,
-PesaLink and cards. Every payment is reconciled automatically. Without it,
-a merchant integrates each rail separately and reconciles each one by hand.
-The Gateway starts in **pass-through** mode: funds go into the merchant's
-own accounts and shortcodes, and we hold none of them. Collecting and
-settling on a merchant's behalf is regulated, so it waits for a PSP licence
-or a licensed partner (FS-031, FS-061). The Gateway ran in production at
-Onit Bank, with W-Harambee, from February 2025 to June 2026, on M-Pesa
-(FS-384, FS-390). Kapu's own products are meant to be its next users, so
-each new rail carries our own traffic before a merchant depends on it.
+The Kapu Pay Gateway gives a merchant one API for taking payments. M-Pesa
+collections are built: they ran in production at Onit Bank, with
+W-Harambee, from February 2025 to June 2026 (FS-384, FS-390). Airtel Money
+and T-Kash will join the same API in v1 (FS-407), PesaLink and cards will
+follow (FS-408), and a merchant dashboard and automatic reconciliation of
+every payment are planned. The aim is that a merchant no longer integrates
+and reconciles each rail separately. The Gateway works in
+**pass-through** mode: funds go into the merchant's own accounts and
+shortcodes, and we hold none of them. Collecting and settling on a
+merchant's behalf is regulated, so it waits for a PSP licence or a
+licensed partner (FS-031, FS-061). Kapu's own products are meant to be its
+next users, so each new rail carries our own traffic before a merchant
+depends on it.
 
 ## 2 · Who it is for
 
@@ -58,13 +60,15 @@ the Onit API technical documentation (Feb 2025, held outside git), evidence
 GW-01, which is **Built** on rails RL-03. The other rows come from the
 8 Jun meeting, which records intentions, so they stay **Planned**. Airtel
 Money was probably built for Onit Bank but never launched; GW-14 stays
-Planned until that is confirmed (FS-393). Whether the other rail
-integrations are built is open — FS-088.
+Planned until that is confirmed (FS-393). Airtel Money and T-Kash are
+part of v1 (FS-407), so GW-14 and GW-02 are phase 1. Whether the other
+rail integrations are built is open — FS-088. Payment risk scoring, once
+GW-09, moved to financial-crime FC-01 (FS-431).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
 | GW-01 | One collections API for M-Pesa | Built | In production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390); rails RL-03. 8 Jun: Phase 2 starts with M-Pesa and Airtel Money | 1 |
-| GW-02 | T-Kash on the same API | Planned | 8 Jun: confirmed it can join the other mobile-money channels | 2 |
+| GW-02 | T-Kash on the same API | Planned | 8 Jun: confirmed it can join the other mobile-money channels. In v1 (FS-407); rails RL-05 | 1 |
 | GW-03 | Card payments | Planned | 8 Jun: Phase 3. No acquirer chosen — FS-091 | 3 |
 | GW-04 | PesaLink | Planned | 8 Jun: Phase 3; sponsor-bank trust accounts outstanding | 3 |
 | GW-05 | Merchant dashboard | Planned | 8 Jun: named as part of the Gateway | 2 |
@@ -75,16 +79,16 @@ integrations are built is open — FS-088.
 | GW-11 | Payouts to the merchant's customers (refunds, disbursements) | Planned | **Not stated for the Gateway in any source** — FS-089 | — |
 | GW-12 | The recipient's registered name confirmed with M-Pesa Hakikisha before every payout | Planned | Owner, 2026-10-03 (FS-388); rails RL-21 | 1 |
 | GW-13 | Payments whose confirmations never arrive are recovered with M-Pesa Pull Transactions and matched | Planned | Owner, 2026-10-03 (FS-388); rails RL-20 | 1 |
-| GW-14 | Airtel Money on the same collections API | Planned | 8 Jun: Phase 2 starts with M-Pesa and Airtel Money. Probably built for Onit Bank but never launched; to confirm (FS-393); rails RL-04 | 2 |
+| GW-14 | Airtel Money on the same collections API | Planned | 8 Jun: Phase 2 starts with M-Pesa and Airtel Money. Probably built for Onit Bank but never launched; to confirm (FS-393); rails RL-04. In v1 (FS-407) | 1 |
 
 ## 4 · Where it sits
 
 **Depends on:** rails (every channel), recon-observability (GW-06), financial-crime (fraud scoring, FC-01),
 messaging (payment-link SMS; merchant callbacks stay in the Gateway API), mandates (payout
-approval, if GW-11 is in scope), identity (merchant onboarding checks —
-FS-090).
+approval, if GW-11 is in scope), identity (merchant onboarding checks,
+including business registration, ID-07 — FS-090).
 **Used by:** sme-recon, for incoming funds; mfi and sacco, for repayments
-and contributions; Dibon's own products (GW-08).
+and contributions; insights, for reporting; Dibon's own products (GW-08).
 
 **Who holds which record** (docs/architecture.md §2):
 
@@ -145,8 +149,8 @@ exception; it is not treated as a failure or a success.
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
 | M-Pesa | in | real-time callback; organisation statement file for end-of-day | Built (GW-01; rails RL-03) |
-| Airtel Money | in | real-time callback; statement file | Planned (GW-14) |
-| T-Kash | in | real-time callback | Planned (GW-02) |
+| Airtel Money | in | real-time callback; statement file | Planned (GW-14); v1 (FS-407) |
+| T-Kash | in | real-time callback | Planned (GW-02); v1 (FS-407) |
 | Cards | in | acquirer callback; settlement file | Planned (GW-03) — FS-091 |
 | PesaLink | in | through the sponsor bank's API | Planned (GW-04) |
 | Merchant ERP | out | through sme-recon | Planned |
@@ -202,6 +206,8 @@ Liquid's Azure Stack (FS-032). That is an inference, not a decision.
 - Replace the merchant's ERP. It feeds one, through sme-recon.
 - Lend, or take deposits. Those belong to mfi, sacco and collect.
 - Onboarding and KYB checks for merchants are not specified — FS-090.
+  Business registration checks will come from identity ID-07 (BRS, v1,
+  FS-415).
 
 ## 11 · Open questions
 

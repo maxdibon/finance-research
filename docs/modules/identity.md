@@ -6,9 +6,9 @@ version: 0.1.0
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
-depends_on: [access]
-consumed_by: [collect, gateway, mfi, sacco, escrow, crb, financial-crime]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-431, FS-448, FS-453]
+depends_on: [access, rails, messaging, financial-crime]
+consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453]
 last_reviewed: 2026-10-05
 ---
 
@@ -16,16 +16,20 @@ last_reviewed: 2026-10-05
 
 ## 1 · In one paragraph
 
-Identity verifies that a person or a business is who they claim to be,
-before an account opens, a loan is approved or an escrow is funded. In
-Kenya it starts with the national population register, NPDM (formerly
-IPRS), for national IDs, passports and alien IDs. It adds document
-checks, liveness and face match, phone-number ownership, tax PIN and
-business registration checks.
-Each product decides which checks it needs. **It keeps the result and the
-evidence, never a copy of the register.** The result is stored on the
-person in their authority — the core, Fineract or Odoo (docs/architecture.md
-§2, §6). Each country brings its own registers (FS-109).
+Identity is designed to verify that a person or a business is who they
+claim to be, before an account opens, a loan is approved or an escrow is
+funded. In Kenya it will start with the national population register,
+NPDM (formerly IPRS), for national IDs, passports and alien IDs, and
+business registration (BRS) in v1 (FS-415). Document checks, liveness and
+face match and tax PIN checks will follow. Phone-number ownership, checked
+against the name the operator holds, is built: it gated account opening
+at Onit Bank (ID-05, FS-392). In v1 each account will also be bound to its
+ID, phone number and SIM, so a swapped or recycled number cannot take it
+over (ID-12 to ID-14, FS-453). Each product decides which checks it needs.
+**It will keep the result and the evidence, never a copy of the
+register,** stored on the person in their authority — the core, Fineract
+or Odoo (docs/architecture.md §2, §6). Each country brings its own
+registers (FS-109).
 
 ## 2 · Who it is for
 
@@ -33,10 +37,10 @@ person in their authority — the core, Fineract or Odoo (docs/architecture.md
 gateway (merchants), mfi, sacco, escrow, crb (matching a person to their
 bureau record).
 
-**The problem, concretely:** KYC is collected on paper, checked by eye, and
-filed where nobody can confirm it happened. The MFI PRD's discovery found
-no digital record, no completeness check and no per-product document
-requirements (MFI PRD §2, problem 5).
+**The problem, concretely:** institutions want KYC captured and checked
+digitally, with a record that shows each check happened. The MFI PRD's
+discovery found lenders working towards a digital record, a completeness
+check and per-product document requirements (MFI PRD §2, problem 5).
 
 **People who use it:**
 
@@ -48,6 +52,9 @@ requirements (MFI PRD §2, problem 5).
 | Partner institution | Evidence it can rely on for its own KYC obligations |
 
 ## 3 · What it does
+
+ID-05 is **Built**; the rest are Designed or Planned. Sanctions and PEP
+screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
@@ -67,8 +74,11 @@ requirements (MFI PRD §2, problem 5).
 
 ## 4 · Where it sits
 
-**Depends on:** access (who ran the check).
-**Used by:** collect, gateway, mfi, sacco, escrow, crb.
+**Depends on:** access (who ran the check), rails (Hakikisha, RL-21; the
+SIM-swap check, RL-22), messaging (one-time codes, ID-11),
+financial-crime (holds on an IMSI change, FC-02).
+**Used by:** collect, gateway, mfi, sacco, escrow, crb, core,
+omni-channel, financial-crime.
 
 **Who holds which record** (docs/architecture.md §2):
 
@@ -119,6 +129,7 @@ mode, to Fineract.
 | Liveness and face-match vendor | read | API or SDK | Planned (ID-04) — partners.md SD-11 |
 | Mobile-network operators (Safaricom, Airtel) | read | the operator's name for the number | Built (ID-05) at Onit Bank, under its agreements; a new customer needs its own or Dibon's — compliance LC-13 |
 | Safaricom Hakikisha | read | Daraja API | Planned (ID-05) — rails RL-21 |
+| Operators' SIM-swap and IMSI checks | read | operator API | Planned (ID-12, ID-13) — rails RL-22; compliance LC-13 |
 | One-time code by SMS | out | messaging | Planned (ID-11) |
 | Tax authority PIN check | read | KRA GavaConnect API | Planned (ID-06) — partners PT-35 |
 | Business registration service (BRS) | read | API, if available | Planned (ID-07), phase 1 — FS-205, FS-415 |
@@ -169,5 +180,5 @@ FS-088, FS-090, FS-098, FS-109, FS-202, FS-203, FS-204, FS-205.
 - Kapu Pay Technical Documentation, v1.0, Apr 2026 — account opening.
   *Derived, not reproduced.*
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — FR-1.4, FR-2, §2.
-- Kapu Pay strategy discussion, 8 Jun 2026 (anonymised) — IPRS dependency.
+- Kapu Pay strategy discussion, 8 Jun 2026 (anonymised) — the national register dependency (NPDM, formerly IPRS).
 - docs/architecture.md §2, §6.

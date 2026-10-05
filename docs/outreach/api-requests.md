@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # API and statement-feed requests — banks and mobile money
@@ -33,7 +33,9 @@ the detailed questions live in one place.
 
 Send one per bank. For KCB, address it to the corporate relationship
 manager and copy the bank's API or developer-platform team, if you have a
-contact there.
+contact there. Leave the optional partnership paragraph out of KCB's
+copy: KCB is already a customer (docs/customers.md CU-03), so wider work
+goes through that relationship.
 
 **Subject:** API access and automated statements for Dibon's accounts
 

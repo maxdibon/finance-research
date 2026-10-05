@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Owner
 classification: Internal until submitted
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # Comments on the draft National Payment System Bill, 2026
@@ -237,3 +237,9 @@ access.
   Change them if you prefer other numbers.
 - **The template:** each comment fills one row: number, clause, provision,
   proposed revision, rationale. A filled copy is built from this file.
+- **Our own status:** we now prepare for PSP authorisation in any case
+  (compliance LC-06, FS-444), after the reported KENEX ruling on the
+  current Act's s.2 (FS-428). The comments argue for proportion across the
+  sector and do not depend on our own status. If the legal partner reviews
+  them in time (docs/outreach/legal-partner-request.md), take its changes
+  before filing.
