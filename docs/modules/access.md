@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [messaging]
 consumed_by: [mandates, messaging, rails, recon-observability, identity, financial-crime, core, collect, gateway, mfi, sacco, sme-recon, escrow, crb, omni-channel, insights, business-suite, platform-security]
-review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491]
+review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491, FS-498]
 last_reviewed: 2026-10-06
 ---
 
@@ -65,7 +65,7 @@ reach.
 | AC-06 | Approval on a phone for a request started elsewhere (CIBA) | Planned | Keycloak: CIBA policy per realm | 2 |
 | AC-07 | Federation with an institution's own identity provider; directory federation (LDAP) | Planned | Keycloak: identity brokering, user federation; FS-195 | 1 |
 | AC-08 | Tenancy: a realm per institution, inside that institution's own instance | Planned | Keycloak realms; FS-197, settled by FS-491 (an isolated instance per institution) | 1 |
-| AC-09 | Roles and groups per institution, read by the mandate engine to resolve approvers | Planned | FS-142, FS-201 | 1 |
+| AC-09 | Roles and groups per institution, read by the mandate engine to resolve approvers; Keycloak is their one authority, and Odoo, Fineract and the products hold no approval roles of their own | Planned | FS-142, FS-201; decided by the owner, 2026-10-06 (FS-498) | 1 |
 | AC-10 | Session rules: expiry, revocation, and sign-out everywhere | Planned | Keycloak session management | 1 |
 | AC-11 | Login, admin and step-up events streamed to observability | Planned | recon-observability RO-16 | 1 |
 | AC-12 | Tokens for AI clients over MCP: per person, scoped, expiring; never shared | Planned | FS-156, FS-159 | 2 |
@@ -82,7 +82,7 @@ reach.
 | Record | System of record | This module |
 |---|---|---|
 | Login identities, credentials, passkeys, sessions | **Access (Keycloak)** | Holds. Credentials Restricted |
-| Roles and groups: who may do what | **Access (Keycloak)** — proposed (FS-201) | Holds |
+| Roles and groups: who may do what | **Access (Keycloak)** — decided (FS-201, FS-498) | Holds |
 | The person: name, KYC, contact details | Their authority: the core, Fineract, Odoo or the ERP | References by id. Holds only what login needs |
 | An institution's own users, when it has an identity provider | The institution's identity provider | Federates; never copies its directory |
 | Step-up and login events | Access, streamed to observability | Holds. Append-only |
@@ -172,7 +172,7 @@ every login.
 
 ## 11 · Open questions
 
-FS-142, FS-201.
+None open in the register.
 
 ## 12 · Sources
 

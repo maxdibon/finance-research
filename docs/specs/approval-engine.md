@@ -5,7 +5,7 @@ kind: spec
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495]
+review_ids: [FS-492, FS-494, FS-495, FS-498]
 last_reviewed: 2026-10-06
 ---
 
@@ -402,8 +402,8 @@ is revoked.
 
 ## 12 · Open questions
 
-1. **Where roles come from** (FS-142, FS-201; blocks R1): this spec
-   assumes Keycloak groups, as FS-201 proposes. To decide.
+1. **Where roles come from:** decided, Keycloak groups (FS-498). Left
+   here so the numbering of the other questions holds.
 2. **Roan Capital's role list** (RC-34, open answer 7), and who
    originates: if the Credit Officer originates, rule 2 means a second
    Credit Officer reviews.

@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -621,3 +621,18 @@ its own entry.
   automation of instances (GitOps, fleet upgrades) becomes a phase-1 need,
   and the DevSecOps rota carries more per customer than a shared model
   would.
+
+## FS-498 · Keycloak is the one authority for roles
+
+- **Chose:** Keycloak groups per institution as the only place that says
+  who may approve or act (access AC-09). The mandate engine reads them when
+  a step opens. Odoo keeps employment and party records; Fineract and the
+  products keep no approval roles of their own. A change to who may
+  approve money is itself approved by a second person (access §8).
+- **Argued against:** Odoo as the authority (FS-142), which ties every
+  approval to the business suite being up and licensed per user; and each
+  product's own user list, which lets roles drift apart across products.
+- **Costs (inferred):** joiners, movers and leavers in Odoo HR must reach
+  Keycloak, by a sync or by hand, and a missed leaver keeps a role until
+  someone notices; Keycloak becomes a dependency of every approval, so its
+  availability is tier 1.

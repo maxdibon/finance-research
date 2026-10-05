@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability, core, crb, financial-crime, omni-channel, business-suite]
-review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453, FS-494, FS-495]
+review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453, FS-494, FS-495, FS-498]
 last_reviewed: 2026-10-06
 ---
 
@@ -97,7 +97,7 @@ approvals).
 |---|---|---|
 | Mandate configuration and its history | **Mandate engine** | Holds. Effective-dated, audited |
 | Requests' frozen chains, decisions, re-authentication evidence | **Mandate engine** | Holds. Append-only |
-| People and their roles | Odoo, or the product's own user directory — FS-142 | References by id; resolves at runtime |
+| People and their roles | Access (Keycloak), AC-09 — FS-498 | References by id; resolves at runtime |
 | Debit consents, signed | Odoo (the signed document) and the mandate engine (the terms) | Holds the terms; references the document |
 | The act being approved (the loan, the payment) | The consuming product | Never holds. Answers yes or no |
 | A mandate registered at a bank or rail | That bank or rail | Registers; never changes it alone |
@@ -160,7 +160,8 @@ The build specification for R1 is docs/specs/approval-engine.md (FS-495).
 | Bank direct debit (clearing house) | out | file or API | Planned — FS-046 |
 | M-Pesa Ratiba (standing orders) | out | Daraja API | Planned — rails RL-23 (FS-387) |
 | Card tokens (recurring) | out | through the acquirer | Planned — partners.md SD-03 |
-| Odoo — roles, signed consents | in | API | Planned — FS-142 |
+| Keycloak — roles and groups | in | Admin API, read when a step opens | Planned — access AC-09, FS-498 |
+| Odoo — signed consents | in | API | Planned — FS-142 |
 
 ## 7 · Regulatory position
 
@@ -202,7 +203,7 @@ Part of the shared platform, inside each deployment (docs/architecture.md
 
 ## 11 · Open questions
 
-FS-037, FS-046, FS-142, FS-143, FS-145. FS-146 is decided: quorum steps
+FS-037, FS-046, FS-143, FS-145. FS-146 is decided: quorum steps
 (MD-09) are phase 1 (FS-402).
 
 ## 12 · Sources
