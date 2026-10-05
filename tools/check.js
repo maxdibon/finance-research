@@ -455,6 +455,32 @@ function checkCustomers(root) {
   return failures;
 }
 
+// ── assurance ────────────────────────────────────────────────────────────
+// Assurance work is never for a customer (FS-440): an engagement that names
+// an institution in docs/customers.md fails unless it was declined.
+const ASSURANCE = path.join('docs', 'assurance.md');
+const ENGAGEMENT_DECISIONS = ['Accepted', 'Declined (conflict)', 'Declined (other)'];
+
+function checkAssurance(root) {
+  if (!fs.existsSync(path.join(root, ASSURANCE))) return [fail('assurance', ASSURANCE, 0, 'assurance register missing')];
+  const customers = read(root, CUSTOMERS).split('\n')
+    .map((l) => l.split('|').slice(1, -1).map((c) => c.trim()))
+    .filter((c) => /^CU-\d{2}$/.test(c[0] || ''))
+    .map((c) => c[1].replace(/\s*\(.*\)$/, '').toLowerCase());
+  const failures = [];
+  read(root, ASSURANCE).split('\n').forEach((line, i) => {
+    const c = line.split('|').slice(1, -1).map((x) => x.trim());
+    if (!/^AS-\d{2}$/.test(c[0] || '')) return;
+    const at = (m) => failures.push(fail('assurance', ASSURANCE, i + 1, `${c[0]} ${m}`));
+    if (c.length !== 8) return at(`has ${c.length} cells; expected 8`);
+    if (!ENGAGEMENT_DECISIONS.includes(c[5])) at(`decision "${c[5]}" outside ${ENGAGEMENT_DECISIONS.join(', ')}`);
+    const name = c[1].toLowerCase();
+    const hit = customers.find((n) => name.includes(n) || n.includes(name));
+    if (hit && !c[5].startsWith('Declined')) at(`names a customer (${hit}); assurance work is never for a customer`);
+  });
+  return failures;
+}
+
 // ── regulation ───────────────────────────────────────────────────────────
 // The law register (FS-429): every row passes a scope test, a Deep or
 // Targeted row drives something that exists, the version named in its link
@@ -596,6 +622,7 @@ function runAll(root) {
     ...checkDecisions(root),
     ...checkCustomers(root),
     ...checkRegulation(root, files),
+    ...checkAssurance(root),
     ...checkReviewed(root, files),
   ];
 }

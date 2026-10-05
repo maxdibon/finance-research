@@ -42,7 +42,7 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-12 | Data for migration, and opening balances it will sign off | Customer's finance lead | Every product that holds records |
 | OB-COM-13 | Named contacts for operations, finance, IT and compliance, and an escalation path | Customer's sponsor | Support |
 | OB-COM-14 | Go-live sign-off after a first full cycle reconciles | Customer's sponsor | recon-observability |
-| OB-COM-15 | The regulator's approval of the arrangement, where one applies: CBK approval for a bank's material outsourcing, 30 days' notice to CBK for a PSP, SASRA's vendor terms for a Sacco. Dibon supplies the due-diligence pack | Customer's compliance lead | docs/compliance.md LC-05, LC-08; FS-368, FS-370 |
+| OB-COM-15 | The regulator's approval of the arrangement, where one applies: CBK approval for a bank's material outsourcing, 30 days' notice to CBK for a PSP, SASRA's vendor terms for a Sacco. Dibon supplies the due-diligence pack. What goes in it: docs/approval-pack.md | Customer's compliance lead | docs/compliance.md LC-05, LC-08; FS-368, FS-370; FS-440 |
 | OB-COM-16 | Its money laundering reporting officer, its goAML registration with the FRC, and its risk appetite: screening lists, thresholds for holds and alerts | Customer's reporting officer | financial-crime FC-05 to FC-11; FS-431 |
 
 ## Kapu Collect

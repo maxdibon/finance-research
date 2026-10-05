@@ -519,3 +519,21 @@ its own entry.
   fees with a non-advocate (s.37) and makes a person paid for bringing an
   advocate work a tout (s.38): referrals are unpaid both ways. Shortlist in
   docs/partners.md (SD-12).
+
+## FS-440 · Recognition through licence and approvals; assurance for non-customers
+
+- **Chose:** a legal opinion on Dibon's payment service provider status
+  before deciding whether to apply for authorisation (LC-06); a standard
+  outsourcing approval pack for customers to file (docs/approval-pack.md);
+  penetration tests, IT and cyber assessments and independent AML testing
+  for institutions we do not supply, with a conflict register the check
+  enforces (docs/assurance.md); ODPC compliance-audit accreditation once
+  we have the people and insurance (LC-14); AFIK membership (PT-51).
+- **Argued against:** seeking a CBK "fintech registration", which does not
+  exist; statutory financial audits, ISO certification and critical
+  infrastructure audits, which need licences or accreditation we do not
+  hold; and assurance work for our own customers, which would spend the
+  independence the service sells.
+- **Costs (inferred):** certified testers and AML-qualified staff before
+  the service can be sold; insurance; and a market for assurance that
+  shrinks as we win customers, because every customer leaves it.

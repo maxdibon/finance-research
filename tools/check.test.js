@@ -328,3 +328,21 @@ test('regulation: citing a law the register does not have fails', () => {
   const f = runWith((d) => patch(d, COLLECT, (t) => `${t}\nSee the law register, LR-99.\n`));
   assert.deepStrictEqual(names(f), ['regulation']);
 });
+
+const ASR = path.join('docs', 'assurance.md');
+const engagement = (who, decision) => (t) => `${t.trimEnd()}\n| AS-01 | ${who} | Penetration test | Internet banking | Yes | ${decision} | 2026-10-05 | FS-440 |\n`;
+
+test('assurance: an accepted engagement for a customer fails', () => {
+  const f = runWith((d) => patch(d, ASR, engagement('KCB Bank Kenya', 'Accepted')));
+  assert.deepStrictEqual(names(f), ['assurance']);
+});
+
+test('assurance: the same engagement declined for the conflict passes', () => {
+  const f = runWith((d) => patch(d, ASR, engagement('KCB Bank Kenya', 'Declined (conflict)')));
+  assert.deepStrictEqual(f, []);
+});
+
+test('assurance: a decision outside the vocabulary fails', () => {
+  const f = runWith((d) => patch(d, ASR, engagement('A bank we do not supply', 'Maybe')));
+  assert.deepStrictEqual(names(f), ['assurance']);
+});

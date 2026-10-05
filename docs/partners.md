@@ -91,6 +91,7 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 | PT-48 | DLA Piper Africa Kenya (IKM) | Law firm | Customer referrals | KE | KE (Chambers banking Band 1; Legal 500 Tier 1) | Candidate | 2026-10-05: research: alerts on loan pricing and lending (2025, 2026); has advised a payments company that competes with the Gateway | Reserve | Commercial lead | FS-432, FS-435 |
 | PT-49 | Mboya Wangong'u & Waiyaki | Law firm | Customer referrals for smaller lenders and Saccos | KE | KE (Legal 500 Tier 3) | Candidate | 2026-10-05: research: fintech and digital-lending practice; alerts on the credit market (Jul 2025) | A second referral channel at lower fees | Commercial lead | FS-432, FS-435 |
 | PT-50 | KN Law | Law firm (boutique) | Customer referrals for smaller lenders and Saccos | KE | None | Candidate | 2026-10-05: research: practical alerts on the lender regulations and the Finance Bill 2026 | A second referral channel at lower fees | Commercial lead | FS-432, FS-435 |
+| PT-51 | Association of Fintechs in Kenya (AFIK) | Industry association | A voice in policy (the NPS Bill, the lender regulations) and a directory listing; no regulatory status | KE | None | Candidate | 2026-10-05: research: membership is open to fintech service providers, paid (FS-437) | Apply for membership | Commercial lead | FS-437, FS-440 |
 
 ---
 

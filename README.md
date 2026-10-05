@@ -25,6 +25,8 @@ docs/                the work. The only place we edit
   onboarding.md      what each customer and product needs to go live
   compliance.md      licences, registrations and certifications
   regulation.md      the law register: what applies and what it drives
+  approval-pack.md   what customers file with their regulator about us
+  assurance.md       testing for institutions we do not supply; conflicts
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
   marketing/
