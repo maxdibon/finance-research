@@ -464,3 +464,5 @@ A row does not change status silently.
 | FS-451 | Eric | "Every record has one home": why is this the best approach? | ANSWERED | Answer in chat **2026-10-05:** answer in chat; the overview's "Odoo holds who owes what" is loose for loans, whose schedules sit in the funds ledger **2026-10-05:** the overview now says the ledger holds money and loans, and Odoo the parties and obligations outside the ledger |
 | FS-452 | Eric | FS-450: remember we also start with Airtel Money and T-Kash | ANSWERED | Field collections (OC-18) prompt on M-Pesa, Airtel Money or T-Kash. The bank channel proposal said "M-Pesa and cards"; it now names all three wallets |
 | FS-453 | Eric | Add traceability, the SIM controls, email approvals and the field-officer channel to v1; do the rewording | DECIDED | Phase 1 throughout; decision entry. Not in the portfolio yet [decision] |
+| FS-454 | Eric | Update the overview and the other Markdown files | OPEN | Sweep 2026-10-05 against FS-389 to FS-453, by three agents with fixed file sets, reviewed before commit |
+| FS-455 | Eric | Then update the portfolio | OPEN | After FS-454 |
