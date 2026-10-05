@@ -449,4 +449,4 @@ A row does not change status silently.
 | FS-436 | Eric | Add the financial-crime and compliance module to the portfolio as coming soon | DECIDED | Platform services page and roadmap |
 | FS-437 | Eric | Can Dibon register with CBK as a fintech or financial-services technology provider? | OPEN | Research running |
 | FS-438 | Eric | Can Dibon register as an auditor for institutions that do not use our systems? | OPEN | Research running |
-| FS-439 | Eric | A partnership in which financial institutions offer SME Recon, and perhaps the Odoo business suite, to their SME customers | OPEN | Proposal in chat |
+| FS-439 | Eric | A partnership in which financial institutions offer SME Recon, and perhaps the Odoo business suite, to their SME customers | OPEN | Proposal in chat **2026-10-05:** proposal in chat. Banking Act s.12(a) bars a bank from wholesale or retail trade, so the bank refers or bundles rather than resells (to confirm with the legal partner). First candidates: KCB and NBK (current customers, CU-03, CU-04) and the banking-as-a-service bank (PT-34) |
