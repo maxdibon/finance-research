@@ -151,7 +151,8 @@ traces back to one transaction.
 ## How we build, the stack
 
 **Layers:**
-- Channels: Mobile app · Internet banking · USSD · WhatsApp and a chatbot
+- Channels: Mobile app · Internet banking · USSD · WhatsApp and a chatbot ·
+  Two-way SMS · Partner APIs
 - Products: Collect · Gateway · Escrow · Core banking · MFI · Sacco ·
   Reconciliation · SME Reconciliation
 - Platform: Approvals · Messaging · Identity and access · Credit bureaus ·
@@ -396,7 +397,7 @@ offers one.
   Money and T-Kash
 - USSD on any phone, with lower limits than the app
 **Facts:**
-- Channels: App, web, USSD, WhatsApp, chatbot, field app
+- Channels: App, web, USSD, WhatsApp, chatbot, SMS, partner APIs, field app
 - Brand: White-labelled per institution
 - For: Saccos, MFIs and banks
 

@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, fintech]
 depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco, financial-crime, core]
 consumed_by: [insights]
-review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431, FS-443, FS-450, FS-452, FS-453, FS-487]
+review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431, FS-443, FS-450, FS-452, FS-453, FS-487, FS-488]
 last_reviewed: 2026-10-05
 ---
 
@@ -85,6 +85,8 @@ of its own. Rows with that evidence are **Built**; the rest are
 | OC-19 | Field controls: the device bound to the officer, remote wipe, every capture attributed and timestamped, and SMS or USSD as a fallback where there is no data | Planned | FS-450. Owner, 2026-10-05: in v1 (FS-453) | 1 |
 | OC-20 | A chatbot on WhatsApp, the app and the web that answers from the member's own records: balances, statements, loan status, how-to; anything that moves money asks for step-up through the app or a USSD PIN; hands over to a person when asked or unsure; never sees Restricted data | Planned | Owner, 2026-10-05 (FS-487). Shares the AI-first desk's knowledge and rules (docs/operating-model.md); the model is open (FS-476) | 1 |
 | OC-21 | Banking by chat on Telegram, for people who have started a chat with the institution's bot | Planned | FS-487; messaging MS-07 | later |
+| OC-22 | Voice: a phone line in English and Swahili for balances, loan status and payment reminders, with a person on request; anything that moves money needs a PIN | Planned | Owner, 2026-10-05 (FS-488). For members who prefer to call or do not read easily | 2 |
+| OC-23 | Agent banking: cash in and out, and account opening, through an institution's agents, on Kapu Core's tellers (KC-06) | Planned | Owner, 2026-10-05 (FS-488). CBK and SASRA set rules for agents; to read and add to the law register before design | 2 |
 
 ## 4 · Where it sits
 
