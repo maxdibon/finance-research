@@ -42,8 +42,8 @@ Nothing here is sent as a commitment until it is Ready.
 | 6 | Where data is held, and who else touches it | Banks, lenders, Saccos | Deployment options and hosting (docs/architecture.md §9); subprocessors: hosting partner (candidate, PT-01), SMS route, mobile operators | To prepare: a subprocessor list |
 | 7 | Security controls | Every regulator | Architecture §3, §6 and §7: credentials only on the server, in OpenBao; encryption; attribution; audit; the baseline in docs/modules/platform-security.md (SE-01 to SE-19) | To prepare: one security summary |
 | 8 | Independent penetration test report | Banks, Saccos, PSPs | An annual test by an independent tester (SE-17) | To prepare: none commissioned yet |
-| 9 | Business continuity: tested recovery time and recovery point | Banks, Saccos | Recovery objectives and the last test | To confirm: objectives not yet set; proposed in platform-security §3 |
-| 10 | Incident reporting | Saccos (12 hours); PSPs (CBK's deadline to verify: 24 or 2 hours) | A commitment in the contract | To confirm; proposed in platform-security §3 |
+| 9 | Business continuity: tested recovery time and recovery point | Banks, Saccos | Recovery objectives by tier (platform-security §3): tier 1 none on a server failure, at most 5 minutes on a site loss, 1 hour and 4 hours to recover; tiers 2 and 3 lower; restores tested quarterly, failover twice a year with the customer | Ready (agreed FS-466); the last test record to attach once SE-10 runs |
+| 10 | Incident reporting | Saccos (12 hours); PSPs (CBK's deadline to verify: 24 or 2 hours) | Notice within 1 hour of confirming a significant incident, updates every 4 hours, preliminary report within 12 hours, root cause within 5 working days; personal data breaches within 24 hours (platform-security §3) | Ready (agreed FS-466), conditional on SE-13 and the on-call rota |
 | 11 | Regulator's access to our premises, books, records, systems and staff | Lenders (reg 31(5)), banks, Saccos | A standard contract clause | To prepare, with the legal partner (SD-12) |
 | 12 | No use of the institution's data for our own purposes | Banks (draft guideline) | A standard contract clause | To prepare, with the legal partner |
 | 13 | Subcontracting only with the institution's approval | Banks (draft guideline) | A standard contract clause | To prepare, with the legal partner |
@@ -55,4 +55,5 @@ Nothing here is sent as a commitment until it is Ready.
 
 - Read the final texts of PG 16 and the Guidance Note when CBK issues them,
   and SASRA/GG/1/2023 itself; until then items marked "draft" may move.
-- Items 9, 10, 15 and 16 are commitments for the owner.
+- Items 15 and 16 are commitments for the owner; 9 and 10 were agreed on
+  2026-10-05 (FS-466).

@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: [collect, gateway, escrow, core, mfi, sacco, sme-recon, omni-channel, business-suite, recon-observability, financial-crime, rails, identity, messaging, mandates, insights, crb]
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464]
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468]
 last_reviewed: 2026-10-05
 ---
 
@@ -74,20 +74,40 @@ live on less.
 | SE-18 | Security events (logins, admin actions, step-ups) collected and kept; Restricted data never in a log | Planned | FS-464; access AC-11; architecture §7 | 1 |
 | SE-19 | Incident response: severities, a runbook, and the institution told within an agreed time of a confirmed incident, so it can meet its regulator's deadline | Planned | FS-464; recon RO-18; approval pack item 10 | 1 |
 
-**Proposed recovery objectives** (for the owner to confirm; approval pack
-item 9):
+**Recovery objectives** (agreed 2026-10-05, FS-466; approval pack item 9).
+Services are tiered by what they hold, not by product:
 
-| Service | Recovery point (data that may be lost) | Recovery time |
-|---|---|---|
-| Anything that moves or records money: ledgers, rails, collections, gateway | 5 minutes (continuous database archiving) | 4 hours |
-| Everything else | 24 hours | 24 hours |
+| Tier | Services | Data that may be lost | Time to recover |
+|---|---|---|---|
+| 1 · moves or records money, or lets people in | Ledgers, rails, collections, gateway, escrow, approvals, login and one-time codes, sanctions screening | None if a server fails (a synchronous standby); at most 5 minutes if the site is lost | 1 hour for a server; 4 hours for the site |
+| 2 · runs the business | Reconciliation, cases, portals, Odoo, campaign messages | 1 hour | 8 hours |
+| 3 · analyses | Insights, dashboards, reports | 24 hours | 72 hours |
 
-**Proposed incident commitment** (approval pack item 10): the institution
-is told within 1 hour of our confirming a significant incident, with a
-written report within 5 working days. CBK's guideline for payment service
-providers sets the institution's own deadline; the two research reports
-read it as 24 hours and as 2 hours, so it is to be checked against the
-text before this is offered (FS-464).
+- Payments the rails confirmed inside a lost window are recovered from the
+  rails' own records (Pull Transactions, rails RL-20) and bank statements,
+  and matched again by reconciliation.
+- Restores are tested every quarter inside Dibon (SE-10), and a full
+  site failover is exercised with each customer twice a year.
+- **These objectives are for failures.** Recovery after a compromise is
+  set separately (FS-468).
+- For a self-managed deployment we commit to the design and the runbook;
+  the objectives depend on the customer's infrastructure.
+
+**Incident commitments** (agreed 2026-10-05, FS-466; approval pack item 10):
+
+| Event | First notice | Updates | Written report |
+|---|---|---|---|
+| Significant security incident: a compromise, or an attack that takes a tier-1 service down | Within 1 hour of confirming it, by phone and email to the institution's named contacts; a strong suspicion counts, labelled "suspected" | Every 4 hours until contained | Preliminary within 12 hours; root cause within 5 working days |
+| Personal data breach | Within 24 hours at the latest: half the 48 hours a processor has to tell the controller (Data Protection Act s.43(3), law register LR-17), so the institution can meet the Data Commissioner's 72 | With the incident | As above |
+| Other security events | In the monthly service review | — | — |
+
+- **Conditional:** the 1-hour notice holds once round-the-clock detection
+  (SE-13) and our on-call rota are contracted and staffed; until then it
+  is not signed.
+- CBK's guideline for payment service providers sets those customers' own
+  deadline: read as 24 hours or as 2 hours, to verify against the text
+  before a payment provider signs (FS-464). One hour fits under either.
+- No service credits yet; commercials are parked (FS-024).
 
 ## 4 · Where it sits
 
