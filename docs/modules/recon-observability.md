@@ -90,6 +90,8 @@ reconciliation, is Planned (FS-405).
 | RO-24 | Each transaction's events are hash-chained, so a change to any step shows, and the chain heads are anchored in an append-only transparency log (Trillian or Rekor) | Planned | FS-445, FS-453 | 1 |
 | RO-25 | A transaction's journey verified by anyone holding our public keys, and exported as evidence for a dispute, an audit or a regulator (with RO-13) | Planned | FS-445, FS-453 | 1 |
 
+**Retired ids:** RO-12, moved to financial-crime FC-03; RO-14, to FC-09 and FC-13; RO-15, to FC-05 and FC-07 (FS-431). A retired id is never reused.
+
 ## 4 · Where it sits
 
 **Depends on:** access (who may see which fields, RO-19), rails (feeds),

@@ -119,6 +119,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | Which partners we are talking to | [partners.md](partners.md) |
 | Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |
 | Who keeps our commitments, and whom we hire next | [operating-model.md](operating-model.md) |
+| What we build next, release by release | [delivery-plan.md](delivery-plan.md) |
 | Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
 | Which laws apply to us and our customers, and what each drives | [regulation.md](regulation.md) |
 | What a customer files with its regulator about us | [approval-pack.md](approval-pack.md) |

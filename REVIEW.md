@@ -483,3 +483,7 @@ A row does not change status silently.
 | FS-470 | Eric | Go with the recommendations on recovery after a compromise and the operating model; push | DECIDED | platform-security SE-20 to SE-25; docs/operating-model.md |
 | FS-471 | Eric | Start with a 4-hour commitment | DECIDED | Read as the response commitments: first notice of a significant incident, and recovery after a compromise. The 1-hour figures become the target once round-the-clock detection and a rota of at least five are in place [decision] |
 | FS-472 | Eric | Current team: 3 DevSecOps; 2 in customer experience who are also the project manager and the administrator; 2 Odoo implementation consultants; a compliance and risk officer under discussion; the CTIO as security lead until a contract closes and gives the runway to hire. Where do we need to strengthen? | ANSWERED | docs/operating-model.md; answer in chat |
+| FS-473 | Eric | The DevSecOps engineers mostly do DevSecOps, not development: add the delivery plan | ANSWERED | docs/delivery-plan.md |
+| FS-474 | Eric | The owner will start hiring one more DevSecOps engineer as soon as possible | ANSWERED | Operating model updated: a rota of four once hired |
+| FS-475 | Eric | Managed detection: is this the managed Sophos service? | ANSWERED | Yes: Sophos managed detection and response through Liquid (platform-security SE-13); answer in chat |
+| FS-476 | Eric | AI-first service desk: where do we start? | ANSWERED | Plan in docs/operating-model.md; answer in chat |

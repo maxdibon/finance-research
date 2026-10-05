@@ -545,6 +545,43 @@ function checkRegulation(root, files) {
   return failures;
 }
 
+// ── references ───────────────────────────────────────────────────────────
+// A capability id cited anywhere in docs/ exists in a module, so a plan, a
+// register or a note cannot point at a row that was renumbered, moved or
+// never written (FS-473). Prefixes are read from the modules themselves;
+// "X-01 to X-05" ranges are expanded.
+function checkReferences(root, files) {
+  const live = new Set(moduleFiles(root).flatMap((f) => capabilityRows(read(root, f)).map((r) => r.id)));
+  const prefixes = new Set([...live].map((id) => id.slice(0, 2)));
+  const failures = [];
+  // A module lists the ids it retired ("**Retired ids:** GW-09, moved to …");
+  // history may cite them, but a retired id is never reused for a live row.
+  const retired = new Set();
+  for (const f of moduleFiles(root)) {
+    read(root, f).split('\n').forEach((line, i) => {
+      if (!line.startsWith('**Retired ids:**')) return;
+      for (const id of line.slice(16).split(/[,;]/).map((s) => (s.trim().match(/^([A-Z]{2}-\d{2})\b/) || [])[1]).filter(Boolean)) {
+        if (live.has(id)) failures.push(fail('references', f, i + 1, `${id} is retired but used again by a live row`));
+        retired.add(id);
+      }
+    });
+  }
+  const known = new Set([...live, ...retired]);
+  for (const file of files.filter((f) => f.split(path.sep)[0] === 'docs')) {
+    read(root, file).split('\n').forEach((line, i) => {
+      for (const m of line.matchAll(/\b([A-Z]{2})-(\d{2})(?: to (?:\1-)?(\d{2}))?\b/g)) {
+        if (!prefixes.has(m[1])) continue;
+        const a = +m[2]; const b = m[3] ? +m[3] : a;
+        for (let n = a; n <= b; n++) {
+          const id = `${m[1]}-${String(n).padStart(2, '0')}`;
+          if (!known.has(id)) failures.push(fail('references', file, i + 1, `cites ${id}, which no module defines`));
+        }
+      }
+    });
+  }
+  return failures;
+}
+
 // ── reviewed ─────────────────────────────────────────────────────────────
 // Every document under docs/ carries last_reviewed, and it is never older
 // than the document's last change: a change being committed counts as
@@ -623,6 +660,7 @@ function runAll(root) {
     ...checkCustomers(root),
     ...checkRegulation(root, files),
     ...checkAssurance(root),
+    ...checkReferences(root, files),
     ...checkReviewed(root, files),
   ];
 }

@@ -23,6 +23,7 @@ docs/                the work. The only place we edit
   partners.md        partner candidates, conversations, selection decisions
   competitors.md     who we meet, and what we learn from each
   operating-model.md the people who keep the commitments; hiring order
+  delivery-plan.md   phase 1 in releases, in the order customers need them
   overview.md        the portfolio story; links modules, restates nothing
   onboarding.md      what each customer and product needs to go live
   compliance.md      licences, registrations and certifications

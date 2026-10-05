@@ -81,6 +81,8 @@ GW-09, moved to financial-crime FC-01 (FS-431).
 | GW-13 | Payments whose confirmations never arrive are recovered with M-Pesa Pull Transactions and matched | Planned | Owner, 2026-10-03 (FS-388); rails RL-20 | 1 |
 | GW-14 | Airtel Money on the same collections API | Planned | 8 Jun: Phase 2 starts with M-Pesa and Airtel Money. Probably built for Onit Bank but never launched; to confirm (FS-393); rails RL-04. In v1 (FS-407) | 1 |
 
+**Retired ids:** GW-09, moved to financial-crime FC-01 (FS-431). A retired id is never reused.
+
 ## 4 · Where it sits
 
 **Depends on:** rails (every channel), recon-observability (GW-06), financial-crime (fraud scoring, FC-01),

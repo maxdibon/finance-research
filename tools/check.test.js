@@ -111,7 +111,7 @@ test('capabilities: a row with no evidence fails', () => {
 
 test('capabilities: a duplicated id fails', () => {
   const f = runWith((d) => patch(d, COLLECT, (t) => t.replace('| CO-04 |', '| CO-03 |')));
-  assert.deepStrictEqual(names(f), ['capabilities']);
+  assert.deepStrictEqual(names(f), ['capabilities', 'references']);
 });
 
 test('diagrams: a diagram line over 78 columns fails', () => {
@@ -302,7 +302,7 @@ test('names: a public-only name in outward material fails', () => {
 
 test('customers: a dependency no module defines fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'customers.md'), (t) => t.replace('| CO-01, CO-02,', '| CO-99, CO-02,')));
-  assert.deepStrictEqual(names(f), ['customers']);
+  assert.deepStrictEqual(names(f), ['customers', 'references']);
 });
 
 test('customers: a delivery map that drifts from the register fails', () => {
@@ -319,7 +319,7 @@ test('regulation: a Deep law that drives nothing fails', () => {
 
 test('regulation: a law driving an id that does not exist fails', () => {
   const f = runWith((d) => patch(d, REG, (t) => t.replace('| CR-01, CR-03, MF-19, MF-27 |', '| CR-01, CR-03, MF-99, MF-27 |')));
-  assert.deepStrictEqual(names(f), ['regulation']);
+  assert.deepStrictEqual(names(f), ['references', 'regulation']);
 });
 
 test('regulation: a version that disagrees with As at fails', () => {
@@ -348,4 +348,14 @@ test('assurance: the same engagement declined for the conflict passes', () => {
 test('assurance: a decision outside the vocabulary fails', () => {
   const f = runWith((d) => patch(d, ASR, engagement('A bank we do not supply', 'Maybe')));
   assert.deepStrictEqual(names(f), ['assurance']);
+});
+
+test('references: citing a capability no module defines fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'overview.md'), (t) => `${t}\nSee MF-98 to MF-99.\n`));
+  assert.deepStrictEqual(names(f), ['references']);
+});
+
+test('references: a retired id used again by a live row fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'modules', 'gateway.md'), (t) => t.replace('**Retired ids:** GW-09,', '**Retired ids:** GW-01, GW-09,')));
+  assert.deepStrictEqual(names(f), ['references']);
 });

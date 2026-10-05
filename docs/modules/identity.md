@@ -72,6 +72,8 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 | ID-13 | An IMSI changed since enrolment, from a swap or a recycled number, holds money movement and credential resets until the customer is re-verified (financial-crime FC-02; rails RL-22) | Planned | FS-448, FS-453. The subscriber regulations do not address recycling (law register LR-22): it is each operator's practice | 1 |
 | ID-14 | The operator's name check (ID-05) re-run on a schedule and whenever a dormant account wakes; a mismatch freezes the mobile channel until the customer is re-verified | Planned | FS-448, FS-453 | 1 |
 
+**Retired ids:** ID-08, moved to financial-crime FC-05 and FC-06 (FS-431). A retired id is never reused.
+
 ## 4 · Where it sits
 
 **Depends on:** access (who ran the check), rails (Hakikisha, RL-21; the
