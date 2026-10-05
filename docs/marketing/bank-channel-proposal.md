@@ -24,12 +24,12 @@ the build; without one, the copy reads "your bank".
 ## The opportunity
 
 **Lede:** Most of [Bank]'s business customers still reconcile their bank
-and M-Pesa statements by hand, at month-end, in a spreadsheet. We propose
+and mobile-money statements by hand, at month-end, in a spreadsheet. We propose
 that [Bank] offers them Dibon's SME Recon: their statements flow from
 [Bank] straight into their own books, every day.
 **For your customers:**
 - Every payment in and out matched to an invoice or a bill the day it
-  lands, across [Bank] accounts, M-Pesa and cards
+  lands, across [Bank] accounts, M-Pesa, Airtel Money, T-Kash and cards
 - Anything unmatched stays visible until someone places it; nothing is
   guessed
 - Their own accounting system, kept: Odoo, Zoho or others; or a full Odoo

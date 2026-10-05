@@ -74,7 +74,7 @@ in the MFI PRD; the rest is **Planned** until a deployment is live.
 | KC-11 | Migration from spreadsheets, Mifos or a previous core, with a signed-off reconciliation | Designed | MFI PRD FR-13 | 1 |
 | KC-12 | Hosted per institution, isolated, on Liquid's Azure Stack | Planned | FS-032 | 1 |
 | KC-13 | Open APIs for the institution's own apps and partners | Planned | FS-316 | 1 |
-| KC-14 | Field-officer app with offline capture | Planned | FS-320: moved up to phase 2. Outside launch scope in MFI PRD §6; the benchmark leads with one | 2 |
+| KC-14 | Field-officer app with offline capture | Planned | FS-320: moved up to phase 2. Outside launch scope in MFI PRD §6; the benchmark leads with one. Specified as omni-channel OC-17 to OC-19 (FS-450) | 2 |
 
 ## 4 · Where it sits
 
