@@ -6,10 +6,10 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [bank, sacco, psp, fintech]
-depends_on: [identity, rails, recon-observability, mandates, messaging]
+depends_on: [identity, rails, recon-observability, mandates, messaging, financial-crime]
 consumed_by: [mfi, sacco]
-review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388, FS-390, FS-392]
-last_reviewed: 2026-10-03
+review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388, FS-390, FS-392, FS-431]
+last_reviewed: 2026-10-05
 ---
 
 # Kapu Collect

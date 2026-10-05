@@ -6,10 +6,10 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [mfi]
-depends_on: [mandates, identity, rails, messaging, recon-observability, crb]
+depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime]
 consumed_by: []
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400]
-last_reviewed: 2026-10-03
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-431]
+last_reviewed: 2026-10-05
 ---
 
 # Kapu MFI

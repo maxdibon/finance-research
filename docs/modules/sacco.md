@@ -6,10 +6,10 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [sacco]
-depends_on: [mandates, identity, rails, messaging, recon-observability, collect, crb]
+depends_on: [mandates, identity, rails, messaging, recon-observability, collect, crb, financial-crime]
 consumed_by: []
-review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177]
-last_reviewed: 2026-10-03
+review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-431]
+last_reviewed: 2026-10-05
 ---
 
 # Kapu Sacco
@@ -72,7 +72,7 @@ shape of the segment, not discovery evidence from a named Sacco* — FS-174.
 | SC-14 | Contribution and repayment reminders | Planned | Reuses mfi MF-13 (Designed) | 1 |
 | SC-15 | Migration from the Sacco's current system, with a signed-off reconciliation | Planned | Reuses mfi MF-16 (Designed) | 1 |
 | SC-16 | Third-party collection into members' accounts, for deposit-taking Saccos | Planned | Reuses collect CO-05 (Built) | 2 |
-| SC-17 | Regulatory returns to SASRA, for deposit-taking Saccos | Planned | FS-175 | later |
+| SC-17 | Regulatory returns to SASRA, for deposit-taking Saccos | Planned | FS-175. Assembled by financial-crime FC-13 (FS-431) | later |
 | SC-18 | CRB sharing | Planned | Depends on crb | later |
 
 ## 4 · Where it sits

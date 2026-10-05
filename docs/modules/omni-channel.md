@@ -6,9 +6,9 @@ version: 0.1.0
 owner: Product lead, channels
 classification: Internal
 audience: [bank, sacco, mfi, fintech]
-depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco]
+depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco, financial-crime]
 consumed_by: []
-review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416]
+review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431]
 last_reviewed: 2026-10-05
 ---
 
@@ -63,7 +63,7 @@ of its own. Rows with that evidence are **Built**; the rest are
 | OC-03 | USSD menus per institution | Built | KCB release notes 3.2.3 (Dec 2022) and 3.2.34 (Mar 2024) and the MMC API specification v2.7 (Jan 2024), held in clients/kcb/ outside git: USSD menus configured per product (retailer finance, float and business overdrafts, term loans, merchant financing), with session state, routing and input validation; ran in production at KCB, 2022 to 2025 (FS-416). FS-022 — FS-233 | 1 |
 | OC-04 | One channel API over the products: balances, statements, loans, contributions, payments, guarantor requests | Planned | FS-022 | 1 |
 | OC-05 | Login through access: passkeys or device biometrics, one-time codes; step-up for anything that moves money | Planned | access AC-03, AC-05. At KCB, USSD used its own PIN and one-time-code lifecycle (set, reset, lock), hashed (FS-416), not the access service | 1 |
-| OC-06 | Device binding, and a SIM-swap check before money moves | Planned | FS-234. Safaricom offers the check through Daraja (rails RL-22, FS-386) | 1 |
+| OC-06 | Device binding, and a SIM-swap check before money moves | Planned | FS-234. Safaricom offers the check through Daraja (rails RL-22, FS-386). The hold after a swap is financial-crime FC-02 (FS-431) | 1 |
 | OC-07 | Payments: deposit by mobile-money prompt, withdrawal, transfer, bill payment — through rails, with mandates where the product requires | Planned | rails RL-01; mandates | 2 |
 | OC-08 | Loan applications and guarantor flows | Planned | mfi, sacco. KCB's USSD took loan requests, repayments, limits and balances against the bank's loan engine (FS-416); guarantor flows have no record | 2 |
 | OC-09 | Self-service KYC: document capture, liveness | Planned | identity ID-02, ID-04 | 2 |

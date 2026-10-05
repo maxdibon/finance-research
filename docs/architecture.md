@@ -5,8 +5,8 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410]
-last_reviewed: 2026-10-03
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-431]
+last_reviewed: 2026-10-05
 ---
 
 # Platform architecture — who holds what
@@ -30,7 +30,7 @@ Draft, pending FS-034.
 |---|---|
 | **Channels** | omni-channel — mobile apps, internet banking, USSD |
 | **Products** | collect · gateway · escrow · core (Kapu Core: hosted core banking on Apache Fineract) · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) · business-suite (Odoo or Zoho, implemented by Dibon) |
-| **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification) · messaging (SMS, WhatsApp, Telegram, app; transactional and campaigns) · rails · insights |
+| **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification) · messaging (SMS, WhatsApp, Telegram, app; transactional and campaigns) · rails · insights · financial-crime (fraud, AML/CFT, reporting) |
 | **Systems of record** | the institution's core, or Kapu Core · Odoo · recon engine — §2 |
 
 ```
@@ -45,7 +45,8 @@ Draft, pending FS-034.
                                   |
  +--------------------------------------------------------------------+
  | SHARED       recon-observability . mandates . crb . access .       |
- | SERVICES     identity . messaging . rails . insights               |
+ | SERVICES     identity . messaging . rails . insights .             |
+ |              financial-crime                                       |
  +--------------------------------------------------------------------+
           |                       |                        |
  +------------------+   +-------------------+   +--------------------+
@@ -219,6 +220,11 @@ Matching rules that hold on every rail:
 ## 6 · Shared services and the bus
 
 - **Event bus:** Kafka between services.
+- **Financial crime and compliance:** one service for fraud scoring,
+  sanctions and PEP screening, cases and the reports institutions file
+  (docs/modules/financial-crime.md, FS-431). **We detect and prepare; the
+  institution decides and files.** It is the reporting institution, and
+  its reporting officer makes every decision.
 - **Secrets:** OpenBao holds rail and bank credentials, signing keys and
   service secrets, per customer, in every deployment option. It is the
   Linux Foundation fork of HashiCorp Vault, under MPL-2.0, with the same

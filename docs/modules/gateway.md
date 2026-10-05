@@ -6,10 +6,10 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [sme, fintech, mfi, sacco]
-depends_on: [rails, recon-observability, messaging, mandates, identity]
+depends_on: [rails, recon-observability, messaging, mandates, identity, financial-crime]
 consumed_by: [sme-recon, mfi, sacco]
-review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393]
-last_reviewed: 2026-10-03
+review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-431]
+last_reviewed: 2026-10-05
 ---
 
 # Kapu Pay Gateway
@@ -71,7 +71,6 @@ integrations are built is open — FS-088.
 | GW-06 | Automatic reconciliation of every merchant payment | Planned | 8 Jun: "a reconciliation engine". Delivered by recon-observability | 2 |
 | GW-07 | Payment links, e.g. an invoice sent by SMS | Planned | 8 Jun: proposed by the commercial lead | 2 |
 | GW-08 | Kapu's own products and Odoo routed through the Gateway first | Planned | 8 Jun: Kapu must be the first consumer of its own Gateway | 2 |
-| GW-09 | Fraud detection and monitoring, designed in from the start | Planned | 8 Jun: must not be retrofitted | 2 |
 | GW-10 | Settlement to merchants (aggregation) | Planned | 8 Jun: the long-term goal, once a PSP licence is held. Interim route under FS-061 | later |
 | GW-11 | Payouts to the merchant's customers (refunds, disbursements) | Planned | **Not stated for the Gateway in any source** — FS-089 | — |
 | GW-12 | The recipient's registered name confirmed with M-Pesa Hakikisha before every payout | Planned | Owner, 2026-10-03 (FS-388); rails RL-21 | 1 |
@@ -80,7 +79,7 @@ integrations are built is open — FS-088.
 
 ## 4 · Where it sits
 
-**Depends on:** rails (every channel), recon-observability (GW-06, GW-09),
+**Depends on:** rails (every channel), recon-observability (GW-06), financial-crime (fraud scoring, FC-01),
 messaging (payment-link SMS; merchant callbacks stay in the Gateway API), mandates (payout
 approval, if GW-11 is in scope), identity (merchant onboarding checks —
 FS-090).

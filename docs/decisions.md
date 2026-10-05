@@ -477,3 +477,22 @@ its own entry.
   access must stay limited to Dibon, and anyone given access later sees
   it. A document copied from docs/ into a meeting must be read for names
   first, because the check only guards the outward folders.
+
+## FS-431 · One financial-crime and compliance service
+
+- **Chose:** a shared service for fraud scoring, AML/CFT screening, cases
+  and regulatory reporting, with the rule "we detect and prepare; the
+  institution decides and files". Sanctions screening (FC-05) and record
+  retention (FC-12) in phase 1; the rest in phase 2. Rows moved in from
+  Gateway (GW-09), identity (ID-08) and reconciliation (RO-12, RO-14,
+  RO-15); reconciliation keeps duplicate and anomaly detection (RO-11) as
+  a feed.
+- **Argued against:** leaving the controls in each product, where eight
+  rows in six modules would each be built, and audited, separately; and
+  filing on the institution's behalf, which would make Dibon answer for
+  reports the law puts on the institution and its reporting officer.
+- **Costs (inferred):** a new service with its own data (Restricted) before
+  any of it has a specification, and sanctions screening in the first
+  release for every lender. In return: one place a regulator, an auditor
+  or a bank's due diligence can examine, and a product Kenya's grey-list
+  position makes urgent.

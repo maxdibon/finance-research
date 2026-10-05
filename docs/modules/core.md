@@ -6,10 +6,10 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [mfi, sacco, bank]
-depends_on: [access, identity, mandates, messaging, rails, recon-observability]
+depends_on: [access, identity, mandates, messaging, rails, recon-observability, financial-crime]
 consumed_by: [mfi, sacco, collect, omni-channel, insights]
-review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390]
-last_reviewed: 2026-10-03
+review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431]
+last_reviewed: 2026-10-05
 ---
 
 # Kapu Core
@@ -70,7 +70,7 @@ in the MFI PRD; the rest is **Planned** until a deployment is live.
 | KC-07 | End of day: accruals, closing and batch jobs on the institution's own cycle | Planned | FS-316 | 1 |
 | KC-08 | Maker-checker on core transactions, through the mandate engine | Planned | mandates MD-12 | 1 |
 | KC-09 | Mobile-money deposits and repayments posted in real time (M-Pesa, Airtel Money, T-Kash) | Planned | rails RL-03 to RL-05 | 1 |
-| KC-10 | Standard reports, and regulatory returns for SASRA and CBK | Planned | FS-184 | 2 |
+| KC-10 | Standard reports, and regulatory returns for SASRA and CBK | Planned | FS-184. Assembled by financial-crime FC-13 (FS-431) | 2 |
 | KC-11 | Migration from spreadsheets, Mifos or a previous core, with a signed-off reconciliation | Designed | MFI PRD FR-13 | 1 |
 | KC-12 | Hosted per institution, isolated, on Liquid's Azure Stack | Planned | FS-032 | 1 |
 | KC-13 | Open APIs for the institution's own apps and partners | Planned | FS-316 | 1 |

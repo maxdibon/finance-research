@@ -112,6 +112,7 @@ missing. *Gap* means no capability does it yet.
 | RC-33 | An immutable audit trail of every action, searchable by user, account, date and action | RO-19, MD-05 | Partial | Access audit and decision records exist; one searchable trail across modules is new |
 | RC-34 | Roles: Credit Officer, committee members, Head Office Committee, administrator | AC-09 | Partial | The prototype has eight roles (adding CEO, finance, collections, auditor). Agree the list |
 | RC-35 | Monitoring: Prometheus, Grafana, Loki; 99.9% uptime | RO-16, RO-17 | Covered | Ran for Collect at Onit Bank (collect CO-11). Uptime sits with the support tier |
+| RC-36 | AML/CFT duties as a licensed or registered lender: sanctions screening at onboarding and on every list change, records for seven years. Not in the document; required by the CBK lender regulations, reg 64 (law register LR-03) | FC-05, FC-12 | Partial | Added by Dibon (FS-431). Both are phase 1; PEP screening, cases and STR drafting (FC-06, FC-08, FC-09) are phase 2 |
 
 ## 3 · Out of scope for the MVP (§2.3)
 

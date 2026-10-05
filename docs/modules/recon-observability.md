@@ -7,8 +7,8 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
-consumed_by: [collect, gateway, mfi, sacco, sme-recon]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421]
+consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime]
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431]
 last_reviewed: 2026-10-05
 ---
 
@@ -74,10 +74,7 @@ reconciliation, is Planned (FS-405).
 | RO-09 | Treasury and float: where the money sits, and hours of float left at the current burn | Designed | Prototype: Treasury & Float | 2 |
 | RO-10 | Branch and till cash by currency and denomination | Designed | Prototype: Branches & Tellers. For institutions with cash; not every customer | 2 |
 | RO-11 | Duplicate and anomaly detection | Designed | Proposal: fraud detection and risk mitigation. Rule-based in the specification; nothing learned | 1 |
-| RO-12 | Integration with an existing fraud system | Planned | Proposal: one line, no specification | 2 |
 | RO-13 | Evidence for a period, assembled from traces rather than retyped | Designed | Prototype: Recon Attestation | 2 |
-| RO-14 | Regulatory returns and suspicious-activity reporting | Planned | Prototype: marked "Phase 2 — illustrative"; not real forms | 2 |
-| RO-15 | AML and sanctions screening (sanctions lists, PEP, structuring) | Planned | Prototype: Phase 2, illustrative — FS-098 | 2 |
 | RO-16 | Observability: metrics (Prometheus), logs (Loki), traces (Tempo or Jaeger), dashboards (Grafana) | Designed | Proposal: Observability. Kapu technical documentation uses the same stack. Metrics, logs and dashboards ran at Onit Bank in Collect (collect CO-11, FS-390); traces are not evidenced there, so the row stays Designed | 1 |
 | RO-17 | Alerting and SLOs, including reconciliation SLOs such as match rate | Designed | Proposal: Alerting & SLO | 1 |
 | RO-18 | On-call and incident response | Designed | Proposal: Grafana IRM. On-prem availability unverified — FS-101 | 1 |
@@ -191,8 +188,8 @@ zero, and that is what closing the day means.
   own credentials and authority, never ours.
 - **Licence relied on:** the customer's own. The service holds no funds.
 - **Regulators:** none directly. The customer's regulator — CBK, SASRA —
-  will inspect the evidence it produces (RO-13). RO-14 would make it part
-  of the customer's regulatory reporting.
+  will inspect the evidence it produces (RO-13). Financial Crime and
+  Compliance uses it for the customer's regulatory returns (FC-13).
 - **Data:** transaction-level records are Confidential. A person's full
   payment history, assembled by the trace, is a pile worth more than its
   rows (docs/architecture.md §7). Bulk export is a separate permission.
@@ -228,7 +225,8 @@ own cloud — FS-101.
 - Decide a match by guessing. Unmatched funds stay unapplied and visible.
 - Learn fraud patterns. RO-11 is rules; anything statistical is
   unspecified.
-- File regulatory returns. RO-14 is Planned, and the prototype's forms are
+- File regulatory returns, screen for AML, or score fraud. Those are
+  financial-crime (FC-01 to FC-14), fed by RO-11; the prototype's forms are
   not real.
 - Serve SMEs directly. That is sme-recon (FS-095).
 

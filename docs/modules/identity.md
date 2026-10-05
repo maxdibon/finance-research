@@ -7,8 +7,8 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access]
-consumed_by: [collect, gateway, mfi, sacco, escrow, crb]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392]
+consumed_by: [collect, gateway, mfi, sacco, escrow, crb, financial-crime]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-431]
 last_reviewed: 2026-10-05
 ---
 
@@ -58,7 +58,6 @@ requirements (MFI PRD §2, problem 5).
 | ID-05 | Phone-number ownership: the number checked against the name the operator holds for it | Built | Ran in production at Onit Bank, Feb 2025 to Jun 2026, as the gate on collect CO-02's account opening, under the bank's own agreements with Safaricom and Airtel (FS-390, FS-392). A new customer needs its own agreements, or Dibon's (compliance LC-13). For M-Pesa numbers, Safaricom's Hakikisha also returns the registered name (rails RL-21, Planned; FS-387) | 1 |
 | ID-06 | Tax PIN validation | Planned | FS-205 | 2 |
 | ID-07 | Business verification: registration, directors, beneficial owners | Planned | FS-090. Owner, 2026-10-05: business registration (BRS) moves to v1 (FS-415) | 1 |
-| ID-08 | Sanctions and politically-exposed-person screening | Planned | FS-098. May sit in a compliance service instead | 2 |
 | ID-09 | Registers in other countries, per country | Planned | FS-109 | later |
 | ID-10 | The result, its source reference and the evidence kept; never a copy of the register's record | Planned | docs/architecture.md §6 | 1 |
 | ID-11 | Phone-number ownership by a one-time code sent to the number | Planned | FS-205. Split from ID-05; no record shows it ran | 1 |

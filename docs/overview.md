@@ -96,6 +96,7 @@ own payments first, and insights runs on our own data first (FS-033).
 - [Identity](modules/identity.md) — verifying who a person or business is
 - [Rails](modules/rails.md) — every payment-rail and bank connection, behind one interface
 - [Insights](modules/insights.md) — governed metrics, dashboards and natural-language questions
+- [Financial Crime and Compliance](modules/financial-crime.md) — fraud scoring, sanctions and PEP screening, cases, and the reports institutions file
 
 **Channels**
 
