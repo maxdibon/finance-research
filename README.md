@@ -27,6 +27,7 @@ docs/                the work. The only place we edit
   regulation.md      the law register: what applies and what it drives
   approval-pack.md   what customers file with their regulator about us
   assurance.md       testing for institutions we do not supply; conflicts
+  bank-channel.md    banks offering SME Recon and Odoo to their SMEs
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
   marketing/
