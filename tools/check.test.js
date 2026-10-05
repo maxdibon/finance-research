@@ -310,12 +310,12 @@ test('customers: a delivery map that drifts from the register fails', () => {
 const REG = path.join('docs', 'regulation.md');
 
 test('regulation: a Deep law that drives nothing fails', () => {
-  const f = runWith((d) => patch(d, REG, (t) => t.replace('| CR-01, CR-03, MF-19 | Targeted |', '| — | Targeted |')));
+  const f = runWith((d) => patch(d, REG, (t) => t.replace('| CR-01, CR-03, MF-19, MF-27 | Targeted |', '| — | Targeted |')));
   assert.deepStrictEqual(names(f), ['regulation']);
 });
 
 test('regulation: a law driving an id that does not exist fails', () => {
-  const f = runWith((d) => patch(d, REG, (t) => t.replace('| CR-01, CR-03, MF-19 |', '| CR-01, CR-03, MF-99 |')));
+  const f = runWith((d) => patch(d, REG, (t) => t.replace('| CR-01, CR-03, MF-19, MF-27 |', '| CR-01, CR-03, MF-99, MF-27 |')));
   assert.deepStrictEqual(names(f), ['regulation']);
 });
 

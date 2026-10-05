@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability, collect, gateway, escrow, mfi, sacco, sme-recon, omni-channel, business-suite, core]
 consumed_by: []
-review_ids: [FS-006, FS-033, FS-043, FS-048, FS-151, FS-156, FS-157, FS-159, FS-220, FS-223, FS-224, FS-225, FS-226, FS-227, FS-228, FS-229]
-last_reviewed: 2026-10-03
+review_ids: [FS-006, FS-033, FS-043, FS-048, FS-151, FS-156, FS-157, FS-159, FS-220, FS-223, FS-224, FS-225, FS-226, FS-227, FS-228, FS-229, FS-446]
+last_reviewed: 2026-10-05
 ---
 
 # Insights — governed metrics and natural-language questions
@@ -69,6 +69,7 @@ number, traceable to a transaction.
 | IN-12 | The product metric catalogue: the metrics each module's dashboards publish, defined here once | Planned | FS-220 | 2 |
 | IN-13 | An evaluation set of questions with known answers, run on every change, broken on purpose to prove it fails | Planned | FS-229; building-a-master §4 | 2 |
 | IN-14 | Exports as a separate permission | Planned | docs/architecture.md §7 | 2 |
+| IN-15 | The customer's own BI tool connects to the governed metrics: Metabase, Power BI, Tableau and Zoho Analytics first, more to follow; Superset stays the default | Planned | Owner, 2026-10-05 (FS-446). Through the semantic layer (IN-02), with row-level security (IN-09). Metabase's open-source edition is AGPL: run unmodified and separately (architecture §6.1) | 2 |
 
 ## 4 · Where it sits
 

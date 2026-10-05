@@ -59,9 +59,9 @@ partners (FS-109; docs/partners.md; docs/compliance.md).
 
 Collect and the Gateway ran in production at Onit Bank, with W-Harambee,
 from February 2025 to June 2026 (FS-390), on M-Pesa. Before that, our USSD
-platform carried KCB's digital lending from 2022 to 2025, and we supply
-KCB and National Bank of Kenya with Meliora's SMS platform today
-(FS-416, FS-419). We are in discussion
+platform carried KCB's digital lending from 2022 to 2025, and since 2021
+we have supplied KCB and National Bank of Kenya with SMS, CRM, USSD and
+lending work, much of it ongoing (FS-416, FS-419, FS-443). We are in discussion
 with new partner banks (docs/partners.md). Roan Capital is in delivery on
 Kapu MFI (docs/customers.md).
 

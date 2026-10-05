@@ -61,6 +61,7 @@ node tools/assemble.js                # builds build/master.md; refuses if a che
 node design/portfolio-pdf/build.js    # both editions: PDFs and web previews
 node design/portfolio-pdf/build.js --edition short   # one edition
 node design/portfolio-pdf/build.js --html-only   # pages only, no PDF
+node design/bank-channel-proposal/build.js --for "Bank"   # the two-page proposal
 ```
 
 The names check reads `sources/confidential/protected-names.txt`, which is
