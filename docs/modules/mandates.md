@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability, core, crb, financial-crime, omni-channel, business-suite]
 review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Mandates — signing and debit
@@ -198,8 +198,8 @@ Part of the shared platform, inside each deployment (docs/architecture.md
 
 ## 11 · Open questions
 
-FS-037, FS-046, FS-122, FS-132, FS-142, FS-143, FS-144, FS-145. FS-146 is
-decided: quorum steps (MD-09) are phase 1 (FS-402).
+FS-037, FS-046, FS-142, FS-143, FS-145. FS-146 is decided: quorum steps
+(MD-09) are phase 1 (FS-402).
 
 ## 12 · Sources
 

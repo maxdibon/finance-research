@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability, collect, gateway, escrow, mfi, sacco, sme-recon, omni-channel, business-suite, core]
 consumed_by: [business-suite]
 review_ids: [FS-006, FS-033, FS-043, FS-048, FS-151, FS-156, FS-157, FS-159, FS-220, FS-223, FS-224, FS-225, FS-226, FS-227, FS-228, FS-229, FS-446]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Insights — governed metrics and natural-language questions
@@ -191,7 +191,7 @@ waits, or runs only on data classes allowed to leave.
 
 ## 11 · Open questions
 
-FS-043, FS-048, FS-224, FS-225, FS-226, FS-227, FS-228, FS-229.
+FS-048, FS-225, FS-227, FS-228, FS-229.
 
 ## 12 · Sources
 

@@ -9,7 +9,7 @@ audience: [mfi, sacco, bank]
 depends_on: [access, identity, mandates, messaging, rails, recon-observability, financial-crime]
 consumed_by: [mfi, sacco, collect, omni-channel, insights]
 review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431, FS-450, FS-453]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Kapu Core
@@ -170,7 +170,7 @@ institution's premises where it requires.
 
 ## 11 · Open questions
 
-FS-066, FS-185, FS-321.
+FS-066, FS-185.
 
 ## 12 · Sources
 

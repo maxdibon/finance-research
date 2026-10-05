@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime, core, escrow, crb, rails, insights, platform-security]
 review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Recon & Observability
@@ -245,8 +245,7 @@ own cloud — FS-101.
 
 ## 11 · Open questions
 
-FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099,
-FS-100, FS-101, FS-102, FS-103.
+FS-012, FS-063, FS-099, FS-101, FS-103.
 
 ## 12 · Sources
 

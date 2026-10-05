@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [messaging]
 consumed_by: [mandates, messaging, rails, recon-observability, identity, financial-crime, core, collect, gateway, mfi, sacco, sme-recon, escrow, crb, omni-channel, insights, business-suite, platform-security]
-review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449]
-last_reviewed: 2026-10-05
+review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491]
+last_reviewed: 2026-10-06
 ---
 
 # Access — login, roles and step-up
@@ -64,7 +64,7 @@ reach.
 | AC-05 | Step-up authentication at the act, by level of authentication — the mechanism behind mandates MD-10 | Planned | Keycloak: step-up authentication; FS-132. Also the step-up behind approval from email, mandates MD-18 (FS-449, FS-453) | 1 |
 | AC-06 | Approval on a phone for a request started elsewhere (CIBA) | Planned | Keycloak: CIBA policy per realm | 2 |
 | AC-07 | Federation with an institution's own identity provider; directory federation (LDAP) | Planned | Keycloak: identity brokering, user federation; FS-195 | 1 |
-| AC-08 | Tenancy: a realm per institution, or organisations within a realm | Planned | Keycloak: realms, organisations; FS-197 | 1 |
+| AC-08 | Tenancy: a realm per institution, inside that institution's own instance | Planned | Keycloak realms; FS-197, settled by FS-491 (an isolated instance per institution) | 1 |
 | AC-09 | Roles and groups per institution, read by the mandate engine to resolve approvers | Planned | FS-142, FS-201 | 1 |
 | AC-10 | Session rules: expiry, revocation, and sign-out everywhere | Planned | Keycloak session management | 1 |
 | AC-11 | Login, admin and step-up events streamed to observability | Planned | recon-observability RO-16 | 1 |
@@ -172,7 +172,7 @@ every login.
 
 ## 11 · Open questions
 
-FS-142, FS-144, FS-170, FS-196, FS-197, FS-201, FS-206.
+FS-142, FS-201.
 
 ## 12 · Sources
 

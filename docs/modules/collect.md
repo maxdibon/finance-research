@@ -9,7 +9,7 @@ audience: [bank, sacco, psp, fintech]
 depends_on: [identity, rails, recon-observability, mandates, messaging, financial-crime, access, core]
 consumed_by: [mfi, sacco, escrow, insights, omni-channel]
 review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388, FS-390, FS-392, FS-393, FS-407, FS-431]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Kapu Collect
@@ -233,8 +233,7 @@ control — FS-059.
 
 ## 11 · Open questions
 
-FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059,
-FS-060.
+FS-051, FS-053, FS-054, FS-056, FS-057, FS-058, FS-059, FS-060.
 
 ## 12 · Sources
 

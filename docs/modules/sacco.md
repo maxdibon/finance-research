@@ -9,7 +9,7 @@ audience: [sacco]
 depends_on: [mandates, identity, rails, messaging, recon-observability, collect, crb, financial-crime, access, core, gateway]
 consumed_by: [omni-channel, insights]
 review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Kapu Sacco
@@ -203,8 +203,8 @@ Liquid's Azure Stack.
 
 ## 11 · Open questions
 
-FS-062, FS-066, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177. FS-146
-is decided: quorum steps (mandates MD-09) are phase 1 (FS-402).
+FS-066, FS-173, FS-174, FS-175, FS-176, FS-177. FS-146 is decided: quorum
+steps (mandates MD-09) are phase 1 (FS-402).
 
 ## 12 · Sources
 

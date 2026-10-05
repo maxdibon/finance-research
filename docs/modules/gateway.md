@@ -9,7 +9,7 @@ audience: [sme, fintech, mfi, sacco]
 depends_on: [rails, recon-observability, messaging, mandates, identity, financial-crime, access]
 consumed_by: [sme-recon, mfi, sacco, insights]
 review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-407, FS-408, FS-415, FS-431]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Kapu Pay Gateway
@@ -213,8 +213,7 @@ Liquid's Azure Stack (FS-032). That is an inference, not a decision.
 
 ## 11 · Open questions
 
-FS-011, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094,
-FS-102.
+FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-094.
 
 ## 12 · Sources
 

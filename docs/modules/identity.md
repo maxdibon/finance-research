@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime]
 review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Identity — verifying who a person is
@@ -175,7 +175,7 @@ connections come from in-country deployments.
 
 ## 11 · Open questions
 
-FS-088, FS-090, FS-098, FS-109, FS-202, FS-203, FS-204, FS-205.
+FS-088, FS-090, FS-109, FS-202, FS-203, FS-204, FS-205.
 
 ## 12 · Sources
 

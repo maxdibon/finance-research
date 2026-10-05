@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [identity, recon-observability, rails, mandates, messaging, access]
 consumed_by: [collect, gateway, mfi, sacco, core, omni-channel, identity]
 review_ids: [FS-098, FS-418, FS-422, FS-428, FS-431, FS-433, FS-435, FS-448, FS-453]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Financial Crime and Compliance
@@ -190,7 +190,7 @@ class.
 
 ## 11 · Open questions
 
-FS-098, FS-431.
+None open in the register.
 
 ## 12 · Sources
 

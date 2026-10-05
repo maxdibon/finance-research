@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, fintech]
 depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco, financial-crime, core]
 consumed_by: [insights]
 review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431, FS-443, FS-450, FS-452, FS-453, FS-487, FS-488]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Omni-channel — apps, internet banking and USSD
@@ -212,8 +212,7 @@ the in-country deployment.
 
 ## 11 · Open questions
 
-FS-167 to FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237,
-FS-238.
+FS-167 to FS-171, FS-235, FS-236, FS-237, FS-238.
 
 ## 12 · Sources
 

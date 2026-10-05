@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
 review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Platform Security
@@ -242,7 +242,7 @@ flow that may leave; it is named in §7.
 
 ## 11 · Open questions
 
-FS-461, FS-464.
+None open in the register.
 
 ## 12 · Sources
 

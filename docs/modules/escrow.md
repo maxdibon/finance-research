@@ -9,7 +9,7 @@ audience: [bank, sme, fintech]
 depends_on: [collect, mandates, recon-observability, messaging, rails, identity, access]
 consumed_by: [insights]
 review_ids: [FS-042, FS-104, FS-107, FS-108, FS-114, FS-115, FS-116, FS-117, FS-328, FS-407, FS-408]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Kapu Escrow
@@ -192,7 +192,7 @@ Stack (FS-032). Kenya first (FS-105).
 
 ## 11 · Open questions
 
-FS-108, FS-114, FS-115, FS-116, FS-117.
+FS-108, FS-114, FS-115.
 
 ## 12 · Sources
 
