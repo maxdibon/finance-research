@@ -5,8 +5,8 @@ kind: register
 version: 0.1.0
 owner: Compliance lead
 classification: Internal
-review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431]
-last_reviewed: 2026-10-05
+review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431, FS-499]
+last_reviewed: 2026-10-06
 ---
 
 # Law register — the legislation that applies to us and our customers
@@ -75,10 +75,11 @@ register when the folder exists. Superseded copies are in `superseded/`.
 | LR-23 | Movable Property Security Rights Act (Cap. 499A) | [movable-property-security-rights-act@2022-12-31](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31) | 2022-12-31 | Source | Lenders taking collateral | MF-03, MF-18 | Targeted | 2026-10-05 | The collateral registry |
 | LR-24 | Excise Duty Act (Cap. 472) | [excise-duty-act@2025-07-01](https://new.kenyalaw.org/akn/ke/act/2015/23/eng@2025-07-01) | 2025-07-01 | Obligation | Institutions charging fees | KC-04, MF-15 | Targeted | 2026-10-05 | Excise on fees and commissions charged by financial institutions: 20% on financial institutions' and digital lenders' fees, never on interest; 15% on money transfer fees (FS-427) |
 | LR-25 | Finance Act, 2026 (No. 19 of 2026) | [finance-act-2026@2026-06-26](https://new.kenyalaw.org/akn/ke/act/2026/19/eng@2026-06-26) | 2026-06-26 | Obligation | Lenders; Gateway merchants taking betting payments | LR-24 | Targeted | 2026-10-05 | A bad debt now includes its interest and charges for money lenders, banks and microfinance banks (Income Tax Act s.15); betting deposits redefined for excise; VASP information returns (FS-427). Also: payment processing, gateway and aggregation fees charged by a PSP carry 16% VAT from 1 Jul 2026; software licence and support fees are royalties for withholding tax; card network fees are royalties (FS-427, FS-434) |
-| LR-26 | Co-operative Societies Act (Cap. 490) | [co-operative-societies-act@2023-12-11](https://new.kenyalaw.org/akn/ke/act/1997/12/eng@2023-12-11) | 2023-12-11 | Institution | Co-operatives, including Saccos | — | Line | 2026-10-05 | |
+| LR-26 | Co-operative Societies Act (Cap. 490) | [co-operative-societies-act@2023-12-11](https://new.kenyalaw.org/akn/ke/act/1997/12/eng@2023-12-11) | 2023-12-11 | Institution, Obligation | Co-operatives, including Saccos; employers who deduct for them | BS-14, SC-04 | Targeted | 2026-10-06 | s.35: an employer who deducts for a society must remit within 7 days, or owes the sum with compound interest of at least 5% a month; the Commissioner may recover it through an agent (FS-499) |
 | LR-27 | Kenya Deposit Insurance Act | [kenya-deposit-insurance-act@2022-12-31](https://new.kenyalaw.org/akn/ke/act/2012/10/eng@2022-12-31) | 2022-12-31 | Institution | Banks, microfinance banks | — | Line | 2026-10-05 | |
 | LR-28 | Virtual Asset Service Providers Act, 2025 | [virtual-asset-service-providers-act@2025-11-04](https://new.kenyalaw.org/akn/ke/act/2025/20/eng@2025-11-04) | 2025-11-04 | Institution | Virtual asset service providers | — | Line | 2026-10-05 | |
 | LR-29 | Virtual Asset Service Providers Regulations, 2026 (LN 134) | [virtual-asset-service-providers-regulations-2026@2026-07-22](https://new.kenyalaw.org/akn/ke/act/ln/2026/134/eng@2026-07-22) | 2026-07-22 | Institution | Virtual asset service providers | — | Line | 2026-10-05 | |
+| LR-30 | Employment Act (Cap. 226) | [employment-act@2024-04-26](https://new.kenyalaw.org/akn/ke/act/2007/11/eng@2024-04-26) | 2024-04-26 | Obligation | Employers, including our SME customers and the institutions as employers | BS-12, BS-14 | Targeted | 2026-10-06 | s.19(1)(g): a deduction the employee asks for in writing; s.19(3): all deductions at most two-thirds of wages; s.19(4), (5): remitting late is an offence, up to KSh 100,000 or two years. Whether statutory deductions count inside the two-thirds is to confirm with counsel (FS-499) |
 
 ## Reports and strategies
 

@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495]
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500]
 last_reviewed: 2026-10-06
 ---
 
@@ -27,7 +27,7 @@ release that needs it.
 
 | Release | Started by | Scope | Size |
 |---|---|---|---|
-| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 47 capabilities from the map (25 Designed, 22 Planned), plus 19 platform and security capabilities |
+| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 48 capabilities from the map (25 Designed, 23 Planned), plus 19 platform and security capabilities |
 | **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability | Mostly Built or Designed: the Onit record |
 | **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
 | **R4 · Saccos and Kapu Core** | The first Sacco or core customer signs | Kapu Sacco, Kapu Core, member apps and USSD, the field-officer app | Sacco, Core and omni-channel phase-1 rows |
@@ -43,7 +43,8 @@ the check keeps the two in step):
   open answer 5 and the document's exclusions.
 - **Approvals:** MD-01, MD-02, MD-05, MD-06, MD-09 (the 3-of-3 committee),
   MD-10, MD-18 (approval from email).
-- **Identity:** ID-01, ID-02, ID-07 (business registration).
+- **Identity:** ID-01, ID-02, ID-07 (business registration), ID-15 (the
+  document vault).
 - **Core:** KC-01, KC-04, KC-07, KC-08 on Kapu Core (Fineract, PostgreSQL).
 - **Money in and out:** RL-07 (bank transfers), with M-Pesa already built
   (RL-03).
@@ -73,7 +74,7 @@ SE-23 to SE-25) follows in R2, before a bank goes live.
 **The current scope is the target** (FS-490): v1 is everything in phase 1
 today, and it does not grow by drift.
 
-**v1 cap:** 221 capabilities in phase 1 (FS-490).
+**v1 cap:** 222 capabilities in phase 1 (FS-490, FS-500).
 
 Nothing moves into phase 1 unless something of similar size moves out, or
 the team grows to carry it. Raising the cap is a decision: the line above

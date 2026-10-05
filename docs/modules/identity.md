@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500]
 last_reviewed: 2026-10-06
 ---
 
@@ -71,6 +71,7 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 | ID-12 | Each account bound at enrolment to the ID number, the phone number and the SIM's IMSI; the phone number alone is never the identity | Planned | FS-448, FS-453 | 1 |
 | ID-13 | An IMSI changed since enrolment, from a swap or a recycled number, holds money movement and credential resets until the customer is re-verified (financial-crime FC-02; rails RL-22) | Planned | FS-448, FS-453. The subscriber regulations do not address recycling (law register LR-22): it is each operator's practice | 1 |
 | ID-14 | The operator's name check (ID-05) re-run on a schedule and whenever a dormant account wakes; a mismatch freezes the mobile channel until the customer is re-verified | Planned | FS-448, FS-453 | 1 |
+| ID-15 | Document vault for KYC and KYB evidence and collateral documents, one per institution in its own instance: object storage (Blob on Azure Stack; Ceph through Rook on-premises), each file encrypted under keys in OpenBao, checksummed, locked for its retention and then deleted; every view logged. Received in R1 at the branch console and by a single-use upload link sent by SMS or email; files type-checked, images re-encoded | Planned | Owner, 2026-10-06 (FS-500). Other channels: field app (omni-channel OC-17), WhatsApp sends the link, never the image (OC-16, privacy PR-16); migration (mfi MF-16) | 1 |
 
 **Retired ids:** ID-08, moved to financial-crime FC-05 and FC-06 (FS-431). A retired id is never reused.
 
@@ -89,7 +90,7 @@ omni-channel, financial-crime.
 | The person and their KYC status | Their authority: the core, Fineract, Odoo | Writes the result there; holds no party record of its own |
 | National register data | NPDM (formerly IPRS) and the other registers | Queries; keeps the reference and the fields the check compared |
 | Verification log: who checked whom, when, why, against what, result | **Identity service** | Holds. Append-only |
-| Evidence: document images, liveness captures | The institution's document store | References by id. Biometric data handled as sensitive (FS-203) |
+| Evidence: document images, liveness captures | **The document vault** (ID-15) | Holds, in each institution's instance. Biometric data handled as sensitive (FS-203) |
 
 **What this module never stores:** a copy of the register's record, or a
 biometric template beyond what the check and its evidence require.

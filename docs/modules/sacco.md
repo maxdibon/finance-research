@@ -7,8 +7,8 @@ owner: Product lead, Kapu
 classification: Internal
 audience: [sacco]
 depends_on: [mandates, identity, rails, messaging, recon-observability, collect, crb, financial-crime, access, core, gateway]
-consumed_by: [omni-channel, insights]
-review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453]
+consumed_by: [omni-channel, insights, business-suite]
+review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453, FS-499]
 last_reviewed: 2026-10-06
 ---
 
@@ -82,8 +82,8 @@ identity (NPDM, formerly IPRS), rails, messaging (reminders,
 statements), recon-observability (contributions, check-off), collect
 (SC-16), crb (SC-18), financial-crime (SASRA returns, SC-17; FC-13). Also access (login, roles and step-up); core (Kapu Core, where the institution has no core of its own); gateway (collections from customers' wallets).
 **Used by:** omni-channel (member self-service, SC-13, and the
-field-officer app) and insights (its metrics). Otherwise it is the
-product a Sacco buys.
+field-officer app), insights (its metrics) and business-suite (check-off
+schedules to employers, BS-15). Otherwise it is the product a Sacco buys.
 
 **Who holds which record** (docs/architecture.md §2):
 

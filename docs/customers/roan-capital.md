@@ -5,8 +5,8 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453]
-last_reviewed: 2026-10-05
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500]
+last_reviewed: 2026-10-06
 ---
 
 # Roan Capital — delivery map
@@ -51,7 +51,7 @@ missing. *Gap* means no capability does it yet.
 | RC-01 | Borrowers as individuals, businesses and statement-based entities | KC-01, MF-01 | Partial | Kapu Core holds individuals and businesses; the statement-based entity type is not modelled |
 | RC-02 | National ID and passport checked against IPRS in real time, with the cost of each query logged | ID-01, MF-02 | Partial | The document logs KES 5 a query; direct access is KES 20 a check plus KES 50,000 to connect (partners PT-29, compliance LC-12). Passport coverage unconfirmed (FS-329). Roan Capital provides the credentials (assumption 1) |
 | RC-03 | Company status and directors checked with the Business Registration Service | ID-07 | Covered | ID-07 moved to phase 1, so it is in the MVP (FS-415) |
-| RC-04 | Documents uploaded and stored: ID, KRA PIN, photo, certificate of incorporation, directors' guarantees; status per document | ID-02, MF-02 | Covered | |
+| RC-04 | Documents uploaded and stored: ID, KRA PIN, photo, certificate of incorporation, directors' guarantees; status per document | ID-02, MF-02, ID-15 | Covered | Stored in the document vault (ID-15, FS-500) |
 | RC-05 | Bank and M-Pesa statements (3 to 12 months) ingested for appraisal | — | Gap | Reconciliation ingests statements (RO-01) for matching, not for appraisal. Needs a parser feeding RC-11 |
 | RC-06 | No loan account until verification is complete | MF-02 | Covered | The completeness gate cannot be overridden |
 | RC-07 | Onboarding wizard with separate individual and business flows | MF-01, MF-02 | Partial | The flows exist; separate wizards per borrower type are screen design |

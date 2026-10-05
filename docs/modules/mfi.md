@@ -7,8 +7,8 @@ owner: Product lead, Kapu
 classification: Internal
 audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway]
-consumed_by: [omni-channel, insights]
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453]
+consumed_by: [omni-channel, insights, business-suite]
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500]
 last_reviewed: 2026-10-06
 ---
 
@@ -103,6 +103,8 @@ FS-393.
 | MF-27 | No negative credit information sent to a bureau for an amount of KES 1,000 or less, and the pre-listing notice observed | Planned | CBK lender regulations 2026 (law register LR-03), reg 33 (FS-435); with CRB submission (MF-19) | 2 |
 | MF-28 | Complaints logged with their clock: acknowledged within seven days where they cannot be resolved promptly | Planned | CBK lender regulations 2026 (law register LR-03), reg 40 (FS-435) | 1 |
 | MF-29 | Where a lending decision is automated, the decision explained to the customer, who is told when dealing with an AI system rather than a person | Planned | CBK lender regulations 2026 (law register LR-03), reg 60 (FS-435) | 2 |
+| MF-30 | Collateral lifecycle: revaluation dates, insurance expiry, where the logbook or title is held, joint registration and discharge status, each with reminders before it lapses | Planned | Owner, 2026-10-06 (FS-496). Extends MF-03; land and other types with MF-18 | 2 |
+| MF-31 | Collateral API: the register read and its changes published as events, for the institution's systems and partners (valuers, insurers, vehicle trackers), scoped by role | Planned | Owner, 2026-10-06 (FS-496). Partner clients per access AC-04 | 2 |
 
 ## 4 · Where it sits
 
@@ -111,8 +113,8 @@ rails (M-Pesa, Airtel Money, T-Kash, bank transfer), messaging (MF-13),
 recon-observability (MF-10, MF-12), crb (MF-19), financial-crime
 (sanctions screening, records and lenders' CBK returns; FS-431). Also access (login, roles and step-up); collect (repayments and deposits collected through partners); core (Kapu Core, where the institution has no core of its own); gateway (collections from customers' wallets).
 **Used by:** omni-channel (the borrower channels and the field-officer
-app show its loans) and insights (its metrics). Otherwise it is the
-product an MFI buys.
+app show its loans), insights (its metrics) and business-suite (check-off
+schedules to employers, BS-15). Otherwise it is the product an MFI buys.
 
 **Who holds which record** (docs/architecture.md §2):
 
@@ -120,7 +122,7 @@ product an MFI buys.
 |---|---|---|
 | Loans, schedules, repayments, charges, balances | **Fineract** | Holds, as the MFI's funds ledger (native mode) |
 | The MFI's money | The MFI's own M-Pesa shortcode and bank accounts | **Never holds** |
-| Borrowers' KYC documents, collateral evidence | MFI, in its document store | Holds. Government IDs are Restricted |
+| Borrowers' KYC documents, collateral evidence | The document vault (identity ID-15) | References by id. Government IDs are Restricted |
 | The MFI as our customer: contract, users, tickets | Odoo | Ops provisioning, sales-led (MFI PRD §4) |
 | Approvals and mandate configuration | Mandate engine | Feeds |
 | Repayment matches and exceptions | Recon engine | Feeds |

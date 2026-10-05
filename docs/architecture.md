@@ -5,8 +5,8 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491]
-last_reviewed: 2026-10-05
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500]
+last_reviewed: 2026-10-06
 ---
 
 # Platform architecture — who holds what
@@ -301,6 +301,10 @@ crime and insights read the same facts without asking each product.
 - **Access and identity:** Keycloak for login, roles and step-up (access);
   the national register (NPDM, formerly IPRS) and verification vendors for
   who a person is (identity).
+- **Documents:** KYC and KYB evidence and collateral documents live in one
+  document vault per institution (identity ID-15, FS-500). Odoo keeps
+  contracts and signed documents (§2); Fineract, Odoo and the products
+  refer to vault documents by id and keep no copies.
 
 ### 6.1 · Licences
 
@@ -311,7 +315,7 @@ Decided 2026-10-01 (FS-223); MPL-2.0 added 2026-10-03 (FS-403):
 | Apache-2.0, MIT, BSD-2, BSD-3, ISC | Yes | — |
 | AGPL-3.0 | Yes, **for services run unmodified and separately** | We do not change their source, and we do not link them into our code. A change to an AGPL service's source is a decision that triggers publishing that source to its network users, so it is never made in passing |
 | MPL-2.0 | Yes, **used unmodified** | MPL's copyleft is per file: a change to one of its files is published with that file. We do not make such changes in passing |
-| LGPL-2.1, LGPL-3.0 | Yes, **used unmodified as separate programs**: Odoo Community, Opengrep | We do not change or statically link them; a change is a decision (FS-464) |
+| LGPL-2.1, LGPL-3.0 | Yes, **used unmodified as separate programs**: Odoo Community, Opengrep, Ceph (object storage on-premises, FS-500) | We do not change or statically link them; a change is a decision (FS-464) |
 | GPL-2.0, GPL-3.0 in the operating system | Yes, **as part of the operating system**: the Linux kernel, disk encryption (LUKS), distribution packages | Run as shipped by the distribution (FS-464) |
 | GPL tools used only to build and test | Yes, **never shipped or linked**: MobSF | A tool in our pipeline, not part of what customers run (FS-464) |
 | GPL, LGPL, SSPL, BSL, and anything unlisted | Not without a decision | Recorded in docs/decisions.md |

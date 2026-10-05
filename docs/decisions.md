@@ -636,3 +636,17 @@ its own entry.
   Keycloak, by a sync or by hand, and a missed leaver keeps a role until
   someone notices; Keycloak becomes a dependency of every approval, so its
   availability is tier 1.
+
+## FS-500 · A document vault per institution, and the v1 cap raised to 222
+
+- **Chose:** one document vault per institution for KYC and KYB evidence
+  and collateral documents (identity ID-15), in phase 1 because R1 needs
+  it; and the v1 cap raised by one to count it.
+- **Argued against:** storing documents as Fineract or Odoo attachments,
+  which scatters Restricted files across systems with different access
+  rules; and folding the vault into ID-02's wording, which hides real
+  work, the drift the cap exists to stop.
+- **Costs (inferred):** one more service to run and back up per
+  institution; Ceph on-premises is heavy to operate for a small site; a
+  virus scanner is not chosen, since ClamAV is GPL and needs a licence
+  decision.
