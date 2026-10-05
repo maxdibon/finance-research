@@ -306,3 +306,25 @@ test('customers: a delivery map that drifts from the register fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'customers', 'roan-capital.md'), (t) => t.replace('| RC-13 | Maker-checker throughout: the decider is never the requester | MD-06 |', '| RC-13 | Maker-checker throughout: the decider is never the requester | MD-06, MD-08 |')));
   assert.deepStrictEqual(names(f), ['customers']);
 });
+
+const REG = path.join('docs', 'regulation.md');
+
+test('regulation: a Deep law that drives nothing fails', () => {
+  const f = runWith((d) => patch(d, REG, (t) => t.replace('| CR-01, CR-03, MF-19 | Targeted |', '| — | Targeted |')));
+  assert.deepStrictEqual(names(f), ['regulation']);
+});
+
+test('regulation: a law driving an id that does not exist fails', () => {
+  const f = runWith((d) => patch(d, REG, (t) => t.replace('| CR-01, CR-03, MF-19 |', '| CR-01, CR-03, MF-99 |')));
+  assert.deepStrictEqual(names(f), ['regulation']);
+});
+
+test('regulation: a version that disagrees with As at fails', () => {
+  const f = runWith((d) => patch(d, REG, (t) => t.replace('/eng@2024-12-13) | 2024-12-13 |', '/eng@2024-12-13) | 2024-12-12 |')));
+  assert.deepStrictEqual(names(f), ['regulation']);
+});
+
+test('regulation: citing a law the register does not have fails', () => {
+  const f = runWith((d) => patch(d, COLLECT, (t) => `${t}\nSee the law register, LR-99.\n`));
+  assert.deepStrictEqual(names(f), ['regulation']);
+});

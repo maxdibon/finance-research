@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Compliance lead
 classification: Internal
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-05
 ---
 
 # Licences, registrations and certifications
@@ -13,7 +13,9 @@ last_reviewed: 2026-10-03
 What Dibon holds, what it needs, and the first step for each (FS-363).
 Requirements were read from the primary sources on 2026-10-03; each row
 names its instrument so it can be checked again. Dibon submits every
-application; this file tracks them.
+application; this file tracks them. The laws behind these rows, and behind
+our customers' obligations, are in the law register, docs/regulation.md
+(FS-429).
 
 **Status:** Held · Needed · Planned (needed later, when a product needs it)
 · Watching (a draft law or rule that may change what is needed).

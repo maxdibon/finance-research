@@ -24,6 +24,7 @@ docs/                the work. The only place we edit
   overview.md        the portfolio story; links modules, restates nothing
   onboarding.md      what each customer and product needs to go live
   compliance.md      licences, registrations and certifications
+  regulation.md      the law register: what applies and what it drives
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
   marketing/
@@ -41,6 +42,7 @@ sources/             inputs as received — never edited
   kapu/              MFI PRD, 8 Jun 2026 meeting notes (anonymised)
   gatekeepr/         snapshots of GateKeepr briefs — git-ignored
   confidential/      client-specific documents — git-ignored
+  regulation/ke/     Kenyan legislation, by "as at" date — git-ignored
 clients/             real prospect and customer material — git-ignored
 tools/               check.js, assemble.js, and their break tests
 .githooks/           pre-commit: runs the checks

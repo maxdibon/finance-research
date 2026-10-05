@@ -11,6 +11,10 @@ sources/confidential/
 # GateKeepr repository, and they name a real estate and its correspondence.
 sources/gatekeepr/
 
+# Kenyan legislation fetched from Kenya Law (FS-429). Public, and fetched
+# again from the links in docs/regulation.md; kept out of git for size.
+sources/regulation/
+
 # Tooling state.
 .superpowers/
 *.tmp

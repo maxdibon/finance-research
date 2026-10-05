@@ -455,6 +455,70 @@ function checkCustomers(root) {
   return failures;
 }
 
+// ── regulation ───────────────────────────────────────────────────────────
+// The law register (FS-429): every row passes a scope test, a Deep or
+// Targeted row drives something that exists, the version named in its link
+// is the one in "As at", and every LR id cited anywhere is in the register.
+// The texts themselves are kept out of git, so local copies are matched to
+// the register only where the folder exists.
+const REGULATION = path.join('docs', 'regulation.md');
+const LAW_DIR = path.join('sources', 'regulation', 'ke');
+const TESTS = ['Institution', 'Payments', 'Obligation', 'Source', 'Dibon'];
+const DEPTHS = ['Deep', 'Targeted', 'Line', 'Unread'];
+const REF_RE = /\b(?:OB-[A-Z]{2,3}-\d{2}|[A-Z]{2}-\d{2})\b/g;
+
+function knownIds(root) {
+  const ids = new Set(moduleFiles(root).flatMap((f) => capabilityRows(read(root, f)).map((r) => r.id)));
+  const rowIds = (rel, re) => fs.existsSync(path.join(root, rel))
+    ? read(root, rel).split('\n').map((l) => (l.match(re) || [])[1]).filter(Boolean) : [];
+  rowIds(path.join('docs', 'compliance.md'), /^\| (LC-\d{2}) \|/).forEach((id) => ids.add(id));
+  rowIds(path.join('docs', 'onboarding.md'), /^\| (OB-[A-Z]{2,3}-\d{2}) \|/).forEach((id) => ids.add(id));
+  rowIds(REGULATION, /^\| (LR-\d{2}) \|/).forEach((id) => ids.add(id));
+  return ids;
+}
+
+function checkRegulation(root, files) {
+  if (!fs.existsSync(path.join(root, REGULATION))) return [fail('regulation', REGULATION, 0, 'law register missing')];
+  const known = knownIds(root);
+  const failures = [];
+  const named = new Map();
+  let expect = 1;
+  read(root, REGULATION).split('\n').forEach((line, i) => {
+    const cells = line.split('|').slice(1, -1).map((c) => c.trim());
+    if (!/^LR-\d{2}$/.test(cells[0] || '')) return;
+    const at = (m) => failures.push(fail('regulation', REGULATION, i + 1, `${cells[0]} ${m}`));
+    if (cells.length !== 10) return at(`has ${cells.length} cells; expected 10`);
+    const [id, , link, asAt, tests, , drives, depth] = cells;
+    if (+id.slice(3) !== expect) at(`out of sequence; expected LR-${String(expect).padStart(2, '0')}`);
+    expect = +id.slice(3) + 1;
+    const t = tests.split(',').map((x) => x.trim());
+    if (!t.length || t.some((x) => !TESTS.includes(x))) at(`tests "${tests}" outside ${TESTS.join(', ')}`);
+    if (!DEPTHS.includes(depth)) at(`depth "${depth}" outside ${DEPTHS.join(', ')}`);
+    const m = link.match(/^\[([a-z0-9-]+)@(\d{4}-\d{2}-\d{2})\]\(https:\/\/new\.kenyalaw\.org\/akn\/ke\/[^)]+@(\d{4}-\d{2}-\d{2})\)$/);
+    if (!m) at('link is not [name@date](Kenya Law expression URL)');
+    else {
+      if (m[2] !== m[3] || m[2] !== asAt) at(`link version ${m[2]}, URL version ${m[3]} and As at ${asAt} must agree`);
+      named.set(`${m[1]}@${m[2]}.pdf`, { id, depth, line: i + 1 });
+    }
+    const refs = drives.match(REF_RE) || [];
+    for (const r of refs) if (!known.has(r)) at(`drives ${r}, which does not exist`);
+    if ((depth === 'Deep' || depth === 'Targeted') && !refs.length) at(`is ${depth} but drives nothing; it does not belong here`);
+  });
+  for (const file of files.filter((f) => f.split(path.sep)[0] === 'docs')) {
+    const text = read(root, file);
+    for (const r of new Set(text.match(/\bLR-\d{2}\b/g) || [])) {
+      if (!known.has(r)) failures.push(fail('regulation', file, 0, `cites ${r}, which is not in the law register`));
+    }
+  }
+  const dir = path.join(root, LAW_DIR);
+  if (fs.existsSync(dir)) {
+    const local = fs.readdirSync(dir).filter((f) => f.endsWith('.pdf'));
+    for (const f of local) if (!named.has(f)) failures.push(fail('regulation', path.join(LAW_DIR, f), 0, 'a local text no register row names (or of another version)'));
+    for (const [f, r] of named) if ((r.depth === 'Deep' || r.depth === 'Targeted') && !local.includes(f)) failures.push(fail('regulation', REGULATION, r.line, `${r.id} is ${r.depth} but ${f} is not in ${LAW_DIR.split(path.sep).join('/')}`));
+  }
+  return failures;
+}
+
 // ── reviewed ─────────────────────────────────────────────────────────────
 // Every document under docs/ carries last_reviewed, and it is never older
 // than the document's last change: a change being committed counts as
@@ -531,6 +595,7 @@ function runAll(root) {
     ...checkClaims(root),
     ...checkDecisions(root),
     ...checkCustomers(root),
+    ...checkRegulation(root, files),
     ...checkReviewed(root, files),
   ];
 }

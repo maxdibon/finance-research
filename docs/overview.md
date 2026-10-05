@@ -111,6 +111,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | Who our customers are, and what we are building for each | [customers.md](customers.md) |
 | Which partners we are talking to | [partners.md](partners.md) |
 | Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
+| Which laws apply to us and our customers, and what each drives | [regulation.md](regulation.md) |
 | What a customer and each product need to go live | [onboarding.md](onboarding.md) |
 | Every word of the portfolio PDF | [marketing/portfolio.md](marketing/portfolio.md) |
 | How big each market segment is | business/market-sizing.xlsx |
