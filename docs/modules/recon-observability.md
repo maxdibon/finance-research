@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405]
-last_reviewed: 2026-10-03
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421]
+last_reviewed: 2026-10-05
 ---
 
 # Recon & Observability
@@ -84,6 +84,7 @@ reconciliation, is Planned (FS-405).
 | RO-19 | Role-based field masking, MFA, access audit, encryption at rest and in transit | Designed | Proposal: Security Features. Prototype: role-based masking | 1 |
 | RO-20 | Processor settlement reports: gross transactions matched to net, batched settlements after fees | Planned | Needed if payment processors are partners — FS-096, FS-102 | 2 |
 | RO-21 | M-Pesa Pull Transactions as a source: each shortcode's transactions fetched on a schedule and whenever a callback is late, so the ledger is matched against the rail's full record | Planned | Owner, 2026-10-03 (FS-388); rails RL-20; RO-01 | 1 |
+| RO-22 | Self-service M-Pesa reversal: the customer forwards the payment's SMS; the payment is checked against the wallet and the core and the disputed funds held; the merchant consents by SMS or voice within a set time; the reversal goes through M-Pesa, then the core; a partial recovery is credited and reported; disputes become tickets | Planned | Owner, 2026-10-05 (FS-421). The need is set out in Dibon's M-Pesa reversal technical proposal for KCB (v1.0, Dec 2022, proposed only; clients/kcb/, outside git; FS-418): reversals took 24 to 48 hours through staff, the M-Pesa portal and emails. Builds on the reversal API that ran at Onit Bank (rails RL-03) | 2 |
 
 ## 4 · Where it sits
 

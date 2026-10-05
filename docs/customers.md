@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416]
+review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420]
 last_reviewed: 2026-10-05
 ---
 
@@ -23,7 +23,8 @@ delivering to, its stage, and the capabilities its delivery depends on
    to those ids, row by row.
 3. **Customers are named only with the owner's release** (FS-414), and
    never in the portfolio or outreach until they agree to be a reference
-   (FS-401). People are never named.
+   (FS-401) or their contract allows it. KCB's and NBK's contracts are
+   believed to allow it, to be confirmed (FS-420). People are never named.
 4. **Material from clients/ is written about, never copied.** The
    requirement documents themselves stay there.
 
@@ -33,4 +34,5 @@ delivering to, its stage, and the capabilities its delivery depends on
 |---|---|---|---|---|---|---|---|---|---|---|
 | CU-01 | Roan Capital | Microfinance lender | Kapu MFI on Kapu Core | In delivery | 2026-10-03: requirement document (v1.0, 20 Aug 2026) reviewed; prototype back office on Vercel; approval chain and loan products confirmed as configuration | Agree the open answers in the delivery file; remove the prototype's public demo panel | Delivery lead | MF-01, MF-02, MF-03, MF-04, MF-05, MF-06, MF-07, MF-10, MF-11, MF-12, MF-13, MF-14, MF-15, MF-18, MF-21, MD-01, MD-02, MD-05, MD-06, MD-09, MD-10, ID-01, ID-02, ID-07, KC-01, KC-04, KC-07, KC-08, RL-07, RO-02, RO-05, RO-16, RO-17, RO-19, AC-05, AC-09, BS-01 | [customers/roan-capital.md](customers/roan-capital.md) | FS-395, FS-397 to FS-403, FS-414 |
 | CU-02 | Onit Bank | Bank | Kapu Collect and Kapu Pay Gateway, with W-Harambee as the partner | Past | 2026-06: production ended after Feb 2025 to Jun 2026; the bank chose more traditional banking services | None. The production record is named with the owner's permission (FS-391) | Commercial lead | CO-01, CO-02, CO-03, CO-05, CO-06, CO-11, GW-01, ID-05, RL-03, RL-19 | — | FS-384, FS-390, FS-391, FS-392; partners PT-39 |
-| CU-03 | KCB | Bank | A USSD lending platform (Dibon's Menu Management Centre), an account mandate API, Meliora's SMS platform and its CRM (mobi_reg) | Past | 2024-03: last USSD release (3.2.34); KCB later moved to a platform of its own, hiring developers rather than working with local IT companies | Owner compiling the details; confirm whether the SMS supply continues | Commercial lead | OC-03, OC-14, MD-11 | — | FS-416, FS-418; partners PT-19, PT-20 |
+| CU-03 | KCB | Bank | Meliora's SMS platform and its CRM (mobi_reg), current; before that a USSD lending platform (Dibon's Menu Management Centre, 2022 to 2025) and an account mandate API (tested, not live) | Live | 2026-10-05: owner: Dibon supplies KCB's SMS today. The last USSD release was 3.2.34 (2024-03); KCB later moved USSD to a platform of its own, hiring developers rather than working with local IT companies | Confirm that the contract lets us name KCB (FS-420); owner compiling the details of the supply | Commercial lead | OC-03, OC-14, MD-11 | — | FS-416, FS-418, FS-419, FS-420; partners PT-19, PT-20 |
+| CU-04 | National Bank of Kenya (NBK) | Bank | Meliora's SMS platform, current | Live | 2026-10-05: owner: Dibon supplies NBK's SMS today | Confirm that the contract lets us name NBK (FS-420); record when the supply began | Commercial lead | — | — | FS-417, FS-419, FS-420; partners PT-20 |

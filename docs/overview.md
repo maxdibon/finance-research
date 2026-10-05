@@ -46,7 +46,8 @@ money instead of five that disagree.
 
 Banks, deposit-taking and credit-only Saccos, MFIs, international money
 transfer operators, PSPs, fintechs and SMEs. We start with the smaller
-institutions, to build the product and the brand (FS-029). For unlicensed
+institutions, to build the product and the brand (FS-029); our work for
+tier-1 banks shows the experience behind it (FS-419). For unlicensed
 deposit-taking and funds-holding operators, we are the route into a
 regulated framework, through a partner bank (FS-045). We stay a platform
 for licensed institutions; Dibon does not become a bank (FS-379).
@@ -58,8 +59,9 @@ partners (FS-109; docs/partners.md; docs/compliance.md).
 
 Collect and the Gateway ran in production at Onit Bank, with W-Harambee,
 from February 2025 to June 2026 (FS-390), on M-Pesa. Before that, our USSD
-platform carried KCB's digital lending from 2022 to 2025, and we have
-supplied banks with Meliora's SMS platform for about four years (FS-416). We are in discussion
+platform carried KCB's digital lending from 2022 to 2025, and we supply
+KCB and National Bank of Kenya with Meliora's SMS platform today
+(FS-416, FS-419). We are in discussion
 with new partner banks (docs/partners.md). Roan Capital is in delivery on
 Kapu MFI (docs/customers.md).
 
