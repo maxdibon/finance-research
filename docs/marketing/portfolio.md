@@ -49,10 +49,10 @@ need to prove where every shilling went.
 **Heading:** One technology partner, not one product
 **Intro:** Dibon Consulting builds the software that banks, Saccos,
 microfinance institutions, payment providers and the businesses around them
-use to collect, lend, hold and reconcile money. Payments, deposit-taking,
-lending, escrow and reconciliation come together with monitoring,
-messaging, identity and ERP integration, so an institution works with one
-partner rather than five.
+use to collect, lend, hold and reconcile money, from one partner rather
+than five. Tier-1 Kenyan banks have run our messaging, USSD and lending
+systems since 2021, and Onit Bank ran our collections and payments in
+production.
 **Mission:** Driving scalable business expansion through immersive,
 customized technology solutions.
 **Vision:** Shaping the future through transformative partnerships,
@@ -283,7 +283,8 @@ in your accounts, and Kapu Core is the ledger that records it.
 ### Kapu MFI
 
 **Tagline:** Loan management for growing lenders
-**Intro:** For lenders moving off spreadsheets, paper or an earlier system.
+**Intro:** For lenders licensed or registered with CBK, or applying, moving
+off spreadsheets, paper or an earlier system.
 The whole loan, from a digital application to closure or restructure, with
 the process enforced and light enough for a team of three.
 **Diagram caption:** The loan’s path, with gates that cannot be skipped.
@@ -293,13 +294,15 @@ loan it replaced.
 **Features:**
 - KYC with IPRS lookup and a completeness gate per product
 - Collateral management, vehicles first, with verification evidence
-- Approval chains by product and amount, with no self-approval
+- Approval chains and unanimous committees; approve from the app or email
 - Above-limit approvals flagged and tracked as their own cohort
-- Repayments split into principal, interest, fees and insurance
+- Repayments applied as CBK's lender rules require; arrears interest capped
+  by law
 - SMS reminders, a portfolio dashboard, and migration from Mifos
 **Facts:**
 - Built on: Apache Fineract
-- Disburse and repay: M-Pesa now; bank transfer coming soon
+- Disburse and repay: M-Pesa, Airtel Money, T-Kash; bank transfer coming
+  soon
 - For: Lenders with 2 to 15 staff
 
 ### Kapu Sacco
@@ -378,7 +381,8 @@ in the ERP leave the business’s own account; Dibon only instructs.
 **Intro:** A mobile app, internet banking and USSD menus, white-labelled for
 each institution, on one channel API, so a balance is the same everywhere.
 Anything that moves money asks the member to confirm who they are at that
-moment, and runs a SIM-swap check where the operator offers one.
+moment, and is held if the phone's SIM has changed. Field officers work
+offline in an app of their own.
 **Diagram caption:** Three channels, one API, one answer. Anything that
 moves money passes step-up first, and a SIM-swap check where the operator
 offers one.
@@ -386,10 +390,11 @@ offers one.
 - Balances, statements, contributions and payments
 - Loan applications and guarantor requests
 - Step-up confirmation before money moves; a SIM-swap check where available
-- Every balance shown with when it was fetched
+- A field-officer app that works offline and collects on M-Pesa, Airtel
+  Money and T-Kash
 - USSD on any phone, with lower limits than the app
 **Facts:**
-- Channels: App, internet banking, USSD
+- Channels: App, internet banking, USSD, field app
 - Brand: White-labelled per institution
 - For: Saccos, MFIs and banks
 
@@ -610,8 +615,8 @@ it remotely, through access you grant, watch and can withdraw at any time.
 
 ### Self-managed in the cloud
 
-**Text:** Your own tenancy in an in-country cloud, today Liquid's Azure
-Stack in Kenya. Your team runs it, with Dibon's support behind it.
+**Text:** Your own tenancy in an in-country cloud in Kenya. Your team runs
+it, with Dibon's support behind it.
 
 ### Managed by Dibon
 
@@ -715,10 +720,11 @@ ITIL 4.
 **Heading:** Built to be audited
 **Rows:**
 - Who can act: One login per person, never shared; re-authentication at the
-  moment of any act that moves money; a second approver for payments,
-  reversals and role changes.
-- What is recorded: Every action, append-only. Nothing is edited after the
-  fact; a correction is a new entry.
+  moment of any act that moves money, in the app or from email; a second
+  approver for payments, reversals and role changes.
+- What is recorded: Every action, append-only; every step of a transaction
+  signed and chained, so its journey can be verified. A correction is a new
+  entry.
 - How data is protected: Encrypted in transit and at rest, with keys held
   in a managed key store and never in the code.
 - How institutions are kept apart: Each institution has its own isolated
@@ -743,8 +749,8 @@ PRSP licence, Communications Authority of Kenya
 **Working towards:** SASRA's requirements for Sacco system vendors; ISO/IEC
 27001 certification
 **How it runs:** Cloud-native on Kubernetes, mostly on permissively licensed
-open source: Apache Fineract, Keycloak, Kafka, Prometheus, OpenTelemetry
-and Apache Superset.
+open source: Apache Fineract, Keycloak, Kafka, OpenBao, Prometheus,
+OpenTelemetry and Apache Superset.
 **Band:** Evidence, *not assertions.*
 **Band text:** Every number traces to a transaction, every approval to a
 person at a moment, and every correction is a new entry an auditor can
