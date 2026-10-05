@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490]
-last_reviewed: 2026-10-05
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492]
+last_reviewed: 2026-10-06
 ---
 
 # Delivery plan — phase 1 in releases
@@ -51,6 +51,11 @@ the check keeps the two in step):
 - **Access:** AC-05, AC-09.
 - **Business suite:** BS-01 (CRM for leads).
 - **Financial crime:** FC-05 (sanctions screening), FC-12 (records).
+
+**Build specifications** for R1 live in docs/specs/: the lender rules
+([specs/lender-rules.md](specs/lender-rules.md)) so far; the approval
+engine, the sanctions adapter, the M-Pesa port and the API contracts are
+to follow (FS-492).
 
 **The platform and security minimum for any go-live:**
 
