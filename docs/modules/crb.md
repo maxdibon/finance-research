@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, fintech, sme]
-depends_on: [mandates, messaging, recon-observability, identity]
+depends_on: [mandates, messaging, recon-observability, identity, access]
 consumed_by: [mfi, sacco, sme-recon]
 review_ids: [FS-004, FS-005, FS-019, FS-020, FS-022, FS-137, FS-186, FS-187, FS-188, FS-189, FS-190, FS-191, FS-447]
 last_reviewed: 2026-10-05
@@ -78,7 +78,7 @@ FS-022) and the MFI PRD's Phase 2 note. Every row is **Planned**.
 
 **Depends on:** mandates (who may look up and submit), messaging
 (pre-listing notices, dispute outcomes), recon-observability (CR-05),
-identity (matching a person to their bureau record).
+identity (matching a person to their bureau record). Also access (login, roles and step-up).
 **Used by:** mfi (MF-19), sacco (SC-18), sme-recon (CR-09). Banks with
 their own core use it directly.
 

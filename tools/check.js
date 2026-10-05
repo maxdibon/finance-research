@@ -582,6 +582,39 @@ function checkReferences(root, files) {
   return failures;
 }
 
+// ── dependencies ─────────────────────────────────────────────────────────
+// A module's depends_on and consumed_by agree with every other module's, both
+// ways, and its §4 names each one (FS-478). A module used by every module
+// says so in §4 ("every module") and lists none.
+function checkDependencies(root) {
+  const list = (t, k) => ((t.match(new RegExp(`^${k}:\\s*\\[([^\\]]*)\\]`, 'm')) || [])[1] || '')
+    .split(',').map((s) => s.trim()).filter(Boolean);
+  const mods = {};
+  for (const file of moduleFiles(root)) {
+    const t = read(root, file);
+    const s4 = t.slice(t.indexOf('## 4 · '), t.indexOf('## 5 · '));
+    mods[path.basename(file, '.md')] = {
+      file, d: list(t, 'depends_on'), c: list(t, 'consumed_by'),
+      dep: (s4.match(/\*\*Depends on:\*\*([\s\S]*?)\*\*Used by:\*\*/) || [])[1] || '',
+      used: (s4.match(/\*\*Used by:\*\*([\s\S]*?)\n\n/) || [])[1] || '',
+    };
+  }
+  const failures = [];
+  for (const [a, m] of Object.entries(mods)) {
+    for (const b of m.d) {
+      if (!mods[b]) { failures.push(fail('dependencies', m.file, 1, `depends on ${b}, which is not a module`)); continue; }
+      if (!mods[b].c.includes(a) && !/every module/.test(mods[b].used)) failures.push(fail('dependencies', mods[b].file, 1, `consumed_by lacks ${a}, which depends on it`));
+      if (!m.dep.includes(b)) failures.push(fail('dependencies', m.file, 0, `§4 "Depends on" does not name ${b}`));
+    }
+    for (const b of m.c) {
+      if (!mods[b]) { failures.push(fail('dependencies', m.file, 1, `consumed by ${b}, which is not a module`)); continue; }
+      if (!mods[b].d.includes(a)) failures.push(fail('dependencies', mods[b].file, 1, `depends_on lacks ${a}, which lists it as a consumer`));
+      if (!m.used.includes(b) && !/every module/.test(m.used)) failures.push(fail('dependencies', m.file, 0, `§4 "Used by" does not name ${b}`));
+    }
+  }
+  return failures;
+}
+
 // ── reviewed ─────────────────────────────────────────────────────────────
 // Every document under docs/ carries last_reviewed, and it is never older
 // than the document's last change: a change being committed counts as
@@ -661,6 +694,7 @@ function runAll(root) {
     ...checkRegulation(root, files),
     ...checkAssurance(root),
     ...checkReferences(root, files),
+    ...checkDependencies(root),
     ...checkReviewed(root, files),
   ];
 }

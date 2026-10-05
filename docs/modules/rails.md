@@ -95,7 +95,7 @@ recon-observability (events in; health out).
 registration), recon-observability (status queries and statement pulls for
 remediation), core (mobile-money deposits and repayments, KC-09),
 omni-channel (payments and field collections, OC-18)
-and financial-crime (the SIM-swap check, RL-22).
+and financial-crime (the SIM-swap check, RL-22). Also identity.
 
 **Who holds which record** (docs/architecture.md §2):
 

@@ -231,7 +231,7 @@ Matching rules that hold on every rail:
 - **Event bus:** Kafka between services.
 - **Security baseline:** perimeter, cluster, data, backup, vulnerability
   management, the build pipeline, round-the-clock detection and endpoints
-  (docs/modules/platform-security.md, SE-01 to SE-19, FS-464).
+  (docs/modules/platform-security.md, SE-01 to SE-25, FS-464, FS-470).
 - **Traceability:** every transaction carries one identifier end to end;
   each processing step is a signed event (CloudEvents, signed with the
   service's SPIFFE identity, keys in OpenBao), hash-chained and anchored in

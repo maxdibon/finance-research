@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [mfi]
-depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime]
+depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway]
 consumed_by: [omni-channel, insights]
 review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453]
 last_reviewed: 2026-10-05
@@ -109,7 +109,7 @@ FS-393.
 **Depends on:** mandates (MF-07, MF-11), identity (NPDM, formerly IPRS),
 rails (M-Pesa, Airtel Money, T-Kash, bank transfer), messaging (MF-13),
 recon-observability (MF-10, MF-12), crb (MF-19), financial-crime
-(sanctions screening, records and lenders' CBK returns; FS-431).
+(sanctions screening, records and lenders' CBK returns; FS-431). Also access (login, roles and step-up); collect (repayments and deposits collected through partners); core (Kapu Core, where the institution has no core of its own); gateway (collections from customers' wallets).
 **Used by:** omni-channel (the borrower channels and the field-officer
 app show its loans) and insights (its metrics). Otherwise it is the
 product an MFI buys.

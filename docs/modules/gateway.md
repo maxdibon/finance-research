@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [sme, fintech, mfi, sacco]
-depends_on: [rails, recon-observability, messaging, mandates, identity, financial-crime]
+depends_on: [rails, recon-observability, messaging, mandates, identity, financial-crime, access]
 consumed_by: [sme-recon, mfi, sacco, insights]
 review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-407, FS-408, FS-415, FS-431]
 last_reviewed: 2026-10-05
@@ -88,7 +88,7 @@ GW-09, moved to financial-crime FC-01 (FS-431).
 **Depends on:** rails (every channel), recon-observability (GW-06), financial-crime (fraud scoring, FC-01),
 messaging (payment-link SMS; merchant callbacks stay in the Gateway API), mandates (payout
 approval, if GW-11 is in scope), identity (merchant onboarding checks,
-including business registration, ID-07 — FS-090).
+including business registration, ID-07 — FS-090). Also access (login, roles and step-up).
 **Used by:** sme-recon, for incoming funds; mfi and sacco, for repayments
 and contributions; insights, for reporting; Dibon's own products (GW-08).
 

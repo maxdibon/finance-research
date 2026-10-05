@@ -41,7 +41,7 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-10 | **Payment channels: its own paybill or till, or its bank's collection account ("Lipa na Bank")?** Plus each bank account and access to its statements | Customer's finance lead | rails; FS-339. A bank's paybill confirms to the bank, so matching on it waits for that bank's feed |
 | OB-COM-11 | Who pays for identity and business checks | Commercial lead | Open: FS-331 |
 | OB-COM-12 | Data for migration, and opening balances it will sign off | Customer's finance lead | Every product that holds records |
-| OB-COM-13 | Named contacts for operations, finance, IT and compliance, and an escalation path | Customer's sponsor | Support |
+| OB-COM-13 | Named contacts for operations, finance, IT, compliance, security and incidents, an escalation path, and the channel we use for incident notices (platform-security §3) | Customer's sponsor | Support; FS-478 |
 | OB-COM-14 | Go-live sign-off after a first full cycle reconciles | Customer's sponsor | recon-observability |
 | OB-COM-15 | The regulator's approval of the arrangement, where one applies: CBK approval for a bank's material outsourcing, 30 days' notice to CBK for a PSP, SASRA's vendor terms for a Sacco. Dibon supplies the due-diligence pack. What goes in it: docs/approval-pack.md | Customer's compliance lead | docs/compliance.md LC-05, LC-08; FS-368, FS-370; FS-440 |
 | OB-COM-16 | Its money laundering reporting officer, its goAML registration with the FRC, and its risk appetite: screening lists, thresholds for holds and alerts | Customer's reporting officer | financial-crime FC-05 to FC-11; FS-431 |

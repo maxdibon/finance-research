@@ -359,3 +359,13 @@ test('references: a retired id used again by a live row fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'modules', 'gateway.md'), (t) => t.replace('**Retired ids:** GW-09,', '**Retired ids:** GW-01, GW-09,')));
   assert.deepStrictEqual(names(f), ['references']);
 });
+
+test('dependencies: a one-sided link fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'modules', 'crb.md'), (t) => t.replace(/^consumed_by: \[/m, 'consumed_by: [escrow, ')));
+  assert.ok(names(f).includes('dependencies'));
+});
+
+test('dependencies: a dependency the §4 prose does not name fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'modules', 'sme-recon.md'), (t) => t.replace(' Also crb (individual lookups from the ERP).', '')));
+  assert.deepStrictEqual(names(f), ['dependencies']);
+});

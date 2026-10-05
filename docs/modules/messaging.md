@@ -95,7 +95,7 @@ recon-observability (alerts to people), sme-recon, collect, core, crb,
 financial-crime, omni-channel, access (one-time codes) and
 business-suite (campaigns).
 **Not covered here:** machine-to-machine callbacks to partners and
-merchants. Those belong to each product's API (collect, gateway).
+merchants. Those belong to each product's API (collect, gateway). Also identity.
 
 **Who holds which record** (docs/architecture.md §2):
 

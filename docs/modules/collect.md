@@ -6,8 +6,8 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [bank, sacco, psp, fintech]
-depends_on: [identity, rails, recon-observability, mandates, messaging, financial-crime]
-consumed_by: [mfi, sacco, escrow, insights]
+depends_on: [identity, rails, recon-observability, mandates, messaging, financial-crime, access, core]
+consumed_by: [mfi, sacco, escrow, insights, omni-channel]
 review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388, FS-390, FS-392, FS-393, FS-407, FS-431]
 last_reviewed: 2026-10-05
 ---
@@ -91,10 +91,10 @@ sources for the rest.
 **Depends on:** identity (NPDM, formerly IPRS; the operators' name check,
 ID-05), rails (M-Pesa, Airtel Money, T-Kash; PesaLink later),
 recon-observability (CO-12), mandates (CO-15), messaging (CO-18),
-financial-crime (fraud and monitoring for CO-13, reports for CO-14).
+financial-crime (fraud and monitoring for CO-13, reports for CO-14). Also access (login, roles and step-up); core (Kapu Core, where the institution has no core of its own).
 **Used by:** mfi and sacco, for deposit and repayment flows into a
 regulated account; escrow, for sub-accounts and deposits (ES-02, ES-03);
-insights, for reporting.
+insights, for reporting. Also omni-channel.
 
 **Who holds which record** (docs/architecture.md §2):
 

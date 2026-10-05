@@ -7,7 +7,7 @@ owner: Security lead
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
-consumed_by: [collect, gateway, escrow, core, mfi, sacco, sme-recon, omni-channel, business-suite, recon-observability, financial-crime, rails, identity, messaging, mandates, insights, crb]
+consumed_by: []
 review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471]
 last_reviewed: 2026-10-05
 ---
@@ -132,7 +132,8 @@ run again, which takes longer than any failover.
 
 **Depends on:** access (identities, step-up and security events) and
 recon-observability (metrics, logs and alerting, RO-16 to RO-18).
-**Used by:** every module.
+**Used by:** every module, which is why no module lists it in its own
+front matter.
 
 **Who holds which record** (docs/architecture.md §2):
 
