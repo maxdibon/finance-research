@@ -552,3 +552,24 @@ its own entry.
 - **Costs (inferred):** phase 1 gains 7 new capabilities and 5 moved up from
   phase 2, and with them a signing service, a transparency log and an
   offline mobile app to build and operate before the first release.
+
+## FS-464 · A security baseline in phase 1; licence rules for LGPL, the operating system and test tools
+
+- **Chose:** a Platform Security module (SE-01 to SE-19, all phase 1) on
+  open source that runs alike on Azure Stack, on premises or
+  self-managed, using only compute and Blob storage from the Stack;
+  managed detection and response bought from Liquid (Sophos) rather than
+  run on Wazuh; PostgreSQL for every database, Fineract's included; LGPL
+  components allowed unmodified as separate programs (Odoo Community,
+  Opengrep), GPL allowed as part of the operating system and for test
+  tools never shipped (MobSF); a competitors register; Liquid and
+  Microsoft approached as partners.
+- **Argued against:** Azure Stack's own Kubernetes, database and monitoring
+  services, which are discontinued, deprecated or send data outside Kenya;
+  Wazuh, which needs a GPL decision and a team to watch it around the
+  clock; MySQL, the default in Roan Capital's document.
+- **Costs (inferred):** nineteen capabilities in phase 1, and the people to
+  run them; a recurring managed-detection fee and telemetry leaving our
+  boundary to the provider, to be confirmed in Kenya; proposed recovery
+  objectives and an incident commitment that become contract terms once
+  confirmed.

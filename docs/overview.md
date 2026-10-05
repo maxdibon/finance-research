@@ -100,6 +100,7 @@ own payments first, and insights runs on our own data first (FS-033).
 - [Identity](modules/identity.md) — verifying who a person or business is
 - [Rails](modules/rails.md) — every payment-rail and bank connection, behind one interface
 - [Insights](modules/insights.md) — governed metrics, dashboards and natural-language questions
+- [Platform Security](modules/platform-security.md) — the security baseline every product runs on, from the perimeter to the database and to staff laptops and field phones
 - [Financial Crime and Compliance](modules/financial-crime.md) — fraud scoring, sanctions and PEP screening, cases, and the reports institutions file
 
 **Channels**
@@ -116,6 +117,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | Why something was decided, and what it cost | [decisions.md](decisions.md) |
 | Who our customers are, and what we are building for each | [customers.md](customers.md) |
 | Which partners we are talking to | [partners.md](partners.md) |
+| Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |
 | Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
 | Which laws apply to us and our customers, and what each drives | [regulation.md](regulation.md) |
 | What a customer files with its regulator about us | [approval-pack.md](approval-pack.md) |

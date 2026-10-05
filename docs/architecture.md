@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464]
 last_reviewed: 2026-10-05
 ---
 
@@ -229,6 +229,9 @@ Matching rules that hold on every rail:
 ## 6 · Shared services and the bus
 
 - **Event bus:** Kafka between services.
+- **Security baseline:** perimeter, cluster, data, backup, vulnerability
+  management, the build pipeline, round-the-clock detection and endpoints
+  (docs/modules/platform-security.md, SE-01 to SE-19, FS-464).
 - **Traceability:** every transaction carries one identifier end to end;
   each processing step is a signed event (CloudEvents, signed with the
   service's SPIFFE identity, keys in OpenBao), hash-chained and anchored in
@@ -282,10 +285,18 @@ Decided 2026-10-01 (FS-223); MPL-2.0 added 2026-10-03 (FS-403):
 | Apache-2.0, MIT, BSD-2, BSD-3, ISC | Yes | — |
 | AGPL-3.0 | Yes, **for services run unmodified and separately** | We do not change their source, and we do not link them into our code. A change to an AGPL service's source is a decision that triggers publishing that source to its network users, so it is never made in passing |
 | MPL-2.0 | Yes, **used unmodified** | MPL's copyleft is per file: a change to one of its files is published with that file. We do not make such changes in passing |
+| LGPL-2.1, LGPL-3.0 | Yes, **used unmodified as separate programs**: Odoo Community, Opengrep | We do not change or statically link them; a change is a decision (FS-464) |
+| GPL-2.0, GPL-3.0 in the operating system | Yes, **as part of the operating system**: the Linux kernel, disk encryption (LUKS), distribution packages | Run as shipped by the distribution (FS-464) |
+| GPL tools used only to build and test | Yes, **never shipped or linked**: MobSF | A tool in our pipeline, not part of what customers run (FS-464) |
 | GPL, LGPL, SSPL, BSL, and anything unlisted | Not without a decision | Recorded in docs/decisions.md |
 
 Today's AGPL services: Grafana, Loki and Tempo (observability). Today's
-MPL service: OpenBao (secrets). Insights
+MPL service: OpenBao (secrets). **Databases are PostgreSQL**, Fineract's
+included, not MySQL or MariaDB (GPL-2.0) (FS-464). Wazuh (GPL-2.0) is not
+adopted: round-the-clock detection is bought as a managed service
+(platform-security SE-13). **Commercial licences** (Odoo Enterprise if
+used, Sophos, Microsoft Intune) are bought, not open source, and are named
+in the module that uses them. Insights
 uses Superset, which is Apache-2.0 (FS-230). **CNCF projects are Apache-2.0**, so they
 are the default where they fit (FS-217).
 

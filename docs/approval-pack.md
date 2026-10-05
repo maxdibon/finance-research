@@ -40,10 +40,10 @@ Nothing here is sent as a commitment until it is Ready.
 | 4 | Description of the services outsourced | Every regulator | Each product's own paragraph (its module, §1) and what it never holds | Ready |
 | 5 | Licences and registrations | Every regulator | ODPC data processor (LC-01) and PRSP licence (LC-03); ISO 27001 not yet held (LC-04); PSP authorisation needed and being prepared, after a legal opinion on the category (LC-06) | Ready, with the gaps stated |
 | 6 | Where data is held, and who else touches it | Banks, lenders, Saccos | Deployment options and hosting (docs/architecture.md §9); subprocessors: hosting partner (candidate, PT-01), SMS route, mobile operators | To prepare: a subprocessor list |
-| 7 | Security controls | Every regulator | Architecture §3, §6 and §7: credentials only on the server, in OpenBao; encryption; attribution; audit | To prepare: one security summary |
-| 8 | Independent penetration test report | Banks, Saccos, PSPs | An annual test by an independent tester | To prepare: none commissioned yet |
-| 9 | Business continuity: tested recovery time and recovery point | Banks, Saccos | Recovery objectives and the last test | To confirm: objectives not yet set |
-| 10 | Incident reporting | Saccos (12 hours), PSPs (CBK within 24 hours) | A commitment in the contract | To confirm |
+| 7 | Security controls | Every regulator | Architecture §3, §6 and §7: credentials only on the server, in OpenBao; encryption; attribution; audit; the baseline in docs/modules/platform-security.md (SE-01 to SE-19) | To prepare: one security summary |
+| 8 | Independent penetration test report | Banks, Saccos, PSPs | An annual test by an independent tester (SE-17) | To prepare: none commissioned yet |
+| 9 | Business continuity: tested recovery time and recovery point | Banks, Saccos | Recovery objectives and the last test | To confirm: objectives not yet set; proposed in platform-security §3 |
+| 10 | Incident reporting | Saccos (12 hours); PSPs (CBK's deadline to verify: 24 or 2 hours) | A commitment in the contract | To confirm; proposed in platform-security §3 |
 | 11 | Regulator's access to our premises, books, records, systems and staff | Lenders (reg 31(5)), banks, Saccos | A standard contract clause | To prepare, with the legal partner (SD-12) |
 | 12 | No use of the institution's data for our own purposes | Banks (draft guideline) | A standard contract clause | To prepare, with the legal partner |
 | 13 | Subcontracting only with the institution's approval | Banks (draft guideline) | A standard contract clause | To prepare, with the legal partner |

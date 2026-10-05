@@ -33,6 +33,7 @@ the manual NTSA and land registry steps kept outside the system.
 - **Hosting:** Dibon's cloud (the document's assumption 4). The prototype
   runs on Vercel; real borrower data stays off it (FS-398).
 - **Secrets:** OpenBao, not HashiCorp Vault as the document says (FS-403).
+- **Database:** PostgreSQL, not MySQL as the document says (FS-464).
 - **Reference:** Roan Capital is to be asked to be named once live
   (FS-401). Until it agrees, its name stays out of the portfolio and
   outreach.

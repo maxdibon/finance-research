@@ -1,0 +1,208 @@
+---
+id: platform-security
+name: Platform Security
+kind: shared-service
+version: 0.1.0
+owner: Security lead
+classification: Internal
+audience: [bank, sacco, mfi, psp, imt, fintech]
+depends_on: [access, recon-observability]
+consumed_by: [collect, gateway, escrow, core, mfi, sacco, sme-recon, omni-channel, business-suite, recon-observability, financial-crime, rails, identity, messaging, mandates, insights, crb]
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464]
+last_reviewed: 2026-10-05
+---
+
+# Platform Security
+
+## 1 · In one paragraph
+
+Platform Security will be the security baseline every product runs on,
+from the perimeter to the database, and from our servers to our staff's
+laptops and field officers' phones (FS-459, FS-464). Today the controls
+that touch customers are designed in the modules that use them (access,
+OpenBao for secrets, encryption, audit, traceability), but nothing is
+built, and the perimeter, the cluster, backup, endpoints, vulnerability
+management, the build pipeline and round-the-clock detection were not
+designed at all (FS-460). This module designs them, on open source we can
+run the same way on Liquid's Azure Stack, on a customer's premises or
+self-managed, with managed detection bought in where we cannot staff it.
+
+## 2 · Who it is for
+
+**Segments:** every customer, and every regulator who inspects one. Banks
+and payment providers file our security posture with CBK; Saccos file it
+against SASRA's vendor terms (docs/approval-pack.md).
+
+**The problem, concretely:** a bank's due diligence asks for a security
+summary, a penetration test report, recovery objectives and an incident
+commitment (approval pack items 7 to 10). Today we can answer none of them
+with something built.
+
+**People who use it:**
+
+| Role | What they need from it |
+|---|---|
+| Our engineers | A hardened cluster, a pipeline that refuses unsafe builds, and secrets they never see |
+| Our operations and security staff | One view of alerts, and a partner watching around the clock |
+| A customer's IT and risk teams | Evidence: test reports, recovery tests, incident reports, the standards we follow |
+| A regulator or auditor | The same evidence, without asking twice |
+
+## 3 · What it does
+
+**Every row is Planned, and in phase 1** (FS-464): a bank should not go
+live on less.
+
+| Id | Capability | Status | Evidence | Phase |
+|---|---|---|---|---|
+| SE-01 | A web application firewall in front of every public endpoint (Coraza with the OWASP core rule set) | Planned | FS-459, FS-464 | 1 |
+| SE-02 | An API gateway (Apache APISIX) with rate limits per client, and financial-grade API profiles through access (FAPI 2.0, AC-04) | Planned | FS-464 | 1 |
+| SE-03 | Protection from denial-of-service attacks upstream, from the hosting provider | Planned | FS-464. To confirm with Liquid (PT-01) | 1 |
+| SE-04 | Kubernetes built and checked to the CIS Benchmarks (RKE2), the check run on every change | Planned | FS-461, FS-464 | 1 |
+| SE-05 | Network traffic denied by default between workloads (Cilium), each service with its own identity (SPIFFE/SPIRE), and encrypted between services | Planned | FS-464; the same identity signs traceability events (recon RO-23) | 1 |
+| SE-06 | Admission rules (Kyverno): only signed images from our registry, no privileged workloads | Planned | FS-464 | 1 |
+| SE-07 | Runtime detection on every node (Falco) | Planned | FS-464 | 1 |
+| SE-08 | Disks encrypted on every node, databases encrypted at rest (PostgreSQL with transparent data encryption), keys in OpenBao and rotated on a schedule | Planned | FS-403, FS-464 | 1 |
+| SE-09 | TLS everywhere, with certificates issued and renewed automatically (cert-manager, OpenBao PKI) | Planned | FS-464 | 1 |
+| SE-10 | Backups of clusters and databases (Velero, pgBackRest) to object storage in Kenya and to a second Kenyan site, with an immutable copy; restores tested every quarter against recovery objectives per service | Planned | FS-464. The portfolio promises recovery tests twice a year; quarterly exceeds it | 1 |
+| SE-11 | Vulnerability management: images and dependencies scanned (Trivy, OSV-Scanner), a software bill of materials per release, fixes prioritised by CISA's known-exploited list, EPSS and CVSS v4 within set times | Planned | FS-462, FS-464 | 1 |
+| SE-12 | A pipeline that refuses unsafe builds: secrets scanning (Gitleaks), static and dynamic testing (Opengrep, ZAP), signed images with build provenance (cosign, SLSA), a private registry (Harbor) | Planned | FS-462, FS-464 | 1 |
+| SE-13 | Round-the-clock detection and response: managed detection and response from a security operations centre (Sophos MDR through Liquid), fed by our logs and endpoint agents | Planned | FS-458, FS-464. To confirm terms with Liquid | 1 |
+| SE-14 | Endpoints: staff laptops and our servers with endpoint protection, disk encryption and device management (Sophos endpoint, Microsoft Intune); field devices enrolled with Android Enterprise (omni-channel OC-19) | Planned | FS-459, FS-464 | 1 |
+| SE-15 | Mobile apps built and tested to OWASP MASVS level 2 (MobSF in the pipeline), with Play Integrity and App Attest | Planned | FS-462, FS-464. The field-officer app (OC-17) and member apps (OC-01) | 1 |
+| SE-16 | A threat model per product (STRIDE for security, LINDDUN for privacy), reviewed at each major change | Planned | FS-462, FS-464 | 1 |
+| SE-17 | An independent penetration test every year and before each customer's go-live, by a tester we do not otherwise use for assurance | Planned | FS-464; approval pack item 8; assurance rule 1 | 1 |
+| SE-18 | Security events (logins, admin actions, step-ups) collected and kept; Restricted data never in a log | Planned | FS-464; access AC-11; architecture §7 | 1 |
+| SE-19 | Incident response: severities, a runbook, and the institution told within an agreed time of a confirmed incident, so it can meet its regulator's deadline | Planned | FS-464; recon RO-18; approval pack item 10 | 1 |
+
+**Proposed recovery objectives** (for the owner to confirm; approval pack
+item 9):
+
+| Service | Recovery point (data that may be lost) | Recovery time |
+|---|---|---|
+| Anything that moves or records money: ledgers, rails, collections, gateway | 5 minutes (continuous database archiving) | 4 hours |
+| Everything else | 24 hours | 24 hours |
+
+**Proposed incident commitment** (approval pack item 10): the institution
+is told within 1 hour of our confirming a significant incident, with a
+written report within 5 working days. CBK's guideline for payment service
+providers sets the institution's own deadline; the two research reports
+read it as 24 hours and as 2 hours, so it is to be checked against the
+text before this is offered (FS-464).
+
+## 4 · Where it sits
+
+**Depends on:** access (identities, step-up and security events) and
+recon-observability (metrics, logs and alerting, RO-16 to RO-18).
+**Used by:** every module.
+
+**Who holds which record** (docs/architecture.md §2):
+
+| Record | System of record | This module |
+|---|---|---|
+| Funds and balances | The institution's core, or Kapu Core | Protects; never holds |
+| Keys, certificates and secrets | OpenBao | Holds, through OpenBao |
+| Security events, findings, test reports | Platform Security | Holds. Append-only |
+| Backups | Object storage in Kenya | Holds copies; restores only under change control |
+
+**What this module never stores:** a secret in code, a log or a ticket.
+
+**Under each ledger mode** (docs/architecture.md §4):
+
+| | Integrated — customer has a core | Native — no core; Fineract is the ledger |
+|---|---|---|
+| Where funds are posted | The institution's core; the core's own security is the institution's | Kapu Core, protected and backed up here |
+| What differs in this module | We protect our services and the connection to the core | We also protect and back up the ledger itself |
+| What the customer must provide | Its security contacts and incident channel; its own controls on the core | Its security contacts and incident channel |
+
+## 5 · How it works
+
+```
+  internet
+     |
+  [ DDoS scrubbing (provider) ]                        SE-03
+     |
+  [ WAF: Coraza + OWASP CRS ] -> [ API gateway ]       SE-01, SE-02
+     |
+  +------------------- Kubernetes (CIS) ---------------------+  SE-04
+  |  default-deny network, service identity, mTLS            |  SE-05
+  |  signed images only, no privileged pods                  |  SE-06
+  |  runtime detection on every node                         |  SE-07
+  |  services <-> OpenBao (keys)   databases (encrypted)     |  SE-08/09
+  +---------------------------------------------------------+
+     |                         |
+  backups to Kenya x2      logs and endpoint agents -> 24/7 SOC (MDR)
+  SE-10                    SE-13, SE-14, SE-18
+```
+
+**Standards we follow:** NIST CSF 2.0 as the frame; CIS Controls v8.1 and
+CIS Benchmarks for hardening; ISO/IEC 27001:2022 Annex A for the
+certification we are working towards; OWASP ASVS 5.0 (level 2, level 3
+for money flows) and the API Security Top 10; FAPI 2.0 for payment APIs;
+CVE, CWE, CVSS v4, EPSS and CISA's known-exploited list for vulnerability
+priority; STRIDE and LINDDUN for threat models; SLSA and SBOMs
+(CycloneDX) for the supply chain; OWASP MASVS and its testing guide, the
+Mobile Top 10 and NIST SP 800-163 for mobile. Kenyan: CBK's cybersecurity
+guidance note and its draft risk guidelines (September 2026), CBK's
+guideline for payment service providers, SASRA's information-system
+guidelines, and the Computer Misuse and Cybercrimes Act with the critical
+information infrastructure regulations (law register LR-20).
+
+## 6 · Rails and integrations
+
+| Rail / system | Direction | Feed | Status |
+|---|---|---|---|
+| Hosting provider's DDoS protection | in | network | Planned (SE-03) |
+| Managed detection and response (Sophos, through Liquid) | out / in | log and endpoint telemetry; alerts back | Planned (SE-13) |
+| Device management (Intune, Android Enterprise) | in / out | device enrolment and policy | Planned (SE-14) |
+| Vulnerability feeds (CVE, EPSS, CISA KEV) | in | daily pull | Planned (SE-11) |
+
+## 7 · Regulatory position
+
+- **Custody:** none.
+- **Licence relied on:** none; this is how we meet our customers'
+  regulators' expectations of a vendor.
+- **Regulators:** CBK and SASRA through our customers; ODPC for personal
+  data; NC4 if a customer's system is designated critical information
+  infrastructure.
+- **Data:** security events are Confidential; a finding that describes an
+  unfixed weakness is Restricted. Telemetry sent to the managed-detection
+  provider leaves our boundary: where it is processed is to be confirmed
+  before contract (FS-464).
+- **Open legal checks:** FS-464.
+
+## 8 · Controls
+
+- **Attribution:** every administrative act on the platform is
+  attributed and re-authenticated; no shared administrator accounts.
+- **Mandates:** a production change, a restore and a key rotation each
+  need a second person.
+- **Audit:** append-only; a finding is closed with evidence, never
+  deleted.
+- **Exceptions:** a control that cannot run blocks what it guards: an
+  unsigned image does not start, a failed scan does not ship.
+
+## 9 · Deployment
+
+The same build on Liquid's Azure Stack, on a customer's premises or
+self-managed: on Azure Stack we use only compute and Blob storage, and run
+everything else ourselves, because the Stack's database and Kubernetes
+services are deprecated or discontinued and its monitoring sends data to
+public Azure outside Kenya (FS-461). Managed detection telemetry is the one
+flow that may leave; it is named in §7.
+
+## 10 · What it does not do
+
+- Certify. ISO 27001 certification is by an accredited body (LC-04).
+- Audit a customer. That is assurance, for non-customers only
+  (docs/assurance.md).
+- Replace a customer's own security on its own systems.
+
+## 11 · Open questions
+
+FS-461, FS-464.
+
+## 12 · Sources
+
+- REVIEW.md FS-458 to FS-464; research of 2026-10-05 (Azure Stack Hub
+  service availability, standards and tool licences).
+- docs/architecture.md §3, §6, §6.1, §7; docs/approval-pack.md.
