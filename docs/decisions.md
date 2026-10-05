@@ -515,3 +515,7 @@ its own entry.
   watch when the same firm advises Dibon and a customer; AML-qualified
   analysts to hire before FC-15 can be sold; and if we run an institution's
   compliance operations, we cannot also audit them.
+- **Update (2026-10-05):** the Advocates Act bars an advocate from sharing
+  fees with a non-advocate (s.37) and makes a person paid for bringing an
+  advocate work a tout (s.38): referrals are unpaid both ways. Shortlist in
+  docs/partners.md (SD-12).

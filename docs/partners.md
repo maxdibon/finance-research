@@ -83,6 +83,14 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 | PT-40 | W-Harambee | Fintech partner: fundraising platform | Contributors' money held in accounts at the partner bank; withdrawals only to the fundraiser's set payout details. Collect's use case | KE | None | Unconfirmed | 2026-10-03: owner. Partner at Onit Bank until Jun 2026; its site still names Onit Bank as where funds sit | Approach together with a new partner bank (PT-34) | Commercial lead | FS-384, FS-380 |
 | PT-41 | Tier-3 bank approached for Collect (named in sources/confidential/) | Bank | Partner bank for Collect and Escrow | KE | None | In discussion | 2026-10-03: owner. Slow; research shows the bank below its capital minimum | Pause until its capital is resolved | Commercial lead | FS-380 |
 | PT-42 | Two further banks approached (named in sources/confidential/) | Bank | Partner bank for Collect and Escrow | KE | None | In discussion | 2026-10-03: owner. Slow going | Bring the due-diligence pack and a partner with volume (FS-370) | Commercial lead | FS-380 |
+| PT-43 | Bowmans Kenya | Law firm | Dibon's own advice: NPS Act s.2 and the Gateway, VAT on gateway fees, the NPS Bill 2026; licence applications | KE | KE (Chambers banking and fintech Band 1; Legal 500 Tier 1) | Candidate | 2026-10-05: research: alerts on the NPS Bill 2026, the lender regulations, the Business Laws (Amendment) Act 2024 and VAT on gateways; reported the KENEX ruling that a SWIFT-connection software firm was a PSP | Conflict check against payments and core-banking competitors, then a first meeting on our own questions | Commercial lead | FS-428, FS-432, FS-435 |
+| PT-44 | Cliffe Dekker Hofmeyr Kenya | Law firm | Customer referrals: lender licence applications, outsourcing approvals, AML programmes | KE | KE (Chambers fintech Band 2; Legal 500 Tier 2) | Candidate | 2026-10-05: research: three alerts on the 2024 Act and lender licensing; wrote the Kenya chapter of the Chambers Fintech 2026 guide | Ask about unpaid two-way referrals, and how its work for Safaricom's parent affects Safaricom matters | Commercial lead | FS-432, FS-435 |
+| PT-45 | Anjarwalla & Khanna | Law firm | Dibon's own advice or customer referrals | KE | KE (Chambers banking and fintech Band 1; Legal 500 Tier 1) | Candidate | 2026-10-05: research: ranked top for banking and fintech; few public alerts found for 2024 to 2026 | Reserve | Commercial lead | FS-432, FS-435 |
+| PT-46 | Dentons Hamilton Harrison & Mathews | Law firm | Customer referrals | KE | KE (Chambers banking Band 2, fintech Band 3; Legal 500 Tier 1) | Candidate | 2026-10-05: research: alert on the draft lender regulations (Sep 2025) | Reserve | Commercial lead | FS-432, FS-435 |
+| PT-47 | Kaplan & Stratton | Law firm | Customer referrals | KE | KE (Chambers fintech Band 2; Legal 500 Tier 2) | Candidate | 2026-10-05: research: ranked for fintech; acts for payment providers, unnamed | Reserve; ask which payment providers it acts for | Commercial lead | FS-432, FS-435 |
+| PT-48 | DLA Piper Africa Kenya (IKM) | Law firm | Customer referrals | KE | KE (Chambers banking Band 1; Legal 500 Tier 1) | Candidate | 2026-10-05: research: alerts on loan pricing and lending (2025, 2026); has advised a payments company that competes with the Gateway | Reserve | Commercial lead | FS-432, FS-435 |
+| PT-49 | Mboya Wangong'u & Waiyaki | Law firm | Customer referrals for smaller lenders and Saccos | KE | KE (Legal 500 Tier 3) | Candidate | 2026-10-05: research: fintech and digital-lending practice; alerts on the credit market (Jul 2025) | A second referral channel at lower fees | Commercial lead | FS-432, FS-435 |
+| PT-50 | KN Law | Law firm (boutique) | Customer referrals for smaller lenders and Saccos | KE | None | Candidate | 2026-10-05: research: practical alerts on the lender regulations and the Finance Bill 2026 | A second referral channel at lower fees | Commercial lead | FS-432, FS-435 |
 
 ---
 
@@ -104,6 +112,7 @@ Statuses: **OPEN** · **DECIDED** (recorded in docs/decisions.md) ·
 | SD-09 | WhatsApp route: Meta directly, or a business solution provider | PT-25, PT-20, PT-21 | C4 C5 C7 | — | OPEN | FS-161 |
 | SD-10 | CRB connections | PT-26, PT-27, PT-28 | C1 C2 C4 C5 C7 | — | OPEN | Proposed: connect to every licensed bureau, not one. Lenders may be required to share with all of them |
 | SD-11 | Liveness and face-match vendor | PT-30, PT-33, PT-37 | C4 C5 C7 | — | OPEN | Biometric data: residency and retention weigh most (FS-203). Three candidates offer liveness and face match: PT-30, PT-33 and PT-37. PT-36 offers ID and phone-name checks, not liveness (FS-382, FS-409) |
+| SD-12 | Legal partner: Dibon's own counsel, and a firm for customer referrals, unpaid both ways | PT-43, PT-44, PT-45, PT-46, PT-47, PT-48, PT-49, PT-50 | C6 C14 C15 C16 | — | OPEN | FS-432, FS-435. Proposed: PT-43 for our own questions, PT-44 for referrals, PT-49 or PT-50 for smaller customers. The Advocates Act bars fee sharing (s.37) and paid referrals (s.38), so no money changes hands for a referral |
 
 ## 3 · Criteria
 
@@ -122,3 +131,6 @@ Statuses: **OPEN** · **DECIDED** (recorded in docs/decisions.md) ·
 | C11 | In-country presence of the hosting stack, and model or GPU options | Hosting and insights (FS-043) |
 | C12 | Delivery-report quality: per message, timely, passed on unaltered | A status is only as truthful as the report behind it (messaging MS-09) |
 | C13 | Sender ID per institution | Each institution messages under its own name (messaging MS-03) |
+| C14 | Current, published work on CBK, payments and lending regulation | The questions are new (lender regulations, NPS Bill 2026); a firm that is already writing on them is already reading them |
+| C15 | Conflicts: acts for a competitor, or for Safaricom or a bank on the other side | A conflict surfaces when we most need the advice |
+| C16 | Fees suited to the matter | A small lender's licence application cannot carry a top-tier rate |
