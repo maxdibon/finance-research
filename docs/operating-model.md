@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-467, FS-470, FS-471, FS-472, FS-473, FS-474, FS-475, FS-476]
+review_ids: [FS-467, FS-470, FS-471, FS-472, FS-473, FS-474, FS-475, FS-476, FS-477]
 last_reviewed: 2026-10-05
 ---
 
@@ -25,11 +25,11 @@ move to 1 hour as the rota grows (platform-security §3).
 
 | Role | People | Notes |
 |---|---|---|
-| DevSecOps | 3, a fourth being hired (FS-474) | The on-call rota; one week in three is heavy, one in four is workable. They run the platform; they are not the build team (docs/delivery-plan.md) |
+| DevSecOps | 3, a fourth being hired (FS-474); one of the three also builds (FS-477) | The on-call rota; one week in three is heavy, one in four is workable. They run the platform; they are not the build team (docs/delivery-plan.md) |
 | Customer experience | 2, both shared | One is also the project manager, the other the administrator |
-| Odoo implementation consultants | 2 | Business suite and SME Recon |
+| Odoo implementation consultants | 2; one also builds R1 (FS-477) | Business suite and SME Recon |
 | Compliance and risk officer | 0 (in discussion) | |
-| Security lead | The CTIO, until a contract gives the runway to hire | |
+| Security lead | The CTIO, until a contract gives the runway to hire | Also architect and build lead (FS-477) |
 
 ## What the commitments need
 

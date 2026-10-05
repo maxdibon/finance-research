@@ -487,3 +487,4 @@ A row does not change status silently.
 | FS-474 | Eric | The owner will start hiring one more DevSecOps engineer as soon as possible | ANSWERED | Operating model updated: a rota of four once hired |
 | FS-475 | Eric | Managed detection: is this the managed Sophos service? | ANSWERED | Yes: Sophos managed detection and response through Liquid (platform-security SE-13); answer in chat |
 | FS-476 | Eric | AI-first service desk: where do we start? | ANSWERED | Plan in docs/operating-model.md; answer in chat |
+| FS-477 | Eric | The build is led by the system developer, one Odoo engineer, one DevSecOps engineer and the CTIO | ANSWERED | Delivery plan and operating model updated; consequences in chat |

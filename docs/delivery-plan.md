@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473]
+review_ids: [FS-453, FS-470, FS-473, FS-477]
 last_reviewed: 2026-10-05
 ---
 
@@ -77,22 +77,70 @@ SE-23 to SE-25) follows in R2, before a bank goes live.
 
 ## The team that builds
 
-The DevSecOps engineers run the platform; they are not the build team
-(FS-473). R1 needs, at least:
+Four people lead the build (FS-477):
 
-| Role | For | Notes |
-|---|---|---|
-| Product owner | Scope, acceptance, the customer | Today the project manager, alongside customer experience |
-| Backend engineers (Java, Spring, Fineract) | Lending, approvals, core, rails | The bulk of R1 |
-| Frontend engineer | Back-office screens, the public loan page | |
-| Test engineer | Automated tests; the definition of done | |
-| Architect | Design decisions and reviews | The CTIO |
+| Who | Owns in R1 |
+|---|---|
+| The system developer | Kapu Core and Kapu MFI on Fineract: products, schedules, charges, the lender rules (MF-21 to MF-26), disbursement and repayment on M-Pesa and bank transfer, reusing the M-Pesa code that ran at Onit Bank (rails RL-03) |
+| An Odoo engineer | Everything Odoo does for Roan Capital: leads and the public "Request a loan" page and calculator (BS-01; Roan RC-28, RC-29), documents, the service desk (docs/operating-model.md) |
+| A DevSecOps engineer | The platform: Kubernetes, Keycloak (AC-01, AC-02, AC-08), OpenBao, the build pipeline, backups and the security minimum (SE rows above) |
+| The CTIO | Architecture and reviews; the approval engine's design (MD-01 to MD-18); security lead; Roan Capital's acceptance with the project manager |
 
-The size of the build team sets R1's date, so the plan gives order, not
-dates, until the team is known (FS-473).
+**Building less is the plan.** Four people cannot build 66 capabilities
+from scratch, so R1 uses what already exists and builds only what does
+not:
+
+- **Fineract** already does loan products, schedules, charges,
+  repayments by component, accounting and standard reports: configure,
+  do not build.
+- **The Mifos X web app** (its licence to confirm against architecture §6.1
+  before use; if MPL-2.0, it is used unmodified) is Fineract's back-office screen:
+  use it, with our screens only where a flow is ours (the committee vote,
+  the collateral gate).
+- **Odoo** does leads, the public page, documents and the desk.
+- **Keycloak** does login, single sign-on and step-up: configure.
+- **Identity checks** (ID-01, ID-07) through one vendor's API (partners
+  SD-11 candidates) rather than direct connections, until volumes justify
+  NPDM and BRS directly.
+- **Build only:** the approval engine (chains, the 3-of-3 committee,
+  approval from email), the lender rules, the collateral gate, sanctions
+  screening against the UN and domestic lists (FC-05), and the platform.
+- **Not in R1:** statement ingestion and appraisal ratios, the behaviour
+  score and automatic downgrades (Roan RC-05, RC-11, RC-14, RC-15, the
+  map's gaps) wait for R1's second step or a later release; agree that
+  with Roan Capital before the next sprint.
+
+**R1 in three increments**, each accepted by Roan Capital before the next
+(its document's agile approach):
+
+1. **Foundation and onboarding:** platform, login, Kapu Core with Roan
+   Capital's products configured, borrower onboarding with ID and BRS
+   checks, documents, leads.
+2. **The credit decision and the money:** collateral gate, the approval
+   chain with the 3-of-3 committee and approval from email, disbursement
+   and repayment, reminders, the lender rules and the arrears cap.
+3. **Reports, screening and go-live:** dashboards and reports, sanctions
+   screening and records, the rest of the security minimum, the
+   penetration test, a restore test, user acceptance and go-live.
+
+**Where this team is thin** (docs/operating-model.md):
+
+- **Testing:** no test engineer. Each person writes the automated tests
+  for what they build, and the definition of done refuses work without
+  them; a test engineer is the first build hire after a contract.
+- **The on-call rota:** one of three DevSecOps engineers builds, so two
+  hold the rota until the fourth arrives (FS-474). The builder stays on
+  the rota rather than leave two alone.
+- **The Odoo bench:** one of two Odoo consultants builds, leaving one for
+  other implementations.
+- **The CTIO:** architect, security lead and build lead at once. Reviews
+  and acceptance need a deputy for when the CTIO is away; the system
+  developer is the natural one.
 
 ## Open
 
-- Who builds, and how many: sets the dates.
+- Dates: with this team and building less, R1's increments can be dated
+  once each is broken into tasks; do that with the team before the next
+  sprint.
 - Land titles and BRS in Roan Capital's MVP (open answer 5): land titles
   would move MF-18 into R1.
