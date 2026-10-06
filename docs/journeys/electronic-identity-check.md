@@ -33,8 +33,9 @@ electronic check covers the document.
 ## 2 · Steps
 
 ```
-  1 Officer opens the application: document type, number, name
+  1 Officer opens the application: document, name, phone
         |-- no connection at the branch ..... waits (3i)
+        |-- the phone's code never arrives . resend; holds (3k)
         v
   2 Register check, directly or through the vendor
         |-- mismatch, or not found ........ held; ticket (3a)
@@ -63,7 +64,7 @@ electronic check covers the document.
 
 | # | Step | Who | Capabilities |
 |---|---|---|---|
-| 1 | The Credit Officer opens the application and enters the document type, its number and the borrower's name and date of birth; the product's document checklist appears | Credit Officer | MF-01, KC-01, ID-02, MF-02 |
+| 1 | The Credit Officer opens the application and enters the document type, its number and the borrower's name, date of birth and phone number; a one-time code sent to that phone confirms the number before anything else is sent to it; the product's document checklist appears | Credit Officer; borrower | MF-01, KC-01, ID-02, MF-02, ID-11 |
 | 2 | The platform checks the national register, directly or through the vendor, and compares the name and date of birth. The result is kept with the register's reference and the fields compared, never a copy of the register's record, and the cost of the query is logged (Roan Capital RC-02) | Platform | ID-01, ID-10 |
 | 3 | Where the register returns a photo, the officer compares it with the borrower in front of them and confirms it in the console | Credit Officer | ID-01 |
 | 4 | Sanctions screening runs against the UN and domestic lists | Platform | FC-05 |
@@ -86,16 +87,16 @@ electronic check covers the document.
 | h | 5 | **A file fails the type check or the malware scan.** It is refused and the borrower or the officer sends it again | ID-15 |
 | i | 1 to 5 | **The branch has no connection.** As JN-02 §3 i: nothing is verified offline, and the application waits | ID-15 |
 | j | 6, later | **A document expires,** or the borrower returns after it has. The check is re-run before a new loan; on a mismatch §3 a applies | ID-03, ID-19 |
+| k | 1 | **The code does not arrive, or the borrower cannot give it.** The officer resends it or corrects the number; the application holds until the number is confirmed, because reminders, receipts and upload links will go to it | ID-11 |
 
 ## 4 · Gaps
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| ID-10, the result kept with its source reference, never a copy of the register's record; with it, the cost of each query (RC-02, which no capability names yet) | phase 1, not in R1 | Nothing says what is kept from a check. The easy build stores the register's whole answer, which is more personal data than the check needs | Bring ID-10 into R1, and add the cost per query to it: the R1 count moves, not the cap (FS-562) |
 | ID-04, liveness and face match | phase 2 | The officer compares the register's photo by eye, with the borrower present | Accept for R1: the borrower is in front of the officer |
 | ID-06, the KRA PIN checked with KRA | phase 2 | The officer checks the PIN certificate in the checklist by eye | Accept for R1 |
-| ID-05 and ID-11, the borrower's phone number confirmed with the operator or by a one-time code | phase 1, not in R1 | The phone number is typed in and never confirmed, yet reminders, receipts and upload links go to it | Bring ID-11 into R1, a code sent through Roan Capital's own SMS gateway (its assumption 5): the R1 count moves, not the cap (FS-562) |
-| FC-06, PEP screening with enhanced due diligence | phase 2 | Recorded in Roan Capital RC-36. The application form asks the borrower whether they hold or held a public office, and the compliance officer reviews any yes | Roan Capital's compliance officer to agree |
+| ID-05, the phone number checked against the name the operator holds | phase 1, R2 | The one-time code (ID-11, step 1) proves the borrower holds the phone, not that it is registered in their name | Accept for R1 |
+| FC-06, PEP screening with enhanced due diligence | phase 2 | Recorded in Roan Capital RC-36. The application form asks the borrower whether they hold or held a public office, and the compliance officer reviews any yes | Roan Capital's compliance officer to agree (delivery map, open answer 11) |
 
 ## 5 · Open questions
 

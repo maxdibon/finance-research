@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562]
 last_reviewed: 2026-10-06
 ---
 
@@ -49,7 +49,7 @@ missing. *Gap* means no capability does it yet.
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
 | RC-01 | Borrowers as individuals, businesses and statement-based entities | KC-01, MF-01 | Partial | Kapu Core holds individuals and businesses; the statement-based entity type is not modelled |
-| RC-02 | National ID and passport checked against IPRS in real time, with the cost of each query logged | ID-01, MF-02 | Partial | The document logs KES 5 a query; direct access is KES 20 a check plus KES 50,000 to connect (partners PT-29, compliance LC-12). Passport coverage unconfirmed (FS-329). Roan Capital provides the credentials (assumption 1) |
+| RC-02 | National ID and passport checked against IPRS in real time, with the cost of each query logged | ID-01, MF-02, ID-10 | Partial | The cost of each query is logged by ID-10 (FS-562). The document logs KES 5 a query; direct access is KES 20 a check plus KES 50,000 to connect (partners PT-29, compliance LC-12). Passport coverage unconfirmed (FS-329). Roan Capital provides the credentials (assumption 1) |
 | RC-03 | Company status and directors checked with the Business Registration Service | ID-07 | Covered | ID-07 moved to phase 1, so it is in the MVP (FS-415) |
 | RC-04 | Documents uploaded and stored: ID, KRA PIN, photo, certificate of incorporation, directors' guarantees; status per document | ID-02, MF-02, ID-15 | Covered | Stored in the document vault (ID-15, FS-500) |
 | RC-05 | Bank and M-Pesa statements (3 to 12 months) ingested for appraisal | — | Gap | Reconciliation ingests statements (RO-01) for matching, not for appraisal. Needs a parser feeding RC-11 |
@@ -74,7 +74,7 @@ missing. *Gap* means no capability does it yet.
 | RC-14 | Behaviour score for repeat borrowers, from repayment timing | — | Gap | No capability in phase 1; credit scoring MF-33 is phase 2 (FS-522) |
 | RC-15 | A Class A borrower downgraded automatically on a pattern of late payment | — | Gap | Classification is reported (MF-14), not changed by rule; MF-33 (phase 2) would do it |
 | RC-16 | Committee composition and the escalation threshold configurable | MD-01, MD-02 | Covered | Effective-dated and audited |
-| RC-17 | Review dashboards; a committee screen with per-member comments and a vote tracker; an escalation banner | MD-05, MD-09, MD-18, MS-19 | Partial | Decisions carry identity, comment and time (MD-05); the vote tracker comes with quorum steps. Committee members can act from Outlook or Gmail, with step-up at the act (MD-18) |
+| RC-17 | Review dashboards; a committee screen with per-member comments and a vote tracker; an escalation banner | MD-05, MD-09, MD-18, MS-19, MD-08 | Partial | Reminders and escalation when a step waits too long: MD-08 (FS-561). Decisions carry identity, comment and time (MD-05); the vote tracker comes with quorum steps. Committee members can act from Outlook or Gmail, with step-up at the act (MD-18) |
 
 ### Disbursement and repayment (§2.2)
 
@@ -119,7 +119,7 @@ missing. *Gap* means no capability does it yet.
 | RC-39 | Restructuring: reschedule, refinance or top-up, approved and disclosed, without resetting the arrears cap. Not in the document | MF-09 | Partial | Added by Dibon (FS-516). Roan Capital's restructuring policy to agree (open answer 10) |
 | RC-40 | Loan officers: each borrower and loan assigned to a Credit Officer, reassigned with approval, performance per officer. Not in the document; Roan Capital's Credit Officers (RC-12, RC-34) hold the portfolios | MF-35 | Partial | Added by Dibon (FS-517); owner, 2026-10-06: in R1 |
 | RC-41 | Guarantors' rights: consent before appointment, periodic statements, 14 days' notice before any demand, recourse only after recovery from the borrower. Not in the document; required by the CBK lender regulations, regs 39(3) and 42, and Roan Capital takes directors' guarantees (RC-04) | MF-37 | Partial | Added by Dibon (FS-531) |
-| RC-42 | Borrowers' access: receipts, status messages and a free statement on request. Not in the document; required by reg 39(1) | MF-38, ID-17 | Partial | Added by Dibon (FS-531) |
+| RC-42 | Borrowers' access: receipts, status messages and a free statement on request. Not in the document; required by reg 39(1) | MF-38, ID-17, ID-11 | Partial | Added by Dibon (FS-531). The borrower's phone number is confirmed by a one-time code before anything is sent to it (ID-11, FS-562) |
 | RC-43 | KYC tiers: each borrower's tier set from the checks done, and loan limits and rules per tier, so a borrower verified manually or with fewer checks cannot reach the larger loans. Not in the document; reg 63 of the CBK lender regulations requires a lender to guard against impersonation, and the AML regulations allow lighter checks only for lower risk (reg 21) | ID-19, ID-03 | Partial | Added by Dibon (FS-551); owner, 2026-10-06: in R1. Roan Capital sets the limits per tier and writes the risk assessment behind them. Re-verification (ID-03) re-checks an expiring document and upgrades a manual record once an electronic check exists (FS-556) |
 
 ## 3 · Out of scope for the MVP (§2.3)
@@ -143,6 +143,7 @@ replacement (MF-05).
 | 8 | Approval chain and loan products | FS-399, FS-400 | Answered: both are configuration |
 | 9 | Will Roan Capital be named as a reference once live? | FS-401 | Open |
 | 10 | Loan agreement and guarantee templates, how borrowers sign, and the restructuring policy (RC-38, RC-39) | FS-516 | Open: the owner is asking |
+| 11 | Until PEP screening (FC-06, phase 2): a question on the application form, whether the borrower holds or held a public office, and the compliance officer's review of any yes. Agree? | FS-562 | Open |
 
 The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text

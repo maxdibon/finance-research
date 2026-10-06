@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability, core, crb, financial-crime, omni-channel, business-suite, insights, identity]
-review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453, FS-494, FS-495, FS-498, FS-497]
+review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453, FS-494, FS-495, FS-498, FS-497, FS-561]
 last_reviewed: 2026-10-06
 ---
 
@@ -67,7 +67,7 @@ owner's request (FS-042).
 | MD-05 | Decisions: approve, decline, or return for revision, each with identity, comment and time | Designed | MFI PRD FR-6.6 | 1 |
 | MD-06 | No self-approval: one person cannot complete two consecutive steps, even holding both roles | Designed | MFI PRD FR-6.7 | 1 |
 | MD-07 | Flags route to an authority: a flagged request always ends with the named role, whatever tier it fell in | Designed | MFI PRD FR-6.8 | 1 |
-| MD-08 | Time-in-step SLAs, reminders and escalation | Designed | MFI PRD FR-6.9 | 1 |
+| MD-08 | Time-in-step SLAs, reminders and escalation | Designed | MFI PRD FR-6.9. Owner, 2026-10-06: in R1 (FS-561) | 1 |
 | MD-09 | Quorum steps (N of M) | Planned | MFI PRD FR-6.10: designed as an additive change; its "launch is sequential only" is superseded by FS-402. Owner, 2026-10-03: moved up to phase 1, because Roan Capital's credit committee approves 3 of 3, unanimously (FS-402; docs/customers.md CU-01) | 1 |
 | MD-10 | Each decision re-authenticated at the moment it is made (PIN or one-time code) | Planned | docs/architecture.md §7; FS-132 | 1 |
 | MD-11 | Bank-side mirror: the signing mandate registered on the bank account, and our instruction checked against it | Designed | FS-122. Dibon specified an account mandate API for KCB (v1.1, Nov 2022: accounts registered with approval rules by transaction type and amount, signatories by level, debits initiated, approved, rejected and queried), integrated in KCB's test environment by Jan 2023, never in production (FS-416). Each bank still needs its own (partners.md C10) | 2 |
