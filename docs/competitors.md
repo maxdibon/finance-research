@@ -5,8 +5,8 @@ kind: register
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-456, FS-464]
-last_reviewed: 2026-10-05
+review_ids: [FS-456, FS-464, FS-508]
+last_reviewed: 2026-10-06
 ---
 
 # Competitors — who we meet, and what we learn from each
@@ -39,3 +39,5 @@ confirmed says so. We describe what they offer, never disparage it.
 | CP-16 | Interswitch | Payments and cards | The Verve network with Kenyan banks | Gateway, cards | | kenyanwallstreet.com |
 | CP-17 | Network International | Payments and cards | Card processing; owns a Nairobi-based payments company | Gateway, cards | | fintechfutures.com |
 | CP-18 | Infosys Finacle | Core banking | Tier-1 and tier-2 bank cores | Integrated mode | We integrate with it more than compete | finacle.com |
+| CP-19 | BlackLine | Financial close and transaction matching | Transaction Matching for the month-end close: bank to ledger, card, intercompany and suspense accounts; rules on amount, reference and date with tolerances; one-to-one, many-to-one and many-to-many matches; rules that match, or only suggest a match for a person to approve | Recon RO-02 and SME Recon, at larger companies and banks' finance teams | Suggest-then-approve as a rule mode, many-to-many matching and the auto-match rate as the headline figure; its paper cites 96% to 99% automated at one customer (vendor's claim) | Vendor paper, sources/market (FS-508) |
+| CP-20 | Reiterate | Reconciliation for finance teams | Payment, bank and data reconciliation against payment providers, invoice data extraction, payment-provider performance, and fee estimates compared with settlement statements | Recon RO-20 and SME Recon, for businesses with several payment providers | Checking the fees a provider charged against its tariff and settlement is a feature finance teams buy | reiterate.com, read 2026-10-06 (FS-508) |

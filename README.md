@@ -56,8 +56,10 @@ build/               generated: master.md, the portfolio PDF and web
                      previews, the bank channel proposal, the NPS Bill
                      comments — git-ignored
 sources/             inputs as received — never edited
-  dibon/             recon proposal, Kapu compliance one-pager
+  dibon/             recon proposal and the RFP notes behind it (Apr
+                     2025), Kapu compliance one-pager
   kapu/              MFI PRD, 8 Jun 2026 meeting notes (anonymised)
+  market/            vendors' published papers — git-ignored
   gatekeepr/         snapshots of GateKeepr briefs, its handoff and
                      obligations register — git-ignored
   confidential/      client-specific documents — git-ignored

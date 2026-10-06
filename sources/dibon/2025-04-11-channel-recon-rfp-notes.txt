@@ -1,0 +1,132 @@
+I need help putting together a response to an RFP for a bank that requires a system that ensures reconciliation of channel transactions and ensures the identified exceptions are handled in a timely manner and within agreed SLA, including being able to monitor systems/channels uptime, transactions trend including possible duplications, failures, possible fraudulent activities, alerts, analysis, reconciliation, reposting and reversals.
+
+How should I structure my response, an in particular the System Architecture and Security Controls?
+
+
+
+* reconciliation of channel transactions 
+	# USSD, mobile app, ATMs, cards, mobile banking, etc.
+		- push OR pull
+
+* ensure the identified exceptions are handled in a timely manner and within agreed SLA
+	# transaction based approach
+		# transaction workflows
+		# transaction ids, status codes
+	# system based approach	
+		# systems
+		# transactions in + transactions out
+		# transaction ids, status codes
+	- including possible duplications, failures, alerts, reposting (retry capability + rules) and reversals
+	- possible fraudulent activities (AI*, simple rules, e.g. 5 transactions a day)
+	- analysis + reconciliation (reporting) **PowerBI, Odoo
+	
+ - monitor systems/channels uptime, transactions trend
+	# Prometheus + Grafana + Loki
+	# Vault (storing sensitive data)
+	# Kafka (data pipeline)
+	
+* data protection in-transit and at-rest
+* Scalability & security - K8S	
+
+-----------------------------------------
+General:
+-----------------------------------------
+- cloud native
+- benefits of K8S (self-monitoring, scaling, ...)
+??
+
+-----------------------------------------
+Observability Platform (used by the other modules + additional internal systems)
+-----------------------------------------
+Features:
+	- Infrastructure Monitoring (out-of-the-box support for:)
+		* OS (Linux, Windows)
+		* Containerization (Docker, K8S)
+		* DBs & message brokers
+		* Webservers, proxies, & LBs (NGINX , HAProxy, IIS, Apache )
+		* Network (via SNMP + syslog)
+			- firewalls, switches, etc.**** confirm capability
+	- Application Monitoring
+		* via Custom Collectors
+	- OOO dashboards + alerts (what else?)		
+	- custom dashboards: (support for customer to build their own)
+		- panel plugins (https://grafana.com/grafana/plugins/panel-plugins/?pg=graf&plcmt=panels-txt)
+		- data source plugins (https://grafana.com/grafana/plugins/data-source-plugins/)
+	- compliance with standards, e.g. opentelemetry		
+
+Components:
+	- Data collation 
+		* Components:
+			- Logs
+			- Metrics
+			- Traces
+		* Features:
+			- Collection
+			- Aggregation & correlation
+			- Storage
+			- Querying
+			- Correlate metrics with logs and traces to gain additional insights
+	- Visualization
+	- IRM
+		* on-call
+		* incident
+	- Alerting
+	- SLO
+
+-----------------------------------------
+Transaction Reconciliation Platform
+-----------------------------------------
+Components:
+	-> Data Pipeline
+		* Collection
+			- Push
+				- API + SFTP
+			- Pull
+				- API + SFTP + DB
+		* Ingestion & Processing (cleaning, transformation, enrichment, filtering, aggregation)
+			- ETL tools
+			- Kafka
+		* Storage
+			- Cache
+			- SQL DB
+		* Analysis
+			- Correlation
+			- Analysis
+		* Visualization (**Observability Module)
+			
+	-> Custom Actors
+		* query status/retry/reverse
+		* benefit from K8S, for monitoring, auto-scaling, ...
+		* one actor per system
+		
+		** only monitoring unless an actor auto-registers
+		** transaction model updates 
+			- transaction code, statuses, actions for each status +
+				
+	
+	-> Portal
+		- Configuration
+			* Transaction definition
+			* SLAs
+			* Business rules			
+		- Remedial Action
+			* Manual retry/reversal
+			* Manual recon
+	
+	-> Security
+		* Secrets Management (Vault)
+		- 
+		
+** feed data to Observability Module 
+** charge for each:
+	- transaction
+	- data source
+	- actor
+	
+
+
+* charge for professional services (man-hours/days)
+
+
+The Top 30 Grafana Dashboard Examples
+https://logit.io/blog/post/top-grafana-dashboards-and-visualisations/

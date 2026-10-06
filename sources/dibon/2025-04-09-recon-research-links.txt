@@ -1,0 +1,3 @@
+https://www.reiterate.com/product/solution/transaction-reconciliation
+https://www.getdbt.com/blog/future-of-the-modern-data-stack
+https://grafana.com/blog/2022/05/31/grafana-for-business-intelligence-how-grafana-labs-uses-dashboards-for-more-than-observability-data/
