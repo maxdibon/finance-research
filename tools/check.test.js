@@ -473,3 +473,42 @@ test('journeys: a §3 row missing from the flow diagram fails', () => {
   const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace('capture again (3d)', 'capture again')));
   assert.deepStrictEqual(names(f), ['journeys']);
 });
+
+// ── site (FS-563, FS-567) ────────────────────────────────────────────────
+const { build: buildSite } = require('./site');
+
+function siteWith(edit, read) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-site-'));
+  for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
+  edit(dir);
+  try {
+    const { outDir } = buildSite(dir);
+    return { page: (rel) => fs.readFileSync(path.join(outDir, rel), 'utf8') };
+  } catch (e) {
+    return { error: e };
+  } finally {
+    if (!read) fs.rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+test('site: refuses to build from failing sources', () => {
+  const missing = ['FS', '999'].join('-');
+  const r = siteWith((d) => patch(d, 'README.md', (t) => `${t}\nSee ${missing}.\n`));
+  assert.ok(r.error && /checks failing/.test(r.error.message));
+});
+
+test('site: a journey links each capability to its module row, with its status', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-site-'));
+  for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
+  try {
+    const { outDir } = buildSite(dir);
+    const journey = fs.readFileSync(path.join(outDir, 'docs', 'journeys', 'manual-identity-check.html'), 'utf8');
+    const status = fs.readFileSync(path.join(ROOT, 'docs', 'modules', 'mfi.md'), 'utf8').match(/^\| MF-02 \|[^|]*\| (\w+) \|/m)[1];
+    assert.match(journey, new RegExp(`<a class="id" href="\.\./modules/mfi\.html#MF-02"[^>]*>MF-02</a> <span class="st st-${status.toLowerCase()}">${status}</span>`));
+    const mfi = fs.readFileSync(path.join(outDir, 'docs', 'modules', 'mfi.html'), 'utf8');
+    assert.match(mfi, /<tr id="MF-02"><td><a class="self" href="#MF-02">MF-02<\/a><details><summary>cited \d+×<\/summary>((?!<\/details>).)*href="\.\.\/journeys\/manual-identity-check\.html/);
+    assert.match(fs.readFileSync(path.join(outDir, 'docs', 'journeys', 'README.html'), 'utf8'), /href="manual-identity-check\.html"/);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});

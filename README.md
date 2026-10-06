@@ -73,7 +73,7 @@ sources/             inputs as received — never edited
                      superseded/ beside it — git-ignored
 clients/             customer and prospect material, one folder each,
                      and the KCB and NBK project list — git-ignored
-tools/               check.js, assemble.js, and their break tests
+tools/               check.js, assemble.js, site.js, and their break tests
 .githooks/           pre-commit: runs the checks
 ```
 
@@ -84,6 +84,7 @@ git config core.hooksPath .githooks   # once per clone
 node tools/check.js --counts          # every check, plus computed counts
 node --test tools/check.test.js       # breaks each check on purpose
 node tools/assemble.js                # builds build/master.md; refuses if a check fails
+node tools/site.js                    # builds build/site/: linked HTML; open index.html
 node design/portfolio-pdf/build.js    # both editions: PDFs and web previews
 node design/portfolio-pdf/build.js --edition short   # one edition
 node design/portfolio-pdf/build.js --html-only   # pages only, no PDF
