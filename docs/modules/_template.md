@@ -12,7 +12,7 @@ audience: [bank, sacco, mfi, psp, imt, sme, fintech]   # who a pack may include 
 depends_on: []                # module ids this needs (shared services, rails)
 consumed_by: []               # module ids that use this
 review_ids: []                # REVIEW.md ids that bear on this module
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-06
 ---
 
 <!--
@@ -108,7 +108,7 @@ not (FS-065). If a mode does not apply, say why in one line.
 
 Components and the main flows. **Diagrams are ASCII** inside a fenced
 block, so they read in any editor, diff line by line and need no renderer
-(FS-064). Keep them under 78 characters wide. Final artwork is a later step.
+(FS-064). Keep them under 100 characters wide (FS-579). Final artwork is a later step.
 
 ```
   +--------+      +-------------+      +------------------+

@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, fintech]
 depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco, financial-crime, core]
 consumed_by: [insights]
-review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431, FS-443, FS-450, FS-452, FS-453, FS-487, FS-488, FS-532]
+review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431, FS-443, FS-450, FS-452, FS-453, FS-487, FS-488, FS-532, FS-580]
 last_reviewed: 2026-10-06
 ---
 
@@ -87,6 +87,7 @@ of its own. Rows with that evidence are **Built**; the rest are
 | OC-21 | Banking by chat on Telegram, for people who have started a chat with the institution's bot | Planned | FS-487; messaging MS-07 | later |
 | OC-22 | Voice: a phone line in English and Swahili for balances, loan status and payment reminders, with a person on request; anything that moves money needs a PIN | Planned | Owner, 2026-10-05 (FS-488). For members who prefer to call or do not read easily | 2 |
 | OC-23 | Agent banking: cash in and out, and account opening, through an institution's agents, on Kapu Core's tellers (KC-06) | Planned | Owner, 2026-10-05 (FS-488). CBK and SASRA set rules for agents; to read and add to the law register before design | 2 |
+| OC-24 | Alerts a customer sets for themselves, on the same criteria as the transaction rules (financial-crime FC-16): any payment over an amount, a payment to a new destination, money in, a balance below a level; set in the app, on USSD or at a branch, and delivered on the channels the customer chose (messaging MS-12). They notify only: a customer's alert never holds or blocks a payment | Planned | Owner, 2026-10-06 (FS-580) | 2 |
 
 ## 4 · Where it sits
 

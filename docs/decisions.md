@@ -138,7 +138,8 @@ its own entry.
 
 ## FS-064 · ASCII diagrams
 
-- **Chose:** ASCII in plain fences, at most 78 columns.
+- **Chose:** ASCII in plain fences, at most 78 columns; 100 since FS-579,
+  which GitHub and the generated reader show without scrolling.
 - **Argued against:** Mermaid, which Claude proposed and used first.
 - **Costs (inferred):** less visual polish, and alignment is maintained by
   hand. In return it reads in any editor and diffs line by line.

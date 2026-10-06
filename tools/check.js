@@ -28,7 +28,7 @@ const PUBLIC_PATHS = [path.join('docs', 'marketing'), path.join('docs', 'outreac
 
 const STATUSES = ['Live', 'Built', 'Designed', 'Planned'];
 const REVIEW_STATUSES = ['OPEN', 'DECIDED', 'ANSWERED', 'DECLINED'];
-const DIAGRAM_WIDTH = 78;
+const DIAGRAM_WIDTH = 100; // FS-579: was 78
 
 function walk(root, rel = '') {
   const out = [];
@@ -211,7 +211,8 @@ function checkCapabilities(root) {
 }
 
 // ── diagrams ─────────────────────────────────────────────────────────────
-// A fence with no language is a diagram (FS-064) and must fit 78 columns.
+// A fence with no language is a diagram (FS-064) and must fit 100 columns
+// (FS-579): GitHub and the generated reader show that much without scrolling.
 function checkDiagrams(root, files) {
   const failures = [];
   for (const file of files.filter((f) => f.endsWith('.md'))) {

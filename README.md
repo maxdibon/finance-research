@@ -117,7 +117,7 @@ fresh clone needs the list before it can commit.
    to allow it (FS-420). Nothing from `clients/` or
    `sources/confidential/` is reproduced in `docs/`. Material from those
    folders is written about, never copied.
-6. **ASCII diagrams**, at most 78 characters wide (FS-064).
+6. **ASCII diagrams**, at most 100 characters wide (FS-064, FS-579).
 7. **Two ledger models, always:** the customer has a core banking system,
    or it does not (FS-065).
 8. **Commit as you go**, with the reasoning in the message. Pushing is the
