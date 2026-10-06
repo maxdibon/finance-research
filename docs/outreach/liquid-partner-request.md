@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Partner enquiry to Liquid
@@ -37,6 +37,7 @@ opens the conversation; the meeting closes these.
 | 11 | Its Azure Stack in Uganda, Tanzania, Rwanda, Zambia, Zimbabwe and Nigeria | The ready markets (FS-105, FS-371) |
 | 12 | GPU capacity in Kenya | Self-hosted models (insights IN-08) |
 | 13 | Whether consumption on Liquid's Stack counts towards Microsoft's partner programme | Microsoft partner designations (PT-52); unverified |
+| 14 | Sophos scanning of files uploaded to our document vault, priced per institution, so customers who want a commercial engine can buy it through Liquid | Identity verification ID-15; ClamAV is the default (FS-525) |
 
 **Subject:** Partnership: Azure Stack hosting and Sophos MDR for a Kenyan
 financial-software company
@@ -61,7 +62,7 @@ financial-software company
 > 3. **Sophos managed detection and response,** and Sophos endpoint
 >    protection, for our own servers and staff laptops: what is included,
 >    where the telemetry is processed, and whether we may offer it to our
->    customers.
+>    customers, including Sophos scanning of the files our customers upload.
 > 4. **GPU capacity** in Kenya, for models we would run ourselves.
 > 5. **Regulators' access:** our customers' regulators require audit and
 >    inspection rights over us and our subcontractors. Would Liquid accept

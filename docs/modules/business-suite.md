@@ -6,9 +6,9 @@ version: 0.1.0
 owner: Product lead, business suite
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
-depends_on: [access, messaging, sme-recon, mandates, insights, sacco, mfi]
+depends_on: [access, messaging, sme-recon, mandates, insights, sacco, mfi, identity]
 consumed_by: [insights, mfi]
-review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518]
+review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518, FS-521, FS-527]
 last_reviewed: 2026-10-06
 ---
 
@@ -60,7 +60,7 @@ hosting on OLP, is **Built** (FS-293).
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
 | BS-01 | Odoo implementation: CRM, helpdesk, accounting and invoicing, configured to the customer | Planned | FS-002, FS-281 | 1 |
-| BS-02 | Odoo Sign for agreements, mandates, consents and onboarding forms; external signers need no licence | Planned | FS-044, FS-049 | 1 |
+| BS-02 | Odoo Sign for agreements, mandates, consents and onboarding forms; external signers need no licence. A signed document that carries personal data is filed in the document vault, and Odoo keeps the record and a link (architecture §6, FS-527) | Planned | FS-044, FS-049, FS-527 | 1 |
 | BS-03 | Customer portal: invoices, statements, tickets, signed documents; portal users need no licence | Planned | FS-026 | 1 |
 | BS-04 | Bank and mobile-money statements reconciled into Odoo accounting, through SME Recon | Planned | sme-recon SR-10 | 1 |
 | BS-05 | Campaigns and templates in Odoo, delivered through Dibon's messaging, with honest delivery status written back | Planned | messaging MS-13 | 2 |
@@ -75,13 +75,16 @@ hosting on OLP, is **Built** (FS-293).
 | BS-15 | Check-off exchange: where the Sacco or lender is on Kapu Sacco or Kapu MFI, schedules arrive by API and remittances return matched, so neither side keys a spreadsheet. Every repayment is tracked: one made directly by M-Pesa, Airtel Money, T-Kash or bank amends the next schedule sent to the employer before the payroll cut-off; one arriving after the cut-off is credited to the next instalment or refunded, never collected twice (early repayment without penalty, reg 56(3)) | Planned | Owner, 2026-10-06 (FS-499, FS-518); sacco SC-04 | 2 |
 | BS-16 | Reactivation campaigns: dormant or lapsed customers re-engaged through Odoo campaigns and Dibon's messaging, only with consent; the opt-out after full repayment honoured (CBK lender regulations reg 27(3)); suitability first (reg 38), so credit is never offered to someone the affordability check would refuse | Planned | Owner, 2026-10-06 (FS-522); BS-05 | 2 |
 | BS-17 | Employee loans from the employer's Odoo: an employee applies for a term loan or a pay-day limit (mfi MF-36) in the employee portal; the employer confirms employment and that the deduction fits within two-thirds of wages (Employment Act s.19(3)); with the employee's consent the application goes by API to the lender's Kapu MFI, whose own approval chain decides and gives reasons for a refusal (reg 28(2)); status and notifications return to Odoo and the employee's phone; the loan is booked once, in the lender's core, and shown in both Odoos | Planned | Owner, 2026-10-06 (FS-518); BS-15 | 2 |
+| BS-18 | SME documents and company records: documents in Odoo Documents, by role; board resolutions and minutes from templates, signed by the directors through Odoo Sign (BS-02); the registers of directors and shareholders checked against the business registry (identity verification ID-07); what the SME shares with a lender travels through the SME-to-lender exchange (FS-528) | Planned | Owner, 2026-10-06 (FS-521). Odoo Documents is an Enterprise app | 2 |
 | BS-11 | Managed Odoo hosting on OLP (Odoo Launch Pad, formerly OPA), Dibon's own Odoo management platform: instances, backups, staging, upgrades | Built | Owner, 2026-10-01 (FS-293); public site opa.dibon.co.ke, unchanged by the rename (FS-336). Liquid hosting planned | 1 |
 
 ## 4 · Where it sits
 
 **Depends on:** access (sign-on), messaging (campaigns, SMS), sme-recon
 (statement feeds into accounting), mandates (money approvals), insights
-(questions over Odoo data), sacco and mfi (check-off schedules, BS-15).
+(questions over Odoo data), sacco and mfi (check-off schedules, BS-15),
+identity (company registers checked against the business registry,
+BS-18).
 **Used by:** customers directly; insights, for questions and dashboards
 over Odoo data; mfi (confirmed purchase orders and invoices, MF-32). In the architecture, Odoo is also one of the three
 authorities (docs/architecture.md §2).

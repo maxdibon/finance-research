@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517]
 last_reviewed: 2026-10-06
 ---
 
@@ -117,6 +117,7 @@ missing. *Gap* means no capability does it yet.
 | RC-37 | Conduct and disclosure rules for a licensed or registered lender: repayment order, APR and key information document, price changes, non-performing classification, collection conduct, complaints. Not in the document; required by the CBK lender regulations (law register LR-03) | MF-22, MF-23, MF-24, MF-25, MF-26, MF-28 | Partial | Added by Dibon (FS-435). The document's day-30 penalty interest and day-47 closure ladder (RC-26, RC-27) must fit within these and the arrears cap (MF-21) |
 | RC-38 | Loan agreements and key information documents, generated, signed by the borrower and guarantors, and kept. Not in the document; a lender cannot disburse without them | MF-34, BS-02 | Partial | Added by Dibon (FS-516). Templates and the signing route to agree with Roan Capital (open answer 10) |
 | RC-39 | Restructuring: reschedule, refinance or top-up, approved and disclosed, without resetting the arrears cap. Not in the document | MF-09 | Partial | Added by Dibon (FS-516). Roan Capital's restructuring policy to agree (open answer 10) |
+| RC-40 | Loan officers: each borrower and loan assigned to a Credit Officer, reassigned with approval, performance per officer. Not in the document; Roan Capital's Credit Officers (RC-12, RC-34) hold the portfolios | MF-35 | Partial | Added by Dibon (FS-517); owner, 2026-10-06: in R1 |
 
 ## 3 · Out of scope for the MVP (§2.3)
 

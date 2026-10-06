@@ -691,3 +691,31 @@ its own entry.
 - **Costs (inferred):** R1 grows again for a team of four; Odoo Sign
   joins R1, so Roan Capital needs Odoo Enterprise for signing, and the
   electronic-signature question goes to counsel before go-live.
+
+## FS-525 · ClamAV scans uploads; commercial engines at the customer's cost
+
+- **Chose:** ClamAV, run unmodified as a separate service and reached
+  over its socket, as the scanner in our offering; Sophos or another
+  commercial engine where a customer pays for it, possibly bought through
+  Liquid. A new licence row allows this one GPL-2.0 service by name.
+- **Requires:** ID-15; docs/architecture.md §6.1 "one named service: ClamAV"; docs/outreach/liquid-partner-request.md "Sophos scanning".
+- **Argued against:** no scanning, which leaves an upload path open to
+  any customer's phone; and a commercial engine for everyone, which puts a
+  licence cost on institutions that do not want it.
+- **Costs (inferred):** ClamAV catches less than commercial engines; its
+  signatures must be kept current in every instance; the GPL boundary
+  holds only while nobody modifies or links it.
+
+## FS-527 · Every document carrying personal data lives in the vault
+
+- **Chose:** the vault for every document that carries personal data,
+  contracts included, and Odoo for documents with none beyond business
+  contacts; the contract record always in Odoo, with a link; when in
+  doubt, the vault. The criteria are written in architecture §6.
+- **Requires:** docs/architecture.md §6 "Where a document lives"; BS-02.
+- **Argued against:** loan and guarantee agreements alone in the vault,
+  which left every other personal contract to judgement; and everything
+  in Odoo, which spreads personal data to every Odoo user with access.
+- **Costs (inferred):** staff employment contracts leave Odoo HR for the
+  vault, so HR works through links; two systems take part in every
+  contract, and the link between them must not break.
