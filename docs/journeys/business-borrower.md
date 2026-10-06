@@ -5,7 +5,7 @@ kind: journey
 release: R1
 owner: Solution architect
 classification: Internal
-review_ids: [FS-090, FS-205, FS-415, FS-536, FS-548, FS-551, FS-562, FS-564, FS-566]
+review_ids: [FS-090, FS-205, FS-415, FS-536, FS-548, FS-551, FS-562, FS-564, FS-566, FS-568]
 last_reviewed: 2026-10-06
 ---
 
@@ -101,17 +101,19 @@ be authorised and verified (reg 23).
 
 ## 5 · Open questions
 
-- Whom the institution verifies in step 4: every director, every
-  shareholder, or those above a holding threshold. The Companies Act
-  (law register LR-34) defines a beneficial owner as the natural person
-  who ultimately owns or controls the company, and leaves the threshold
-  to the Beneficial Ownership Information Regulations, not yet read
-  (FS-566).
+- Whom the institution verifies in step 4. The law sets the floor: a
+  beneficial owner is a natural person holding at least ten percent of
+  the shares or the votes, directly or through other companies, or able
+  to appoint or remove most of the board, or with significant influence
+  or control (Beneficial Ownership Information Regulations reg 3(2), law
+  register LR-35). Roan Capital's policy may go further, for example
+  every director.
 - The board resolution: Roan Capital's template, and whether a director's
   signature alone suffices for a sole director.
-- Whether the registry returns beneficial owners, or only shareholders.
-  Every company must lodge its beneficial owners with the Registrar
-  (Companies Act s.93A), so the registry holds them; each vendor's
+- Whether the registry's API returns beneficial owners, or only
+  shareholders. Every company lodges them with the Registrar (Companies
+  Act s.93A), and the Registrar discloses them to a financial institution
+  on Form BOF6 and a fee (reg 14(1)(c)), a paper route; each vendor's
   documentation names only shareholders and directors (partners PT-30,
   PT-53). If the API returns them, step 4 compares the declaration with
   the Registrar's record instead of with the shareholders.
