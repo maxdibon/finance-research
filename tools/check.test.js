@@ -458,3 +458,18 @@ test('journeys: a heading that differs from the template fails', () => {
   const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace('## 4 · Gaps', '## 4 · Missing')));
   assert.deepStrictEqual(names(f), ['journeys']);
 });
+
+test('journeys: a journey with no flow diagram fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace(/## 2 · Steps\n\n```\n[\s\S]*?```\n/, '## 2 · Steps\n\n')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: a step missing from the flow diagram fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace('  8 Chained, logged, kept seven years', '    Chained, logged, kept seven years')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: a §3 row missing from the flow diagram fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace('capture again (3d)', 'capture again')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});

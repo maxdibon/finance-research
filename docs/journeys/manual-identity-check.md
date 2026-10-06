@@ -5,7 +5,7 @@ kind: journey
 release: R1
 owner: Solution architect
 classification: Internal
-review_ids: [FS-329, FS-544, FS-547, FS-548, FS-551, FS-555, FS-556, FS-557]
+review_ids: [FS-329, FS-544, FS-547, FS-548, FS-551, FS-555, FS-556, FS-557, FS-558, FS-559, FS-561]
 last_reviewed: 2026-10-06
 ---
 
@@ -34,6 +34,40 @@ document, and it never clears a check that failed.
 
 ## 2 · Steps
 
+```
+  1 Officer starts the application, enters the document
+        |-- no connection at the branch ... waits; no capture (3i)
+        |
+  2 Electronic check for this document?
+        |-- yes, match ............... JN-01 (electronic)
+        |-- yes, mismatch ............ held; ticket to compliance (3a)
+        |-- register down ............ queued and retried (3b)
+        |-- none, or down past the wait
+        v
+    Manual route offered; officer picks the reason
+        |
+  3 Screening ------ match ........... frozen; route stops (3c)
+        |
+  4 Officer sees the original: photos, live photo, attestation
+    Vault: type check, malware scan -- fails ... capture again (3d)
+        |
+  5 Approval request, found by role
+        |
+  6 Second person decides, re-authenticated
+        |-- not reachable ............ waits; reminders (3j)
+        |-- same person as step 4 .... refused (3f)
+        |-- declines ................. application stops (3e)
+        |-- returns .................. back to 4
+        v
+  7 Verified manually; tier set and capped (3g)
+        |
+  8 Chained, logged, kept seven years
+        |
+  9 On to JN-04, within the tier's limit
+        :
+    Later: document expires, or a check appears -> re-check (3h)
+```
+
 | # | Step | Who | Capabilities |
 |---|---|---|---|
 | 1 | The Credit Officer starts the borrower's application and enters the document type and number; the product's document checklist appears | Credit Officer | MF-01, KC-01, ID-02, MF-02 |
@@ -58,6 +92,8 @@ document, and it never clears a check that failed.
 | f | 6 | **The approver is the officer who captured it, or decided the step before.** The decision is refused | MD-06 |
 | g | 7 | **The borrower asks for more than the tier allows.** The tier's limit holds. A larger loan needs more evidence and a higher tier, not an override | ID-19 |
 | h | 7, later | **The document expires, or an electronic check becomes available for it.** The check is re-run; on a match the record becomes verified electronically and the tier may rise, on a mismatch §3 a applies | ID-03, ID-19 |
+| i | 1 to 4 | **The branch has no connection.** Nothing can be verified offline: the register, screening, the vault and the approver all need the platform. The console says so and the application waits. Photos taken on a phone and uploaded later are not accepted, because nothing would show the officer saw the original. A mobile-data fallback at the branch is Roan Capital's to arrange | ID-15 |
+| j | 6 | **The approver cannot be reached.** The request waits in the approver's queue; approval from email reaches them away from the desk. Reminders and escalation to another holder of the role wait for MD-08 (§4) | MD-18, MD-08 |
 
 ## 4 · Gaps
 
@@ -67,7 +103,8 @@ document, and it never clears a check that failed.
 | A vendor's check that the document itself is genuine (security features, MRZ) | No capability | The officer's examination of the original only | To come with the vendor choice (FS-340, partners PT-30, PT-53) |
 | FC-08, case management for a mismatch (§3 a) | phase 2 | A ticket in a restricted helpdesk team (BS-01): an owner, a deadline and a history, but no alerts, evidence bundle or report drafting | Accepted for R1 (FS-555) |
 | IN-18, the governance view: manual verifications per officer and per branch | phase 2 | A plain report from the verification log, in ID-01 | Accepted for R1 (FS-557) |
-| OC-17, the field-officer app, for capture away from the branch | phase 1, R4 | Manual verification happens at the branch only | Accept for R1; Roan Capital's officers meet borrowers at branches |
+| OC-17, the field-officer app, for capture away from the branch | phase 1, R4 | Manual verification happens at the branch only. In R4 the app captures offline on the officer's bound device, encrypted and stamped with time and place (OC-19); screening, verification and approval happen only after it syncs, and a capture older than the institution's set age is taken again | Accept for R1; Roan Capital's officers meet borrowers at branches |
+| MD-08, reminders and escalation when an approval waits too long (§3 j) | phase 1, not in R1 | The approver is chased by hand | Bring MD-08 into R1: it is Designed and already phase 1, so the R1 count moves, not the cap (FS-561) |
 
 ## 5 · Open questions
 

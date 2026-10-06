@@ -39,6 +39,7 @@ docs/                the work. The only place we edit
   specs/             build specifications, one per R1 component
   journeys/          user journeys, step by step, with the capabilities each
                      step relies on; gaps named; statuses computed
+  testing.md         acceptance items, tagged tests, the coverage matrix
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
   marketing/

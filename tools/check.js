@@ -702,7 +702,8 @@ function checkScope(root) {
 // the capabilities each step relies on and never types their status. A
 // capability outside the journey's release is cited in §4 Gaps: for R1,
 // one in "R1 in detail" and in phase 1; for R2 to R5, one in phase 1.
-// Every journey is listed in the index with a link to its file.
+// Every journey is listed in the index with a link to its file, and §2
+// opens with a flow diagram that shows every step and every §3 row.
 const JOURNEYS = path.join('docs', 'journeys');
 const RELEASES = ['R1', 'R2', 'R3', 'R4', 'R5', 'phase 2'];
 
@@ -742,16 +743,23 @@ function parseJourney(text, prefixes) {
   const j = {
     release: (front.match(/^release: *(.+)$/m) || [])[1],
     id: (front.match(/^name: *(JN-\d{2})\b/m) || [])[1],
-    steps: [], gaps: '',
+    steps: [], gaps: '', diagram: null,
   };
   let section = null;
+  let fence = null;
   text.split('\n').forEach((line, i) => {
+    if (/^```/.test(line)) {
+      if (fence === null) fence = line === '```' && section === 2 && j.diagram === null ? '' : false;
+      else { if (fence !== false) j.diagram = fence; fence = null; }
+      return;
+    }
+    if (fence !== null) { if (fence !== false) fence += `${line}\n`; return; }
     if (/^## /.test(line)) { section = +((line.match(/^## (\d+) · /) || [])[1] || 0); return; }
     if (section === 4) j.gaps += `${line}\n`;
     if (section !== 2 && section !== 3) return;
     const c = line.split('|').slice(1, -1).map((x) => x.trim());
     if (!/^(\d+|[a-z])$/.test(c[0] || '')) return;
-    j.steps.push({ line: i + 1, step: c[0], text: c.slice(1).join(' '), last: c[c.length - 1], ids: citedIds(c[c.length - 1], prefixes) });
+    j.steps.push({ line: i + 1, section, step: c[0], text: c.slice(1).join(' '), last: c[c.length - 1], ids: citedIds(c[c.length - 1], prefixes) });
   });
   j.gapIds = new Set(citedIds(j.gaps, prefixes));
   return j;
@@ -787,6 +795,14 @@ function checkJourneys(root) {
     const got = headings(text);
     for (let i = 0; i < Math.max(got.length, wantHeadings.length); i++) {
       if (got[i] !== wantHeadings[i]) { at(0, `heading ${i + 1} is "${got[i] || '(missing)'}"; template has "${wantHeadings[i] || '(none)'}"`); break; }
+    }
+    // The flow diagram (FS-558) names every step by number and every §3 row
+    // as "(3x)"; it carries no capability ids, so the table stays their one place.
+    if (j.diagram === null) at(0, '§2 has no flow diagram (a fence with no language, before the table)');
+    for (const s of j.steps) {
+      if (j.diagram === null) break;
+      const shown = s.section === 2 ? new RegExp(`^\\s*${s.step}\\s`, 'm').test(j.diagram) : j.diagram.includes(`(3${s.step})`);
+      if (!shown) at(s.line, `${s.section === 2 ? `step ${s.step}` : `§3 ${s.step}`} is not in the flow diagram${s.section === 3 ? ` as "(3${s.step})"` : ''}`);
     }
     for (const s of j.steps) {
       if (!s.ids.length && s.last !== '—') at(s.line, `step ${s.step} cites no capability; cite one, or "—" and name it in §4`);

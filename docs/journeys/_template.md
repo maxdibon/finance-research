@@ -20,6 +20,16 @@ last_reviewed: 2026-10-06
 
 ## 2 · Steps
 
+A flow diagram first: every step by its number at the start of a line,
+every §3 row as "(3x)" where it leaves the path, and no capability ids.
+
+```
+  1 What happens
+        |-- the failure ............. where it ends (3a)
+        v
+    The outcome
+```
+
 | # | Step | Who | Capabilities |
 |---|---|---|---|
 | 1 | What happens, in a sentence or two | Role | XX-01 |

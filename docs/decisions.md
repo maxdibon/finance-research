@@ -811,3 +811,21 @@ its own entry.
 - **Costs (inferred):** one more phase-1 capability in R2; till payments
   carry no account number, so some land in a holding queue for a person
   to match; validation on tills is unconfirmed with Safaricom.
+
+## FS-560 · Tests trace to acceptance items; an identity simulator in R1; the cap raised to 236
+
+- **Chose:** acceptance items written here (the specs' tables, every
+  journey step and §3 row), tests in the code repository tagged with the
+  item and the capability, and a coverage matrix generated from the tags
+  and CI; Built only when every item for a capability passes. User
+  acceptance runs the journeys, tracked in Odoo Project. An identity
+  simulator (ID-20) in R1, so the manual route's failures can be tested.
+  Each journey opens with a flow diagram the check keeps in step with its
+  table (FS-558).
+- **Requires:** ID-20; docs/testing.md "coverage matrix"; docs/delivery-plan.md "ID-20 (the identity simulator)"; docs/journeys/_template.md "A flow diagram first".
+- **Argued against:** a test management tool, which would be a third
+  place for what the specs and the code already hold; and tests written
+  here, which would drift from the code that runs them.
+- **Costs (inferred):** tagging discipline on every test; a script to
+  write in the code repository; one more R1 capability for a team of
+  four with no test engineer.
