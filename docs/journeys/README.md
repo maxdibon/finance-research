@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548]
+review_ids: [FS-548, FS-558]
 last_reviewed: 2026-10-06
 ---
 
@@ -32,13 +32,16 @@ in the build.
    rule.
 4. **Roles, never names.** The institution's own role names where it has
    given them; otherwise the role's function.
-5. **Every journey is listed below.**
+5. **§2 opens with a flow diagram** in plain text: every step by its
+   number at the start of a line, every §3 row as "(3x)", and no
+   capability ids, so the table stays their one place (FS-558).
+6. **Every journey is listed below.**
 
 Copy [_template.md](_template.md) and keep every heading.
 
 | Id | Journey | Release | File |
 |---|---|---|---|
-| JN-01 | An individual borrower, verified electronically | R1 | to write |
+| JN-01 | An individual borrower, verified electronically | R1 | [electronic-identity-check.md](electronic-identity-check.md) |
 | JN-02 | A borrower verified by hand: the manual route | R1 | [manual-identity-check.md](manual-identity-check.md) |
 | JN-03 | A business borrower: registry, directors, beneficial owners | R1 | to write |
 | JN-04 | A loan from application through approval, signing and disbursement | R1 | to write |
