@@ -76,6 +76,8 @@ officer and the institution (FS-063).
 
 ## Open
 
+- Retention periods per document are now proposed in docs/documents.md
+  (FS-537); rows here still marked open follow it once confirmed.
 - Retention periods marked open (FS-063), with the compliance and risk
   officer.
 - An impact-assessment template, and the assessments marked Needed, before

@@ -5,7 +5,7 @@ kind: guide
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534]
+review_ids: [FS-492, FS-534, FS-537]
 last_reviewed: 2026-10-06
 ---
 
@@ -112,6 +112,7 @@ Ids are never reused; a retired capability id is listed in its module
 | RC | customers/roan-capital.md | One of Roan Capital's requirements, mapped to capabilities |
 | LR | regulation.md | A law or regulation in the law register |
 | PR | privacy.md | A processing of personal data |
+| DT | documents.md | A type of document an institution keeps, with its law and retention |
 | LC | compliance.md | A licence, registration or certification we hold or need |
 | PT | partners.md | A partner candidate |
 | SD | partners.md | A partner selection decision |

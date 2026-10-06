@@ -126,6 +126,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | Who keeps our commitments, and whom we hire next | [operating-model.md](operating-model.md) |
 | What we build next, release by release | [delivery-plan.md](delivery-plan.md) |
 | What personal data we process, why and for how long | [privacy.md](privacy.md) |
+| Which documents an institution keeps, under which law, for how long | [documents.md](documents.md) |
 | How the service and the company keep going when something fails | [business-continuity.md](business-continuity.md) |
 | Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
 | Which laws apply to us and our customers, and what each drives | [regulation.md](regulation.md) |

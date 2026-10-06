@@ -27,6 +27,7 @@ docs/                the work. The only place we edit
   operating-model.md the people who keep the commitments; hiring order
   delivery-plan.md   phase 1 in releases, in the order customers need them
   privacy.md         what personal data we process, why, for how long
+  documents.md       what an institution keeps, the law, how long, where
   business-continuity.md  people, suppliers and processes when things fail
   overview.md        the portfolio story; links modules, restates nothing
   onboarding.md      what each customer and product needs to go live
