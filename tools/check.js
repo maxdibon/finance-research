@@ -418,6 +418,61 @@ function checkDecisions(root) {
   return failures;
 }
 
+// ── obligations ──────────────────────────────────────────────────────────
+// A decision names what it requires to exist (FS-515), the light version of
+// GateKeepr's obligations register. From FS-490 on, every entry carries a
+// "- **Requires:**" line. Each item is a capability id a module defines, or
+// a file under docs/ with an optional § section it must have and an
+// optional "quoted text" it must contain. "nothing" stands alone, for a
+// decision that only confirmed or removed something.
+const OBLIGATIONS_FROM = 490;
+const REQUIRE_RE = /(docs\/[\w./-]+\.md)(?: §(\d+(?:\.\d+)?))?(?: "([^"]+)")?|\b([A-Z]{2}-\d{2})\b/g;
+
+function checkObligations(root) {
+  const failures = [];
+  const known = new Set(moduleFiles(root).flatMap((f) => capabilityRows(read(root, f)).map((r) => r.id)));
+  const lines = read(root, DECISIONS).split('\n');
+  const entries = [];
+  let cur = null;
+  lines.forEach((t, i) => {
+    if (t.startsWith('## ')) {
+      const m = t.match(/FS-(\d{3})/);
+      cur = m ? { id: m[0], n: Number(m[1]), line: i + 1, req: null } : null;
+      if (cur) entries.push(cur);
+      return;
+    }
+    const r = t.match(/^- \*\*Requires:\*\* (.*)$/);
+    if (r && cur) {
+      let text = r[1];
+      for (let j = i + 1; j < lines.length && /^ {2}\S/.test(lines[j]); j++) text += ` ${lines[j].trim()}`;
+      cur.req = { text, line: i + 1 };
+    }
+  });
+  for (const e of entries) {
+    if (!e.req) {
+      if (e.n >= OBLIGATIONS_FROM) failures.push(fail('obligations', DECISIONS, e.line, `${e.id} has no "Requires:" line; name what the decision requires to exist, or "nothing"`));
+      continue;
+    }
+    const { text, line } = e.req;
+    if (/^nothing\b/.test(text)) continue;
+    const rest = text.replace(REQUIRE_RE, '').replace(/[\s,;.]+/g, '');
+    if (rest) failures.push(fail('obligations', DECISIONS, line, `${e.id} "Requires:" has items not understood: ${rest.slice(0, 60)}`));
+    for (const m of text.matchAll(REQUIRE_RE)) {
+      const [, file, section, quote, id] = m;
+      if (id) {
+        if (!known.has(id)) failures.push(fail('obligations', DECISIONS, line, `${e.id} requires ${id}, which no module defines`));
+        continue;
+      }
+      const abs = path.join(root, ...file.split('/'));
+      if (!fs.existsSync(abs)) { failures.push(fail('obligations', DECISIONS, line, `${e.id} requires ${file}, which does not exist`)); continue; }
+      const body = fs.readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
+      if (section && !new RegExp(`^#{2,3} ${section.replace('.', '\\.')} · `, 'm').test(body)) failures.push(fail('obligations', DECISIONS, line, `${e.id} requires ${file} §${section}, which has no such section`));
+      if (quote && !body.includes(quote)) failures.push(fail('obligations', DECISIONS, line, `${e.id} requires ${file} to say "${quote}", and it does not`));
+    }
+  }
+  return failures;
+}
+
 // ── customers ────────────────────────────────────────────────────────────
 // Every capability a customer depends on exists in a module, and a customer
 // with a delivery file depends on exactly the capabilities that file maps
@@ -716,6 +771,7 @@ function runAll(root) {
     ...checkCopy(root),
     ...checkClaims(root),
     ...checkDecisions(root),
+    ...checkObligations(root),
     ...checkCustomers(root),
     ...checkRegulation(root, files),
     ...checkAssurance(root),

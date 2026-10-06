@@ -135,7 +135,9 @@ Rows that block R1 are marked in the register:
 `tools/check.js` runs, among others: names (the protected list), register
 and review ids, the module template, capability rows, diagrams no wider
 than 78 columns, partners, the public/internal line, copy and claims for
-the portfolio, decisions, `reviewed` (a changed file must carry a fresh
+the portfolio, decisions, obligations (every decision from FS-490 names
+what it requires in a `Requires:` line, and each item must exist),
+`reviewed` (a changed file must carry a fresh
 `last_reviewed`), customers (a customer's "Depends on" equals its delivery
 map), regulation, assurance, references (every capability id cited
 exists, or is retired and never reused), dependencies (two-way, and named
@@ -183,10 +185,6 @@ only with a register row.
 
 ## What the last session left half-done
 
-- **FS-503 to FS-505** (lost handsets, forgotten credentials, common
-  cases): a proposal is in the register and awaits "go". It adds AC-14 to
-  AC-16 and SE-26 in phase 1 and raises the v1 cap by decision.
-- **FS-506**: the GateKeepr handoff and obligations register were moved to
-  `sources/gatekeepr/`. Whether to adopt an obligations register of our
-  own was put to the owner.
 - The remaining R1 specs (above).
+- Proposals awaiting "go" are the OPEN rows whose notes say "Proposal in
+  chat"; read their notes before asking the owner again.

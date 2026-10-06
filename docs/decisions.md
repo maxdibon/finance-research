@@ -20,6 +20,12 @@ in the conversation that produced the decision. *Inferred* means Claude
 wrote it down afterwards and nobody has confirmed it yet. An inferred cost
 that turns out to be wrong is corrected here, and the correction is kept.
 
+**Every decision names what it requires to exist** (FS-515), from
+FS-490 on: a `Requires:` line listing capability ids, files under docs/,
+a file's § section, or "quoted text" the file must contain. The check
+fails when any of them is missing, so a decision cannot stay a paragraph.
+"nothing" stands alone for a decision that only confirmed something.
+
 **Nothing is superseded quietly.** A reversed decision keeps its entry,
 gains a line saying what replaced it and why, and the new decision gets
 its own entry.
@@ -603,6 +609,7 @@ its own entry.
 - **Chose:** the current phase 1 (221 capabilities) as the target, and a
   cap the check enforces: nothing moves in unless something of similar
   size moves out or the team grows.
+- **Requires:** docs/delivery-plan.md "v1 cap:".
 - **Argued against:** redefining v1 as the first two releases only, which
   would have narrowed the promise; and letting phase 1 grow as each good
   idea arrived, which had added a dozen capabilities in two days.
@@ -614,6 +621,7 @@ its own entry.
 
 - **Chose:** the full platform stack as designed, and one isolated instance
   per institution: its own namespace, databases, keys and backups.
+- **Requires:** docs/architecture.md §9 "an isolated instance per institution"; AC-08.
 - **Argued against:** a staged, lighter stack for the first release, and a
   shared control plane with per-institution data, both of which cost less
   to run.
@@ -629,6 +637,7 @@ its own entry.
   a step opens. Odoo keeps employment and party records; Fineract and the
   products keep no approval roles of their own. A change to who may
   approve money is itself approved by a second person (access §8).
+- **Requires:** AC-09; docs/modules/mandates.md "Access (Keycloak), AC-09".
 - **Argued against:** Odoo as the authority (FS-142), which ties every
   approval to the business suite being up and licensed per user; and each
   product's own user list, which lets roles drift apart across products.
@@ -642,6 +651,7 @@ its own entry.
 - **Chose:** one document vault per institution for KYC and KYB evidence
   and collateral documents (identity ID-15), in phase 1 because R1 needs
   it; and the v1 cap raised by one to count it.
+- **Requires:** ID-15; SE-10; docs/architecture.md §6 "document vault".
 - **Argued against:** storing documents as Fineract or Odoo attachments,
   which scatters Restricted files across systems with different access
   rules; and folding the vault into ID-02's wording, which hides real
@@ -659,6 +669,7 @@ its own entry.
   authenticators for staff and approvers (AC-16); hardware keys and
   sealed break-glass accounts for Dibon's engineers (platform-security
   SE-26). AC-16 and SE-26 join R1. The cap counts them openly.
+- **Requires:** AC-14, AC-15, AC-16, SE-26; docs/operating-model.md "Runbooks to write first".
 - **Argued against:** folding them into AC-03's wording, which would hide
   work the channels cannot go live without; and recovery by one-time code
   alone, which hands an account to whoever holds a swapped SIM.

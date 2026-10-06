@@ -375,6 +375,33 @@ test('scope: a capability moved into phase 1 past the cap fails', () => {
   assert.deepStrictEqual(names(f), ['scope']);
 });
 
+const DECISIONS = path.join('docs', 'decisions.md');
+
+test('obligations: a decision from FS-490 on without a Requires line fails', () => {
+  const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace(/^- \*\*Requires:\*\* docs\/delivery-plan\.md "v1 cap:"\.\n/m, '')));
+  assert.deepStrictEqual(names(f), ['obligations']);
+});
+
+test('obligations: a required file that does not exist fails', () => {
+  const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace('docs/operating-model.md "Runbooks to write first"', 'docs/specs/recovery.md')));
+  assert.deepStrictEqual(names(f), ['obligations']);
+});
+
+test('obligations: required text the file no longer says fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'operating-model.md'), (t) => t.replace('**Runbooks to write first**', '**Runbooks**')));
+  assert.deepStrictEqual(names(f), ['obligations']);
+});
+
+test('obligations: a required section the file does not have fails', () => {
+  const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace('docs/architecture.md §9 "an isolated', 'docs/architecture.md §19 "an isolated')));
+  assert.deepStrictEqual(names(f), ['obligations']);
+});
+
+test('obligations: an item the check cannot read fails rather than passing', () => {
+  const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace('AC-14, AC-15, AC-16, SE-26;', 'AC-14, AC-15, AC-16, SE-26, the recovery screens;')));
+  assert.deepStrictEqual(names(f), ['obligations']);
+});
+
 test('scope: moving one out keeps the count within the cap', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'modules', 'insights.md'), (t) => t.replace(/^(\| IN-02 \|.*\| )2 \|$/m, '$11 |').replace(/^(\| IN-15 \|.*\| )2 \|$/m, '$12 |').replace(/^(\| IN-01 \|.*\| )1 \|$/m, '$12 |')));
   assert.deepStrictEqual(f, []);
