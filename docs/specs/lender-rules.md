@@ -5,7 +5,7 @@ kind: spec
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492]
+review_ids: [FS-492, FS-531]
 last_reviewed: 2026-10-06
 ---
 
@@ -29,6 +29,8 @@ been verified, it says **to confirm against Fineract**.
 | MF-26 | Collection conduct in messages | reg 30 | Yes |
 | MF-27 | Bureau floor and pre-listing notice | reg 33 | No: phase 2, with CRB submission (MF-19) in R5; R1 keeps the data it needs |
 | MF-28 | Complaints clock | reg 40 | Yes |
+| MF-37 | Guarantors: consent, statements, notice, recourse last | regs 39(3), 42 | Yes; rules in the module row, design to add here (FS-531) |
+| MF-38 | Borrower access: receipts, status, statements by link | reg 39(1) | Yes; rules in the module row, design to add here (FS-531) |
 | MF-29 | Automated decisions explained, AI disclosed | reg 60 | No: Roan Capital has no automated lending decisions in R1, vetting stays human (MFI §7). It applies once a score or AI system takes part in a decision |
 
 **Also out of R1:** the end-of-day lockout (RC-21, a gap in the delivery

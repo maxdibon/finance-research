@@ -8,7 +8,7 @@ classification: Internal
 audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway, sme-recon, business-suite, escrow]
 consumed_by: [omni-channel, insights, business-suite, sacco]
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519]
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531]
 last_reviewed: 2026-10-06
 ---
 
@@ -110,6 +110,8 @@ FS-393.
 | MF-34 | Loan agreements: the agreement and key information document generated from the product version and the loan's terms, from templates approved under maker-checker; signed by the borrower and guarantors through Odoo Sign (business-suite BS-02) with a code to their bound phone; the offered and the signed versions filed in the document vault against the loan (identity ID-15), the signed one with its signing certificate and a hash recorded in the loan's trace (recon RO-23) | Planned | Owner, 2026-10-06: in R1 (FS-516). Electronic signatures: Kenya Information and Communications Act s.83B; whether this meets an advanced signature for loans and guarantees is for counsel | 1 |
 | MF-35 | Loan officers: each borrower and loan assigned to an officer, reassigned in bulk on leave or exit with a second person's approval and the history kept; joining in Odoo HR creates the Keycloak role, the Fineract staff record and an enrolled field device; performance by officer (portfolio, disbursements, arrears, collections, overrides, visits); officers never approve their own applications and handle no cash | Planned | Owner, 2026-10-06 (FS-517). Fineract assigns loans to staff (to confirm against Fineract). Owner, 2026-10-06: in R1 | 1 |
 | MF-36 | Pay-day limits: a limit approved once like any loan; each draw from the phone to M-Pesa, Airtel Money, T-Kash or the bank without further approval, checked on every draw for the limit left, employment still active (a leaver in Odoo HR blocks it), deduction headroom on the next payroll and arrears; repaid by check-off over one to three payrolls | Planned | Owner, 2026-10-06 (FS-518). The lender notifies CBK of a new channel 30 days before launch (reg 27) | 2 |
+| MF-37 | Guarantors: consent sought and recorded before anyone is appointed, the guarantee signed (MF-34); the guarantor kept informed by periodic loan statements; recourse only after non-judicial recovery from the borrower is exhausted, and no demand before the guarantor has had 14 days' notice of the default | Planned | CBK lender regulations reg 39(3), reg 42 (LR-03); owner, 2026-10-06: in R1 (FS-531) | 1 |
+| MF-38 | Borrower access: a receipt for every transaction; a message at each change of status (approved, disbursed, due, overdue, restructured, settled); a free statement on request, by a single-use link to our own page, never as an attachment | Planned | CBK lender regulations reg 39(1) (LR-03); owner, 2026-10-06: in R1 (FS-531) | 1 |
 
 ## 4 · Where it sits
 

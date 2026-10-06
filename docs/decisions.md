@@ -719,3 +719,17 @@ its own entry.
 - **Costs (inferred):** staff employment contracts leave Odoo HR for the
   vault, so HR works through links; two systems take part in every
   contract, and the link between them must not break.
+
+## FS-531 · Guarantors' rights and borrowers' access in R1; the cap raised to 230
+
+- **Chose:** guarantors (mfi MF-37) and borrower access (MF-38) in phase
+  1 and in R1, because the CBK lender regulations require them (regs 39
+  and 42) and Roan Capital takes directors' guarantees; document intake by
+  API (identity ID-16) in phase 2.
+- **Requires:** MF-37; MF-38; ID-16; docs/customers/roan-capital.md "RC-41"; docs/specs/lender-rules.md "MF-37".
+- **Argued against:** leaving the guarantor rules to Roan Capital's
+  procedures, which would put a lender in breach the first time a
+  guarantor is pursued without notice.
+- **Costs (inferred):** two more capabilities in R1 for a team of four;
+  periodic statements to guarantors cost messages every month for every
+  guaranteed loan.

@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531]
 last_reviewed: 2026-10-06
 ---
 
@@ -118,6 +118,8 @@ missing. *Gap* means no capability does it yet.
 | RC-38 | Loan agreements and key information documents, generated, signed by the borrower and guarantors, and kept. Not in the document; a lender cannot disburse without them | MF-34, BS-02 | Partial | Added by Dibon (FS-516). Templates and the signing route to agree with Roan Capital (open answer 10) |
 | RC-39 | Restructuring: reschedule, refinance or top-up, approved and disclosed, without resetting the arrears cap. Not in the document | MF-09 | Partial | Added by Dibon (FS-516). Roan Capital's restructuring policy to agree (open answer 10) |
 | RC-40 | Loan officers: each borrower and loan assigned to a Credit Officer, reassigned with approval, performance per officer. Not in the document; Roan Capital's Credit Officers (RC-12, RC-34) hold the portfolios | MF-35 | Partial | Added by Dibon (FS-517); owner, 2026-10-06: in R1 |
+| RC-41 | Guarantors' rights: consent before appointment, periodic statements, 14 days' notice before any demand, recourse only after recovery from the borrower. Not in the document; required by the CBK lender regulations, regs 39(3) and 42, and Roan Capital takes directors' guarantees (RC-04) | MF-37 | Partial | Added by Dibon (FS-531) |
+| RC-42 | Borrowers' access: receipts, status messages and a free statement on request. Not in the document; required by reg 39(1) | MF-38 | Partial | Added by Dibon (FS-531) |
 
 ## 3 · Out of scope for the MVP (§2.3)
 
