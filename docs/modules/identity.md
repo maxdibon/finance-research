@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532]
 last_reviewed: 2026-10-06
 ---
 
@@ -78,6 +78,7 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 | ID-14 | The operator's name check (ID-05) re-run on a schedule and whenever a dormant account wakes; a mismatch freezes the mobile channel until the customer is re-verified | Planned | FS-448, FS-453 | 1 |
 | ID-15 | Document vault for KYC and KYB evidence and collateral documents, one per institution in its own instance: object storage (Blob on Azure Stack; Ceph through Rook on-premises), each file encrypted under keys in OpenBao, checksummed, locked for its retention and then deleted; every view logged. Received in R1 at the branch console and by a single-use upload link sent by SMS or email; files type-checked, scanned for malware (ClamAV, run unmodified as a separate service; Sophos or another commercial engine where the customer pays for it, possibly through Liquid, FS-525), images re-encoded | Planned | Owner, 2026-10-06 (FS-500). Other channels: field app (omni-channel OC-17), WhatsApp sends the link, never the image (OC-16, privacy PR-16); migration (mfi MF-16) | 1 |
 | ID-16 | Document intake by API, through the same pipeline as ID-15: SMEs from their Odoo through the SME-to-lender exchange; institutions and vendors (a referring bank, another lender, an identity vendor) through the partner API with mutual authentication (access AC-04); each sender authenticated, consent recorded, files checked, scanned, classified, fingerprinted and filed against the application, the checklist (ID-02) updated. Reliance on another institution's checks only where it is itself supervised (POCAML Regulations reg 33), and the lender stays responsible | Planned | Owner, 2026-10-06 (FS-528, FS-530) | 2 |
+| ID-17 | Sharing documents out: to a person, a single-use, short-lived link to our own page, opened with a one-time code to the bound phone, after which they may download or share their own document as they choose; to an organisation, the portal, the API, or SFTP for bulk files (check-off and settlement files, regulator and audit exports); every share and download logged | Planned | Owner, 2026-10-06 (FS-532); architecture §7 | 1 |
 
 **Retired ids:** ID-08, moved to financial-crime FC-05 and FC-06 (FS-431). A retired id is never reused.
 

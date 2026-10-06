@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-467, FS-470, FS-471, FS-472, FS-473, FS-474, FS-475, FS-476, FS-477, FS-505]
+review_ids: [FS-467, FS-470, FS-471, FS-472, FS-473, FS-474, FS-475, FS-476, FS-477, FS-505, FS-532]
 last_reviewed: 2026-10-06
 ---
 
@@ -99,7 +99,9 @@ first, logs every request and hands it to a person (FS-476). Start small,
 on the customers we serve today, and let the agent earn each step:
 
 1. **One record of every request.** Odoo Helpdesk, which we implement
-   anyway (business-suite BS-01): email and WhatsApp in, the support
+   anyway (business-suite BS-01): email and WhatsApp in for requests,
+   never for documents: an attachment is removed from the ticket and the
+   person is sent an upload link (FS-532); the support
    page's severities, and a severity-1 request paging the on-call rota.
 2. **A knowledge base from what we already write:** each product's own
    paragraph, the onboarding checklists, runbooks and answers to the

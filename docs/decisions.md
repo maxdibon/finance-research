@@ -733,3 +733,38 @@ its own entry.
 - **Costs (inferred):** two more capabilities in R1 for a team of four;
   periodic statements to guarantors cost messages every month for every
   guaranteed loan.
+
+## FS-532 · Documents travel only on our network; notification channels carry links
+
+- **Chose:** documents and sensitive data travel only by link to our own
+  pages, the portal, an API or SFTP; WhatsApp, SMS, email and push carry
+  notifications and links only; once signed in, a customer may download
+  and share their own documents as they choose. Sharing out is a phase-1
+  capability (identity ID-17), in R1. WhatsApp banking and the chatbot are
+  narrowed to notifications, links and how-to answers.
+- **Requires:** ID-17; OC-16; OC-20; docs/architecture.md §7 "travel only on our network"; docs/specs/approval-engine.md "decided: never"; docs/operating-model.md "never for documents".
+- **Argued against:** balances and statements in WhatsApp, which the v1
+  design had, and which sends Confidential data through Meta outside
+  Kenya; emailing signed agreements and statements, which leaves copies in
+  mailboxes we cannot reach.
+- **Costs (inferred):** customers who expected banking in WhatsApp must
+  open a link and sign in; the portfolio's WhatsApp promise is narrower;
+  Odoo Sign may not allow link-only completion emails, which would move
+  signing to our own page. USSD keeps balances behind the PIN: it is a
+  session, not a stored message.
+
+## FS-533 · People choose their channels, with three overrides
+
+- **Chose:** one or more channels per kind of message, chosen by the
+  person; security alerts to every channel, regulatory notices always on
+  a channel with delivery reports, marketing only by opt-in. Email joins
+  the channels (messaging MS-19), in R1, because approvals and upload links
+  already need it.
+- **Requires:** MS-12; MS-19; docs/delivery-plan.md "MS-19 (email".
+- **Argued against:** one preferred channel per person, which cannot carry
+  a security alert to the real owner of a stolen phone; and full freedom,
+  which lets a regulatory notice go to a channel that cannot prove
+  delivery.
+- **Costs (inferred):** every message is sent once per chosen channel, at
+  the institution's cost; email delivery depends on each institution's
+  domain being set up correctly.

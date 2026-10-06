@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533]
 last_reviewed: 2026-10-06
 ---
 
@@ -74,7 +74,7 @@ missing. *Gap* means no capability does it yet.
 | RC-14 | Behaviour score for repeat borrowers, from repayment timing | — | Gap | No capability in phase 1; credit scoring MF-33 is phase 2 (FS-522) |
 | RC-15 | A Class A borrower downgraded automatically on a pattern of late payment | — | Gap | Classification is reported (MF-14), not changed by rule; MF-33 (phase 2) would do it |
 | RC-16 | Committee composition and the escalation threshold configurable | MD-01, MD-02 | Covered | Effective-dated and audited |
-| RC-17 | Review dashboards; a committee screen with per-member comments and a vote tracker; an escalation banner | MD-05, MD-09, MD-18 | Partial | Decisions carry identity, comment and time (MD-05); the vote tracker comes with quorum steps. Committee members can act from Outlook or Gmail, with step-up at the act (MD-18) |
+| RC-17 | Review dashboards; a committee screen with per-member comments and a vote tracker; an escalation banner | MD-05, MD-09, MD-18, MS-19 | Partial | Decisions carry identity, comment and time (MD-05); the vote tracker comes with quorum steps. Committee members can act from Outlook or Gmail, with step-up at the act (MD-18) |
 
 ### Disbursement and repayment (§2.2)
 
@@ -115,11 +115,11 @@ missing. *Gap* means no capability does it yet.
 | RC-35 | Monitoring: Prometheus, Grafana, Loki; 99.9% uptime | RO-16, RO-17 | Covered | Ran for Collect at Onit Bank (collect CO-11). Uptime sits with the support tier |
 | RC-36 | AML/CFT duties as a licensed or registered lender: sanctions screening at onboarding and on every list change, records for seven years. Not in the document; required by the CBK lender regulations, reg 64 (law register LR-03) | FC-05, FC-12 | Partial | Added by Dibon (FS-431). Both are phase 1; PEP screening, cases and STR drafting (FC-06, FC-08, FC-09) are phase 2 |
 | RC-37 | Conduct and disclosure rules for a licensed or registered lender: repayment order, APR and key information document, price changes, non-performing classification, collection conduct, complaints. Not in the document; required by the CBK lender regulations (law register LR-03) | MF-22, MF-23, MF-24, MF-25, MF-26, MF-28 | Partial | Added by Dibon (FS-435). The document's day-30 penalty interest and day-47 closure ladder (RC-26, RC-27) must fit within these and the arrears cap (MF-21) |
-| RC-38 | Loan agreements and key information documents, generated, signed by the borrower and guarantors, and kept. Not in the document; a lender cannot disburse without them | MF-34, BS-02 | Partial | Added by Dibon (FS-516). Templates and the signing route to agree with Roan Capital (open answer 10) |
+| RC-38 | Loan agreements and key information documents, generated, signed by the borrower and guarantors, and kept. Not in the document; a lender cannot disburse without them | MF-34, BS-02, ID-17 | Partial | Added by Dibon (FS-516). Templates and the signing route to agree with Roan Capital (open answer 10) |
 | RC-39 | Restructuring: reschedule, refinance or top-up, approved and disclosed, without resetting the arrears cap. Not in the document | MF-09 | Partial | Added by Dibon (FS-516). Roan Capital's restructuring policy to agree (open answer 10) |
 | RC-40 | Loan officers: each borrower and loan assigned to a Credit Officer, reassigned with approval, performance per officer. Not in the document; Roan Capital's Credit Officers (RC-12, RC-34) hold the portfolios | MF-35 | Partial | Added by Dibon (FS-517); owner, 2026-10-06: in R1 |
 | RC-41 | Guarantors' rights: consent before appointment, periodic statements, 14 days' notice before any demand, recourse only after recovery from the borrower. Not in the document; required by the CBK lender regulations, regs 39(3) and 42, and Roan Capital takes directors' guarantees (RC-04) | MF-37 | Partial | Added by Dibon (FS-531) |
-| RC-42 | Borrowers' access: receipts, status messages and a free statement on request. Not in the document; required by reg 39(1) | MF-38 | Partial | Added by Dibon (FS-531) |
+| RC-42 | Borrowers' access: receipts, status messages and a free statement on request. Not in the document; required by reg 39(1) | MF-38, ID-17 | Partial | Added by Dibon (FS-531) |
 
 ## 3 · Out of scope for the MVP (§2.3)
 

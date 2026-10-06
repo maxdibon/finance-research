@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability, collect, gateway, escrow, mfi, sacco, sme-recon, omni-channel, business-suite, core, mandates]
 consumed_by: [business-suite]
-review_ids: [FS-006, FS-033, FS-043, FS-048, FS-151, FS-156, FS-157, FS-159, FS-220, FS-223, FS-224, FS-225, FS-226, FS-227, FS-228, FS-229, FS-446, FS-497]
+review_ids: [FS-006, FS-033, FS-043, FS-048, FS-151, FS-156, FS-157, FS-159, FS-220, FS-223, FS-224, FS-225, FS-226, FS-227, FS-228, FS-229, FS-446, FS-497, FS-532]
 last_reviewed: 2026-10-06
 ---
 
@@ -73,7 +73,7 @@ number, traceable to a transaction.
 | IN-14 | Exports as a separate permission | Planned | docs/architecture.md §7 | 2 |
 | IN-15 | The customer's own BI tool connects to the governed metrics: Metabase, Power BI, Tableau and Zoho Analytics first, more to follow; Superset stays the default | Planned | Owner, 2026-10-05 (FS-446). Through the semantic layer (IN-02), with row-level security (IN-09). Metabase's open-source edition is AGPL: run unmodified and separately (architecture §6.1) | 2 |
 | IN-16 | Funder view: an institution's investors and lenders see governed portfolio metrics (arrears by age, non-performing loans under the lender regulations' reg 57, collections, yield, growth, concentration), aggregated, with no personal data, under their own role | Planned | Owner, 2026-10-06 (FS-497) | 2 |
-| IN-17 | Investor pack: a monthly report, signed, and a pseudonymised loan tape, with the funder's covenant thresholds and any breach flagged; the tape only under a data-sharing agreement between the institution and the funder | Planned | Owner, 2026-10-06 (FS-497). A pseudonymised tape is still personal data (privacy PR-17) | 2 |
+| IN-17 | Investor pack: a monthly report, signed, and a pseudonymised loan tape, with the funder's covenant thresholds and any breach flagged; the tape only under a data-sharing agreement between the institution and the funder; delivered in the funder view, never by email (FS-532) | Planned | Owner, 2026-10-06 (FS-497). A pseudonymised tape is still personal data (privacy PR-17) | 2 |
 | IN-18 | Governance view: limit overrides and how those loans perform (mfi MF-06), approvals outside the agreed chains, overdue approvals, write-offs, the complaints clock and regulatory deadlines, from the mandate engine and the products | Planned | Owner, 2026-10-06 (FS-497). Visibility of the management, not only of the book | 2 |
 
 ## 4 · Where it sits

@@ -5,7 +5,7 @@ kind: guide
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492]
+review_ids: [FS-492, FS-534]
 last_reviewed: 2026-10-06
 ---
 
@@ -81,5 +81,42 @@ decisions follow from it.
 | Kapu Core | The core banking engine, on Apache Fineract and PostgreSQL |
 | Mandate | A chain of approvals, or a customer's authority to debit |
 | The custody line | Who holds money and records: the institution, not us |
-| FS-nnn | A row in the intake register, REVIEW.md |
-| LR, PR, CP, PT, CU, RC | Rows in the law, privacy, competitor, partner, customer and Roan Capital registers |
+
+**Ids.** Every row anywhere has an id: a prefix, a hyphen and a number.
+Ids are never reused; a retired capability id is listed in its module
+(FS-534).
+
+| Prefix | Where | What it numbers |
+|---|---|---|
+| FS | REVIEW.md | A point raised: a question, a request, a finding ("financial services") |
+| AC | modules/access.md | Access: login, roles, step-up, recovery |
+| BS | modules/business-suite.md | Business suite on Odoo and Zoho |
+| CO | modules/collect.md | Kapu Collect |
+| CR | modules/crb.md | Credit bureau connections |
+| ES | modules/escrow.md | Kapu Escrow |
+| FC | modules/financial-crime.md | Financial crime and compliance |
+| GW | modules/gateway.md | Kapu Pay Gateway |
+| ID | modules/identity.md | Identity verification, and the document vault |
+| IN | modules/insights.md | Insights: metrics, dashboards, questions |
+| KC | modules/core.md | Kapu Core |
+| MD | modules/mandates.md | Mandates: approvals and debit mandates |
+| MF | modules/mfi.md | Kapu MFI |
+| MS | modules/messaging.md | Messaging |
+| OC | modules/omni-channel.md | Omni-channel: app, web, USSD, WhatsApp, field app |
+| RL | modules/rails.md | Rails: payment and bank integrations |
+| RO | modules/recon-observability.md | Reconciliation and observability |
+| SC | modules/sacco.md | Kapu Sacco |
+| SE | modules/platform-security.md | Platform security |
+| SR | modules/sme-recon.md | SME Recon |
+| CU | customers.md | A customer |
+| RC | customers/roan-capital.md | One of Roan Capital's requirements, mapped to capabilities |
+| LR | regulation.md | A law or regulation in the law register |
+| PR | privacy.md | A processing of personal data |
+| LC | compliance.md | A licence, registration or certification we hold or need |
+| PT | partners.md | A partner candidate |
+| SD | partners.md | A partner selection decision |
+| C1 to C9 | partners.md | The criteria partners are judged against |
+| CP | competitors.md | A competitor |
+| OB-COM, OB-MF and others | onboarding.md | A go-live item: common to every customer (COM), or per product (its prefix) |
+| DC-FS-PF | README.md | A document code: the two portfolio editions |
+| R1 to R5 | delivery-plan.md | A release |

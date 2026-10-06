@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532]
 last_reviewed: 2026-10-06
 ---
 
@@ -354,6 +354,13 @@ are the default where they fit (FS-217).
   in at the start of a session is not enough.
 - **Nothing resolves an exception by inference.** A break stays open and
   visible until evidence closes it, and the audit keeps every step.
+- **Documents and sensitive data travel only on our network or a trusted
+  partner's** (FS-532): by a link to our own pages, the portal, an API or
+  SFTP. WhatsApp, SMS, email and push carry notifications and links only,
+  never a document, a statement, a balance or an ID number. **Once signed
+  in, a customer may download their own documents and share them as they
+  choose:** the rule binds what we send, not what a customer does with
+  their own copy.
 - **Data classes travel with the data.**
 
 | Class | Examples |

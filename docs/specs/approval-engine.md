@@ -5,7 +5,7 @@ kind: spec
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532]
 last_reviewed: 2026-10-06
 ---
 
@@ -284,10 +284,10 @@ channel. The products act on `request.approved`, never on a decision.
   approve or disburse a loan; only the Kapu MFI service account does, and
   it acts only on `request.approved` (§9).
 - **What goes into an email:** request reference, product, amount, step
-  and due time. No national ID numbers, no statements, no documents. A
-  borrower's name only if the institution turns it on, since an email
-  sent through Microsoft or Google leaves Kenya (privacy PR-16, Data
-  Protection Act s.48).
+  and due time. No names, national ID numbers, statements or documents:
+  an email sent through Microsoft or Google leaves Kenya (Data Protection
+  Act s.48), and notifications carry links only (architecture §7,
+  FS-532).
 - **Rate limits** on decisions and on link opening, per person and per
   source address. Five failed codes lock step-up for that person for 15
   minutes and raise a security event.
@@ -412,7 +412,7 @@ is revoked.
 4. **The override authority** for `limit_override` at Roan Capital
    (MF-06).
 5. **SLAs and escalation roles** per step.
-6. **Borrower names in emails:** on or off for Roan Capital (§8).
+6. **Borrower names in emails:** decided: never (FS-532).
 7. **One-click** for non-money steps: wanted at all?
 8. **Fineract:** the approve, reject, withdraw and disburse commands,
    their permission codes, where an external reference can go, and how

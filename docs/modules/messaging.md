@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access]
 consumed_by: [mfi, sacco, gateway, escrow, mandates, recon-observability, sme-recon, collect, core, crb, financial-crime, omni-channel, access, business-suite, identity]
-review_ids: [FS-147, FS-148, FS-149, FS-150, FS-152, FS-153, FS-155, FS-156, FS-158, FS-159, FS-160, FS-161, FS-162, FS-163, FS-164, FS-165, FS-166, FS-416, FS-419, FS-487]
+review_ids: [FS-147, FS-148, FS-149, FS-150, FS-152, FS-153, FS-155, FS-156, FS-158, FS-159, FS-160, FS-161, FS-162, FS-163, FS-164, FS-165, FS-166, FS-416, FS-419, FS-487, FS-532, FS-533]
 last_reviewed: 2026-10-06
 ---
 
@@ -75,13 +75,14 @@ FS-150, FS-160) and the MFI PRD's SMS requirements (FR-10). Every row is
 | MS-09 | A truthful status per message: accepted, handed to the operator or platform, delivered and read only where the channel reports them, failed | Planned | FS-153 | 1 |
 | MS-10 | Inbound and two-way: replies, keywords, STOP opt-outs | Planned | FS-155 | 1 |
 | MS-11 | Consent per person, per channel and per purpose (transactional or marketing), held in Odoo | Planned | FS-155 | 1 |
-| MS-12 | Transactional path: product events become messages from templates, on the person's preferred channel | Planned | MFI PRD FR-10; FS-155 | 1 |
+| MS-12 | Transactional path: product events become messages from templates, on the channels the person chose, one or more for each kind of message (transactions, statements and notices, marketing), set at onboarding (SMS by default), by self-service or by staff on request, every change logged. Three things override the choice: security alerts go to every channel the person has; regulatory notices (receipts, guarantors' statements, the 14-day notice, collection notices) always include a channel with delivery reports, SMS at the least; marketing needs its own opt-in (MS-11). WhatsApp needs explicit consent and email a verified address; the institution decides which channels it offers | Planned | MFI PRD FR-10; FS-155; owner, 2026-10-06 (FS-533) | 1 |
 | MS-13 | Campaign path: Odoo defines the audience, template and schedule; messaging delivers and writes the status back to Odoo | Planned | FS-150 | 2 |
 | MS-14 | Templates with merge fields; SMS length counted in the right alphabet (160 characters in GSM-7, 70 otherwise) | Planned | GateKeepr STANDARDS.md §3 (SMS is GSM 03.38) | 1 |
 | MS-15 | Quiet hours and rate limits per recipient | Planned | FS-162 | 1 |
 | MS-16 | When an important message cannot be delivered, try the next permitted channel, then tell the sender. Never assume it arrived | Planned | GateKeepr STANDARDS.md §6.3 rule 4 | 2 |
 | MS-17 | API and MCP access for institutions: send, templates, status; campaigns only as drafts for a person to approve | Planned | FS-149, FS-156, FS-159 | 2 |
 | MS-18 | Delivery and cost reporting per institution | Planned | FS-147 | 2 |
+| MS-19 | Email through our own relay, with SPF, DKIM and DMARC on each institution's domain; notifications and links only (architecture §7) | Planned | Owner, 2026-10-06 (FS-533). Approval emails (mandates MD-18) and upload links (identity ID-15) need it in R1 | 1 |
 
 **Excluded:** Signal. It has no business messaging API, and unofficial
 clients break its terms (FS-152).
