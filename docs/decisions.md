@@ -890,3 +890,25 @@ its own entry.
 - **Costs (inferred):** two more phase-1 capabilities in R2; each larger
   bank's cut-offs, formats and fees to learn and keep current; whether a
   given microfinance bank is a direct RTGS participant is to confirm.
+
+## FS-586 · One instruction from approval to settlement, reversals included; the cap raised to 245
+
+- **Chose:** approvals decide, the product orchestrates, rails execute,
+  reconciliation confirms; the Gateway is never on an institution's
+  payout path. Every payout is one instruction (rails RL-01, into R1)
+  with a lifecycle that includes cancellation, recall, returns and
+  reversals, a reversal being a new instruction linked to the original
+  and under maker-checker (FS-587). Banks are reached by API,
+  host-to-host files, or an internet-banking file the institution's
+  signatories release (RL-07). A bank account holder's name is
+  confirmed before a payout (RL-29). The institution asks its own banks
+  for access (docs/outreach/bank-access-request.md).
+- **Requires:** RL-01; RL-07; RL-29; docs/outreach/bank-access-request.md "Cancelling, recalling and reversing"; docs/specs/approval-engine.md "payment.reversal".
+- **Argued against:** routing payouts through the Gateway, which takes
+  merchants' collections and has no account to post to; and editing a
+  sent instruction to reverse it, which loses what was sent.
+- **Costs (inferred):** one more R1 capability, and RL-01 brought in;
+  two approvals per bank payout in R1, ours and the signatories' at
+  the bank, until a bank allows payments within agreed limits to go
+  straight through; each bank's channel, formats and time limits to
+  learn.

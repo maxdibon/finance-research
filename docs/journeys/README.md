@@ -53,3 +53,4 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-10 | A deposit paid to the institution's paybill or till | R2 | to write |
 | JN-11 | A transfer out through a larger bank: RTGS, EFT or SWIFT | R2 | to write |
 | JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | to write |
+| JN-13 | A bank disbursement, from release to settlement, return, recall or reversal | R1 | to write |

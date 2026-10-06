@@ -5,7 +5,7 @@ kind: spec
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587]
 last_reviewed: 2026-10-06
 ---
 
@@ -82,7 +82,7 @@ the database role the service runs as cannot update or delete them.
 | Field | Type | Notes |
 |---|---|---|
 | id | uuid | |
-| subject_type | text | `loan.application`, `loan.disbursement`, `loan.restructure` (FS-516), `mandate.change`, `kyc.manual_verification` (the manual identity route, FS-547; docs/journeys/manual-identity-check.md); later `bill.payment` |
+| subject_type | text | `loan.application`, `loan.disbursement`, `loan.restructure` (FS-516), `mandate.change`, `kyc.manual_verification` (the manual identity route, FS-547; docs/journeys/manual-identity-check.md), `payment.reversal` and `payment.recall` (a reversal or recall of a sent instruction, rails RL-01, FS-587); later `bill.payment` |
 | product_code | text | The Fineract product short name, or `*` |
 | version | int | Increments on every change |
 | effective_from | timestamptz | Africa/Nairobi in the UI, UTC stored |

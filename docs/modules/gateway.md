@@ -8,7 +8,7 @@ classification: Internal
 audience: [sme, fintech, mfi, sacco]
 depends_on: [rails, recon-observability, messaging, mandates, identity, financial-crime, access]
 consumed_by: [sme-recon, mfi, sacco, insights]
-review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-407, FS-408, FS-415, FS-431, FS-554]
+review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-407, FS-408, FS-415, FS-431, FS-554, FS-586]
 last_reviewed: 2026-10-06
 ---
 
@@ -74,7 +74,7 @@ GW-09, moved to financial-crime FC-01 (FS-431).
 | GW-05 | Merchant dashboard | Planned | 8 Jun: named as part of the Gateway | 2 |
 | GW-06 | Automatic reconciliation of every merchant payment | Planned | 8 Jun: "a reconciliation engine". Delivered by recon-observability | 2 |
 | GW-07 | Payment links, e.g. an invoice sent by SMS | Planned | 8 Jun: proposed by the commercial lead | 2 |
-| GW-08 | Kapu's own products and Odoo routed through the Gateway first | Planned | 8 Jun: Kapu must be the first consumer of its own Gateway | 2 |
+| GW-08 | Dibon's own collections first: the payments Dibon itself takes, for its products and in its own Odoo, routed through the Gateway before a merchant depends on it. An institution's payouts never go through the Gateway; products send them through rails (FS-586) | Planned | 8 Jun: Kapu must be the first consumer of its own Gateway | 2 |
 | GW-10 | Settlement to merchants (aggregation) | Planned | 8 Jun: the long-term goal, once a PSP licence is held. Interim route under FS-061 | later |
 | GW-11 | Payouts to the merchant's customers (refunds, disbursements) | Planned | **Not stated for the Gateway in any source** — FS-089 | — |
 | GW-12 | The recipient's registered name confirmed with M-Pesa Hakikisha before every payout | Planned | Owner, 2026-10-03 (FS-388); rails RL-21 | 1 |

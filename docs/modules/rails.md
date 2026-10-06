@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, escrow, mandates, recon-observability, core, omni-channel, financial-crime, identity]
-review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-390, FS-391, FS-393, FS-403, FS-407, FS-408, FS-448, FS-453, FS-523, FS-585]
+review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-390, FS-391, FS-393, FS-403, FS-407, FS-408, FS-448, FS-453, FS-523, FS-585, FS-586, FS-587]
 last_reviewed: 2026-10-06
 ---
 
@@ -61,13 +61,13 @@ launched; its row stays Designed until that is confirmed (FS-393).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| RL-01 | One adapter interface: collect, pay out, status, balance, statement, reversal | Planned | FS-093 — FS-208 | 1 |
+| RL-01 | One adapter interface: collect, pay out, status, balance, statement, cancel, recall, reversal. Every payout is an instruction with one id from approval to settlement, carried to the rail as its reference: approved, released, sent, accepted or rejected, debited, settled; held by a rule until it may go; pending when no answer comes, settled by a status query, never resent blind. Cancelled before the rail processes it; recalled after, where the rail allows, with the outcome recorded; returned by the receiving side (account closed, name mismatch) with the funds back. A reversal is a new instruction linked to the original, never an edit of it: requested under maker-checker, through the rail's own reversal where it has one (M-Pesa's, RL-03) or a recall request, reversed in full, in part, or refused, each within the rail's time limit; the customer's posting is reversed by an entry, never deleted, and only when the money is back | Planned | FS-093 — FS-208. Owner, 2026-10-06: in R1, with the lifecycle, cancellation, recall and reversals (FS-586, FS-587) | 1 |
 | RL-02 | One normalised event per call, carrying the rail's own reference as a field, never in a note | Designed | docs/architecture.md §2 | 1 |
 | RL-03 | M-Pesa (Daraja): M-Pesa Express push prompt, C2B validation and confirmation, B2C, transaction status, account balance, reversal | Built | Ran in production at Onit Bank, Feb 2025 to Jun 2026, in Collect and the Gateway (owner, 2026-10-03, FS-384, FS-387, FS-391) | 1 |
 | RL-04 | Airtel Money: collections, disbursements, enquiry, balance, refunds | Designed | Kapu technical documentation lists the channel; MFI PRD §4. Outreach Email 3. Owner, 2026-10-03: the Airtel API integration was probably built for Onit Bank but never launched; to confirm with the technical lead (FS-393) | 1 |
 | RL-05 | T-Kash | Designed | Kapu technical documentation lists the channel. Outreach Email 4 | 1 |
 | RL-06 | PesaLink, through the sponsor bank's API | Planned | 8 Jun: trust accounts outstanding | 2 |
-| RL-07 | Bank APIs and statement files (MT940, CAMT.053, CSV), per bank; Dibon's own banks first | Planned | FS-125; outreach Email 1 | 1 |
+| RL-07 | Bank APIs and statement files (MT940, CAMT.053, CSV), per bank; Dibon's own banks first. Instructions reach each bank by the channel it offers: its API; host-to-host files over SFTP (ISO 20022 payment initiation out, status reports back); or a bulk-payment file uploaded to internet banking and released there by the institution's signatories, R1's fallback until a bank grants more. Whichever channel, the bank's status and its statement close the instruction (RL-01), and the bank-side release is linked to the approval that preceded it | Planned | FS-125; outreach Email 1; a customer's own request to its banks (docs/outreach/bank-access-request.md, FS-586) | 1 |
 | RL-08 | Card acquiring through an aggregator or acquirer; card numbers never reach us | Planned | partners.md SD-01, SD-03 | 3 |
 | RL-09 | Processor settlement reports, gross to net of fees | Planned | FS-102; recon-observability RO-20 | 2 |
 | RL-10 | **Unknown is a state.** A timeout is pending until a status query or a statement settles it | Designed | Prospect prototype, Transaction Trace; docs/architecture.md §5 | 1 |
@@ -89,6 +89,7 @@ launched; its row stays Designed until that is confirmed (FS-393).
 | RL-26 | Virtual cards for an institution's customers, issued through a licensed issuer-processor; card numbers never reach us. An opportunity we track, not a commitment | Planned | Owner, 2026-10-06 (FS-523). Candidates CP-16, CP-17; PCI DSS is compliance LC-11 | later |
 | RL-27 | Rails reached through another bank: for an institution that sends and receives RTGS, EFT, PesaLink or SWIFT transfers through a larger bank, its settlement account there is modelled as an account of its own; that bank's cut-offs per rail are held as transaction rules on the business calendar (financial-crime FC-16, core KC-15); a transfer out is released only after a prefunding check on the settlement account; status comes from that bank's API or its statements; a return or rejection reverses the customer's posting; every wire carries the sender's and recipient's details the AML regulations require (reg 32) | Planned | Owner, 2026-10-06 (FS-585); first for the R2 partner, a microfinance bank (partners PT-34) | 1 |
 | RL-28 | SWIFT through the larger bank: ISO 20022 messages (FS-424), the transfer's status tracked through that bank, incoming payment messages parsed for the beneficiary, charges and exchange rates captured for matching | Planned | Owner, 2026-10-06 (FS-585) | 2 |
+| RL-29 | The account holder's name confirmed before a bank payout, through the bank's account-validation service or PesaLink's name lookup where offered; a mismatch holds the payout, as M-Pesa's Hakikisha does for mobile money (RL-21) | Planned | Owner, 2026-10-06 (FS-586); Roan Capital RC-18 | 1 |
 
 ## 4 · Where it sits
 
