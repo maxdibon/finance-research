@@ -14,6 +14,7 @@ Markdown or a preview before they reach the PDF (FS-009).
 ```
 README.md            this file
 REVIEW.md            the intake register — every point raised, with an id
+HANDOFF.md           paste into a new session: orientation, rules, traps
 docs/                the work. The only place we edit
   start-here.md      a first week here: reading order by role, the rules
   architecture.md    who holds what: the three authorities, the custody
@@ -57,7 +58,8 @@ build/               generated: master.md, the portfolio PDF and web
 sources/             inputs as received — never edited
   dibon/             recon proposal, Kapu compliance one-pager
   kapu/              MFI PRD, 8 Jun 2026 meeting notes (anonymised)
-  gatekeepr/         snapshots of GateKeepr briefs — git-ignored
+  gatekeepr/         snapshots of GateKeepr briefs, its handoff and
+                     obligations register — git-ignored
   confidential/      client-specific documents — git-ignored
   regulation/ke/     Kenyan legislation, by "as at" date; reports/ and
                      superseded/ beside it — git-ignored
