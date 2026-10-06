@@ -7,7 +7,7 @@ owner: Product lead, recon
 classification: Internal
 audience: [sme, fintech]
 depends_on: [access, recon-observability, rails, mandates, messaging, gateway, crb]
-consumed_by: [business-suite, insights, mfi]
+consumed_by: [business-suite, insights, mfi, identity]
 review_ids: [FS-026, FS-027, FS-028, FS-033, FS-036, FS-037, FS-038, FS-095, FS-124, FS-125, FS-127, FS-130, FS-131, FS-132, FS-133, FS-134, FS-135, FS-439, FS-441, FS-522]
 last_reviewed: 2026-10-06
 ---
@@ -83,8 +83,8 @@ FS-132), recon-observability (the engine), rails (bank, mobile-money and
 card feeds), mandates (approval of payments, SR-11), messaging, gateway
 (incoming merchant payments, for businesses that collect through it). Also crb (individual lookups from the ERP).
 **Used by:** business-suite (statement feeds into accounting), insights
-(its metrics) and mfi (confirmed invoices for LPO and invoice financing,
-MF-32). Otherwise it is the product an SME buys, directly
+(its metrics), mfi (confirmed invoices for LPO and invoice financing,
+MF-32) and identity (statements from source, with consent, ID-18). Otherwise it is the product an SME buys, directly
 or through its bank (docs/bank-channel.md).
 
 **Who holds which record** (docs/architecture.md §2):

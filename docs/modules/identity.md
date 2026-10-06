@@ -6,9 +6,9 @@ version: 0.1.0
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
-depends_on: [access, rails, messaging, financial-crime]
+depends_on: [access, rails, messaging, financial-crime, sme-recon]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536]
 last_reviewed: 2026-10-06
 ---
 
@@ -68,8 +68,8 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 | ID-03 | Re-verification when documents expire, for repeat customers | Designed | MFI PRD FR-1.4 | 1 |
 | ID-04 | Liveness and face match against the ID photo | Planned | FS-204 — vendor not chosen; candidates Smile ID (PT-30), MetaMap (PT-33, owned by Incode since June 2024), Spin Mobile (PT-36) and Sumsub (PT-37); FS-340, FS-382 | 2 |
 | ID-05 | Phone-number ownership: the number checked against the name the operator holds for it | Built | Ran in production at Onit Bank, Feb 2025 to Jun 2026, as the gate on collect CO-02's account opening, under the bank's own agreements with Safaricom and Airtel (FS-390, FS-392). A new customer needs its own agreements, or Dibon's (compliance LC-13). For M-Pesa numbers, Safaricom's Hakikisha also returns the registered name (rails RL-21, Planned; FS-387) | 1 |
-| ID-06 | Tax PIN validation | Planned | FS-205 | 2 |
-| ID-07 | Business verification: registration, directors, beneficial owners | Planned | FS-090. Owner, 2026-10-05: business registration (BRS) moves to v1 (FS-415) | 1 |
+| ID-06 | Tax checks: KRA PIN validation, and whether a tax compliance certificate is valid, through KRA GavaConnect | Planned | FS-205; owner, 2026-10-06: the certificate added (FS-536) | 2 |
+| ID-07 | Business verification by registration number: status, directors and shareholders fetched from the business registry (the content of a CR12), beneficial owners as declared and checked; the company uploads only what cannot be fetched, and its eCitizen login is never held | Planned | FS-090; owner, 2026-10-06 (FS-536). Depends on BRS access, FS-205. Owner, 2026-10-05: business registration (BRS) moves to v1 (FS-415) | 1 |
 | ID-09 | Registers in other countries, per country | Planned | FS-109 | later |
 | ID-10 | The result, its source reference and the evidence kept; never a copy of the register's record | Planned | docs/architecture.md §6 | 1 |
 | ID-11 | Phone-number ownership by a one-time code sent to the number | Planned | FS-205. Split from ID-05; no record shows it ran | 1 |
@@ -79,6 +79,7 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 | ID-15 | Document vault for KYC and KYB evidence and collateral documents, one per institution in its own instance: object storage (Blob on Azure Stack; Ceph through Rook on-premises), each file encrypted under keys in OpenBao, checksummed, locked for its retention and then deleted; every view logged. Received in R1 at the branch console and by a single-use upload link sent by SMS or email; files type-checked, scanned for malware (ClamAV, run unmodified as a separate service; Sophos or another commercial engine where the customer pays for it, possibly through Liquid, FS-525), images re-encoded | Planned | Owner, 2026-10-06 (FS-500). Other channels: field app (omni-channel OC-17), WhatsApp sends the link, never the image (OC-16, privacy PR-16); migration (mfi MF-16) | 1 |
 | ID-16 | Document intake by API, through the same pipeline as ID-15: SMEs from their Odoo through the SME-to-lender exchange; institutions and vendors (a referring bank, another lender, an identity vendor) through the partner API with mutual authentication (access AC-04); each sender authenticated, consent recorded, files checked, scanned, classified, fingerprinted and filed against the application, the checklist (ID-02) updated. Reliance on another institution's checks only where it is itself supervised (POCAML Regulations reg 33), and the lender stays responsible | Planned | Owner, 2026-10-06 (FS-528, FS-530) | 2 |
 | ID-17 | Sharing documents out: to a person, a single-use, short-lived link to our own page, opened with a one-time code to the bound phone, after which they may download or share their own document as they choose; to an organisation, the portal, the API, or SFTP for bulk files (check-off and settlement files, regulator and audit exports); every share and download logged | Planned | Owner, 2026-10-06 (FS-532); architecture §7 | 1 |
+| ID-18 | Evidence from source, with the business's consent: statements taken from its SME Recon feeds, its bank's API or its M-Pesa shortcode (rails RL-20) instead of files that can be edited; licences checked against the regulators' published lists | Planned | Owner, 2026-10-06 (FS-536). Would close Roan Capital's statement gap (RC-05) and feed credit scoring (mfi MF-33) | 2 |
 
 **Retired ids:** ID-08, moved to financial-crime FC-05 and FC-06 (FS-431). A retired id is never reused.
 
@@ -86,7 +87,8 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 
 **Depends on:** access (who ran the check), rails (Hakikisha, RL-21; the
 SIM-swap check, RL-22), messaging (one-time codes, ID-11),
-financial-crime (holds on an IMSI change, FC-02).
+financial-crime (holds on an IMSI change, FC-02), sme-recon (statements
+from source, ID-18).
 **Used by:** collect, gateway, mfi, sacco, escrow, crb, core,
 omni-channel, financial-crime, access (re-verification before a
 reset or a new device, AC-15) and business-suite (company registers
