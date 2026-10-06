@@ -51,7 +51,8 @@ design/              layout, diagrams and illustrative screens; no copy
   portfolio-preview/ the per-product diagrams both editions draw
   bank-channel-proposal/
                      build.js for the two-page proposal
-  brand/             the Dibon logo, and the script that extracts it
+  brand/             the Dibon logo, the script that extracts it, and the
+                     "Dibon Consulting" mark, a candidate not yet in use
 build/               generated: master.md, the portfolio PDF and web
                      previews, the bank channel proposal, the NPS Bill
                      comments — git-ignored
