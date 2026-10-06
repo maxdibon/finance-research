@@ -22,3 +22,8 @@ node tools/check.js || {
   echo "pre-commit: checks failed; nothing committed. Fix, or see tools/check.js."
   exit 1
 }
+
+# 3. The reader (FS-567): build/site/, linked HTML of the documents, rebuilt
+#    after the checks pass so it always matches the last commit. A failure
+#    here warns and does not block: the reader is a reading aid.
+node tools/site.js >/dev/null 2>&1 || echo "pre-commit: warning: build/site/ not rebuilt; run node tools/site.js to see why."
