@@ -912,3 +912,25 @@ its own entry.
   the bank, until a bank allows payments within agreed limits to go
   straight through; each bank's channel, formats and time limits to
   learn.
+
+## FS-588 · What is approved is what is sent; no Dibon role moves an institution's money
+
+- **Chose:** an approval records a hash of the payment's content and
+  rails send only what matches (RL-01, the approval-engine spec); a
+  recently added or changed destination adds an approver and a wait,
+  and whoever changed it may not approve (FC-16); instructions and files
+  to banks signed with keys that never leave OpenBao, over mutual TLS
+  (RL-07, RL-12); the internet-banking file controlled by its totals and
+  hash and checked line by line against the statement; reversals only
+  to the source; no Dibon role, break-glass included, in any payment's
+  chain (architecture §3, AC-09); the instruction path threat-modelled
+  first and always in the penetration test (SE-16, SE-17).
+- **Requires:** RL-01; RL-07; RL-12; FC-16; AC-09; SE-16; SE-17; docs/architecture.md §3 "never move an institution's money"; docs/specs/approval-engine.md "a hash".
+- **Argued against:** trusting the approval of a request without its
+  content, which lets a payee be changed after approval; and leaving
+  break-glass able to release payments, which makes Dibon's staff a
+  path to the institution's money.
+- **Costs (inferred):** hashing and checking on every payout; signing
+  per bank, whose requirements are still to learn (the bank access
+  request, item 8); a wait on payouts to new destinations that
+  customers will feel.

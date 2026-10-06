@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588]
 last_reviewed: 2026-10-06
 ---
 
@@ -168,6 +168,12 @@ server, and our server calls the rail. Daraja keys, bank API credentials
 and signing keys are never placed in a mobile app, a USSD gateway
 configuration or a browser, because anyone can unpack an app. On the
 server they are held in OpenBao (§6, FS-403).
+
+**Dibon's staff never move an institution's money.** No Dibon role may
+initiate, approve or release a payment from an institution's account,
+break-glass access included; the roles that can are the institution's
+own, in its realm (access AC-09). Dibon engineers run the platform; they
+are never in a payment's approval chain (FS-588).
 
 ---
 

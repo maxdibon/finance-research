@@ -5,7 +5,7 @@ kind: spec
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588]
 last_reviewed: 2026-10-06
 ---
 
@@ -254,7 +254,11 @@ channel. The products act on `request.approved`, never on a decision.
 2. The link carries a token signed by the engine with a key held in
    OpenBao's transit engine; the key never leaves OpenBao. The token
    binds the request, the step, the approver's subject id, an expiry and
-   a nonce.
+   a nonce. For anything that moves money, the request also carries a hash
+   of its content (amount, currency, payee name, account or number, rail,
+   reference), shown to the approver and recorded with the decision; rails
+   send only an instruction whose hash matches, and a change re-opens
+   approval (rails RL-01, FS-588).
 3. Opening the link checks the signature, the expiry, that the step is
    still open, and that the nonce is unused; the nonce is then spent.
 4. **Anything that moves money:** the page signs the approver in through

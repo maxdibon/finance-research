@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503]
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588]
 last_reviewed: 2026-10-06
 ---
 
@@ -69,8 +69,8 @@ not go live on less.
 | SE-13 | Round-the-clock detection and response: managed detection and response from a security operations centre (Sophos MDR through Liquid), fed by our logs and endpoint agents | Planned | FS-458, FS-464. To confirm terms with Liquid | 1 |
 | SE-14 | Endpoints: staff laptops and our servers with endpoint protection, disk encryption and device management (Sophos endpoint, Microsoft Intune); field devices enrolled with Android Enterprise (omni-channel OC-19) | Planned | FS-459, FS-464 | 1 |
 | SE-15 | Mobile apps built and tested to OWASP MASVS level 2 (MobSF in the pipeline), with Play Integrity and App Attest | Planned | FS-462, FS-464. The field-officer app (OC-17) and member apps (OC-01) | 1 |
-| SE-16 | A threat model per product (STRIDE for security, LINDDUN for privacy), reviewed at each major change | Planned | FS-462, FS-464 | 1 |
-| SE-17 | An independent penetration test every year and before each customer's go-live, by a tester we do not otherwise use for assurance | Planned | FS-464; approval pack item 8; assurance rule 1 | 1 |
+| SE-16 | A threat model per product (STRIDE for security, LINDDUN for privacy), reviewed at each major change; the payment-instruction path first, written before it is built (rails RL-01, RL-07; FS-588) | Planned | FS-462, FS-464 | 1 |
+| SE-17 | An independent penetration test every year and before each customer's go-live, by a tester we do not otherwise use for assurance; the payment-instruction path always in scope (FS-588) | Planned | FS-464; approval pack item 8; assurance rule 1 | 1 |
 | SE-18 | Security events (logins, admin actions, step-ups) collected and kept; Restricted data never in a log | Planned | FS-464; access AC-11; architecture §7 | 1 |
 | SE-19 | Incident response: severities, a runbook, and the institution told within an agreed time of a confirmed incident, so it can meet its regulator's deadline | Planned | FS-464; recon RO-18; approval pack item 10 | 1 |
 | SE-20 | Backups in a separate security domain: their own accounts, administrators and multi-factor authentication; write-once copies, one of them offline (three copies, two media, one off-site, one offline, verified) | Planned | FS-468, FS-470 | 1 |
