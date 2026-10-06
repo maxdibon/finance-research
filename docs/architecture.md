@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590]
 last_reviewed: 2026-10-06
 ---
 
@@ -30,7 +30,7 @@ Draft, pending FS-034.
 |---|---|
 | **Channels** | omni-channel — mobile apps, internet banking, USSD, the field-officer app |
 | **Products** | collect · gateway · escrow · core (Kapu Core: hosted core banking on Apache Fineract) · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) · business-suite (Odoo or Zoho, implemented by Dibon) |
-| **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification) · messaging (SMS, WhatsApp, Telegram, app; transactional and campaigns) · rails · insights · financial-crime (fraud, AML/CFT, reporting) |
+| **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification) · messaging (SMS, WhatsApp, Telegram, app; transactional and campaigns) · rails · insights · financial-crime (fraud, AML/CFT, transaction rules, reporting) · decisioning (appraisal, scores, risk classes) · platform-security |
 | **Systems of record** | the institution's core, or Kapu Core · Odoo · recon engine — §2 |
 
 ```
@@ -47,7 +47,7 @@ Draft, pending FS-034.
  +--------------------------------------------------------------------+
  | SHARED       recon-observability . mandates . crb . access .       |
  | SERVICES     identity . messaging . rails . insights .             |
- |              financial-crime                                       |
+ |              financial-crime . decisioning . platform-security     |
  +--------------------------------------------------------------------+
           |                       |                        |
  +------------------+   +-------------------+   +--------------------+
@@ -236,24 +236,34 @@ Matching rules that hold on every rail:
 
 ```
   PRODUCTS AND CHANNELS
-  collect . gateway . escrow . core . mfi . sacco . sme-recon . omni-channel
-      |  requests (API, synchronous)            ^  events, signed
-      v                                         |  (traceability)
- +--------------------------------------------------------------------+
- |                EVENT BUS: Kafka, CloudEvents envelopes             |
- +--------------------------------------------------------------------+
-      |           |          |           |           |           |
-  mandates    identity   messaging     rails     financial-   recon-
-  approvals,  KYC, NPDM, SMS, chat,   M-Pesa,    crime        observ-
-  quorum,     BRS, SIM   one-time     Airtel,    screening,   ability
-  email       binding    codes        T-Kash,    cases,       matching,
-  approval                            banks      reports      traces
-      |           |          |           |           |           |
- +--------------------------------------------------------------------+
- | access (Keycloak): every login, role and step-up                  |
- | OpenBao: every key and secret     platform security: every layer  |
- | insights: reads the three authorities and the bus; never writes   |
- +--------------------------------------------------------------------+
+  collect . gateway . escrow . core . mfi . sacco . sme-recon . business-suite . omni-channel
+        |  requests (API, synchronous)               ^  every state change, a signed event
+        v                                            |  (traceability)
+  +------------------------------------------------------------------------------------------------+
+  |                             EVENT BUS: Kafka, CloudEvents envelopes                            |
+  +------------------------------------------------------------------------------------------------+
+             |                        |                        |                        |
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+  | MANDATES            |  | IDENTITY            |  | MESSAGING           |  | RAILS               |
+  | approvals, quorum,  |  | KYC, NPDM, BRS,     |  | SMS, WhatsApp,      |  | M-Pesa, Airtel,     |
+  | approval by email,  |  | SIM binding, tiers, |  | email, one-time     |  | T-Kash, banks;      |
+  | debit mandates      |  | the document vault  |  | codes, quiet hours  |  | one instruction     |
+  |                     |  |                     |  |                     |  | per payout          |
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+             |                        |                        |                        |
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+  | FINANCIAL CRIME     |  | RECON-OBSERVABILITY |  | DECISIONING         |  | CRB                 |
+  | screening, the      |  | matching, traces,   |  | appraisal, scores,  |  | bureau lookups and  |
+  | transaction rules,  |  | float, monitoring   |  | risk classes; rules |  | submissions         |
+  | cases, reports      |  |                     |  | now, models later   |  |                     |
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+             |                        |                        |                        |
+  +------------------------------------------------------------------------------------------------+
+  | access (Keycloak): every login, role and step-up                                               |
+  | OpenBao: every key and secret; signing keys used inside it, never exported                     |
+  | platform security: every layer, from the perimeter to the database                             |
+  | insights: reads the three authorities and the bus; never writes                                |
+  +------------------------------------------------------------------------------------------------+
 ```
 
 Products ask shared services to act by API, and every state change is
