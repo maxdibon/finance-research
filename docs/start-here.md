@@ -121,3 +121,4 @@ Ids are never reused; a retired capability id is listed in its module
 | OB-COM, OB-MF and others | onboarding.md | A go-live item: common to every customer (COM), or per product (its prefix) |
 | DC-FS-PF | README.md | A document code: the two portfolio editions |
 | R1 to R5 | delivery-plan.md | A release |
+| JN | journeys/README.md | A user journey, step by step |

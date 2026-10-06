@@ -697,6 +697,129 @@ function checkScope(root) {
   return n > cap ? [fail('scope', DELIVERY, 0, `phase 1 has ${n} capabilities; the v1 cap is ${cap}. Move something out, or raise the cap by decision`)] : [];
 }
 
+// ── journeys ─────────────────────────────────────────────────────────────
+// A journey (FS-548) keeps the template's headings, has a release, cites
+// the capabilities each step relies on and never types their status. A
+// capability outside the journey's release is cited in §4 Gaps: for R1,
+// one in "R1 in detail" and in phase 1; for R2 to R5, one in phase 1.
+// Every journey is listed in the index with a link to its file.
+const JOURNEYS = path.join('docs', 'journeys');
+const RELEASES = ['R1', 'R2', 'R3', 'R4', 'R5', 'phase 2'];
+
+function capabilityInfo(root) {
+  const info = new Map();
+  for (const file of moduleFiles(root)) {
+    let inSection = false;
+    for (const line of read(root, file).split('\n')) {
+      if (/^## /.test(line)) inSection = /^## 3 · /.test(line);
+      if (!inSection) continue;
+      const c = line.split('|').slice(1, -1).map((x) => x.trim());
+      if (/^[A-Z]{2}-\d{2}$/.test(c[0] || '')) info.set(c[0], { status: c[2], phase: c[c.length - 1] });
+    }
+  }
+  return info;
+}
+
+// Capability ids in a piece of text, "X-01 to X-05" ranges expanded.
+function citedIds(text, prefixes) {
+  const ids = [];
+  for (const m of text.matchAll(/\b([A-Z]{2})-(\d{2})(?: to (?:\1-)?(\d{2}))?\b/g)) {
+    if (!prefixes.has(m[1])) continue;
+    for (let n = +m[2]; n <= (m[3] ? +m[3] : +m[2]); n++) ids.push(`${m[1]}-${String(n).padStart(2, '0')}`);
+  }
+  return ids;
+}
+
+function journeyFiles(root) {
+  const dir = path.join(root, JOURNEYS);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter((f) => f.endsWith('.md') && f !== 'README.md' && !f.startsWith('_'))
+    .map((f) => path.join(JOURNEYS, f));
+}
+
+function parseJourney(text, prefixes) {
+  const front = (text.match(/^---\n([\s\S]*?)\n---\n/) || [])[1] || '';
+  const j = {
+    release: (front.match(/^release: *(.+)$/m) || [])[1],
+    id: (front.match(/^name: *(JN-\d{2})\b/m) || [])[1],
+    steps: [], gaps: '',
+  };
+  let section = null;
+  text.split('\n').forEach((line, i) => {
+    if (/^## /.test(line)) { section = +((line.match(/^## (\d+) · /) || [])[1] || 0); return; }
+    if (section === 4) j.gaps += `${line}\n`;
+    if (section !== 2 && section !== 3) return;
+    const c = line.split('|').slice(1, -1).map((x) => x.trim());
+    if (!/^(\d+|[a-z])$/.test(c[0] || '')) return;
+    j.steps.push({ line: i + 1, step: c[0], text: c.slice(1).join(' '), last: c[c.length - 1], ids: citedIds(c[c.length - 1], prefixes) });
+  });
+  j.gapIds = new Set(citedIds(j.gaps, prefixes));
+  return j;
+}
+
+function r1Scope(root) {
+  const text = read(root, DELIVERY);
+  const start = text.indexOf('## R1 in detail');
+  if (start < 0) return '';
+  const end = text.indexOf('\n## ', start + 1);
+  return text.slice(start, end < 0 ? undefined : end);
+}
+
+function checkJourneys(root) {
+  const files = journeyFiles(root);
+  if (!files.length) return [];
+  const info = capabilityInfo(root);
+  const prefixes = new Set([...info.keys()].map((id) => id.slice(0, 2)));
+  const r1 = new Set(citedIds(r1Scope(root), prefixes));
+  const wantHeadings = headings(read(root, path.join(JOURNEYS, '_template.md')));
+  const index = read(root, path.join(JOURNEYS, 'README.md'));
+  const statusWord = new RegExp(`\\b(${STATUSES.join('|')})\\b`);
+  const failures = [];
+  for (const file of files) {
+    const text = read(root, file);
+    const at = (line, m) => failures.push(fail('journeys', file, line, m));
+    const j = parseJourney(text, prefixes);
+    if (!RELEASES.includes(j.release)) at(1, `release "${j.release || ''}" outside ${RELEASES.join(', ')}`);
+    if (!j.id) at(1, 'name does not start with a JN id');
+    else if (!index.split('\n').some((l) => l.startsWith(`| ${j.id} |`) && l.includes(`](${path.basename(file)})`))) {
+      at(1, `${j.id} is not listed in ${JOURNEYS.split(path.sep).join('/')}/README.md with a link to its file`);
+    }
+    const got = headings(text);
+    for (let i = 0; i < Math.max(got.length, wantHeadings.length); i++) {
+      if (got[i] !== wantHeadings[i]) { at(0, `heading ${i + 1} is "${got[i] || '(missing)'}"; template has "${wantHeadings[i] || '(none)'}"`); break; }
+    }
+    for (const s of j.steps) {
+      if (!s.ids.length && s.last !== '—') at(s.line, `step ${s.step} cites no capability; cite one, or "—" and name it in §4`);
+      if (s.last === '—' && !new RegExp(`\\bstep ${s.step}\\b`).test(j.gaps)) at(s.line, `step ${s.step} is "—" but §4 does not name "step ${s.step}"`);
+      if (statusWord.test(s.text)) at(s.line, `step ${s.step} types a status; statuses are computed from the modules`);
+      for (const id of s.ids) {
+        const cap = info.get(id);
+        if (!cap || j.release === 'phase 2' || j.gapIds.has(id)) continue;
+        const inRelease = cap.phase === '1' && (j.release !== 'R1' || r1.has(id));
+        if (!inRelease) at(s.line, `step ${s.step} relies on ${id} (phase ${cap.phase}${j.release === 'R1' && !r1.has(id) ? ', not in R1' : ''}), outside ${j.release}, and §4 Gaps does not cite it`);
+      }
+    }
+  }
+  return failures;
+}
+
+// Each journey's capabilities by status, computed: never typed (FS-548).
+function journeyCounts(root) {
+  const info = capabilityInfo(root);
+  const prefixes = new Set([...info.keys()].map((id) => id.slice(0, 2)));
+  const out = {};
+  for (const file of journeyFiles(root)) {
+    const j = parseJourney(read(root, file), prefixes);
+    const ids = [...new Set(j.steps.flatMap((s) => s.ids))];
+    out[j.id || file] = { release: j.release, capabilities: ids.length, ...ids.reduce((m, id) => {
+      const s = (info.get(id) || {}).status || 'missing';
+      m[s] = (m[s] || 0) + 1;
+      return m;
+    }, {}) };
+  }
+  return out;
+}
+
 // ── reviewed ─────────────────────────────────────────────────────────────
 // Every document under docs/ carries last_reviewed, and it is never older
 // than the document's last change: a change being committed counts as
@@ -749,6 +872,7 @@ function counts(root) {
   return {
     register: { rows: rows.length, byStatus: tally(rows.map((r) => r.status)), byRaiser: tally(rows.map((r) => r.raisedBy)) },
     modules,
+    journeys: journeyCounts(root),
     partners: {
       candidates: p.candidates.length,
       byStage: tally(p.candidates.map((r) => r.cells[6])),
@@ -779,6 +903,7 @@ function runAll(root) {
     ...checkReferences(root, files),
     ...checkDependencies(root),
     ...checkScope(root),
+    ...checkJourneys(root),
     ...checkReviewed(root, files),
   ];
 }

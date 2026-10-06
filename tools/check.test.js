@@ -406,3 +406,55 @@ test('scope: moving one out keeps the count within the cap', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'modules', 'insights.md'), (t) => t.replace(/^(\| IN-02 \|.*\| )2 \|$/m, '$11 |').replace(/^(\| IN-15 \|.*\| )2 \|$/m, '$12 |').replace(/^(\| IN-01 \|.*\| )1 \|$/m, '$12 |')));
   assert.deepStrictEqual(f, []);
 });
+
+// ── journeys (FS-548) ────────────────────────────────────────────────────
+const JOURNEY = path.join('docs', 'journeys', 'manual-identity-check.md');
+const JOURNEY_INDEX = path.join('docs', 'journeys', 'README.md');
+const STEP_1 = '| MF-01, KC-01, ID-02, MF-02 |';
+
+test('journeys: a step relying on a phase-2 capability not in §4 Gaps fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace(STEP_1, '| MF-01, KC-01, ID-02, MF-02, OC-08 |')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: the same capability cited in §4 Gaps passes', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace(STEP_1, '| MF-01, KC-01, ID-02, MF-02, OC-08 |')
+    .replace('## 5 · Open questions', '| OC-08, applications by USSD | phase 2 | At the branch only | Accept |\n\n## 5 · Open questions')
+    .replace(/\n\n(\| OC-08, applications)/, '\n$1')));
+  assert.deepStrictEqual(f, []);
+});
+
+test('journeys: an R1 journey relying on a phase-1 capability outside R1 fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace(STEP_1, '| MF-01, KC-01, ID-02, MF-02, ID-14 |')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: a typed status fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace('the product\'s document checklist appears', 'the product\'s document checklist appears (Planned)')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: a step citing no capability fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace(STEP_1, '| |')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: a "—" step that §4 does not name fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace(STEP_1, '| — |')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: a release outside the list fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace('release: R1', 'release: soon')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: a journey missing from the index fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY_INDEX, (t) => t.replace(/^\| JN-02 \|.*\n/m, '')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: a heading that differs from the template fails', () => {
+  const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace('## 4 · Gaps', '## 4 · Missing')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});

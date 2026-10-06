@@ -37,6 +37,8 @@ docs/                the work. The only place we edit
   assurance.md       testing for institutions we do not supply; conflicts
   bank-channel.md    banks offering SME Recon and Odoo to their SMEs
   specs/             build specifications, one per R1 component
+  journeys/          user journeys, step by step, with the capabilities each
+                     step relies on; gaps named; statuses computed
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
   marketing/
