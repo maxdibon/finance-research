@@ -5,7 +5,7 @@ kind: journey
 release: R1
 owner: Solution architect
 classification: Internal
-review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570]
+review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571]
 last_reviewed: 2026-10-06
 ---
 
@@ -95,8 +95,8 @@ docs/specs/approval-engine.md.
 | f | 5 | **No one acts.** Reminders after the set time, then escalation to another holder of the role | MD-08 |
 | g | 6 | **The borrower does not sign before the offer expires.** The offer lapses; a new one is generated from the product version then in force | MF-34 |
 | h | 6 | **The product changed after approval.** The loan keeps the terms it was approved and offered on; changes apply only to new loans (RC-30) | KC-04, MF-24 |
-| i | 8 | **The payment fails, or no answer comes.** It goes to the retry and exception queue the accountant sees. An unanswered payment is not retried blind: its status is asked first, so it is never paid twice (§4) | MF-12, RL-03, RL-10, RL-14 |
-| j | 8 | **The M-Pesa number is registered to someone else.** The payment is held before it is sent (§4) | MF-20, RL-21 |
+| i | 8 | **The payment fails, or no answer comes.** It goes to the retry and exception queue the accountant sees. An unanswered payment is not retried blind: its status is asked first, so it is never paid twice | MF-12, RL-03, RL-10, RL-14 |
+| j | 8 | **The M-Pesa number is registered to someone else.** The payment is held before it is sent | MF-20, RL-21 |
 | k | 7 | **The person approving the disbursement prepared it.** Refused | KC-08, MD-06 |
 | l | 1 to 9 | **No connection.** As JN-02 §3 i: nothing moves offline | ID-15 |
 | m | 7 | **It is between 11 pm and 4 am,** Roan Capital's end-of-day window (RC-21). No disbursement goes out; it waits for the window to close (§4) | KC-07 |
@@ -105,11 +105,9 @@ docs/specs/approval-engine.md.
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| MF-20 and RL-21, the M-Pesa registered name confirmed before a disbursement (§3 j) | phase 1, not in R1 | Money goes to whatever number was typed. A wrong digit pays a stranger | Bring both into R1: the R1 count moves, not the cap (FS-570) |
-| RL-10 and RL-14: an unanswered payment is a state, settled by a status query; a repeat never pays twice (§3 i) | phase 1, not in R1 | A timeout invites a second payment by hand | Bring both into R1 (FS-570) |
-| KC-07 in Roan Capital's map carries end of day, not a lockout: RC-21 is a gap in the delivery map (§3 m, step 7) | phase 1, in R1, without the window | Disbursements could go out during end of day | Write the window into MF-11: no disbursement inside the institution's end-of-day window (FS-570) |
-| CR-02, a credit bureau report at appraisal | phase 1, not in R1 | Appraisal (step 3) has no bureau history | Ask Roan Capital whether it pulls bureau reports today; if so, bring CR-02 into R1 (FS-570) |
-| Appraisal from statements: ratios computed (RC-11), statements from source (ID-18, phase 2, RC-05) | RC-05 a gap; ID-18 phase 2 | Statements arrive as files that can be edited, and the officer computes the ratios by hand | Accept for R1. In phase 2, statements from source (ID-18); Prembly's M-Pesa statement analysis (partners PT-53) is a candidate (FS-570) |
+| KC-07 in Roan Capital's map carries end of day, not a lockout: RC-21 is a gap in the delivery map (§3 m, step 7) | phase 1, in R1, without the window | Disbursements could go out during end of day | Open: Roan Capital's procedure, or a time check on automated payouts (FS-571) |
+| CR-02, a credit bureau report at appraisal | phase 1, not in R1 | Appraisal (step 3) has no bureau history | Asked of Roan Capital (delivery map, open answer 12); if it does, CR-02 comes into R1 (FS-570) |
+| Appraisal from statements: ratios computed (RC-11), statements from source (ID-18, phase 2, RC-05) | RC-05 a gap; ID-18 phase 2 | Statements arrive as files that can be edited, and the officer computes the ratios by hand | Accept for R1. In phase 2, statements from source (ID-18); Prembly's M-Pesa statement analysis (partners PT-53) is a candidate. Accepted for R1 (FS-570) |
 | MF-33, a behaviour score for repeat borrowers (RC-14, RC-15) | phase 2 | The officer judges repayment history by eye | As decided (FS-522) |
 
 ## 5 · Open questions
@@ -119,4 +117,5 @@ docs/specs/approval-engine.md.
 - The Head Office Committee's threshold, and the override authority's
   role: configuration, from Roan Capital's role list (open answer 7).
 - Disbursement banks: NCBA only, or NCBA and Access Bank (open answer 6).
-- Whether Roan Capital checks a credit bureau before lending today.
+- Whether Roan Capital checks a credit bureau before lending today
+  (delivery map, open answer 12).

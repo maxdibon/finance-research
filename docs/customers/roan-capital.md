@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570]
 last_reviewed: 2026-10-06
 ---
 
@@ -80,7 +80,7 @@ missing. *Gap* means no capability does it yet.
 
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
-| RC-18 | Disbursement under maker-checker, through NCBA and Access Bank internet banking | MF-11, RL-07 | Partial | Maker-checker is MF-11. Bank APIs are RL-07, Planned; Roan Capital opens the NCBA API talks (assumption 2). The document names Access Bank in §2.1 only. M-Pesa B2C ran in production at Onit Bank (RL-03), with the name confirmed by Hakikisha (MF-20) |
+| RC-18 | Disbursement under maker-checker, through NCBA and Access Bank internet banking | MF-11, RL-07, MF-20, RL-21, RL-10, RL-14 | Partial | Before an M-Pesa disbursement the registered name is confirmed (MF-20, RL-21); an unanswered payment is settled by a status query and a repeat never pays twice (RL-10, RL-14) (FS-570). Maker-checker is MF-11. Bank APIs are RL-07, Planned; Roan Capital opens the NCBA API talks (assumption 2). The document names Access Bank in §2.1 only. M-Pesa B2C ran in production at Onit Bank (RL-03), with the name confirmed by Hakikisha (MF-20) |
 | RC-19 | Repayments reconciled by parsing M-Pesa and bank statement narrations | MF-10, RO-02, RO-05 | Partial | Better with M-Pesa C2B on Roan Capital's paybill (RL-03, Built at Onit Bank): each repayment arrives with its account reference, and Pull Transactions (RL-20) finds any missed confirmation. Statement parsing becomes the fallback |
 | RC-20 | SMS or WhatsApp reminder on day 25 of a 30-day loan | MF-13, MS-01, MS-02, MS-03, MS-09 | Covered | Owner, 2026-10-06: the demo and the platform run on Dibon's messaging service, not Roan Capital's own gateway, superseding the document's assumption 5 (FS-565): SMS direct to the operators under our PRSP licence (compliance LC-03), a sender ID for Roan Capital registered with each operator (onboarding OB-COM-09), and a truthful delivery status. WhatsApp (MS-06) stays outside R1 |
 | RC-21 | End-of-day lockout, 11 pm to 4 am: no fund movements, while leads and interest calculation continue | KC-07 | Gap | Kapu Core runs end of day (KC-07); a lockout window on fund movements is not a capability yet |
@@ -144,6 +144,7 @@ replacement (MF-05).
 | 9 | Will Roan Capital be named as a reference once live? | FS-401 | Open |
 | 10 | Loan agreement and guarantee templates, how borrowers sign, and the restructuring policy (RC-38, RC-39) | FS-516 | Open: the owner is asking |
 | 11 | Until PEP screening (FC-06, phase 2): a question on the application form, whether the borrower holds or held a public office, and the compliance officer's review of any yes. Agree? | FS-562 | Open |
+| 12 | Do you pull credit bureau reports before lending today? If so, the bureau lookup (CR-02) comes into R1 | FS-570 | Open |
 
 The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text

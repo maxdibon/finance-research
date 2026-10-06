@@ -5,6 +5,7 @@ kind: overview
 version: 0.2.0
 owner: Solution architect
 classification: Internal
+review_ids: [FS-572]
 last_reviewed: 2026-10-06
 ---
 
@@ -125,6 +126,9 @@ own payments first, and insights runs on our own data first (FS-033).
 | Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |
 | Who keeps our commitments, and whom we hire next | [operating-model.md](operating-model.md) |
 | What we build next, release by release | [delivery-plan.md](delivery-plan.md) |
+| How an R1 component is built | [specs/](specs/): the lender rules, the approval engine |
+| What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
+| How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](testing.md) |
 | What personal data we process, why and for how long | [privacy.md](privacy.md) |
 | Which documents an institution keeps, under which law, for how long | [documents.md](documents.md) |
 | How the service and the company keep going when something fails | [business-continuity.md](business-continuity.md) |
@@ -139,6 +143,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | How big each market segment is | business/market-sizing.xlsx |
 | Drafts to partners, operators and regulators | outreach/ |
 | Everything still open | [REVIEW.md](../REVIEW.md) |
+| All of it as linked pages, every id a link | build/site/index.html, rebuilt on every commit (FS-567) |
 
 Packs for each buyer type will sit in packs/ and will list modules rather
 than copy them.
