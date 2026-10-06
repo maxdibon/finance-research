@@ -819,6 +819,25 @@ function checkJourneys(root) {
   return failures;
 }
 
+// ── overview ─────────────────────────────────────────────────────────────
+// Every document under docs/ is reachable from the overview (FS-575): linked
+// directly, or inside a folder the overview links ("journeys/" or
+// "journeys/README.md"). Templates are copied, not read, and are exempt.
+const OVERVIEW = path.join('docs', 'overview.md');
+
+function checkOverview(root, files) {
+  if (!fs.existsSync(path.join(root, OVERVIEW))) return [fail('overview', OVERVIEW, 0, 'overview missing')];
+  const links = [...read(root, OVERVIEW).matchAll(/\]\(([^)\s#]+)(?:#[^)]*)?\)/g)]
+    .filter((m) => !/^[a-z]+:/i.test(m[1]))
+    .map((m) => path.posix.normalize(path.posix.join('docs', m[1])).replace(/\/?$/, m[1].endsWith('/') ? '/' : ''));
+  const folders = links.filter((l) => l.endsWith('/') || l.endsWith('/README.md')).map((l) => (l.endsWith('/') ? l : `${path.posix.dirname(l)}/`));
+  return files
+    .map((f) => f.split(path.sep).join('/'))
+    .filter((f) => f.startsWith('docs/') && f.endsWith('.md') && f !== 'docs/overview.md' && !path.posix.basename(f).startsWith('_'))
+    .filter((f) => !links.includes(f) && !folders.some((d) => f.startsWith(d)))
+    .map((f) => fail('overview', OVERVIEW, 0, `${f} is not linked from the overview, directly or by its folder`));
+}
+
 // Each journey's capabilities by status, computed: never typed (FS-548).
 function journeyCounts(root) {
   const info = capabilityInfo(root);
@@ -920,6 +939,7 @@ function runAll(root) {
     ...checkDependencies(root),
     ...checkScope(root),
     ...checkJourneys(root),
+    ...checkOverview(root, files),
     ...checkReviewed(root, files),
   ];
 }

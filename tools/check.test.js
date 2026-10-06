@@ -512,3 +512,19 @@ test('site: a journey links each capability to its module row, with its status',
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
+
+// ── overview (FS-575) ────────────────────────────────────────────────────
+test('overview: a document the overview does not link fails', () => {
+  const f = runWith((d) => fs.writeFileSync(path.join(d, 'docs', 'orphan.md'), '---\nid: orphan\nlast_reviewed: 2026-10-06\n---\n\n# Orphan\n'));
+  assert.deepStrictEqual(names(f), ['overview']);
+});
+
+test('overview: a document inside a linked folder passes', () => {
+  const f = runWith((d) => fs.writeFileSync(path.join(d, 'docs', 'journeys', 'later.md'), '---\nid: later\nlast_reviewed: 2026-10-06\n---\n\n# Later\n'));
+  assert.ok(!names(f).includes('overview'));
+});
+
+test('overview: removing a direct link fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'overview.md'), (t) => t.replace('[testing.md](testing.md)', 'testing.md')));
+  assert.deepStrictEqual(names(f), ['overview']);
+});

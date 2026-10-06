@@ -121,7 +121,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | Who holds which record, and where the licence line is | [architecture.md](architecture.md) |
 | What a product does, and what is built | its module, §3 |
 | Why something was decided, and what it cost | [decisions.md](decisions.md) |
-| Who our customers are, and what we are building for each | [customers.md](customers.md) |
+| Who our customers are, and what we are building for each | [customers.md](customers.md); each customer's delivery map in [customers/](customers/) |
 | Which partners we are talking to | [partners.md](partners.md) |
 | Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |
 | Who keeps our commitments, and whom we hire next | [operating-model.md](operating-model.md) |
@@ -141,7 +141,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | Every word of the portfolio PDF | [marketing/portfolio.md](marketing/portfolio.md) |
 | Every word of the two-page bank channel proposal | [marketing/bank-channel-proposal.md](marketing/bank-channel-proposal.md) |
 | How big each market segment is | business/market-sizing.xlsx |
-| Drafts to partners, operators and regulators | outreach/ |
+| Drafts to partners, operators and regulators | [outreach/](outreach/) |
 | Everything still open | [REVIEW.md](../REVIEW.md) |
 | All of it as linked pages, every id a link | build/site/index.html, rebuilt on every commit (FS-567) |
 

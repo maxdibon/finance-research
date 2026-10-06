@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571]
 last_reviewed: 2026-10-06
 ---
 
@@ -61,7 +61,7 @@ missing. *Gap* means no capability does it yet.
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
 | RC-08 | Collateral record for a vehicle or land, linked to the loan | MF-03, MF-18 | Partial | Vehicle is the first type (MF-03); land titles are MF-18, phase 2. This document needs land in the MVP |
-| RC-09 | The committee cannot open or approve an application until the logbook or title is attached; status "Logbook Pending" or "Logbook Attached" | MF-04 | Partial | MF-04 blocks acceptance on a failed verification; a gate on the document's presence is a narrower rule to configure |
+| RC-09 | The committee cannot open or approve an application until the logbook or title is attached; status "Logbook Pending" or "Logbook Attached" | MF-04, ID-02, MF-02 | Covered | Configuration, nothing built for it (FS-571): the logbook or title is an item on the secured product's checklist, its status shown per document (Pending, Attached), and the completeness gate holds the approval request until it is there. MF-04 blocks acceptance on a failed verification |
 | RC-10 | NTSA search, joint registration and discharge stay manual, outside the system | MF-04, MF-05 | Covered | Matches MF-04's manual verification; programmatic NTSA (MF-05) stays phase 2, as the document's exclusions say |
 
 ### Credit lifecycle and governance (§2.2)
