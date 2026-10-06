@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, psp, fintech]
 depends_on: [identity, rails, recon-observability, mandates, messaging, financial-crime, access, core]
 consumed_by: [mfi, sacco, escrow, insights, omni-channel]
-review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388, FS-390, FS-392, FS-393, FS-407, FS-431]
+review_ids: [FS-045, FS-050, FS-051, FS-052, FS-053, FS-054, FS-055, FS-056, FS-057, FS-058, FS-059, FS-060, FS-384, FS-388, FS-390, FS-392, FS-393, FS-407, FS-431, FS-552, FS-553, FS-554]
 last_reviewed: 2026-10-06
 ---
 
@@ -16,9 +16,11 @@ last_reviewed: 2026-10-06
 
 ## 1 · In one paragraph
 
-Kapu Collect lets a licensed institution take deposits that third parties
-collect. Each deposit lands in a real account held at the institution in
-the end user's name. The third party is a money collector, an SME or an
+Kapu Collect lets a licensed institution take deposits from mobile money
+into real accounts held at the institution in the end user's name. The
+deposits are collected by third parties through Kapu's APIs, or paid by
+the institution's own customers straight to its paybill or tills (CO-21,
+FS-552); a partner is optional. The third party, where there is one, is a money collector, an SME or an
 unlicensed deposit-taking or funds-holding operator (FS-045). It connects
 through Kapu's APIs, and Kapu never holds the funds. For the institution,
 Collect turns many small, scattered SME cash flows into deposits on its own
@@ -52,7 +54,7 @@ until one does (FS-051).
 | Institution operations team | Create and manage partners; see every partner's activity; dashboards and logs for the service |
 | Institution technical team | A documented API and sandbox; integration with the core banking system; on-call and escalation paths |
 | Partner (collector, SME, operator) | APIs to open accounts for its customers, collect, disburse and query; callbacks when async work finishes |
-| End user | Funds held in a real account at a licensed institution. Interacts only through the partner's channel |
+| End user | Funds held in a real account at a licensed institution. Pays in through the partner's app, the institution's paybill or till (CO-21), a payment prompt from a field collector, or USSD; receipts by SMS or WhatsApp (CO-18) |
 
 ## 3 · What it does
 
@@ -84,6 +86,7 @@ sources for the rest.
 | CO-18 | Notifications to the end customer when a deposit lands, through messaging | Planned | Owner, 2026-10-02 (FS-315) | 1 |
 | CO-17 | Loans on the bank's core: request, repayment, loan statement, loan balance, credit-limit check | Built | Onit API technical documentation (Feb 2025, held outside git); in production at Onit Bank, Feb 2025 to Jun 2026 (FS-384, FS-390), §2.6 | — |
 | CO-19 | The recipient's registered name confirmed with M-Pesa Hakikisha before every withdrawal to mobile | Planned | Owner, 2026-10-03 (FS-388); rails RL-21 | 1 |
+| CO-21 | Deposits paid by the customer to the institution's own paybill, with the account number as the reference, or to its own tills (one per partner, agent or branch), matched on the payer's phone number; anything unmatched goes to a holding queue and is never guessed. Where M-Pesa lets us check a payment before accepting it, an unknown or closed account, or a deposit above the customer's tier limit (identity ID-19), is refused before the money leaves the customer's wallet. Never into a partner's own paybill or till, or a Pochi la Biashara: the money would rest outside the institution (FS-056) | Planned | Owner, 2026-10-06 (FS-552, FS-554). C2B validation and confirmation are Built in rails RL-03 (Onit Bank). Validation on tills, and any third-party API for Pochi, to confirm with Safaricom | 1 |
 | CO-20 | A deposit whose confirmation never arrives is found with M-Pesa Pull Transactions and posted, not left unmatched | Planned | Owner, 2026-10-03 (FS-388); rails RL-20 | 1 |
 
 ## 4 · Where it sits
@@ -154,6 +157,15 @@ partner can recover the outcome by querying with its own request id.
     The flow is the same; only the posting target differs.
 ```
 
+**Channels** (FS-553): Collect stays an API product; the channels come
+from omni-channel and call the same API, so nothing is built twice. The
+partner's own app; the paybill or till directly, with no app (CO-21);
+a payment prompt sent by a field collector to the customer's own phone
+(omni-channel OC-18); a USSD menu for the partner on the institution's
+USSD service (OC-03, with the member USSD in R4); SMS and WhatsApp for
+receipts and links only, never balances (CO-18, architecture §7);
+payment links by SMS later (gateway GW-07, phase 2).
+
 **Withdrawal:** the sequence diagram debits the core first and then
 disburses. The data-flow text says the two happen "simultaneously".
 These describe different products — FS-054.
@@ -162,7 +174,7 @@ These describe different products — FS-054.
 
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
-| M-Pesa (C2B push, B2C, B2B) | in / out | real-time callback | Built: ran in production at Onit Bank, Feb 2025 to Jun 2026 (FS-390). The 8 Jun note of an outstanding go-live is unexplained (FS-088) |
+| M-Pesa (push prompt, C2B to paybill and till, B2C, B2B) | in / out | real-time callback | Built: ran in production at Onit Bank, Feb 2025 to Jun 2026 (FS-390). The 8 Jun note of an outstanding go-live is unexplained (FS-088) |
 | Airtel Money | in / out | real-time callback | Designed; in v1 (FS-407). Probably built for Onit Bank but never launched; to confirm (FS-393, rails RL-04) |
 | T-Kash | in / out | real-time callback | Designed (listed in the API; added to the suite 8 Jun); in v1 (FS-407, rails RL-05) |
 | PesaLink | in / out | to establish | Planned — CO-16 |
@@ -218,6 +230,12 @@ mobile-money rails and the institution's core, neither of which we
 control — FS-059.
 
 ## 10 · What it does not do
+
+**Collect or the Gateway** (FS-554): money that becomes a deposit in a
+customer's account at a licensed institution goes through Collect, which
+posts it to the core. Money that pays a merchant for goods or services
+goes through the Gateway, into the merchant's own shortcode. Both use the
+same M-Pesa connection (rails RL-03), so nothing is built twice.
 
 - Hold funds, a wallet or a ledger of its own.
 - Lend. Loan management sits in mfi and sacco (CO-17).

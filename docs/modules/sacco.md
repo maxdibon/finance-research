@@ -8,7 +8,7 @@ classification: Internal
 audience: [sacco]
 depends_on: [mandates, identity, rails, messaging, recon-observability, collect, crb, financial-crime, access, core, gateway, mfi]
 consumed_by: [omni-channel, insights, business-suite]
-review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453, FS-499, FS-522, FS-539]
+review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453, FS-499, FS-522, FS-539, FS-554]
 last_reviewed: 2026-10-06
 ---
 
@@ -59,7 +59,7 @@ shape of the segment, not discovery evidence from a named Sacco* — FS-174.
 | SC-01 | Member onboarding with KYC against the national register (NPDM, formerly IPRS) and membership approval | Planned | FS-023. Reuses mfi MF-02 (Designed) | 1 |
 | SC-02 | Share capital accounts, non-withdrawable, transferable as the bylaws allow | Planned | FS-023 | 1 |
 | SC-03 | Member deposits, non-withdrawable, as the basis of loan limits | Planned | FS-023 | 1 |
-| SC-04 | Contributions by M-Pesa, bank transfer or check-off, matched to members | Planned | FS-023; recon-observability RO-02 | 1 |
+| SC-04 | Contributions by M-Pesa, bank transfer or check-off, matched to members | Planned | FS-023; recon-observability RO-02. M-Pesa to the Sacco's paybill or tills through collect CO-21 (FS-554) | 1 |
 | SC-05 | Check-off: the employer's remittance reconciled against each member's expected deduction; differences as exceptions | Planned | FS-174 | 1 |
 | SC-06 | Withdrawable savings accounts, for deposit-taking Saccos only | Planned | FS-023 | 2 |
 | SC-07 | Loan products with limits set as a multiple of deposits | Planned | FS-023 | 1 |

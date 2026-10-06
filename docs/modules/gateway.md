@@ -8,7 +8,7 @@ classification: Internal
 audience: [sme, fintech, mfi, sacco]
 depends_on: [rails, recon-observability, messaging, mandates, identity, financial-crime, access]
 consumed_by: [sme-recon, mfi, sacco, insights]
-review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-407, FS-408, FS-415, FS-431]
+review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-407, FS-408, FS-415, FS-431, FS-554]
 last_reviewed: 2026-10-06
 ---
 
@@ -207,6 +207,12 @@ Liquid's Azure Stack (FS-032). That is an inference, not a decision.
 - See or store card numbers.
 - Replace the merchant's ERP. It feeds one, through sme-recon.
 - Lend, or take deposits. Those belong to mfi, sacco and collect.
+
+**Collect or the Gateway** (FS-554): money that becomes a deposit in a
+customer's account at a licensed institution goes through Collect, which
+posts it to the core. Money that pays a merchant for goods or services
+goes through the Gateway, into the merchant's own shortcode. Both use the
+same M-Pesa connection (rails RL-03), so nothing is built twice.
 - Onboarding and KYB checks for merchants are not specified — FS-090.
   Business registration checks will come from identity ID-07 (BRS, v1,
   FS-415).

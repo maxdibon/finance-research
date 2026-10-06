@@ -795,3 +795,19 @@ its own entry.
 - **Costs (inferred):** one more capability in R1 for a team of four;
   every limit check reads the tier; each institution must write the risk
   assessment behind its lightest tier before using it.
+
+## FS-552 · Collect takes paybill and till deposits; Collect for deposits, the Gateway for merchants; the cap raised to 235
+
+- **Chose:** deposits paid to the institution's own paybill or tills
+  (collect CO-21, phase 1, R2), with a partner optional; money that
+  becomes a deposit goes through Collect, money that pays a merchant
+  through the Gateway (FS-554); Collect's channels come from
+  omni-channel over the same API (FS-553).
+- **Requires:** CO-21; SC-04; docs/modules/collect.md "Collect or the Gateway"; docs/modules/gateway.md "Collect or the Gateway"; docs/delivery-plan.md "(CO-21)".
+- **Argued against:** deposits into a partner's own paybill, till or
+  Pochi la Biashara, which leaves customers' money with an unlicensed
+  party until it is swept (FS-045, FS-056); and deposits through the
+  Gateway, which has no account to post to.
+- **Costs (inferred):** one more phase-1 capability in R2; till payments
+  carry no account number, so some land in a holding queue for a person
+  to match; validation on tills is unconfirmed with Safaricom.

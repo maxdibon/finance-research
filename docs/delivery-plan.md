@@ -12,8 +12,8 @@ last_reviewed: 2026-10-06
 # Delivery plan — phase 1 in releases
 
 **Why this exists:** phase 1 in the modules is the whole of v1, not a
-release (FS-473). On 2026-10-06 it held 234 capability rows: 16 Built, 47
-Designed, 171 Planned (computed from the modules' §3 tables). No team
+release (FS-473). On 2026-10-06 it held 235 capability rows: 16 Built, 47
+Designed, 172 Planned (computed from the modules' §3 tables). No team
 builds that at once. This plan cuts it into releases, each started by a
 customer event and finished by a definition of done, so the work in hand
 is always what a signed customer needs next.
@@ -28,7 +28,7 @@ release that needs it.
 | Release | Started by | Scope | Size |
 |---|---|---|---|
 | **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 57 capabilities from the map (26 Designed, 31 Planned), plus 21 platform and security capabilities |
-| **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability | Mostly Built or Designed: the Onit record |
+| **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability | Mostly Built or Designed: the Onit record |
 | **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
 | **R4 · Saccos and Kapu Core** | The first Sacco or core customer signs | Kapu Sacco, Kapu Core, member apps and USSD, the field-officer app | Sacco, Core and omni-channel phase-1 rows |
 | **R5 · The rest of v1** | After R1, in the order sales ask | Escrow, CRB, financial crime beyond R1, insights, the remaining platform services | What is left of phase 1 |
@@ -80,7 +80,7 @@ SE-23 to SE-25) follows in R2, before a bank goes live.
 **The current scope is the target** (FS-490): v1 is everything in phase 1
 today, and it does not grow by drift.
 
-**v1 cap:** 234 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551).
+**v1 cap:** 235 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552).
 
 Nothing moves into phase 1 unless something of similar size moves out, or
 the team grows to carry it. Raising the cap is a decision: the line above
