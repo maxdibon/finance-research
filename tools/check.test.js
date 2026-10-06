@@ -306,7 +306,7 @@ test('customers: a dependency no module defines fails', () => {
 });
 
 test('customers: a delivery map that drifts from the register fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'customers', 'roan-capital.md'), (t) => t.replace('| RC-13 | Maker-checker throughout: the decider is never the requester | MD-06 |', '| RC-13 | Maker-checker throughout: the decider is never the requester | MD-06, MD-08 |')));
+  const f = runWith((d) => patch(d, path.join('docs', 'customers', 'roan-capital.md'), (t) => t.replace('| RC-13 | Maker-checker throughout: the decider is never the requester | MD-06 |', '| RC-13 | Maker-checker throughout: the decider is never the requester | MD-06, MD-11 |')));
   assert.deepStrictEqual(names(f), ['customers']);
 });
 
