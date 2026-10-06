@@ -829,3 +829,25 @@ its own entry.
 - **Costs (inferred):** tagging discipline on every test; a script to
   write in the code repository; one more R1 capability for a team of
   four with no test engineer.
+
+## FS-574 · Transaction rules and a business calendar; the cap raised to 238
+
+- **Chose:** one place where every money movement meets the
+  institution's rules before a rail (financial-crime FC-16): criteria of
+  type, amount per transaction and per cycle, source and destination
+  with allow- and deny-lists, currency, time, day and type of day,
+  channel and KYC tier; outcomes of allow, deny, hold until, approval or
+  step-up; the strictest wins. One business calendar per institution
+  (core KC-15) under every rule that counts days, and under Fineract's
+  own holidays. In R1 only time windows, types of day and tier amounts,
+  first for Roan Capital's lockout; the rest is configuration later.
+- **Requires:** FC-16; KC-15; docs/customers/roan-capital.md "RC-21"; docs/regulation.md "LR-36".
+- **Argued against:** a lockout written into the disbursement service,
+  which every institution's next rule would need written again; and
+  allow-lists that override everything, which would let a list entry
+  pass a sanctions match.
+- **Costs (inferred):** two more R1 capabilities for a team of four; a
+  calendar someone must keep, since the moon-dated days and the
+  gazetted ones are announced, not known in advance; messaging's quiet
+  hours, approval clocks and the complaints clocks will read the
+  calendar once wired, and their dependencies are added then.

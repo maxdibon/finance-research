@@ -5,7 +5,7 @@ kind: journey
 release: R1
 owner: Solution architect
 classification: Internal
-review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571]
+review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574]
 last_reviewed: 2026-10-06
 ---
 
@@ -99,13 +99,12 @@ docs/specs/approval-engine.md.
 | j | 8 | **The M-Pesa number is registered to someone else.** The payment is held before it is sent | MF-20, RL-21 |
 | k | 7 | **The person approving the disbursement prepared it.** Refused | KC-08, MD-06 |
 | l | 1 to 9 | **No connection.** As JN-02 §3 i: nothing moves offline | ID-15 |
-| m | 7 | **It is between 11 pm and 4 am,** Roan Capital's end-of-day window (RC-21). No disbursement goes out; it waits for the window to close (§4) | KC-07 |
+| m | 7 | **It is between 11 pm and 4 am,** Roan Capital's end-of-day window (RC-21). Staff release nothing in the window, by Roan Capital's procedure; a transaction rule holds what the system sends by itself, a queued payout or a retry, until the window closes | FC-16, KC-15 |
 
 ## 4 · Gaps
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| KC-07 in Roan Capital's map carries end of day, not a lockout: RC-21 is a gap in the delivery map (§3 m, step 7) | phase 1, in R1, without the window | Disbursements could go out during end of day | Open: Roan Capital's procedure, or a time check on automated payouts (FS-571) |
 | CR-02, a credit bureau report at appraisal | phase 1, not in R1 | Appraisal (step 3) has no bureau history | Asked of Roan Capital (delivery map, open answer 12); if it does, CR-02 comes into R1 (FS-570) |
 | Appraisal from statements: ratios computed (RC-11), statements from source (ID-18, phase 2, RC-05) | RC-05 a gap; ID-18 phase 2 | Statements arrive as files that can be edited, and the officer computes the ratios by hand | Accept for R1. In phase 2, statements from source (ID-18); Prembly's M-Pesa statement analysis (partners PT-53) is a candidate. Accepted for R1 (FS-570) |
 | MF-33, a behaviour score for repeat borrowers (RC-14, RC-15) | phase 2 | The officer judges repayment history by eye | As decided (FS-522) |
