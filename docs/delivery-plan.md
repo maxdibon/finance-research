@@ -27,7 +27,7 @@ release that needs it.
 
 | Release | Started by | Scope | Size |
 |---|---|---|---|
-| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 57 capabilities from the map (26 Designed, 31 Planned), plus 21 platform and security capabilities |
+| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 58 capabilities from the map (27 Designed, 31 Planned), plus 21 platform and security capabilities |
 | **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability | Mostly Built or Designed: the Onit record |
 | **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
 | **R4 · Saccos and Kapu Core** | The first Sacco or core customer signs | Kapu Sacco, Kapu Core, member apps and USSD, the field-officer app | Sacco, Core and omni-channel phase-1 rows |
@@ -45,7 +45,7 @@ the check keeps the two in step):
   open answer 5 and the document's exclusions.
 - **Approvals:** MD-01, MD-02, MD-05, MD-06, MD-09 (the 3-of-3 committee),
   MD-10, MD-18 (approval from email).
-- **Identity:** ID-01, ID-02, ID-07 (business registration), ID-19 (KYC tiers), ID-15 (the
+- **Identity:** ID-01, ID-02, ID-03 (re-verification), ID-07 (business registration), ID-19 (KYC tiers), ID-15 (the
   document vault), ID-17 (sharing documents out).
 - **Messaging:** MS-19 (email, for approvals and links).
 - **Core:** KC-01, KC-04, KC-07, KC-08 on Kapu Core (Fineract, PostgreSQL).
@@ -112,7 +112,7 @@ Four people lead the build (FS-477):
 | A DevSecOps engineer | The platform: Kubernetes, Keycloak (AC-01, AC-02, AC-08), OpenBao, the document vault (ID-15), the build pipeline, backups and the security minimum (SE rows above) |
 | The CTIO | Architecture and reviews; the approval engine's design (MD-01 to MD-18); security lead; Roan Capital's acceptance with the project manager |
 
-**Building less is the plan.** Four people cannot build 78 capabilities
+**Building less is the plan.** Four people cannot build 79 capabilities
 from scratch, so R1 uses what already exists and builds only what does
 not:
 

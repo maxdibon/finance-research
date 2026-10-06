@@ -59,7 +59,7 @@ hosting on OLP, is **Built** (FS-293).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| BS-01 | Odoo implementation: CRM, helpdesk, accounting and invoicing, configured to the customer | Planned | FS-002, FS-281 | 1 |
+| BS-01 | Odoo implementation: CRM, helpdesk, accounting and invoicing, configured to the customer. The helpdesk includes a restricted compliance team for identity mismatches referred from identity ID-01: visible to the compliance officer and those it names, never to the customer portal or the service desk's AI agent, and holding a link to the application, never its documents | Planned | FS-002, FS-281; owner, 2026-10-06 (FS-555). Tipping off is an offence (POCAMLA s.8) | 1 |
 | BS-02 | Odoo Sign for agreements, mandates, consents and onboarding forms; external signers need no licence. A signed document that carries personal data is filed in the document vault, and Odoo keeps the record and a link (architecture §6, FS-527). Completion emails carry a link, never the signed file (to confirm against Odoo; if it cannot be set, signing moves to our own page, FS-532) | Planned | FS-044, FS-049, FS-527 | 1 |
 | BS-03 | Customer portal: invoices, statements, tickets, signed documents; portal users need no licence | Planned | FS-026 | 1 |
 | BS-04 | Bank and mobile-money statements reconciled into Odoo accounting, through SME Recon | Planned | sme-recon SR-10 | 1 |

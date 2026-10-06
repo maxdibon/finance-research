@@ -5,7 +5,7 @@ kind: journey
 release: R1
 owner: Solution architect
 classification: Internal
-review_ids: [FS-329, FS-544, FS-547, FS-548, FS-551]
+review_ids: [FS-329, FS-544, FS-547, FS-548, FS-551, FS-555, FS-556, FS-557]
 last_reviewed: 2026-10-06
 ---
 
@@ -50,13 +50,14 @@ document, and it never clears a check that failed.
 
 | # | At step | What happens | Capabilities |
 |---|---|---|---|
-| a | 2 | **The register answers, and the name or number does not match, or the number is not found.** This is not the manual route: a mismatch is a possible impersonation. The application is held and referred to the compliance officer, by hand in R1 (§4) | ID-01 |
+| a | 2 | **The register answers, and the name or number does not match, or the number is not found.** This is not the manual route: a mismatch is a possible impersonation. The application is held, and the platform opens a ticket for the compliance officer in a restricted helpdesk team, with a link to the application and never its documents. The officer who captured it sees only that it is held: telling the borrower more could be tipping off (POCAMLA s.8) | ID-01, BS-01 |
 | b | 2 | **The register is down.** The check is queued and retried. The manual route opens only after the institution's set wait, and only if its policy allows it | ID-01 |
 | c | 3 | **A screening match.** The borrower's assets are frozen within 24 hours. No manual approval clears a match | FC-05 |
 | d | 4 | **An image fails the type check or the malware scan.** It is refused, and the officer captures it again | ID-15 |
 | e | 6 | **The approver declines.** The application stops at identity, with the reason kept; the officer tells the borrower. A return for revision goes back to step 4 | MD-05 |
 | f | 6 | **The approver is the officer who captured it, or decided the step before.** The decision is refused | MD-06 |
 | g | 7 | **The borrower asks for more than the tier allows.** The tier's limit holds. A larger loan needs more evidence and a higher tier, not an override | ID-19 |
+| h | 7, later | **The document expires, or an electronic check becomes available for it.** The check is re-run; on a match the record becomes verified electronically and the tier may rise, on a mismatch §3 a applies | ID-03, ID-19 |
 
 ## 4 · Gaps
 
@@ -64,9 +65,8 @@ document, and it never clears a check that failed.
 |---|---|---|---|
 | ID-04, liveness and face match of the live photo against the document's photo | phase 2 | Two people judge the photo by eye. This is the main weakness of the route in R1 | Accept for R1, with the tier cap carrying the risk; or move ID-04 into v1, a decision against the cap (FS-547) |
 | A vendor's check that the document itself is genuine (security features, MRZ) | No capability | The officer's examination of the original only | To come with the vendor choice (FS-340, partners PT-30, PT-53) |
-| FC-08, case management for a mismatch (§3 a) | phase 2 | The officer refers it to the compliance officer by email; the referral is not tracked in the platform | Accept for R1; a mismatch should be rare at a branch |
-| ID-03, re-verification when a document expires, which would also upgrade a manual record once an electronic check exists | phase 1, not in R1 | A manually verified borrower stays manual until someone re-runs the check by hand | Bring ID-03 into R1, which moves the R1 count, not the cap |
-| IN-18, the governance view: manual verifications per officer and per branch | phase 2 | Nobody sees an officer who uses the route too often | A plain report from the verification log in R1, outside IN-18 |
+| FC-08, case management for a mismatch (§3 a) | phase 2 | A ticket in a restricted helpdesk team (BS-01): an owner, a deadline and a history, but no alerts, evidence bundle or report drafting | Accepted for R1 (FS-555) |
+| IN-18, the governance view: manual verifications per officer and per branch | phase 2 | A plain report from the verification log, in ID-01 | Accepted for R1 (FS-557) |
 | OC-17, the field-officer app, for capture away from the branch | phase 1, R4 | Manual verification happens at the branch only | Accept for R1; Roan Capital's officers meet borrowers at branches |
 
 ## 5 · Open questions

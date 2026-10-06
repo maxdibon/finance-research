@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557]
 last_reviewed: 2026-10-06
 ---
 
@@ -63,7 +63,7 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| ID-01 | National register lookup (NPDM, formerly IPRS): national ID, passport, alien ID. Where neither the register nor a vendor covers a document (refugee IDs, likely), a manual route: the officer sees the original, the scan goes to the vault (ID-15), a second person approves through mandates, and the record is marked verified manually, which caps the tier it can reach (ID-19) | Designed | Kapu technical documentation (account opening); MFI PRD FR-2.1. Coverage of passports, alien and refugee IDs disputed by a reviewer; to confirm against NPDM and Maisha (FS-329, FS-341). Manual route: owner, 2026-10-06 (FS-544). Integration not final at 8 Jun — FS-088. Direct access open to private firms: KES 50,000 to connect, KES 20 a check (partners PT-29, FS-382) | 1 |
+| ID-01 | National register lookup (NPDM, formerly IPRS): national ID, passport, alien ID. Where neither the register nor a vendor covers a document (refugee IDs, likely), a manual route: the officer sees the original, the scan goes to the vault (ID-15), a second person approves through mandates, and the record is marked verified manually, which caps the tier it can reach (ID-19). Manual verifications are reported per officer and per branch from the verification log, until the governance view (insights IN-18, phase 2). A mismatch is never sent down the manual route: it is referred to the compliance officer as a ticket in a restricted team of the institution's Odoo Helpdesk (business-suite BS-01), until case management (financial-crime FC-08, phase 2) | Designed | Kapu technical documentation (account opening); MFI PRD FR-2.1. Coverage of passports, alien and refugee IDs disputed by a reviewer; to confirm against NPDM and Maisha (FS-329, FS-341). Manual route: owner, 2026-10-06 (FS-544). Integration not final at 8 Jun — FS-088. Direct access open to private firms: KES 50,000 to connect, KES 20 a check (partners PT-29, FS-382) | 1 |
 | ID-02 | Document checklist per product, with a completeness gate | Designed | MFI PRD FR-2.2 to FR-2.4 | 1 |
 | ID-03 | Re-verification when documents expire, for repeat customers | Designed | MFI PRD FR-1.4 | 1 |
 | ID-04 | Liveness and face match against the ID photo | Planned | FS-204 — vendor not chosen; candidates Smile ID (PT-30), MetaMap (PT-33, owned by Incode since June 2024), Spin Mobile (PT-36) and Sumsub (PT-37); FS-340, FS-382 | 2 |
