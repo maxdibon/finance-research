@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-582, FS-583]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583]
 last_reviewed: 2026-10-06
 ---
 
@@ -60,7 +60,7 @@ missing. *Gap* means no capability does it yet.
 
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
-| RC-08 | Collateral record for a vehicle or land, linked to the loan | MF-03, MF-18 | Partial | Vehicle is the first type (MF-03); land titles are MF-18, phase 2. This document needs land in the MVP |
+| RC-08 | Collateral record for a vehicle or land, linked to the loan | MF-03, MF-18, ID-15 | Covered | Vehicle and land title both in R1 under MF-03: the land title stored, as the document's scope asks, with its record and registry reference (FS-581). Land Registry searches and charge registration stay manual, as the document excludes them; MF-18 automates them in phase 2 |
 | RC-09 | The committee cannot open or approve an application until the logbook or title is attached; status "Logbook Pending" or "Logbook Attached" | MF-04, ID-02, MF-02 | Covered | Configuration, nothing built for it (FS-571): the logbook or title is an item on the secured product's checklist, its status shown per document (Pending, Attached), and the completeness gate holds the approval request until it is there. MF-04 blocks acceptance on a failed verification |
 | RC-10 | NTSA search, joint registration and discharge stay manual, outside the system | MF-04, MF-05 | Covered | Matches MF-04's manual verification; programmatic NTSA (MF-05) stays phase 2, as the document's exclusions say |
 
@@ -137,7 +137,7 @@ replacement (MF-05).
 | 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules. Every non-deposit-taking lender must now be licensed or registered with CBK, applying by about 29 Mar 2027 (NDTCP Regulations 2026, FS-423) | FS-400, FS-423 | Open |
 | 3 | 1% a day default interest: within the in duplum rule? | FS-400 | Answered for the cap: reg 29 of the lender regulations stops recoverable interest at the principal owing, enforced by MF-21. Whether the rate itself fits the pricing and disclosure rules (RC-37) is open |
 | 4 | The interest rate's unit | FS-395 | Open |
-| 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413, FS-415 | BRS answered: v1. Land titles open |
+| 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413, FS-415, FS-581 | Answered: BRS in v1; land titles stored in the MVP, searches manual |
 | 6 | Disbursement banks: NCBA only, or NCBA and Access Bank? (RC-18) | FS-395 | Open |
 | 7 | The role list (RC-34) | FS-395 | Open |
 | 8 | Approval chain and loan products | FS-399, FS-400 | Answered: both are configuration |

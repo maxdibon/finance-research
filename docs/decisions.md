@@ -871,3 +871,22 @@ its own entry.
   statement parser the heaviest because every bank's format differs;
   nothing can be finished until Roan Capital gives its formulas,
   weights and thresholds (open answer 13).
+
+## FS-585 · Institutions that reach the rails through a larger bank; the cap raised to 244
+
+- **Chose:** model the larger bank as a route (rails RL-27): the
+  settlement account as an account of its own, that bank's cut-offs as
+  transaction rules on the calendar, a prefunding check before release,
+  returns that reverse the customer's posting, and wires carrying the
+  details reg 32 requires; treasury and float (RO-09) into phase 1 for
+  R2; many-to-many matching and tolerances in RO-02 (FS-509); fee
+  verification (RO-26, FS-510) and SWIFT (RL-28) in phase 2. Every
+  component replaceable behind a stable contract, written into
+  architecture §6 (FS-584).
+- **Requires:** RL-27; RO-09; RO-02; docs/architecture.md §6 "replaceable behind a stable contract"; docs/journeys/README.md "JN-11".
+- **Argued against:** treating the larger bank as just another statement
+  feed, which misses the cut-offs, the prefunding and the returns that
+  run a microfinance bank's day.
+- **Costs (inferred):** two more phase-1 capabilities in R2; each larger
+  bank's cut-offs, formats and fees to learn and keep current; whether a
+  given microfinance bank is a direct RTGS participant is to confirm.

@@ -8,7 +8,7 @@ classification: Internal
 audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway, sme-recon, business-suite, escrow, decisioning]
 consumed_by: [omni-channel, insights, business-suite, sacco]
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532, FS-582]
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532, FS-582, FS-581]
 last_reviewed: 2026-10-06
 ---
 
@@ -76,7 +76,7 @@ FS-393.
 |---|---|---|---|---|
 | MF-01 | Digital loan application with drafts and a timestamped, attributed lifecycle from Draft to Closed, Restructured or Written Off | Designed | MFI PRD FR-1 | 1 |
 | MF-02 | Borrower KYC: national register lookup (NPDM, formerly IPRS), a document checklist per product, and a completeness gate that cannot be overridden | Designed | MFI PRD FR-2 | 1 |
-| MF-03 | Generic collateral model, with vehicle as the first type: coverage ratios, custody log, recovery and forced sale, release on settlement. Scans, the NTSA joint-registration record and the collateral-registry search are filed in the document vault (identity ID-15); the collateral-registry number is kept on the record (Movable Property Security Rights Act, LR-23); originals are tracked in the custody log and released only on settlement with a second person's approval | Designed | MFI PRD FR-3; owner, 2026-10-06: vault, registry number and release (FS-519) | 1 |
+| MF-03 | Generic collateral model, with vehicle as the first type: coverage ratios, custody log, recovery and forced sale, release on settlement. Scans, the NTSA joint-registration record and the collateral-registry search are filed in the document vault (identity ID-15); the collateral-registry number is kept on the record (Movable Property Security Rights Act, LR-23); originals are tracked in the custody log and released only on settlement with a second person's approval. In R1, a land title is a second type, stored only: the record, the title in the vault and the registry reference; searches and charge registration stay MF-18 (FS-581) | Designed | MFI PRD FR-3; owner, 2026-10-06: vault, registry number and release (FS-519) | 1 |
 | MF-04 | Collateral verification done manually, with an immutable evidence record; a failed check blocks acceptance unless the override authority justifies it | Designed | MFI PRD FR-4.1 to FR-4.4 | 1 |
 | MF-05 | Programmatic NTSA verification as a drop-in replacement for the manual step | Designed | MFI PRD FR-4.5. The access agreement is the long pole | 2 |
 | MF-06 | Vetting with an assessed limit. An approval above it is flagged as an override: immutable, justified, and tracked as a cohort | Designed | MFI PRD FR-5 | 1 |

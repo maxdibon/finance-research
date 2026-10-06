@@ -12,8 +12,8 @@ last_reviewed: 2026-10-06
 # Delivery plan — phase 1 in releases
 
 **Why this exists:** phase 1 in the modules is the whole of v1, not a
-release (FS-473). On 2026-10-06 it held 242 capability rows: 16 Built, 47
-Designed, 179 Planned (computed from the modules' §3 tables). No team
+release (FS-473). On 2026-10-06 it held 244 capability rows: 16 Built, 48
+Designed, 180 Planned (computed from the modules' §3 tables). No team
 builds that at once. This plan cuts it into releases, each started by a
 customer event and finished by a definition of done, so the work in hand
 is always what a signed customer needs next.
@@ -28,7 +28,7 @@ release that needs it.
 | Release | Started by | Scope | Size |
 |---|---|---|---|
 | **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 75 capabilities from the map (29 Designed, 46 Planned), plus 22 platform, security and testing capabilities |
-| **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability | Mostly Built or Designed: the Onit record |
+| **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); for a microfinance bank, rails through a larger bank and its settlement account's float (RL-27, RO-09; FS-585); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability | Mostly Built or Designed: the Onit record |
 | **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
 | **R4 · Saccos and Kapu Core** | The first Sacco or core customer signs | Kapu Sacco, Kapu Core, member apps and USSD, the field-officer app | Sacco, Core and omni-channel phase-1 rows |
 | **R5 · The rest of v1** | After R1, in the order sales ask | Escrow, CRB, financial crime beyond R1, insights, the remaining platform services | What is left of phase 1 |
@@ -41,8 +41,9 @@ the check keeps the two in step):
 - **Lending:** MF-01 to MF-07, MF-09 (restructuring), MF-10 to MF-15,
   MF-21 to MF-26, MF-28, MF-34 (loan agreements), MF-35 (loan officers), MF-37
   (guarantors), MF-38 (borrower access); land
-  titles (MF-18) and programmatic NTSA (MF-05) are phase 2 and wait on
-  open answer 5 and the document's exclusions.
+  title searches and charge registration (MF-18) and programmatic NTSA
+  (MF-05) are phase 2, as the document's exclusions say; land titles are
+  stored in R1 under MF-03 (FS-581).
 - **Approvals:** MD-01, MD-02, MD-05, MD-06, MD-08 (reminders and
   escalation), MD-09 (the 3-of-3 committee), MD-10, MD-18 (approval from
   email).
@@ -93,7 +94,7 @@ SE-23 to SE-25) follows in R2, before a bank goes live.
 **The current scope is the target** (FS-490): v1 is everything in phase 1
 today, and it does not grow by drift.
 
-**v1 cap:** 242 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582).
+**v1 cap:** 244 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585).
 
 Nothing moves into phase 1 unless something of similar size moves out, or
 the team grows to carry it. Raising the cap is a decision: the line above

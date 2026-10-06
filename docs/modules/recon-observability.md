@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime, core, escrow, crb, rails, insights, platform-security, decisioning]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532]
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585]
 last_reviewed: 2026-10-06
 ---
 
@@ -68,14 +68,14 @@ reconciliation, is Planned (FS-405).
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
 | RO-01 | Ingest rail, bank and ledger events: real-time callbacks, API pulls, statement files | Designed | Proposal: data pipeline. Prototype: manual load of CSV, XLSX, MT940, fixed-width | 1 |
-| RO-02 | Matching engine with configurable rules. Outcomes: matched clean, matched with variance, unmatched on our side, unmatched at the counterparty, duplicate | Designed | Proposal: analysis engine. Prototype: Recon Workbench | 1 |
+| RO-02 | Matching engine with configurable rules. Outcomes: matched clean, matched with variance, unmatched on our side, unmatched at the counterparty, duplicate. Rules match one to one, one to many and many to many (a bank's single batched entry against many transfers), with tolerances per rule (amount, date, reference); each rule runs automatically or as suggest-then-approve; the share matched automatically is published per cycle (FS-509) | Designed | Proposal: analysis engine. Prototype: Recon Workbench | 1 |
 | RO-03 | Three-way matching: ledger, statement and expected | Designed | Prototype: Manual Recon | 1 |
 | RO-04 | Intraday and end-of-day cycles, mirroring the customer's own cycle | Designed | Proposal: functional spec. Prototype: Control Tower cycle table | 1 |
 | RO-05 | Exception queue, ordered by SLA remaining rather than by amount, with owner and age | Designed | Proposal: SLA routing. Prototype: Exception Queue | 1 |
 | RO-06 | Transaction trace: every hop, with both sides' evidence | Designed | Prototype: Transaction Trace | 1 |
 | RO-07 | Remediation: status query, retry, repost, reversal — each audited | Designed | Proposal: actors and corrective workflows. Prototype: status query that completes a break. Control rule in §8 — FS-097 | 1 |
 | RO-08 | Ledger replica, checked two ways: real-time assertions from posting events, and a nightly batch proof that subledgers sum to their parents. Suspense holds exactly the open breaks | Designed | Prototype: GL & Subledger | 1 |
-| RO-09 | Treasury and float: where the money sits, and hours of float left at the current burn | Designed | Prototype: Treasury & Float | 2 |
+| RO-09 | Treasury and float: where the money sits, and hours of float left at the current burn; for an institution that reaches the rails through a larger bank, the settlement account's balance against the transfers queued for release (rails RL-27) | Designed | Prototype: Treasury & Float. Owner, 2026-10-06: phase 1, in R2 (FS-585) | 1 |
 | RO-10 | Branch and till cash by currency and denomination | Designed | Prototype: Branches & Tellers. For institutions with cash; not every customer | 2 |
 | RO-11 | Duplicate and anomaly detection | Designed | Proposal: fraud detection and risk mitigation. Rule-based in the specification; nothing learned | 1 |
 | RO-13 | Evidence for a period, assembled from traces rather than retyped | Designed | Prototype: Recon Attestation | 2 |
@@ -89,6 +89,7 @@ reconciliation, is Planned (FS-405).
 | RO-23 | Every transaction carries one identifier end to end, and every processing step is recorded as a signed event: a CloudEvents envelope, signed with the issuing service's own identity (SPIFFE), its keys held in OpenBao | Planned | FS-445, FS-453. All Apache-2.0 (architecture §6.1) | 1 |
 | RO-24 | Each transaction's events are hash-chained, so a change to any step shows, and the chain heads are anchored in an append-only transparency log (Trillian or Rekor) | Planned | FS-445, FS-453 | 1 |
 | RO-25 | A transaction's journey verified by anyone holding our public keys, and exported as evidence for a dispute, an audit or a regulator (with RO-13); exported through the portal or SFTP (identity ID-17) | Planned | FS-445, FS-453 | 1 |
+| RO-26 | Fee verification: what each rail, bank or provider charged, checked against its tariff and its settlement statement: a larger bank's transfer fees, intermediary deductions and exchange rates for an institution; charges on an SME's accounts | Planned | Owner, 2026-10-06 (FS-510, FS-585); from competitors CP-20 and RO-20 | 2 |
 
 **Retired ids:** RO-12, moved to financial-crime FC-03; RO-14, to FC-09 and FC-13; RO-15, to FC-05 and FC-07 (FS-431). A retired id is never reused.
 

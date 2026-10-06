@@ -51,3 +51,5 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-08 | A complaint, against the 30-day clock | R1 | to write |
 | JN-09 | Self-sign-up by USSD into the lightest KYC tier | phase 2 | to write |
 | JN-10 | A deposit paid to the institution's paybill or till | R2 | to write |
+| JN-11 | A transfer out through a larger bank: RTGS, EFT or SWIFT | R2 | to write |
+| JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | to write |

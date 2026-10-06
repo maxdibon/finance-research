@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, escrow, mandates, recon-observability, core, omni-channel, financial-crime, identity]
-review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-390, FS-391, FS-393, FS-403, FS-407, FS-408, FS-448, FS-453, FS-523]
+review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-390, FS-391, FS-393, FS-403, FS-407, FS-408, FS-448, FS-453, FS-523, FS-585]
 last_reviewed: 2026-10-06
 ---
 
@@ -87,6 +87,8 @@ launched; its row stays Designed until that is confirmed (FS-393).
 | RL-24 | M-Pesa Dynamic QR, B2B Express Checkout and Business to Pochi, for merchant and small-trader payments | Planned | Daraja API list (FS-387); gateway | 2 |
 | RL-25 | M-Pesa Bill Manager and Tax Remittance: invoices with reminders, and KRA payments from a shortcode | Planned | Daraja API list (FS-387); sme-recon, business-suite | 2 |
 | RL-26 | Virtual cards for an institution's customers, issued through a licensed issuer-processor; card numbers never reach us. An opportunity we track, not a commitment | Planned | Owner, 2026-10-06 (FS-523). Candidates CP-16, CP-17; PCI DSS is compliance LC-11 | later |
+| RL-27 | Rails reached through another bank: for an institution that sends and receives RTGS, EFT, PesaLink or SWIFT transfers through a larger bank, its settlement account there is modelled as an account of its own; that bank's cut-offs per rail are held as transaction rules on the business calendar (financial-crime FC-16, core KC-15); a transfer out is released only after a prefunding check on the settlement account; status comes from that bank's API or its statements; a return or rejection reverses the customer's posting; every wire carries the sender's and recipient's details the AML regulations require (reg 32) | Planned | Owner, 2026-10-06 (FS-585); first for the R2 partner, a microfinance bank (partners PT-34) | 1 |
+| RL-28 | SWIFT through the larger bank: ISO 20022 messages (FS-424), the transfer's status tracked through that bank, incoming payment messages parsed for the beneficiary, charges and exchange rates captured for matching | Planned | Owner, 2026-10-06 (FS-585) | 2 |
 
 ## 4 · Where it sits
 

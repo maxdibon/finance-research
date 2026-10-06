@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584]
 last_reviewed: 2026-10-06
 ---
 
@@ -253,6 +253,18 @@ Matching rules that hold on every rail:
 Products ask shared services to act by API, and every state change is
 published once on the bus as a signed event, so reconciliation, financial
 crime and insights read the same facts without asking each product.
+
+**Every component is replaceable behind a stable contract** (FS-584). A
+service exposes a versioned contract and owns its own records; what sits
+behind the contract (rules, a vendor, a learned model) can change without
+its consumers changing. Every record says which version produced it.
+Work that computes scales by adding instances; work that holds state has
+one owner. Each institution's data stays in its own instance (FS-491).
+A change is tried beside the one in force (in shadow, or on a share of
+the traffic) before it takes over. Rails (one adapter interface, RL-01),
+identity (vendors behind one check) and decisioning (rules now, models
+later, DE-01) are the cases written so far; every module's §5 is read
+against this paragraph.
 
 - **Event bus:** Kafka between services.
 - **Security baseline:** perimeter, cluster, data, backup, vulnerability
