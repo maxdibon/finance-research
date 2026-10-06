@@ -44,7 +44,7 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-01 | An individual borrower, verified electronically | R1 | [electronic-identity-check.md](electronic-identity-check.md) |
 | JN-02 | A borrower verified by hand: the manual route | R1 | [manual-identity-check.md](manual-identity-check.md) |
 | JN-03 | A business borrower: registry, directors, beneficial owners | R1 | [business-borrower.md](business-borrower.md) |
-| JN-04 | A loan from application through approval, signing and disbursement | R1 | to write |
+| JN-04 | A loan from application through approval, signing and disbursement | R1 | [loan-to-disbursement.md](loan-to-disbursement.md) |
 | JN-05 | A guarantor: consent, statements and notice | R1 | to write |
 | JN-06 | A loan restructured | R1 | to write |
 | JN-07 | A borrower viewing and sharing their own documents | R1 | to write |
