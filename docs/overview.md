@@ -101,7 +101,7 @@ own payments first, and insights runs on our own data first (FS-033).
 - [Messaging](modules/messaging.md) — SMS, WhatsApp, Telegram and app; transactional and campaigns
 - [CRB](modules/crb.md) — submissions to, and lookups from, every licensed bureau
 - [Access](modules/access.md) — login, roles and step-up, on Keycloak
-- [Identity](modules/identity.md) — verifying who a person or business is
+- [Identity verification](modules/identity.md) — who a person or business really is
 - [Rails](modules/rails.md) — every payment-rail and bank connection, behind one interface
 - [Insights](modules/insights.md) — governed metrics, dashboards and natural-language questions
 - [Platform Security](modules/platform-security.md) — the security baseline every product runs on, from the perimeter to the database and to staff laptops and field phones

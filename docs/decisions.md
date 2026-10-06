@@ -650,3 +650,18 @@ its own entry.
   institution; Ceph on-premises is heavy to operate for a small site; a
   virus scanner is not chosen, since ClamAV is GPL and needs a licence
   decision.
+
+## FS-503 · Block easily, recover only after verification; the v1 cap raised to 226
+
+- **Chose:** four phase-1 rows: block from any channel without the desk
+  (access AC-14); recovery only after identity verification, never on a
+  one-time code alone, with cooling-off and alerts (AC-15); two
+  authenticators for staff and approvers (AC-16); hardware keys and
+  sealed break-glass accounts for Dibon's engineers (platform-security
+  SE-26). AC-16 and SE-26 join R1. The cap counts them openly.
+- **Argued against:** folding them into AC-03's wording, which would hide
+  work the channels cannot go live without; and recovery by one-time code
+  alone, which hands an account to whoever holds a swapped SIM.
+- **Costs (inferred):** recovery is slower for honest customers, and some
+  will need a branch; branches and field officers carry re-verification
+  work; R1 grows by two capabilities for a team of four.

@@ -5,15 +5,15 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500]
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503]
 last_reviewed: 2026-10-06
 ---
 
 # Delivery plan — phase 1 in releases
 
 **Why this exists:** phase 1 in the modules is the whole of v1, not a
-release (FS-473). On 2026-10-06 it held 222 capability rows: 16 Built, 47
-Designed, 159 Planned (computed from the modules' §3 tables). No team
+release (FS-473). On 2026-10-06 it held 226 capability rows: 16 Built, 47
+Designed, 163 Planned (computed from the modules' §3 tables). No team
 builds that at once. This plan cuts it into releases, each started by a
 customer event and finished by a definition of done, so the work in hand
 is always what a signed customer needs next.
@@ -27,7 +27,7 @@ release that needs it.
 
 | Release | Started by | Scope | Size |
 |---|---|---|---|
-| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 48 capabilities from the map (25 Designed, 23 Planned), plus 19 platform and security capabilities |
+| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 48 capabilities from the map (25 Designed, 23 Planned), plus 21 platform and security capabilities |
 | **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability | Mostly Built or Designed: the Onit record |
 | **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
 | **R4 · Saccos and Kapu Core** | The first Sacco or core customer signs | Kapu Sacco, Kapu Core, member apps and USSD, the field-officer app | Sacco, Core and omni-channel phase-1 rows |
@@ -62,9 +62,11 @@ FS-495).
 **The platform and security minimum for any go-live:**
 
 - **Access:** AC-01 (one identity provider), AC-02 (staff single sign-on),
-  AC-08 (a realm per institution).
+  AC-08 (a realm per institution), AC-16 (two authenticators for staff and
+  approvers).
 - **Security:** SE-01, SE-02, SE-04, SE-05, SE-08, SE-09, SE-10, SE-11,
-  SE-12, SE-13, SE-17, SE-18, SE-19, SE-20, SE-21, SE-22.
+  SE-12, SE-13, SE-17, SE-18, SE-19, SE-20, SE-21, SE-22, SE-26 (privileged
+  access).
 
 The rest of the security baseline (SE-03, SE-06, SE-07, SE-14 to SE-16,
 SE-23 to SE-25) follows in R2, before a bank goes live.
@@ -74,7 +76,7 @@ SE-23 to SE-25) follows in R2, before a bank goes live.
 **The current scope is the target** (FS-490): v1 is everything in phase 1
 today, and it does not grow by drift.
 
-**v1 cap:** 222 capabilities in phase 1 (FS-490, FS-500).
+**v1 cap:** 226 capabilities in phase 1 (FS-490, FS-500, FS-503).
 
 Nothing moves into phase 1 unless something of similar size moves out, or
 the team grows to carry it. Raising the cap is a decision: the line above
@@ -106,7 +108,7 @@ Four people lead the build (FS-477):
 | A DevSecOps engineer | The platform: Kubernetes, Keycloak (AC-01, AC-02, AC-08), OpenBao, the document vault (ID-15), the build pipeline, backups and the security minimum (SE rows above) |
 | The CTIO | Architecture and reviews; the approval engine's design (MD-01 to MD-18); security lead; Roan Capital's acceptance with the project manager |
 
-**Building less is the plan.** Four people cannot build 67 capabilities
+**Building less is the plan.** Four people cannot build 69 capabilities
 from scratch, so R1 uses what already exists and builds only what does
 not:
 

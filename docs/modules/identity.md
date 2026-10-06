@@ -1,18 +1,18 @@
 ---
 id: identity
-name: Identity — verifying who a person is
+name: Identity verification — who a person or business really is
 kind: shared-service
 version: 0.1.0
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime]
-consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500]
+consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514]
 last_reviewed: 2026-10-06
 ---
 
-# Identity — verifying who a person is
+# Identity verification — who a person or business really is
 
 ## 1 · In one paragraph
 
@@ -30,6 +30,11 @@ over (ID-12 to ID-14, FS-453). Each product decides which checks it needs.
 register,** stored on the person in their authority — the core, Fineract
 or Odoo (docs/architecture.md §2, §6). Each country brings its own
 registers (FS-109).
+
+**Not access.** Access (Keycloak) decides who is logged in and what they
+may do; this module establishes who the person is. They meet at recovery:
+access resets nothing until this module has re-verified the person
+(access AC-15). Renamed from "Identity" (FS-514).
 
 ## 2 · Who it is for
 
@@ -81,7 +86,8 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 SIM-swap check, RL-22), messaging (one-time codes, ID-11),
 financial-crime (holds on an IMSI change, FC-02).
 **Used by:** collect, gateway, mfi, sacco, escrow, crb, core,
-omni-channel, financial-crime.
+omni-channel, financial-crime, and access (re-verification before a
+reset or a new device, AC-15).
 
 **Who holds which record** (docs/architecture.md §2):
 

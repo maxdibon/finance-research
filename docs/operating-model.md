@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-467, FS-470, FS-471, FS-472, FS-473, FS-474, FS-475, FS-476, FS-477]
-last_reviewed: 2026-10-05
+review_ids: [FS-467, FS-470, FS-471, FS-472, FS-473, FS-474, FS-475, FS-476, FS-477, FS-505]
+last_reviewed: 2026-10-06
 ---
 
 # Operating model — the people who keep the commitments
@@ -115,6 +115,17 @@ on the customers we serve today, and let the agent earn each step:
 5. **24/7:** out of hours the agent acknowledges, gathers the details and
    pages the rota for severity 1; everything else waits for the morning
    with the customer told when.
+
+**Runbooks to write first** (FS-505): the access cases a desk meets most,
+each with who may act, what is checked, and what the agent may and may not
+do. In rough order of frequency: a forgotten PIN or password; a lockout; a
+new phone with the old one in hand; a lost or stolen phone; a SIM replaced
+or swapped; a changed number; a customer tricked into giving away a PIN or
+code; a recycled number; a lost authenticator for staff or approvers; a
+leaver or a change of role; a field device lost; a phone shared by several
+customers; a customer abroad; a deceased customer; an account-takeover
+attempt. **The agent may block (AC-14); it never unblocks or resets** (AC-15
+needs identity verification).
 
 **Pilot with:** KCB and National Bank of Kenya, whose SMS and USSD support
 we already provide, and Dibon's own staff.

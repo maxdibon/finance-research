@@ -285,7 +285,7 @@ crime and insights read the same facts without asking each product.
   consumers. Approvers will be able to act from Outlook or Gmail through a
   signed, single-use link, with step-up at the act for anything that moves
   money; never by reply (mandates MD-18, FS-449).
-- **Identity:** national register lookup (NPDM, formerly IPRS) on
+- **Identity verification:** national register lookup (NPDM, formerly IPRS) on
   onboarding, or the mobile operator's check of the phone number against
   the registered name, as at Onit Bank (FS-392). The result is stored on
   the party in its authority, not copied into consumers. **The phone
@@ -300,7 +300,7 @@ crime and insights read the same facts without asking each product.
   IN-15, FS-446). The model is not chosen yet — FS-043.
 - **Access and identity:** Keycloak for login, roles and step-up (access);
   the national register (NPDM, formerly IPRS) and verification vendors for
-  who a person is (identity).
+  who a person is (identity verification).
 - **Documents:** KYC and KYB evidence and collateral documents live in one
   document vault per institution (identity ID-15, FS-500). Odoo keeps
   contracts and signed documents (§2); Fineract, Odoo and the products
