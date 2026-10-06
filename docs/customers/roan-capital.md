@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516]
 last_reviewed: 2026-10-06
 ---
 
@@ -115,6 +115,8 @@ missing. *Gap* means no capability does it yet.
 | RC-35 | Monitoring: Prometheus, Grafana, Loki; 99.9% uptime | RO-16, RO-17 | Covered | Ran for Collect at Onit Bank (collect CO-11). Uptime sits with the support tier |
 | RC-36 | AML/CFT duties as a licensed or registered lender: sanctions screening at onboarding and on every list change, records for seven years. Not in the document; required by the CBK lender regulations, reg 64 (law register LR-03) | FC-05, FC-12 | Partial | Added by Dibon (FS-431). Both are phase 1; PEP screening, cases and STR drafting (FC-06, FC-08, FC-09) are phase 2 |
 | RC-37 | Conduct and disclosure rules for a licensed or registered lender: repayment order, APR and key information document, price changes, non-performing classification, collection conduct, complaints. Not in the document; required by the CBK lender regulations (law register LR-03) | MF-22, MF-23, MF-24, MF-25, MF-26, MF-28 | Partial | Added by Dibon (FS-435). The document's day-30 penalty interest and day-47 closure ladder (RC-26, RC-27) must fit within these and the arrears cap (MF-21) |
+| RC-38 | Loan agreements and key information documents, generated, signed by the borrower and guarantors, and kept. Not in the document; a lender cannot disburse without them | MF-34, BS-02 | Partial | Added by Dibon (FS-516). Templates and the signing route to agree with Roan Capital (open answer 10) |
+| RC-39 | Restructuring: reschedule, refinance or top-up, approved and disclosed, without resetting the arrears cap. Not in the document | MF-09 | Partial | Added by Dibon (FS-516). Roan Capital's restructuring policy to agree (open answer 10) |
 
 ## 3 · Out of scope for the MVP (§2.3)
 
@@ -136,6 +138,7 @@ replacement (MF-05).
 | 7 | The role list (RC-34) | FS-395 | Open |
 | 8 | Approval chain and loan products | FS-399, FS-400 | Answered: both are configuration |
 | 9 | Will Roan Capital be named as a reference once live? | FS-401 | Open |
+| 10 | Loan agreement and guarantee templates, how borrowers sign, and the restructuring policy (RC-38, RC-39) | FS-516 | Open: the owner is asking |
 
 The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text

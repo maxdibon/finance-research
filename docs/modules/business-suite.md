@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, messaging, sme-recon, mandates, insights, sacco, mfi]
 consumed_by: [insights, mfi]
-review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522]
+review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518]
 last_reviewed: 2026-10-06
 ---
 
@@ -72,8 +72,9 @@ hosting on OLP, is **Built** (FS-293).
 | BS-12 | HR and payroll: contracts, leave, attendance and monthly payroll; for a Sacco or MFI, its own staff | Planned | FS-304 | 1 |
 | BS-13 | Zoho implementations for businesses that prefer it, with SME Recon's Zoho wrapper for statements | Planned | FS-306; sme-recon SR-13 | 2 |
 | BS-14 | Check-off in payroll: each Sacco's or lender's schedule becomes deduction lines in payroll (BS-12), only with the employee's written request; total deductions held to two-thirds of wages; each remittance file produced and paid within 7 days through SME Recon (SR-11) | Planned | Owner, 2026-10-06 (FS-499). Employment Act s.19(1)(g), s.19(3) to (5) (LR-30); Co-operative Societies Act s.35 (LR-26) | 2 |
-| BS-15 | Check-off exchange: where the Sacco or lender is on Kapu Sacco or Kapu MFI, schedules arrive by API and remittances return matched, so neither side keys a spreadsheet | Planned | Owner, 2026-10-06 (FS-499); sacco SC-04 | 2 |
+| BS-15 | Check-off exchange: where the Sacco or lender is on Kapu Sacco or Kapu MFI, schedules arrive by API and remittances return matched, so neither side keys a spreadsheet. Every repayment is tracked: one made directly by M-Pesa, Airtel Money, T-Kash or bank amends the next schedule sent to the employer before the payroll cut-off; one arriving after the cut-off is credited to the next instalment or refunded, never collected twice (early repayment without penalty, reg 56(3)) | Planned | Owner, 2026-10-06 (FS-499, FS-518); sacco SC-04 | 2 |
 | BS-16 | Reactivation campaigns: dormant or lapsed customers re-engaged through Odoo campaigns and Dibon's messaging, only with consent; the opt-out after full repayment honoured (CBK lender regulations reg 27(3)); suitability first (reg 38), so credit is never offered to someone the affordability check would refuse | Planned | Owner, 2026-10-06 (FS-522); BS-05 | 2 |
+| BS-17 | Employee loans from the employer's Odoo: an employee applies for a term loan or a pay-day limit (mfi MF-36) in the employee portal; the employer confirms employment and that the deduction fits within two-thirds of wages (Employment Act s.19(3)); with the employee's consent the application goes by API to the lender's Kapu MFI, whose own approval chain decides and gives reasons for a refusal (reg 28(2)); status and notifications return to Odoo and the employee's phone; the loan is booked once, in the lender's core, and shown in both Odoos | Planned | Owner, 2026-10-06 (FS-518); BS-15 | 2 |
 | BS-11 | Managed Odoo hosting on OLP (Odoo Launch Pad, formerly OPA), Dibon's own Odoo management platform: instances, backups, staging, upgrades | Built | Owner, 2026-10-01 (FS-293); public site opa.dibon.co.ke, unchanged by the rename (FS-336). Liquid hosting planned | 1 |
 
 ## 4 · Where it sits

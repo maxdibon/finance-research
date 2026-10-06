@@ -676,3 +676,18 @@ its own entry.
 - **Costs (inferred):** recovery is slower for honest customers, and some
   will need a branch; branches and field officers carry re-verification
   work; R1 grows by two capabilities for a team of four.
+
+## FS-516 · Loan agreements and restructuring in R1; loan officers in v1; the cap raised to 228
+
+- **Chose:** loan agreements (mfi MF-34, with Odoo Sign, business-suite
+  BS-02) and restructuring (MF-09) in R1, added to Roan Capital's map by
+  Dibon (RC-38, RC-39) because a lender cannot disburse without an
+  agreement; loan officers (MF-35) in phase 1 (FS-517). Two new phase-1
+  rows, counted against the cap.
+- **Requires:** MF-09; MF-34; MF-35; BS-02; docs/customers/roan-capital.md "RC-38"; docs/delivery-plan.md "MF-34 (loan agreements)".
+- **Argued against:** waiting for Roan Capital to ask, which would leave
+  R1 unable to disburse lawfully; and leaving officers to Fineract's
+  defaults, which have no reassignment approval or performance view.
+- **Costs (inferred):** R1 grows again for a team of four; Odoo Sign
+  joins R1, so Roan Capital needs Odoo Enterprise for signing, and the
+  electronic-signature question goes to counsel before go-live.
