@@ -555,6 +555,7 @@ function knownIds(root) {
   rowIds(path.join('docs', 'compliance.md'), /^\| (LC-\d{2}) \|/).forEach((id) => ids.add(id));
   rowIds(path.join('docs', 'onboarding.md'), /^\| (OB-[A-Z]{2,3}-\d{2}) \|/).forEach((id) => ids.add(id));
   rowIds(REGULATION, /^\| (LR-\d{2}) \|/).forEach((id) => ids.add(id));
+  rowIds(path.join('docs', 'documents.md'), /^\| (DT-\d{2}) \|/).forEach((id) => ids.add(id)); // FS-538
   return ids;
 }
 

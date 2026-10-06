@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Compliance lead
 classification: Internal
-review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431, FS-499]
+review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431, FS-499, FS-538]
 last_reviewed: 2026-10-06
 ---
 
@@ -80,6 +80,9 @@ register when the folder exists. Superseded copies are in `superseded/`.
 | LR-28 | Virtual Asset Service Providers Act, 2025 | [virtual-asset-service-providers-act@2025-11-04](https://new.kenyalaw.org/akn/ke/act/2025/20/eng@2025-11-04) | 2025-11-04 | Institution | Virtual asset service providers | — | Line | 2026-10-05 | |
 | LR-29 | Virtual Asset Service Providers Regulations, 2026 (LN 134) | [virtual-asset-service-providers-regulations-2026@2026-07-22](https://new.kenyalaw.org/akn/ke/act/ln/2026/134/eng@2026-07-22) | 2026-07-22 | Institution | Virtual asset service providers | — | Line | 2026-10-05 | |
 | LR-30 | Employment Act (Cap. 226) | [employment-act@2024-04-26](https://new.kenyalaw.org/akn/ke/act/2007/11/eng@2024-04-26) | 2024-04-26 | Obligation | Employers, including our SME customers and the institutions as employers | BS-12, BS-14 | Targeted | 2026-10-06 | s.19(1)(g): a deduction the employee asks for in writing; s.19(3): all deductions at most two-thirds of wages; s.19(4), (5): remitting late is an offence, up to KSh 100,000 or two years. Whether statutory deductions count inside the two-thirds is to confirm with counsel (FS-499) |
+| LR-31 | Tax Procedures Act (Cap. 469B) | [tax-procedures-act@2026-09-01](https://new.kenyalaw.org/akn/ke/act/2015/29/eng@2026-09-01) | 2026-09-01 | Obligation | Every taxpayer: institutions, SMEs, Dibon | DT-39, BS-01 | Targeted | 2026-10-06 | s.23(1)(c): tax records kept five years from the end of the reporting period (FS-538) |
+| LR-32 | Limitation of Actions Act (Cap. 22) | [limitation-of-actions-act@2022-12-31](https://new.kenyalaw.org/akn/ke/act/1968/21/eng@2022-12-31) | 2022-12-31 | Obligation | Lenders and their customers | DT-17, DT-21, DT-23, ID-15 | Targeted | 2026-10-06 | s.4(1): a claim on a contract within six years; s.19(1): recovery of a principal secured on land or movable property within twelve years; s.4(4): a judgment within twelve years. Sets how long a lender's evidence must outlive a loan (FS-538) |
+| LR-33 | Microfinance (Deposit-Taking Microfinance Institutions) Regulations (LN 58 of 2008) | [microfinance-deposit-taking-regulations-2008@2022-12-31](https://new.kenyalaw.org/akn/ke/act/ln/2008/58/eng@2022-12-31) | 2022-12-31 | Institution | Microfinance banks | DT-35, ID-15 | Targeted | 2026-10-06 | Read for records only: reg 37(1)(b), customer, source-of-funds and transaction records at least seven years; reg 40(4), internal audit reports and working papers at least five years (FS-538) |
 
 ## Reports and strategies
 
@@ -91,6 +94,18 @@ financial-crime work (FS-422, FS-428). In sources/regulation/ke/reports/.
 | ESAAMLG mutual evaluation of Kenya | Sep 2022 | 9 of 11 effectiveness outcomes Low; sanctions took 4 days from UN notice; no local PEP database; Saccos filed 1 STR in five years. A 2022 snapshot: check the follow-up reports before quoting it |
 | ML/TF national risk assessment | 2021 (data 2016 to 2020) | Banks high threat; deposit-taking Saccos and remittance medium high |
 | National Financial Inclusion Strategy | 2025 to 2028 | A CBK fast payment system with shared fraud detection; e-money and digital wallet compensation guidelines planned; creditworthiness assessment and alternative scoring |
+
+## Regulators' guidelines
+
+Not on Kenya Law, so not in the register; read for what they add to it.
+In sources/regulation/ke/guidelines/ (FS-538).
+
+| Document | Date | What it gives us |
+|---|---|---|
+| CBK Prudential Guidelines, consolidated (banks) | Jan 2013 | CBK/PG/08 §5.17: transaction and due-diligence records, copies of IDs included, at least seven years; the same rule as the POCAML Regulations reg 42 |
+| SASRA Guidelines for Combating Money Laundering, Terrorism Financing and Proliferation Financing | Jul 2024 | §6.8: records at least seven years, or longer if the Financial Reporting Centre says; records from digital and electronic identification (e-KYC) kept as long |
+| SASRA Model Complaints Handling Policy for Regulated Saccos (SASRA/MC/1/2025) | Mar 2025 | Acknowledge within three working days, resolve within 21 calendar days, tell the member before a deadline is missed; no retention period. A scanned document, read as images |
+| Financial Consumer Protection Framework for Kenya, **draft** (CBK, SASRA, CMA, IRA, RBA, CA, CAK) | Mar 2026 | Regulators may prescribe record retention later; a payout statement on request, itemised for a given date |
 
 **Superseded copies** (sources/regulation/ke/superseded/): the Banking Act
 as at 1 Jan 2013 and the National Payment System Act as at 15 Sep 2023.
