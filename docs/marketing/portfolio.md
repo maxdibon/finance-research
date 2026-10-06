@@ -5,7 +5,7 @@ kind: marketing
 version: 0.2.0
 owner: Commercial lead
 classification: Public once approved
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-06
 ---
 
 # Dibon Financial Services portfolio
@@ -112,7 +112,8 @@ they decided.
 **Problem:** Members phone in to ask a balance, a loan limit, or whether a
 contribution arrived.
 **With Dibon:** *Omni-channel banking* gives every member an app, internet
-banking, USSD and WhatsApp under your brand, with the same answer on each.
+banking and USSD under your brand, with the same answer on each; WhatsApp
+tells them when it changes.
 
 ### Growth held back by paperwork
 
@@ -381,14 +382,14 @@ in the ERP leave the business’s own account; Dibon only instructs.
 ### Omni-channel banking
 
 **Tagline:** App, web, USSD and chat, under your brand
-**Intro:** A mobile app, internet banking, USSD menus and WhatsApp with a
-chatbot, white-labelled for each institution, on one channel API, so a balance is the same everywhere.
+**Intro:** A mobile app, internet banking and USSD menus, with WhatsApp and
+a chatbot for alerts and help, white-labelled for each institution, on one channel API, so a balance is the same everywhere.
 Anything that moves money asks the member to confirm who they are at that
 moment, and is held if the phone's SIM has changed. Field officers work
 offline in an app of their own.
-**Diagram caption:** Four channels, one API, one answer. Anything that
-moves money passes step-up first, and a SIM-swap check where the operator
-offers one.
+**Diagram caption:** Three channels answer from one API; WhatsApp alerts
+link back to them. Anything that moves money passes step-up first, and a
+SIM-swap check where the operator offers one.
 **Features:**
 - Balances, statements, contributions and payments
 - Loan applications and guarantor requests

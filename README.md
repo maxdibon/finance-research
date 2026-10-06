@@ -53,7 +53,8 @@ design/              layout, diagrams and illustrative screens; no copy
   bank-channel-proposal/
                      build.js for the two-page proposal
   brand/             the Dibon logo, the script that extracts it, and the
-                     "Dibon Consulting" mark, a candidate not yet in use
+                     "Dibon Consulting" mark in vector (amber, plum,
+                     white): candidates not yet in use
 build/               generated: master.md, the portfolio PDF and web
                      previews, the bank channel proposal, the NPS Bill
                      comments — git-ignored
@@ -83,6 +84,7 @@ node tools/assemble.js                # builds build/master.md; refuses if a che
 node design/portfolio-pdf/build.js    # both editions: PDFs and web previews
 node design/portfolio-pdf/build.js --edition short   # one edition
 node design/portfolio-pdf/build.js --html-only   # pages only, no PDF
+node design/portfolio-pdf/measure.js    # after a copy change: every page fits
 node design/bank-channel-proposal/build.js --for "Bank"   # the two-page proposal
 ```
 

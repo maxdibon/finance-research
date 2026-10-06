@@ -139,11 +139,11 @@ F['SME Reconciliation'] = figure('sm', 640, 224,
   'Statements in, matches into the ERP. Payments approved in the ERP leave the business’s own account; Dibon only instructs.');
 
 F['Omni-channel banking'] = figure('oc', 640, 210,
-  'The mobile app, internet banking, USSD and WhatsApp with its chatbot all call one channel API. Before money moves, it runs step-up authentication, and a SIM-swap check where the operator offers one. It calls the products, which post to and read from your core; balances come back with the time they were fetched.',
+  'The mobile app, internet banking and USSD call one channel API; WhatsApp and its chatbot send alerts and links back into them, never balances. Before money moves, it runs step-up authentication, and a SIM-swap check where the operator offers one. It calls the products, which post to and read from your core; balances come back with the time they were fetched.',
   box('box', 16, 6, 130, 40, 'Mobile app') +
   box('box', 16, 56, 130, 40, 'Internet banking') +
   box('box', 16, 106, 130, 40, 'USSD', 'any phone') +
-  box('box', 16, 156, 130, 40, 'WhatsApp', 'and a chatbot') +
+  box('box', 16, 156, 130, 40, 'WhatsApp', 'alerts · links') +
   box('dibon', 220, 82, 160, 44, 'Channel API') +
   box('box', 220, 156, 160, 44, 'Step-up · SIM swap', 'before money moves') +
   box('box', 460, 12, 164, 44, 'Products', 'Collect · MFI · Sacco') +
@@ -153,6 +153,6 @@ F['Omni-channel banking'] = figure('oc', 640, 210,
   ctl('oc', 380, 96, 458, 40) + label(410, 60, 'calls', 'end') +
   ctl('oc', 542, 56, 542, 150) + label(550, 106, 'posts · reads', 'start') +
   ctl('oc', 460, 172, 382, 118) + label(432, 128, 'fetched-at time', 'middle', true),
-  'Four channels, one API, one answer. Anything that moves money passes step-up first, and a SIM-swap check where the operator offers one.');
+  'Three channels answer from one API; WhatsApp alerts link back to them. Anything that moves money passes step-up first, and a SIM-swap check where the operator offers one.');
 
 module.exports = { F };
