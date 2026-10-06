@@ -532,3 +532,4 @@ A row does not change status silently.
 | FS-519 | Eric | FS-500: where do we store other documents, such as logbooks and titles? | OPEN | Proposal in chat: scans in the vault (ID-15), originals in the custody log (MF-03) |
 | FS-520 | Eric | FS-500: where and how do we manage contracts, particularly loan contracts? Does this use Sign? | OPEN | No capability generates or signs a loan agreement; BS-02 Odoo Sign is phase 1. Proposal in chat |
 | FS-521 | Eric | FS-500: how do we support SMEs' internal documents, such as board resolutions? | OPEN | Proposal in chat |
+| FS-522 | Eric | FS-511: which of the 2024 deck's products do you recommend we adopt or adapt? | OPEN | Recommendation in chat: keep what we have, adapt chama management, LPO and invoice financing, an explainable behaviour score and consent-based reactivation (all phase 2); leave cards, investments and bonds to licensed partners; drop the wallet and social-media scoring |
