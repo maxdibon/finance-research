@@ -5,7 +5,7 @@ kind: spec
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531]
+review_ids: [FS-492, FS-531, FS-565]
 last_reviewed: 2026-10-06
 ---
 
@@ -239,8 +239,8 @@ before selling movable security (30(4)).
   sale notice is delivered.
 
 **Where enforced.** Messaging (MS-15) applies a policy the lender-rules
-service supplies. Roan Capital sends through its own SMS gateway
-(RC-20); the same checks run before a message is handed to it.
+service supplies. Roan Capital's messages go through Dibon's own
+messaging service (RC-20, FS-565), so the checks run in one place.
 
 ### 2.7 Bureau floor and notice — reg 33, MF-27 (phase 2)
 
