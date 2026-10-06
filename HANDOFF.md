@@ -1,8 +1,8 @@
 # Dibon financial services — session handoff
 
-    version: 1.1.0
+    version: 1.2.0
     updated: 2026-10-06
-    supersedes: 1.0.0, the same morning; this adds the afternoon's decisions
+    supersedes: 1.1.0, the same day; adds the end of the session
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -64,6 +64,10 @@ Each has a register row and, where it changed the design, an entry in
   or in recovery (`docs/documents.md`, FS-537, FS-538).
 - **ClamAV scans uploads**, allowed by name as a separate GPL service;
   commercial engines at the customer's cost (FS-525).
+- **Saccos have their own complaints clock**: 21 days, beside the
+  lenders' 30 (FS-539).
+- **The 2024 digital banking deck is retired**; the portfolio replaces it
+  (FS-511).
 - **Every decision from FS-490 names what it requires** in a `Requires:`
   line, and the check proves each item exists (FS-515).
 
@@ -118,11 +122,12 @@ Each has a register row and, where it changed the design, an entry in
 - **Binary files** are refused by the pre-commit hook unless listed in
   `.githooks/allowed-binaries`. Add a path only after looking at the file
   and confirming it is Dibon's own and names no client.
-- **Logos:** the builds use `design/brand/dibon_logo_white.png`; keep it
-  until the owner supplies a better copy (FS-524). A "Dibon Consulting"
-  candidate sits unused beside it. **Five SVG files appeared in
-  `sources/dibon/` at the end of this session and were not looked at**;
-  they may be that better copy.
+- **Logos:** the builds use `design/brand/dibon_logo_white.png` until the
+  owner chooses (FS-524, FS-542). Beside it are vector candidates of the
+  "Dibon Consulting" mark in amber, plum and white
+  (`dibon_consulting_logo_*.svg`), cropped from the owner's SVGs in
+  `sources/dibon/`; 3.svg and 4.svg there are unusable (a JPEG with a black
+  box). Switching is one line in each build, then a layout check.
 
 ## Fetching documents
 
@@ -141,6 +146,7 @@ Each has a register row and, where it changed the design, an entry in
   the images.
 - **Downloads need the owner's permission**; reading what the owner asked
   for counts.
+- **Close the browser pane when the downloads are done** (FS-542).
 
 ## Current state — ask, do not read
 
@@ -211,7 +217,10 @@ only with a register row.
 - **Subagents claim more than they did.** Check their work by running the
   checks and reading a sample.
 - **The portfolio layout overflows silently.** After a copy change, build
-  with `node design/portfolio-pdf/build.js --html-only` and measure.
+  with `node design/portfolio-pdf/build.js --html-only`, then run
+  `node design/portfolio-pdf/measure.js`: it prints any page whose content
+  passes the edge, and exits 1. A change to the copy bumps both editions
+  in `design/portfolio-pdf/document.json` (now v1.4).
 - **A PDF open in a viewer** makes the build write a timestamped file.
 
 ## Waiting on the owner, outside the repository (as at 2026-10-06)
@@ -233,14 +242,10 @@ only with a register row.
 - The compliance and risk officer: confirm the periods marked
   *proposed* in `docs/documents.md`, and whether staff contracts follow
   the vault rule.
-- A better copy of the logo.
+- Which logo: the current mark, or the "Dibon Consulting" vectors.
 
 ## Left half-done, or asked and not yet answered
 
-- **Asked, unanswered:** whether to fix the portfolio's WhatsApp copy
-  now or in the next edition (it still promises banking in WhatsApp);
-  whether to add a Sacco complaints clock of 21 days (FS-539); whether
-  to retire the 2024 digital banking deck (FS-511).
 - **To confirm technically:** that Odoo Sign can send link-only completion
   emails; if not, signing moves to our own page (FS-532).
 - **The remaining R1 specs** (above), and the rows that block R1.

@@ -8,7 +8,7 @@ classification: Internal
 audience: [sacco]
 depends_on: [mandates, identity, rails, messaging, recon-observability, collect, crb, financial-crime, access, core, gateway, mfi]
 consumed_by: [omni-channel, insights, business-suite]
-review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453, FS-499, FS-522]
+review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453, FS-499, FS-522, FS-539]
 last_reviewed: 2026-10-06
 ---
 
@@ -75,6 +75,7 @@ shape of the segment, not discovery evidence from a named Sacco* — FS-174.
 | SC-17 | Regulatory returns to SASRA, for deposit-taking Saccos | Planned | FS-175. Assembled by financial-crime FC-13 (FS-431) | later |
 | SC-18 | CRB sharing | Planned | Depends on crb | later |
 | SC-19 | Chama management: contributions, savings and loans for chamas and investment groups, withdrawals approved by the group's own signatories (quorum steps, mandates MD-09), the money in the group's bank or Sacco account and never ours; sold through banks (docs/bank-channel.md) | Planned | Owner, 2026-10-06 (FS-522). Reuses contributions (SC-04), group lending (mfi MF-17) and collect | 2 |
+| SC-20 | Complaints clock for Saccos: acknowledged within three working days, resolved within 21 calendar days, and the member told before a deadline is missed, with SASRA's complaints register and quarterly return | Planned | SASRA Model Complaints Handling Policy (SASRA/MC/1/2025); owner, 2026-10-06 (FS-539). Lenders' clock is mfi MF-28 | 1 |
 
 ## 4 · Where it sits
 

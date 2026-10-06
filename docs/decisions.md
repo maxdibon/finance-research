@@ -768,3 +768,14 @@ its own entry.
 - **Costs (inferred):** every message is sent once per chosen channel, at
   the institution's cost; email delivery depends on each institution's
   domain being set up correctly.
+
+## FS-539 · Saccos get their own complaints clock; the cap raised to 233
+
+- **Chose:** a Sacco complaints clock (sacco SC-20, phase 1): acknowledge
+  in three working days, resolve in 21 calendar days, as SASRA's model
+  policy sets, beside the lenders' 30-day clock (mfi MF-28).
+- **Requires:** SC-20; MF-28; docs/regulation.md "SASRA Model Complaints Handling Policy".
+- **Argued against:** one clock for every institution, which would let a
+  Sacco run past SASRA's 21 days while the software showed green.
+- **Costs (inferred):** two clocks to configure and test; one more
+  phase-1 row in a release (R4) that is already large.

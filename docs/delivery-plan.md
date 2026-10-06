@@ -5,15 +5,15 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532]
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539]
 last_reviewed: 2026-10-06
 ---
 
 # Delivery plan — phase 1 in releases
 
 **Why this exists:** phase 1 in the modules is the whole of v1, not a
-release (FS-473). On 2026-10-06 it held 232 capability rows: 16 Built, 47
-Designed, 169 Planned (computed from the modules' §3 tables). No team
+release (FS-473). On 2026-10-06 it held 233 capability rows: 16 Built, 47
+Designed, 170 Planned (computed from the modules' §3 tables). No team
 builds that at once. This plan cuts it into releases, each started by a
 customer event and finished by a definition of done, so the work in hand
 is always what a signed customer needs next.
@@ -80,7 +80,7 @@ SE-23 to SE-25) follows in R2, before a bank goes live.
 **The current scope is the target** (FS-490): v1 is everything in phase 1
 today, and it does not grow by drift.
 
-**v1 cap:** 232 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532).
+**v1 cap:** 233 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539).
 
 Nothing moves into phase 1 unless something of similar size moves out, or
 the team grows to carry it. Raising the cap is a decision: the line above
