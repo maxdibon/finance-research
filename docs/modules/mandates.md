@@ -7,7 +7,7 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
-consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability, core, crb, financial-crime, omni-channel, business-suite, insights]
+consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability, core, crb, financial-crime, omni-channel, business-suite, insights, identity]
 review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453, FS-494, FS-495, FS-498, FS-497]
 last_reviewed: 2026-10-06
 ---
@@ -89,7 +89,8 @@ pre-debit notices), rails (debit registration and pulls).
 recon-observability (reversals and reposts), core (maker-checker), crb
 (who may look up and submit), financial-crime (decisions that need a second person),
 omni-channel (approvals in the channels), business-suite (money
-approvals) and insights (the governance view, IN-18).
+approvals), insights (the governance view, IN-18) and identity (the
+second approval on a manual identity check, ID-01).
 
 **Who holds which record** (docs/architecture.md §2):
 
