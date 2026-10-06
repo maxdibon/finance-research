@@ -182,7 +182,7 @@ function serviceMatrix(builtOn, caption, short) {
   }
   // Ids are the modules; names are the copy's keys, shown by their short names.
   const products = [['collect', 'Kapu Collect'], ['gateway', 'Kapu Pay Gateway'], ['escrow', 'Kapu Escrow'], ['core', 'Kapu Core'], ['mfi', 'Kapu MFI'], ['sacco', 'Kapu Sacco'], ['recon-observability', 'Reconciliation & Observability'], ['sme-recon', 'SME Reconciliation'], ['omni-channel', 'Omni-channel banking'], ['business-suite', 'Business suite']];
-  const services = [['mandates', 'Approvals and mandates'], ['messaging', 'Messaging'], [['access', 'identity'], 'Identity and access'], ['crb', 'Credit bureaus'], ['rails', 'Payment rails'], ['insights', 'Insights'], ['financial-crime', 'Financial crime and compliance']];
+  const services = [['mandates', 'Approvals and mandates'], ['messaging', 'Messaging'], [['access', 'identity'], 'Identity and access'], ['crb', 'Credit bureaus'], ['rails', 'Payment rails'], ['insights', 'Insights'], ['financial-crime', 'Financial crime and compliance'], ['decisioning', 'Credit decisioning']];
   // A tick when the product depends on the service, or, for insights alone,
   // when insights reads from the product (FS-301). Other services that
   // depend on a product (CRB on recon) do not make the product use them.
@@ -322,7 +322,7 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
   const PS = copy.section('Platform services');
   const SHORT = new Map([...PS.get('Short product names'), ...PS.get('Short service names')].map(pair));
   const shortName = (full) => { if (!SHORT.has(full)) throw new Error(`portfolio copy: no short name for "${full}" under Platform services`); return inline(SHORT.get(full)); };
-  const svc = byOrder(['approvals', 'messaging', 'identity', 'bureau', 'rails', 'insights', 'shield'],
+  const svc = byOrder(['approvals', 'messaging', 'identity', 'bureau', 'rails', 'insights', 'shield', 'pulse'],
     PS.get('Services').map(pair).map(([a, b]) => [inline(a), inline(b)]), 'Platform services › Services');
 
   const BS = copy.section('Business suite');

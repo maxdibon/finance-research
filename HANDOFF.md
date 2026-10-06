@@ -241,7 +241,11 @@ only with a register row.
 - **Subagents claim more than they did.** Check their work.
 - **The portfolio layout overflows silently**: build with
   `node design/portfolio-pdf/build.js --html-only`, then
-  `node design/portfolio-pdf/measure.js`.
+  `node design/portfolio-pdf/measure.js`, which flags content past the
+  page edge and, since FS-593, content running under the footer. On
+  product and closing pages the last block is pushed to the bottom, so
+  one extra line of copy anywhere above it overflows. A copy change bumps
+  both editions in `design/portfolio-pdf/document.json` (now v1.5).
 - **A PDF open in a viewer** makes the build write a timestamped file.
 
 ## Waiting on the owner, outside the repository (as at 2026-10-06)
@@ -272,6 +276,4 @@ only with a register row.
   calendar (KC-15); whether the business registry's API returns
   beneficial owners (FS-566, FS-568); M-Pesa validation on tills and any
   Pochi API (CO-21); each bank's signing and certificate requirements.
-- **The portfolio** still names MetaMap as coming soon and describes
-  Collect as partner-collected only; changing it bumps both editions.
 - Proposals awaiting go: the OPEN rows whose notes say "Proposal in chat".

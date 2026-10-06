@@ -189,7 +189,7 @@ Credit bureaus · Payment rails · Insights
 
 ### Kapu Collect
 
-**Tagline:** Deposits collected by partners, held at your bank
+**Tagline:** Deposits from partners and paybills, held at your bank
 **Intro:** Kapu Collect lets a bank take deposits gathered by collection
 firms, high-volume SMEs and funds-holding operators. Partners connect
 through Kapu's APIs; every deposit lands in a real account at the bank, in
@@ -201,9 +201,9 @@ discussion with new partner banks.
 paybill and into the customer’s account. Kapu prompts, confirms and posts;
 it never holds the money.
 **Features:**
-- Account and sub-account opening, gated on IPRS identity checks; Smile ID, MetaMap, Spin Mobile and Sumsub coming soon
-- Deposits by mobile-money prompt; withdrawals to mobile, till or paybill,
-  with the recipient's name confirmed first, coming soon
+- Account and sub-account opening, gated on IPRS identity checks; Smile ID and Prembly coming soon
+- Deposits by prompt, or to your paybill and tills, checked first;
+  withdrawals to mobile, till or paybill
 - Account-to-account transfers, balances and statements
 - Partner and bank management portals
 - Asynchronous callbacks, idempotent requests and queries by reference
@@ -296,10 +296,10 @@ Every step is timestamped and attributed; a restructure stays linked to the
 loan it replaced.
 **Dashboard caption:** Illustrative screen: the portfolio dashboard
 **Features:**
-- KYC with IPRS lookup and a completeness gate per product
-- Collateral management, vehicles first, with verification evidence
+- KYC with IPRS lookup, tiers and a completeness gate per product
+- Collateral for vehicles and land titles, with verification evidence
 - Approval chains and unanimous committees; approve from the app or email
-- Above-limit approvals flagged and tracked as their own cohort
+- Statement appraisal, behaviour scores and risk classes
 - Repayments applied as CBK's lender rules require; arrears interest capped
   by law
 - SMS reminders, a portfolio dashboard, and migration from Mifos
@@ -321,7 +321,8 @@ unknown stays open until someone explains it.
 - Membership, share capital and member deposits; withdrawable savings for
   deposit-taking Saccos
 - Contributions by M-Pesa, bank and employer check-off, matched to members
-- Loan limits from members' deposits; guarantors who can see their exposure
+- Loan limits from deposits and repayment record; guarantors who can see
+  their exposure
 - Credit-committee approval, recorded per member
 - Dividends and interest computed from your bylaws, kept for the AGM
 - Your own HR, payroll and accounting through the Business suite
@@ -442,24 +443,25 @@ messages, logins and reports as the first.
 - Approvals and mandates: Chains by product, amount and risk; no
   self-approval; every decision attributed when it is made. Debit mandates
   with the payer's consent and right to cancel.
-- Messaging: SMS, WhatsApp, Telegram and app push: direct to Kenya's
-  operators under our PRSP licence, through partners in each new market. A
-  status says only what the channel reported.
+- Messaging: SMS, WhatsApp, Telegram and app push, direct to Kenya's
+  operators under our PRSP licence. A status says only what the channel
+  reported.
 - Identity and access: One login for every system; re-authentication before
   money moves; financial-grade API security; IPRS, document and liveness
-  checks.
+  checks; KYC tiers.
 - Credit bureaus: Coming soon. Monthly submissions generated from the
   ledger and reconciled; lookups with the purpose recorded first;
   corrections when a borrower settles.
 - Payment rails: M-Pesa, Airtel Money and T-Kash behind one interface,
-  with PesaLink, bank APIs and files, and cards coming soon. Unconfirmed
-  means pending, never assumed.
+  with PesaLink, bank APIs and files, and cards coming soon. Every payout
+  sent as approved, the name checked first.
 - Insights: Every metric defined once, for dashboards and plain-language
   questions. Each answer shows how it was calculated and how fresh the data
   is. Superset included, or your own Power BI, Tableau or Metabase.
-- Financial crime and compliance: Coming soon. Payments scored before money
-  moves; sanctions and PEP screening; alerts become cases; suspicious
-  transaction and regulatory reports prepared for the institution to file.
+- Financial crime and compliance: Your rules on amount, time, holidays and
+  destination; sanctions screening. Scoring and cases coming soon.
+- Credit decisioning: Appraisal, behaviour scores and risk classes, as rules
+  you can read. AI-assisted decisions coming soon.
 **Built-on caption:** Read from each product's design: the platform
 services it is built on.
 **Short product names:**
@@ -481,6 +483,7 @@ services it is built on.
 - Payment rails: Rails
 - Insights: Insights
 - Financial crime and compliance: Compliance
+- Credit decisioning: Decisions
 
 ## Who it is for
 
@@ -732,9 +735,9 @@ ITIL 4.
 **Eyebrow:** Security and standards
 **Heading:** Built to be audited
 **Rows:**
-- Who can act: One login per person, never shared; re-authentication at the
-  moment of any act that moves money, in the app or from email; a second
-  approver for payments, reversals and role changes.
+- Who can act: One login per person, never shared; re-authentication at any
+  act that moves money; a second approver for payments, reversals and role
+  changes. What is approved is what is sent; Dibon cannot move your money.
 - What is recorded: Every action, append-only; every step of a transaction
   signed and chained, so its journey can be verified. A correction is a new
   entry.
@@ -797,7 +800,7 @@ give an order, not dates: each step follows our customers.
 ### Services
 
 **Now:** Nine products on one platform, and the Business suite
-**Next:** Credit-bureau submissions and lookups; financial-crime screening and reporting
+**Next:** Credit-bureau submissions and lookups; payment scoring, cases and reports; AI-assisted credit decisions
 **Later:** Messaging partners and identity registers in each new market
 
 ### Assurance
