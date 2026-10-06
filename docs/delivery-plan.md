@@ -74,7 +74,9 @@ the check keeps the two in step):
 **Build specifications** for R1 live in docs/specs/: the lender rules
 ([specs/lender-rules.md](specs/lender-rules.md)) and the approval engine
 ([specs/approval-engine.md](specs/approval-engine.md)); the sanctions
-adapter, the M-Pesa port and the API contracts are to follow (FS-492,
+adapter, the M-Pesa port, the API contracts, decisioning (FS-582) and
+the payout instruction path with its security (FS-586, FS-588) are to
+follow (FS-492,
 FS-495).
 
 **The platform and security minimum for any go-live:**

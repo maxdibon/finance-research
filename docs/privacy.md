@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532]
+review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532, FS-582, FS-591]
 last_reviewed: 2026-10-06
 ---
 
@@ -73,6 +73,7 @@ officer and the institution (FS-063).
 | PR-15 | Backups of all the above | platform-security SE-10, SE-20 to SE-22 | All of the above | As the source | As the source | Expire with the source's retention; nothing restored beyond it | Covered by its source | No: two Kenyan sites |
 | PR-16 | Notifications, links and the chatbot on WhatsApp | omni-channel OC-16, OC-20; messaging MS-06 | Customers, members | Confidential only as far as a phone number and a reference; never balances, statements, documents or Restricted data (architecture §7, FS-532) | Contract; consent to use WhatsApp for banking | Open (FS-063) | Needed (a transfer out of Kenya, and an AI agent) | **Yes:** the WhatsApp Business Platform is Meta's and processes outside Kenya; proof of safeguards to the Data Commissioner before it starts (s.48), and the member told (FS-487) |
 | PR-17 | Investor loan tapes: pseudonymised loan-level data an institution shares with its funders | insights IN-17 | Borrowers | Confidential | The institution's legitimate interest or contract with its funder, to confirm per institution | As the data-sharing agreement sets, no longer than the funding | Needed | Only if a funder is abroad: the institution's transfer, under s.48 |
+| PR-18 | Credit decisioning: statement metrics, behaviour scores and internal risk classes, which is profiling | decisioning DE-01 to DE-04; DE-06 in phase 2 | Borrowers and applicants | Confidential; forbidden inputs never read (social media, the characteristics the Act names in its definition of profiling) | Contract (assessing the loan asked for); the institution's legitimate interest for risk classes, to confirm per institution | With the loan file: 7 years, as PR-02 | Needed (profiling; whether the Act's impact-assessment duty applies is to confirm) | No |
 
 ## Open
 

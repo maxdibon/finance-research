@@ -5,8 +5,8 @@ kind: checklist
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453]
-last_reviewed: 2026-10-05
+review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591]
+last_reviewed: 2026-10-06
 ---
 
 # Customer onboarding checklists
@@ -47,6 +47,8 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-16 | Its money laundering reporting officer, its goAML registration with the FRC, and its risk appetite: screening lists, thresholds for holds and alerts | Customer's reporting officer | financial-crime FC-05 to FC-11; FS-431 |
 | OB-COM-17 | Approvers' work email addresses, and which approvals may be acted on from Outlook or Gmail | Customer's operations lead | mandates MD-18; FS-449 |
 | OB-COM-18 | The operator agreements for the SIM-change, IMSI and name checks with Safaricom, Airtel and Telkom: the institution's own, or Dibon's; and the limit and holding period after a SIM change | Customer's compliance lead | identity ID-12 to ID-14, financial-crime FC-02; compliance LC-13; FS-448 |
+| OB-COM-19 | Access to each bank it pays out through: the bank access request sent (docs/outreach/bank-access-request.md), the channel each bank grants (API, host-to-host files, or internet banking), its cut-offs, and the signing certificates it requires | Customer's finance lead | rails RL-01, RL-07; FS-586, FS-588 |
+| OB-COM-20 | Its business calendar (working hours, its own closures) and its transaction rules: windows, limits per tier and per cycle, allow- and deny-lists | Customer's operations lead | core KC-15; financial-crime FC-16; FS-574 |
 
 ## Kapu Collect
 
@@ -105,6 +107,7 @@ Module: [mfi](modules/mfi.md)
 | OB-MF-03 | Approval chains, vetting limits and the override authority | Credit lead | mfi MF-06, MF-07 |
 | OB-MF-04 | Collateral types it accepts | Credit lead | mfi MF-03 |
 | OB-MF-05 | Its CBK licence or registration as a lender, or its application (due by about 29 Mar 2027), which decides the conduct and disclosure rules the product applies | Compliance lead | mfi MF-22 to MF-29; law register LR-03; FS-435 |
+| OB-MF-06 | Its appraisal and scoring definitions: the statement formulas, the behaviour score's weights, its risk classes and their thresholds; and the risk assessment behind its lightest KYC tier | Credit lead; compliance lead | decisioning DE-02 to DE-04; identity ID-19; FS-551, FS-582 |
 
 ## Kapu Sacco
 

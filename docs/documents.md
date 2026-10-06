@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-063, FS-527, FS-532, FS-537, FS-538]
+review_ids: [FS-063, FS-527, FS-532, FS-537, FS-538, FS-591]
 last_reviewed: 2026-10-06
 ---
 
@@ -79,7 +79,7 @@ of employment.
 
 | Id | Document | Required by | Keep for | Class | Arrives by |
 |---|---|---|---|---|---|
-| DT-13 | Application, appraisal, assessed limit and any override with its reason | CBK lender regulations reg 28; POCAML Regs reg 42(1) | 7 years, T | Confidential | Generated (MF-01, MF-06) |
+| DT-13 | Application, appraisal, assessed limit and any override with its reason; the decision record behind the appraisal: metrics, scores, risk class, reasons and the model version (decisioning DE-01, FS-582) | CBK lender regulations reg 28; POCAML Regs reg 42(1) | 7 years, T | Confidential | Generated (MF-01, MF-06) |
 | DT-14 | Bank and M-Pesa statements used for appraisal | POCAML Regs reg 42(2) | 7 years, T | Confidential | From source (ID-18), or uploaded |
 | DT-15 | Credit bureau report, and the consent to obtain it | CRB Regulations 2020 | 7 years, T (proposed) | Confidential | Fetched (crb) |
 | DT-16 | Key information document, as offered | CBK lender regulations regs 48, 59 | 7 years, T | Confidential | Generated (MF-34) |
