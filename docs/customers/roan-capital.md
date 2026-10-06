@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551]
 last_reviewed: 2026-10-06
 ---
 
@@ -120,6 +120,7 @@ missing. *Gap* means no capability does it yet.
 | RC-40 | Loan officers: each borrower and loan assigned to a Credit Officer, reassigned with approval, performance per officer. Not in the document; Roan Capital's Credit Officers (RC-12, RC-34) hold the portfolios | MF-35 | Partial | Added by Dibon (FS-517); owner, 2026-10-06: in R1 |
 | RC-41 | Guarantors' rights: consent before appointment, periodic statements, 14 days' notice before any demand, recourse only after recovery from the borrower. Not in the document; required by the CBK lender regulations, regs 39(3) and 42, and Roan Capital takes directors' guarantees (RC-04) | MF-37 | Partial | Added by Dibon (FS-531) |
 | RC-42 | Borrowers' access: receipts, status messages and a free statement on request. Not in the document; required by reg 39(1) | MF-38, ID-17 | Partial | Added by Dibon (FS-531) |
+| RC-43 | KYC tiers: each borrower's tier set from the checks done, and loan limits and rules per tier, so a borrower verified manually or with fewer checks cannot reach the larger loans. Not in the document; reg 63 of the CBK lender regulations requires a lender to guard against impersonation, and the AML regulations allow lighter checks only for lower risk (reg 21) | ID-19 | Partial | Added by Dibon (FS-551); owner, 2026-10-06: in R1. Roan Capital sets the limits per tier and writes the risk assessment behind them |
 
 ## 3 · Out of scope for the MVP (§2.3)
 

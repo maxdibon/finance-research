@@ -779,3 +779,19 @@ its own entry.
   Sacco run past SASRA's 21 days while the software showed green.
 - **Costs (inferred):** two clocks to configure and test; one more
   phase-1 row in a release (R4) that is already large.
+
+## FS-551 · KYC tiers in R1; USSD self-sign-up in phase 2; the cap raised to 234
+
+- **Chose:** KYC tiers (identity ID-19) in phase 1 and in R1: the tier
+  comes from the evidence held, each institution sets limits and rules
+  per tier, a tier falls on an event and rises only with evidence. Remote
+  self-sign-up by USSD, the lightest tier's natural channel, waits for
+  phase 2 with loan applications on USSD (omni-channel OC-08).
+- **Requires:** ID-19; ID-01; docs/customers/roan-capital.md "RC-43"; docs/delivery-plan.md "ID-19 (KYC tiers)".
+- **Argued against:** one level of KYC for every customer, which either
+  turns away people with fewer documents or lends to them as if fully
+  verified; and the manual route without limits, which would make it the
+  way around every failed check.
+- **Costs (inferred):** one more capability in R1 for a team of four;
+  every limit check reads the tier; each institution must write the risk
+  assessment behind its lightest tier before using it.
