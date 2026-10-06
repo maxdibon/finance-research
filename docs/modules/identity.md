@@ -7,8 +7,8 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
-consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568]
+consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite, decisioning]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582]
 last_reviewed: 2026-10-06
 ---
 
@@ -81,7 +81,7 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 | ID-17 | Sharing documents out: to a person, a single-use, short-lived link to our own page, opened with a one-time code to the bound phone, after which they may download or share their own document as they choose; to an organisation, the portal, the API, or SFTP for bulk files (check-off and settlement files, regulator and audit exports); every share and download logged | Planned | Owner, 2026-10-06 (FS-532); architecture §7 | 1 |
 | ID-19 | KYC tiers: each customer's tier set from the evidence held, never from a request: tier 1 a register match and the operator's match on the customer's own SIM; tier 2 adds a photo check (liveness, a document check, or the manual route, flagged) and the KRA PIN; tier 3 adds source of funds and enhanced due diligence, and business checks for companies. Loan, deposit and transaction limits and rules per tier and product, set by each institution under maker-checker, and read by every limit check. A tier falls on an event (a SIM swap, an expired document, a mismatch when a check is re-run, a screening hit) and rises only with new evidence; screening at every tier. Tier 1 rests on simplified due diligence, which needs the institution's own risk assessment (POCAML Regulations reg 21). Remote self-sign-up into tier 1 by USSD waits for phase 2 (omni-channel OC-08, FS-549) | Planned | Owner, 2026-10-06: in R1 (FS-550, FS-551). CBK lender regulations reg 63(2) and (3) for remote onboarding | 1 |
 | ID-20 | An identity simulator for tests and demos: the national register and each verification vendor answering a match, a mismatch, not found, deceased, slow and down, for made-up people only; never a real person's data | Planned | Owner, 2026-10-06 (FS-560); as rails RL-17 does for the rails; docs/testing.md | 1 |
-| ID-18 | Evidence from source, with the business's consent: statements taken from its SME Recon feeds, its bank's API or its M-Pesa shortcode (rails RL-20) instead of files that can be edited; licences checked against the regulators' published lists | Planned | Owner, 2026-10-06 (FS-536). Would close Roan Capital's statement gap (RC-05) and feed credit scoring (mfi MF-33) | 2 |
+| ID-18 | Evidence from source, with the business's consent: statements taken from its SME Recon feeds, its bank's API or its M-Pesa shortcode (rails RL-20) instead of files that can be edited; licences checked against the regulators' published lists | Planned | Owner, 2026-10-06 (FS-536). Would close Roan Capital's statement gap (RC-05) and feed credit scoring (decisioning DE-06) | 2 |
 
 **Retired ids:** ID-08, moved to financial-crime FC-05 and FC-06 (FS-431). A retired id is never reused.
 
@@ -95,7 +95,8 @@ ID-01).
 **Used by:** collect, gateway, mfi, sacco, escrow, crb, core,
 omni-channel, financial-crime, access (re-verification before a
 reset or a new device, AC-15) and business-suite (company registers
-checked against the business registry, BS-18).
+checked against the business registry, BS-18), and decisioning
+(statements in the vault, ID-15; the KYC tier, ID-19).
 
 **Who holds which record** (docs/architecture.md §2):
 

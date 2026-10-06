@@ -5,7 +5,7 @@ kind: journey
 release: R1
 owner: Solution architect
 classification: Internal
-review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574]
+review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574, FS-582]
 last_reviewed: 2026-10-06
 ---
 
@@ -74,7 +74,7 @@ docs/specs/approval-engine.md.
 |---|---|---|---|
 | 1 | The Credit Officer opens the loan for a verified borrower: product, amount, tenor and purpose. The amount cannot exceed the borrower's tier limit | Credit Officer | MF-01, ID-19, KC-04 |
 | 2 | For a secured product, the vehicle's logbook, the NTSA search and the collateral-registry search are captured and filed; the registry number is kept on the record. The committee cannot open the application until the logbook is attached (RC-09) | Credit Officer | MF-03, MF-04, ID-15 |
-| 3 | The officer appraises the borrower from the statements on file and records an assessed limit with reasons | Credit Officer | MF-06, ID-15 |
+| 3 | Decisioning computes the statement metrics, and for a repeat borrower the behaviour score and risk class, into a decision record; the officer reads it, appraises, and records an assessed limit with reasons | Credit Officer; platform | MF-06, ID-15, DE-01, DE-02, DE-03, DE-04 |
 | 4 | The platform prices the loan from the product version: the schedule, the APR and the total cost of credit, and generates the key information document | Platform | MF-23, KC-04, MF-34 |
 | 5 | The application goes up its chain by product and amount: the Credit Officer, then the Business Credit Committee (three of three), then the Head Office Committee above the set amount. Each decision is recorded with identity, comment and time, re-authenticated at the act, and may be made from email; no one decides two steps in a row; an override always ends with the override authority | Approvers | MD-01, MD-02, MF-07, MD-09, MD-05, MD-06, MD-10, MD-18, MD-08 |
 | 6 | The borrower, and any guarantors (JN-05), receive the agreement and the key information document as a link; they read the key information document and accept it before signing; they sign in Odoo Sign with a one-time code to their confirmed phone; the offered and signed versions are filed in the vault, and the email carries only a link | Borrower; guarantors | MF-34, BS-02, ID-11, ID-15, MS-19, MF-37 |
@@ -106,8 +106,7 @@ docs/specs/approval-engine.md.
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
 | CR-02, a credit bureau report at appraisal | phase 1, not in R1 | Appraisal (step 3) has no bureau history | Asked of Roan Capital (delivery map, open answer 12); if it does, CR-02 comes into R1 (FS-570) |
-| Appraisal from statements: ratios computed (RC-11), statements from source (ID-18, phase 2, RC-05) | RC-05 a gap; ID-18 phase 2 | Statements arrive as files that can be edited, and the officer computes the ratios by hand | Accept for R1. In phase 2, statements from source (ID-18); Prembly's M-Pesa statement analysis (partners PT-53) is a candidate. Accepted for R1 (FS-570) |
-| MF-33, a behaviour score for repeat borrowers (RC-14, RC-15) | phase 2 | The officer judges repayment history by eye | As decided (FS-522) |
+| ID-18, statements fetched from source with the borrower's consent (RC-05) | phase 2 | Statements are uploaded files; each is checked to reconcile before it is scored (DE-02), and the officer sees any that does not | Accepted for R1 (FS-570, FS-582) |
 
 ## 5 · Open questions
 

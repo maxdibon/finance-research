@@ -852,3 +852,22 @@ its own entry.
   gazetted ones are announced, not known in advance; messaging's quiet
   hours, approval clocks and the complaints clocks will read the
   calendar once wired, and their dependencies are added then.
+
+## FS-582 · Decisioning: one engine for appraisal, scores and risk classes; the cap raised to 242
+
+- **Chose:** a shared decisioning service, used by every product that
+  lends: statement metrics, a behaviour score and internal risk classes
+  in R1, as rules a person can read, giving evidence to people who
+  decide; one contract and versioned models, so learned models, shadow
+  mode and automated decisions arrive in phase 2 without changing a
+  product. MF-33 is retired into it. Overrides FS-522's choice of v2
+  for the behaviour score and downgrades only, because Roan Capital's
+  requirement document, Dibon's own, commits them to the MVP.
+- **Requires:** DE-01; DE-02; DE-03; DE-04; docs/customers/roan-capital.md "RC-15"; docs/delivery-plan.md "DE-01 (the contract and decision records)".
+- **Argued against:** scoring inside each product, which would take the
+  step to AI once per product; and putting it in recon, which matches
+  money and shares only the statement parsers.
+- **Costs (inferred):** four more R1 capabilities for a team of four, the
+  statement parser the heaviest because every bank's format differs;
+  nothing can be finished until Roan Capital gives its formulas,
+  weights and thresholds (open answer 13).

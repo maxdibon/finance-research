@@ -94,6 +94,7 @@ Ids are never reused; a retired capability id is listed in its module
 | CO | modules/collect.md | Kapu Collect |
 | CR | modules/crb.md | Credit bureau connections |
 | ES | modules/escrow.md | Kapu Escrow |
+| DE | modules/decisioning.md | Decisioning: appraisal, scores, risk classes |
 | FC | modules/financial-crime.md | Financial crime and compliance |
 | GW | modules/gateway.md | Kapu Pay Gateway |
 | ID | modules/identity.md | Identity verification, and the document vault |

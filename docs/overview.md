@@ -107,6 +107,7 @@ own payments first, and insights runs on our own data first (FS-033).
 - [Insights](modules/insights.md) — governed metrics, dashboards and natural-language questions
 - [Platform Security](modules/platform-security.md) — the security baseline every product runs on, from the perimeter to the database and to staff laptops and field phones
 - [Financial Crime and Compliance](modules/financial-crime.md) — fraud scoring, sanctions and PEP screening, cases, and the reports institutions file
+- [Decisioning](modules/decisioning.md) — appraisal, behaviour scores and risk classes, rules first, built to take AI later
 
 **Channels**
 

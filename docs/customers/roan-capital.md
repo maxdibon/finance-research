@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-582, FS-583]
 last_reviewed: 2026-10-06
 ---
 
@@ -52,7 +52,7 @@ missing. *Gap* means no capability does it yet.
 | RC-02 | National ID and passport checked against IPRS in real time, with the cost of each query logged | ID-01, MF-02, ID-10 | Partial | The cost of each query is logged by ID-10 (FS-562). The document logs KES 5 a query; direct access is KES 20 a check plus KES 50,000 to connect (partners PT-29, compliance LC-12). Passport coverage unconfirmed (FS-329). Roan Capital provides the credentials (assumption 1) |
 | RC-03 | Company status and directors checked with the Business Registration Service | ID-07 | Covered | ID-07 moved to phase 1, so it is in the MVP (FS-415) |
 | RC-04 | Documents uploaded and stored: ID, KRA PIN, photo, certificate of incorporation, directors' guarantees; status per document | ID-02, MF-02, ID-15 | Covered | Stored in the document vault (ID-15, FS-500) |
-| RC-05 | Bank and M-Pesa statements (3 to 12 months) ingested for appraisal | — | Gap | Reconciliation ingests statements (RO-01) for matching, not for appraisal. Needs a parser feeding RC-11 |
+| RC-05 | Bank and M-Pesa statements (3 to 12 months) ingested for appraisal | DE-02, ID-15 | Partial | Uploaded to the vault and parsed with recon's parsers for appraisal (decisioning DE-02, FS-582); each checked to reconcile. Statements fetched from source are phase 2 (identity ID-18) |
 | RC-06 | No loan account until verification is complete | MF-02 | Covered | The completeness gate cannot be overridden |
 | RC-07 | Onboarding wizard with separate individual and business flows | MF-01, MF-02 | Partial | The flows exist; separate wizards per borrower type are screen design |
 
@@ -68,11 +68,11 @@ missing. *Gap* means no capability does it yet.
 
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
-| RC-11 | Appraisal from statements: turnover, liquidity, retainer ratio | MF-06 | Partial | MF-06 records an assessed limit and flags overrides; computing these ratios from statements is new (needs RC-05) |
+| RC-11 | Appraisal from statements: turnover, liquidity, retainer ratio | MF-06, DE-01, DE-02 | Partial | Computed by decisioning (DE-02) into a decision record (DE-01) the officer and committee read; the officer's assessed limit stays MF-06 (FS-582). The formulas are Roan Capital's to give (open answer 13) |
 | RC-12 | Chain: Credit Officer, then the Business Credit Committee (3 of 3, unanimous), then the Head Office Committee above a configurable threshold | MD-01, MF-07, MD-09 | Covered | Chains per product and amount tier are configuration. The unanimous committee needs quorum steps, moved to phase 1 for this delivery (FS-399, FS-402) |
 | RC-13 | Maker-checker throughout: the decider is never the requester | MD-06 | Covered | |
-| RC-14 | Behaviour score for repeat borrowers, from repayment timing | — | Gap | No capability in phase 1; credit scoring MF-33 is phase 2 (FS-522) |
-| RC-15 | A Class A borrower downgraded automatically on a pattern of late payment | — | Gap | Classification is reported (MF-14), not changed by rule; MF-33 (phase 2) would do it |
+| RC-14 | Behaviour score for repeat borrowers, from repayment timing | DE-03 | Partial | Decisioning DE-03, in R1 (FS-582): from instalment timing in Kapu Core, the statement assessment weighing less as repaid loans accumulate. The scale and weights are Roan Capital's to give (open answer 13) |
+| RC-15 | A Class A borrower downgraded automatically on a pattern of late payment | DE-04 | Partial | Decisioning DE-04, in R1 (FS-583): Roan Capital's classes and downgrade rules, applied automatically and recorded; never the regulatory classification (MF-25). The classes and thresholds are Roan Capital's to give (open answer 13) |
 | RC-16 | Committee composition and the escalation threshold configurable | MD-01, MD-02 | Covered | Effective-dated and audited |
 | RC-17 | Review dashboards; a committee screen with per-member comments and a vote tracker; an escalation banner | MD-05, MD-09, MD-18, MS-19, MD-08 | Partial | Reminders and escalation when a step waits too long: MD-08 (FS-561). Decisions carry identity, comment and time (MD-05); the vote tracker comes with quorum steps. Committee members can act from Outlook or Gmail, with step-up at the act (MD-18) |
 
@@ -145,6 +145,7 @@ replacement (MF-05).
 | 10 | Loan agreement and guarantee templates, how borrowers sign, and the restructuring policy (RC-38, RC-39) | FS-516 | Open: the owner is asking |
 | 11 | Until PEP screening (FC-06, phase 2): a question on the application form, whether the borrower holds or held a public office, and the compliance officer's review of any yes. Agree? | FS-562 | Open |
 | 12 | Do you pull credit bureau reports before lending today? If so, the bureau lookup (CR-02) comes into R1 | FS-570 | Open |
+| 13 | The definitions behind the appraisal and scoring (RC-05, RC-11, RC-14, RC-15): the formulas for turnover, the liquidity metric and the retainer ratio; the behaviour score's scale and weights, and how statement scoring is weighted down over time; the risk classes and the downgrade thresholds; and synthetic or anonymised sample statements from each bank | FS-582 | Open |
 
 The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text

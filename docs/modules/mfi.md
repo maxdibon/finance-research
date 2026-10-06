@@ -6,9 +6,9 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [mfi]
-depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway, sme-recon, business-suite, escrow]
+depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway, sme-recon, business-suite, escrow, decisioning]
 consumed_by: [omni-channel, insights, business-suite, sacco]
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532]
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532, FS-582]
 last_reviewed: 2026-10-06
 ---
 
@@ -106,19 +106,22 @@ FS-393.
 | MF-30 | Collateral lifecycle: revaluation dates, insurance expiry, where the logbook or title is held, joint registration and discharge status, each with reminders before it lapses | Planned | Owner, 2026-10-06 (FS-496). Extends MF-03; land and other types with MF-18 | 2 |
 | MF-31 | Collateral API: the register read and its changes published as events, for the institution's systems and partners (valuers, insurers, vehicle trackers), scoped by role | Planned | Owner, 2026-10-06 (FS-496). Partner clients per access AC-04 | 2 |
 | MF-32 | LPO and invoice financing for SMEs: the lender sees purchase orders and invoices confirmed in the SME's Odoo and SME Recon, with the SME's consent; repaid from the buyer's payment; the supplier paid through Escrow on delivery where agreed | Planned | Owner, 2026-10-06 (FS-522). Ordinary lending under the CBK lender regulations (LR-03) | 2 |
-| MF-33 | Credit scoring that can be explained: a behaviour score for repeat borrowers from repayment timing, and affordability from bank and M-Pesa statements; rules a person can read before any learned model; every decision explained to the customer (reg 60, MF-29); no social-media data | Planned | Owner, 2026-10-06 (FS-522). Would close Roan Capital's gaps RC-14 and RC-15 | 2 |
 | MF-34 | Loan agreements: the agreement and key information document generated from the product version and the loan's terms, from templates approved under maker-checker; signed by the borrower and guarantors through Odoo Sign (business-suite BS-02) with a code to their bound phone; the offered and the signed versions filed in the document vault against the loan (identity ID-15), the signed one with its signing certificate and a hash recorded in the loan's trace (recon RO-23); the borrower's copy by link (identity ID-17), never as an attachment | Planned | Owner, 2026-10-06: in R1 (FS-516). Electronic signatures: Kenya Information and Communications Act s.83B; whether this meets an advanced signature for loans and guarantees is for counsel | 1 |
 | MF-35 | Loan officers: each borrower and loan assigned to an officer, reassigned in bulk on leave or exit with a second person's approval and the history kept; joining in Odoo HR creates the Keycloak role, the Fineract staff record and an enrolled field device; performance by officer (portfolio, disbursements, arrears, collections, overrides, visits); officers never approve their own applications and handle no cash | Planned | Owner, 2026-10-06 (FS-517). Fineract assigns loans to staff (to confirm against Fineract). Owner, 2026-10-06: in R1 | 1 |
 | MF-36 | Pay-day limits: a limit approved once like any loan; each draw from the phone to M-Pesa, Airtel Money, T-Kash or the bank without further approval, checked on every draw for the limit left, employment still active (a leaver in Odoo HR blocks it), deduction headroom on the next payroll and arrears; repaid by check-off over one to three payrolls | Planned | Owner, 2026-10-06 (FS-518). The lender notifies CBK of a new channel 30 days before launch (reg 27) | 2 |
 | MF-37 | Guarantors: consent sought and recorded before anyone is appointed, the guarantee signed (MF-34); the guarantor kept informed by periodic loan statements; recourse only after non-judicial recovery from the borrower is exhausted, and no demand before the guarantor has had 14 days' notice of the default | Planned | CBK lender regulations reg 39(3), reg 42 (LR-03); owner, 2026-10-06: in R1 (FS-531) | 1 |
 | MF-38 | Borrower access: a receipt for every transaction; a message at each change of status (approved, disbursed, due, overdue, restructured, settled); a free statement on request, by a single-use link to our own page, never as an attachment | Planned | CBK lender regulations reg 39(1) (LR-03); owner, 2026-10-06: in R1 (FS-531) | 1 |
 
+**Retired ids:** MF-33, moved to decisioning DE-03 (the behaviour score) and DE-06 (learned scoring and affordability from source) (FS-582).
+
 ## 4 · Where it sits
 
 **Depends on:** mandates (MF-07, MF-11), identity (NPDM, formerly IPRS),
 rails (M-Pesa, Airtel Money, T-Kash, bank transfer), messaging (MF-13),
 recon-observability (MF-10, MF-12), crb (MF-19), financial-crime
-(sanctions screening, records and lenders' CBK returns; FS-431). Also access (login, roles and step-up); collect (repayments and deposits collected through partners); core (Kapu Core, where the institution has no core of its own); gateway (collections from customers' wallets); sme-recon, business-suite and escrow (LPO and invoice financing, MF-32).
+(sanctions screening, records and lenders' CBK returns; FS-431),
+decisioning (statement metrics, the behaviour score and risk classes
+for appraisal, MF-06; FS-582). Also access (login, roles and step-up); collect (repayments and deposits collected through partners); core (Kapu Core, where the institution has no core of its own); gateway (collections from customers' wallets); sme-recon, business-suite and escrow (LPO and invoice financing, MF-32).
 **Used by:** omni-channel (the borrower channels and the field-officer
 app show its loans), insights (its metrics) and business-suite (check-off
 schedules to employers, BS-15) and sacco (group lending for chamas,

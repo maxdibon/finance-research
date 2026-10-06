@@ -7,7 +7,7 @@ owner: Product lead, Kapu
 classification: Internal
 audience: [mfi, sacco, bank]
 depends_on: [access, identity, mandates, messaging, rails, recon-observability, financial-crime]
-consumed_by: [mfi, sacco, collect, omni-channel, insights, financial-crime]
+consumed_by: [mfi, sacco, collect, omni-channel, insights, financial-crime, decisioning]
 review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431, FS-450, FS-453, FS-574, FS-578]
 last_reviewed: 2026-10-06
 ---
@@ -86,7 +86,8 @@ recon-observability (it ties to its own rails every day), financial-crime
 (regulatory returns, KC-10; FC-13).
 **Used by:** mfi, sacco, collect (as the core for an institution without
 one), omni-channel, insights, financial-crime (the business calendar,
-KC-15, for its transaction rules).
+KC-15, for its transaction rules), decisioning (repayment history for
+the behaviour score and risk classes).
 
 **Who holds which record** (docs/architecture.md §2):
 
