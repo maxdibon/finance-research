@@ -6,9 +6,9 @@ version: 0.1.0
 owner: Product lead, Kapu
 classification: Internal
 audience: [mfi]
-depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway]
-consumed_by: [omni-channel, insights, business-suite]
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500]
+depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway, sme-recon, business-suite, escrow]
+consumed_by: [omni-channel, insights, business-suite, sacco]
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522]
 last_reviewed: 2026-10-06
 ---
 
@@ -105,16 +105,19 @@ FS-393.
 | MF-29 | Where a lending decision is automated, the decision explained to the customer, who is told when dealing with an AI system rather than a person | Planned | CBK lender regulations 2026 (law register LR-03), reg 60 (FS-435) | 2 |
 | MF-30 | Collateral lifecycle: revaluation dates, insurance expiry, where the logbook or title is held, joint registration and discharge status, each with reminders before it lapses | Planned | Owner, 2026-10-06 (FS-496). Extends MF-03; land and other types with MF-18 | 2 |
 | MF-31 | Collateral API: the register read and its changes published as events, for the institution's systems and partners (valuers, insurers, vehicle trackers), scoped by role | Planned | Owner, 2026-10-06 (FS-496). Partner clients per access AC-04 | 2 |
+| MF-32 | LPO and invoice financing for SMEs: the lender sees purchase orders and invoices confirmed in the SME's Odoo and SME Recon, with the SME's consent; repaid from the buyer's payment; the supplier paid through Escrow on delivery where agreed | Planned | Owner, 2026-10-06 (FS-522). Ordinary lending under the CBK lender regulations (LR-03) | 2 |
+| MF-33 | Credit scoring that can be explained: a behaviour score for repeat borrowers from repayment timing, and affordability from bank and M-Pesa statements; rules a person can read before any learned model; every decision explained to the customer (reg 60, MF-29); no social-media data | Planned | Owner, 2026-10-06 (FS-522). Would close Roan Capital's gaps RC-14 and RC-15 | 2 |
 
 ## 4 · Where it sits
 
 **Depends on:** mandates (MF-07, MF-11), identity (NPDM, formerly IPRS),
 rails (M-Pesa, Airtel Money, T-Kash, bank transfer), messaging (MF-13),
 recon-observability (MF-10, MF-12), crb (MF-19), financial-crime
-(sanctions screening, records and lenders' CBK returns; FS-431). Also access (login, roles and step-up); collect (repayments and deposits collected through partners); core (Kapu Core, where the institution has no core of its own); gateway (collections from customers' wallets).
+(sanctions screening, records and lenders' CBK returns; FS-431). Also access (login, roles and step-up); collect (repayments and deposits collected through partners); core (Kapu Core, where the institution has no core of its own); gateway (collections from customers' wallets); sme-recon, business-suite and escrow (LPO and invoice financing, MF-32).
 **Used by:** omni-channel (the borrower channels and the field-officer
 app show its loans), insights (its metrics) and business-suite (check-off
-schedules to employers, BS-15). Otherwise it is the product an MFI buys.
+schedules to employers, BS-15) and sacco (group lending for chamas,
+SC-19). Otherwise it is the product an MFI buys.
 
 **Who holds which record** (docs/architecture.md §2):
 

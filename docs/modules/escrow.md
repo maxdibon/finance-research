@@ -7,8 +7,8 @@ owner: Product lead, Kapu
 classification: Internal
 audience: [bank, sme, fintech]
 depends_on: [collect, mandates, recon-observability, messaging, rails, identity, access]
-consumed_by: [insights]
-review_ids: [FS-042, FS-104, FS-107, FS-108, FS-114, FS-115, FS-116, FS-117, FS-328, FS-407, FS-408]
+consumed_by: [insights, mfi]
+review_ids: [FS-042, FS-104, FS-107, FS-108, FS-114, FS-115, FS-116, FS-117, FS-328, FS-407, FS-408, FS-522]
 last_reviewed: 2026-10-06
 ---
 
@@ -76,8 +76,8 @@ same gap as the GateKeepr brief's second-leg problem.
 **Depends on:** collect (sub-accounts, deposits), mandates (release
 approvals), recon-observability (ES-10), messaging (ES-09), rails
 (funding and release), identity (KYC on both parties). Also access (login, roles and step-up).
-**Used by:** insights, which reads its states for reporting. No product
-builds on it yet; GateKeepr's deposit and service-charge flows are a
+**Used by:** insights, which reads its states for reporting, and mfi,
+which pays suppliers on delivery for LPO financing (MF-32); GateKeepr's deposit and service-charge flows are a
 possible consumer.
 
 **Who holds which record** (docs/architecture.md §2):

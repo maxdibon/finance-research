@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, escrow, mandates, recon-observability, core, omni-channel, financial-crime, identity]
-review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-390, FS-391, FS-393, FS-403, FS-407, FS-408, FS-448, FS-453]
+review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-390, FS-391, FS-393, FS-403, FS-407, FS-408, FS-448, FS-453, FS-523]
 last_reviewed: 2026-10-06
 ---
 
@@ -86,6 +86,7 @@ launched; its row stays Designed until that is confirmed (FS-393).
 | RL-23 | M-Pesa Ratiba: standing orders the customer authorises on M-Pesa, for loan repayments and contributions | Planned | Daraja API list (FS-387); mandates MD-14, RL-16 | 2 |
 | RL-24 | M-Pesa Dynamic QR, B2B Express Checkout and Business to Pochi, for merchant and small-trader payments | Planned | Daraja API list (FS-387); gateway | 2 |
 | RL-25 | M-Pesa Bill Manager and Tax Remittance: invoices with reminders, and KRA payments from a shortcode | Planned | Daraja API list (FS-387); sme-recon, business-suite | 2 |
+| RL-26 | Virtual cards for an institution's customers, issued through a licensed issuer-processor; card numbers never reach us. An opportunity we track, not a commitment | Planned | Owner, 2026-10-06 (FS-523). Candidates CP-16, CP-17; PCI DSS is compliance LC-11 | later |
 
 ## 4 · Where it sits
 

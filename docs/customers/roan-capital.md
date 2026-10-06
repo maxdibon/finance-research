@@ -71,8 +71,8 @@ missing. *Gap* means no capability does it yet.
 | RC-11 | Appraisal from statements: turnover, liquidity, retainer ratio | MF-06 | Partial | MF-06 records an assessed limit and flags overrides; computing these ratios from statements is new (needs RC-05) |
 | RC-12 | Chain: Credit Officer, then the Business Credit Committee (3 of 3, unanimous), then the Head Office Committee above a configurable threshold | MD-01, MF-07, MD-09 | Covered | Chains per product and amount tier are configuration. The unanimous committee needs quorum steps, moved to phase 1 for this delivery (FS-399, FS-402) |
 | RC-13 | Maker-checker throughout: the decider is never the requester | MD-06 | Covered | |
-| RC-14 | Behaviour score for repeat borrowers, from repayment timing | — | Gap | No capability scores repayment behaviour |
-| RC-15 | A Class A borrower downgraded automatically on a pattern of late payment | — | Gap | Classification is reported (MF-14), not changed by rule |
+| RC-14 | Behaviour score for repeat borrowers, from repayment timing | — | Gap | No capability in phase 1; credit scoring MF-33 is phase 2 (FS-522) |
+| RC-15 | A Class A borrower downgraded automatically on a pattern of late payment | — | Gap | Classification is reported (MF-14), not changed by rule; MF-33 (phase 2) would do it |
 | RC-16 | Committee composition and the escalation threshold configurable | MD-01, MD-02 | Covered | Effective-dated and audited |
 | RC-17 | Review dashboards; a committee screen with per-member comments and a vote tracker; an escalation banner | MD-05, MD-09, MD-18 | Partial | Decisions carry identity, comment and time (MD-05); the vote tracker comes with quorum steps. Committee members can act from Outlook or Gmail, with step-up at the act (MD-18) |
 
