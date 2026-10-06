@@ -5,7 +5,7 @@ kind: journey
 release: R1
 owner: Solution architect
 classification: Internal
-review_ids: [FS-090, FS-205, FS-415, FS-536, FS-548, FS-551, FS-562, FS-564]
+review_ids: [FS-090, FS-205, FS-415, FS-536, FS-548, FS-551, FS-562, FS-564, FS-566]
 last_reviewed: 2026-10-06
 ---
 
@@ -102,11 +102,16 @@ be authorised and verified (reg 23).
 ## 5 · Open questions
 
 - Whom the institution verifies in step 4: every director, every
-  shareholder, or those above a holding threshold. The beneficial
-  ownership threshold under the Companies Act is to confirm: that law is
-  not in the law register, and has not been read (FS-564).
+  shareholder, or those above a holding threshold. The Companies Act
+  (law register LR-34) defines a beneficial owner as the natural person
+  who ultimately owns or controls the company, and leaves the threshold
+  to the Beneficial Ownership Information Regulations, not yet read
+  (FS-566).
 - The board resolution: Roan Capital's template, and whether a director's
   signature alone suffices for a sole director.
-- Whether the registry returns beneficial owners, or only shareholders;
-  each vendor's documentation names shareholders and directors
-  (partners PT-30, PT-53).
+- Whether the registry returns beneficial owners, or only shareholders.
+  Every company must lodge its beneficial owners with the Registrar
+  (Companies Act s.93A), so the registry holds them; each vendor's
+  documentation names only shareholders and directors (partners PT-30,
+  PT-53). If the API returns them, step 4 compares the declaration with
+  the Registrar's record instead of with the shareholders.
