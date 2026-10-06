@@ -27,7 +27,7 @@ release that needs it.
 
 | Release | Started by | Scope | Size |
 |---|---|---|---|
-| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 61 capabilities from the map (28 Designed, 33 Planned), plus 22 platform, security and testing capabilities |
+| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 65 capabilities from the map (28 Designed, 37 Planned), plus 22 platform, security and testing capabilities |
 | **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability | Mostly Built or Designed: the Onit record |
 | **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
 | **R4 · Saccos and Kapu Core** | The first Sacco or core customer signs | Kapu Sacco, Kapu Core, member apps and USSD, the field-officer app | Sacco, Core and omni-channel phase-1 rows |
@@ -48,7 +48,9 @@ the check keeps the two in step):
   email).
 - **Identity:** ID-01, ID-02, ID-03 (re-verification), ID-07 (business registration), ID-10 (what is kept, and each query's cost), ID-11 (the phone number confirmed), ID-19 (KYC tiers), ID-15 (the
   document vault), ID-17 (sharing documents out).
-- **Messaging:** MS-19 (email, for approvals and links).
+- **Messaging:** MS-01, MS-02 (SMS through our own gateway, FS-565),
+  MS-03 (Roan Capital's sender ID), MS-09 (delivery status), MS-19 (email,
+  for approvals and links).
 - **Core:** KC-01, KC-04, KC-07, KC-08 on Kapu Core (Fineract, PostgreSQL).
 - **Money in and out:** RL-07 (bank transfers), with M-Pesa already built
   (RL-03).
@@ -116,7 +118,7 @@ Four people lead the build (FS-477):
 | A DevSecOps engineer | The platform: Kubernetes, Keycloak (AC-01, AC-02, AC-08), OpenBao, the document vault (ID-15), the build pipeline, backups and the security minimum (SE rows above) |
 | The CTIO | Architecture and reviews; the approval engine's design (MD-01 to MD-18); security lead; Roan Capital's acceptance with the project manager |
 
-**Building less is the plan.** Four people cannot build 83 capabilities
+**Building less is the plan.** Four people cannot build 87 capabilities
 from scratch, so R1 uses what already exists and builds only what does
 not:
 
