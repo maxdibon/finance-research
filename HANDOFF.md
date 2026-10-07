@@ -1,8 +1,8 @@
 # Dibon financial services — session handoff
 
-    version: 1.3.0
-    updated: 2026-10-06
-    supersedes: 1.2.0, the same day; adds the second session (FS-544 to FS-589)
+    version: 1.4.0
+    updated: 2026-10-07
+    supersedes: 1.3.0; adds 7 October (FS-590 to FS-610)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -83,6 +83,14 @@ Each has a register row and, where it changed the design, an entry in
 - **What is approved is what is sent**, and **no Dibon role, break-glass
   included, moves an institution's money** (FS-588).
 - **Diagrams are plain text, at most 100 columns** (FS-064, FS-579).
+- **Bank payouts: one approval within limits a bank agrees by mandate
+  letter, two above them** or through internet banking (RL-07, FS-594).
+- **Payroll is paid from the employer's own accounts, never through
+  Dibon**: net pay, statutory and check-off remittances in one approved
+  run (business-suite BS-19, phase 2, FS-606, FS-608).
+- **The portfolio's version is what a reader holds.** Only v1.0 has gone
+  out; the work is v1.1, a draft, and the build refuses a named copy of a
+  draft (FS-595).
 - **Every decision from FS-490 names what it requires** in a `Requires:`
   line, and the check proves each item exists (FS-515).
 
@@ -107,6 +115,15 @@ Each has a register row and, where it changed the design, an entry in
   API references (partners PT-30, PT-33, PT-53); Smile ID and Prembly
   proposed as the candidates; the owner has reached out to Prembly and
   will provide its updates.
+- **The collateral registry** (Movable Property Security Rights Act and
+  its regulations, law register LR-23, LR-37): MF-03 now searches before
+  lending, records each notice, sends the borrower their copy within ten
+  working days, warns before expiry and cancels at settlement, by hand on
+  BRS's eCitizen portal in R1. No API is documented (partners PT-55).
+- **The team** has been invited to read this repository and GateKeepr
+  and to bring proposals on how to work together (FS-603). Nobody pushes
+  here; a fresh clone fails the names check until it has the protected
+  names list, which is not in git.
 - **KCB and National Bank of Kenya** are current SMS customers, named
   internally only until their contracts allow more (FS-420).
 
@@ -142,6 +159,9 @@ Each has a register row and, where it changed the design, an entry in
   *about* them.
 - **Binary files** are refused by the pre-commit hook unless listed in
   `.githooks/allowed-binaries`.
+- **`design/card_design.png`** is a third-party design image the owner
+  shared as inspiration for page 17. It stays local and untracked; never
+  commit it.
 - **Logos:** the builds use `design/brand/dibon_logo_white.png` until the
   owner chooses (FS-524, FS-542).
 
@@ -239,6 +259,15 @@ only with a register row.
   used MD-08 as an id Roan did not depend on, until Roan did).
 - **Changing a template** changes its `last_reviewed` too.
 - **Subagents claim more than they did.** Check their work.
+- **Look at the portfolio, do not only measure it.** Render changed
+  pages from the printed PDF (PyMuPDF) when the browser pane cannot take
+  a screenshot; the probe has missed a problem once, and layout choices
+  (a half-empty card, a squeezed text column) are not overflow.
+- **The portfolio is public copy:** no register ids in it, not even in
+  its editing notes; the public check fails on one.
+- **A typed list in the copy goes stale.** Page 6's platform line was
+  typed and fell two services behind; it is now read from Platform
+  services. Prefer reading over typing.
 - **The portfolio layout overflows silently**: build with
   `node design/portfolio-pdf/build.js --html-only`, then
   `node design/portfolio-pdf/measure.js`, which flags content past the
@@ -266,6 +295,10 @@ only with a register row.
 - Counsel and the compliance officer, as listed in 1.2.0, plus whether an
   automatic downgrade "significantly affects" a borrower under s.35.
 - Which logo.
+- Writing to BRS (mpsr@brs.go.ke): system-to-system access to the
+  collateral registry, and organisation accounts (PT-55).
+- Friday 9 October: the team's proposals (FS-603), the same day the NPS
+  Bill comments are due.
 
 ## Left half-done, or asked and not yet answered
 

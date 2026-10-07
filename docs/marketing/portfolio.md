@@ -421,7 +421,8 @@ totals for the general ledger.
 - CRM: Leads, accounts and pipeline in one place
 - Helpdesk: Tickets with SLAs, linked to the customer
 - Accounting: Statements already reconciled by SME Reconciliation
-- HR and payroll: Contracts, leave, attendance and monthly payroll
+- HR and payroll: Contracts, leave and payroll; salary, tax and check-off
+  payments coming soon
 - Sign: Agreements, mandates and consents signed online
 - Portal: Invoices, statements and tickets for customers
 - Campaigns: Delivered through Dibon's messaging, status written back
