@@ -244,8 +244,11 @@ only with a register row.
   `node design/portfolio-pdf/measure.js`, which flags content past the
   page edge and, since FS-593, content running under the footer. On
   product and closing pages the last block is pushed to the bottom, so
-  one extra line of copy anywhere above it overflows. A copy change bumps
-  both editions in `design/portfolio-pdf/document.json` (now v1.5).
+  one extra line of copy anywhere above it overflows. **Versions are what a reader
+  holds** (FS-595): only v1.0 has gone out. Between issues an edition is
+  `"status": "draft"` in `design/portfolio-pdf/document.json` (now v1.1,
+  draft), printed as a review draft, and the build refuses a named copy of
+  it; the version moves only when an edition is issued.
 - **A PDF open in a viewer** makes the build write a timestamped file.
 
 ## Waiting on the owner, outside the repository (as at 2026-10-06)

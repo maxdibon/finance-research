@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-07
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -934,3 +934,18 @@ its own entry.
   per bank, whose requirements are still to learn (the bank access
   request, item 8); a wait on payouts to new destinations that
   customers will feel.
+
+## FS-594 · Bank payouts: one approval within agreed limits, two above them
+
+- **Chose:** within limits a bank agrees by mandate letter, a signed
+  instruction from the institution's chain goes straight through; above
+  them, or by the internet-banking stopgap, the institution's signatories
+  also release it at the bank, checking the file's totals and hash
+  (rails RL-07).
+- **Requires:** RL-07; docs/outreach/bank-access-request.md "Our signing mandate".
+- **Argued against:** two approvals on every payout, which slows them,
+  invites rubber-stamping by signatories who see only totals, and leaves
+  two records that can disagree; and one approval on every payout, which
+  takes the bank's own controls out of the large ones.
+- **Costs (inferred):** a mandate letter and limits to agree with each
+  bank; until a bank agrees, every payout through it is approved twice.

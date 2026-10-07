@@ -5,7 +5,7 @@ kind: marketing
 version: 0.2.0
 owner: Commercial lead
 classification: Public once approved
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-07
 ---
 
 # Dibon Financial Services portfolio
@@ -296,13 +296,14 @@ Every step is timestamped and attributed; a restructure stays linked to the
 loan it replaced.
 **Dashboard caption:** Illustrative screen: the portfolio dashboard
 **Features:**
-- KYC with IPRS lookup, tiers and a completeness gate per product
-- Collateral for vehicles and land titles, with verification evidence
+- KYC against the national ID and business registries; tiers and a
+  completeness gate
+- Collateral for vehicles and land titles; loan agreements signed on the
+  phone
 - Approval chains and unanimous committees; approve from the app or email
 - Statement appraisal, behaviour scores and risk classes
-- Repayments applied as CBK's lender rules require; arrears interest capped
-  by law
-- SMS reminders, a portfolio dashboard, and migration from Mifos
+- CBK's lender rules built in: repayment order, the arrears cap, disclosures
+- Reminders by SMS, email or WhatsApp; a dashboard; migration from Mifos
 **Facts:**
 - Built on: Apache Fineract
 - Disburse and repay: M-Pesa, Airtel Money, T-Kash; bank transfer coming
@@ -449,15 +450,13 @@ messages, logins and reports as the first.
 - Identity and access: One login for every system; re-authentication before
   money moves; financial-grade API security; IPRS, document and liveness
   checks; KYC tiers.
-- Credit bureaus: Coming soon. Monthly submissions generated from the
-  ledger and reconciled; lookups with the purpose recorded first;
-  corrections when a borrower settles.
+- Credit bureaus: Coming soon. Monthly submissions from the ledger,
+  reconciled; lookups with the purpose recorded first.
 - Payment rails: M-Pesa, Airtel Money and T-Kash behind one interface,
   with PesaLink, bank APIs and files, and cards coming soon. Every payout
   sent as approved, the name checked first.
 - Insights: Every metric defined once, for dashboards and plain-language
-  questions. Each answer shows how it was calculated and how fresh the data
-  is. Superset included, or your own Power BI, Tableau or Metabase.
+  questions; Superset, or your own Power BI, Tableau or Metabase.
 - Financial crime and compliance: Your rules on amount, time, holidays and
   destination; sanctions screening. Scoring and cases coming soon.
 - Credit decisioning: Appraisal, behaviour scores and risk classes, as rules

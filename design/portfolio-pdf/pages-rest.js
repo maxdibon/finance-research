@@ -354,7 +354,7 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
     ${RULE}
     <h2>${inline(PS.get('Heading'))}</h2>
     <p class="lede">${inline(PS.get('Intro'))}</p>
-    <div class="stiles">${svc.map(([k, a, b]) => `<div class="stile">${ico(k)}<b>${a}</b><span>${b}</span></div>`).join('')}</div>
+    <div class="stiles">${svc.map(([k, a, b]) => `<div class="stile s-${k}">${ico(k)}<b>${a}</b><span>${b}</span></div>`).join('')}</div>
     ${serviceMatrix(inline(L.get('Built on')), inline(PS.get('Built-on caption')), shortName)}
   </div>
   ${footer('17')}
@@ -563,14 +563,36 @@ const CSS = `
 .mod b { font: 700 10pt/1.2 var(--display); color: var(--aubergine); }
 .mod span { font-size: 8.8pt; line-height: 1.35; color: var(--muted); }
 /* Page 16 · platform services */
-.stiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3mm; }
-/* An odd last service runs the full width as a strip: title beside its text. */
-.stiles .stile:last-child:nth-child(odd) { grid-column: 1 / -1; grid-template-columns: 9mm 46mm 1fr; align-items: center; }
-.stiles .stile:last-child:nth-child(odd) .ico { grid-row: auto; }
+/* Cards of different sizes (FS-598): wide cards staggered, left then right,
+   for the services that set the platform apart; small light cards for the
+   briefest; the newest service across the foot in amber. Selectors carry
+   .stile so they outrank the base card below. */
+.stiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.6mm; }
+.stile.s-approvals { grid-column: 1 / 3; grid-row: 1; }
+.stile.s-messaging { grid-column: 3; grid-row: 1; }
+.stile.s-identity { grid-column: 1; grid-row: 2; }
+.stile.s-rails { grid-column: 2; grid-row: 2; }
+.stile.s-insights { grid-column: 3; grid-row: 2; }
+.stile.s-bureau { grid-column: 1; grid-row: 3; }
+.stile.s-shield { grid-column: 2 / 4; grid-row: 3; }
+.stile.s-pulse { grid-column: 1 / -1; grid-row: 4; }
+.stile.s-approvals, .stile.s-shield, .stile.s-pulse { grid-template-columns: 9mm 44mm 1fr; align-items: center; }
+.stile.s-approvals .ico, .stile.s-shield .ico, .stile.s-pulse .ico { grid-row: auto; }
+/* In a third of the width the icon sits beside the title and the text runs
+   the card's full width beneath, so narrow cards stay short. */
+.stile.s-messaging, .stile.s-identity, .stile.s-rails, .stile.s-insights, .stile.s-bureau { grid-template-columns: 6mm 1fr; column-gap: 2mm; align-items: center; align-content: start; }
+.stile.s-messaging .ico, .stile.s-identity .ico, .stile.s-rails .ico, .stile.s-insights .ico, .stile.s-bureau .ico { grid-row: auto; width: 5.5mm; height: 5.5mm; }
+.stile.s-messaging span, .stile.s-identity span, .stile.s-rails span, .stile.s-insights span, .stile.s-bureau span { grid-column: 1 / -1; }
+.stile.s-insights, .stile.s-bureau { background: var(--cream); color: var(--aubergine); border: 0.35mm solid var(--line); }
+.stile.s-insights span, .stile.s-bureau span { color: var(--muted); }
+.stile.s-insights .ico, .stile.s-bureau .ico { stroke: var(--aubergine); }
+.stile.s-pulse { background: var(--amber); color: var(--aubergine); }
+.stile.s-pulse span { color: var(--aubergine); }
+.stile.s-pulse .ico { stroke: var(--aubergine); }
 .stile { background: var(--aubergine); color: var(--cream); border-radius: 1.5mm; padding: 2.4mm 3.4mm; display: grid; grid-template-columns: 9mm 1fr; column-gap: 3.5mm; row-gap: 1mm; }
 .stile .ico { grid-row: span 2; width: 8mm; height: 8mm; stroke: var(--amber); }
-.stile b { font: 700 11pt/1.2 var(--display); }
-.stile span { font-size: 9.5pt; color: #e7d3df; }
+.stile b { font: 700 10.5pt/1.2 var(--display); }
+.stile span { font-size: 9pt; color: #e7d3df; }
 /* Page 17 · segments */
 .segs { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8mm; row-gap: 1.8mm; margin-top: 1mm; }
 .seg { display: grid; grid-template-columns: 11mm 1fr; gap: 3.5mm; align-items: start; padding: 1.6mm 0 2.6mm; border-bottom: 0.3mm solid var(--line); }

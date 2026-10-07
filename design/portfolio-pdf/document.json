@@ -3,8 +3,9 @@
     "full": {
       "id": "DC-FS-PF-001",
       "title": "Dibon Financial Services Portfolio",
-      "version": "1.5",
-      "issued": "2026-10-06",
+      "version": "1.1",
+      "status": "draft",
+      "issued": "2026-10-07",
       "minutes": "45 to 60",
       "pages": ["cover", "contents", "who", "problems", "how", "glance", "products", "suite", "platform", "who-for",
         "integrations", "deployment", "service", "security", "roadmap", "working"]
@@ -12,8 +13,9 @@
     "short": {
       "id": "DC-FS-PF-002",
       "title": "Dibon Financial Services Overview",
-      "version": "1.5",
-      "issued": "2026-10-06",
+      "version": "1.1",
+      "status": "draft",
+      "issued": "2026-10-07",
       "minutes": "20 to 25",
       "pages": ["cover", "who", "problems", "how", "glance", "who-for", "deployment", "security", "working"]
     }

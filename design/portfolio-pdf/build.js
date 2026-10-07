@@ -7,7 +7,7 @@
 //   node design/portfolio-pdf/build.js --html-only          pages, no PDF
 //
 // Every word comes from docs/marketing/portfolio.md (FS-352). document.json
-// names each edition: its id, title, version, issue date and the pages it
+// names each edition: its id, title, version, status, issue date and the pages it
 // carries (FS-333, FS-362). Pages are numbered by position in the edition,
 // and the contents page lists what that edition carries.
 //
@@ -136,7 +136,12 @@ function edition(name) {
       toc.push(entry(' class="sub"', inline(p.product)));
     } else toc.push(entry('', inline(copy.section(SECTION_OF[p.key]).get('Contents'))));
   }
-  const docRef = `${E.id} · v${E.version}`;
+  // The version is the copy a reader holds (FS-595). Between issues an
+  // edition is a draft: "Review draft" in its footer and file name, and
+  // never sent, so a named copy of a draft is refused.
+  if (!["draft", "issued"].includes(E.status)) throw new Error(`document.json: ${name} status "${E.status}"; expected draft or issued`);
+  if (E.status === "draft" && recipient) throw new Error(`${E.id} v${E.version} is a draft; set its status to issued in document.json before preparing a copy for anyone`);
+  const docRef = `${E.id} · v${E.version}${E.status === "draft" ? " · Review draft" : ""}`;
   const longDate = new Date(`${E.issued}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const prepared = recipient ? `<div class="prepared"><span>${inline(copy.section('Labels').get('Prepared for'))}</span>${esc(recipient)} · ${longDate}</div>` : '';
@@ -167,7 +172,7 @@ for (const name of only ? [only] : Object.keys(DOC.editions)) {
   const { E, html, docRef, count } = edition(name);
   const htmlOut = path.join(OUT, `portfolio-${name}.html`);
   fs.writeFileSync(htmlOut, html);
-  const pdfOut = path.join(OUT, `${slug(E.title)}-v${E.version}-${E.issued}${recipient ? `-for-${slug(recipient)}` : ''}.pdf`);
+  const pdfOut = path.join(OUT, `${slug(E.title)}-v${E.version}${E.status === "draft" ? "-draft" : ""}-${E.issued}${recipient ? `-for-${slug(recipient)}` : ''}.pdf`);
   if (htmlOnly) console.log(`built ${path.relative(ROOT, htmlOut)} (${count} pages); no PDF printed (--html-only)`);
   else printPdf(htmlOut, pdfOut);
   if (recipient) {

@@ -152,7 +152,7 @@ F['Omni-channel banking'] = figure('oc', 640, 210,
   ctl('oc', 300, 126, 300, 154, true) +
   ctl('oc', 380, 96, 458, 40) + label(410, 60, 'calls', 'end') +
   ctl('oc', 542, 56, 542, 150) + label(550, 106, 'posts · reads', 'start') +
-  ctl('oc', 460, 172, 382, 118) + label(432, 128, 'fetched-at time', 'middle', true),
+  ctl('oc', 460, 172, 382, 118) + label(392, 112, 'balances,', 'start', true) + label(392, 122, 'time-stamped', 'start', true),
   'Three channels answer from one API; WhatsApp alerts link back to them. Anything that moves money passes step-up first, and a SIM-swap check where the operator offers one.');
 
 module.exports = { F };
