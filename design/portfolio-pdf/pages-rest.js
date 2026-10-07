@@ -521,6 +521,8 @@ const CSS = `
 .chev li:last-child { background: var(--amber); color: var(--aubergine); }
 /* Built on: one row per product (FS-332) */
 .pillars { margin-top: 3mm; position: relative; }
+/* On the platform page the matrix stands clear of the services above it (FS-601). */
+.stiles + .pillars { margin-top: 5.5mm; }
 .pl-row { display: grid; grid-template-columns: 32mm repeat(var(--n), 1fr); align-items: center; }
 .pl-row > b { font: 700 8.6pt/1.1 var(--display); color: var(--aubergine); padding: 0.5mm 0; border-bottom: 0.3mm solid var(--line); }
 .pl-row > span { display: flex; justify-content: center; align-items: center; height: 100%; min-height: 4.3mm; border-bottom: 0.3mm solid var(--line); }
@@ -567,7 +569,7 @@ const CSS = `
    for the services that set the platform apart; small light cards for the
    briefest; the newest service across the foot in amber. Selectors carry
    .stile so they outrank the base card below. */
-.stiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.6mm; }
+.stiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.2mm; border: 0.5mm solid var(--amber); border-radius: 2.5mm; padding: 2mm; } /* one frame: one platform (FS-600) */
 .stile.s-approvals { grid-column: 1 / 3; grid-row: 1; }
 .stile.s-messaging { grid-column: 3; grid-row: 1; }
 .stile.s-identity { grid-column: 1; grid-row: 2; }
