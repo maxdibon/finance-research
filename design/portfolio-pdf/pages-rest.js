@@ -309,7 +309,7 @@ function rest({ F, copy }) {
 ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(it.get('Tagline')))}`).join('\n')}
     </div>
     <div class="gsuite">${ico('suite')}<div><b>${inline(G.get('Suite title'))}</b><span>${inline(G.get('Suite text'))}</span></div></div>
-    <div class="gbase"><b>${ico('layers', 'bi')}${inline(G.get('Platform title'))}</b><span>${inline(G.get('Platform'))}</span></div>
+    <div class="gbase"><b>${ico('layers', 'bi')}${inline(G.get('Platform title'))}</b><span>${copy.section('Platform services').get('Services').map(pair).map(([a]) => inline(a)).join(' · ')}</span></div>
   </div>
   ${footer('06')}
 </section>`;
@@ -578,13 +578,13 @@ const CSS = `
 .stile.s-bureau { grid-column: 1; grid-row: 3; }
 .stile.s-shield { grid-column: 2 / 4; grid-row: 3; }
 .stile.s-pulse { grid-column: 1 / -1; grid-row: 4; }
-.stile.s-approvals, .stile.s-shield, .stile.s-pulse { grid-template-columns: 9mm 44mm 1fr; align-items: center; }
-.stile.s-approvals .ico, .stile.s-shield .ico, .stile.s-pulse .ico { grid-row: auto; }
+.stile.s-pulse { grid-template-columns: 9mm 44mm 1fr; align-items: center; }
+.stile.s-pulse .ico { grid-row: auto; }
 /* In a third of the width the icon sits beside the title and the text runs
    the card's full width beneath, so narrow cards stay short. */
-.stile.s-messaging, .stile.s-identity, .stile.s-rails, .stile.s-insights, .stile.s-bureau { grid-template-columns: 6mm 1fr; column-gap: 2mm; align-items: center; align-content: start; }
-.stile.s-messaging .ico, .stile.s-identity .ico, .stile.s-rails .ico, .stile.s-insights .ico, .stile.s-bureau .ico { grid-row: auto; width: 5.5mm; height: 5.5mm; }
-.stile.s-messaging span, .stile.s-identity span, .stile.s-rails span, .stile.s-insights span, .stile.s-bureau span { grid-column: 1 / -1; }
+.stile.s-approvals, .stile.s-shield, .stile.s-messaging, .stile.s-identity, .stile.s-rails, .stile.s-insights, .stile.s-bureau { grid-template-columns: 6mm 1fr; column-gap: 2mm; align-items: center; align-content: start; }
+.stile.s-approvals .ico, .stile.s-shield .ico, .stile.s-messaging .ico, .stile.s-identity .ico, .stile.s-rails .ico, .stile.s-insights .ico, .stile.s-bureau .ico { grid-row: auto; width: 5.5mm; height: 5.5mm; }
+.stile.s-approvals span, .stile.s-shield span, .stile.s-messaging span, .stile.s-identity span, .stile.s-rails span, .stile.s-insights span, .stile.s-bureau span { grid-column: 1 / -1; }
 .stile.s-insights, .stile.s-bureau { background: var(--cream); color: var(--aubergine); border: 0.35mm solid var(--line); }
 .stile.s-insights span, .stile.s-bureau span { color: var(--muted); }
 .stile.s-insights .ico, .stile.s-bureau .ico { stroke: var(--aubergine); }

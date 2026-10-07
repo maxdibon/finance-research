@@ -23,6 +23,8 @@ Words between single asterisks, like `*this*`, are highlighted. Adding or
 removing a card changes the layout, so the build stops and says so rather
 than squeezing it in.
 
+The glance page's list of platform services is read from Platform services, so it never falls behind.
+
 On a few cards the label is also the visible heading: Mission, Vision,
 Values, Email, Phone, Now, Next and Later, the support tiers' Hours, How and Reviews, and "Every tier
 includes".
@@ -179,8 +181,6 @@ their customers, and never through our software.
 a customer portal, implemented by Dibon as an Odoo and Zoho partner and
 connected to every product.
 **Platform title:** One platform underneath
-**Platform:** Approvals and mandates · Messaging · Identity and access ·
-Credit bureaus · Payment rails · Insights
 
 ## Products
 
