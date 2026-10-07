@@ -298,11 +298,12 @@ loan it replaced.
 **Features:**
 - KYC against the national ID and business registries; tiers and a
   completeness gate
-- Collateral for vehicles and land titles; loan agreements signed on the
-  phone
+- A collateral register for vehicles and land: documents, searches and
+  originals in custody
 - Approval chains and unanimous committees; approve from the app or email
 - Statement appraisal, behaviour scores and risk classes
-- CBK's lender rules built in: repayment order, the arrears cap, disclosures
+- Agreements and disclosures signed on the phone; CBK's lender rules built
+  in
 - Reminders by SMS, email or WhatsApp; a dashboard; migration from Mifos
 **Facts:**
 - Built on: Apache Fineract
