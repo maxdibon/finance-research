@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-07
 ---
 
 # Partners — candidates, conversations and selection decisions
@@ -95,6 +95,7 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 | PT-52 | Microsoft AI Cloud Partner Program | Software vendor; partner programme | Partner benefits and Azure credits; Marketplace listing through ISV Success; designations later | Global | None | Candidate | 2026-10-05: research: free to enrol; benefits packages from USD 350 a year; designations need 70 points; co-sell needs USD 100,000 in 12 months (FS-457) | Owner enrols in Partner Center, then the Success Core package and ISV Success | Commercial lead | FS-457, FS-464 |
 | PT-53 | Prembly | Identity verification vendor | Register checks, business checks, liveness, document checks, AML screening; also Kenyan credit-bureau lookups and M-Pesa statement analysis | Pan-African and global | Documented in its API reference (2026-10-06), not yet in a contract. Kenyan endpoints: national ID, ID serial number (returns the photo), alien ID, passport, driving licence, KRA PIN checker and PIN from an ID number, tax compliance certificate (TCC) and withholding-tax checks, business registration with directors, credit bureau (person and business), M-Pesa statement analysis, phone number (carrier and line type, not the registered name), bank account, vehicle plate and collateral. Liveness, face comparison and document verification with face are global endpoints. Refugee IDs and Maisha not documented; certifications and where data is processed not stated | Candidate | Owner, 2026-10-06: we have reached out; when and what was sent is not recorded here (FS-546). API docs read the same day | Owner to share the outreach and any reply; then ask for pricing, where Kenyan data is stored and processed, certifications, whether it holds its own NPDM agreement (FS-202), refugee IDs and Maisha | Architect | FS-340, FS-546 |
 | PT-54 | Access Bank Kenya | Bank — a customer's disbursement bank | Payment instructions, status, statements and account-name validation for Roan Capital's accounts (RC-18), through Roan Capital's own relationship | KE | None | Candidate | 2026-10-06: named by Roan Capital's requirement document (FS-586) | Roan Capital sends the bank access request (docs/outreach/bank-access-request.md) | Architect | FS-586 |
+| PT-55 | The collateral registry (MPSR), operated by the Business Registration Service | Government register | Searches before lending; registering, extending and cancelling notices of security rights over movable collateral | KE | KE (government) | Candidate | 2026-10-07: research. Online through eCitizen, each user signing in with a one-time code; no API documented on BRS's pages or in its user guide. KSh 500 a search; notices free (BRS fee schedule; regulations LR-37) | Ask BRS (mpsr@brs.go.ke) whether lenders or their providers can reach the registry system to system, and whether an institution can hold an organisation account | Architect | FS-602 |
 
 ---
 
