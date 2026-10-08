@@ -73,7 +73,7 @@ default (reg 42(4)); recovery expenses only as necessary, itemised
 | 4 | While the loan runs, the guarantor receives periodic loan statements by link, with delivery recorded; information, never collection pressure | Platform | MF-37, MF-38, MS-09, ID-17 |
 | 5 | If the borrower defaults, recovery is pursued against the borrower first, through the collection ladder, each step recorded until non-judicial recovery is exhausted | Credit Officer; platform | MF-39, MF-14 |
 | 6 | The guarantor is given fourteen days' notice of the borrower's default, on a channel that reports delivery, counted on the business calendar | Platform | MF-37, MS-09, KC-15 |
-| 7 | After the notice has run and recovery from the borrower is recorded as exhausted, a demand to the guarantor is approved under maker-checker, with any recovery expenses itemised | Approvers | MF-37, MD-01, MD-06, MF-21 |
+| 7 | After the notice has run and recovery from the borrower is recorded as exhausted, a demand to the guarantor is approved under maker-checker (approval subject `guarantee.demand`), with any recovery expenses itemised | Approvers | MF-37, MD-01, MD-06, MF-21 |
 | 8 | A payment by the guarantor is applied to the loan in the regulated order and matched; when the loan is repaid, by anyone, the guarantee is released and the guarantor told | Platform | MF-22, RO-02, MF-37 |
 | 9 | Every event is chained and the records kept for at least seven years | Platform | RO-24, FC-12 |
 
@@ -95,9 +95,8 @@ default (reg 42(4)); recovery expenses only as necessary, itemised
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| MS-12, the guarantor choosing their channels for statements and notices | phase 1, not in R1 | Statements and notices go by SMS with a link, and by email where there is one; the guarantor cannot choose | Accept for R1 (FS-622) |
-| A demand to a guarantor as its own approval subject in the approval engine | Not yet in docs/specs/approval-engine.md | Step 7 has no subject type to configure | Add `guarantee.demand` to the spec's subject types: configuration, not a capability (FS-622) |
-| A guarantor's total exposure across every loan they guarantee | Sacco only (sacco SC-08) | The officer checks the guarantor's other guarantees by hand | Ask Roan Capital whether it limits a guarantor's exposure (FS-622) |
+| MS-12, the guarantor choosing their channels for statements and notices | phase 1, not in R1 | Statements and notices go by SMS with a link, and by email where there is one; the guarantor cannot choose | Accepted for R1 (FS-622) |
+| A guarantor's total exposure across every loan they guarantee | Sacco only (sacco SC-08) | The officer checks the guarantor's other guarantees by hand | Asked of Roan Capital (delivery map, open answer 16) (FS-622) |
 
 ## 5 · Open questions
 
