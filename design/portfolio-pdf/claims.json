@@ -9,5 +9,8 @@
   {"claim": "Documents", "basis": "v1", "ref": "FS-263", "status_in_records": "identity ID-02 Designed"},
   {"claim": "Liveness", "basis": "v1", "ref": "FS-263", "status_in_records": "identity ID-04 Planned; no vendor chosen (FS-204)"},
   {"claim": "Your core, by adapter", "basis": "v1", "ref": "FS-263", "status_in_records": "integrated ledger mode; adapters per core not yet built"},
-  {"claim": "Kapu Core, on Apache Fineract", "basis": "v1", "ref": "FS-263", "status_in_records": "core KC-01 to KC-14, Planned or Designed"}
+  {"claim": "Temenos T24", "basis": "live", "evidence": ["OC-03"], "status_in_records": "KCB's core, worked with by Dibon's USSD and digital-lending platform there (customers CU-03); the owner, 2026-10-08 (FS-612, FS-614). The scope of the integration is the owner's word, not yet in the records"},
+  {"claim": "Sopra Banking", "basis": "live", "evidence": ["OC-03"], "status_in_records": "KCB's loan engine: USSD loan requests, repayments, limits and balances ran against it (omni-channel OC-03, FS-416; customers CU-03)"},
+  {"claim": "Bankers' Realm", "basis": "live", "evidence": ["CO-05"], "status_in_records": "Craft Silicon's core at Onit Bank: Collect posted deposits to it in production, Feb 2025 to Jun 2026 (collect CO-05, FS-390)"},
+  {"claim": "Kapu Core", "basis": "v1", "ref": "FS-263", "status_in_records": "core KC-01 to KC-14, Planned or Designed"}
 ]

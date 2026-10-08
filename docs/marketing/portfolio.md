@@ -598,8 +598,8 @@ suggest where to begin, on your own data.
 
 ### Core banking
 
-**Integrated:** Your core, by adapter; Kapu Core, on Apache Fineract
-**Note:** Your core first; Kapu Core when you choose to upgrade
+**Integrated:** Your core, by adapter; Temenos T24; Sopra Banking; Bankers' Realm; Kapu Core
+**Note:** Your core first; Kapu Core when you upgrade
 
 ## Integrations, closing
 
