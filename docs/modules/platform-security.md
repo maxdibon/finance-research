@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633]
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636]
 last_reviewed: 2026-10-08
 ---
 
@@ -80,6 +80,7 @@ not go live on less.
 | SE-24 | Safe mode, decided in advance: collections keep paying into institutions' own paybills and their cores keep running; new outgoing payments queue and reconcile later; named people decide when to enter and leave it | Planned | FS-468, FS-470 | 1 |
 | SE-25 | A ransomware drill twice a year: a restore into a clean environment against the clock, with backup keys taken from escrow | Planned | FS-468, FS-470 | 1 |
 | SE-26 | Privileged access for Dibon's engineers: hardware security keys, each with a registered backup; break-glass accounts sealed and split between two people like the backup keys (SE-21), every use alerted and reviewed | Planned | Owner, 2026-10-06 (FS-503) | 1 |
+| SE-27 | Restricted fields encrypted one by one: government ID numbers and other Restricted values encrypted by the service with OpenBao's transit engine before they reach a database, and found by a keyed hash, so a database query, a backup or a replica shows none of them in clear | Planned | FS-636. SE-08's encryption at rest protects a stolen disk, not a query by someone with database access | 2 |
 
 **Recovery objectives** (agreed 2026-10-05, FS-466; approval pack item 9).
 Services are tiered by what they hold, not by product:

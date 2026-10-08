@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636]
 last_reviewed: 2026-10-08
 ---
 
@@ -121,6 +121,33 @@ who owns an account.
 4. **Blast radius.** A breach of Odoo exposes what people owe. A breach of
    the recon store exposes how money moved. Separate stores keep these two
    separate breaches.
+
+### Every store: what it holds, and how it is protected
+
+The three authorities above, and every other store, in one place
+(FS-636). **The baseline for every store:** inside the institution's own
+instance (FS-491); reached only through its service's API; encrypted at
+rest (platform-security SE-08) and in transit (SE-05, SE-09); backed up
+to two Kenyan sites (SE-10); retention set by docs/documents.md and
+docs/privacy.md. The last column adds what goes beyond it.
+
+| Store | Holds | Never holds | Class | Beyond the baseline |
+|---|---|---|---|---|
+| Funds ledger (the core, or Kapu Core) | Accounts, balances, postings, loans; in native mode, the institution's customers and their KYC | Contact details beyond its need, tickets, matching state | Confidential; ID numbers Restricted | One writer, the product's service account (docs/specs/kapu-core-fineract.md §8); ID numbers encrypted field by field (SE-27) |
+| Odoo | Parties no core holds, obligations, tickets, contract records, HR | Balances, rail events, documents with personal data | Confidential | Staff sign in through Keycloak (AC-02) |
+| Recon engine | Rail and bank events, statements, matches, exceptions | Parties, obligations | Confidential | Append-only; each role sees only its fields (RO-19) |
+| Keycloak (access) | Logins, hashed credentials, roles, devices, step-ups | KYC, balances | Restricted | Security events kept (SE-18); engineers on hardware keys (SE-26) |
+| Document vault (identity) | Every document carrying personal data; verification evidence | Balances | Confidential; ID images Restricted | Reached only by links on our own network (§7); a bulk export needs its own permission |
+| Approval engine | Requests, decisions, mandate rules | The subject's record, which it refers to by id | Confidential | Every decision re-authenticated (mandates MD-10); append-only |
+| Decisioning | The decision record: inputs, version and score at the time | The customer file | Confidential | Profiling under privacy PR-18 |
+| Messaging | What was sent, to which number, delivery, preferences, quiet hours | Documents, balances, ID numbers (§7) | Confidential | Templates approved before use |
+| Financial crime | Screening results, cases, draft reports | The decision to file, which is the institution's | Confidential | Cases seen only by the institution's reporting roles |
+| Rails | Instructions and normalised rail events | Credentials | Confidential | Instructions signed, with their content hash (RL-01); credentials in OpenBao (RL-12) |
+| Event bus | Events in transit, kept for replay | Anything not in an event | Confidential | Every event signed (RO-23) |
+| Audit chain | Signed event hashes and their anchors | Content beyond the event | Internal | Hash-chained, anchored in an append-only log (RO-24, RO-25) |
+| OpenBao | Keys and secrets | Data | Restricted | Signing keys never leave it; backup keys split between two people (SE-21) |
+| Observability | Metrics, logs and traces, by id | Personal data | Internal | Restricted values never in a log (SE-18) |
+| Insights | Nothing of its own: it reads | — | As read | Never writes; a bulk export needs its own permission (§7) |
 
 ### The institution's reference is a first-class field
 
@@ -476,7 +503,9 @@ the audit trail and matches in reconciliation agree (FS-634).
   deposits until its end of day (FS-630). Each is *in transit*, with the
   day it should clear, and becomes a break only if it does not clear in
   the next cycle (recon-observability RO-04). Each source's statement day,
-  cut-off and end-of-day window is recorded at onboarding (OB-COM-21).
+  cut-off and end-of-day window is recorded at onboarding (OB-COM-21),
+  and each item is chased through the source's status query or statement
+  until it clears (recon-observability RO-07, FS-635).
 
 **Where time matters most:**
 

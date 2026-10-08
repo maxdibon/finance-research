@@ -16,9 +16,9 @@
 // reference ("approval-engine §9", "architecture.md §10", "(§4)"). Each page
 // opens with what it relates to (from its front matter), what links to it,
 // and, when long, its contents. ASCII diagrams are drawn with box lines,
-// names in bold and failure branches marked; GitHub alerts become callouts;
-// a mermaid fence is drawn by Mermaid. Like tools/assemble.js, it refuses to
-// build while any check fails, and it lives in build/, which git ignores.
+// names in bold and failure branches marked; GitHub alerts become callouts.
+// Like tools/assemble.js, it refuses to build while any check fails, and it
+// lives in build/, which git ignores.
 
 'use strict';
 
@@ -30,7 +30,6 @@ const ID = '(?:OB-[A-Z]{2,3}-\\d{2}|[A-Z]{2}-\\d{2,3})';
 const ID_CELL = new RegExp(`^${ID}$`);
 const ID_TEXT = new RegExp(`\\b${ID}\\b`, 'g');
 const STATUSES = ['Live', 'Built', 'Designed', 'Planned'];
-const MERMAID = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
 
 function read(root, rel) {
   return fs.readFileSync(path.join(root, rel), 'utf8').replace(/\r\n/g, '\n');
@@ -264,8 +263,7 @@ function render(body, ctx) {
       const buf = [];
       for (i++; i < lines.length && !lines[i].startsWith('```'); i++) buf.push(lines[i]);
       i++;
-      if (lang === 'mermaid') { ctx.mermaid = true; out.push(`<pre class="mermaid">${html(buf.join('\n'))}</pre>`); } else if (!lang) out.push(diagram(buf.join('\n'), ctx));
-      else out.push(`<pre>${html(buf.join('\n'))}</pre>`);
+      out.push(lang ? `<pre>${html(buf.join('\n'))}</pre>` : diagram(buf.join('\n'), ctx));
       continue;
     }
     const h = line.match(/^(#{1,4}) (.*)$/);
@@ -399,7 +397,6 @@ th{background:var(--code)}tr:target{outline:2px solid var(--accent);background:v
 pre{background:var(--code);padding:12px;overflow-x:auto;font:13px/1.4 ui-monospace,Consolas,monospace}code{background:var(--code);padding:0 3px;font:13px ui-monospace,Consolas,monospace}
 pre.diagram{background:var(--card);border:1px solid var(--line);border-radius:6px;line-height:1.18;padding:14px 16px;font-family:"Cascadia Mono",Consolas,ui-monospace,monospace}
 pre.diagram .bn{font-weight:700;color:var(--accent)}pre.diagram .tg{color:var(--muted)}pre.diagram .br{color:var(--warn)}pre.diagram a{text-decoration:none}
-pre.mermaid{background:var(--card);border:1px solid var(--line);border-radius:6px;text-align:center}
 .st{font-size:11px;padding:0 5px;border-radius:3px;white-space:nowrap}.st-planned{color:var(--planned);background:var(--planned-bg)}
 .st-designed{color:var(--designed);background:var(--designed-bg)}.st-built{color:var(--built);background:var(--built-bg)}.st-live{color:var(--live);background:var(--live-bg)}
 details{font-size:12px;color:var(--muted);margin-top:4px}details a{font-size:12px}
@@ -419,11 +416,10 @@ const NAV = [['index.html', 'Search'], ['README.html', 'README'], ['docs/start-h
   ['docs/journeys/README.html', 'Journeys'], ['docs/specs/README.html', 'Specs'], ['docs/customers/roan-capital.html', 'Roan Capital'],
   ['docs/delivery-plan.html', 'Delivery plan'], ['REVIEW.html', 'Review'], ['HANDOFF.html', 'Handoff']];
 
-function shell(title, page, content, note = '', mermaid = false) {
+function shell(title, page, content, note = '') {
   const links = NAV.map(([p, t]) => `<a href="${relHref(page, p)}">${t}</a>`).join('');
-  const script = mermaid ? `<script type="module">import mermaid from '${MERMAID}';const dark=matchMedia('(prefers-color-scheme: dark)').matches;mermaid.initialize({startOnLoad:true,theme:dark?'dark':'neutral'});</script>` : '';
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${html(title)}</title><style>${STYLE}</style></head><body><header><b>Dibon FS</b>${links}</header>${note ? `<p class="reader">${note}</p>` : ''}<main>${content}</main>${script}</body></html>\n`;
+<title>${html(title)}</title><style>${STYLE}</style></head><body><header><b>Dibon FS</b>${links}</header>${note ? `<p class="reader">${note}</p>` : ''}<main>${content}</main></body></html>\n`;
 }
 
 // The one failure a reader may skip: the protected-names list, which is never
@@ -462,7 +458,7 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
     }
     const ctx = {
       root, file: f, page, defs, caps, docs: idx.docs, keys: idx.keys, self: null, row: null, badges: f.startsWith('docs/journeys/'),
-      journey, rows, mermaid: false,
+      journey, rows,
       cite(id) {
         if (this.self === id) return;
         if (!cited.has(id)) cited.set(id, new Map());
@@ -475,7 +471,7 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
       .map(([k, v]) => `${k.replace('_', ' ')}: ${inline(v.replace(/^\[|\]$/g, ''), ctx)}`).join(' · ');
     const head = `<p class="meta">${crumbs(root, f, page)}${meta ? ` · ${meta}` : ''}</p>`;
     const content = head + related(f, idx, page) + contents(body) + render(body, ctx);
-    pages.push({ f, page, title, content, mermaid: ctx.mermaid });
+    pages.push({ f, page, title, content });
   }
   // Emptied, not removed: a preview server may be serving from it, and
   // Windows will not delete a folder that a process has open.
@@ -490,7 +486,7 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
     });
     const out = path.join(outDir, p.page);
     fs.mkdirSync(path.dirname(out), { recursive: true });
-    fs.writeFileSync(out, shell(p.title, p.page, content, note, p.mermaid));
+    fs.writeFileSync(out, shell(p.title, p.page, content, note));
   }
   const entries = [...defs].map(([id, d]) => {
     const cap = caps.get(id);

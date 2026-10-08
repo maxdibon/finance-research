@@ -5,7 +5,7 @@ kind: guide
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537, FS-631]
+review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637]
 last_reviewed: 2026-10-08
 ---
 
@@ -72,6 +72,8 @@ decisions follow from it.
   the check. A check is changed only with a register row.
 - **Language is customer-safe**, inside as well as outside: describe what
   a customer is working towards, never judge its systems.
+- **Nothing needs reading.** Anything a person must confirm or be told is
+  also available by voice or as numbers (omni-channel, FS-637).
 
 ## Words you will meet
 

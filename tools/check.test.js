@@ -628,7 +628,7 @@ test('site: a section reference links to that section', () => {
   }
 });
 
-test('site: a diagram is drawn with box lines, names in bold; Mermaid only where used; alerts become callouts', () => {
+test('site: a diagram is drawn with box lines, names in bold; alerts become callouts', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-site-'));
   for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
   patch(dir, path.join('docs', 'testing.md'), (t) => `${t}\n> [!WARNING]\n> Nothing here is built.\n`);
@@ -636,10 +636,13 @@ test('site: a diagram is drawn with box lines, names in bold; Mermaid only where
     const { outDir } = buildSite(dir);
     const spec = fs.readFileSync(path.join(outDir, 'docs', 'specs', 'approval-engine.html'), 'utf8');
     assert.match(spec, /<pre class="diagram">[\s\S]*┌─+┐[\s\S]*<span class="bn">APPROVAL ENGINE<\/span>[\s\S]*<span class="tg">\[kapu_service\]<\/span>/);
-    assert.doesNotMatch(spec, /mermaid\.esm/);
-    assert.match(fs.readFileSync(path.join(outDir, 'docs', 'specs', 'README.html'), 'utf8'), /<pre class="mermaid">[\s\S]*mermaid\.esm/);
     assert.match(fs.readFileSync(path.join(outDir, 'docs', 'testing.html'), 'utf8'), /<div class="alert alert-warning"><b>Warning<\/b><p>Nothing here is built\.<\/p><\/div>/);
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test('diagrams: a Mermaid diagram fails; ASCII is the rule (FS-628)', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'testing.md'), (t) => `${t}\n\`\`\`mermaid\nflowchart LR\n  A --> B\n\`\`\`\n`));
+  assert.deepStrictEqual(names(f), ['diagrams']);
 });

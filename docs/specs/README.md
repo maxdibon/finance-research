@@ -50,30 +50,38 @@ messaging (the SMS gateway and its routes).
 
 ## How they connect
 
-The first diagram here drawn in Mermaid, as a trial (FS-628): GitHub and
-the HTML reader draw it; elsewhere it reads as text. Solid lines are specs
-written; dashed lines lead to specs still to write.
+ACCESS, RAILS and EVENT BUS have specs still to write; the table below
+says what crosses each line.
 
-```mermaid
-flowchart LR
-  AE["APPROVAL ENGINE<br/>decides"]
-  LR["LENDER RULES<br/>corrects"]
-  KC["KAPU CORE<br/>records"]
-  EOD["END-OF-DAY RUNNER<br/>closes the day"]
-  OBS["OBSERVABILITY<br/>watches, alerts"]
-  ACC["ACCESS<br/>signs in, steps up"]
-  BUS["EVENT BUS<br/>carries events"]
-  RAI["RAILS<br/>pays"]
-  AE -- "approve, reject, withdraw" --> KC
-  LR -- "waivers, settings" --> KC
-  EOD -- "close of business, business date" --> KC
-  EOD -- "classification, cap, sweep" --> LR
-  EOD -- "run status, failures" --> OBS
-  AE -. "roles, step-up" .-> ACC
-  KC -. "OAuth" .-> ACC
-  AE -. "approved, hashed" .-> RAI
-  KC -. "events" .-> BUS
-  RAI -. "events" .-> BUS
+```
+                   +-------------------+
+                   | ACCESS            |
+                   | signs in, steps up| (spec to write)
+                   | [keycloak]        |
+                   +-------------------+
+    roles, step-up  ^                 ^ OAuth
+                    |                 |
+  +-------------------+             +-------------------+             +-------------------+
+  | APPROVAL ENGINE   |------------>| KAPU CORE         |<------------| LENDER RULES      |
+  | decides           | approve,    | records           | waivers,    | corrects          |
+  | [kapu_service]    | reject      | [apache_fineract] | settings    | [kapu_service]    |
+  +-------------------+             +-------------------+             +-------------------+
+      |                                 |           ^                       ^ classification,
+      | approved, hashed                | events    | close of business,    | cap, sweep
+      |                                 |           +-------------------+   |
+      v                                 v             business date     |   |
+  +-------------------+             +-------------------+             +-------------------+
+  | RAILS             |------------>| EVENT BUS         |             | END-OF-DAY RUNNER |
+  | pays              | events      | carries events    |             | closes the day    |
+  | [kapu_service]    |             | [kafka]           |             | [kapu_service]    |
+  +-------------------+             +-------------------+             +-------------------+
+                                                                          | run status, failures
+                                                                          v
+                                                                      +-------------------+
+                                                                      | OBSERVABILITY     |
+                                                                      | watches, alerts   |
+                                                                      | [grafana]         |
+                                                                      +-------------------+
 ```
 
 | From | To | What crosses |

@@ -140,7 +140,7 @@ fresh clone needs the list before it can commit.
 6. **ASCII diagrams**, at most 100 characters wide (FS-064, FS-579). In a
    box: the name in capitals, as docs/specs/README.md names it; what it
    does, in lower case; what it runs on, in `[snake_case]` (FS-632).
-   Mermaid only in the specs index, as a trial (FS-628).
+   No Mermaid: the owner prefers ASCII (FS-628).
 7. **Two ledger models, always:** the customer has a core banking system,
    or it does not (FS-065).
 8. **Commit as you go**, with the reasoning in the message. Pushing is the

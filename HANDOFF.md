@@ -2,7 +2,7 @@
 
     version: 1.5.0
     updated: 2026-10-08
-    supersedes: 1.4.0; adds 8 October (FS-611 to FS-634)
+    supersedes: 1.4.0; adds 8 October (FS-611 to FS-637)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -85,8 +85,8 @@ Each has a register row and, where it changed the design, an entry in
 - **Diagrams are plain text, at most 100 columns** (FS-064, FS-579). In a
   box: the name in capitals as the components table in
   `docs/specs/README.md` names it, what it does in lower case, what it
-  runs on in `[snake_case]` (FS-632). Mermaid only in the specs index, as
-  a trial (FS-628); the reader draws the ASCII with box lines.
+  runs on in `[snake_case]` (FS-632). No Mermaid: the owner prefers ASCII
+  (FS-628); the reader draws the ASCII with box lines.
 - **Specs come in two kinds** on one template (FS-627): build (a service
   we write) and component (a product we configure). §1 ends with "Where it
   sits" and a Related line; relations in front matter, both ways; closing
@@ -101,6 +101,13 @@ Each has a register row and, where it changed the design, an entry in
   to override; a severity 1 is a phone call. **Time** (FS-634): UTC
   stored, Nairobi business dates, three dates per money record, NTP with a
   500 ms alarm, references before time in matching (architecture §10).
+  Items in transit are chased through each source's status query or
+  statement until they clear (RO-07, FS-635).
+- **Who holds what:** architecture §2 "Every store" lists every store,
+  what it holds and never holds, its class and its protections (FS-636).
+  Restricted fields encrypted one by one is SE-27, phase 2 unless moved.
+- **Nothing needs reading** (FS-637): anything a person must confirm or be
+  told is also available by voice or as numbers (omni-channel §1).
 - **Bank payouts: one approval within limits a bank agrees by mandate
   letter, two above them** or through internet banking (RL-07, FS-594).
 - **Payroll is paid from the employer's own accounts, never through
@@ -122,7 +129,7 @@ Each has a register row and, where it changed the design, an entry in
   downgrades to the MVP.
 - **User journeys** in `docs/journeys/`: JN-01 to JN-06 written (the
   electronic and manual identity checks, the business borrower, a loan
-  to disbursement, a guarantor, a restructure). Still to write for R1: JN-07 (borrower's documents), JN-08 (complaint), JN-14
+  to disbursement, a guarantor, a restructure). JN-15 (a trader who does not read, phase 2) also written. Still to write for R1: JN-07 (borrower's documents), JN-08 (complaint), JN-14
   (settlement and the collateral's discharge), JN-13
   (a bank disbursement to settlement, return, recall or reversal). Each
   journey found gaps, settled with the owner one by one.

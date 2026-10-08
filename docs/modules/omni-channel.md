@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, fintech]
 depends_on: [access, identity, messaging, rails, mandates, collect, mfi, sacco, financial-crime, core]
 consumed_by: [insights]
-review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431, FS-443, FS-450, FS-452, FS-453, FS-487, FS-488, FS-532, FS-580]
-last_reviewed: 2026-10-06
+review_ids: [FS-075, FS-160, FS-167, FS-168, FS-169, FS-170, FS-171, FS-232, FS-233, FS-234, FS-235, FS-236, FS-237, FS-238, FS-320, FS-386, FS-416, FS-431, FS-443, FS-450, FS-452, FS-453, FS-487, FS-488, FS-532, FS-580, FS-637]
+last_reviewed: 2026-10-08
 ---
 
 # Omni-channel — apps, internet banking and USSD
@@ -30,6 +30,13 @@ institution. In phase 1, a **field-officer app** will take onboarding,
 appraisal and collections on M-Pesa, Airtel Money and T-Kash to the
 customer (OC-17 to OC-19). **Nothing is drawn yet**, and no screen is
 built before it is drawn (FS-237).
+
+**Nothing needs reading** (FS-637). Anything a person must confirm, or
+must be told, is also available without reading words: by voice (OC-22)
+or as numbers, which many people read when words are hard. No step that
+matters is reachable only through text. The case behind it is a trader
+paid to someone else's number, keeping a book his buyers write in
+(docs/journeys/micro-trader.md).
 
 ## 2 · Who it is for
 

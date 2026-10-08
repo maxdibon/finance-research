@@ -221,6 +221,8 @@ function checkDiagrams(root, files) {
     read(root, file).split('\n').forEach((line, i) => {
       if (/^\s*```/.test(line)) {
         if (!inFence) { inFence = true; inDiagram = /^\s*```\s*$/.test(line); } else { inFence = false; inDiagram = false; }
+        // Diagrams are ASCII; the owner prefers it to Mermaid (FS-628).
+        if (/^\s*```\s*mermaid\b/.test(line)) failures.push(fail('diagrams', file, i + 1, 'a Mermaid diagram; draw it in ASCII (FS-628)'));
         return;
       }
       if (inDiagram && line.length > DIAGRAM_WIDTH) {

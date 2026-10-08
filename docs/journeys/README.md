@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-558]
+review_ids: [FS-548, FS-558, FS-637]
 last_reviewed: 2026-10-08
 ---
 
@@ -55,3 +55,4 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | to write |
 | JN-13 | A bank disbursement, from release to settlement, return, recall or reversal | R1 | to write |
 | JN-14 | A loan settled: the collateral discharged with NTSA, the registry notice cancelled, the originals released | R1 | to write |
+| JN-15 | A trader who does not read, paid to his own till, told by voice, saving and borrowing for stock | phase 2 | [micro-trader.md](micro-trader.md) |
