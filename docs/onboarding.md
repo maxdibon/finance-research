@@ -5,7 +5,7 @@ kind: checklist
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591]
+review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620]
 last_reviewed: 2026-10-08
 ---
 
@@ -103,12 +103,13 @@ Module: [mfi](modules/mfi.md)
 | Id | What we need | From | Why |
 |---|---|---|---|
 | OB-MF-01 | Its shortcode and bank access | Finance lead | mfi §4 |
-| OB-MF-02 | Loan products and fee structures, including repayment frequency and overdue charges, within the cap on interest recoverable on a non-performing loan (CBK lender regulations, reg 29) | Credit lead | mfi §3, MF-21; FS-400 |
+| OB-MF-02 | Loan products and fee structures, including repayment frequency and overdue charges, within the cap on interest recoverable on a non-performing loan (CBK lender regulations, reg 29); and its collection ladder: the stages by days past due, their messages and actions (mfi MF-39) | Credit lead | mfi §3, MF-21; FS-400 |
 | OB-MF-03 | Approval chains, vetting limits and the override authority | Credit lead | mfi MF-06, MF-07 |
 | OB-MF-04 | Collateral types it accepts; for each, its manual steps by stage, which of them hold approval or disbursement, and its vehicle tracking provider | Credit lead | mfi MF-03, MF-04; FS-619 |
 | OB-MF-05 | Its CBK licence or registration as a lender, or its application (due by about 29 Mar 2027), which decides the conduct and disclosure rules the product applies | Compliance lead | mfi MF-22 to MF-29; law register LR-03; FS-435 |
 | OB-MF-06 | Its appraisal and scoring definitions: the statement formulas, the behaviour score's weights, its risk classes and their thresholds; and the risk assessment behind its lightest KYC tier | Credit lead; compliance lead | decisioning DE-02 to DE-04; identity ID-19; FS-551, FS-582 |
 | OB-MF-07 | Its collateral registry access: the officers who will search and register on the registry's portal, each with their own eCitizen account, never a shared one | Credit lead | mfi MF-03; FS-602 |
+| OB-MF-08 | Its public pages: the website and domain for the "Request a loan" form and the calculator, the consent wording, and who receives new leads | Customer's marketing or operations lead | business-suite BS-20; FS-618 |
 
 ## Kapu Sacco
 

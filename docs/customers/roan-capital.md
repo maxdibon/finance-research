@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620]
 last_reviewed: 2026-10-08
 ---
 
@@ -25,7 +25,8 @@ replacing Excel and paper: onboarding and KYC, collateral documents, a
 committee approval chain with maker-checker, disbursement, repayment
 reconciliation, arrears and collections, and management reports. It is
 Kapu MFI on Kapu Core (Apache Fineract), delivered as an MVP pilot, with
-the manual NTSA and land registry steps kept outside the system.
+the NTSA and land registry steps done by hand and tracked in the system
+(FS-619).
 
 - **Products:** Kapu MFI (docs/modules/mfi.md) on Kapu Core
   (docs/modules/core.md), with mandates, identity, access, messaging and
@@ -127,7 +128,9 @@ missing. *Gap* means no capability does it yet.
 NTSA automation, vehicle tracking, land registry search, WhatsApp-based
 reconciliation and tax portals. Each is a later scoping exercise
 (assumption 6). Programmatic NTSA is already designed as a drop-in
-replacement (MF-05).
+replacement (MF-05). Until then the manual steps are tracked: each a task
+with an owner, a due date and evidence, the blocking ones Roan Capital's
+choice (MF-04, FS-619).
 
 ## 4 · Open answers
 

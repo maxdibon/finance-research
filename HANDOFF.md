@@ -105,7 +105,8 @@ Each has a register row and, where it changed the design, an entry in
 - **User journeys** in `docs/journeys/`: JN-01 to JN-04 written (the
   electronic and manual identity checks, the business borrower, a loan
   to disbursement). Still to write for R1: JN-05 (guarantor), JN-06
-  (restructuring), JN-07 (borrower's documents), JN-08 (complaint), JN-13
+  (restructuring), JN-07 (borrower's documents), JN-08 (complaint), JN-14
+  (settlement and the collateral's discharge), JN-13
   (a bank disbursement to settlement, return, recall or reversal). Each
   journey found gaps, settled with the owner one by one.
 - **Build specifications** in `docs/specs/`: the lender rules and the
@@ -120,6 +121,12 @@ Each has a register row and, where it changed the design, an entry in
   lending, records each notice, sends the borrower their copy within ten
   working days, warns before expiry and cancels at settlement, by hand on
   BRS's eCitizen portal in R1. No API is documented (partners PT-55).
+- **Roan Capital's map** is nearly all Covered (FS-618); three rows stay
+  Partial, each with a stated gap: RC-01, RC-02 and RC-36. R1 gained the
+  collection ladder (MF-39), the public request page and calculator
+  (BS-20) and one audit trail across modules (RO-27); the authenticator
+  app is named in R1 (AC-16); the descoped collateral steps are tracked
+  though done by hand (MF-04, FS-619).
 - **The team** has been invited to read this repository and GateKeepr
   and to bring proposals on how to work together (FS-603). Nobody pushes
   here; a fresh clone fails the names check until it has the protected
@@ -291,7 +298,8 @@ only with a register row.
 - Confirm that the KCB and NBK contracts allow naming them.
 - Roan Capital's open answers (delivery map §4), above all 13 (appraisal
   and scoring definitions), 7 (roles), 10 (templates and policies), 11
-  (the PEP question) and 12 (bureau reports); and Roan sending its banks
+  (the PEP question), 12 (bureau reports), 14 (statement-based entities)
+  and 15 (its manual collateral steps and tracking provider); and Roan sending its banks
   the access request (`docs/outreach/bank-access-request.md`).
 - The number of Odoo Enterprise users (FS-529).
 - Counsel and the compliance officer, as listed in 1.2.0, plus whether an
