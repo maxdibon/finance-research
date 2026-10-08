@@ -2,7 +2,7 @@
 
     version: 1.5.0
     updated: 2026-10-08
-    supersedes: 1.4.0; adds 8 October (FS-611 to FS-646)
+    supersedes: 1.4.0; adds 8 October (FS-611 to FS-648)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -143,9 +143,11 @@ Each has a register row and, where it changed the design, an entry in
   **Dibon engineers** (FS-645): one central identity brokered into each
   instance, no standing access to data, just-in-time grants approved by
   the institution where it runs operations, an access register compared
-  monthly (SE-26, architecture §9). Next, in order:
-  event-bus-kafka (one catalogue of event names),
-  odoo, rails, messaging; then the sanctions adapter, guarantors and
+  monthly (SE-26, architecture §9). **Messaging** (`messaging.md`, FS-648):
+  the R1 catalogue of 27 templates; the institution owns and approves its
+  words; a message never carries the outstanding balance. Next, in order:
+  event-bus-kafka (one catalogue of event names, seeded by the messaging
+  catalogue), odoo, rails; then the sanctions adapter, guarantors and
   borrower access. **On-call:** Grafana OnCall's open-source edition was
   archived on 2026-03-24; GoAlert self-hosted with Twilio is proposed, the
   choice is the owner's (observability-grafana §5).

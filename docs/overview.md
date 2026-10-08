@@ -5,7 +5,7 @@ kind: overview
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-641, FS-572, FS-627, FS-631, FS-633, FS-639]
+review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647]
 last_reviewed: 2026-10-08
 ---
 
@@ -28,7 +28,7 @@ reconciliation come together with monitoring, messaging, CRM and an ERP.
 Our customers get one partner instead of five, and one account of their
 money instead of five that disagree.
 
-**Four ideas run through every product:**
+**Five ideas run through every product:**
 
 1. **We hold nobody's money unless we are licensed to.** Funds sit at the
    institution, the merchant or a licensed partner. We prompt, instruct,
@@ -47,6 +47,11 @@ money instead of five that disagree.
    the lender rules, sanctions screening, data protection, records, is a
    capability in the product, checked like any other, not a report added
    later (financial-crime; mfi MF-21 to MF-29; docs/regulation.md; FS-484).
+5. **Dibon never moves an institution's money, and whoever acts is proven
+   at the act.** No Dibon role, break-glass included, may initiate,
+   approve or release an institution's payment; anything that moves money,
+   approves or reveals a person asks who is acting at that moment, not
+   only at login (docs/architecture.md §3, §7; FS-588).
 
 ## Who it is for
 
@@ -76,6 +81,11 @@ Kapu MFI (docs/customers.md).
 Dibon is the first customer of its own products: the Gateway carries our
 own payments first, and insights runs on our own data first (FS-033).
 
+**Where we are:** R1 is Roan Capital's pilot on Kapu MFI. What it
+includes, release by release, is in [the delivery plan](delivery-plan.md);
+how each R1 component is built or run is in [the specs](specs/README.md);
+what each person goes through is in [the journeys](journeys/README.md).
+
 ## The modules
 
 **Products**
@@ -86,12 +96,13 @@ own payments first, and insights runs on our own data first (FS-033).
   for every rail a merchant takes
 - [Kapu Escrow](modules/escrow.md) — funds held at a bank until the agreed
   conditions are met
-- [Kapu Core](modules/core.md) — a hosted core banking system on Apache Fineract, for institutions ready for a modern core
+- [Kapu Core](modules/core.md) — hosted core banking on Apache Fineract
 - [Kapu MFI](modules/mfi.md) — loan management for non-deposit-taking
   lenders, licensed or registered with CBK or applying
 - [Kapu Sacco](modules/sacco.md) — deposit-taking and credit-only Saccos
 - [SME Recon](modules/sme-recon.md) — reconciliation inside the SME's own ERP
-- [Business Suite, on Odoo and Zoho](modules/business-suite.md) — CRM, helpdesk, accounting, HR and payroll, Sign and portal, implemented by Dibon as an Odoo and Zoho partner
+- [Business Suite, on Odoo and Zoho](modules/business-suite.md) — CRM,
+  helpdesk, accounting, HR and payroll, signing and portal
 
 **Shared services**
 
@@ -105,9 +116,12 @@ own payments first, and insights runs on our own data first (FS-033).
 - [Identity verification](modules/identity.md) — who a person or business really is
 - [Rails](modules/rails.md) — every payment-rail and bank connection, behind one interface
 - [Insights](modules/insights.md) — governed metrics, dashboards and natural-language questions
-- [Platform Security](modules/platform-security.md) — the security baseline every product runs on, from the perimeter to the database and to staff laptops and field phones
-- [Financial Crime and Compliance](modules/financial-crime.md) — fraud scoring, sanctions and PEP screening, cases, and the reports institutions file
-- [Decisioning](modules/decisioning.md) — appraisal, behaviour scores and risk classes, rules first, built to take AI later
+- [Platform Security](modules/platform-security.md) — the security
+  baseline every product runs on, from the perimeter to staff laptops
+- [Financial Crime and Compliance](modules/financial-crime.md) — fraud
+  scoring, screening, cases and the reports institutions file
+- [Decisioning](modules/decisioning.md) — appraisal, behaviour scores and
+  risk classes, rules first
 
 **Channels**
 
@@ -116,34 +130,66 @@ own payments first, and insights runs on our own data first (FS-033).
 
 ## How to read the rest
 
+**Start**
+
 | If you want | Read |
 |---|---|
 | Where to start, if you are new | [start-here.md](start-here.md) |
-| Who holds which record, and where the licence line is | [architecture.md](architecture.md) |
 | What a product does, and what is built | its module, §3 |
+
+**Design and build**
+
+| If you want | Read |
+|---|---|
+| Who holds which record, and where the licence line is | [architecture.md](architecture.md) |
 | Why something was decided, and what it cost | [decisions.md](decisions.md) |
+| How each component is built or run, and how they connect | [specs/](specs/README.md) |
+| What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
+| How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](testing.md) |
+
+**Customers and delivery**
+
+| If you want | Read |
+|---|---|
 | Who our customers are, and what we are building for each | [customers.md](customers.md); each customer's delivery map in [customers/](customers/) |
+| What we build next, release by release | [delivery-plan.md](delivery-plan.md) |
+| What a customer and each product need to go live | [onboarding.md](onboarding.md) |
 | Which partners we are talking to | [partners.md](partners.md) |
 | Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |
 | Who keeps our commitments, and whom we hire next | [operating-model.md](operating-model.md) |
-| What we build next, release by release | [delivery-plan.md](delivery-plan.md) |
-| How an R1 component is built or run, and how the specs connect | [specs/](specs/README.md): the approval engine, lender rules, Kapu Core on Fineract, the end-of-day runner, observability |
-| What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
-| How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](testing.md) |
+
+**Running the service**
+
+| If you want | Read |
+|---|---|
+| How we run it: incidents, changes, problems, service levels, the configuration record, the tools | [service-management/](service-management/README.md) |
+| How the service and the company keep going when something fails | [business-continuity.md](business-continuity.md) |
+
+**Law and assurance**
+
+| If you want | Read |
+|---|---|
+| Which laws apply to us and our customers, and what each drives | [regulation.md](regulation.md) |
+| Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
 | What personal data we process, why and for how long | [privacy.md](privacy.md) |
 | Which documents an institution keeps, under which law, for how long | [documents.md](documents.md) |
-| How the service and the company keep going when something fails | [business-continuity.md](business-continuity.md) |
-| How we run the service: incidents, changes, problems, service levels, the configuration record, the tools | [service-management/](service-management/README.md) |
-| Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
-| Which laws apply to us and our customers, and what each drives | [regulation.md](regulation.md) |
 | What a customer files with its regulator about us | [approval-pack.md](approval-pack.md) |
 | Testing we offer institutions we do not supply, and its conflict register | [assurance.md](assurance.md) |
-| How banks can offer SME Recon and the business suite to their customers | [bank-channel.md](bank-channel.md) |
-| What a customer and each product need to go live | [onboarding.md](onboarding.md) |
+
+**Material for outside**
+
+| If you want | Read |
+|---|---|
 | Every word of the portfolio PDF | [marketing/portfolio.md](marketing/portfolio.md) |
 | Every word of the two-page bank channel proposal | [marketing/bank-channel-proposal.md](marketing/bank-channel-proposal.md) |
-| How big each market segment is | business/market-sizing.xlsx |
+| How banks can offer SME Recon and the business suite to their customers | [bank-channel.md](bank-channel.md) |
 | Drafts to partners, operators and regulators | [outreach/](outreach/) |
+| How big each market segment is | business/market-sizing.xlsx |
+
+**The register and the reader**
+
+| If you want | Read |
+|---|---|
 | Everything still open | [REVIEW.md](../REVIEW.md) |
 | All of it as linked pages, every id a link | build/site/index.html, rebuilt on every commit (FS-567); to build it yourself, README "Reading the documents" (FS-631) |
 

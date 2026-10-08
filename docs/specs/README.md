@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642]
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648]
 last_reviewed: 2026-10-08
 ---
 
@@ -40,12 +40,12 @@ as the components table below names it.
 | [kapu-core-fineract](kapu-core-fineract.md) | Component | Apache Fineract as Kapu Core: version, features, settings, contracts, restructuring, end of day | core | R1 |
 | [end-of-day-runner](end-of-day-runner.md) | Build | The nightly close: checks first, then Fineract's close of business, then ours, watched and escalated | core, recon-observability | R1 |
 | [observability-grafana](observability-grafana.md) | Component | Grafana and its stack: metrics, logs, dashboards, alerts, and the on-call rota that takes a phone call | recon-observability | R1 |
+| [messaging](messaging.md) | Build | The messaging service and the R1 template catalogue: what each event sends, to whom, with which fields, and who approves the words | messaging | R1 |
 | [access-keycloak](access-keycloak.md) | Component | Keycloak as access: four realms, levels of authentication and step-up, roles granted by mandate, sign-in for every service | access | R1 |
 
 **To write, in the order R1 needs them:** event-bus-kafka (the envelope, signing and one catalogue of event names);
 odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
-rails (M-Pesa and bank instructions, their lifecycle and signing);
-messaging (the SMS gateway and its routes).
+rails (M-Pesa and bank instructions, their lifecycle and signing).
 
 ## How they connect
 
@@ -111,7 +111,7 @@ Every box in a spec's diagram is named as this table names it (FS-632).
 | ACCESS | Sign-in, roles, step-up | `[keycloak]` | [access-keycloak](access-keycloak.md) |
 | EVENT BUS | Carries signed events between services | `[kafka]` | to write |
 | RAILS | Sends and receives money on M-Pesa and banks | `[kapu_service]` | to write |
-| MESSAGING | SMS, WhatsApp and email to people | `[kapu_service]` | to write |
+| MESSAGING | SMS, WhatsApp and email to people | `[kapu_service]` | [messaging](messaging.md) |
 | RECONCILIATION | Matches the ledger with the rails | `[kapu_service]` | — (recon-observability) |
 | ODOO | Back office: signing, HR, helpdesk, general-ledger summaries | `[odoo]` | to write |
 | DATABASE | PostgreSQL, one per service | `[postgresql]` | — |

@@ -5,12 +5,12 @@ kind: spec
 type: component
 release: R1
 implements: [access]
-depends_on: []
-used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana]
+depends_on: [messaging]
+used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646]
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648]
 last_reviewed: 2026-10-08
 ---
 
@@ -82,9 +82,9 @@ One-time codes to customers go out through our messaging service; every
 login, admin change and step-up goes to observability as an event; the
 on-call tool signs in through the "ops" realm.
 
-**Related:** implements [access](../modules/access.md); depends on no
-written spec yet (messaging is to write); used by
-[approval-engine](approval-engine.md),
+**Related:** implements [access](../modules/access.md); depends on
+[messaging](messaging.md) for codes; used by
+[approval-engine](approval-engine.md), [messaging](messaging.md),
 [kapu-core-fineract](kapu-core-fineract.md),
 [end-of-day-runner](end-of-day-runner.md) and
 [observability-grafana](observability-grafana.md); journeys

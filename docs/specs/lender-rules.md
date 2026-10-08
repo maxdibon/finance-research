@@ -5,12 +5,12 @@ kind: spec
 type: build
 release: R1
 implements: [mfi]
-depends_on: [kapu-core-fineract]
+depends_on: [kapu-core-fineract, messaging]
 used_by: [end-of-day-runner]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648]
 last_reviewed: 2026-10-08
 ---
 
@@ -74,7 +74,8 @@ own: FS-629).
 ```
 
 **Related:** implements [mfi](../modules/mfi.md); depends on
-[kapu-core-fineract](kapu-core-fineract.md) (and messaging, to write);
+[kapu-core-fineract](kapu-core-fineract.md) and
+[messaging](messaging.md);
 used by [end-of-day-runner](end-of-day-runner.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and

@@ -1087,3 +1087,23 @@ its own entry.
 - **Costs (inferred):** the module must keep pace with each Odoo version
   we deploy; a change to it would mean publishing that change, so it is
   never changed in passing.
+
+
+## FS-648 · Templates: the institution's words, our rules; no balance in a message
+
+- **Chose:** the institution owns and approves the words of its
+  transactional messages, notices and collection messages, from Dibon's
+  defaults, held and versioned in messaging; Dibon owns the wording of
+  codes and security messages. A message carries the amount just paid or
+  due now, a date, a reference, the last four characters of a loan and a
+  link, and **never the outstanding balance**, a statement, a document or
+  an ID number; a template that would is refused at approval. An R1
+  catalogue of 27 templates.
+- **Requires:** MS-12; MS-14; docs/specs/messaging.md "never the outstanding balance".
+- **Argued against:** the balance in a receipt, as many Kenyan lenders
+  send it, which puts a figure about a person's debt on any phone that
+  can read the SMS; and Dibon owning every template, which would make us
+  the author of an institution's words to its own customers.
+- **Costs (inferred):** a borrower must open a link to see what is
+  still owed; every institution approves its templates before go-live;
+  Swahili wording needs a native speaker's review.
