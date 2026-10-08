@@ -5,12 +5,12 @@ kind: spec
 type: build
 release: R1
 implements: [core, recon-observability]
-depends_on: [kapu-core-fineract, lender-rules, observability-grafana]
+depends_on: [kapu-core-fineract, lender-rules, observability-grafana, access-keycloak]
 used_by: []
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-574, FS-630, FS-633, FS-634]
+review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642]
 last_reviewed: 2026-10-08
 ---
 
@@ -63,8 +63,9 @@ runner), and runs for Saccos' savings and shares.
 **Related:** implements [core](../modules/core.md) and
 [recon-observability](../modules/recon-observability.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
-[lender-rules](lender-rules.md) and
-[observability-grafana](observability-grafana.md); used by none; the
+[lender-rules](lender-rules.md),
+[observability-grafana](observability-grafana.md) and
+[access-keycloak](access-keycloak.md); used by none; the
 plan it notifies by is [incident management](../service-management/incident-management.md).
 
 ## 2 · Concepts

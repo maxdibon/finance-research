@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632]
+review_ids: [FS-627, FS-628, FS-632, FS-642]
 last_reviewed: 2026-10-08
 ---
 
@@ -40,23 +40,22 @@ as the components table below names it.
 | [kapu-core-fineract](kapu-core-fineract.md) | Component | Apache Fineract as Kapu Core: version, features, settings, contracts, restructuring, end of day | core | R1 |
 | [end-of-day-runner](end-of-day-runner.md) | Build | The nightly close: checks first, then Fineract's close of business, then ours, watched and escalated | core, recon-observability | R1 |
 | [observability-grafana](observability-grafana.md) | Component | Grafana and its stack: metrics, logs, dashboards, alerts, and the on-call rota that takes a phone call | recon-observability | R1 |
+| [access-keycloak](access-keycloak.md) | Component | Keycloak as access: four realms, levels of authentication and step-up, roles granted by mandate, sign-in for every service | access | R1 |
 
-**To write, in the order R1 needs them:** access-keycloak (realms, roles,
-step-up, the authenticator app, sign-in for Fineract, Odoo and Grafana);
-event-bus-kafka (the envelope, signing and one catalogue of event names);
+**To write, in the order R1 needs them:** event-bus-kafka (the envelope, signing and one catalogue of event names);
 odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
 rails (M-Pesa and bank instructions, their lifecycle and signing);
 messaging (the SMS gateway and its routes).
 
 ## How they connect
 
-ACCESS, RAILS and EVENT BUS have specs still to write; the table below
+RAILS and EVENT BUS have specs still to write; the table below
 says what crosses each line.
 
 ```
                    +-------------------+
                    | ACCESS            |
-                   | signs in, steps up| (spec to write)
+                   | signs in, steps up|
                    | [keycloak]        |
                    +-------------------+
     roles, step-up  ^                 ^ OAuth
@@ -91,8 +90,8 @@ says what crosses each line.
 | end-of-day-runner | kapu-core-fineract | The business date moved, close of business started and watched |
 | end-of-day-runner | lender-rules | Classification, the cap and the sweep, run after Fineract's close |
 | end-of-day-runner | observability-grafana | The run's metrics and failures, routed by severity |
-| approval-engine | access-keycloak (to write) | Roles resolved to people (MD-04); step-up at each decision (MD-10) |
-| kapu-core-fineract | access-keycloak (to write) | Sign-in by OAuth, the service account, read-only staff roles |
+| approval-engine | access-keycloak | Roles resolved to people (MD-04); step-up at each decision (MD-10) |
+| kapu-core-fineract | access-keycloak | Sign-in by OAuth, the service account, read-only staff roles |
 | approval-engine | rails (to write) | An approved payment's content hash; nothing is sent without it (RL-01) |
 | every spec | event-bus-kafka (to write) | Event names, the envelope and signing (RO-23) |
 
@@ -109,7 +108,7 @@ Every box in a spec's diagram is named as this table names it (FS-632).
 | END-OF-DAY RUNNER | Closes the business day: checks, runs, watches, escalates | `[kapu_service]` | [end-of-day-runner](end-of-day-runner.md) |
 | OBSERVABILITY | Metrics, logs, traces, dashboards and alert rules | `[grafana]` | [observability-grafana](observability-grafana.md) |
 | ON-CALL | Rotas, escalation, phone calls and acknowledgement | `[goalert]` | [observability-grafana](observability-grafana.md) |
-| ACCESS | Sign-in, roles, step-up | `[keycloak]` | to write |
+| ACCESS | Sign-in, roles, step-up | `[keycloak]` | [access-keycloak](access-keycloak.md) |
 | EVENT BUS | Carries signed events between services | `[kafka]` | to write |
 | RAILS | Sends and receives money on M-Pesa and banks | `[kapu_service]` | to write |
 | MESSAGING | SMS, WhatsApp and email to people | `[kapu_service]` | to write |

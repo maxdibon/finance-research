@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [messaging, identity]
 consumed_by: [mandates, messaging, rails, recon-observability, identity, financial-crime, core, collect, gateway, mfi, sacco, sme-recon, escrow, crb, omni-channel, insights, business-suite, platform-security, decisioning]
-review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491, FS-498, FS-503, FS-504, FS-588, FS-618]
+review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491, FS-498, FS-503, FS-504, FS-588, FS-618, FS-642]
 last_reviewed: 2026-10-08
 ---
 
@@ -176,12 +176,16 @@ every login.
 
 ## 11 · Open questions
 
-None open in the register.
+How Keycloak is run, and its open questions (customers as code-only users,
+Odoo's sign-in module, where engineers' identities live):
+docs/specs/access-keycloak.md §10 (FS-642).
 
 ## 12 · Sources
 
 - Keycloak documentation, Server Administration Guide, version 26
   (keycloak.org), checked 2026-10-01: FAPI profiles, CIBA, step-up,
   organisations, passkeys, identity brokering, user federation, operator.
+- Keycloak 26.8.0, its Server Administration Guide and list of features,
+  read 2026-10-08 for docs/specs/access-keycloak.md (FS-642).
 - REVIEW.md FS-132, FS-193 to FS-197.
 - docs/architecture.md §2, §7.

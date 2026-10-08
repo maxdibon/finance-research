@@ -5,12 +5,12 @@ kind: spec
 type: component
 release: R1
 implements: [recon-observability]
-depends_on: []
+depends_on: [access-keycloak]
 used_by: [end-of-day-runner]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-101, FS-633, FS-640]
+review_ids: [FS-101, FS-633, FS-640, FS-642]
 last_reviewed: 2026-10-08
 ---
 
@@ -61,8 +61,8 @@ on); security event monitoring, which is the managed detection service
 ```
 
 **Related:** implements
-[recon-observability](../modules/recon-observability.md); depends on no
-written spec yet (access-keycloak and messaging are to write); used by
+[recon-observability](../modules/recon-observability.md); depends on
+[access-keycloak](access-keycloak.md) (and messaging, to write); used by
 [end-of-day-runner](end-of-day-runner.md); routes by
 [incident management](../service-management/incident-management.md).
 

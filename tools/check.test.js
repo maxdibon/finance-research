@@ -561,7 +561,7 @@ test('specs: a relation one spec states and the other does not fails', () => {
 });
 
 test('specs: a Related line that does not link a spec in the front matter fails', () => {
-  const f = runWith((d) => patch(d, SPEC('approval-engine'), (t) => t.replace('[kapu-core-fineract](kapu-core-fineract.md) (and', 'kapu-core-fineract (and')));
+  const f = runWith((d) => patch(d, SPEC('approval-engine'), (t) => t.replace('[kapu-core-fineract](kapu-core-fineract.md) and', 'kapu-core-fineract and')));
   assert.deepStrictEqual(names(f), ['specs']);
 });
 

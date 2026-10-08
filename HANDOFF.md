@@ -135,8 +135,10 @@ Each has a register row and, where it changed the design, an entry in
   journey found gaps, settled with the owner one by one.
 - **Specifications** in `docs/specs/` (index: `README.md`, with the map and
   the components table): approval engine, lender rules, Kapu Core on
-  Fineract, the end-of-day runner, observability on Grafana. Next, in
-  order: access-keycloak, event-bus-kafka (one catalogue of event names),
+  Fineract, the end-of-day runner, observability on Grafana, access on
+  Keycloak (four realms per instance: staff, customers, ops, master;
+  step-up as `loa3`; roles granted only by mandate). Next, in order:
+  event-bus-kafka (one catalogue of event names),
   odoo, rails, messaging; then the sanctions adapter, guarantors and
   borrower access. **On-call:** Grafana OnCall's open-source edition was
   archived on 2026-03-24; GoAlert self-hosted with Twilio is proposed, the

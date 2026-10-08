@@ -5,12 +5,12 @@ kind: spec
 type: component
 release: R1
 implements: [core]
-depends_on: []
+depends_on: [access-keycloak]
 used_by: [approval-engine, lender-rules, end-of-day-runner]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634]
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642]
 last_reviewed: 2026-10-08
 ---
 
@@ -78,8 +78,8 @@ FS-185. Groups (KC-01, later).
   +----------------+   +--------------------------------+
 ```
 
-**Related:** implements [core](../modules/core.md); depends on no written
-spec yet (access-keycloak and event-bus-kafka are to write); used by
+**Related:** implements [core](../modules/core.md); depends on
+[access-keycloak](access-keycloak.md) (and event-bus-kafka, to write); used by
 [approval-engine](approval-engine.md), [lender-rules](lender-rules.md) and
 [end-of-day-runner](end-of-day-runner.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md) and
