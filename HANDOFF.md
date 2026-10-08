@@ -143,6 +143,11 @@ Each has a register row and, where it changed the design, an entry in
   open through a recovery vault with three of five hardware-key holders,
   one outside Dibon (FS-657); never TOTP for shares (FS-659). Who carries a
   hardware key, and which: YubiKey 5C NFC for engineers and holders.
+- **The preferred channel, never the only one** (architecture §3, FS-661):
+  if we stop, the money does not; M-Pesa validation fallback set to
+  complete; queued payouts checked before release; manual acts approved
+  afterwards (manual.act); a fallback runbook per institution (OB-COM-23).
+  Merchants give direct payment details by default (GW-16, FS-662).
 - **Unplaced payments** (CO-21, FS-663): a ticket, the payer asked on the
   paying number, applied automatically only when the account is the
   phone's own, escalated at 48 hours, returned at day 7. **Flowza** (Dibon's

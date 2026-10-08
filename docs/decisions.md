@@ -1164,3 +1164,22 @@ its own entry.
   drop its transfer clause and use only the official WhatsApp API before
   institutions' customers use it; a follow-up team at each institution;
   returns approved and sent.
+
+
+## FS-661 · The preferred channel, never the only one
+
+- **Chose:** say plainly that if the platform stops, the money does not:
+  collections keep landing in institutions' own paybills, payouts can be
+  made by hand from their own portals and banks, and everything comes
+  back in afterwards. Three rules make it dependable: M-Pesa's validation
+  fallback set to complete; queued payouts checked against the rail's
+  statement before release; manual acts approved afterwards
+  (`manual.act`). Each institution's runbook agreed at onboarding.
+  Merchants give their direct details by default (GW-16, FS-662).
+- **Requires:** SE-24; GW-16; docs/architecture/README.md "If we stop, the money does not"; docs/onboarding.md "OB-COM-23".
+- **Argued against:** leaving it implicit, which a regulator's continuity
+  and exit questions would expose; and cancelling payments while our
+  check is down, which would stop institutions being paid.
+- **Costs (inferred):** payments to unknown accounts accepted during an
+  outage, then handled as unplaced (CO-21); a runbook per institution;
+  manual acts to approve after each outage.

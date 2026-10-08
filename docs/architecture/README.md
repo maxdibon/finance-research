@@ -5,7 +5,7 @@ kind: architecture
 version: 0.3.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662]
 last_reviewed: 2026-10-08
 ---
 
@@ -226,6 +226,34 @@ initiate, approve or release a payment from an institution's account,
 break-glass access included; the roles that can are the institution's
 own, in its realm (access AC-09). Dibon engineers run the platform; they
 are never in a payment's approval chain (FS-588).
+
+**If we stop, the money does not** (FS-661). Because the money sits in
+the institution's own paybills, tills and accounts, the rails work
+without us: **we are the preferred channel, never the only one.** What
+still works if the platform is down:
+
+| Service | Without us | How | What waits |
+|---|---|---|---|
+| Collections: repayments, deposits, contributions | Works | The customer pays the institution's paybill or till from the M-Pesa menu, or deposits at its bank; Safaricom's own SMS confirms it to the payer | Posting, caught up from M-Pesa's records (rails RL-20) and bank statements |
+| M-Pesa payment prompts | Stops | Customers pay the paybill directly; every message and page carries it (messaging T07; gateway GW-16) | — |
+| Disbursements and payouts | Works, by hand | The institution's own staff, from its M-Pesa business portal or its bank's internet banking, under its own two-person control | Recording; queued payouts checked before release |
+| Bank transfers, PesaLink, RTGS | Works, by hand | The institution's internet banking | As above |
+| Cards (phase 3) | Partly | The acquirer's own terminal or hosted page, where the merchant keeps one | Matching |
+| Gateway checkout | Mostly stops | The merchant's own paybill or till, given by default (GW-16) | Matching |
+| Escrow | Held | Funds stay at the partner bank; a release by its documented manual procedure | Releases |
+| Approvals | Stops | The institution's documented manual procedure | Approved again afterwards |
+| The ledger, native mode | Balances unavailable | Money still arrives; counters follow the institution's offline procedure | Postings, on recovery |
+| The ledger, integrated mode | Works | The institution's own core | Our postings |
+| USSD, app, onboarding, receipts | Stop | Field officers capture offline (omni-channel OC-17) | Sent or verified on recovery |
+
+**Three rules make it dependable** (platform-security SE-24): M-Pesa's
+fallback for a paybill with validation is set to *complete*, so payments
+go through while our check does not answer; queued payouts are checked
+against the rail's statement before release, so nothing paid by hand
+meanwhile is paid twice; and every manual act during an outage comes
+back in, approved afterwards by the institution's approvers
+(`manual.act`, approval-engine). Each institution's fallback runbook is
+agreed at onboarding (OB-COM-23); Dibon never operates it (FS-588).
 
 ---
 

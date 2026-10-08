@@ -10,7 +10,7 @@ used_by: [access-keycloak, lender-rules, observability-grafana]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663]
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662]
 last_reviewed: 2026-10-08
 ---
 
@@ -316,5 +316,8 @@ refused it), `.opted_out`.
 2. The wording of its collection messages, from the defaults, approved by
    its compliance role.
 3. Working hours for collection messages (lender-rules open question 5).
+
+**For the gateway** (phase 2): its payment templates carry the merchant's
+paybill or till and the reference in their text (gateway GW-16, FS-662).
 
 **Before use:** a native speaker reviews every Swahili template.

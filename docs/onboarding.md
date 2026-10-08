@@ -5,7 +5,7 @@ kind: checklist
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645]
+review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661]
 last_reviewed: 2026-10-08
 ---
 
@@ -51,6 +51,7 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-20 | Its business calendar (working hours, its own closures) and its transaction rules: windows, limits per tier and per cycle, allow- and deny-lists | Customer's operations lead | core KC-15; financial-crime FC-16; FS-574 |
 | OB-COM-21 | For each core banking system we integrate with and each rail: its end-of-day window, what happens to postings during it, its cut-off and value dating, its statement day, and the status and statement interfaces it offers (a status query, intraday reports such as MT942 or CAMT.052, transaction enquiry, end-of-day statements), so reconciliation knows what is in transit and how to chase it (docs/architecture/README.md §10) | Customer's IT lead | recon-observability RO-04, RO-07; FS-630, FS-635 |
 | OB-COM-22 | Dibon engineers' access: who approves a grant for the institution, its VPN or bastion, the contact who can switch Dibon's access off at any hour; it receives the list of Dibon engineers who may ask for access, with their vetting (docs/architecture/README.md §9) | Customer's IT lead and security contact | platform-security SE-26; FS-645 |
+| OB-COM-23 | Its fallback runbook for when the platform is down (docs/architecture/README.md §3): who operates its M-Pesa business portal and internet banking, under its own two-person control; its manual approval form; its counter procedure; who decides to enter and leave safe mode; M-Pesa's validation fallback set to complete | Customer's operations lead | platform-security SE-24; FS-661 |
 
 ## Kapu Collect
 
