@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646]
 last_reviewed: 2026-10-08
 ---
 
@@ -382,7 +382,7 @@ Decided 2026-10-01 (FS-223); MPL-2.0 added 2026-10-03 (FS-403):
 | Licence | Allowed | Condition |
 |---|---|---|
 | Apache-2.0, MIT, BSD-2, BSD-3, ISC | Yes | — |
-| AGPL-3.0 | Yes, **for services run unmodified and separately** | We do not change their source, and we do not link them into our code. A change to an AGPL service's source is a decision that triggers publishing that source to its network users, so it is never made in passing |
+| AGPL-3.0 | Yes, **for services run unmodified and separately** | We do not change their source, and we do not link them into our code. A change to an AGPL service's source is a decision that triggers publishing that source to its network users, so it is never made in passing. **One exception, by decision:** OCA's `auth_oidc` module, installed unmodified inside Odoo for sign-in through Keycloak by the code flow, because Odoo's own sign-in module uses the implicit flow (FS-646) |
 | MPL-2.0 | Yes, **used unmodified** | MPL's copyleft is per file: a change to one of its files is published with that file. We do not make such changes in passing |
 | LGPL-2.1, LGPL-3.0 | Yes, **used unmodified as separate programs**: Odoo Community, Opengrep, Ceph (object storage on-premises, FS-500) | We do not change or statically link them; a change is a decision (FS-464) |
 | GPL-2.0, GPL-3.0 in the operating system | Yes, **as part of the operating system**: the Linux kernel, disk encryption (LUKS), distribution packages | Run as shipped by the distribution (FS-464) |
@@ -447,6 +447,27 @@ of an Odoo deployment is internal users, so external people stay external:
 **Whether the Enterprise Agreement limits any of these is unconfirmed**
 (FS-036). This section is a plan until it is read against the agreement.
 
+**Enterprise is required, not only assumed** (FS-644). The apps R1 and the
+business suite use, by edition, from Odoo's editions page (read
+2026-10-08):
+
+| App | We use it for | Edition |
+|---|---|---|
+| Sign | Loan agreements, guarantees, consents (business-suite BS-02, mfi MF-34) | Enterprise only |
+| Helpdesk | The service desk; incidents, problems, requests (BS-01, docs/service-management/README.md) | Enterprise only |
+| Knowledge | Known errors and the desk's knowledge base | Enterprise only |
+| Documents | SME company records (BS-18) | Enterprise only |
+| Approvals | Workflows that move no money (BS-09) | Enterprise only |
+| Accounting | Reconciliation into the ledger (BS-04); a core's daily totals (BS-08) | Enterprise only; Community has Invoicing |
+| Payroll | Employers' payroll (BS-19) | Enterprise only |
+| CRM, Project, Calendar, Employees, Website | Leads, user acceptance, change windows, HR records, public pages | Both |
+
+Dibon's own Odoo and every institution's Odoo run Enterprise. Community
+appears in two places only: an SME on the business suite that will not
+pay for Enterprise gets Community without the Enterprise-only apps, or
+Zoho; and the licence rule (§6.1) lists it as LGPL software used
+unmodified.
+
 ---
 
 ## 9 · Hosting
@@ -472,6 +493,28 @@ does not reach the rest (the lesson of shared platforms, FS-469). The cost
 is operating many instances, met by building every instance from the same
 code and configuration (GitOps), upgrading the fleet together, and
 watching all of them in one place (platform-security SE-23; recon RO-16).
+
+**Who holds access, by who runs the instance** (FS-645). Each Dibon
+engineer has one identity, in a central Dibon Keycloak with hardware keys
+only, brokered into each instance's `ops` realm and never copied there
+(docs/specs/access-keycloak.md §3); when an engineer leaves Dibon, one
+switch removes them from every institution.
+
+| | Dibon runs the instance | The institution runs it |
+|---|---|---|
+| Who operates | Dibon's on-call rota | The institution's own operators, in its `ops` realm or through its own identity provider |
+| Dibon's standing access | Platform tooling only: monitoring, on-call, deployments through change enablement | None: the broker link is off |
+| Access to data or production | Just in time, against a ticket | Just in time, against a ticket, approved by the institution's named approver through its own approval chain |
+| How long, how much | Until the ticket closes, 4 hours by default; a named scope (read-only logs, one maintenance action) | The same, and only through the institution's own VPN or bastion |
+| Switching Dibon off | The institution may disable Dibon's broker at any time, by contract | Off unless granted |
+
+**Tracked on both sides:** the institution's Keycloak events and bastion
+sessions; Dibon's access register of every grant (engineer, institution,
+ticket, approver, scope, start, end, what was done); the two compared at
+each monthly service review, and a grant on one side only is an
+incident (platform-security SE-26). Engineers never see Restricted data:
+it is encrypted field by field (SE-27), and support works on masked
+views.
 
 ## 10 · Time and dates
 

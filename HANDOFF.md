@@ -2,7 +2,7 @@
 
     version: 1.5.0
     updated: 2026-10-08
-    supersedes: 1.4.0; adds 8 October (FS-611 to FS-637)
+    supersedes: 1.4.0; adds 8 October (FS-611 to FS-646)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -137,7 +137,13 @@ Each has a register row and, where it changed the design, an entry in
   the components table): approval engine, lender rules, Kapu Core on
   Fineract, the end-of-day runner, observability on Grafana, access on
   Keycloak (four realms per instance: staff, customers, ops, master;
-  step-up as `loa3`; roles granted only by mandate). Next, in order:
+  step-up as `loa3`; roles granted only by mandate; borrowers and
+  guarantors code-only, FS-643; Odoo by OCA's `auth_oidc`, the one AGPL
+  exception, FS-646). **Odoo is Enterprise, required** (FS-644).
+  **Dibon engineers** (FS-645): one central identity brokered into each
+  instance, no standing access to data, just-in-time grants approved by
+  the institution where it runs operations, an access register compared
+  monthly (SE-26, architecture §9). Next, in order:
   event-bus-kafka (one catalogue of event names),
   odoo, rails, messaging; then the sanctions adapter, guarantors and
   borrower access. **On-call:** Grafana OnCall's open-source edition was

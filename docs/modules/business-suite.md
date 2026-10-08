@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, messaging, sme-recon, mandates, insights, sacco, mfi, identity]
 consumed_by: [insights, mfi]
-review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518, FS-521, FS-527, FS-532, FS-606, FS-608, FS-618]
+review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518, FS-521, FS-527, FS-532, FS-606, FS-608, FS-618, FS-644]
 last_reviewed: 2026-10-08
 ---
 
@@ -152,7 +152,10 @@ accounts, or a ledger of funds that a core already holds.
   Silver (FS-288). Marketing states the current tier only, and follows
   Odoo's rules for its name and logo (FS-282).
 - **Licensing:** Odoo Enterprise, per internal user. Portal users and
-  external signers are not counted (FS-026). Whether the Enterprise
+  external signers are not counted (FS-026). Sign, Helpdesk, Documents,
+  Knowledge, Approvals, full Accounting and Payroll are Enterprise only;
+  an SME that stays on Community goes without them (docs/architecture.md
+  §8, FS-644). Whether the Enterprise
   Agreement limits serving internal work through them is open (FS-036).
 - **Hosting:** on OLP, to be hosted on Liquid's Azure Stack so that data
   stays in-country (FS-289, FS-293).

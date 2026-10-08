@@ -1056,3 +1056,34 @@ its own entry.
   build; Helpdesk types and SLA policies to configure before R1; service
   levels to agree in every contract; ISO/IEC 20000-1 still without a
   certification route in Kenya.
+
+
+## FS-645 · Dibon engineers: one identity, no standing access, every grant recorded on both sides
+
+- **Chose:** each engineer holds one identity in a central Dibon Keycloak,
+  brokered into each instance and never copied; no standing access to an
+  institution's data in any deployment; access just in time, against a
+  ticket, scoped and expiring, approved by the institution where it runs
+  its own operations, which may switch Dibon's access off at any time;
+  an access register compared with the institution's records each month.
+- **Requires:** SE-26; docs/architecture.md "Who holds access, by who runs the instance"; docs/onboarding.md "OB-COM-22".
+- **Argued against:** local accounts for engineers in each instance,
+  which a leaver keeps until someone remembers every instance; and
+  standing access for convenience, which an outsourcing approval would
+  have to justify and an auditor would question.
+- **Costs (inferred):** a central Keycloak for Dibon to run; slower
+  support where each access waits for the institution's approval; a
+  monthly comparison to do; a bastion still to choose.
+
+## FS-646 · OCA's auth_oidc inside Odoo, unmodified: the one AGPL exception
+
+- **Chose:** sign Odoo users in through Keycloak by the code flow with
+  OCA's `auth_oidc` module, installed unmodified, as a stated exception
+  to the rule that AGPL software runs only as a separate service.
+- **Requires:** docs/architecture.md "One exception, by decision"; docs/specs/access-keycloak.md "auth_oidc".
+- **Argued against:** Odoo's own module, which uses the implicit flow
+  and puts tokens in the browser's address bar; and writing our own
+  module, which is code to keep for every Odoo version.
+- **Costs (inferred):** the module must keep pace with each Odoo version
+  we deploy; a change to it would mean publishing that change, so it is
+  never changed in passing.

@@ -10,7 +10,7 @@ used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642]
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646]
 last_reviewed: 2026-10-08
 ---
 
@@ -116,14 +116,24 @@ where an identity lives, not only by which roles it holds:
 | Realm | Who | How they sign in | What it may reach |
 |---|---|---|---|
 | `staff` | The institution's staff and approvers; the services that act for it | A password, then an authenticator app or a security key; services by signed client assertion | The products, Fineract, Odoo, the approval engine, the institution's Grafana folder |
-| `customers` | Borrowers and guarantors in R1; members and customers later | A code to their bound phone (ID-12), by SMS; no password | Their own pages: consents, agreements to sign, statements (MF-37, MF-38) |
-| `ops` | Dibon's engineers | Hardware security keys only (SE-26) | The platform's tools: Grafana's operations views, the on-call tool, the cluster. **Never a product, never an institution's money** (FS-588) |
+| `customers` | Borrowers and guarantors in R1, as code-only users (owner, 2026-10-08, FS-643); members and customers later | A code to their bound phone (ID-12), by SMS; no password | Their own pages: consents, agreements to sign, statements (MF-37, MF-38) |
+| `ops` | Whoever operates the instance: Dibon's engineers, brokered from Dibon's central Keycloak, never local accounts; where the institution runs its own operations, its operators too, and Dibon's engineers only when it grants them (FS-645) | Hardware security keys only (SE-26), or the institution's own identity provider for its operators | The platform's tools: Grafana's operations views, the on-call tool, the cluster. **Never a product, never an institution's money** (FS-588) |
 | `master` | No one, day to day | Sealed break-glass accounts only (SE-26) | Keycloak's own administration, every use alerted |
 
 **Why separate realms:** the products and Fineract accept tokens only
 from `staff` (and the customer pages only from `customers`). A token from
 `ops` is refused by every product API, so no Dibon identity can carry an
 institution's payment role, by construction rather than by policy.
+
+**Dibon's engineers, in either model** (FS-645, architecture §9): one
+identity each, in Dibon's central Keycloak, brokered into the instance's
+`ops` realm. Where Dibon runs the instance, the broker is on for platform
+tooling; data or production access is granted just in time against a
+ticket, scoped and expiring. Where the institution runs it, the broker is
+off until the institution's approver grants a ticket's access, through
+its own approval chain, and the institution can switch it off at any
+time. Every grant is in Dibon's access register and in the instance's
+Keycloak events (SE-26).
 
 ## 4 · Features used and not used
 
@@ -196,7 +206,7 @@ sessions; break-glass accounts sealed and split like the backup keys
 | `end-of-day-runner` | Service account | Runs only its jobs (end-of-day-runner §8) |
 | `provisioning` | Service account | The only identity that may map approval roles (§6) |
 | `fineract` | Resource server | Accepts `staff` tokens addressed to it |
-| `odoo` | Confidential; people | Code flow with PKCE (§9, K10) |
+| `odoo` | Confidential; people | Code flow with PKCE, through OCA's `auth_oidc` module, unmodified (FS-646; K10) |
 | `grafana` | Confidential; people | Role from a group: viewer, editor (§7) |
 | `customer-pages` | Public with PKCE; realm `customers` | Consents, signing, statements |
 | `goalert` | Confidential; realm `ops` | The on-call tool |
@@ -291,7 +301,7 @@ On a running 26.8 instance, before the build relies on each (FS-642):
 | K7 | An institution administrator cannot map an approval role; the provisioning service can | AC-09 |
 | K8 | An `ops` token is refused by Fineract, the approval engine and Kapu MFI | AC-09, FS-588 |
 | K9 | Fineract under OAuth maps the token's user to its own user, and no Fineract approve permission is reachable | KC-08 |
-| K10 | Odoo signs in by the code flow, with the module chosen (§10) | AC-02 |
+| K10 | Odoo signs in by the code flow through OCA's `auth_oidc`, unmodified, on the Odoo version we deploy | AC-02 |
 | K11 | Grafana's role from a group; one institution's users see only its folder | AC-02, RO-19 |
 | K12 | A rolling restart and a minor upgrade sign no one out | AC-10 |
 | K13 | Events reach Loki with no code, password or token in them | AC-11, SE-18 |
@@ -301,20 +311,11 @@ On a running 26.8 instance, before the build relies on each (FS-642):
 
 **For the owner:**
 
-1. **Borrowers and guarantors as code-only users** in the `customers`
-   realm in R1, so every code has one implementation, one lockout and
-   one audit (proposed), rather than codes sent by the identity service
-   outside Keycloak.
-2. **Odoo's sign-in.** Odoo's own module uses the implicit flow, which
-   §4 rules out. OCA's `auth_oidc` uses the code flow but is AGPL-3.0 and
-   runs inside Odoo, which architecture §6.1 allows only for services run
-   separately. Choose: allow it, used unmodified, by decision; or write a
-   small sign-in module of our own.
-3. Whether staff use Fineract's own screens (kapu-core-fineract §10),
+1. Whether staff use Fineract's own screens (kapu-core-fineract §10),
    which decides whether Fineract needs a staff client at all.
-4. Where Dibon's engineers' identities live: an `ops` realm in each
-   instance (designed), or one central Keycloak for Dibon brokered into
-   each instance's `ops` realm.
+2. Which bastion records engineers' sessions where Dibon runs the
+   instance (Teleport's community edition is no longer open-source, so a
+   tool must be chosen against architecture §6.1; FS-645).
 
 **For Roan Capital:**
 

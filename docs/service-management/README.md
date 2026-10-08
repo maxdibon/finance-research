@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641]
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645]
 last_reviewed: 2026-10-08
 ---
 
@@ -160,7 +160,10 @@ service reviews.
 Standard requests, each a Helpdesk request type with who may ask, what
 is checked and what the desk may do: a user added or removed, a role
 changed, a password or authenticator reset (after re-verification), a
-report, a setting within its tested bounds. The access cases follow the
+report, a setting within its tested bounds, and **access for a Dibon
+engineer**: against a ticket, scoped and expiring, approved by the
+institution where it runs its own operations, and entered in the access
+register ([architecture](../architecture.md) §9, SE-26). The access cases follow the
 runbooks in [the operating model](../operating-model.md) (FS-505).
 
 ## 7 · Tools
@@ -196,4 +199,5 @@ as part of the operating system ([architecture](../architecture.md)
 | The pull-request template and the pipeline's change-window rule | Not built | Build with SE-23 |
 | Helpdesk ticket types, SLA policies, request types | Not configured | Configure before R1 go-live |
 | Service-level targets | Proposed defaults ([§5](#5--service-levels)) | Agree in Roan Capital's contract |
+| The bastion that records engineers' sessions where Dibon runs the instance | Not chosen; Teleport's community edition is no longer open-source | Choose against the licence rule ([architecture](../architecture.md) §6.1; FS-645) |
 | An ISO/IEC 20000-1 certification body | No KENAS-accredited body found; SGS advertises it ([compliance](../compliance.md) LC-10) | Stay "in line with" until a route is confirmed |
