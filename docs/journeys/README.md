@@ -46,7 +46,7 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-03 | A business borrower: registry, directors, beneficial owners | R1 | [business-borrower.md](business-borrower.md) |
 | JN-04 | A loan from application through approval, signing and disbursement | R1 | [loan-to-disbursement.md](loan-to-disbursement.md) |
 | JN-05 | A guarantor: consent, statements and notice | R1 | [guarantor.md](guarantor.md) |
-| JN-06 | A loan restructured | R1 | to write |
+| JN-06 | A loan restructured | R1 | [restructuring.md](restructuring.md) |
 | JN-07 | A borrower viewing and sharing their own documents | R1 | to write |
 | JN-08 | A complaint, against the 30-day clock | R1 | to write |
 | JN-09 | Self-sign-up by USSD into the lightest KYC tier | phase 2 | to write |

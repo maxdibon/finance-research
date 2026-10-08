@@ -303,7 +303,8 @@ only with a register row.
   the access request (`docs/outreach/bank-access-request.md`).
 - The number of Odoo Enterprise users (FS-529).
 - Counsel and the compliance officer, as listed in 1.2.0, plus whether an
-  automatic downgrade "significantly affects" a borrower under s.35.
+  automatic downgrade "significantly affects" a borrower under s.35, and
+  the two restructuring questions (FS-624).
 - Which logo.
 - Writing to BRS (mpsr@brs.go.ke): system-to-system access to the
   collateral registry, and organisation accounts (PT-55).
