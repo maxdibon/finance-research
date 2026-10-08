@@ -122,6 +122,7 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
       && !['overview.md', 'architecture.md', 'decisions.md', 'partners.md'].includes(f)).sort()
       .map((f) => ({ rel: path.join('docs', f) })),
     ...folder('service-management'),
+    ...folder('training'),
     ...(fs.existsSync(path.join(root, 'docs', 'customers')) ? fs.readdirSync(path.join(root, 'docs', 'customers'))
       .filter((f) => f.endsWith('.md')).sort().map((f) => ({ rel: path.join('docs', 'customers', f) })) : []),
   ].map((d) => {

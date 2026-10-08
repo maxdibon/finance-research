@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645]
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656]
 last_reviewed: 2026-10-08
 ---
 
@@ -73,8 +73,8 @@ not go live on less.
 | SE-17 | An independent penetration test every year and before each customer's go-live, by a tester we do not otherwise use for assurance; the payment-instruction path always in scope (FS-588) | Planned | FS-464; approval pack item 8; assurance rule 1 | 1 |
 | SE-18 | Security events (logins, admin actions, step-ups) collected and kept; Restricted data never in a log | Planned | FS-464; access AC-11; architecture §7 | 1 |
 | SE-19 | Incident response: severities, a runbook, and the institution told within an agreed time of a confirmed incident, so it can meet its regulator's deadline | Planned | FS-464; recon RO-18; approval pack item 10; the plan: docs/service-management/incident-management.md (FS-633) | 1 |
-| SE-20 | Backups in a separate security domain: their own accounts, administrators and multi-factor authentication; write-once copies, one of them offline (three copies, two media, one off-site, one offline, verified) | Planned | FS-468, FS-470 | 1 |
-| SE-21 | Backup encryption keys held outside production: split between two people and sealed offline, so backups can be decrypted with OpenBao down or compromised | Planned | FS-468, FS-470 | 1 |
+| SE-20 | Backups in a separate security domain: their own accounts, administrators and multi-factor authentication; write-once copies, one of them offline (three copies, two media, one off-site, one offline, verified). The offline copy encrypted before it leaves, written only by the backup domain, kept at a third place, moved by two people in sealed, numbered bags with a signed custody log, each copy's hash in the audit chain | Planned | FS-468, FS-470; the offline copy: FS-651, docs/architecture/deployment.md §3 | 1 |
+| SE-21 | Backup encryption keys held outside production, so backups can be decrypted with OpenBao down or compromised: wrapped by a key in a recovery vault, a separate OpenBao kept switched off and sealed, opened by any three of five holders, each share encrypted to the holder's hardware security key; every unlock requested, approved by two people other than the initiator, and recorded | Planned | FS-468, FS-470; the recovery vault: FS-656 to FS-659, docs/architecture/deployment.md §4 | 1 |
 | SE-22 | Point-in-time recovery: databases archived continuously to write-once storage, restorable to the minute before an attack began | Planned | FS-468, FS-470 | 1 |
 | SE-23 | A clean rebuild from code: infrastructure as code and signed images bring up a fresh environment from nothing, never from a machine that was compromised. The same code describes each instance: a configuration record generated from it (each component's version, the settings the specs define, integrations, certificates and their expiry, the ids of secrets, never their values), with drift from the code and certificates near expiry alerted | Planned | FS-468, FS-470; the configuration record: FS-639, FS-640, docs/service-management/README.md §3 | 1 |
 | SE-24 | Safe mode, decided in advance: collections keep paying into institutions' own paybills and their cores keep running; new outgoing payments queue and reconcile later; named people decide when to enter and leave it | Planned | FS-468, FS-470 | 1 |
@@ -83,11 +83,14 @@ not go live on less.
 | SE-27 | Restricted fields encrypted one by one: government ID numbers and other Restricted values encrypted by the service with OpenBao's transit engine before they reach a database, and found by a keyed hash, so a database query, a backup or a replica shows none of them in clear | Planned | FS-636. SE-08's encryption at rest protects a stolen disk, not a query by someone with database access. Owner, 2026-10-08: in R1 (FS-638) | 1 |
 
 **Recovery objectives** (agreed 2026-10-05, FS-466; approval pack item 9).
-Services are tiered by what they hold, not by product:
+Services are tiered by what they hold, not by product. These objectives
+are for warm standby, the default availability model; each institution's
+model sets its own in its contract (docs/architecture/deployment.md §2,
+FS-655):
 
 | Tier | Services | Data that may be lost | Time to recover |
 |---|---|---|---|
-| 1 · moves or records money, or lets people in | Ledgers, rails, collections, gateway, escrow, approvals, login and one-time codes, sanctions screening | None if a server fails (a synchronous standby); at most 5 minutes if the site is lost | 1 hour for a server; 4 hours for the site |
+| 1 · moves or records money, or lets people in | Ledgers, rails, collections, gateway, escrow, approvals, login and one-time codes, sanctions screening | None if a server fails (a synchronous standby); at most 5 minutes if the site is lost | Minutes for a server, automatically; 4 hours for the site |
 | 2 · runs the business | Reconciliation, cases, portals, Odoo, campaign messages | 1 hour | 8 hours |
 | 3 · analyses | Insights, dashboards, reports | 24 hours | 72 hours |
 

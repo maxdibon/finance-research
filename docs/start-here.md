@@ -5,7 +5,7 @@ kind: guide
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637]
+review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660]
 last_reviewed: 2026-10-08
 ---
 
@@ -74,6 +74,8 @@ decisions follow from it.
   a customer is working towards, never judge its systems.
 - **Nothing needs reading.** Anything a person must confirm or be told is
   also available by voice or as numbers (omni-channel, FS-637).
+- **Delightful to use.** The right thing is the easy thing; we draw,
+  test with real people, and measure (docs/experience.md, FS-660).
 
 ## Words you will meet
 

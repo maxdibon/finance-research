@@ -2,7 +2,7 @@
 
     version: 1.5.0
     updated: 2026-10-08
-    supersedes: 1.4.0; adds 8 October (FS-611 to FS-649)
+    supersedes: 1.4.0; adds 8 October (FS-611 to FS-660)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -137,6 +137,16 @@ Each has a register row and, where it changed the design, an entry in
   keeps §1 to §10, so "architecture §N" references hold; beside it the
   views: context, instance, deployment, runtime (sequence diagrams),
   interfaces, quality goals, constraints, risks.
+- **Availability and recovery** (deployment.md §2 to §5): failover in
+  seconds within a site; cold, warm (default), hot or hot-automatic across
+  sites, chosen per institution; no active-active ledger (FS-655). Backups
+  open through a recovery vault with three of five hardware-key holders,
+  one outside Dibon (FS-657); never TOTP for shares (FS-659). Who carries a
+  hardware key, and which: YubiKey 5C NFC for engineers and holders.
+- **Experience and training** (docs/experience.md, docs/training/):
+  delightful to use is the sixth idea; draw, test with five users per
+  role, measure; manuals by role, the key holder's written first. No
+  designer on the team yet.
 - **Specifications** in `docs/specs/` (index: `README.md`, with the map and
   the components table): approval engine, lender rules, Kapu Core on
   Fineract, the end-of-day runner, observability on Grafana, access on

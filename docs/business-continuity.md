@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-482, FS-485]
-last_reviewed: 2026-10-05
+review_ids: [FS-482, FS-485, FS-657]
+last_reviewed: 2026-10-08
 ---
 
 # Business continuity plan
@@ -41,7 +41,7 @@ draft risk guidelines expect one from banks' providers.
 | DevSecOps on call | The next person in the rota, then the CTIO | The rota reaches five |
 | Project manager | The administrator | Permanent |
 | Compliance and risk officer | The CTIO | The officer is hired |
-| Anyone holding a backup key share | A second named holder for each share (SE-21) | Permanent |
+| The recovery key holders | Five holders, any three of whom open the backups, one of them outside Dibon (SE-21, docs/architecture/deployment.md §4) | Permanent |
 
 **No single person** holds the only copy of a password, a key, a
 procedure or a customer relationship. Runbooks are written, not

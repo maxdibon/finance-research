@@ -10,7 +10,7 @@ used_by: [end-of-day-runner]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-101, FS-633, FS-640, FS-642, FS-648]
+review_ids: [FS-101, FS-633, FS-640, FS-642, FS-648, FS-653]
 last_reviewed: 2026-10-08
 ---
 
@@ -115,6 +115,33 @@ annotation carries personal data (§7).
 **The watchdog:** a rule that always fires, sent to ON-CALL's heartbeat;
 if Grafana, Prometheus or the route between them stops, the heartbeat
 goes quiet and ON-CALL pages.
+
+**Alert rules for R1** (FS-653). Thresholds are proposed, and tuned after
+go-live; severities follow the incident plan.
+
+| Area | Condition | Severity |
+|---|---|---|
+| Callbacks | 95th-percentile latency over half the rail's timeout for 5 minutes; over 80% | 3; 2 |
+| Callbacks | More than 1% answered with an error over 5 minutes | 2 |
+| Callbacks | A payment found by status query or the nightly pull with no callback; more than 5 in an hour | 3; 2 |
+| Callbacks | An unsigned callback not confirmed by status query within 2 minutes (RL-11) | 3 |
+| Payouts | A result unknown after 15 minutes; after an hour (RL-10) | 2; 1 |
+| Rails | A rail paused as degraded (RL-15); credentials or certificates 30 days from expiry | 2; 3 |
+| Ledger | A repayment not posted 5 minutes after the rail confirmed it; 30 minutes | 3; 2 |
+| Ledger | A write refused by Fineract after its retries | 3, per loan |
+| Reconciliation | An exception past its SLA (RO-05) | As its SLA policy says |
+| The night's close | As end-of-day-runner §6 | As there |
+| Integrity | A nightly comparison finds an act without an approved request (approval-engine §9, access-keycloak §6) | 1 |
+| Integrity | The audit chain fails verification (RO-24) | 1 |
+| Recovery | Database replication more than 5 minutes behind: the recovery objective breached | 1 |
+| Recovery | A backup, or a restore test, failed | 2 |
+| Platform | Event consumers more than 10 minutes behind | 2 |
+| Platform | A host's clock more than 500 ms out | 2 |
+| Platform | Disk over 80%; over 95% | 3; 2 |
+| Platform | A certificate 30 days from expiry | 3 |
+| Access | Lockouts at more than three times their usual rate: a possible attack | 2 |
+| Messages | Delivery failures on a route over 10% in 15 minutes; one-time codes taking over 30 seconds | 2 |
+| Watchdog | The heartbeat silent | 1, paged by ON-CALL |
 
 ## 5 · On-call: the phone call
 

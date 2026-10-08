@@ -1107,3 +1107,40 @@ its own entry.
 - **Costs (inferred):** a borrower must open a link to see what is
   still owed; every institution approves its templates before go-live;
   Swahili wording needs a native speaker's review.
+
+
+## FS-655 · Availability: failover in seconds within a site; a choice of models across sites; no active-active ledger
+
+- **Chose:** automatic failover within a site for every tier-1 component
+  (PostgreSQL through CloudNativePG with a synchronous standby, Kafka on
+  three brokers, OpenBao on three nodes); across sites, a choice per
+  institution of cold, warm (the default), hot or hot automatic with a
+  witness; active-active only for the edge, stateless services, read
+  copies and observability; availability sold as its own choice.
+- **Requires:** docs/architecture/deployment.md §2; docs/modules/platform-security.md "These objectives".
+- **Argued against:** active-active PostgreSQL for the ledger, which
+  settles conflicting writes after the fact or needs three sites and a
+  database Fineract does not support; and a 5-minute recovery time for
+  everyone, which a team of four would run for a rare event while money
+  keeps landing in institutions' own paybills regardless.
+- **Costs (inferred):** hot and automatic models need a second site at
+  full size and a third location for the witness; four models to price,
+  contract and test.
+
+## FS-657 · Backups opened by three of five, on hardware keys, through a recovery vault
+
+- **Chose:** a recovery vault, a separate OpenBao kept off and sealed,
+  holding the key that wraps every backup's key; opened by any three of
+  five holders, one outside Dibon, each share encrypted to the holder's
+  hardware security key and backup key; an unlock requested, approved by
+  two people other than the initiator, done in a clean environment and
+  recorded; shares never released by TOTP (FS-659); practised every
+  quarter as training.
+- **Requires:** SE-21; docs/architecture/deployment.md §4; docs/training/key-holder.md.
+- **Argued against:** two holders, where losing one loses the backups;
+  TOTP-released shares, which would put every share in one service; and
+  rotating the key after each unlock, unneeded once the wrapping key
+  never leaves the vault.
+- **Costs (inferred):** a vault to keep, a ceremony to run, a custody
+  agreement with an outside holder, and hardware keys for two holders who
+  do not carry one today.

@@ -5,7 +5,7 @@ kind: overview
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647]
+review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660]
 last_reviewed: 2026-10-08
 ---
 
@@ -28,7 +28,7 @@ reconciliation come together with monitoring, messaging, CRM and an ERP.
 Our customers get one partner instead of five, and one account of their
 money instead of five that disagree.
 
-**Five ideas run through every product:**
+**Six ideas run through every product:**
 
 1. **We hold nobody's money unless we are licensed to.** Funds sit at the
    institution, the merchant or a licensed partner. We prompt, instruct,
@@ -52,6 +52,9 @@ money instead of five that disagree.
    approve or release an institution's payment; anything that moves money,
    approves or reveals a person asks who is acting at that moment, not
    only at login (docs/architecture/README.md §3, §7; FS-588).
+6. **Delightful to use.** The right thing is the easy thing: what a person
+   must do is obvious, fast and forgiving; what we cannot make obvious we
+   teach (docs/experience.md; FS-660).
 
 ## Who it is for
 
@@ -145,6 +148,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | Why something was decided, and what it cost | [decisions.md](decisions.md) |
 | How each component is built or run, and how they connect | [specs/](specs/README.md) |
 | What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
+| How it should feel to use, and how we make it intuitive | [experience.md](experience.md) |
 | How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](testing.md) |
 
 **Customers and delivery**
@@ -163,6 +167,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | If you want | Read |
 |---|---|
 | How we run it: incidents, changes, problems, service levels, the configuration record, the tools | [service-management/](service-management/README.md) |
+| How people learn it: manuals and training, by role | [training/](training/README.md) |
 | How the service and the company keep going when something fails | [business-continuity.md](business-continuity.md) |
 
 **Law and assurance**
