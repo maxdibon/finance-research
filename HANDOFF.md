@@ -105,7 +105,7 @@ Each has a register row and, where it changed the design, an entry in
   statement until they clear (RO-07, FS-635).
 - **Who holds what:** architecture §2 "Every store" lists every store,
   what it holds and never holds, its class and its protections (FS-636).
-  Restricted fields encrypted one by one is SE-27, phase 2 unless moved.
+  Restricted fields encrypted one by one is SE-27, in R1 (FS-638).
 - **Nothing needs reading** (FS-637): anything a person must confirm or be
   told is also available by voice or as numbers (omni-channel §1).
 - **Bank payouts: one approval within limits a bank agrees by mandate

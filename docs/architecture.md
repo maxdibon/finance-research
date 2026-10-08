@@ -133,7 +133,7 @@ docs/privacy.md. The last column adds what goes beyond it.
 
 | Store | Holds | Never holds | Class | Beyond the baseline |
 |---|---|---|---|---|
-| Funds ledger (the core, or Kapu Core) | Accounts, balances, postings, loans; in native mode, the institution's customers and their KYC | Contact details beyond its need, tickets, matching state | Confidential; ID numbers Restricted | One writer, the product's service account (docs/specs/kapu-core-fineract.md §8); ID numbers encrypted field by field (SE-27) |
+| Funds ledger (the core, or Kapu Core) | Accounts, balances, postings, loans; in native mode, the institution's customers and their KYC | Contact details beyond its need, tickets, matching state | Confidential; ID numbers Restricted | One writer, the product's service account (docs/specs/kapu-core-fineract.md §8); ID numbers encrypted field by field (SE-27, in R1) |
 | Odoo | Parties no core holds, obligations, tickets, contract records, HR | Balances, rail events, documents with personal data | Confidential | Staff sign in through Keycloak (AC-02) |
 | Recon engine | Rail and bank events, statements, matches, exceptions | Parties, obligations | Confidential | Append-only; each role sees only its fields (RO-19) |
 | Keycloak (access) | Logins, hashed credentials, roles, devices, step-ups | KYC, balances | Restricted | Security events kept (SE-18); engineers on hardware keys (SE-26) |

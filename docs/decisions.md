@@ -1020,3 +1020,19 @@ its own entry.
 - **Costs (inferred):** a service to build and run, and one more,
   GoAlert, for on-call; a Twilio account for calls; and a rota of three
   carrying night pages until it grows.
+
+
+## FS-638 · ID numbers encrypted field by field, in R1; the cap raised to 249
+
+- **Chose:** government ID numbers and other Restricted fields encrypted
+  by the service through OpenBao's transit engine before they reach a
+  database, and found by a keyed hash (platform-security SE-27), in R1,
+  because Roan Capital's borrowers' and guarantors' ID numbers are among
+  the first data the platform holds.
+- **Requires:** SE-27; docs/architecture.md "ID numbers encrypted field by field".
+- **Argued against:** phase 2, which would leave ID numbers readable by
+  anyone with database access, in backups and in replicas, for the whole
+  pilot.
+- **Costs (inferred):** one more R1 capability for a team of four; lookups
+  by ID number go through a keyed hash, and a key rotation re-encrypts the
+  fields.
