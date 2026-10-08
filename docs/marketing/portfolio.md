@@ -5,7 +5,7 @@ kind: marketing
 version: 0.2.0
 owner: Commercial lead
 classification: Public once approved
-last_reviewed: 2026-10-07
+last_reviewed: 2026-10-08
 ---
 
 # Dibon Financial Services portfolio
@@ -445,7 +445,8 @@ messages, logins and reports as the first.
 **Services:**
 - Approvals and mandates: Chains by product, amount and risk; no
   self-approval; every decision attributed when it is made. Debit mandates
-  with the payer's consent and right to cancel.
+  with the payer's consent and right to cancel. Approve from the app or
+  email, signing in afresh at the moment of decision.
 - Messaging: SMS, WhatsApp, Telegram and app push, direct to Kenya's
   operators under our PRSP licence. A status says only what the channel
   reported.

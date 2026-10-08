@@ -5,8 +5,8 @@ kind: register
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-456, FS-464, FS-508]
-last_reviewed: 2026-10-06
+review_ids: [FS-456, FS-464, FS-508, FS-612]
+last_reviewed: 2026-10-08
 ---
 
 # Competitors — who we meet, and what we learn from each
@@ -27,7 +27,7 @@ confirmed says so. We describe what they offer, never disparage it.
 | CP-04 | Sumsub | Identity, monitoring, AML reporting | KYC, transaction monitoring, goAML-format reports; a platinum member of AFIK | identity; financial-crime FC-09 | A partner candidate as well (PT-37); active in the association we are joining (PT-51) | sumsub.com newsroom |
 | CP-05 | ComplyAdvantage | Screening data | Sanctions, PEP and adverse-media data, including Kenyan lists | financial-crime FC-05, FC-06 | A possible data source for FC-06 rather than a rival; no named Kenyan customer found | complyadvantage.com |
 | CP-06 | NICE Actimize | Tier-1 bank AML | Enterprise AML and fraud | financial-crime, at tier-1 banks | Writes on Kenya's grey-listing; no named Kenyan deployment found | niceactimize.com blog |
-| CP-07 | Craft Silicon | Core banking | Bankers Realm for banks, MFIs and Saccos | Kapu Core, MFI, Sacco | The established local core; we meet it in integrated mode as often as we compete | craftsilicon.net |
+| CP-07 | Craft Silicon | Core banking | Bankers Realm for banks, MFIs and Saccos | Kapu Core, MFI, Sacco | The established local core; we meet it in integrated mode as often as we compete. Onit Bank's core: Collect posted to it in production (FS-390, FS-612) | craftsilicon.net |
 | CP-08 | Coretec | Sacco software | Sacco systems on Microsoft Dynamics; "70+ Saccos" | Kapu Sacco | Microsoft-partner route to Saccos | coretecafrica.com |
 | CP-09 | Neptune | Core banking | Orbit-R for MFIs and Saccos | Kapu Core, MFI, Sacco | | neptunesoftwaregroup.com |
 | CP-10 | Musoni | MFI software | MFI system on Mifos X, the same open-source family as Fineract | Kapu MFI | Proof that a Mifos-family product sells locally; migration path from it (MF-16) | musonisystem.com |

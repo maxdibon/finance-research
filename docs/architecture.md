@@ -5,8 +5,8 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590]
-last_reviewed: 2026-10-06
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612]
+last_reviewed: 2026-10-08
 ---
 
 # Platform architecture — who holds what
@@ -186,7 +186,7 @@ configuration, so the mode is not a fork of the code.
 
 | Mode | When | What we do |
 |---|---|---|
-| **Integrated** | The institution has a core banking system | **The core stays authoritative.** We read and post through its API. Any copy we keep is a cache with a fetched-at time. At Onit Bank, Collect posted to the bank's own core through its stored procedures (FS-390) |
+| **Integrated** | The institution has a core banking system | **The core stays authoritative.** We read and post through its API. Any copy we keep is a cache with a fetched-at time. At Onit Bank, Collect posted to the bank's own core through its stored procedures (FS-390). Cores we have worked with: Craft Silicon's Bankers' Realm at Onit Bank, and Temenos T24 and Sopra Banking at KCB (FS-612) |
 | **Native** | No digital ledger exists, or the institution is replacing its core — a lender moving off spreadsheets as it is licensed or registered with CBK, a small credit-only Sacco, a tier-3 bank upgrading | **Kapu Core is the funds ledger**: Apache Fineract, hosted and sold as a product (docs/modules/core.md, FS-311). One authority, so there is no core to reconcile against (MFI PRD §1) |
 
 **Integrated comes first, always.** Integrating with a core is a read.
