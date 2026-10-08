@@ -85,6 +85,7 @@ node tools/check.js --counts          # every check, plus computed counts
 node --test tools/check.test.js       # breaks each check on purpose
 node tools/assemble.js                # builds build/master.md; refuses if a check fails
 node tools/site.js                    # builds build/site/: linked HTML; open index.html
+node tools/site.js --reader           # the same, on a clone without the protected-names list
 node design/portfolio-pdf/build.js    # both editions: PDFs and web previews
 node design/portfolio-pdf/build.js --edition short   # one edition
 node design/portfolio-pdf/build.js --html-only   # pages only, no PDF

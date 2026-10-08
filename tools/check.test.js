@@ -491,6 +491,27 @@ function siteWith(edit, read) {
   }
 }
 
+test('site --reader: builds without the names list, and says so; refuses any other failure', () => {
+  const names = path.join('sources', 'confidential', 'protected-names.txt');
+  const ok = (() => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-site-'));
+    for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
+    fs.rmSync(path.join(dir, names));
+    try {
+      assert.throws(() => buildSite(dir), /checks failing/);
+      const r = buildSite(dir, undefined, { reader: true });
+      assert.ok(r.reader);
+      return fs.readFileSync(path.join(r.outDir, 'index.html'), 'utf8');
+    } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+  })();
+  assert.match(ok, /class="reader">Built for reading, without the protected-names check/);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-site-'));
+  for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
+  fs.rmSync(path.join(dir, names));
+  patch(dir, 'README.md', (t) => `${t}\nSee ${['FS', '999'].join('-')}.\n`);
+  try { assert.throws(() => buildSite(dir, undefined, { reader: true }), /checks failing/); } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
 test('site: refuses to build from failing sources', () => {
   const missing = ['FS', '999'].join('-');
   const r = siteWith((d) => patch(d, 'README.md', (t) => `${t}\nSee ${missing}.\n`));

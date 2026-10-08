@@ -123,7 +123,9 @@ Each has a register row and, where it changed the design, an entry in
 - **The team** has been invited to read this repository and GateKeepr
   and to bring proposals on how to work together (FS-603). Nobody pushes
   here; a fresh clone fails the names check until it has the protected
-  names list, which is not in git.
+  names list, which is not in git. They read the site with
+  `node tools/site.js --reader`, which skips only that check and says so
+  (FS-617).
 - **KCB and National Bank of Kenya** are current SMS customers, named
   internally only until their contracts allow more (FS-420).
 

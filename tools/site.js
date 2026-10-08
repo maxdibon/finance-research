@@ -2,7 +2,10 @@
 // Generates build/site/: the repository as linked HTML pages, for reading
 // in a browser (FS-563, FS-567).
 //
-//   node tools/site.js
+//   node tools/site.js            the full checks must pass
+//   node tools/site.js --reader   for reading a clone without the protected-names
+//                                 list (FS-617): that one failure is excused, and
+//                                 every page says so; any other failure still stops it
 //
 // The Markdown stays plain; links are made here, never typed there. Every
 // id a table defines (a capability, a register row, a requirement, a law,
@@ -201,20 +204,30 @@ pre{background:var(--code);padding:12px;overflow-x:auto;font:13px/1.4 ui-monospa
 .st-designed{color:var(--designed);background:var(--designed-bg)}.st-built{color:var(--built);background:var(--built-bg)}.st-live{color:var(--live);background:var(--live-bg)}
 details{font-size:12px;color:var(--muted);margin-top:4px}details a{font-size:12px}
 #q{width:100%;max-width:520px;padding:8px 10px;font-size:15px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px}
-#hits div{padding:4px 0;border-bottom:1px solid var(--line)}#hits small{color:var(--muted)}
+#hits div{padding:4px 0;border-bottom:1px solid var(--line)}
+.reader{margin:0;padding:6px 16px;background:var(--planned-bg);color:var(--planned);font-size:13px}#hits small{color:var(--muted)}
 @media (max-width:640px){main{padding:12px 16px}table{font-size:13px}}
 `;
 
-function shell(title, page, content) {
+function shell(title, page, content, note = '') {
   const nav = [['index.html', 'Search'], ['README.html', 'README'], ['docs/start-here.html', 'Start here'], ['docs/journeys/README.html', 'Journeys'],
     ['docs/delivery-plan.html', 'Delivery plan'], ['docs/customers/roan-capital.html', 'Roan Capital'], ['REVIEW.html', 'Review'], ['HANDOFF.html', 'Handoff']];
   const links = nav.map(([p, t]) => `<a href="${relHref(page, p)}">${t}</a>`).join('');
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${html(title)}</title><style>${STYLE}</style></head><body><header><b>Dibon FS</b>${links}</header><main>${content}</main></body></html>\n`;
+<title>${html(title)}</title><style>${STYLE}</style></head><body><header><b>Dibon FS</b>${links}</header>${note ? `<p class="reader">${note}</p>` : ''}<main>${content}</main></body></html>\n`;
 }
 
-function build(root, outDir = path.join(root, 'build', 'site')) {
-  const failures = runAll(root);
+// The one failure a reader may skip: the protected-names list, which is never
+// in git, so a fresh clone cannot run that check. Reading locally cannot leak
+// what the check guards; committing still needs it (FS-617).
+const NAMES_MISSING = (f) => f.check === 'names' && /protected-names list missing/.test(f.message);
+const READER_NOTE = 'Built for reading, without the protected-names check: this clone has no list. Commits still need the full checks.';
+
+function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
+  const all = runAll(root);
+  const excused = opts.reader ? all.filter(NAMES_MISSING) : [];
+  const failures = all.filter((f) => !excused.includes(f));
+  const note = excused.length ? READER_NOTE : '';
   if (failures.length) {
     const err = new Error(`checks failing (${failures.length}); the site is not built from failing sources`);
     err.failures = failures;
@@ -252,7 +265,7 @@ function build(root, outDir = path.join(root, 'build', 'site')) {
     });
     const out = path.join(outDir, p.page);
     fs.mkdirSync(path.dirname(out), { recursive: true });
-    fs.writeFileSync(out, shell(p.title, p.page, content));
+    fs.writeFileSync(out, shell(p.title, p.page, content, note));
   }
   const entries = [...defs].map(([id, d]) => {
     const cap = caps.get(id);
@@ -264,8 +277,8 @@ function build(root, outDir = path.join(root, 'build', 'site')) {
 function show(){const v=q.value.trim().toLowerCase();if(!v){h.innerHTML='';return}const r=E.filter(e=>(e.id+' '+e.t).toLowerCase().includes(v)).slice(0,60);
 h.innerHTML=r.map(e=>'<div><a href="'+e.h+'">'+(e.id||'page')+'</a> '+(e.s?'<small>'+e.s+'</small> ':'')+e.t.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</div>').join('')||'<div>No match</div>'}
 q.addEventListener('input',show);</script>`;
-  fs.writeFileSync(path.join(outDir, 'index.html'), shell('Dibon financial services', 'index.html', search));
-  return { outDir, pages: pages.length, ids: defs.size };
+  fs.writeFileSync(path.join(outDir, 'index.html'), shell('Dibon financial services', 'index.html', search, note));
+  return { outDir, pages: pages.length, ids: defs.size, reader: Boolean(note) };
 }
 
 module.exports = { build };
@@ -273,7 +286,8 @@ module.exports = { build };
 if (require.main === module) {
   const root = path.join(__dirname, '..');
   try {
-    const { outDir, pages, ids } = build(root);
+    const { outDir, pages, ids, reader } = build(root, undefined, { reader: process.argv.includes('--reader') });
+    if (reader) console.log('built for reading: the protected-names list is missing, so that check was skipped');
     console.log(`built ${path.relative(root, outDir)}/index.html: ${pages} pages, ${ids} ids linked`);
   } catch (e) {
     for (const f of e.failures || []) console.log(`FAIL ${f.check}  ${f.file}${f.line ? `:${f.line}` : ''}  ${f.message}`);
