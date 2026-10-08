@@ -2,7 +2,7 @@
 
     version: 1.5.0
     updated: 2026-10-08
-    supersedes: 1.4.0; adds 8 October (FS-611 to FS-660)
+    supersedes: 1.4.0; adds 8 October (FS-611 to FS-666)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -143,6 +143,11 @@ Each has a register row and, where it changed the design, an entry in
   open through a recovery vault with three of five hardware-key holders,
   one outside Dibon (FS-657); never TOTP for shares (FS-659). Who carries a
   hardware key, and which: YubiKey 5C NFC for engineers and holders.
+- **Unplaced payments** (CO-21, FS-663): a ticket, the payer asked on the
+  paying number, applied automatically only when the account is the
+  phone's own, escalated at 48 hours, returned at day 7. **Flowza** (Dibon's
+  own engagement platform) is the conversation layer, sending through
+  messaging; its gaps before institutional use: FS-664 to FS-666.
 - **Experience and training** (docs/experience.md, docs/training/):
   delightful to use is the sixth idea; draw, test with five users per
   role, measure; manuals by role, the key holder's written first. No
@@ -158,7 +163,8 @@ Each has a register row and, where it changed the design, an entry in
   instance, no standing access to data, just-in-time grants approved by
   the institution where it runs operations, an access register compared
   monthly (SE-26, architecture §9). **Messaging** (`messaging.md`, FS-648):
-  the R1 catalogue of 27 templates; the institution owns and approves its
+  the R1 catalogue of 30 templates (27, then 3 for unplaced payments,
+  FS-663); the institution owns and approves its
   words; a message never carries the outstanding balance. Next, in order:
   event-bus-kafka (one catalogue of event names, seeded by the messaging
   catalogue), odoo, rails; then the sanctions adapter, guarantors and

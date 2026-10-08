@@ -10,7 +10,7 @@ used_by: [access-keycloak, lender-rules, observability-grafana]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648]
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663]
 last_reviewed: 2026-10-08
 ---
 
@@ -211,6 +211,18 @@ Events marked * are proposed names, for the event bus spec.
 | T26 | Approval waiting | `request.step.opened` | Transactional | request reference, product, amount, step, due time, signed link | MD-18 |
 | T27 | Approval reminder, then escalation | `request.step.overdue` | Transactional | the same, and who it escalated to | MD-08 |
 
+**Payers whose payment could not be placed** (collect CO-21, FS-663)
+
+| # | Template | Event | Category | Channels | Fields | Basis |
+|---|---|---|---|---|---|---|
+| T28 | A payment we could not place | `kapu.collect.payment.unplaced`* | Transactional | SMS, and WhatsApp where the payer has consented | amount, date, M-Pesa reference, how to reply, link | CO-21 |
+| T29 | Reminder, at 24 hours | `kapu.collect.payment.unplaced.reminder`* | Transactional | SMS | the same | CO-21 |
+| T30 | Returned to you | `kapu.collect.payment.returned`* | Transactional | SMS | amount, date, the return's reference | CO-21; rails RL-01 |
+
+The payer may not be a customer: T28 to T30 name no account holder and
+no other person, and carry nothing but the payer's own payment. Replies
+are handled in Flowza's inbox and recorded on the ticket (§5).
+
 Incident and end-of-day notices follow the incident plan's own templates
 (docs/service-management/incident-management.md §4).
 
@@ -235,6 +247,16 @@ by a native speaker before use):
 | `POST /v1/templates`, `.../{id}/versions` | Draft a template or a new version |
 | `POST /v1/templates/{id}/versions/{v}/approve` | Maker-checker; refused if a rule in §3 fails |
 | `GET /v1/templates/{id}/versions/{v}/preview` | The text with its longest likely merge, and its part count |
+
+**The conversation layer:** Flowza, Dibon's own engagement platform,
+is the team inbox and automation for two-way conversations: the payers
+of T28 to T30, and WhatsApp support for the service desk. It sends
+through this service, so templates, consent, quiet hours, sender IDs and
+the message log stay in one place; each conversation is linked to its
+Odoo Helpdesk ticket (FS-663). Before an institution's customers' data
+passes through it, it is hosted in Kenya per institution, its privacy
+terms carry no transfer abroad, and it uses only the official WhatsApp
+Business API (FS-664 to FS-666).
 
 **Events in:** each institution's mapping from product events to
 templates (§4), configured, effective-dated and approved like a
@@ -274,6 +296,8 @@ refused it), `.opted_out`.
 | M12 | STOP received | A marketing message and a T06 | Marketing blocked; T06 sent | MS-10, MS-11 |
 | M13 | A guarantor named | T18 | No borrower's name in the SMS | MF-37 |
 | M14 | The operator reports nothing | Status asked | "Handed to the operator", never "delivered" | MS-09 |
+| M15 | A payment from a number that is no customer's | Unplaced | T28 to the paying number; no account holder named | CO-21 |
+| M16 | Unclaimed at day 7 | Returned | T30 with the return's reference | CO-21 |
 
 ## 8 · Open questions
 

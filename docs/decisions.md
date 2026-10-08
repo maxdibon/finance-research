@@ -1144,3 +1144,23 @@ its own entry.
 - **Costs (inferred):** a vault to keep, a ceremony to run, a custody
   agreement with an outside holder, and hardware keys for two holders who
   do not carry one today.
+
+
+## FS-663 · Unplaced payments: ask the payer, escalate, return at day 7; Flowza as the conversation layer
+
+- **Chose:** a payment that cannot be placed opens a ticket and the payer
+  is asked on the paying number which account it is for; applied
+  automatically only when that account belongs to the paying phone;
+  reminded at 24 hours; the institution's follow-up team at 48; returned
+  to the payer at day 7, never kept. Flowza, Dibon's own engagement
+  platform, carries the conversation as the team inbox, sending through
+  the messaging service so its rules stay in one place.
+- **Requires:** CO-21; docs/specs/messaging.md "The conversation layer".
+- **Argued against:** guessing the account from a payer's reply, which
+  lets anyone redirect money; keeping unclaimed money, which is not the
+  institution's; Flowza as the messaging service itself, before it meets
+  that spec; and leaving Flowza out, which would build its inbox again.
+- **Costs (inferred):** Flowza must be hosted in Kenya per institution,
+  drop its transfer clause and use only the official WhatsApp API before
+  institutions' customers use it; a follow-up team at each institution;
+  returns approved and sent.

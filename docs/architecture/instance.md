@@ -5,7 +5,7 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-491, FS-649]
+review_ids: [FS-491, FS-649, FS-663]
 last_reviewed: 2026-10-08
 ---
 
@@ -65,6 +65,7 @@ sites is in [deployment](deployment.md).
 | END-OF-DAY RUNNER | The night's close: checks, Fineract's close, ours | [end-of-day-runner](../specs/end-of-day-runner.md) |
 | RAILS | M-Pesa and bank instructions, confirmations and status | rails |
 | RECONCILIATION | Matches rail events with the ledger; exceptions | recon-observability |
+| FLOWZA | The team inbox for two-way conversations, sending through messaging; Dibon's own product (FS-663) | [messaging](../specs/messaging.md) §5 |
 | MESSAGING | SMS, WhatsApp and email to people, from approved templates | [messaging](../specs/messaging.md) |
 | IDENTITY | Register checks, the manual route, the document vault | identity |
 | KAPU CORE | The ledger: Apache Fineract | [kapu-core-fineract](../specs/kapu-core-fineract.md) |
