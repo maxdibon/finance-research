@@ -1,6 +1,6 @@
 ---
 id: architecture-context
-name: Architecture — context: who and what the platform connects to
+name: Architecture context — who and what the platform connects to
 kind: architecture
 version: 0.1.0
 owner: Solution architect

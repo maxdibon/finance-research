@@ -1001,6 +1001,27 @@ function checkLinks(root, files) {
   return failures;
 }
 
+// ── frontmatter ──────────────────────────────────────────────────────────
+// Front matter must be valid YAML, or viewers that render it show no header
+// (FS-654). Our own tools split on the first colon and forgive what YAML
+// does not: an unquoted value holding ": " is the usual fault. A comment
+// (" # ...") is valid and allowed.
+function checkFrontMatter(root, files) {
+  const failures = [];
+  for (const file of files.filter((f) => f.endsWith('.md'))) {
+    const m = read(root, file).match(/^---\n([\s\S]*?)\n---\n/);
+    if (!m) continue;
+    m[1].split('\n').forEach((line, i) => {
+      const kv = line.match(/^([a-z_]+):(?: (.*))?$/);
+      if (!kv) { if (line.trim() && !line.trim().startsWith('#')) failures.push(fail('frontmatter', file, i + 2, `"${line.slice(0, 40)}" is not a key and value`)); return; }
+      const value = (kv[2] || '').replace(/\s+#.*$/, '');
+      if (/^["']/.test(value)) return;
+      if (/: /.test(value)) failures.push(fail('frontmatter', file, i + 2, `${kv[1]}'s value holds ": "; quote it or reword it, or YAML viewers show no header`));
+    });
+  }
+  return failures;
+}
+
 // Each journey's capabilities by status, computed: never typed (FS-548).
 function journeyCounts(root) {
   const info = capabilityInfo(root);
@@ -1105,6 +1126,7 @@ function runAll(root) {
     ...checkOverview(root, files),
     ...checkSpecs(root),
     ...checkLinks(root, files),
+    ...checkFrontMatter(root, files),
     ...checkReviewed(root, files),
   ];
 }

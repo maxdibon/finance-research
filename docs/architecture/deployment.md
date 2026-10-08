@@ -1,6 +1,6 @@
 ---
 id: architecture-deployment
-name: Architecture — deployment: sites, the fleet, and what is central
+name: Architecture deployment — sites, the fleet, and what is central
 kind: architecture
 version: 0.1.0
 owner: Solution architect

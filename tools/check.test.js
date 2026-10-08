@@ -651,3 +651,14 @@ test('links: a link to a section that is no heading fails (FS-641)', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'service-management', 'README.md'), (t) => t.replace('(#2--change-enablement)', '(#2--changes)')));
   assert.deepStrictEqual(names(f), ['links']);
 });
+
+// ── frontmatter (FS-654) ─────────────────────────────────────────────────
+test('frontmatter: an unquoted value holding ": " fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'architecture', 'risks.md'), (t) => t.replace(/^name: (.*)$/m, 'name: Architecture: $1')));
+  assert.deepStrictEqual(names(f), ['frontmatter']);
+});
+
+test('frontmatter: a quoted value, or a comment, passes', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'architecture', 'risks.md'), (t) => t.replace(/^name: (.*)$/m, 'name: "Architecture: $1"  # quoted')));
+  assert.ok(!names(f).includes('frontmatter'));
+});

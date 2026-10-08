@@ -1,6 +1,6 @@
 ---
 id: architecture-runtime
-name: Architecture — runtime: how a payment moves
+name: Architecture runtime — how a payment moves
 kind: architecture
 version: 0.1.0
 owner: Solution architect
