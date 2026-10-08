@@ -211,7 +211,8 @@ test('onboarding: a product the portfolio sells with no checklist fails', () => 
 
 test('onboarding: a checklist linking a module that does not exist fails', () => {
   const f = runWith((d) => patch(d, ONBOARDING, (t) => t.replace('Module: [escrow](modules/escrow.md)', 'Module: [escrow](modules/escrow.md)\n\nModule: [lending](modules/lending.md)')));
-  assert.deepStrictEqual(names(f), ['onboarding']);
+  // The broken link also trips the links check (FS-627).
+  assert.deepStrictEqual(names(f), ['links', 'onboarding']);
 });
 
 test('copy: a line with no label in the portfolio copy fails', () => {
@@ -384,7 +385,8 @@ test('obligations: a decision from FS-490 on without a Requires line fails', () 
 
 test('obligations: a required file that does not exist fails', () => {
   const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace('docs/operating-model.md "Runbooks to write first"', 'docs/specs/recovery.md')));
-  assert.deepStrictEqual(names(f), ['obligations']);
+  // The missing path also trips the links check (FS-627).
+  assert.deepStrictEqual(names(f), ['links', 'obligations']);
 });
 
 test('obligations: required text the file no longer says fails', () => {
@@ -548,4 +550,96 @@ test('overview: a document inside a linked folder passes', () => {
 test('overview: removing a direct link fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'overview.md'), (t) => t.replace('[testing.md](testing.md)', 'testing.md')));
   assert.deepStrictEqual(names(f), ['overview']);
+});
+
+// ── specs (FS-627, FS-632) ───────────────────────────────────────────────
+const SPEC = (f) => path.join('docs', 'specs', `${f}.md`);
+
+test('specs: a relation one spec states and the other does not fails', () => {
+  const f = runWith((d) => patch(d, SPEC('lender-rules'), (t) => t.replace('used_by: [end-of-day-runner]', 'used_by: []')));
+  assert.deepStrictEqual(names(f), ['specs']);
+});
+
+test('specs: a Related line that does not link a spec in the front matter fails', () => {
+  const f = runWith((d) => patch(d, SPEC('approval-engine'), (t) => t.replace('[kapu-core-fineract](kapu-core-fineract.md) (and', 'kapu-core-fineract (and')));
+  assert.deepStrictEqual(names(f), ['specs']);
+});
+
+test('specs: closing sections out of place fail', () => {
+  const f = runWith((d) => patch(d, SPEC('approval-engine'), (t) => t.replace(/^## (\d+) · Acceptance tests$/m, '## $1 · Tests')));
+  assert.deepStrictEqual(names(f), ['specs']);
+});
+
+test('specs: a spec missing from the index fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'specs', 'README.md'), (t) => t.replace(/^\| \[lender-rules\]\(lender-rules\.md\) \|.*\n/m, '')));
+  assert.ok(names(f).includes('specs'));
+});
+
+test('specs: a box named outside the components table fails', () => {
+  const f = runWith((d) => patch(d, SPEC('approval-engine'), (t) => t.replace('| KAPU CORE           |', '| FINERACT            |')));
+  assert.deepStrictEqual(names(f), ['specs']);
+});
+
+test('specs: implementing a module that does not exist fails', () => {
+  const f = runWith((d) => patch(d, SPEC('lender-rules'), (t) => t.replace('implements: [mfi]', 'implements: [mfi, lending]')));
+  assert.deepStrictEqual(names(f), ['specs']);
+});
+
+// ── links (FS-627) ───────────────────────────────────────────────────────
+test('links: a relative link to a file that does not exist fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'start-here.md'), (t) => `${t}\nSee [the old map](old-map.md).\n`));
+  assert.deepStrictEqual(names(f), ['links']);
+});
+
+test('links: a docs path in the text that does not exist fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'testing.md'), (t) => `${t}\nAs docs/specs/rails.md says.\n`));
+  assert.deepStrictEqual(names(f), ['links']);
+});
+
+// ── site navigation (FS-627, FS-628) ─────────────────────────────────────
+test('site: a spec shows what it implements and what uses it, what links to it, and its contents', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-site-'));
+  for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
+  try {
+    const { outDir } = buildSite(dir);
+    const spec = fs.readFileSync(path.join(outDir, 'docs', 'specs', 'kapu-core-fineract.html'), 'utf8');
+    assert.match(spec, /<nav class="rel"><span><b>Implements:<\/b> <a href="\.\.\/modules\/core\.html">core<\/a>/);
+    assert.match(spec, /<b>Used by:<\/b>[^<]*<a href="approval-engine\.html">approval-engine<\/a>/);
+    assert.match(spec, /<details class="back"><summary>Linked from \d+ documents?<\/summary>/);
+    assert.match(spec, /<nav class="toc"><b>Contents<\/b><a href="#s1">/);
+    const core = fs.readFileSync(path.join(outDir, 'docs', 'modules', 'core.html'), 'utf8');
+    assert.match(core, /<b>Specs:<\/b>[^<]*<a href="\.\.\/specs\/end-of-day-runner\.html">/);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('site: a section reference links to that section', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-site-'));
+  for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
+  try {
+    const { outDir } = buildSite(dir);
+    const idx = fs.readFileSync(path.join(outDir, 'docs', 'specs', 'README.html'), 'utf8');
+    assert.match(idx, /<a class="sec" href="approval-engine\.html#s9">approval-engine §9<\/a>/);
+    const ae = fs.readFileSync(path.join(outDir, 'docs', 'specs', 'approval-engine.html'), 'utf8');
+    assert.match(ae, /<h2 id="s9">/);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('site: a diagram is drawn with box lines, names in bold; Mermaid only where used; alerts become callouts', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-site-'));
+  for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
+  patch(dir, path.join('docs', 'testing.md'), (t) => `${t}\n> [!WARNING]\n> Nothing here is built.\n`);
+  try {
+    const { outDir } = buildSite(dir);
+    const spec = fs.readFileSync(path.join(outDir, 'docs', 'specs', 'approval-engine.html'), 'utf8');
+    assert.match(spec, /<pre class="diagram">[\s\S]*┌─+┐[\s\S]*<span class="bn">APPROVAL ENGINE<\/span>[\s\S]*<span class="tg">\[kapu_service\]<\/span>/);
+    assert.doesNotMatch(spec, /mermaid\.esm/);
+    assert.match(fs.readFileSync(path.join(outDir, 'docs', 'specs', 'README.html'), 'utf8'), /<pre class="mermaid">[\s\S]*mermaid\.esm/);
+    assert.match(fs.readFileSync(path.join(outDir, 'docs', 'testing.html'), 'utf8'), /<div class="alert alert-warning"><b>Warning<\/b><p>Nothing here is built\.<\/p><\/div>/);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });

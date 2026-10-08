@@ -839,6 +839,150 @@ function checkOverview(root, files) {
     .map((f) => fail('overview', OVERVIEW, 0, `${f} is not linked from the overview, directly or by its folder`));
 }
 
+// ── specs ────────────────────────────────────────────────────────────────
+// Every spec follows docs/specs/_template.md (FS-627): its front matter; a
+// first section ending in a "Where it sits" diagram and a Related line that
+// links each module and spec the front matter names; relations agreed both
+// ways; the closing sections its kind needs; a row in the index. Every box
+// in its diagrams is named as the index's components table names it (FS-632).
+const SPECS = path.join('docs', 'specs');
+const SPEC_KEYS = ['id', 'name', 'kind', 'type', 'release', 'implements', 'depends_on', 'used_by', 'version', 'owner', 'classification', 'review_ids', 'last_reviewed'];
+const SPEC_END = { build: 'Acceptance tests', component: 'Checks before the build' };
+
+function specFiles(root) {
+  const dir = path.join(root, SPECS);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter((f) => f.endsWith('.md') && f !== 'README.md' && !f.startsWith('_'))
+    .map((f) => path.join(SPECS, f));
+}
+
+function frontList(text, key) {
+  const m = text.match(new RegExp(`^${key}: *\\[([^\\]]*)\\]`, 'm'));
+  return m ? m[1].split(',').map((s) => s.trim()).filter(Boolean) : null;
+}
+
+// Fences with no language: the ASCII diagrams.
+function plainFences(text) {
+  const out = [];
+  const lines = text.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    if (!/^\s*```\s*$/.test(lines[i])) {
+      if (/^\s*```/.test(lines[i])) for (i++; i < lines.length && !/^\s*```/.test(lines[i]); i++);
+      continue;
+    }
+    const start = i + 1;
+    const buf = [];
+    for (i++; i < lines.length && !/^\s*```/.test(lines[i]); i++) buf.push(lines[i]);
+    out.push({ start, text: buf.join('\n') });
+  }
+  return out;
+}
+
+// The first line inside each box drawn as +---+ over | ... |.
+function boxNames(diagram) {
+  const rows = diagram.split('\n');
+  const out = [];
+  rows.forEach((row, i) => {
+    for (const m of row.matchAll(/\+-{3,}\+/g)) {
+      const next = rows[i + 1] || '';
+      const a = m.index;
+      const b = m.index + m[0].length - 1;
+      if (next[a] !== '|' || next[b] !== '|') continue;
+      out.push({ row: i + 1, from: a + 1, to: b, name: next.slice(a + 1, b).trim() });
+    }
+  });
+  return out;
+}
+
+function componentNames(root) {
+  const p = path.join(root, SPECS, 'README.md');
+  if (!fs.existsSync(p)) return new Set();
+  const text = read(root, path.join(SPECS, 'README.md'));
+  const section = (text.split(/^## Components$/m)[1] || '').split(/^## /m)[0];
+  return new Set(section.split('\n').filter((l) => l.startsWith('|')).map((l) => l.split('|')[1].trim())
+    .filter((c) => c && !/^-+$/.test(c) && c !== 'Name in diagrams'));
+}
+
+function checkSpecs(root) {
+  const files = specFiles(root);
+  if (!files.length) return [];
+  const failures = [];
+  const ids = new Set(files.map((f) => path.basename(f, '.md')));
+  const index = fs.existsSync(path.join(root, SPECS, 'README.md')) ? read(root, path.join(SPECS, 'README.md')) : '';
+  const names = componentNames(root);
+  const rel = new Map();
+  for (const file of files) {
+    const text = read(root, file);
+    const at = (line, m) => failures.push(fail('specs', file, line, m));
+    const id = path.basename(file, '.md');
+    const keys = frontMatterKeys(text) || [];
+    for (const k of SPEC_KEYS) if (!keys.includes(k)) at(1, `front matter missing "${k}"`);
+    if ((text.match(/^id: *(\S+)/m) || [])[1] !== id) at(1, `id does not match file name "${id}"`);
+    if (!/^kind: spec$/m.test(text)) at(1, 'kind is not "spec"');
+    const type = (text.match(/^type: *(\S+)/m) || [])[1];
+    if (!SPEC_END[type]) at(1, `type "${type || ''}" is neither build nor component`);
+    const release = (text.match(/^release: *(.+)$/m) || [])[1];
+    if (!RELEASES.includes((release || '').trim())) at(1, `release "${release || ''}" outside ${RELEASES.join(', ')}`);
+    const impl = frontList(text, 'implements') || [];
+    const deps = frontList(text, 'depends_on') || [];
+    const used = frontList(text, 'used_by') || [];
+    rel.set(id, { file, deps, used });
+    if (!impl.length) at(1, 'implements no module');
+    for (const m of impl) if (!fs.existsSync(path.join(root, 'docs', 'modules', `${m}.md`))) at(1, `implements "${m}", which is not a module`);
+    for (const s of [...deps, ...used]) if (!ids.has(s)) at(1, `names spec "${s}", which does not exist; a spec still to write goes in the prose`);
+    const got = headings(text);
+    got.forEach((h, i) => { if (!h.startsWith(`${i + 1} · `)) at(0, `heading "${h}" is not numbered ${i + 1}`); });
+    const n = got.length;
+    if (got[0] !== '1 · Purpose and scope') at(0, `heading 1 is "${got[0] || '(missing)'}"; it must be "1 · Purpose and scope"`);
+    if (SPEC_END[type] && got[n - 2] !== `${n - 1} · ${SPEC_END[type]}`) at(0, `the second-last heading must be "${n - 1} · ${SPEC_END[type]}" for a ${type} spec`);
+    if (got[n - 1] !== `${n} · Open questions`) at(0, `the last heading must be "${n} · Open questions"`);
+    const body = text.replace(/<!--[\s\S]*?-->/g, '');
+    const first = (body.split(/^## 1 · .*$/m)[1] || '').split(/^## /m)[0];
+    if (!plainFences(first).length) at(0, '§1 has no "Where it sits" diagram');
+    const from = first.indexOf('**Related:**');
+    const related = from < 0 ? '' : first.slice(from).split(/\n\s*\n/)[0];
+    if (!related) at(0, '§1 has no "**Related:**" line');
+    else {
+      for (const m of impl) if (!related.includes(`](../modules/${m}.md)`)) at(0, `the Related line does not link the module ${m}`);
+      for (const s of [...deps, ...used]) if (!related.includes(`](${s}.md)`)) at(0, `the Related line does not link the spec ${s}`);
+    }
+    if (!index.split('\n').some((l) => l.startsWith(`| [${id}](${id}.md) |`))) at(1, `${id} is not listed in docs/specs/README.md with a link`);
+    for (const fence of plainFences(text)) {
+      for (const box of boxNames(fence.text)) {
+        if (!names.has(box.name)) at(fence.start + box.row + 1, `box "${box.name}" is not named in the components table of docs/specs/README.md`);
+      }
+    }
+  }
+  for (const [a, r] of rel) {
+    for (const b of r.deps) if (rel.has(b) && !rel.get(b).used.includes(a)) failures.push(fail('specs', rel.get(b).file, 1, `used_by lacks ${a}, which depends on it`));
+    for (const b of r.used) if (rel.has(b) && !rel.get(b).deps.includes(a)) failures.push(fail('specs', rel.get(b).file, 1, `depends_on lacks ${a}, which lists it as a user`));
+  }
+  return failures;
+}
+
+// ── links ────────────────────────────────────────────────────────────────
+// Every relative Markdown link, and every docs/… path written in the text,
+// leads to a file that exists, so a rename cannot strand a reader (FS-627).
+// REVIEW.md is history and keeps the paths it was written with.
+function checkLinks(root, files) {
+  const failures = [];
+  const md = files.filter((f) => f.endsWith('.md') && !path.basename(f).startsWith('_') && (f.split(path.sep)[0] === 'docs' || (!f.includes(path.sep) && f !== 'REVIEW.md')));
+  const exists = (rel) => fs.existsSync(path.join(root, ...rel.split('/')));
+  for (const file of md) {
+    const dir = path.posix.dirname(file.split(path.sep).join('/'));
+    read(root, file).split('\n').forEach((line, i) => {
+      for (const m of line.matchAll(/\]\(([^)\s#]+)(?:#[^)]*)?\)/g)) {
+        if (/^[a-z]+:/i.test(m[1])) continue;
+        if (!exists(path.posix.normalize(path.posix.join(dir, m[1])))) failures.push(fail('links', file, i + 1, `links to ${m[1]}, which does not exist`));
+      }
+      for (const m of line.matchAll(/(?<![\w./-])(docs\/[\w./-]*\.md)\b/g)) {
+        if (!exists(m[1])) failures.push(fail('links', file, i + 1, `names ${m[1]}, which does not exist`));
+      }
+    });
+  }
+  return failures;
+}
+
 // Each journey's capabilities by status, computed: never typed (FS-548).
 function journeyCounts(root) {
   const info = capabilityInfo(root);
@@ -941,11 +1085,13 @@ function runAll(root) {
     ...checkScope(root),
     ...checkJourneys(root),
     ...checkOverview(root, files),
+    ...checkSpecs(root),
+    ...checkLinks(root, files),
     ...checkReviewed(root, files),
   ];
 }
 
-module.exports = { runAll, counts, moduleFiles };
+module.exports = { runAll, counts, moduleFiles, boxNames, plainFences, componentNames };
 
 if (require.main === module) {
   const args = process.argv.slice(2);
