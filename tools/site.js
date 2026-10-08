@@ -24,7 +24,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { runAll, boxNames } = require('./check');
+const { runAll, boxNames, githubAnchor } = require('./check');
 
 const ID = '(?:OB-[A-Z]{2,3}-\\d{2}|[A-Z]{2}-\\d{2,3})';
 const ID_CELL = new RegExp(`^${ID}$`);
@@ -270,7 +270,11 @@ function render(body, ctx) {
     if (h) {
       const n = h[1].length;
       if (n === 2) section = h[2];
-      out.push(`<h${n} id="${anchorOf(h[2])}">${inline(h[2], ctx)}</h${n}>`);
+      // Our anchor (s9) for section references, and GitHub's, so a link
+      // written for GitHub works here too (FS-641).
+      const gh = githubAnchor(h[2]);
+      const own = anchorOf(h[2]);
+      out.push(`<h${n} id="${own}">${gh !== own ? `<span id="${html(gh)}"></span>` : ''}${inline(h[2], ctx)}</h${n}>`);
       i++;
       continue;
     }

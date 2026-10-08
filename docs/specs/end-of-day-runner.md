@@ -65,7 +65,7 @@ runner), and runs for Saccos' savings and shares.
 [kapu-core-fineract](kapu-core-fineract.md),
 [lender-rules](lender-rules.md) and
 [observability-grafana](observability-grafana.md); used by none; the
-plan it notifies by is [incident management](../incident-management.md).
+plan it notifies by is [incident management](../service-management/incident-management.md).
 
 ## 2 · Concepts
 

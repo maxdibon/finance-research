@@ -141,9 +141,9 @@ Each has a register row and, where it changed the design, an entry in
   borrower access. **On-call:** Grafana OnCall's open-source edition was
   archived on 2026-03-24; GoAlert self-hosted with Twilio is proposed, the
   choice is the owner's (observability-grafana §5).
-- **Incident management** (`docs/incident-management.md`): severities, the
+- **Incident management** (`docs/service-management/incident-management.md`): severities, the
   notification plan, what a notice says, the record and its closure.
-  **Service management** (`docs/service-management.md`, FS-639): the
+  **Service management** (`docs/service-management/README.md`, FS-639): the
   ITIL 4 practices mapped; change kinds and the change calendar (no
   deployment during the night's close or at month-end); the configuration
   record generated from code (SE-23); problems and known errors; proposed

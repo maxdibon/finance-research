@@ -1012,7 +1012,7 @@ its own entry.
   incident-management plan, a severity 1 by phone call to the on-call
   engineer. On-call proposed on GoAlert, self-hosted, since Grafana's
   own on-call is now cloud-only.
-- **Requires:** KC-07; RO-18; docs/specs/end-of-day-runner.md §4; docs/incident-management.md §3; docs/specs/observability-grafana.md §5.
+- **Requires:** KC-07; RO-18; docs/specs/end-of-day-runner.md §4; docs/service-management/incident-management.md §3; docs/specs/observability-grafana.md §5.
 - **Argued against:** Fineract's scheduler alone, which runs the close
   with no checks before it and calls no one; holding the business date
   with the close, which would refuse the next day's payments as being in
@@ -1047,7 +1047,7 @@ its own entry.
   month-end; the configuration record generated from code as part of
   SE-23, not a capability of its own; Odoo Helpdesk, Knowledge and the
   pipeline as the tools, with no separate suite.
-- **Requires:** SE-23; docs/service-management.md §2; docs/incident-management.md "The record".
+- **Requires:** SE-23; docs/service-management/README.md §2; docs/service-management/incident-management.md "The record".
 - **Argued against:** a service-management suite, which splits every
   request across two systems and holds customer data outside Kenya; a
   hand-kept configuration database, which drifts from what runs; and

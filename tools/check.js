@@ -964,18 +964,34 @@ function checkSpecs(root) {
 
 // ── links ────────────────────────────────────────────────────────────────
 // Every relative Markdown link, and every docs/… path written in the text,
-// leads to a file that exists, so a rename cannot strand a reader (FS-627).
-// REVIEW.md is history and keeps the paths it was written with.
+// leads to a file that exists, so a rename cannot strand a reader (FS-627);
+// a link to a section names a heading that exists, by GitHub's anchor
+// (FS-641). REVIEW.md is history and keeps the paths it was written with.
+function githubAnchor(heading) {
+  return heading.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[`*]/g, '').trim().toLowerCase()
+    .replace(/[^\p{L}\p{N}\p{M}\s_-]/gu, '').replace(/ /g, '-');
+}
+
+function anchorsOf(text) {
+  return new Set(text.replace(/```[\s\S]*?```/g, '').split('\n').filter((l) => /^#{1,6} /.test(l)).map((l) => githubAnchor(l.replace(/^#+ /, ''))));
+}
+
 function checkLinks(root, files) {
   const failures = [];
   const md = files.filter((f) => f.endsWith('.md') && !path.basename(f).startsWith('_') && (f.split(path.sep)[0] === 'docs' || (!f.includes(path.sep) && f !== 'REVIEW.md')));
   const exists = (rel) => fs.existsSync(path.join(root, ...rel.split('/')));
   for (const file of md) {
     const dir = path.posix.dirname(file.split(path.sep).join('/'));
-    read(root, file).split('\n').forEach((line, i) => {
-      for (const m of line.matchAll(/\]\(([^)\s#]+)(?:#[^)]*)?\)/g)) {
+    const own = read(root, file);
+    own.split('\n').forEach((line, i) => {
+      for (const m of line.matchAll(/\]\(#([^)\s]+)\)/g)) {
+        if (!anchorsOf(own).has(m[1])) failures.push(fail('links', file, i + 1, `links to #${m[1]}, which is no heading here`));
+      }
+      for (const m of line.matchAll(/\]\(([^)\s#]+)(?:#([^)]*))?\)/g)) {
         if (/^[a-z]+:/i.test(m[1])) continue;
-        if (!exists(path.posix.normalize(path.posix.join(dir, m[1])))) failures.push(fail('links', file, i + 1, `links to ${m[1]}, which does not exist`));
+        const target = path.posix.normalize(path.posix.join(dir, m[1]));
+        if (!exists(target)) { failures.push(fail('links', file, i + 1, `links to ${m[1]}, which does not exist`)); continue; }
+        if (m[2] && target.endsWith('.md') && !anchorsOf(read(root, target)).has(m[2])) failures.push(fail('links', file, i + 1, `links to ${m[1]}#${m[2]}, which is no heading there`));
       }
       for (const m of line.matchAll(/(?<![\w./-])(docs\/[\w./-]*\.md)\b/g)) {
         if (!exists(m[1])) failures.push(fail('links', file, i + 1, `names ${m[1]}, which does not exist`));
@@ -1093,7 +1109,7 @@ function runAll(root) {
   ];
 }
 
-module.exports = { runAll, counts, moduleFiles, boxNames, plainFences, componentNames };
+module.exports = { runAll, counts, moduleFiles, boxNames, plainFences, componentNames, githubAnchor };
 
 if (require.main === module) {
   const args = process.argv.slice(2);

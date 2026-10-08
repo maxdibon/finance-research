@@ -646,3 +646,8 @@ test('diagrams: a Mermaid diagram fails; ASCII is the rule (FS-628)', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'testing.md'), (t) => `${t}\n\`\`\`mermaid\nflowchart LR\n  A --> B\n\`\`\`\n`));
   assert.deepStrictEqual(names(f), ['diagrams']);
 });
+
+test('links: a link to a section that is no heading fails (FS-641)', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'service-management', 'README.md'), (t) => t.replace('(#2--change-enablement)', '(#2--changes)')));
+  assert.deepStrictEqual(names(f), ['links']);
+});

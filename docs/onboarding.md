@@ -94,7 +94,7 @@ Module: [core](modules/core.md)
 | OB-KC-01 | Products: savings, loans and shares, with interest, fee and charge rules | Operations lead | core KC-02 to KC-04 |
 | OB-KC-02 | Chart of accounts | Finance lead | core KC-05 |
 | OB-KC-03 | Branches, tellers and tills | Operations lead | core KC-06 |
-| OB-KC-04 | End-of-day cycle: the runner's times; each check's class, agreed against the criteria in docs/specs/end-of-day-runner.md §4; the tolerance for unapplied money; who is told of what (docs/incident-management.md §3); and the returns it files | Finance lead, with our operations | core KC-07, KC-10 |
+| OB-KC-04 | End-of-day cycle: the runner's times; each check's class, agreed against the criteria in docs/specs/end-of-day-runner.md §4; the tolerance for unapplied money; who is told of what (docs/service-management/incident-management.md §3); and the returns it files | Finance lead, with our operations | core KC-07, KC-10 |
 | OB-KC-05 | Data from its current system, and a signed-off migration reconciliation | Finance lead | core KC-11 |
 
 ## Kapu MFI

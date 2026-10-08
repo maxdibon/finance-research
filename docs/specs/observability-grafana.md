@@ -64,7 +64,7 @@ on); security event monitoring, which is the managed detection service
 [recon-observability](../modules/recon-observability.md); depends on no
 written spec yet (access-keycloak and messaging are to write); used by
 [end-of-day-runner](end-of-day-runner.md); routes by
-[incident management](../incident-management.md).
+[incident management](../service-management/incident-management.md).
 
 ## 2 · Version and hosting
 

@@ -14,10 +14,12 @@ last_reviewed: 2026-10-08
 **What this covers:** how an incident is ranked, who is told, on which
 channel, how fast, and what the notice says (FS-633). Every alert the
 platform raises, the end-of-day runner's included, is routed by this
-plan (docs/specs/end-of-day-runner.md, docs/specs/observability-grafana.md).
-Security incidents add the commitments in platform-security §3; telling
+plan ([the end-of-day runner](../specs/end-of-day-runner.md),
+[observability](../specs/observability-grafana.md)). It is one of the
+practices in [service management](README.md).
+Security incidents add the commitments in [platform-security](../modules/platform-security.md) §3; telling
 customers, regulators and staff in a wider disruption is in
-docs/business-continuity.md. This is the runbook SE-19 asks for, at its
+[business continuity](../business-continuity.md). This is the runbook SE-19 asks for, at its
 start; recon-observability RO-18 runs it.
 
 ## 1 · Severities
@@ -40,7 +42,7 @@ the on-call engineer may raise or lower it, and says why in the record.
 |---|---|
 | On-call engineer (DevSecOps rota) | Acknowledges, leads the incident until they hand it over, keeps the timeline |
 | Incident lead | The on-call engineer, or the CTIO for a severity 1 lasting over an hour |
-| Security lead | Any security incident; the customer notices in platform-security §3 |
+| Security lead | Any security incident; the customer notices in [platform-security](../modules/platform-security.md) §3 |
 | Customer experience | Updates to customers after the first notice; the ticket |
 | The institution's contacts | Named at onboarding (OB-COM-13): operations, finance, IT, security, incidents |
 
@@ -48,7 +50,7 @@ the on-call engineer may raise or lower it, and says why in the record.
 its severity and any change to it with the reason; the service and the
 institutions affected; when it was raised, acknowledged and resolved;
 who led it; the timeline, which GoAlert keeps for every page; who was
-told, when and how; and the problem it opened (docs/service-management.md
+told, when and how; and the problem it opened ([service management](README.md)
 §4).
 
 **Closed** when the service is restored and the institution confirms it,
@@ -71,7 +73,7 @@ agreed with the rota and each customer (§6).
 | 2 | The institution's operations contact (for end of day, its accountant) | Email, and a ticket | Within one hour, or before its working day starts | §4, the full form |
 | 3 | The owning team; the institution's operations contact | A ticket; email in working hours | Next working day, and in the morning report | What, which records, what to do |
 | 4 | The owning team | A ticket | As the support tier says | — |
-| Any | Dibon staff | A channel that does not depend on our own systems (business-continuity) | When a severity 1 is declared | That it is, and who leads |
+| Any | Dibon staff | A channel that does not depend on our own systems ([business continuity](../business-continuity.md)) | When a severity 1 is declared | That it is, and who leads |
 
 ## 4 · What a notice says
 
@@ -93,12 +95,12 @@ service, what failed, since when, and where the runbook is.
 any Restricted field. An SMS carries no customer names at all.
 
 Templates for each form are written before they are needed, and checked
-in the twice-yearly tabletop (business-continuity).
+in the twice-yearly tabletop ([business continuity](../business-continuity.md)).
 
 ## 5 · After
 
 - Every severity 1 has a written report: preliminary within 12 hours,
-  root cause within 5 working days (as platform-security §3 sets for
+  root cause within 5 working days (as [platform-security](../modules/platform-security.md) §3 sets for
   security incidents), sent to the institution.
 - Every alert's timeline stays in the record: raised, acknowledged,
   escalated, resolved. Nothing is rewritten.
@@ -108,7 +110,7 @@ in the twice-yearly tabletop (business-continuity).
 ## 6 · Open
 
 - The acknowledgement and escalation times above, with the rota (three
-  engineers today, docs/operating-model.md).
+  engineers today, [the operating model](../operating-model.md)).
 - Each customer's contacts and hours, by support tier, at onboarding
   (OB-COM-13).
-- The on-call tool and its phone route (observability-grafana §6).
+- The on-call tool and its phone route ([observability-grafana](../specs/observability-grafana.md) §5).
