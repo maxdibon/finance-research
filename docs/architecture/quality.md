@@ -22,7 +22,7 @@ checked.
 | Money moves only as approved | No payout whose content differs from what was approved; no ledger change without an approved request | Content hash (rails RL-01); one writer (kapu-core-fineract §8); FS-588 | Nightly comparisons (approval-engine §9, access-keycloak §6); none unexplained |
 | Every payment accounted for | Each rail event matched, in transit with a clear-by day, or in the exception queue; never silently dropped | RO-02, RO-04, RO-07 | Match rate and exception age (RO-17) |
 | The night closes | By 03:00, or someone is phoned | [end-of-day-runner](../specs/end-of-day-runner.md) | Its own metrics and heartbeat |
-| A repayment reaches the ledger | Within minutes of the rail's confirmation (5 minutes proposed) | [runtime](runtime.md) §1 | Time from rail event to posting, per payment |
+| A repayment reaches the ledger | Within minutes of the rail's confirmation (5 minutes proposed) | [runtime](runtime.md) §2 | Time from rail event to posting, per payment |
 | Callbacks answered | Within each rail's own timeout, set per rail at onboarding | rails | Callback latency per rail |
 | Who acted is proven | Every act that moves money, approves or reveals a person re-authenticated at the act | AC-05, MD-10 | Every decision carries its step-up record |
 | Evidence holds | Every state change a signed, hash-chained event | RO-23 to RO-25 | Chain verification |

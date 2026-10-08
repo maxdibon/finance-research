@@ -28,7 +28,7 @@ views beside them:
 | [context.md](context.md) | Who and what the platform connects to |
 | [instance.md](instance.md) | What runs in one institution's instance, as R1 deploys it; the environments |
 | [deployment.md](deployment.md) | The sites, the fleet, and what Dibon runs centrally |
-| [runtime.md](runtime.md) | How a payment moves: a repayment in, a disbursement out, as sequence diagrams |
+| [runtime.md](runtime.md) | How a payment moves: a disbursement out, then a repayment in, as sequence diagrams |
 | [interfaces.md](interfaces.md) | The rules every service's contract follows |
 | [quality.md](quality.md) | Quality goals, measurable, and where each is met |
 | [constraints.md](constraints.md) | What we design within, and where it comes from |

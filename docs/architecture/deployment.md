@@ -5,7 +5,7 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649]
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651]
 last_reviewed: 2026-10-08
 ---
 
@@ -15,6 +15,8 @@ Where instances run, what Dibon runs centrally, and how a site's loss is
 survived (FS-649). The four deployment options and who holds access are
 in [the README](README.md) §9; recovery objectives in platform-security
 §3.
+
+## 1 · Sites and the fleet
 
 ```
   +------------------------------------------+      +------------------------------------------+
