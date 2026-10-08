@@ -94,14 +94,14 @@ missing. *Gap* means no capability does it yet.
 | RC-24 | Loan classification and a risk portfolio view | MF-14, MF-15, DE-04 | Covered | Covered (FS-618): classification reported (MF-14, MF-15) and changed by rule (DE-04). Reported; the rule that changes a classification is RC-15 |
 | RC-25 | Internal management P&L: interest, fees, penalties | MF-15 | Covered | Income by component |
 | RC-26 | Loan calculator (rates 1% to 50%), with penalty interest after day 30 | KC-04, MF-21 | Covered | Covered (FS-618): the rate's unit is configuration, open answer 4. The rate's unit is not stated (a month, a year, flat?). Penalty interest must stay within the arrears cap: for lenders, interest recoverable on a non-performing loan stops at the principal owing (CBK lender regulations reg 29; MF-21, phase 1, FS-400) |
-| RC-27 | Delinquency ladder: reminder day 25, default run days 30 to 40, final warning days 40 to 47, hard closure day 47 | MF-13, MF-14, MF-39 | Partial | Reminders and arrears buckets exist; the collection ladder that moves a loan between stages by day is MF-39, in R1 (FS-618). The ladder itself must fit the conduct rules and the arrears cap (RC-37, open answer 3) |
+| RC-27 | Delinquency ladder: reminder day 25, default run days 30 to 40, final warning days 40 to 47, hard closure day 47 | MF-13, MF-14, MF-39 | Covered | Reminders and arrears buckets exist; the collection ladder that moves a loan between stages by day is MF-39, in R1 (FS-618). The ladder itself must fit the conduct rules and the arrears cap (RC-37, open answer 3) |
 
 ### Public lead capture, calculator and administration (§2.2)
 
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
-| RC-28 | A public "Request a Loan" page and lead capture, with lead status from New to Converted or Dropped | BS-01, BS-20 | Partial | The public page, the lead and its conversion into a draft application are BS-20, in R1 (FS-618) |
-| RC-29 | Loan calculator service and a public calculator page, from the same product configuration as live loans | KC-04, BS-20 | Partial | The public calculator, priced from the same product version as live loans, is BS-20, in R1 (FS-618) |
+| RC-28 | A public "Request a Loan" page and lead capture, with lead status from New to Converted or Dropped | BS-01, BS-20 | Covered | The public page, the lead and its conversion into a draft application are BS-20, in R1 (FS-618) |
+| RC-29 | Loan calculator service and a public calculator page, from the same product configuration as live loans | KC-04, BS-20 | Covered | The public calculator, priced from the same product version as live loans, is BS-20, in R1 (FS-618) |
 | RC-30 | Loan products: rates, fees, insurance, penalties, amount and tenor limits; changes apply only to new loans | KC-04 | Covered | Fineract copies the product's terms onto each loan when it is created |
 | RC-31 | Product changes approved under maker-checker, and audited | MD-01, MD-02, KC-08 | Covered | |
 
@@ -110,7 +110,7 @@ missing. *Gap* means no capability does it yet.
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
 | RC-32 | Time-based one-time codes (Google Authenticator) for every approver | AC-05, MD-10, AC-16 | Covered | Covered (FS-618): an authenticator app with time-based one-time codes is one of every approver's two authenticators, in R1 (AC-16). The prototype's fixed code is open answer 1. Step-up at the act is Planned. The prototype accepts a fixed code (123456): production must never |
-| RC-33 | An immutable audit trail of every action, searchable by user, account, date and action | RO-19, MD-05, RO-24, RO-27 | Partial | Access audit and decision records exist, and every step of a transaction is signed and chained (RO-24). One trail across modules, actions outside transactions included, searchable by user, account, date and action, is RO-27, in R1 (FS-618) |
+| RC-33 | An immutable audit trail of every action, searchable by user, account, date and action | RO-19, MD-05, RO-24, RO-27 | Covered | Access audit and decision records exist, and every step of a transaction is signed and chained (RO-24). One trail across modules, actions outside transactions included, searchable by user, account, date and action, is RO-27, in R1 (FS-618) |
 | RC-34 | Roles: Credit Officer, committee members, Head Office Committee, administrator | AC-09 | Covered | Covered (FS-618): the role list is configuration, open answer 7. The prototype has eight roles (adding CEO, finance, collections, auditor). Agree the list |
 | RC-35 | Monitoring: Prometheus, Grafana, Loki; 99.9% uptime | RO-16, RO-17 | Covered | Ran for Collect at Onit Bank (collect CO-11). Uptime sits with the support tier |
 | RC-36 | AML/CFT duties as a licensed or registered lender: sanctions screening at onboarding and on every list change, records for seven years. Not in the document; required by the CBK lender regulations, reg 64 (law register LR-03) | FC-05, FC-12 | Partial | Added by Dibon (FS-431). Both are phase 1; PEP screening, cases and STR drafting (FC-06, FC-08, FC-09) are phase 2 |
