@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Solution architect
 classification: Internal
 review_ids: [FS-548, FS-558]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # User journeys
@@ -54,3 +54,4 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-11 | A transfer out through a larger bank: RTGS, EFT or SWIFT | R2 | to write |
 | JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | to write |
 | JN-13 | A bank disbursement, from release to settlement, return, recall or reversal | R1 | to write |
+| JN-14 | A loan settled: the collateral discharged with NTSA, the registry notice cancelled, the originals released | R1 | to write |

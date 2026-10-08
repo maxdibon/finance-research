@@ -5,8 +5,8 @@ kind: journey
 release: R1
 owner: Solution architect
 classification: Internal
-review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574, FS-582, FS-602]
-last_reviewed: 2026-10-07
+review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574, FS-582, FS-602, FS-619]
+last_reviewed: 2026-10-08
 ---
 
 # JN-04 · A loan from application to disbursement
@@ -58,6 +58,7 @@ docs/specs/approval-engine.md.
         v
   7 Disbursement prepared, and approved by a second person
         |-- same person ......................... refused (3k)
+        |-- a blocking collateral step open ..... held (3o)
         |-- inside the end-of-day window ........ waits (3m)
         v
   8 Paid by M-Pesa or bank transfer; the loan posted with its schedule
@@ -102,6 +103,7 @@ docs/specs/approval-engine.md.
 | l | 1 to 9 | **No connection.** As JN-02 §3 i: nothing moves offline | ID-15 |
 | m | 7 | **It is between 11 pm and 4 am,** Roan Capital's end-of-day window (RC-21). Staff release nothing in the window, by Roan Capital's procedure; a transaction rule holds what the system sends by itself, a queued payout or a retry, until the window closes | FC-16, KC-15 |
 | n | 2 | **The registry search shows an earlier lender's security right on the vehicle.** The application is held and the committee sees the certificate; it goes on only if that right is discharged, or if the committee accepts ranking behind it | MF-03, MF-07 |
+| o | 7 | **A collateral step the institution made blocking is still open,** such as joint registration with NTSA. The disbursement is held until the step's evidence is filed; the step's owner is reminded and, past its due date, escalated | MF-04, MD-08 |
 
 ## 4 · Gaps
 
