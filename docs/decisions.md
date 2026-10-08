@@ -1036,3 +1036,23 @@ its own entry.
 - **Costs (inferred):** one more R1 capability for a team of four; lookups
   by ID number go through a keyed hash, and a key rotation re-encrypts the
   fields.
+
+
+## FS-639 · Service management: a few ITIL 4 practices, on tools we already run
+
+- **Chose:** adopt incident, problem, change, release, configuration,
+  service-level and request management from ITIL 4, in our own words and
+  at our size, and map the other practices to where they already live;
+  three kinds of change with no deployment during the night's close or at
+  month-end; the configuration record generated from code as part of
+  SE-23, not a capability of its own; Odoo Helpdesk, Knowledge and the
+  pipeline as the tools, with no separate suite.
+- **Requires:** SE-23; docs/service-management.md §2; docs/incident-management.md "The record".
+- **Argued against:** a service-management suite, which splits every
+  request across two systems and holds customer data outside Kenya; a
+  hand-kept configuration database, which drifts from what runs; and
+  adopting all 34 practices, which a team of four cannot run.
+- **Costs (inferred):** a pipeline rule and a pull-request template to
+  build; Helpdesk types and SLA policies to configure before R1; service
+  levels to agree in every contract; ISO/IEC 20000-1 still without a
+  certification route in Kenya.

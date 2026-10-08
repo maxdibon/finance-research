@@ -142,7 +142,13 @@ Each has a register row and, where it changed the design, an entry in
   archived on 2026-03-24; GoAlert self-hosted with Twilio is proposed, the
   choice is the owner's (observability-grafana §5).
 - **Incident management** (`docs/incident-management.md`): severities, the
-  notification plan, what a notice says. Its times are proposals until
+  notification plan, what a notice says, the record and its closure.
+  **Service management** (`docs/service-management.md`, FS-639): the
+  ITIL 4 practices mapped; change kinds and the change calendar (no
+  deployment during the night's close or at month-end); the configuration
+  record generated from code (SE-23); problems and known errors; proposed
+  service levels; tools on Odoo Helpdesk, Knowledge and the pipeline. Open:
+  Odoo Enterprise for our own use, the GitOps tool, a status page. Its times are proposals until
   agreed with the rota and each customer.
 - **Vendors for identity:** Smile ID, MetaMap and Prembly read from their
   API references (partners PT-30, PT-33, PT-53); Smile ID and Prembly

@@ -10,7 +10,7 @@ used_by: [end-of-day-runner]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-101, FS-633]
+review_ids: [FS-101, FS-633, FS-640]
 last_reviewed: 2026-10-08
 ---
 
@@ -94,6 +94,7 @@ written spec yet (access-keycloak and messaging are to write); used by
 | **Grafana OnCall (open source)** | **No** | Archived on 2026-03-24; its phone and SMS relay through Grafana Cloud stopped the same day |
 | **Grafana Cloud IRM** | Not proposed | On-call now lives only there, a hosted service outside Kenya (FS-101); the alternative in §5 |
 | Grafana's SLO app | No | A Grafana Cloud product; SLOs are Prometheus recording rules instead (RO-17) |
+| A status page for customers | Optional | Gatus (Apache-2.0), which also checks our endpoints, or Uptime Kuma (MIT), self-hosted: customers' staff see a service's state without waiting for a notice; offered first to the Complete tier (FS-640) |
 
 ## 4 · Settings
 
@@ -184,3 +185,4 @@ to add it:
 1. The on-call option: A, B or C (§5). Proposed: A.
 2. A Twilio account, and the cost of calls and SMS to Kenyan numbers.
 3. The rota: three engineers today (docs/operating-model.md).
+4. A status page (§3): whether to offer one, and with which tool.

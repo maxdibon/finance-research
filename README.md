@@ -56,6 +56,7 @@ docs/                the work. The only place we edit
   specs/             how each component is built or run; README.md is
                      the index, with how the specs connect
   incident-management.md  severities; who is told, how and with what
+  service-management.md   the ITIL 4 practices we adopt, and the tools
   journeys/          user journeys, step by step, with the capabilities each
                      step relies on; gaps named; statuses computed
   testing.md         acceptance items, tagged tests, the coverage matrix

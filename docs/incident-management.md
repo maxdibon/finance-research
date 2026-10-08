@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-466, FS-471, FS-633]
+review_ids: [FS-466, FS-471, FS-633, FS-639]
 last_reviewed: 2026-10-08
 ---
 
@@ -43,6 +43,18 @@ the on-call engineer may raise or lower it, and says why in the record.
 | Security lead | Any security incident; the customer notices in platform-security §3 |
 | Customer experience | Updates to customers after the first notice; the ticket |
 | The institution's contacts | Named at onboarding (OB-COM-13): operations, finance, IT, security, incidents |
+
+**The record** (FS-639): one Odoo Helpdesk ticket per incident, holding
+its severity and any change to it with the reason; the service and the
+institutions affected; when it was raised, acknowledged and resolved;
+who led it; the timeline, which GoAlert keeps for every page; who was
+told, when and how; and the problem it opened (docs/service-management.md
+§4).
+
+**Closed** when the service is restored and the institution confirms it,
+or two working days pass after we tell it with no reply. A severity 1
+closes only after its preliminary report is sent, and always opens a
+problem.
 
 ## 3 · The notification plan
 

@@ -5,7 +5,7 @@ kind: overview
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-572, FS-627, FS-631, FS-633]
+review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639]
 last_reviewed: 2026-10-08
 ---
 
@@ -134,6 +134,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | Which documents an institution keeps, under which law, for how long | [documents.md](documents.md) |
 | How the service and the company keep going when something fails | [business-continuity.md](business-continuity.md) |
 | How an incident is ranked, and who is told, how and with what | [incident-management.md](incident-management.md) |
+| How we run the service: changes, problems, service levels, the configuration record, the tools | [service-management.md](service-management.md) |
 | Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
 | Which laws apply to us and our customers, and what each drives | [regulation.md](regulation.md) |
 | What a customer files with its regulator about us | [approval-pack.md](approval-pack.md) |

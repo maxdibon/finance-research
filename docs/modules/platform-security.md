@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638]
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640]
 last_reviewed: 2026-10-08
 ---
 
@@ -76,7 +76,7 @@ not go live on less.
 | SE-20 | Backups in a separate security domain: their own accounts, administrators and multi-factor authentication; write-once copies, one of them offline (three copies, two media, one off-site, one offline, verified) | Planned | FS-468, FS-470 | 1 |
 | SE-21 | Backup encryption keys held outside production: split between two people and sealed offline, so backups can be decrypted with OpenBao down or compromised | Planned | FS-468, FS-470 | 1 |
 | SE-22 | Point-in-time recovery: databases archived continuously to write-once storage, restorable to the minute before an attack began | Planned | FS-468, FS-470 | 1 |
-| SE-23 | A clean rebuild from code: infrastructure as code and signed images bring up a fresh environment from nothing, never from a machine that was compromised | Planned | FS-468, FS-470 | 1 |
+| SE-23 | A clean rebuild from code: infrastructure as code and signed images bring up a fresh environment from nothing, never from a machine that was compromised. The same code describes each instance: a configuration record generated from it (each component's version, the settings the specs define, integrations, certificates and their expiry, the ids of secrets, never their values), with drift from the code and certificates near expiry alerted | Planned | FS-468, FS-470; the configuration record: FS-639, FS-640, docs/service-management.md §3 | 1 |
 | SE-24 | Safe mode, decided in advance: collections keep paying into institutions' own paybills and their cores keep running; new outgoing payments queue and reconcile later; named people decide when to enter and leave it | Planned | FS-468, FS-470 | 1 |
 | SE-25 | A ransomware drill twice a year: a restore into a clean environment against the clock, with backup keys taken from escrow | Planned | FS-468, FS-470 | 1 |
 | SE-26 | Privileged access for Dibon's engineers: hardware security keys, each with a registered backup; break-glass accounts sealed and split between two people like the backup keys (SE-21), every use alerted and reviewed | Planned | Owner, 2026-10-06 (FS-503) | 1 |
