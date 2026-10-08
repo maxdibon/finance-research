@@ -30,5 +30,5 @@ Each row points to its register row, where its status lives.
 | On-call tool and phone route not chosen | A severity 1 not heard | Choose; the fallback SMS | FS-633 |
 | The bastion not chosen | Engineers' sessions unrecorded | Choose under the licence rule | FS-645 |
 | One AGPL module inside Odoo | A change to it would have to be published | Never modified | FS-646 |
-| Event names not yet one catalogue | Services diverge | The event bus spec, next | FS-627 |
+| Event names drift from the catalogue | Services diverge again | Every name from the event bus catalogue; a name not in it is not published | FS-667 |
 | Counsel's answers on restructuring | Relief delayed thirty days | Ask counsel | FS-624 |

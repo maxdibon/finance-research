@@ -848,8 +848,11 @@ function checkOverview(root, files) {
 // ways; the closing sections its kind needs; a row in the index. Every box
 // in its diagrams is named as the index's components table names it (FS-632).
 const SPECS = path.join('docs', 'specs');
-const SPEC_KEYS = ['id', 'name', 'kind', 'type', 'release', 'implements', 'depends_on', 'used_by', 'version', 'owner', 'classification', 'review_ids', 'last_reviewed'];
+const SPEC_KEYS = ['id', 'name', 'kind', 'type', 'status', 'release', 'implements', 'depends_on', 'used_by', 'version', 'owner', 'classification', 'review_ids', 'last_reviewed'];
 const SPEC_END = { build: 'Acceptance tests', component: 'Checks before the build' };
+// FS-667: a lifecycle, and the sections every spec carries.
+const SPEC_STATUSES = ['draft', 'agreed', 'building', 'built'];
+const SPEC_SECTIONS = ['Data', 'Quality and metrics', 'Threats'];
 
 function specFiles(root) {
   const dir = path.join(root, SPECS);
@@ -938,6 +941,16 @@ function checkSpecs(root) {
     if (got[0] !== '1 · Purpose and scope') at(0, `heading 1 is "${got[0] || '(missing)'}"; it must be "1 · Purpose and scope"`);
     if (SPEC_END[type] && got[n - 2] !== `${n - 1} · ${SPEC_END[type]}`) at(0, `the second-last heading must be "${n - 1} · ${SPEC_END[type]}" for a ${type} spec`);
     if (got[n - 1] !== `${n} · Open questions`) at(0, `the last heading must be "${n} · Open questions"`);
+    const status = (text.match(/^status: *(\S+)/m) || [])[1];
+    if (!SPEC_STATUSES.includes(status)) at(1, `status "${status || ''}" is not one of ${SPEC_STATUSES.join(', ')}`);
+    for (const s of SPEC_SECTIONS) if (!got.some((h) => h.replace(/^\d+ · /, '') === s)) at(0, `no "${s}" section`);
+    // Every test has an id, so the code can be tagged with it (docs/testing.md).
+    const testsBody = (text.split(new RegExp(`^## ${n - 1} · .*$`, 'm'))[1] || '').split(/^## /m)[0];
+    const testIds = testsBody.split('\n').filter((l) => l.startsWith('|')).map((l) => l.split('|')[1].trim())
+      .filter((c) => c && !/^-+$/.test(c) && c !== '#');
+    if (!testIds.length) at(0, 'the tests section has no table of tests');
+    for (const tid of testIds) if (!/^[A-Z]{1,2}\d{1,3}$/.test(tid)) at(0, `test "${tid}" has no id like A1 or K12`);
+    if (new Set(testIds).size !== testIds.length) at(0, 'two tests share an id');
     const body = text.replace(/<!--[\s\S]*?-->/g, '');
     const first = (body.split(/^## 1 · .*$/m)[1] || '').split(/^## /m)[0];
     if (!plainFences(first).length) at(0, '§1 has no "Where it sits" diagram');

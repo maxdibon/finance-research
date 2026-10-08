@@ -3,14 +3,15 @@ id: kapu-core-fineract
 name: Kapu Core on Apache Fineract — component specification
 kind: spec
 type: component
+status: draft
 release: R1
 implements: [core]
-depends_on: [access-keycloak]
+depends_on: [access-keycloak, event-bus-kafka]
 used_by: [approval-engine, lender-rules, end-of-day-runner]
-version: 0.1.0
+version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642]
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667]
 last_reviewed: 2026-10-08
 ---
 
@@ -79,7 +80,7 @@ FS-185. Groups (KC-01, later).
 ```
 
 **Related:** implements [core](../modules/core.md); depends on
-[access-keycloak](access-keycloak.md) (and event-bus-kafka, to write); used by
+[access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by
 [approval-engine](approval-engine.md), [lender-rules](lender-rules.md) and
 [end-of-day-runner](end-of-day-runner.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md) and
@@ -88,7 +89,7 @@ FS-185. Groups (KC-01, later).
 ## 2 · Version and hosting
 
 - **Apache Fineract 1.15.x, pinned.** A minor upgrade is taken only after
-  §9's checks pass on it. The Mifos web app's version is open (FS-136).
+  §12's checks pass on it. The Mifos web app's version is open (FS-136).
 - **No fork.** Anything Fineract lacks is added through its documented
   custom modules (custom services, business steps, transaction
   processors), never by changing its code.
@@ -103,7 +104,7 @@ FS-185. Groups (KC-01, later).
 | Feature | Used | Why |
 |---|---|---|
 | Progressive loan schedule, with advanced payment allocation | **Yes, every product** | The repayment order is a setting (§4); restructuring and a rate change on a live loan need it (§6). The two go together: Fineract allows one only with the other |
-| Flat or declining-balance interest | Per product | Progressive loans have supported flat interest since 1.13; it is young, so §9 tests it (Roan's open answer 4) |
+| Flat or declining-balance interest | Per product | Progressive loans have supported flat interest since 1.13; it is young, so §12 tests it (Roan's open answer 4) |
 | Top-up, with the loan it closes | Yes | Refinance and top-up (§6) |
 | Re-aging, re-amortization, reschedule requests | Yes | Restructuring (§6) |
 | Interest and charge waivers | Yes | The arrears cap's same-day sweep (lender-rules) |
@@ -151,7 +152,7 @@ FS-185. Groups (KC-01, later).
 `WAIVEINTERESTPORTION_LOAN`, `WAIVE_LOANCHARGE`, `WRITEOFF_LOAN` or
 `FORECLOSURE_LOAN`. Only Kapu MFI's service account does, and it acts only
 on an approved request. Whether staff use Fineract's own screens at all,
-and so whether they need a read-only role, is open (§10).
+and so whether they need a read-only role, is open (§13).
 
 **Codes:** reschedule reasons and re-amortization reasons, matching the
 reasons Kapu MFI records (MF-09).
@@ -186,7 +187,7 @@ whether the approve command also takes an external id is in §9.
 the change it describes, sends them in order, at least once, in Avro, to
 Kafka. An adapter re-wraps them in the platform's signed CloudEvents
 envelope (RO-23) for the event bus; consumers never read Fineract's topic
-directly. Names follow the event bus spec, to write.
+directly. Names are in the event bus catalogue (event-bus-kafka §5).
 
 **Never:** a write by anyone but Kapu MFI's service account; a change to
 a posted transaction (a correction is a reversal and a new posting).
@@ -265,7 +266,37 @@ itself is in the end-of-day-runner spec.
 - **Nightly comparison** (approval-engine §9): any loan approved, disbursed
   or restructured in Fineract without an approved request is an alert.
 
-## 9 · Checks before the build
+## 9 · Data
+
+| What | Class | Kept | Personal data |
+|---|---|---|---|
+| Clients, loans, schedules, transactions, the general ledger | Confidential | Seven years after the relationship ends (docs/documents.md) | Borrowers' and guarantors' |
+| National ID numbers | Restricted | — | Not stored in Fineract in clear: the identity record holds them (identity ID-15), referenced by id; any field Fineract must hold is encrypted (SE-27) |
+| Fineract's command audit | Confidential | Seven years | Staff and service identities |
+
+## 10 · Quality and metrics
+
+- **Tier 1.** A repayment command answered within 500 ms at the 95th
+  percentile; the close of business for 10,000 loans within 30 minutes
+  (both proposed, measured in §12's checks).
+- **Metrics,** from Fineract's own instrumentation to Prometheus: API
+  latency and errors; the close's duration and loans failed; loans
+  locked; events waiting to be sent.
+- **Alerts** (observability-grafana §4): a write refused after retries
+  (3); events not sent (2); the close (end-of-day-runner §6).
+
+## 11 · Threats
+
+| Threat | For example | The answer |
+|---|---|---|
+| Elevation of privilege | Staff approve or disburse in Fineract directly | No staff role holds those permissions; only Kapu MFI's account (§4) |
+| Spoofing | The service account's key stolen | Its key in OpenBao, a signed client assertion, mutual TLS; rotated |
+| Tampering | The database edited directly | Reachable only by Fineract; encrypted; the nightly comparison; the ledger reconciled with the rails |
+| Repudiation | A posting nobody can explain | Every command carries the approval it acts on; Fineract's audit |
+| Information disclosure | A bulk export of clients | Exports need their own permission (architecture §7); no ID numbers in clear |
+| Denial of service | Writes refused during the close | Retries; catch-up (§7) |
+
+## 12 · Checks before the build
 
 On a running 1.15 instance, before the build relies on each (FS-625):
 
@@ -285,7 +316,7 @@ On a running 1.15 instance, before the build relies on each (FS-625):
 | F12 | A missed day caught up; the business date's alarm when it lags | KC-07 |
 | F13 | Kafka events through the adapter: order, duplicates, a broker down and back | RO-23 |
 
-## 10 · Open questions
+## 13 · Open questions
 
 **For the owner:**
 

@@ -3,14 +3,15 @@ id: lender-rules
 name: Lender rules — build specification
 kind: spec
 type: build
+status: draft
 release: R1
 implements: [mfi]
-depends_on: [kapu-core-fineract, messaging]
+depends_on: [kapu-core-fineract, messaging, event-bus-kafka]
 used_by: [end-of-day-runner]
-version: 0.1.0
+version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667]
 last_reviewed: 2026-10-08
 ---
 
@@ -74,8 +75,8 @@ own: FS-629).
 ```
 
 **Related:** implements [mfi](../modules/mfi.md); depends on
-[kapu-core-fineract](kapu-core-fineract.md) and
-[messaging](messaging.md);
+[kapu-core-fineract](kapu-core-fineract.md),
+[messaging](messaging.md) and [event-bus-kafka](event-bus-kafka.md);
 used by [end-of-day-runner](end-of-day-runner.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and
@@ -371,13 +372,13 @@ the new episode's cap is 60,000.
 | `GET /policies/collection-messaging` | Working hours, recipients, template rules |
 | `POST /complaints/events` | Desk events in, clocks out |
 
-**Kafka events** (CloudEvents, signed per RO-23; names proposed, to align
-with platform naming): `kapu.mfi.loan.nonperforming`,
+**Kafka events** (CloudEvents, signed per RO-23; names from the event bus
+catalogue, event-bus-kafka §5): `kapu.mfi.loan.nonperforming`,
 `kapu.mfi.loan.performing`, `kapu.mfi.loan.cap.reached`,
 `kapu.mfi.loan.charge.waived`, `kapu.mfi.repayment.allocated`,
 `kapu.mfi.repayment.allocation.mismatch`, `kapu.mfi.loan.ladder.changed`,
 `kapu.mfi.product.version.activated`, `kapu.mfi.loan.variation.accepted`,
-`kapu.mfi.message.blocked`, `kapu.mfi.complaint.overdue`.
+`kapu.messaging.message.blocked` (published by messaging), `kapu.mfi.complaint.overdue`.
 
 **End of day** (KC-07), Africa/Nairobi, run by the end-of-day runner after
 its checks (end-of-day-runner):
@@ -396,7 +397,53 @@ its checks (end-of-day-runner):
 A failure stops the later steps for the loans affected and raises an
 exception to the accountant's queue (MF-12).
 
-## 4 · Acceptance tests
+## 4 · Security and audit
+
+- **Its own service account,** which may post only waivers and default
+  interest, and read loans (kapu-core-fineract §4).
+- **Rule parameters are configuration under maker-checker,**
+  effective-dated: rates, the cap's components, working hours, banned
+  terms. A pricing change cannot activate without CBK's approval recorded
+  (MF-24).
+- **Every waiver, default-interest posting and change of classification**
+  is a signed event carrying the rule version that produced it (RO-23).
+- **No one overrides the cap.** A court-ordered exception is a flag and a
+  manual step, approved and recorded.
+
+## 5 · Data
+
+| What | Class | Kept | Personal data |
+|---|---|---|---|
+| Cap episodes, classifications, collection stages | Confidential | Seven years after the loan closes (docs/documents.md) | A borrower's repayment conduct (docs/privacy.md) |
+| Product versions, CBK approvals, variation notices and acceptances | Confidential | Seven years after the product or loan ends | Acceptances are the borrower's |
+| Complaints clocks | Confidential | With the complaint | The complainant's |
+
+## 6 · Quality and metrics
+
+- **Within the night's close:** its steps for 10,000 loans in under 15
+  minutes (proposed).
+- **The same answer every time:** each result reproducible from the rule
+  version and its inputs. The worked examples in §2 and the tests in this
+  spec become machine-readable test vectors, kept with the code, that the
+  code must pass; allocation and the cap are also tested with generated
+  cases (property-based tests).
+- **Metrics:** loans by classification and stage; cap episodes open;
+  amounts waived; allocation mismatches; messages blocked.
+- **Alerts** (observability-grafana §4): an allocation mismatch (2); a
+  failed step of the close (end-of-day-runner §6).
+
+## 7 · Threats
+
+| Threat | For example | The answer |
+|---|---|---|
+| Tampering | A rate or the cap's parameters changed quietly | Maker-checker, effective-dating, CBK's approval recorded; the rule version on every result |
+| Repudiation | A borrower disputes a charge | Each posting carries its rule version and inputs; the statement shows what was waived |
+| Information disclosure | A collection message reaches a borrower's contact | Recipient rules in messaging; a blocked event (§2.6) |
+| Elevation of privilege | Staff waive to favour a borrower | Waivers only by rule, or through an approved request |
+| A wrong rule | A defect charges past the cap | Test vectors, generated tests, the same-day sweep, reconciliation |
+| Purpose (privacy) | A classification used for something else | Used for the regulation's purposes; decisioning reads it only under its own privacy row (PR-18) |
+
+## 8 · Acceptance tests
 
 | # | Given | When | Then | Id, reg |
 |---|---|---|---|---|
@@ -419,7 +466,7 @@ exception to the accountant's queue (MF-12).
 | A17 | Written complaint, unresolved | Day 7 with no acknowledgement | Overdue event | MF-28, 40(3) |
 | A18 | Oral complaint | 48 hours unresolved | Written confirmation task due | MF-28, 40(4) |
 
-## 5 · Open questions
+## 9 · Open questions
 
 **For the owner, with counsel:**
 

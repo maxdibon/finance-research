@@ -3,6 +3,7 @@ id: file-name-without-md
 name: Component name — build specification
 kind: spec
 type: build
+status: draft
 release: R1
 implements: [module-id]
 depends_on: [spec-id]
@@ -10,7 +11,7 @@ used_by: []
 version: 0.1.0
 owner: Role, never a name
 classification: Internal
-review_ids: [FS-627]
+review_ids: [FS-627, FS-667]
 last_reviewed: 2026-10-08
 ---
 
@@ -29,8 +30,20 @@ last_reviewed: 2026-10-08
     Concepts, Rules, States, Interfaces, Security and audit. Component specs
     usually have Version and hosting, Features used and not used, Settings,
     Contracts, Security.
+  - Every spec has a "Data" section (what it stores, its class, how long,
+    whose personal data), a "Quality and metrics" section (its targets,
+    tied to docs/architecture/quality.md, its metrics and alerts), and a
+    "Threats" section (STRIDE, and LINDDUN for personal data; SE-16).
   - The last two sections are "Acceptance tests" (build) or "Checks before
-    the build" (component), then "Open questions".
+    the build" (component), then "Open questions". Every test is a table
+    row with an id (A1, K12), so the code can be tagged with it.
+  - `status` is draft, agreed (the owner's go), building or built. Once
+    agreed, a spec changes only through change enablement
+    (docs/service-management/README.md §2), and its version moves:
+    patch for wording, minor for behaviour, major for a restructure.
+  - Contracts: each build spec's endpoints and events become an OpenAPI
+    3.1 and an AsyncAPI 3.0 file with the code; event names come from the
+    event bus catalogue (event-bus-kafka.md).
   - Listed in docs/specs/README.md, with a link.
 
   Diagrams (FS-632): a fence with no language, at most 100 columns. In each
@@ -88,13 +101,30 @@ once it is written.
 
 Who may call it, what is logged, what is never logged.
 
-## 6 · Acceptance tests
+## 6 · Data
+
+| What | Class | Kept | Personal data |
+|---|---|---|---|
+| A record it holds | Confidential | How long, and by which rule | Whose, if any |
+
+## 7 · Quality and metrics
+
+Its targets (availability tier, latency, throughput), its metrics, and
+its alerts in observability-grafana §4.
+
+## 8 · Threats
+
+| Threat | For example | The answer |
+|---|---|---|
+| Spoofing | Someone acts as another | The control that stops it |
+
+## 9 · Acceptance tests
 
 | # | Given | When | Then | Id, source |
 |---|---|---|---|---|
 | A1 | A starting state | An act | The outcome | XX-01 |
 
-## 7 · Open questions
+## 10 · Open questions
 
 **For the owner:** questions only Dibon can answer.
 

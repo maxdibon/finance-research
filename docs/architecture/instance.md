@@ -71,7 +71,7 @@ sites is in [deployment](deployment.md).
 | KAPU CORE | The ledger: Apache Fineract | [kapu-core-fineract](../specs/kapu-core-fineract.md) |
 | ODOO | Back office: Sign, Helpdesk, HR, the institution's parties | business-suite |
 | ACCESS | Keycloak: four realms, step-up | [access-keycloak](../specs/access-keycloak.md) |
-| EVENT BUS | Kafka: every state change, signed | event-bus-kafka, to write |
+| EVENT BUS | Kafka: every state change, signed | [event-bus-kafka](../specs/event-bus-kafka.md) |
 | DATABASE | PostgreSQL, one database per service, nothing shared | [README](README.md) §6.1 |
 | OBJECT STORAGE | The vault's files | identity ID-15 |
 | OPENBAO | Every key and secret | [README](README.md) §6 |

@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648]
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667]
 last_reviewed: 2026-10-08
 ---
 
@@ -41,15 +41,15 @@ as the components table below names it.
 | [end-of-day-runner](end-of-day-runner.md) | Build | The nightly close: checks first, then Fineract's close of business, then ours, watched and escalated | core, recon-observability | R1 |
 | [observability-grafana](observability-grafana.md) | Component | Grafana and its stack: metrics, logs, dashboards, alerts, and the on-call rota that takes a phone call | recon-observability | R1 |
 | [messaging](messaging.md) | Build | The messaging service and the R1 template catalogue: what each event sends, to whom, with which fields, and who approves the words | messaging | R1 |
+| [event-bus-kafka](event-bus-kafka.md) | Component | Kafka as the event bus: the CloudEvents envelope, signing and the audit chain, one catalogue of event names, delivery rules | recon-observability | R1 |
 | [access-keycloak](access-keycloak.md) | Component | Keycloak as access: four realms, levels of authentication and step-up, roles granted by mandate, sign-in for every service | access | R1 |
 
-**To write, in the order R1 needs them:** event-bus-kafka (the envelope, signing and one catalogue of event names);
-odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
+**To write, in the order R1 needs them:** odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
 rails (M-Pesa and bank instructions, their lifecycle and signing).
 
 ## How they connect
 
-RAILS and EVENT BUS have specs still to write; the table below
+RAILS has a spec still to write; the table below
 says what crosses each line.
 
 ```
@@ -93,7 +93,7 @@ says what crosses each line.
 | approval-engine | access-keycloak | Roles resolved to people (MD-04); step-up at each decision (MD-10) |
 | kapu-core-fineract | access-keycloak | Sign-in by OAuth, the service account, read-only staff roles |
 | approval-engine | rails (to write) | An approved payment's content hash; nothing is sent without it (RL-01) |
-| every spec | event-bus-kafka (to write) | Event names, the envelope and signing (RO-23) |
+| every spec | event-bus-kafka | Event names, the envelope and signing (RO-23) |
 
 ## Components
 
@@ -109,7 +109,7 @@ Every box in a spec's diagram is named as this table names it (FS-632).
 | OBSERVABILITY | Metrics, logs, traces, dashboards and alert rules | `[grafana]` | [observability-grafana](observability-grafana.md) |
 | ON-CALL | Rotas, escalation, phone calls and acknowledgement | `[goalert]` | [observability-grafana](observability-grafana.md) |
 | ACCESS | Sign-in, roles, step-up | `[keycloak]` | [access-keycloak](access-keycloak.md) |
-| EVENT BUS | Carries signed events between services | `[kafka]` | to write |
+| EVENT BUS | Carries signed events between services | `[kafka]` | [event-bus-kafka](event-bus-kafka.md) |
 | RAILS | Sends and receives money on M-Pesa and banks | `[kapu_service]` | to write |
 | MESSAGING | SMS, WhatsApp and email to people | `[kapu_service]` | [messaging](messaging.md) |
 | RECONCILIATION | Matches the ledger with the rails | `[kapu_service]` | — (recon-observability) |

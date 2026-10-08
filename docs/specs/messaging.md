@@ -3,14 +3,15 @@ id: messaging
 name: Messaging and its templates — build specification
 kind: spec
 type: build
+status: draft
 release: R1
 implements: [messaging]
-depends_on: [access-keycloak]
+depends_on: [access-keycloak, event-bus-kafka]
 used_by: [access-keycloak, lender-rules, observability-grafana]
-version: 0.1.0
+version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662]
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667]
 last_reviewed: 2026-10-08
 ---
 
@@ -80,7 +81,7 @@ and MCP access (MS-17), partners' routes outside Kenya (MS-04).
 ```
 
 **Related:** implements [messaging](../modules/messaging.md); depends on
-[access-keycloak](access-keycloak.md); used by
+[access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by
 [access-keycloak](access-keycloak.md),
 [lender-rules](lender-rules.md) and
 [observability-grafana](observability-grafana.md); journeys
@@ -162,62 +163,62 @@ refused at approval, not at sending.
 ## 4 · The R1 catalogue
 
 `{institution}` is the institution's short name; every SMS opens with it.
-Events marked * are proposed names, for the event bus spec.
+Event names are in the event bus catalogue (event-bus-kafka §5).
 
 **Borrowers**
 
 | # | Template | Event | Category | Channels | Fields | Basis |
 |---|---|---|---|---|---|---|
-| T01 | Application received | `kapu.mfi.application.submitted`* | Transactional | SMS | reference | MF-01 |
-| T02 | Approved, agreement to sign | `kapu.mfi.loan.approved`* | Notice | SMS, email | amount, link | MF-34, MF-38 |
-| T03 | Declined | `kapu.mfi.loan.declined`* | Transactional | SMS | reference, how to ask why | MF-38 |
+| T01 | Application received | `kapu.mfi.application.submitted` | Transactional | SMS | reference | MF-01 |
+| T02 | Approved, agreement to sign | `kapu.mfi.loan.approved` | Notice | SMS, email | amount, link | MF-34, MF-38 |
+| T03 | Declined | `kapu.mfi.loan.declined` | Transactional | SMS | reference, how to ask why | MF-38 |
 | T04 | Signing code | Odoo Sign, through access | Code | SMS | code, minutes valid | MF-34, AC-13 |
-| T05 | Disbursed | `kapu.mfi.loan.disbursed`* | Transactional | SMS | amount, rail reference, date | MF-38 |
+| T05 | Disbursed | `kapu.mfi.loan.disbursed` | Transactional | SMS | amount, rail reference, date | MF-38 |
 | T06 | Payment received (the receipt) | `kapu.mfi.repayment.allocated` | Notice | SMS | amount, date, receipt reference, loan ending, link | MF-38, reg 39(1) |
 | T07 | Due reminder (Roan Capital: day 25 of 30) | `kapu.mfi.loan.ladder.changed` | Transactional | SMS or WhatsApp | amount due now, due date, paybill, account | MF-13, MF-39; RC-20 |
 | T08 | Overdue: the default run (day 30) | `kapu.mfi.loan.ladder.changed` | Collection | SMS | amount due now, paybill, account, help line | MF-39, MF-26; reg 30 |
 | T09 | Final warning (day 40) | `kapu.mfi.loan.ladder.changed` | Collection | SMS | amount due now, the next step under the agreement and its date, link | MF-39, MF-26; reg 30 |
 | T10 | Closure (day 47) | `kapu.mfi.loan.ladder.changed` | Collection | SMS | what happens next, link | MF-39, MF-26; reg 30 |
-| T11 | A variation or restructure offered | `kapu.mfi.loan.variation.issued`* | Notice | SMS, email | effective date (30 days on), how to accept, link | MF-24, MF-09; reg 54(7) |
+| T11 | A variation or restructure offered | `kapu.mfi.loan.variation.issued` | Notice | SMS, email | effective date (30 days on), how to accept, link | MF-24, MF-09; reg 54(7) |
 | T12 | A variation accepted | `kapu.mfi.loan.variation.accepted` | Transactional | SMS | effective date, link | MF-24 |
 | T13 | A product price change | `kapu.mfi.product.version.activated` | Notice | SMS, email | effective date, link | MF-24; reg 55 |
-| T14 | Settled | `kapu.mfi.loan.settled`* | Transactional | SMS | loan ending, date, what happens to the collateral, link | MF-38, MF-03 |
+| T14 | Settled | `kapu.mfi.loan.settled` | Transactional | SMS | loan ending, date, what happens to the collateral, link | MF-38, MF-03 |
 | T15 | Statement link | On request | Notice | SMS | single-use link, hours valid | MF-38, ID-17 |
-| T16 | Complaint acknowledged | `kapu.mfi.complaint.logged`* | Notice | SMS, email | complaint reference, the date it will be answered by | MF-28; reg 40 |
-| T17 | Complaint resolved | `kapu.mfi.complaint.resolved`* | Notice | SMS, email | complaint reference, link | MF-28 |
+| T16 | Complaint acknowledged | `kapu.mfi.complaint.logged` | Notice | SMS, email | complaint reference, the date it will be answered by | MF-28; reg 40 |
+| T17 | Complaint resolved | `kapu.mfi.complaint.resolved` | Notice | SMS, email | complaint reference, link | MF-28 |
 
 **Guarantors**
 
 | # | Template | Event | Category | Channels | Fields | Basis |
 |---|---|---|---|---|---|---|
-| T18 | Consent asked | `kapu.mfi.guarantor.named`* | Notice | SMS | link; never the borrower's name | MF-37; reg 42(1) |
-| T19 | Periodic statement | `kapu.mfi.guarantor.statement.due`* | Notice | SMS, email | link | MF-37; reg 47(2) |
-| T20 | Fourteen days' notice of default | `kapu.mfi.guarantor.notice.issued`* | Notice | SMS, email | the date the notice runs to, link | MF-37; reg 42(4) |
-| T21 | Guarantee released | `kapu.mfi.guarantee.released`* | Transactional | SMS | loan ending, date | MF-37 |
+| T18 | Consent asked | `kapu.mfi.guarantor.named` | Notice | SMS | link; never the borrower's name | MF-37; reg 42(1) |
+| T19 | Periodic statement | `kapu.mfi.guarantor.statement.due` | Notice | SMS, email | link | MF-37; reg 47(2) |
+| T20 | Fourteen days' notice of default | `kapu.mfi.guarantor.notice.issued` | Notice | SMS, email | the date the notice runs to, link | MF-37; reg 42(4) |
+| T21 | Guarantee released | `kapu.mfi.guarantee.released` | Transactional | SMS | loan ending, date | MF-37 |
 
 **Everyone: codes and security**
 
 | # | Template | Event | Category | Channels | Fields | Basis |
 |---|---|---|---|---|---|---|
 | T22 | Sign-in code | Access, realm `customers` | Code | SMS | code, minutes valid | AC-03, AC-13 |
-| T23 | Access blocked, at the person's request | `kapu.access.blocked`* | Security | Every channel | how to recover | AC-14 |
-| T24 | SIM changed: money movement held | `kapu.identity.sim.changed`* | Security | Every channel but the changed SIM | how to re-verify | ID-13 |
-| T25 | Recovered: new device, number or PIN | `kapu.access.recovered`* | Security | Every channel | what changed, lower limits until when | AC-15 |
+| T23 | Access blocked, at the person's request | `kapu.access.blocked` | Security | Every channel | how to recover | AC-14 |
+| T24 | SIM changed: money movement held | `kapu.identity.sim.changed` | Security | Every channel but the changed SIM | how to re-verify | ID-13 |
+| T25 | Recovered: new device, number or PIN | `kapu.access.recovered` | Security | Every channel | what changed, lower limits until when | AC-15 |
 
 **Staff** (email, through our relay; no names, ID numbers or documents)
 
 | # | Template | Event | Category | Fields | Basis |
 |---|---|---|---|---|---|
-| T26 | Approval waiting | `request.step.opened` | Transactional | request reference, product, amount, step, due time, signed link | MD-18 |
-| T27 | Approval reminder, then escalation | `request.step.overdue` | Transactional | the same, and who it escalated to | MD-08 |
+| T26 | Approval waiting | `kapu.mandates.step.opened` | Transactional | request reference, product, amount, step, due time, signed link | MD-18 |
+| T27 | Approval reminder, then escalation | `kapu.mandates.sla.breached`, `kapu.mandates.step.escalated` | Transactional | the same, and who it escalated to | MD-08 |
 
 **Payers whose payment could not be placed** (collect CO-21, FS-663)
 
 | # | Template | Event | Category | Channels | Fields | Basis |
 |---|---|---|---|---|---|---|
-| T28 | A payment we could not place | `kapu.collect.payment.unplaced`* | Transactional | SMS, and WhatsApp where the payer has consented | amount, date, M-Pesa reference, how to reply, link | CO-21 |
-| T29 | Reminder, at 24 hours | `kapu.collect.payment.unplaced.reminder`* | Transactional | SMS | the same | CO-21 |
-| T30 | Returned to you | `kapu.collect.payment.returned`* | Transactional | SMS | amount, date, the return's reference | CO-21; rails RL-01 |
+| T28 | A payment we could not place | `kapu.collect.payment.unplaced` | Transactional | SMS, and WhatsApp where the payer has consented | amount, date, M-Pesa reference, how to reply, link | CO-21 |
+| T29 | Reminder, at 24 hours | `kapu.collect.payment.still_unplaced` | Transactional | SMS | the same | CO-21 |
+| T30 | Returned to you | `kapu.collect.payment.returned` | Transactional | SMS | amount, date, the return's reference | CO-21; rails RL-01 |
 
 The payer may not be a customer: T28 to T30 name no account holder and
 no other person, and carry nothing but the payer's own payment. Replies
@@ -278,7 +279,37 @@ refused it), `.opted_out`.
 - **Codes are never logged**, only their hashes (SE-18).
 - **Operator binds and partner credentials** in OpenBao.
 
-## 7 · Acceptance tests
+## 7 · Data
+
+| What | Class | Kept | Personal data |
+|---|---|---|---|
+| Templates, versions and their approvals | Internal | Always | — |
+| The message log: to whom, which template and version, when, status | Confidential | The institution's record period | Phone numbers, email addresses |
+| Message bodies | Confidential | Their retention period only (FS-063) | As the template's fields |
+| Consent and channel choices | Confidential | In Odoo (MS-11) | The person's |
+| One-time codes | Restricted | Never: only their hashes | — |
+
+## 8 · Quality and metrics
+
+- **Codes delivered within 30 seconds** at the 95th percentile; a receipt
+  within a minute of its posting (proposed).
+- **Metrics:** sent, delivered and failed by route and template; held;
+  blocked; opt-outs; code latency.
+- **Alerts** (observability-grafana §4): failures on a route; codes slow.
+
+## 9 · Threats
+
+| Threat | For example | The answer |
+|---|---|---|
+| Spoofing | An SMS pretending to be the institution | Registered sender IDs (MS-03); our messages never ask for a PIN or code |
+| Tampering | A merge field carrying injected text | Fields typed and escaped; only approved templates sent |
+| Information disclosure | A balance or an ID number in an SMS | Refused at the template's approval (§3.1) |
+| Information disclosure | A code intercepted after a SIM swap | Codes short-lived; an IMSI change holds sign-in (ID-13) |
+| Repudiation | "I was never told" | The message log, with the channel's own status |
+| Denial of service | Floods, or cost run up | Rate limits per recipient and institution (MS-15) |
+| Identifiability (privacy) | A guarantor or payer told about someone else | Their templates name no one else (T18, T28) |
+
+## 10 · Acceptance tests
 
 | # | Given | When | Then | Id, source |
 |---|---|---|---|---|
@@ -299,7 +330,7 @@ refused it), `.opted_out`.
 | M15 | A payment from a number that is no customer's | Unplaced | T28 to the paying number; no account holder named | CO-21 |
 | M16 | Unclaimed at day 7 | Returned | T30 with the return's reference | CO-21 |
 
-## 8 · Open questions
+## 11 · Open questions
 
 **For the owner:**
 

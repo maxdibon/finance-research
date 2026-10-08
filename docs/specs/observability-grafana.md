@@ -3,14 +3,15 @@ id: observability-grafana
 name: Observability on Grafana, with on-call — component specification
 kind: spec
 type: component
+status: draft
 release: R1
 implements: [recon-observability]
 depends_on: [access-keycloak, messaging]
-used_by: [end-of-day-runner]
-version: 0.1.0
+used_by: [end-of-day-runner, event-bus-kafka]
+version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-101, FS-633, FS-640, FS-642, FS-648, FS-653]
+review_ids: [FS-101, FS-633, FS-640, FS-642, FS-648, FS-653, FS-667]
 last_reviewed: 2026-10-08
 ---
 
@@ -63,7 +64,7 @@ on); security event monitoring, which is the managed detection service
 **Related:** implements
 [recon-observability](../modules/recon-observability.md); depends on
 [access-keycloak](access-keycloak.md) and [messaging](messaging.md); used by
-[end-of-day-runner](end-of-day-runner.md); routes by
+[end-of-day-runner](end-of-day-runner.md) and [event-bus-kafka](event-bus-kafka.md); routes by
 [incident management](../service-management/incident-management.md).
 
 ## 2 · Version and hosting
@@ -192,7 +193,33 @@ to add it:
 - **Alert history is kept,** with each acknowledgement and escalation, for
   the incident record (incident-management §5).
 
-## 8 · Checks before the build
+## 8 · Data
+
+| What | Class | Kept | Personal data |
+|---|---|---|---|
+| Metrics | Internal | 13 months (proposed) | None |
+| Logs | Internal; Confidential where an id appears | 90 days searchable, a year archived; security events as SE-18 sets (proposed) | Ids only, never names or numbers |
+| Traces | Internal | 14 days (proposed) | Ids only |
+| Alert history, on-call timelines | Internal | With the incident record (service management) | Engineers' identities |
+
+## 9 · Quality and metrics
+
+- **A severity 1 rings within a minute** (G1); the watchdog proves the
+  path continuously.
+- **Its own health:** rule evaluation failures, notifications failed,
+  ingestion lag; the fleet's Grafana watches each instance's.
+
+## 10 · Threats
+
+| Threat | For example | The answer |
+|---|---|---|
+| Tampering | An attacker silences alerts | Silences need a reason and an end, and are audited; the watchdog pages if the path stops |
+| Information disclosure | Personal data in a log | Ids only (§7); checked by G8 |
+| Spoofing | A page acknowledged by someone else | ON-CALL's sign-in through the `ops` realm, hardware keys only |
+| Denial of service | A storm of alerts hides the one that matters | Grouping, inhibition and routing by severity (§4) |
+| Elevation of privilege | One institution's dashboards seen by another | A folder per institution (RO-19; G7) |
+
+## 11 · Checks before the build
 
 | # | Check | Settles |
 |---|---|---|
@@ -205,7 +232,7 @@ to add it:
 | G7 | Sign-in through Keycloak; one institution cannot see another's dashboards | AC-02, RO-19 |
 | G8 | An alert built with a name in it is caught before sending | SE-18 |
 
-## 9 · Open questions
+## 12 · Open questions
 
 **For the owner:**
 

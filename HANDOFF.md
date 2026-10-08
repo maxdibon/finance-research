@@ -2,7 +2,7 @@
 
     version: 1.5.0
     updated: 2026-10-08
-    supersedes: 1.4.0; adds 8 October (FS-611 to FS-666)
+    supersedes: 1.4.0; adds 8 October (FS-611 to FS-667)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -157,6 +157,10 @@ Each has a register row and, where it changed the design, an entry in
   delightful to use is the sixth idea; draw, test with five users per
   role, measure; manuals by role, the key holder's written first. No
   designer on the team yet.
+- **Every spec** (FS-667) carries a status (draft until the owner agrees it),
+  Data, Quality and metrics, and Threats sections, and tests with ids; the
+  check enforces them. **Events** are named only from the catalogue in
+  `event-bus-kafka.md` §5 (CloudEvents, type `ke.dibon.` + name).
 - **Specifications** in `docs/specs/` (index: `README.md`, with the map and
   the components table): approval engine, lender rules, Kapu Core on
   Fineract, the end-of-day runner, observability on Grafana, access on
@@ -171,8 +175,7 @@ Each has a register row and, where it changed the design, an entry in
   the R1 catalogue of 30 templates (27, then 3 for unplaced payments,
   FS-663); the institution owns and approves its
   words; a message never carries the outstanding balance. Next, in order:
-  event-bus-kafka (one catalogue of event names, seeded by the messaging
-  catalogue), odoo, rails; then the sanctions adapter, guarantors and
+  rails, reconciliation, kapu-mfi, identity, odoo, decisioning; then the sanctions adapter, guarantors and
   borrower access. **On-call:** Grafana OnCall's open-source edition was
   archived on 2026-03-24; GoAlert self-hosted with Twilio is proposed, the
   choice is the owner's (observability-grafana §5).
@@ -402,8 +405,8 @@ only with a register row.
   registry access for business borrowers (FS-564).
 - **To confirm technically:** Odoo Sign link-only completion emails
   (FS-532); Fineract's thirteen checks on a running 1.15 instance
-  (kapu-core-fineract §9, F1 to F13); Grafana and on-call checks
-  (observability-grafana §8); whether the business registry's API returns
+  (kapu-core-fineract §12, F1 to F13); Grafana and on-call checks
+  (observability-grafana §11); whether the business registry's API returns
   beneficial owners (FS-566, FS-568); M-Pesa validation on tills and any
   Pochi API (CO-21); each bank's signing and certificate requirements.
 - Proposals awaiting go: the OPEN rows whose notes say "Proposal in chat".

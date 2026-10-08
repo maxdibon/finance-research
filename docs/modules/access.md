@@ -178,7 +178,7 @@ every login.
 
 How Keycloak is run, and its open questions (customers as code-only users,
 Odoo's sign-in module, where engineers' identities live):
-docs/specs/access-keycloak.md §10 (FS-642).
+docs/specs/access-keycloak.md §13 (FS-642).
 
 ## 12 · Sources
 

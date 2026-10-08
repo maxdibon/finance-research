@@ -3,14 +3,15 @@ id: end-of-day-runner
 name: End-of-day runner — build specification
 kind: spec
 type: build
+status: draft
 release: R1
 implements: [core, recon-observability]
-depends_on: [kapu-core-fineract, lender-rules, observability-grafana, access-keycloak]
+depends_on: [kapu-core-fineract, lender-rules, observability-grafana, access-keycloak, event-bus-kafka]
 used_by: []
-version: 0.1.0
+version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642]
+review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667]
 last_reviewed: 2026-10-08
 ---
 
@@ -64,8 +65,8 @@ runner), and runs for Saccos' savings and shares.
 [recon-observability](../modules/recon-observability.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
 [lender-rules](lender-rules.md),
-[observability-grafana](observability-grafana.md) and
-[access-keycloak](access-keycloak.md); used by none; the
+[observability-grafana](observability-grafana.md),
+[access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by none; the
 plan it notifies by is [incident management](../service-management/incident-management.md).
 
 ## 2 · Concepts
@@ -207,7 +208,7 @@ does, so nothing closes without the checks.
 `eod_locked_loans`, `eod_business_date_lag_days`; a heartbeat every five
 minutes while running, so silence is itself an alert.
 
-**Events** (names proposed, to align with the event bus spec):
+**Events** (from the event bus catalogue, event-bus-kafka §5):
 `kapu.core.eod.checked`, `.held`, `.released`, `.closed`, `.failed`,
 `.reported`.
 
@@ -226,7 +227,32 @@ closed and locked, any hold and override, and reconciliation breaks.
   append-only, in the audit chain (RO-24, RO-27).
 - **The service account** may run only the jobs in §7 and read status.
 
-## 9 · Acceptance tests
+## 9 · Data
+
+| What | Class | Kept | Personal data |
+|---|---|---|---|
+| Each night's record: every check's result, step times, holds, notices sent | Internal | Seven years, as evidence of the ledger's close | — |
+| Overrides, with both reasons | Confidential | Seven years | The two people who overrode |
+
+## 10 · Quality and metrics
+
+- **The close finished by 03:00,** or someone is phoned
+  (docs/architecture/quality.md).
+- **The checks complete within 10 minutes;** a heartbeat every five
+  minutes while running.
+- **Metrics and alerts:** §7 and §6.
+
+## 11 · Threats
+
+| Threat | For example | The answer |
+|---|---|---|
+| Spoofing | A forged override | Two people, each stepped up (§8) |
+| Tampering | A blocking check quietly made a warning | Classes under maker-checker, effective-dated; a check a regulation drives is never lowered |
+| Repudiation | "Who released the hold?" | Signed records of every hold and release |
+| Denial of service | The runner itself stops | Its heartbeat goes quiet, and on-call is paged (observability G3) |
+| Elevation of privilege | The runner's account used for other writes | It may run only its jobs (§8) |
+
+## 12 · Acceptance tests
 
 | # | Given | When | Then | Id, source |
 |---|---|---|---|---|
@@ -243,7 +269,7 @@ closed and locked, any hold and override, and reconciliation breaks.
 | E11 | A host's clock 2 seconds out | 23:45 | C9 fails; close held; severity 2 | §4 |
 | E12 | A warning check fails | 06:00 | In the morning report; close was not held | §4 |
 
-## 10 · Open questions
+## 13 · Open questions
 
 **For the owner:**
 

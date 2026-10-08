@@ -1183,3 +1183,21 @@ its own entry.
 - **Costs (inferred):** payments to unknown accounts accepted during an
   outage, then handled as unplaced (CO-21); a runbook per institution;
   manual acts to approve after each outage.
+
+## FS-667 · Specs: a lifecycle, threats, data and quality in each; one catalogue of events
+
+- **Chose:** every spec carries a status (draft, agreed, building,
+  built) and, once agreed, changes only through change enablement; every
+  spec states its data, its quality targets and metrics, and its threats
+  (STRIDE, LINDDUN); every test has an id; contracts become OpenAPI 3.1
+  and AsyncAPI 3.0 files with the code; events are CloudEvents 1.0 named
+  from one catalogue in the event bus spec, a name not in it not
+  published. The standards to build to are listed in FS-667.
+- **Requires:** docs/specs/_template.md "Threats"; docs/specs/event-bus-kafka.md §5.
+- **Argued against:** leaving specs free to grow sections as they need,
+  which let event names drift until approval emails had no event to
+  fire on; and capitalised RFC 2119 words, which our plain style already
+  makes unnecessary.
+- **Costs (inferred):** three more sections in every spec, kept current;
+  contract files to generate and test; every new event added to the
+  catalogue before it is published.

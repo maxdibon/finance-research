@@ -3,14 +3,15 @@ id: access-keycloak
 name: Access on Keycloak — component specification
 kind: spec
 type: component
+status: draft
 release: R1
 implements: [access]
 depends_on: [messaging]
 used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging]
-version: 0.1.0
+version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648]
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667]
 last_reviewed: 2026-10-08
 ---
 
@@ -260,7 +261,7 @@ The end-of-day runner's overrides (end-of-day-runner §8) and every
 
 **Fineract:** validates `staff` tokens and maps the token's user to its
 own user (§8, K9); staff hold read-only Fineract roles, if any
-(kapu-core-fineract §10).
+(kapu-core-fineract §13).
 
 **Grafana:** generic OAuth; its role taken from a group (viewer or
 editor); an institution's users see only its folder (RO-19).
@@ -286,7 +287,39 @@ bus spec when written. No code, password or token in any of them
   OpenBao, never from configuration files.
 - **Logs** carry no code, password or token (SE-18).
 
-## 9 · Checks before the build
+## 9 · Data
+
+| What | Class | Kept | Personal data |
+|---|---|---|---|
+| Password hashes, authenticator secrets, passkeys, sessions | Restricted | While the account exists | Every user's |
+| Login, admin and step-up events | Confidential | A year in Keycloak; longer in the audit trail (SE-18) | Who signed in, when, from where |
+| Users: username, email, phone (`customers`) | Confidential | While the account exists | Borrowers' and guarantors' contact points |
+
+## 10 · Quality and metrics
+
+- **Tier 1** ("lets people in"). The sign-in page within a second at the
+  95th percentile; a step-up round trip within 10 seconds, the person's
+  own time excluded (proposed).
+- **Against NIST SP 800-63B:** `loa2` meets AAL2; `loa3` is AAL2 with an
+  authenticator app and AAL3 with a hardware key.
+- **Metrics:** sign-ins, failures, lockouts, step-ups by result, codes
+  sent (Keycloak's user-event metrics).
+- **Alerts** (observability-grafana §4): lockouts spiking (2); codes slow
+  (2); an admin event touching roles (§8).
+
+## 11 · Threats
+
+| Threat | For example | The answer |
+|---|---|---|
+| Spoofing | A staff password phished | A second factor at sign-in; level 3 at the act; engineers on hardware keys, which phishing cannot replay |
+| Spoofing | A customer's code taken by a SIM swap | An IMSI change holds sign-in until re-verification (ID-13) |
+| Spoofing | Credential stuffing | Brute-force detection; lockouts alerted |
+| Tampering | An administrator maps a role | Only provisioning maps approval roles; the nightly comparison (§6); role changes alerted |
+| Repudiation | "That wasn't me" | Events kept, and signed into the audit trail |
+| Information disclosure | A token stolen | Five-minute access tokens; refresh tokens rotated; DPoP with the app (phase 2) |
+| Elevation of privilege | A Dibon engineer reaches an institution's money | Separate realms; product APIs refuse `ops` tokens (K8) |
+
+## 12 · Checks before the build
 
 On a running 26.8 instance, before the build relies on each (FS-642):
 
@@ -307,11 +340,11 @@ On a running 26.8 instance, before the build relies on each (FS-642):
 | K13 | Events reach Loki with no code, password or token in them | AC-11, SE-18 |
 | K14 | The nightly comparison flags a role mapped outside an approved request | AC-09 |
 
-## 10 · Open questions
+## 13 · Open questions
 
 **For the owner:**
 
-1. Whether staff use Fineract's own screens (kapu-core-fineract §10),
+1. Whether staff use Fineract's own screens (kapu-core-fineract §13),
    which decides whether Fineract needs a staff client at all.
 2. Which bastion records engineers' sessions where Dibon runs the
    instance (Teleport's community edition is no longer open-source, so a

@@ -194,7 +194,7 @@ as part of the operating system ([architecture](../architecture/README.md)
 |---|---|---|
 | Odoo Enterprise for Dibon's own use: does the agreement cover Helpdesk, Knowledge and Calendar for us, not only customers' instances? | Assumed ([architecture](../architecture/README.md) §8) | Confirm with Odoo (FS-640) |
 | Which GitOps tool: Argo CD or Flux | Not named anywhere | Choose before the configuration record is built |
-| The on-call tool | GoAlert proposed | The owner's choice ([observability-grafana](../specs/observability-grafana.md) §9) |
+| The on-call tool | GoAlert proposed | The owner's choice ([observability-grafana](../specs/observability-grafana.md) §12) |
 | A status page | None; customers learn of an incident from our notices | Optional; offered first to the Complete tier |
 | The pull-request template and the pipeline's change-window rule | Not built | Build with SE-23 |
 | Helpdesk ticket types, SLA policies, request types | Not configured | Configure before R1 go-live |

@@ -561,7 +561,7 @@ test('specs: a relation one spec states and the other does not fails', () => {
 });
 
 test('specs: a Related line that does not link a spec in the front matter fails', () => {
-  const f = runWith((d) => patch(d, SPEC('approval-engine'), (t) => t.replace('[kapu-core-fineract](kapu-core-fineract.md) and', 'kapu-core-fineract and')));
+  const f = runWith((d) => patch(d, SPEC('approval-engine'), (t) => t.replace('[kapu-core-fineract](kapu-core-fineract.md),', 'kapu-core-fineract,')));
   assert.deepStrictEqual(names(f), ['specs']);
 });
 
@@ -661,4 +661,20 @@ test('frontmatter: an unquoted value holding ": " fails', () => {
 test('frontmatter: a quoted value, or a comment, passes', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'architecture', 'risks.md'), (t) => t.replace(/^name: (.*)$/m, 'name: "Architecture: $1"  # quoted')));
   assert.ok(!names(f).includes('frontmatter'));
+});
+
+// ── specs: lifecycle, sections, test ids (FS-667) ────────────────────────
+test('specs: a status outside the lifecycle fails', () => {
+  const f = runWith((d) => patch(d, SPEC('messaging'), (t) => t.replace(/^status: draft$/m, 'status: finished')));
+  assert.deepStrictEqual(names(f), ['specs']);
+});
+
+test('specs: a spec without a Threats section fails', () => {
+  const f = runWith((d) => patch(d, SPEC('messaging'), (t) => t.replace(/^## (\d+) · Threats$/m, '## $1 · Risks')));
+  assert.deepStrictEqual(names(f), ['specs']);
+});
+
+test('specs: a test without an id fails', () => {
+  const f = runWith((d) => patch(d, SPEC('messaging'), (t) => t.replace(/^\| M1 \|/m, '| first |')));
+  assert.deepStrictEqual(names(f), ['specs']);
 });

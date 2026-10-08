@@ -36,7 +36,8 @@ this page puts them in one place.
 - **Consumers tolerate repeats and order:** delivery is at least once;
   each consumer records what it has applied.
 - **Events are CloudEvents, signed** with the service's identity (RO-23);
-  names follow the event bus spec, still to write.
+  names are in the event bus catalogue
+  ([event-bus-kafka](../specs/event-bus-kafka.md) §5).
 
 **When something does not answer**
 

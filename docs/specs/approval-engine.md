@@ -3,14 +3,15 @@ id: approval-engine
 name: Approval engine — build specification
 kind: spec
 type: build
+status: draft
 release: R1
 implements: [mandates]
-depends_on: [kapu-core-fineract, access-keycloak]
+depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka]
 used_by: []
-version: 0.1.0
+version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667]
 last_reviewed: 2026-10-08
 ---
 
@@ -78,8 +79,8 @@ extra: the engine holds the facts already.
 ```
 
 **Related:** implements [mandates](../modules/mandates.md); depends on
-[kapu-core-fineract](kapu-core-fineract.md) and
-[access-keycloak](access-keycloak.md); used by none yet (rails, to write, will be); journeys
+[kapu-core-fineract](kapu-core-fineract.md),
+[access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by none yet (rails, to write, will be); journeys
 [JN-02](../journeys/manual-identity-check.md),
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and
@@ -269,7 +270,7 @@ the email landing page; OAuth 2 tokens from Keycloak, AC-01):
 
 **Events** on Kafka, as CloudEvents, each signed with the service's
 SPIFFE identity and hash-chained per request (architecture §6, RO-23,
-RO-24). Names proposed, to align with the lender-rules spec:
+RO-24). Names from the event bus catalogue (event-bus-kafka §5):
 `kapu.mandates.request.submitted`, `kapu.mandates.step.opened`,
 `kapu.mandates.decision.recorded`, `kapu.mandates.step.completed`,
 `kapu.mandates.step.stalled`, `kapu.mandates.sla.breached`,
@@ -278,7 +279,8 @@ RO-24). Names proposed, to align with the lender-rules spec:
 `kapu.mandates.request.withdrawn`, `kapu.mandates.mandate.activated`.
 Every event carries the request id as the trace id, the subject, and the
 mandate version; a decision event also carries the actor, `acr` and
-channel. The products act on `request.approved`, never on a decision.
+channel. The products act on `kapu.mandates.request.approved`, never on a
+decision.
 
 ## 7 · Approval from email (MD-18)
 
@@ -320,7 +322,7 @@ channel. The products act on `request.approved`, never on a decision.
   hash-chained (RO-24), so a change shows.
 - **No path around the engine.** Staff hold no Fineract permission to
   approve or disburse a loan; only the Kapu MFI service account does, and
-  it acts only on `request.approved` (§9).
+  it acts only on `kapu.mandates.request.approved` (§9).
 - **What goes into an email:** request reference, product, amount, step
   and due time. No names, national ID numbers, statements or documents:
   an email sent through Microsoft or Google leaves Kenya (Data Protection
@@ -344,19 +346,17 @@ approval records side by side that can disagree. So:
    Fineract loan id as subject. The loan carries our application id as
    its external id (kapu-core-fineract §5).
 2. Approvers decide in the engine: console, email or app.
-3. On `request.approved`, Kapu MFI calls Fineract's approve command with
-   the service account, putting the engine's request id in the command's note (whether it
-   also takes an external id is kapu-core-fineract check F9).
-4. On `request.declined`, Kapu MFI calls Fineract's reject command; on a
-   withdrawal, its `withdrawnByApplicant` command (kapu-core-fineract §5).
-5. Fineract's own maker-checker stays off for the commands the engine
-   governs, and staff roles in Fineract lose the approve, reject and
-   disburse permissions (the permission codes are in kapu-core-fineract §4).
-6. Disbursement (MF-11) is a second request, `loan.disbursement`, with
+3. On `kapu.mandates.request.approved`, Kapu MFI calls Fineract's approve
+   command; on `kapu.mandates.request.declined`, its reject command; on a
+   withdrawal, its withdraw command. Fineract's own maker-checker stays
+   off for these, and staff roles hold none of their permissions. The
+   commands, permission codes and the request id's place are in
+   kapu-core-fineract §4 and §5.
+4. Disbursement (MF-11) is a second request, `loan.disbursement`, with
    its own maker-checker chain. On approval, Kapu MFI pays through the
    rail (RL-03 or RL-07) and posts the disbursal to Fineract when the
    rail confirms.
-7. A nightly comparison lists any Fineract loan approved or disbursed
+5. A nightly comparison lists any Fineract loan approved or disbursed
    without an approved request (reconciliation RO-02). There should be
    none; one is an incident.
 
@@ -379,67 +379,68 @@ bill (rent, a subscription) approved once with a payee, a cap per
 payment and an end date, which pays within those limits until it ends or
 is revoked.
 
-## 11 · Acceptance tests
+## 11 · Data
 
-1. **MD-01:** given tiers 0 to 100,000 and 100,001 upward, when saved,
-   then the gap is refused.
-2. **MD-01:** given a product with tiers 0 to 500,000 and 500,000
-   upward, when a 500,000 request is submitted, then the upper tier
-   applies (`max` exclusive).
-3. **MD-03:** given a request in progress, when the mandate gains a
-   step, then the request's chain is unchanged and a new request gets the
-   new step.
-4. **MD-02, rule 11:** given an admin edits a mandate, when they submit
-   it, then it stays inactive until a second admin approves; when the
-   same admin tries to approve, then it is refused.
-5. **RC-13, rule 2:** given a Credit Officer submits an application,
-   when they try to decide the Credit Officer step, then it is refused.
-6. **MD-06, rule 3:** given a person in both the Credit Officer role and
-   the committee, when they approve step 1, then they cannot vote in
-   step 2.
-7. **Rule 4:** given a committee of three, one of whom is the originator,
-   when a 3-of-3 request is previewed, then it is reported unfillable and
-   not created.
-8. **MD-09, RC-12:** given the committee step open with three members,
-   when two approve, then the step stays open; when the third approves,
-   then the step completes.
-9. **MD-09:** given two approvals, when the third member declines, then
-   the request is declined and the loan is rejected in Fineract.
-10. **Rule 7:** given a member returns the request, when the originator
-    resubmits, then the committee step opens again with no votes counted
-    and the Credit Officer's approval stands.
-11. **RC-12:** given an amount at the threshold, when submitted, then the
-    chain ends with the Head Office Committee; one shilling below, it
-    does not.
-12. **MD-07:** given a flagged `limit_override` request in the lowest
-    tier, when resolved, then the override authority is the last step.
-13. **Rule 8:** given a committee member removed from the group mid-step,
-    when the quorum can no longer be reached, then the step is stalled
-    and the admin is told; re-opened, the remaining votes stand.
-14. **MD-08:** given an SLA of 24 hours, when it passes, then the
-    approvers are reminded; at the escalation threshold, the escalation
-    role sees the request too and the approvers remain.
-15. **MD-10, RC-32:** given a session but no step-up in 5 minutes, when
-    an approver decides a money step, then it is refused and step-up
-    asked for.
-16. **MD-18:** given an email link, when it is opened a second time,
-    then it is refused and a security event raised.
-17. **MD-18:** given a forwarded link, when another person opens it,
-    then they cannot sign in as the approver and nothing is decided.
-18. **MD-18:** given a reply to the notification email, then no decision
-    is recorded and the sender is told to use the link.
-19. **§9:** given a staff user with Fineract access, when they try to
-    approve a loan in Fineract directly, then Fineract refuses it.
-20. **§9:** given a loan approved in Fineract without an approved
-    request, when the nightly comparison runs, then an exception is
-    raised.
-21. **RO-24:** given a request's decisions, when any stored decision is
-    altered, then the hash chain no longer verifies.
-22. **FS-494:** given a request in progress, when the originator opens
-    it, then they see the current step, who holds it, how long it has
-    waited and when it is due.
+| What | Class | Kept | Personal data |
+|---|---|---|---|
+| Requests: subject, amount, product, flags, the frozen chain | Confidential | As long as the record they authorise: seven years after the loan closes (docs/documents.md) | The subject's reference only, never a borrower's name |
+| Decisions: who, when, how they authenticated, the comment, the step-up token's hash | Confidential | The same | Approvers' identities, as staff data (docs/privacy.md) |
+| Mandates and their versions | Internal | Always, versioned | — |
 
-## 12 · Open questions
+## 12 · Quality and metrics
+
+- **Tier 1** (approvals), recovered as docs/architecture/quality.md sets.
+- **A decision recorded within a second** at the 95th percentile, the
+  step-up itself excluded; an approval email within a minute of a step
+  opening (proposed).
+- **Metrics:** requests open by step and age; time in step; SLA breaches;
+  step-up failures and lockouts; decisions per approver; the nightly
+  comparison's result.
+- **Alerts** (observability-grafana §4): the comparison finding an
+  unapproved act (severity 1); lockouts spiking (2); SLA breaches (3).
+
+## 13 · Threats
+
+STRIDE for security, LINDDUN for privacy (platform-security SE-16):
+
+| Threat | For example | The answer |
+|---|---|---|
+| Spoofing | Someone decides in an approver's open session | Step-up at level 3 at each decision, bound to the request and its hash (access-keycloak §7) |
+| Tampering | The request changed after approval | The chain frozen at submission (MD-03); the content hash bound to the approval; rails refuse an instruction whose hash differs (RL-01) |
+| Repudiation | "I never approved that" | Each decision carries its step-up record; events signed and chained (RO-23, RO-24) |
+| Information disclosure | An approval email reveals a borrower | Emails carry reference, product, amount and step only (§8); links single-use |
+| Denial of service | Requests or link openings flooded | Rate limits per person and source (§8); SLA alerts |
+| Elevation of privilege | An approver grants themselves a role | Roles only through an approved `access.role.change`; no self-approval (MD-06); no Dibon role in any chain (FS-588) |
+| Linkability (privacy) | An approver's activity profiled | Decision history read by role; reports aggregate |
+
+## 14 · Acceptance tests
+
+| # | Given | When | Then | Id, source |
+|---|---|---|---|---|
+| A1 | Tiers 0 to 100,000 and 100,001 upward | Saved | The gap is refused | MD-01 |
+| A2 | Tiers 0 to 500,000 and 500,000 upward | A 500,000 request is submitted | The upper tier applies (`max` exclusive) | MD-01 |
+| A3 | A request in progress | The mandate gains a step | The request's chain is unchanged; a new request gets the new step | MD-03 |
+| A4 | An admin edits a mandate | They submit it; then they try to approve it | It stays inactive until a second admin approves; their own approval is refused | MD-02, rule 11 |
+| A5 | A Credit Officer submits an application | They try to decide the Credit Officer step | Refused | RC-13, rule 2 |
+| A6 | A person in both the Credit Officer role and the committee | They approve step 1 | They cannot vote in step 2 | MD-06, rule 3 |
+| A7 | A committee of three, one of them the originator | A 3-of-3 request is previewed | Reported unfillable, and not created | Rule 4 |
+| A8 | The committee step open with three members | Two approve; then the third | The step stays open; then completes | MD-09, RC-12 |
+| A9 | Two approvals | The third member declines | The request is declined and the loan rejected in Fineract | MD-09 |
+| A10 | A member returns the request | The originator resubmits | The committee step opens again with no votes counted; the Credit Officer's approval stands | Rule 7 |
+| A11 | An amount at the threshold; one shilling below | Submitted | The chain ends with the Head Office Committee; below, it does not | RC-12 |
+| A12 | A flagged `limit_override` request in the lowest tier | Resolved | The override authority is the last step | MD-07 |
+| A13 | A committee member removed mid-step | The quorum can no longer be reached | The step is stalled and the admin told; reopened, the remaining votes stand | Rule 8 |
+| A14 | An SLA of 24 hours | It passes; then the escalation threshold | Approvers reminded; then the escalation role sees it too, and the approvers remain | MD-08 |
+| A15 | A session but no step-up in 5 minutes | An approver decides a money step | Refused; step-up asked for | MD-10, RC-32 |
+| A16 | An email link | Opened a second time | Refused; a security event raised | MD-18 |
+| A17 | A forwarded link | Another person opens it | They cannot sign in as the approver; nothing is decided | MD-18 |
+| A18 | A reply to the notification email | Received | No decision recorded; the sender told to use the link | MD-18 |
+| A19 | A staff user with Fineract access | They try to approve a loan in Fineract directly | Fineract refuses it | §9 |
+| A20 | A loan approved in Fineract without an approved request | The nightly comparison runs | An exception is raised | §9 |
+| A21 | A request's decisions | Any stored decision is altered | The hash chain no longer verifies | RO-24 |
+| A22 | A request in progress | The originator opens it | They see the current step, who holds it, how long it has waited and when it is due | FS-494 |
+
+## 15 · Open questions
 
 1. **Where roles come from:** decided, Keycloak groups (FS-498). Left
    here so the numbering of the other questions holds.
