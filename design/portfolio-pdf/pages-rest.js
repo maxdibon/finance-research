@@ -354,7 +354,7 @@ ${prods.map((it) => `      ${tile(TILE_ICON[it.title], inline(it.title), inline(
     ${RULE}
     <h2>${inline(PS.get('Heading'))}</h2>
     <p class="lede">${inline(PS.get('Intro'))}</p>
-    <div class="stiles">${svc.map(([k, a, b]) => `<div class="stile s-${k}">${ico(k)}<b>${a}</b><span>${b}</span></div>`).join('')}</div>
+    <div class="stiles">${svc.map(([k, a, b]) => `<div class="stile s-${k}">${ico(k)}<b>${a}</b>${b.split(/\s*¶\s*/).map((x) => `<span>${x}</span>`).join('')}</div>`).join('')}</div>
     ${serviceMatrix(inline(L.get('Built on')), inline(PS.get('Built-on caption')), shortName)}
   </div>
   ${footer('17')}
@@ -595,6 +595,7 @@ const CSS = `
 .stile .ico { grid-row: span 2; width: 8mm; height: 8mm; stroke: var(--amber); }
 .stile b { font: 700 10.5pt/1.2 var(--display); }
 .stile span { font-size: 9pt; color: #e7d3df; }
+.stile span + span { margin-top: 1.6mm; } /* a pilcrow in the copy starts a paragraph (FS-616) */
 /* Page 17 · segments */
 .segs { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8mm; row-gap: 1.8mm; margin-top: 1mm; }
 .seg { display: grid; grid-template-columns: 11mm 1fr; gap: 3.5mm; align-items: start; padding: 1.6mm 0 2.6mm; border-bottom: 0.3mm solid var(--line); }

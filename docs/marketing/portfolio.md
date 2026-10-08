@@ -19,7 +19,8 @@ card, product or row on that page, in the order they appear. Change the
 words after a bold label freely; keep the labels themselves, because the
 build reads them. A line in a list that starts with a label, such as
 `- Channels: ...`, keeps everything before the first colon as its label.
-Words between single asterisks, like `*this*`, are highlighted. Adding or
+Words between single asterisks, like `*this*`, are highlighted. On the
+platform services cards, a pilcrow, ¶, starts a new paragraph. Adding or
 removing a card changes the layout, so the build stops and says so rather
 than squeezing it in.
 
@@ -221,24 +222,24 @@ it never holds the money.
 rail. One API and one dashboard cover mobile money today, with bank
 transfers and cards coming soon, and every payment is reconciled against
 what it paid for. You bring your own paybill or account, and payments
-settle straight into it; we never hold the money. Already have a business
-collection account at your bank, often called Lipa na Bank? The Gateway
-works with it, with matching as each bank comes online. Proven in
-production at Onit Bank, 2025 to 2026.
+settle straight into it; we never hold the money. It works with Lipa na
+Bank collection accounts. Banks use it too, in their own app or under
+their own name for their business customers. Proven in production at
+Onit Bank, 2025 to 2026.
 **Diagram caption:** One API for every rail. The money settles straight
 into the merchant’s own account; the Gateway handles the prompt, the
 confirmation and the reconciliation.
 **Features:**
 - One collections API across M-Pesa, Airtel Money and T-Kash
-- Cards, PesaLink, name checks before payouts and recovery of missed
-  payments, coming soon
+- Cards, PesaLink, name checks before payouts, recovery of missed payments
+  and a white-label for banks, coming soon
 - Payment links, including invoices sent by SMS
 - A merchant dashboard: every payment matched, every exception listed
 - Signed callbacks and idempotent requests
 **Facts:**
 - Channels: M-Pesa, Airtel Money, T-Kash; cards and PesaLink coming soon
 - Settles: Into the merchant's own accounts
-- For: SMEs, fintechs, MFIs and Saccos
+- For: Businesses, fintechs, banks, MFIs and Saccos
 
 ### Kapu Escrow
 
@@ -444,9 +445,9 @@ sign-on with the rest of the Dibon platform.
 messages, logins and reports as the first.
 **Services:**
 - Approvals and mandates: Chains by product, amount and risk; no
-  self-approval; every decision attributed when it is made. Debit mandates
-  with the payer's consent and right to cancel. Approve from the app or
-  email, signing in afresh at the moment of decision.
+  self-approval; every decision attributed when it is made. Approve from
+  the app or email, signing in afresh at the moment of decision. ¶ Debit
+  mandates with the payer's consent and right to cancel.
 - Messaging: SMS, WhatsApp, Telegram and app push, direct to Kenya's
   operators under our PRSP licence. A status says only what the channel
   reported.

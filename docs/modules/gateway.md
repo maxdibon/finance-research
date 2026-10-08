@@ -8,8 +8,8 @@ classification: Internal
 audience: [sme, fintech, mfi, sacco]
 depends_on: [rails, recon-observability, messaging, mandates, identity, financial-crime, access]
 consumed_by: [sme-recon, mfi, sacco, insights]
-review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-407, FS-408, FS-415, FS-431, FS-554, FS-586]
-last_reviewed: 2026-10-06
+review_ids: [FS-011, FS-031, FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-093, FS-094, FS-102, FS-339, FS-384, FS-388, FS-390, FS-391, FS-393, FS-407, FS-408, FS-415, FS-431, FS-554, FS-586, FS-615]
+last_reviewed: 2026-10-08
 ---
 
 # Kapu Pay Gateway
@@ -33,7 +33,13 @@ depends on it.
 ## 2 · Who it is for
 
 **Segments:** SMEs and fintechs that take payments on more than one rail.
-Also MFIs and Saccos taking repayments and contributions. Dibon's own
+Also MFIs and Saccos taking repayments and contributions. Institutions use
+it themselves (FS-615): their own developers build payment features the
+products do not offer, collecting into the institution's own shortcodes,
+and crediting customers' accounts stays with the institution's systems or
+with Collect (FS-554); and a bank can offer it, white-labelled, to the
+businesses that bank with it (GW-15). The institution's app talks to the
+Channel API (omni-channel OC-04), not to the Gateway directly. Dibon's own
 products come first (8 Jun meeting).
 
 **The problem, concretely:** each rail has its own integration, its own
@@ -47,6 +53,7 @@ commercially attractive (FS-094).
 
 | Role | What they need from it |
 |---|---|
+| Institution developer | The same API, keys per team and environment, for payment features the institution builds itself |
 | Merchant developer | One API, sandbox credentials, signed callbacks, idempotent requests |
 | Merchant finance | Every payment matched to what it paid for, and the exceptions listed. A dashboard; an export into their ERP |
 | Merchant's customer | A payment prompt or a payment link that works on the rail they have |
@@ -80,6 +87,7 @@ GW-09, moved to financial-crime FC-01 (FS-431).
 | GW-12 | The recipient's registered name confirmed with M-Pesa Hakikisha before every payout | Planned | Owner, 2026-10-03 (FS-388); rails RL-21 | 1 |
 | GW-13 | Payments whose confirmations never arrive are recovered with M-Pesa Pull Transactions and matched | Planned | Owner, 2026-10-03 (FS-388); rails RL-20 | 1 |
 | GW-14 | Airtel Money on the same collections API | Planned | 8 Jun: Phase 2 starts with M-Pesa and Airtel Money. Probably built for Onit Bank but never launched; to confirm (FS-393); rails RL-04. In v1 (FS-407) | 1 |
+| GW-15 | White-labelled for an institution: a bank, microfinance bank or Sacco offers the Gateway under its own name to the businesses that bank with it; each merchant's payments settle into its own account at that institution, and the institution sees its merchants' payments and exceptions in its own portal. The money never rests with Dibon | Planned | Owner, 2026-10-08 (FS-615); the same model as docs/bank-channel.md | 2 |
 
 **Retired ids:** GW-09, moved to financial-crime FC-01 (FS-431). A retired id is never reused.
 
