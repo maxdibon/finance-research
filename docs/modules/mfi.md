@@ -8,8 +8,8 @@ classification: Internal
 audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway, sme-recon, business-suite, escrow, decisioning]
 consumed_by: [omni-channel, insights, business-suite, sacco]
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532, FS-582, FS-581, FS-602]
-last_reviewed: 2026-10-07
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532, FS-582, FS-581, FS-602, FS-618]
+last_reviewed: 2026-10-08
 ---
 
 # Kapu MFI
@@ -111,6 +111,7 @@ FS-393.
 | MF-36 | Pay-day limits: a limit approved once like any loan; each draw from the phone to M-Pesa, Airtel Money, T-Kash or the bank without further approval, checked on every draw for the limit left, employment still active (a leaver in Odoo HR blocks it), deduction headroom on the next payroll and arrears; repaid by check-off over one to three payrolls | Planned | Owner, 2026-10-06 (FS-518). The lender notifies CBK of a new channel 30 days before launch (reg 27) | 2 |
 | MF-37 | Guarantors: consent sought and recorded before anyone is appointed, the guarantee signed (MF-34); the guarantor kept informed by periodic loan statements; recourse only after non-judicial recovery from the borrower is exhausted, and no demand before the guarantor has had 14 days' notice of the default | Planned | CBK lender regulations reg 39(3), reg 42 (LR-03); owner, 2026-10-06: in R1 (FS-531) | 1 |
 | MF-38 | Borrower access: a receipt for every transaction; a message at each change of status (approved, disbursed, due, overdue, restructured, settled); a free statement on request, by a single-use link to our own page, never as an attachment | Planned | CBK lender regulations reg 39(1) (LR-03); owner, 2026-10-06: in R1 (FS-531) | 1 |
+| MF-39 | The collection ladder: stages by days past due, configured per product (for Roan Capital: a reminder on day 25, the default run from day 30, a final warning from day 40, closure on day 47), each with its messages, its actions and who acts; a loan moves between stages by rule each day on the business calendar (core KC-15), and back when it is paid up; every message within the conduct rules (MF-26), every charge within the arrears cap (MF-21), and the bureau notice before any listing (MF-27) | Planned | Owner, 2026-10-08 (FS-618); Roan Capital RC-27 | 1 |
 
 **Retired ids:** MF-33, moved to decisioning DE-03 (the behaviour score) and DE-06 (learned scoring and affordability from source) (FS-582).
 

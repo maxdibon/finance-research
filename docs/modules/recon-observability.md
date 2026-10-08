@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime, core, escrow, crb, rails, insights, platform-security, decisioning]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585]
-last_reviewed: 2026-10-06
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618]
+last_reviewed: 2026-10-08
 ---
 
 # Recon & Observability
@@ -90,6 +90,7 @@ reconciliation, is Planned (FS-405).
 | RO-24 | Each transaction's events are hash-chained, so a change to any step shows, and the chain heads are anchored in an append-only transparency log (Trillian or Rekor) | Planned | FS-445, FS-453 | 1 |
 | RO-25 | A transaction's journey verified by anyone holding our public keys, and exported as evidence for a dispute, an audit or a regulator (with RO-13); exported through the portal or SFTP (identity ID-17) | Planned | FS-445, FS-453 | 1 |
 | RO-26 | Fee verification: what each rail, bank or provider charged, checked against its tariff and its settlement statement: a larger bank's transfer fees, intermediary deductions and exchange rates for an institution; charges on an SME's accounts | Planned | Owner, 2026-10-06 (FS-510, FS-585); from competitors CP-20 and RO-20 | 2 |
+| RO-27 | One audit trail across modules: every action, inside a transaction or not (sign-ins, role and product changes, approvals, document views), published as a signed event (architecture §6) and indexed, searchable by user, account, date and action by the institution's auditors under their own role, exportable for an auditor or the regulator, and never editable | Planned | Owner, 2026-10-08 (FS-618); Roan Capital RC-33 | 1 |
 
 **Retired ids:** RO-12, moved to financial-crime FC-03; RO-14, to FC-09 and FC-13; RO-15, to FC-05 and FC-07 (FS-431). A retired id is never reused.
 

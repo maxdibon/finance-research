@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-07
+last_reviewed: 2026-10-08
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -949,3 +949,19 @@ its own entry.
   takes the bank's own controls out of the large ones.
 - **Costs (inferred):** a mandate letter and limits to agree with each
   bank; until a bank agrees, every payout through it is approved twice.
+
+## FS-618 · Roan Capital's map: twenty rows closed, three capabilities added; the cap raised to 248
+
+- **Chose:** twenty Partial rows closed, because their capabilities do
+  what the requirement asks and what remains is Roan Capital's input or
+  screen design. Three gaps closed by new R1 capabilities: the collection
+  ladder (mfi MF-39), the public request page and calculator
+  (business-suite BS-20), one audit trail across modules
+  (recon-observability RO-27). The authenticator app is named in R1
+  (access AC-16).
+- **Requires:** MF-39; BS-20; RO-27; AC-16; docs/customers/roan-capital.md "RC-27".
+- **Argued against:** leaving the three Partial until Roan Capital
+  confirms them, when its requirement document already asks for each.
+- **Costs (inferred):** three more R1 capabilities for a team of four;
+  the ladder's stages must be fitted to the conduct rules before Roan
+  Capital's day 30 and day 47 can be configured (open answer 3).

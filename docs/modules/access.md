@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [messaging, identity]
 consumed_by: [mandates, messaging, rails, recon-observability, identity, financial-crime, core, collect, gateway, mfi, sacco, sme-recon, escrow, crb, omni-channel, insights, business-suite, platform-security, decisioning]
-review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491, FS-498, FS-503, FS-504, FS-588]
-last_reviewed: 2026-10-06
+review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491, FS-498, FS-503, FS-504, FS-588, FS-618]
+last_reviewed: 2026-10-08
 ---
 
 # Access — login, roles and step-up
@@ -72,7 +72,7 @@ reach.
 | AC-13 | One-time codes delivered through our messaging service | Planned | messaging MS-02 | 1 |
 | AC-14 | Block now: a customer, member, field officer or agent blocks their own access from any channel (USSD from another phone with the ID number and date of birth, the call centre, a branch, WhatsApp from another number, a web form), at any hour and without the service desk; sessions revoked, the device unbound, money movement held | Planned | Owner, 2026-10-06 (FS-503). Blocking is easy; unblocking needs AC-15 | 1 |
 | AC-15 | Recovery: a PIN or password reset, a new device or a new number only after identity verification (the bound SIM with its IMSI unchanged and something only the person knows, a face match, or a branch); never a one-time code alone; lower limits for 24 to 48 hours afterwards; an alert on every other channel; a phone upgrade moves the binding with the old device's approval | Planned | Owner, 2026-10-06 (FS-503, FS-504); identity verification ID-01, ID-04, ID-13 | 1 |
-| AC-16 | Staff and approvers register two authenticators (an app, and a security key or passkey); a lost one is revoked at once, and a reset needs a second administrator and an identity check in person or by video | Planned | Owner, 2026-10-06 (FS-503). Roan Capital's approvers use one-time codes (RC-32) | 1 |
+| AC-16 | Staff and approvers register two authenticators: an authenticator app with time-based one-time codes (Google Authenticator, Microsoft Authenticator or any TOTP app), in R1; and a security key or passkey; a lost one is revoked at once, and a reset needs a second administrator and an identity check in person or by video | Planned | Owner, 2026-10-06 (FS-503). Roan Capital's approvers use one-time codes (RC-32) | 1 |
 
 ## 4 · Where it sits
 

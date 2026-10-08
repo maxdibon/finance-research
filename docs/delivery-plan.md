@@ -6,14 +6,14 @@ version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # Delivery plan — phase 1 in releases
 
 **Why this exists:** phase 1 in the modules is the whole of v1, not a
-release (FS-473). On 2026-10-06 it held 245 capability rows: 16 Built, 48
-Designed, 181 Planned (computed from the modules' §3 tables). No team
+release (FS-473). On 2026-10-06 it held 248 capability rows: 16 Built, 48
+Designed, 184 Planned (computed from the modules' §3 tables). No team
 builds that at once. This plan cuts it into releases, each started by a
 customer event and finished by a definition of done, so the work in hand
 is always what a signed customer needs next.
@@ -27,7 +27,7 @@ release that needs it.
 
 | Release | Started by | Scope | Size |
 |---|---|---|---|
-| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 77 capabilities from the map (29 Designed, 48 Planned), plus 22 platform, security and testing capabilities |
+| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 81 capabilities from the map (29 Designed, 52 Planned), plus 21 further platform, security and testing capabilities (AC-16 is in both) |
 | **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); for a microfinance bank, rails through a larger bank and its settlement account's float (RL-27, RO-09; FS-585); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability | Mostly Built or Designed: the Onit record |
 | **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
 | **R4 · Saccos and Kapu Core** | The first Sacco or core customer signs | Kapu Sacco, Kapu Core, member apps and USSD, the field-officer app | Sacco, Core and omni-channel phase-1 rows |
@@ -40,7 +40,7 @@ the check keeps the two in step):
 
 - **Lending:** MF-01 to MF-07, MF-09 (restructuring), MF-10 to MF-15,
   MF-21 to MF-26, MF-28, MF-34 (loan agreements), MF-35 (loan officers), MF-37
-  (guarantors), MF-38 (borrower access); land
+  (guarantors), MF-38 (borrower access), MF-39 (the collection ladder); land
   title searches and charge registration (MF-18) and programmatic NTSA
   (MF-05) are phase 2, as the document's exclusions say; land titles are
   stored in R1 under MF-03 (FS-581).
@@ -60,9 +60,11 @@ the check keeps the two in step):
   repeat never pays twice) (FS-570); RL-01 (each payout one instruction,
   cancellable, recallable, reversible) and RL-29 (a bank account holder's
   name confirmed) (FS-586).
-- **Reconciliation and evidence:** RO-02, RO-05, RO-16, RO-17, RO-19, RO-24.
+- **Reconciliation and evidence:** RO-02, RO-05, RO-16, RO-17, RO-19, RO-24,
+  RO-27 (one audit trail across modules).
 - **Access:** AC-05, AC-09.
-- **Business suite:** BS-01 (CRM for leads), BS-02 (Odoo Sign, for loan
+- **Business suite:** BS-01 (CRM for leads), BS-20 (the public request page
+  and calculator), BS-02 (Odoo Sign, for loan
   agreements).
 - **Decisioning:** DE-01 (the contract and decision records), DE-02
   (statement metrics), DE-03 (the behaviour score), DE-04 (risk classes),
@@ -98,7 +100,7 @@ SE-23 to SE-25) follows in R2, before a bank goes live.
 **The current scope is the target** (FS-490): v1 is everything in phase 1
 today, and it does not grow by drift.
 
-**v1 cap:** 245 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585, FS-586).
+**v1 cap:** 248 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585, FS-586, FS-618).
 
 Nothing moves into phase 1 unless something of similar size moves out, or
 the team grows to carry it. Raising the cap is a decision: the line above
@@ -131,7 +133,7 @@ Four people lead the build (FS-477):
 | A DevSecOps engineer | The platform: Kubernetes, Keycloak (AC-01, AC-02, AC-08), OpenBao, the document vault (ID-15), the build pipeline, backups and the security minimum (SE rows above) |
 | The CTIO | Architecture and reviews; the approval engine's design (MD-01 to MD-18); security lead; Roan Capital's acceptance with the project manager |
 
-**Building less is the plan.** Four people cannot build 99 capabilities
+**Building less is the plan.** Four people cannot build 102 capabilities
 from scratch, so R1 uses what already exists and builds only what does
 not:
 
