@@ -220,7 +220,8 @@ function diagram(src, ctx) {
   }
   lines.forEach((l, r) => {
     for (const m of l.matchAll(/\[[a-z_][a-z_, ]*\]/g)) for (let c = m.index; c < m.index + m[0].length; c++) cls[r][c] = 'tg';
-    const br = l.match(/^(\s*)\|--/);
+    // A journey's failure branch ("|-- ... (3a)"); not an arrow in a sequence.
+    const br = ctx.journey && l.match(/^(\s*)\|--/);
     if (br) for (let c = br[1].length + 3; c < l.length; c++) if (!cls[r][c]) cls[r][c] = 'br';
   });
   const out = lines.map((l, r) => {

@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite, decisioning]
 review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # Identity verification — who a person or business really is
@@ -28,7 +28,7 @@ ID, phone number and SIM, so a swapped or recycled number cannot take it
 over (ID-12 to ID-14, FS-453). Each product decides which checks it needs.
 **It will keep the result and the evidence, never a copy of the
 register,** stored on the person in their authority — the core, Fineract
-or Odoo (docs/architecture.md §2, §6). Each country brings its own
+or Odoo (docs/architecture/README.md §2, §6). Each country brings its own
 registers (FS-109).
 
 **Not access.** Access (Keycloak) decides who is logged in and what they
@@ -71,7 +71,7 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 | ID-06 | Tax checks: KRA PIN validation, and whether a tax compliance certificate is valid, through KRA GavaConnect | Planned | FS-205; owner, 2026-10-06: the certificate added (FS-536) | 2 |
 | ID-07 | Business verification by registration number: status, directors and shareholders fetched from the business registry (the content of a CR12), beneficial owners as declared and checked; the company uploads only what cannot be fetched, and its eCitizen login is never held | Planned | FS-090; owner, 2026-10-06 (FS-536). Depends on BRS access, FS-205. Owner, 2026-10-05: business registration (BRS) moves to v1 (FS-415). Every company lodges its register of beneficial owners with the Registrar (Companies Act s.93A, law register LR-34), so the registry holds them; whether its API returns them is to confirm (FS-566). Otherwise the Registrar discloses them to a financial institution on Form BOF6 and a fee (Beneficial Ownership Information Regulations reg 14(1)(c), LR-35); a beneficial owner is a natural person with at least ten percent of the shares or votes, the power over the board, or significant influence or control (reg 3(2)) (FS-568) | 1 |
 | ID-09 | Registers in other countries, per country | Planned | FS-109 | later |
-| ID-10 | The result, its source reference and the evidence kept; never a copy of the register's record. The cost of each query logged against the check, per source | Planned | docs/architecture.md §6. Owner, 2026-10-06: in R1, with the cost per query (FS-562; Roan Capital RC-02) | 1 |
+| ID-10 | The result, its source reference and the evidence kept; never a copy of the register's record. The cost of each query logged against the check, per source | Planned | docs/architecture/README.md §6. Owner, 2026-10-06: in R1, with the cost per query (FS-562; Roan Capital RC-02) | 1 |
 | ID-11 | Phone-number ownership by a one-time code sent to the number | Planned | FS-205. Split from ID-05; no record shows it ran. Owner, 2026-10-06: in R1 (FS-562), the code sent through Dibon's messaging service (messaging MS-02, FS-565) | 1 |
 | ID-12 | Each account bound at enrolment to the ID number, the phone number and the SIM's IMSI; the phone number alone is never the identity | Planned | FS-448, FS-453 | 1 |
 | ID-13 | An IMSI changed since enrolment, from a swap or a recycled number, holds money movement and credential resets until the customer is re-verified (financial-crime FC-02; rails RL-22) | Planned | FS-448, FS-453. The subscriber regulations do not address recycling (law register LR-22): it is each operator's practice | 1 |
@@ -98,7 +98,7 @@ reset or a new device, AC-15) and business-suite (company registers
 checked against the business registry, BS-18), and decisioning
 (statements in the vault, ID-15; the KYC tier, ID-19).
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -199,4 +199,4 @@ FS-088, FS-090, FS-109, FS-202, FS-203, FS-204, FS-205.
   *Derived, not reproduced.*
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — FR-1.4, FR-2, §2.
 - Kapu Pay strategy discussion, 8 Jun 2026 (anonymised) — the national register dependency (NPDM, formerly IPRS).
-- docs/architecture.md §2, §6.
+- docs/architecture/README.md §2, §6.

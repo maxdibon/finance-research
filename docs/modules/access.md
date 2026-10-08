@@ -25,7 +25,7 @@ It is how re-authentication at the act will be built: a payment, an
 approval or a release will ask for **step-up authentication** at that
 moment, not at login. An institution with its own identity provider keeps
 it; we will federate to it. **Access will hold logins, not people.** A
-person's identity and KYC stay with their authority (docs/architecture.md
+person's identity and KYC stay with their authority (docs/architecture/README.md
 §2).
 
 ## 2 · Who it is for
@@ -81,7 +81,7 @@ before any recovery, AC-15).
 **Used by:** every module. The mandate engine uses it for re-authentication
 (AC-05) and role resolution (AC-09).
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -150,7 +150,7 @@ system it federates to.
 
 ## 8 · Controls
 
-- **Attribution at the act** (docs/architecture.md §7). A session says who
+- **Attribution at the act** (docs/architecture/README.md §7). A session says who
   opened the app; step-up says who is accountable for the act.
 - **Granting a role is a mandated act.** Changing who may approve money is
   itself approved by a second person (FS-144, FS-206).
@@ -188,4 +188,4 @@ docs/specs/access-keycloak.md §10 (FS-642).
 - Keycloak 26.8.0, its Server Administration Guide and list of features,
   read 2026-10-08 for docs/specs/access-keycloak.md (FS-642).
 - REVIEW.md FS-132, FS-193 to FS-197.
-- docs/architecture.md §2, §7.
+- docs/architecture/README.md §2, §7.

@@ -2,7 +2,7 @@
 
     version: 1.5.0
     updated: 2026-10-08
-    supersedes: 1.4.0; adds 8 October (FS-611 to FS-648)
+    supersedes: 1.4.0; adds 8 October (FS-611 to FS-649)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -37,7 +37,7 @@ security.
 
 **One line decides most questions:** the institution holds its licence,
 its money and its records; Dibon holds the platform. Read
-`docs/architecture.md` §2 and §3 before you argue with it.
+`docs/architecture/README.md` §2 and §3 before you argue with it.
 
 ## Settled: do not reopen without the owner
 
@@ -133,6 +133,10 @@ Each has a register row and, where it changed the design, an entry in
   (settlement and the collateral's discharge), JN-13
   (a bank disbursement to settlement, return, recall or reversal). Each
   journey found gaps, settled with the owner one by one.
+- **Architecture** is a folder (`docs/architecture/`, FS-649): README.md
+  keeps §1 to §10, so "architecture §N" references hold; beside it the
+  views: context, instance, deployment, runtime (sequence diagrams),
+  interfaces, quality goals, constraints, risks.
 - **Specifications** in `docs/specs/` (index: `README.md`, with the map and
   the components table): approval engine, lender rules, Kapu Core on
   Fineract, the end-of-day runner, observability on Grafana, access on

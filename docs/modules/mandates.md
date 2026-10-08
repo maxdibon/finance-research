@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability, core, crb, financial-crime, omni-channel, business-suite, insights, identity, decisioning]
 review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453, FS-494, FS-495, FS-498, FS-497, FS-561, FS-582]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # Mandates — signing and debit
@@ -69,7 +69,7 @@ owner's request (FS-042).
 | MD-07 | Flags route to an authority: a flagged request always ends with the named role, whatever tier it fell in | Designed | MFI PRD FR-6.8 | 1 |
 | MD-08 | Time-in-step SLAs, reminders and escalation | Designed | MFI PRD FR-6.9. Owner, 2026-10-06: in R1 (FS-561) | 1 |
 | MD-09 | Quorum steps (N of M) | Planned | MFI PRD FR-6.10: designed as an additive change; its "launch is sequential only" is superseded by FS-402. Owner, 2026-10-03: moved up to phase 1, because Roan Capital's credit committee approves 3 of 3, unanimously (FS-402; docs/customers.md CU-01) | 1 |
-| MD-10 | Each decision re-authenticated at the moment it is made (PIN or one-time code) | Planned | docs/architecture.md §7; FS-132 | 1 |
+| MD-10 | Each decision re-authenticated at the moment it is made (PIN or one-time code) | Planned | docs/architecture/README.md §7; FS-132 | 1 |
 | MD-11 | Bank-side mirror: the signing mandate registered on the bank account, and our instruction checked against it | Designed | FS-122. Dibon specified an account mandate API for KCB (v1.1, Nov 2022: accounts registered with approval rules by transaction type and amount, signatories by level, debits initiated, approved, rejected and queried), integrated in KCB's test environment by Jan 2023, never in production (FS-416). Each bank still needs its own (partners.md C10) | 2 |
 | MD-12 | Consumers beyond MFI: Sacco committees, Collect and Gateway maker-checker, SME Recon payments, Escrow releases, recon reversals | Planned | MFI PRD FR-6 platform note; FS-097, FS-107 | 1–2 |
 | MD-13 | Debit mandate record: payer, payee, amount (fixed or capped), frequency, start and end, rail; consent captured and signed | Planned | FS-042. On M-Pesa: Ratiba standing orders (rails RL-23, FS-387) | 2 |
@@ -93,7 +93,7 @@ approvals), insights (the governance view, IN-18) identity (the
 second approval on a manual identity check, ID-01) and decisioning
 (maker-checker on model changes).
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -169,7 +169,7 @@ The build specification for R1 is docs/specs/approval-engine.md (FS-495).
 
 - **Custody:** none. The engine decides whether an act may happen; the
   product and the rail execute it.
-- **Debit pulls are initiation** (docs/architecture.md §3): we instruct a
+- **Debit pulls are initiation** (docs/architecture/README.md §3): we instruct a
   pull from the payer's account under their consent — FS-037.
 - **Consent:** each pull needs clear, recorded consent that the payer can
   withdraw. The rules for direct debits, and for standing orders on mobile
@@ -193,7 +193,7 @@ The build specification for R1 is docs/specs/approval-engine.md (FS-495).
 
 ## 9 · Deployment
 
-Part of the shared platform, inside each deployment (docs/architecture.md
+Part of the shared platform, inside each deployment (docs/architecture/README.md
 §6). On-prem or on Liquid's Azure Stack (FS-032).
 
 ## 10 · What it does not do
@@ -216,6 +216,6 @@ FS-037, FS-046, FS-143, FS-145. FS-146 is decided: quorum steps
   FS-449, FS-453.
 - KCB account mandate API specification v1.1, Nov 2022 (clients/kcb/,
   outside git; FS-416).
-- docs/architecture.md §3, §7.
+- docs/architecture/README.md §3, §7.
 - GateKeepr STANDARDS.md §6.2 (attribution at the act; approvals never
   gate a safety alert) — principles carried over, not references.

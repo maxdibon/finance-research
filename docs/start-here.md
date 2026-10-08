@@ -26,13 +26,13 @@ on shared services (identity, access, mandates, messaging, rails,
 reconciliation, financial crime, insights, platform security). Each
 institution runs in its own isolated instance (architecture §9). The
 institution holds its licence and its records; we hold the platform. That
-line is in [architecture.md](architecture.md) §2 and §3, and most
+line is in [architecture.md](architecture/README.md) §2 and §3, and most
 decisions follow from it.
 
 ## Your first day
 
 1. Read [overview.md](overview.md), then
-   [architecture.md](architecture.md) §2, §3 and §6.
+   [architecture.md](architecture/README.md) §2, §3 and §6.
 2. Read [delivery-plan.md](delivery-plan.md): what we build now (R1,
    Roan Capital's pilot), the v1 rule, and the definition of done.
 3. Read [customers.md](customers.md) and the delivery map in

@@ -62,7 +62,7 @@ launched; its row stays Designed until that is confirmed (FS-393).
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
 | RL-01 | One adapter interface: collect, pay out, status, balance, statement, cancel, recall, reversal. Every payout is an instruction with one id from approval to settlement, carried to the rail as its reference: approved, released, sent, accepted or rejected, debited, settled; held by a rule until it may go; pending when no answer comes, settled by a status query, never resent blind. Cancelled before the rail processes it; recalled after, where the rail allows, with the outcome recorded; returned by the receiving side (account closed, name mismatch) with the funds back. A reversal is a new instruction linked to the original, never an edit of it: requested under maker-checker, through the rail's own reversal where it has one (M-Pesa's, RL-03) or a recall request, reversed in full, in part, or refused, each within the rail's time limit; the customer's posting is reversed by an entry, never deleted, and only when the money is back. A reversal or recall returns money only to where it came from, never to a new destination. What is approved is what is sent: the approval records a hash of the amount, currency, payee name, account or number, rail and reference, and the adapter refuses to send an instruction whose hash differs; any change re-opens approval (FS-588) | Planned | FS-093 — FS-208. Owner, 2026-10-06: in R1, with the lifecycle, cancellation, recall and reversals (FS-586, FS-587) | 1 |
-| RL-02 | One normalised event per call, carrying the rail's own reference as a field, never in a note | Designed | docs/architecture.md §2 | 1 |
+| RL-02 | One normalised event per call, carrying the rail's own reference as a field, never in a note | Designed | docs/architecture/README.md §2 | 1 |
 | RL-03 | M-Pesa (Daraja): M-Pesa Express push prompt, C2B validation and confirmation, B2C, transaction status, account balance, reversal | Built | Ran in production at Onit Bank, Feb 2025 to Jun 2026, in Collect and the Gateway (owner, 2026-10-03, FS-384, FS-387, FS-391) | 1 |
 | RL-04 | Airtel Money: collections, disbursements, enquiry, balance, refunds | Designed | Kapu technical documentation lists the channel; MFI PRD §4. Outreach Email 3. Owner, 2026-10-03: the Airtel API integration was probably built for Onit Bank but never launched; to confirm with the technical lead (FS-393) | 1 |
 | RL-05 | T-Kash | Designed | Kapu technical documentation lists the channel. Outreach Email 4 | 1 |
@@ -70,9 +70,9 @@ launched; its row stays Designed until that is confirmed (FS-393).
 | RL-07 | Bank APIs and statement files (MT940, CAMT.053, CSV), per bank; Dibon's own banks first. Instructions reach each bank by the channel it offers: its API; host-to-host files over SFTP (ISO 20022 payment initiation out, status reports back); or a bulk-payment file uploaded to internet banking and released there by the institution's signatories, R1's fallback until a bank grants more. Whichever channel, the bank's status and its statement close the instruction (RL-01), and the bank-side release is linked to the approval that preceded it. Tiered (FS-594): within limits a bank agrees by mandate letter, a signed instruction from the institution's chain is released straight through; above them, or by the internet-banking stopgap, the institution's signatories also release it at the bank, checking the file's totals and hash, so the second approval is not a formality. Both paths are built once; which applies is configuration, per institution and bank account: the limit from that bank's mandate letter, effective-dated and changed under maker-checker (FS-611). Each instruction or file is signed with the institution's key, or the certificate its bank issues, used inside OpenBao and never exported (RL-12), over mutual TLS to each bank. The internet-banking file carries its line count, total and hash on the approval record; it is downloaded only to a managed device, never emailed, and deleted after upload; the signatories check the totals in the bank's portal before release; when the statement arrives, every line is compared with what was approved, and an extra or altered line is an incident (FS-588) | Planned | FS-125; outreach Email 1; a customer's own request to its banks (docs/outreach/bank-access-request.md, FS-586) | 1 |
 | RL-08 | Card acquiring through an aggregator or acquirer; card numbers never reach us | Planned | partners.md SD-01, SD-03 | 3 |
 | RL-09 | Processor settlement reports, gross to net of fees | Planned | FS-102; recon-observability RO-20 | 2 |
-| RL-10 | **Unknown is a state.** A timeout is pending until a status query or a statement settles it | Designed | Prospect prototype, Transaction Trace; docs/architecture.md §5 | 1 |
+| RL-10 | **Unknown is a state.** A timeout is pending until a status query or a statement settles it | Designed | Prospect prototype, Transaction Trace; docs/architecture/README.md §5 | 1 |
 | RL-11 | A callback the rail does not sign is confirmed by status query, or by source checks, before it is final | Planned | FS-209 | 1 |
-| RL-12 | Credentials per customer, held server-side in OpenBao; never on a device, in an app or in a browser. Signing keys for instructions to banks are used inside OpenBao's transit engine and never exported (FS-588) | Designed | docs/architecture.md §3 and §6; OpenBao, not HashiCorp Vault, for licence reasons (FS-403). The Onit Bank deployment used Vault; OpenBao keeps its API | 1 |
+| RL-12 | Credentials per customer, held server-side in OpenBao; never on a device, in an app or in a browser. Signing keys for instructions to banks are used inside OpenBao's transit engine and never exported (FS-588) | Designed | docs/architecture/README.md §3 and §6; OpenBao, not HashiCorp Vault, for licence reasons (FS-403). The Onit Bank deployment used Vault; OpenBao keeps its API | 1 |
 | RL-13 | Delegated access to a customer's own shortcode or bank account, under its written consent | Planned | FS-127 | 1 |
 | RL-14 | Idempotency: our request id carried to the rail's own idempotency key where it has one; a repeat never pays twice | Planned | collect §8 (code 5001) | 1 |
 | RL-15 | Rail health, latency and failure rates to observability; a degraded rail is paused, not hammered | Planned | recon-observability RO-16, RO-17 | 1 |
@@ -101,7 +101,7 @@ remediation), core (mobile-money deposits and repayments, KC-09),
 omni-channel (payments and field collections, OC-18)
 and financial-crime (the SIM-swap check, RL-22). Also identity.
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -159,7 +159,7 @@ mode.
 
 - **Custody:** none of ours. Each call uses the credentials of the owner of
   the shortcode or account. The custody pattern is the calling product's
-  (docs/architecture.md §3). **The shortcode owner decides it** (FS-056).
+  (docs/architecture/README.md §3). **The shortcode owner decides it** (FS-056).
 - **Operator agreements:** each shortcode carries the owner's agreement
   with the operator. Acting on a customer's shortcode needs the operator's
   terms for third parties and the customer's consent — FS-127.
@@ -209,4 +209,4 @@ FS-056, FS-088, FS-127, FS-208, FS-209, FS-210.
 - Prospect reconciliation prototype, Aug 2026 — Transaction Trace.
   *Derived, not reproduced.*
 - docs/outreach/api-requests.md; docs/partners.md.
-- docs/architecture.md §2, §3, §5.
+- docs/architecture/README.md §2, §3, §5.

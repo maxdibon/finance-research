@@ -128,7 +128,7 @@ app show its loans), insights (its metrics) and business-suite (check-off
 schedules to employers, BS-15) and sacco (group lending for chamas,
 SC-19). Otherwise it is the product an MFI buys.
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -228,7 +228,7 @@ approval engine decides (docs/specs/approval-engine.md); Fineract records
 - **No self-approval** across consecutive steps, even in a three-person
   team (FR-6.7).
 - **Maker-checker on disbursement** (FR-9.3). Disbursement moves money, so
-  it is attributed at the act (docs/architecture.md §7).
+  it is attributed at the act (docs/architecture/README.md §7).
 - **Nothing is deleted:** a restructured loan is closed as Restructured and
   linked, never modified (FR-8.2). Verification records are immutable
   (FR-4.2).
@@ -237,7 +237,7 @@ approval engine decides (docs/specs/approval-engine.md); Fineract records
 
 Hosted by us, one tenant per MFI, on Liquid's Azure Stack (FS-032). A
 three-person lender will not run its own infrastructure. Shared platform
-services as in docs/architecture.md §6. The MFI PRD calls it sales-led and
+services as in docs/architecture/README.md §6. The MFI PRD calls it sales-led and
 ops-provisioned through Odoo CRM.
 
 ## 10 · What it does not do
@@ -258,5 +258,5 @@ FS-088, FS-141.
 
 - Kapu Pay MFI — Product Specification (PRD section), Draft v0.2, Jun 2026
   (sources/kapu/).
-- docs/architecture.md §2, §3, §4.
+- docs/architecture/README.md §2, §3, §4.
 - REVIEW.md FS-019, FS-020, FS-045.

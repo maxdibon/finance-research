@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [identity, recon-observability, rails, mandates, messaging, access, core]
 consumed_by: [collect, gateway, mfi, sacco, core, omni-channel, identity]
 review_ids: [FS-098, FS-418, FS-422, FS-428, FS-431, FS-433, FS-435, FS-448, FS-453, FS-574, FS-577, FS-580, FS-588]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # Financial Crime and Compliance
@@ -92,7 +92,7 @@ transaction rules, FC-16).
 **Used by:** collect, gateway, mfi, sacco, core, omni-channel; identity,
 whose IMSI-change holds (ID-13) run through FC-02.
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -105,7 +105,7 @@ whose IMSI-change holds (ID-13) run through FC-02.
 **What this module never stores:** money, and a copy of a sanctions or
 PEP list beyond the version screened against, with its date.
 
-**Under each ledger mode** (docs/architecture.md §4):
+**Under each ledger mode** (docs/architecture/README.md §4):
 
 | | Integrated — customer has a core | Native — no core; Fineract is the ledger |
 |---|---|---|

@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, fintech]
 depends_on: [core, recon-observability, identity, mandates, access]
 consumed_by: [mfi, sacco]
 review_ids: [FS-522, FS-581, FS-582, FS-583, FS-584]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # Decisioning
@@ -73,7 +73,7 @@ see models).
 **Used by:** mfi (the officer's assessed limit, MF-06, and the committee
 read its record) and sacco (loan limits and repeat members).
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|

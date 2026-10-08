@@ -9,7 +9,7 @@ audience: [bank, sme, fintech]
 depends_on: [collect, mandates, recon-observability, messaging, rails, identity, access]
 consumed_by: [insights, mfi]
 review_ids: [FS-042, FS-104, FS-107, FS-108, FS-114, FS-115, FS-116, FS-117, FS-328, FS-407, FS-408, FS-522]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # Kapu Escrow
@@ -80,7 +80,7 @@ approvals), recon-observability (ES-10), messaging (ES-09), rails
 which pays suppliers on delivery for LPO financing (MF-32); GateKeepr's deposit and service-charge flows are a
 possible consumer.
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -143,7 +143,7 @@ that would let Dibon release funds without the agreed approvers.
 
 - **Custody:** the partner bank's. **Pattern: initiation.** We instruct a
   release from an account we do not control, and only with the agreed
-  approvals (docs/architecture.md §3). If Dibon held escrowed funds it
+  approvals (docs/architecture/README.md §3). If Dibon held escrowed funds it
   would be aggregation, which needs a licence. A PSP licence might not
   cover escrow even then.
 - **Licence relied on:** the partner bank's. Who may act as escrow agent,
@@ -197,7 +197,7 @@ FS-108, FS-114, FS-115.
 ## 12 · Sources
 
 - REVIEW.md FS-042, FS-104, FS-107.
-- docs/architecture.md §2, §3.
+- docs/architecture/README.md §2, §3.
 - docs/modules/collect.md CO-03, CO-05 (sub-accounts, deposits).
 - GateKeepr brief (odoo-reconciliation.md §2): escrow sits on the
   regulated side of the custody line.

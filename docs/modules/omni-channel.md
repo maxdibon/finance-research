@@ -106,7 +106,7 @@ shows: collect, mfi, sacco.
 **Used by:** members, customers and field officers; insights reads its
 metrics.
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|

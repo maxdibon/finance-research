@@ -9,7 +9,7 @@ audience: [sacco]
 depends_on: [mandates, identity, rails, messaging, recon-observability, collect, crb, financial-crime, access, core, gateway, mfi, decisioning]
 consumed_by: [omni-channel, insights, business-suite]
 review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453, FS-499, FS-522, FS-539, FS-554, FS-582]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # Kapu Sacco
@@ -89,7 +89,7 @@ loan limits and repeat members; FS-582). Also access (login, roles and step-up);
 field-officer app), insights (its metrics) and business-suite (check-off
 schedules to employers, BS-15). Otherwise it is the product a Sacco buys.
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -202,7 +202,7 @@ Liquid's Azure Stack.
 - Hold members' money.
 - Run chamas or informal groups. That is Kapu Circle, parked (FS-021).
 - Replace a deposit-taking Sacco's core without a separate decision and
-  agreement (docs/architecture.md §4: integrated first, always).
+  agreement (docs/architecture/README.md §4: integrated first, always).
 - Decide credit. The committee decides.
 
 ## 11 · Open questions
@@ -217,4 +217,4 @@ steps (mandates MD-09) are phase 1 (FS-402).
   docs/modules/mandates.md.
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — FR-6 platform note
   (Sacco loan committees as a consumer).
-- docs/architecture.md §2, §4.
+- docs/architecture/README.md §2, §4.

@@ -59,9 +59,9 @@ optimise and automate.
 | Continual improvement | [REVIEW.md](../../REVIEW.md): every point raised, recorded and closed, is the improvement register |
 | Measurement and reporting | Grafana for the platform; [insights](../modules/insights.md) for customers |
 | Relationship management | [Customers](../customers.md); the service reviews each support tier promises |
-| Architecture management | [Architecture](../architecture.md) |
+| Architecture management | [Architecture](../architecture/README.md) |
 | Deployment management | GitOps and signed images ([platform-security](../modules/platform-security.md) SE-06, SE-12, SE-23) |
-| Infrastructure and platform management | [Architecture](../architecture.md) §9; [platform-security](../modules/platform-security.md) |
+| Infrastructure and platform management | [Architecture](../architecture/README.md) §9; [platform-security](../modules/platform-security.md) |
 | Software development and management | The code repository; [testing](../testing.md) |
 | Risk management | [Compliance](../compliance.md); [regulation](../regulation.md); threat models ([platform-security](../modules/platform-security.md) SE-16) |
 | Workforce and talent management | [The operating model](../operating-model.md) |
@@ -163,7 +163,7 @@ changed, a password or authenticator reset (after re-verification), a
 report, a setting within its tested bounds, and **access for a Dibon
 engineer**: against a ticket, scoped and expiring, approved by the
 institution where it runs its own operations, and entered in the access
-register ([architecture](../architecture.md) §9, SE-26). The access cases follow the
+register ([architecture](../architecture/README.md) §9, SE-26). The access cases follow the
 runbooks in [the operating model](../operating-model.md) (FS-505).
 
 ## 7 · Tools
@@ -185,19 +185,19 @@ runbooks in [the operating model](../operating-model.md) (FS-505).
 Service Management, Freshservice), which would split the record of every
 request across two systems and hold customer data outside Kenya. Of the
 open-source suites, GLPI is GPL-3.0, which the licence rule allows only
-as part of the operating system ([architecture](../architecture.md)
+as part of the operating system ([architecture](../architecture/README.md)
 §6.1); iTop and Zammad are allowed but repeat Odoo Helpdesk.
 
 ## 8 · Gaps and open items
 
 | Item | Today | Next |
 |---|---|---|
-| Odoo Enterprise for Dibon's own use: does the agreement cover Helpdesk, Knowledge and Calendar for us, not only customers' instances? | Assumed ([architecture](../architecture.md) §8) | Confirm with Odoo (FS-640) |
+| Odoo Enterprise for Dibon's own use: does the agreement cover Helpdesk, Knowledge and Calendar for us, not only customers' instances? | Assumed ([architecture](../architecture/README.md) §8) | Confirm with Odoo (FS-640) |
 | Which GitOps tool: Argo CD or Flux | Not named anywhere | Choose before the configuration record is built |
 | The on-call tool | GoAlert proposed | The owner's choice ([observability-grafana](../specs/observability-grafana.md) §9) |
 | A status page | None; customers learn of an incident from our notices | Optional; offered first to the Complete tier |
 | The pull-request template and the pipeline's change-window rule | Not built | Build with SE-23 |
 | Helpdesk ticket types, SLA policies, request types | Not configured | Configure before R1 go-live |
 | Service-level targets | Proposed defaults ([§5](#5--service-levels)) | Agree in Roan Capital's contract |
-| The bastion that records engineers' sessions where Dibon runs the instance | Not chosen; Teleport's community edition is no longer open-source | Choose against the licence rule ([architecture](../architecture.md) §6.1; FS-645) |
+| The bastion that records engineers' sessions where Dibon runs the instance | Not chosen; Teleport's community edition is no longer open-source | Choose against the licence rule ([architecture](../architecture/README.md) §6.1; FS-645) |
 | An ISO/IEC 20000-1 certification body | No KENAS-accredited body found; SGS advertises it ([compliance](../compliance.md) LC-10) | Stay "in line with" until a route is confirmed |

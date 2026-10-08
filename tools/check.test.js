@@ -115,7 +115,7 @@ test('capabilities: a duplicated id fails', () => {
 });
 
 test('diagrams: a diagram line over 100 columns fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'architecture.md'),
+  const f = runWith((d) => patch(d, path.join('docs', 'architecture', 'README.md'),
     (t) => t.replace(' | FUNDS LEDGER     |', ` | FUNDS LEDGER     |${'-'.repeat(60)}`)));
   assert.deepStrictEqual(names(f), ['diagrams']);
 });
@@ -395,7 +395,7 @@ test('obligations: required text the file no longer says fails', () => {
 });
 
 test('obligations: a required section the file does not have fails', () => {
-  const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace('docs/architecture.md §9 "an isolated', 'docs/architecture.md §19 "an isolated')));
+  const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace('docs/architecture/README.md §9 "an isolated', 'docs/architecture/README.md §19 "an isolated')));
   assert.deepStrictEqual(names(f), ['obligations']);
 });
 

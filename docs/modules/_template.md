@@ -12,7 +12,7 @@ audience: [bank, sacco, mfi, psp, imt, sme, fintech]   # who a pack may include 
 depends_on: []                # module ids this needs (shared services, rails)
 consumed_by: []               # module ids that use this
 review_ids: []                # REVIEW.md ids that bear on this module
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 <!--
@@ -34,9 +34,9 @@ standards carried over):
    (FS-024).
 3. Roles, never names. No client names from confidential source material;
    write "a tier-2 bank", not the bank.
-4. Facts live once. If another module or architecture.md owns a fact, link
+4. Facts live once. If another module or the architecture owns a fact, link
    it — do not restate it. The division of labour between Odoo, the funds
-   ledger and the recon engine is owned by docs/architecture.md (FS-025).
+   ledger and the recon engine is owned by docs/architecture/README.md (FS-025).
 5. Section references name their document: "MFI PRD FR-6", not "FR-6".
 6. Open questions are REVIEW.md ids, not restated prose.
 -->
@@ -83,7 +83,7 @@ Status definitions:
 **Depends on:** shared services and rails, by module id.
 **Used by:** modules that consume it.
 
-**Who holds which record** — the part of docs/architecture.md that applies
+**Who holds which record** — the part of docs/architecture/README.md that applies
 here. One row per record this module touches.
 
 | Record | System of record | This module |
@@ -94,7 +94,7 @@ here. One row per record this module touches.
 
 **What this module never stores:** stated explicitly.
 
-**Under each ledger mode** (docs/architecture.md §4). Every module states
+**Under each ledger mode** (docs/architecture/README.md §4). Every module states
 how it behaves when the customer has a core banking system and when it does
 not (FS-065). If a mode does not apply, say why in one line.
 

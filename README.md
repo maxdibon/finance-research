@@ -34,8 +34,10 @@ REVIEW.md            the intake register — every point raised, with an id
 HANDOFF.md           paste into a new session: orientation, rules, traps
 docs/                the work. The only place we edit
   start-here.md      a first week here: reading order by role, the rules
-  architecture.md    who holds what: the three authorities, the custody
-                     line, ledger modes, feeds, hosting
+  architecture/      who holds what: the three authorities, the custody
+                     line, ledger modes, feeds, hosting; with its views:
+                     context, instance, deployment, runtime, interfaces,
+                     quality, constraints, risks
   decisions.md       what each decision cost, and what was argued against
   customers.md       customers, their stage and what each depends on
   customers/         a delivery map per customer, requirement by requirement
@@ -122,7 +124,7 @@ fresh clone needs the list before it can commit.
 1. **Record before answering.** Every point raised gets a REVIEW.md id
    before it is discussed. Nothing is filtered when it is recorded.
 2. **Facts live once.** A module links to another module or to
-   `architecture.md` rather than restating it. Packs list modules; they do
+   `docs/architecture/` rather than restating it. Packs list modules; they do
    not copy them.
 3. **Tense follows status.** Every capability is Live, Built, Designed or
    Planned, with evidence. Present tense only for Live or Built. The

@@ -251,7 +251,7 @@ the clock: it moves only when the runner moves it.
   (`loans/catch-up`); test environments move the date to run a loan's
   life in minutes.
 
-The platform's rules for time are in docs/architecture.md §10; the run
+The platform's rules for time are in docs/architecture/README.md §10; the run
 itself is in the end-of-day-runner spec.
 
 ## 8 · Security

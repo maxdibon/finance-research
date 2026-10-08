@@ -27,7 +27,7 @@ MFI, Sacco, Collect, omni-channel, reconciliation. Roan Capital's Kapu MFI
 is in delivery on it (customers CU-01). Where the institution has a core,
 they run on that core instead, as Collect did at Onit Bank (the
 integrated mode, FS-390). Kapu Core is the native mode of the
-architecture, packaged as a product (docs/architecture.md §4). **The money
+architecture, packaged as a product (docs/architecture/README.md §4). **The money
 stays in the institution's own accounts; Kapu Core will be its ledger.**
 
 ## 2 · Who it is for
@@ -89,7 +89,7 @@ one), omni-channel, insights, financial-crime (the business calendar,
 KC-15, for its transaction rules), decisioning (repayment history for
 the behaviour score and risk classes).
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -179,5 +179,5 @@ FS-066, FS-185.
 
 - REVIEW.md FS-303, FS-311, FS-316, FS-319.
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — FR-7, FR-13, §6.
-- docs/architecture.md §2, §4.
+- docs/architecture/README.md §2, §4.
 - Musoni System public site, read 2026-10-02, as a benchmark only.

@@ -100,7 +100,7 @@ including business registration, ID-07 — FS-090). Also access (login, roles an
 **Used by:** sme-recon, for incoming funds; mfi and sacco, for repayments
 and contributions; insights, for reporting; Dibon's own products (GW-08).
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -171,7 +171,7 @@ and are written once there — FS-093.
 ## 7 · Regulatory position
 
 - **Custody:** none in pass-through. **Aggregation puts funds under our
-  control, however briefly, and is regulated** (docs/architecture.md §3).
+  control, however briefly, and is regulated** (docs/architecture/README.md §3).
 - **Licence relied on:** in pass-through, none of ours; each merchant uses
   its own shortcodes. For aggregation: the PSP licence (FS-031), or in the
   meantime a payment-facilitator agreement with a licensed gateway
@@ -238,4 +238,4 @@ FS-061, FS-088, FS-089, FS-090, FS-091, FS-092, FS-094.
   (sources/kapu/meeting-2026-06-08-anonymized.md).
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — §4, the capability
   table.
-- docs/architecture.md §2, §3, §5.
+- docs/architecture/README.md §2, §3, §5.

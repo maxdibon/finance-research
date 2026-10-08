@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, fintech, sme]
 depends_on: [mandates, messaging, recon-observability, identity, access]
 consumed_by: [mfi, sacco, sme-recon]
 review_ids: [FS-004, FS-005, FS-019, FS-020, FS-022, FS-137, FS-186, FS-187, FS-188, FS-189, FS-190, FS-191, FS-447]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # CRB — credit bureau connections
@@ -82,7 +82,7 @@ identity (matching a person to their bureau record). Also access (login, roles a
 **Used by:** mfi (MF-19), sacco (SC-18), sme-recon (CR-09). Banks with
 their own core use it directly.
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|

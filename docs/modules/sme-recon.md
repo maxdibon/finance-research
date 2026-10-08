@@ -9,7 +9,7 @@ audience: [sme, fintech]
 depends_on: [access, recon-observability, rails, mandates, messaging, gateway, crb]
 consumed_by: [business-suite, insights, mfi, identity]
 review_ids: [FS-026, FS-027, FS-028, FS-033, FS-036, FS-037, FS-038, FS-095, FS-124, FS-125, FS-127, FS-130, FS-131, FS-132, FS-133, FS-134, FS-135, FS-439, FS-441, FS-522]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # SME Recon
@@ -66,10 +66,10 @@ Every row is **Planned**.
 | SR-03 | Mobile money (M-Pesa, Airtel Money, T-Kash) by direct integration with the business's own shortcode | Planned | FS-124. Depends on delegated access — FS-127 | 1 |
 | SR-04 | Card settlements matched gross to net of fees | Planned | recon-observability RO-20 | 2 |
 | SR-05 | Balances across every connected account in one view | Planned | FS-028 | 1 |
-| SR-06 | Incoming funds matched to customer invoices: partial payments, overpayments, and one payment across several invoices | Planned | FS-028. Matching rules in docs/architecture.md §5 | 1 |
+| SR-06 | Incoming funds matched to customer invoices: partial payments, overpayments, and one payment across several invoices | Planned | FS-028. Matching rules in docs/architecture/README.md §5 | 1 |
 | SR-07 | Incoming funds matched to investments: interest, maturities, dividends | Planned | FS-028 | 2 |
 | SR-08 | Outgoing funds matched to vendor bills and expenses. Bank charges and taxes, where itemised, posted as expense lines | Planned | FS-028 | 1 |
-| SR-09 | Anything unmatched stays unapplied and visible in the ERP | Planned | docs/architecture.md §5 | 1 |
+| SR-09 | Anything unmatched stays unapplied and visible in the ERP | Planned | docs/architecture/README.md §5 | 1 |
 | SR-10 | Matches written into the ERP's own bank reconciliation | Planned | FS-027 | 1 |
 | SR-11 | Payments approved in the ERP executed by bank API or mobile money (B2C, B2B) | Planned | FS-028. Regulatory and control questions — FS-037, FS-132 | 2 |
 | SR-12 | Payment outcome written back to the ERP; a failure becomes an exception | Planned | FS-028 | 2 |
@@ -87,7 +87,7 @@ card feeds), mandates (approval of payments, SR-11), messaging, gateway
 MF-32) and identity (statements from source, with consent, ID-18). Otherwise it is the product an SME buys, directly
 or through its bank (docs/bank-channel.md).
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -150,7 +150,7 @@ one we overwrite (FS-133).
                  outcome --> back to the ERP; a failure is an exception
 ```
 
-**Matching, in order** (docs/architecture.md §5): the strongest key first
+**Matching, in order** (docs/architecture/README.md §5): the strongest key first
 — the paying phone number for mobile money, the invoice number where the
 payer gave it, then amount and date. One payment against several invoices
 is an allocation the accountant makes, not one the engine guesses.
@@ -171,7 +171,7 @@ is an allocation the accountant makes, not one the engine guesses.
 - **Custody:** none. Funds stay in the business's own accounts.
 - **Pattern:** pass-through for matching; **initiation** for SR-11. We
   instruct payments from the business's own account on its approval
-  (docs/architecture.md §3). The NPS Act position on initiation is open —
+  (docs/architecture/README.md §3). The NPS Act position on initiation is open —
   FS-037.
 - **Licence relied on:** none of ours, subject to FS-037.
 - **Delegated access:** reading a client's shortcode or bank account needs
@@ -183,7 +183,7 @@ is an allocation the accountant makes, not one the engine guesses.
 
 ## 8 · Controls
 
-- **Attribution at the act** (docs/architecture.md §7). Approving a
+- **Attribution at the act** (docs/architecture/README.md §7). Approving a
   payment in the ERP moves money. An ERP login session does not show who
   approved at that moment, so execution waits for the approver to
   re-authenticate with us (a PIN or one-time code), or for the bank's own
@@ -221,7 +221,7 @@ FS-037, FS-127, FS-130, FS-131, FS-133, FS-134, FS-135.
 
 - REVIEW.md FS-027, FS-028 (the owner's description), FS-033, FS-095,
   FS-124, FS-125.
-- docs/architecture.md §2, §3, §5, §7.
+- docs/architecture/README.md §2, §3, §5, §7.
 - docs/modules/recon-observability.md §4 (institution and SME compared).
 - docs/outreach/api-requests.md (feeds requested for Dibon's own
   accounts).

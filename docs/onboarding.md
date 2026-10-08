@@ -31,7 +31,7 @@ in docs/partners.md, under each partner's next step.
 |---|---|---|---|
 | OB-COM-01 | Signed agreement and order form | Customer's signatory | Odoo Sign (business-suite) |
 | OB-COM-02 | The customer's own company documents: registration, directors, beneficial owners | Customer's company secretary | Our KYB of the customer |
-| OB-COM-03 | Its licence and regulator (CBK, SASRA, or none), and whether it works through a partner bank | Customer's compliance lead | Decides the custody pattern (docs/architecture.md) |
+| OB-COM-03 | Its licence and regulator (CBK, SASRA, or none), and whether it works through a partner bank | Customer's compliance lead | Decides the custody pattern (docs/architecture/README.md) |
 | OB-COM-04 | A data processing agreement; both parties' registration with the Data Commissioner | Both compliance leads | Kenya Data Protection Act; Dibon is a processor |
 | OB-COM-05 | Ledger mode: its own core (name, API or extracts) or Kapu Core | Customer's IT lead | Integrated or native mode |
 | OB-COM-06 | Deployment: where it runs (its own premises or in-country cloud), who runs it (the institution or Dibon), and if Dibon, the managed level: Hosted, Managed or Operated | Customer's IT lead | Hosting (FS-032, FS-359, FS-360) |
@@ -49,8 +49,8 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-18 | The operator agreements for the SIM-change, IMSI and name checks with Safaricom, Airtel and Telkom: the institution's own, or Dibon's; and the limit and holding period after a SIM change | Customer's compliance lead | identity ID-12 to ID-14, financial-crime FC-02; compliance LC-13; FS-448 |
 | OB-COM-19 | Access to each bank it pays out through: the bank access request sent (docs/outreach/bank-access-request.md), the channel each bank grants (API, host-to-host files, or internet banking), its cut-offs, and the signing certificates it requires | Customer's finance lead | rails RL-01, RL-07; FS-586, FS-588 |
 | OB-COM-20 | Its business calendar (working hours, its own closures) and its transaction rules: windows, limits per tier and per cycle, allow- and deny-lists | Customer's operations lead | core KC-15; financial-crime FC-16; FS-574 |
-| OB-COM-21 | For each core banking system we integrate with and each rail: its end-of-day window, what happens to postings during it, its cut-off and value dating, its statement day, and the status and statement interfaces it offers (a status query, intraday reports such as MT942 or CAMT.052, transaction enquiry, end-of-day statements), so reconciliation knows what is in transit and how to chase it (docs/architecture.md §10) | Customer's IT lead | recon-observability RO-04, RO-07; FS-630, FS-635 |
-| OB-COM-22 | Dibon engineers' access: who approves a grant for the institution, its VPN or bastion, the contact who can switch Dibon's access off at any hour; it receives the list of Dibon engineers who may ask for access, with their vetting (docs/architecture.md §9) | Customer's IT lead and security contact | platform-security SE-26; FS-645 |
+| OB-COM-21 | For each core banking system we integrate with and each rail: its end-of-day window, what happens to postings during it, its cut-off and value dating, its statement day, and the status and statement interfaces it offers (a status query, intraday reports such as MT942 or CAMT.052, transaction enquiry, end-of-day statements), so reconciliation knows what is in transit and how to chase it (docs/architecture/README.md §10) | Customer's IT lead | recon-observability RO-04, RO-07; FS-630, FS-635 |
+| OB-COM-22 | Dibon engineers' access: who approves a grant for the institution, its VPN or bastion, the contact who can switch Dibon's access off at any hour; it receives the list of Dibon engineers who may ask for access, with their vetting (docs/architecture/README.md §9) | Customer's IT lead and security contact | platform-security SE-26; FS-645 |
 
 ## Kapu Collect
 

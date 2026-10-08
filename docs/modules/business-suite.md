@@ -89,9 +89,9 @@ identity (company registers checked against the business registry,
 BS-18).
 **Used by:** customers directly; insights, for questions and dashboards
 over Odoo data; mfi (confirmed purchase orders and invoices, MF-32). In the architecture, Odoo is also one of the three
-authorities (docs/architecture.md §2).
+authorities (docs/architecture/README.md §2).
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -154,7 +154,7 @@ accounts, or a ledger of funds that a core already holds.
 - **Licensing:** Odoo Enterprise, per internal user. Portal users and
   external signers are not counted (FS-026). Sign, Helpdesk, Documents,
   Knowledge, Approvals, full Accounting and Payroll are Enterprise only;
-  an SME that stays on Community goes without them (docs/architecture.md
+  an SME that stays on Community goes without them (docs/architecture/README.md
   §8, FS-644). Whether the Enterprise
   Agreement limits serving internal work through them is open (FS-036).
 - **Hosting:** on OLP, to be hosted on Liquid's Azure Stack so that data
@@ -195,6 +195,6 @@ FS-036, FS-290, FS-291, FS-292.
 
 - REVIEW.md FS-002, FS-026, FS-131, FS-145, FS-156, FS-172, FS-280,
   FS-281, FS-288.
-- docs/architecture.md §2, §8.
+- docs/architecture/README.md §2, §8.
 - docs/modules/sme-recon.md, messaging.md, access.md, insights.md.
 - Odoo 20.0 documentation — AI MCP server.

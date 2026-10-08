@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Compliance lead
 classification: Internal
 review_ids: [FS-368, FS-370, FS-420, FS-437, FS-440, FS-443, FS-444]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-08
 ---
 
 # Outsourcing approval pack
@@ -39,7 +39,7 @@ Nothing here is sent as a commitment until it is Ready.
 | 3 | Business record | Lenders, banks | The production record: Onit Bank (Collect and the Gateway, 2025 to 2026); KCB since 2021 (CRM, SMS gateway, the USSD platform for digital lending 2022 to 2025, loan-engine integration; work ongoing); National Bank of Kenya since 2021 (SMS gateway and operator connections; shortcodes and USSD in 2026) (docs/customers.md) | Ready, once the contracts confirm the banks may be named (FS-420) |
 | 4 | Description of the services outsourced | Every regulator | Each product's own paragraph (its module, §1) and what it never holds | Ready |
 | 5 | Licences and registrations | Every regulator | ODPC data processor (LC-01) and PRSP licence (LC-03); ISO 27001 not yet held (LC-04); PSP authorisation needed and being prepared, after a legal opinion on the category (LC-06) | Ready, with the gaps stated |
-| 6 | Where data is held, and who else touches it | Banks, lenders, Saccos | Deployment options and hosting (docs/architecture.md §9); subprocessors: hosting partner (candidate, PT-01), SMS route, mobile operators | To prepare: a subprocessor list |
+| 6 | Where data is held, and who else touches it | Banks, lenders, Saccos | Deployment options and hosting (docs/architecture/README.md §9); subprocessors: hosting partner (candidate, PT-01), SMS route, mobile operators | To prepare: a subprocessor list |
 | 7 | Security controls | Every regulator | Architecture §3, §6 and §7: credentials only on the server, in OpenBao; encryption; attribution; audit; the baseline in docs/modules/platform-security.md (SE-01 to SE-25) | To prepare: one security summary |
 | 8 | Independent penetration test report | Banks, Saccos, PSPs | An annual test by an independent tester (SE-17) | To prepare: none commissioned yet |
 | 9 | Business continuity: tested recovery time and recovery point | Banks, Saccos | Recovery objectives by tier (platform-security §3): tier 1 none on a server failure, at most 5 minutes on a site loss, 1 hour and 4 hours to recover; tiers 2 and 3 lower; restores tested quarterly, failover twice a year with the customer | Ready (agreed FS-466); the last test record to attach once SE-10 runs |

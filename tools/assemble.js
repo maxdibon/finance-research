@@ -103,9 +103,16 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
     .sort((a, b) => (KIND_ORDER.indexOf(a.fields.kind) - KIND_ORDER.indexOf(b.fields.kind))
       || a.fields.id.localeCompare(b.fields.id));
 
+  // A folder's README first, then its other documents (FS-641, FS-649).
+  const folder = (name) => {
+    const dir = path.join(root, 'docs', name);
+    if (!fs.existsSync(dir)) return [];
+    const rest = fs.readdirSync(dir).filter((x) => x.endsWith('.md') && x !== 'README.md').sort();
+    return ['README.md', ...rest].filter((x) => fs.existsSync(path.join(dir, x))).map((x) => ({ rel: path.join('docs', name, x) }));
+  };
   const docs = [
     { rel: path.join('docs', 'overview.md') },
-    { rel: path.join('docs', 'architecture.md') },
+    ...folder('architecture'),
     ...modules.map((m) => ({ rel: m.rel })),
     { rel: path.join('docs', 'decisions.md') },
     { rel: path.join('docs', 'partners.md') },
@@ -114,6 +121,7 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
     ...fs.readdirSync(path.join(root, 'docs')).filter((f) => f.endsWith('.md')
       && !['overview.md', 'architecture.md', 'decisions.md', 'partners.md'].includes(f)).sort()
       .map((f) => ({ rel: path.join('docs', f) })),
+    ...folder('service-management'),
     ...(fs.existsSync(path.join(root, 'docs', 'customers')) ? fs.readdirSync(path.join(root, 'docs', 'customers'))
       .filter((f) => f.endsWith('.md')).sort().map((f) => ({ rel: path.join('docs', 'customers', f) })) : []),
   ].map((d) => {

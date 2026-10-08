@@ -74,7 +74,7 @@ its own entry.
 ## FS-025 · Three authorities: the funds ledger, Odoo, the recon engine
 
 - **Chose:** the GateKeepr division of labour, written into
-  docs/architecture.md §2 and every module's §4.
+  docs/architecture/README.md §2 and every module's §4.
 - **Argued against:** reconciliation inside Odoo. The 8 Jun meeting
   floated an "Odoo-based reconciliation tool" as an entry product.
 - **Costs (inferred):** a separate recon service to deploy and run at every
@@ -235,7 +235,7 @@ its own entry.
 ## FS-223 · Unmodified AGPL services allowed
 
 - **Chose:** AGPL-3.0 services may run if unmodified and separate from our
-  code (docs/architecture.md §6.1).
+  code (docs/architecture/README.md §6.1).
 - **Argued against:** the copyleft exclusion carried over from GateKeepr,
   which came from shipping a phone app; and Apache-2.0-only alternatives
   (Jaeger, Thanos or Cortex, Superset).
@@ -622,7 +622,7 @@ its own entry.
 
 - **Chose:** the full platform stack as designed, and one isolated instance
   per institution: its own namespace, databases, keys and backups.
-- **Requires:** docs/architecture.md §9 "an isolated instance per institution"; AC-08.
+- **Requires:** docs/architecture/README.md §9 "an isolated instance per institution"; AC-08.
 - **Argued against:** a staged, lighter stack for the first release, and a
   shared control plane with per-institution data, both of which cost less
   to run.
@@ -652,7 +652,7 @@ its own entry.
 - **Chose:** one document vault per institution for KYC and KYB evidence
   and collateral documents (identity ID-15), in phase 1 because R1 needs
   it; and the v1 cap raised by one to count it.
-- **Requires:** ID-15; SE-10; docs/architecture.md §6 "document vault".
+- **Requires:** ID-15; SE-10; docs/architecture/README.md §6 "document vault".
 - **Argued against:** storing documents as Fineract or Odoo attachments,
   which scatters Restricted files across systems with different access
   rules; and folding the vault into ID-02's wording, which hides real
@@ -699,7 +699,7 @@ its own entry.
   over its socket, as the scanner in our offering; Sophos or another
   commercial engine where a customer pays for it, possibly bought through
   Liquid. A new licence row allows this one GPL-2.0 service by name.
-- **Requires:** ID-15; docs/architecture.md §6.1 "one named service: ClamAV"; docs/outreach/liquid-partner-request.md "Sophos scanning".
+- **Requires:** ID-15; docs/architecture/README.md §6.1 "one named service: ClamAV"; docs/outreach/liquid-partner-request.md "Sophos scanning".
 - **Argued against:** no scanning, which leaves an upload path open to
   any customer's phone; and a commercial engine for everyone, which puts a
   licence cost on institutions that do not want it.
@@ -713,7 +713,7 @@ its own entry.
   contracts included, and Odoo for documents with none beyond business
   contacts; the contract record always in Odoo, with a link; when in
   doubt, the vault. The criteria are written in architecture §6.
-- **Requires:** docs/architecture.md §6 "Where a document lives"; BS-02.
+- **Requires:** docs/architecture/README.md §6 "Where a document lives"; BS-02.
 - **Argued against:** loan and guarantee agreements alone in the vault,
   which left every other personal contract to judgement; and everything
   in Odoo, which spreads personal data to every Odoo user with access.
@@ -743,7 +743,7 @@ its own entry.
   and share their own documents as they choose. Sharing out is a phase-1
   capability (identity ID-17), in R1. WhatsApp banking and the chatbot are
   narrowed to notifications, links and how-to answers.
-- **Requires:** ID-17; OC-16; OC-20; docs/architecture.md §7 "travel only on our network"; docs/specs/approval-engine.md "decided: never"; docs/operating-model.md "never for documents".
+- **Requires:** ID-17; OC-16; OC-20; docs/architecture/README.md §7 "travel only on our network"; docs/specs/approval-engine.md "decided: never"; docs/operating-model.md "never for documents".
 - **Argued against:** balances and statements in WhatsApp, which the v1
   design had, and which sends Confidential data through Meta outside
   Kenya; emailing signed agreements and statements, which leaves copies in
@@ -883,7 +883,7 @@ its own entry.
   verification (RO-26, FS-510) and SWIFT (RL-28) in phase 2. Every
   component replaceable behind a stable contract, written into
   architecture §6 (FS-584).
-- **Requires:** RL-27; RO-09; RO-02; docs/architecture.md §6 "replaceable behind a stable contract"; docs/journeys/README.md "JN-11".
+- **Requires:** RL-27; RO-09; RO-02; docs/architecture/README.md §6 "replaceable behind a stable contract"; docs/journeys/README.md "JN-11".
 - **Argued against:** treating the larger bank as just another statement
   feed, which misses the cut-offs, the prefunding and the returns that
   run a microfinance bank's day.
@@ -925,7 +925,7 @@ its own entry.
   to the source; no Dibon role, break-glass included, in any payment's
   chain (architecture §3, AC-09); the instruction path threat-modelled
   first and always in the penetration test (SE-16, SE-17).
-- **Requires:** RL-01; RL-07; RL-12; FC-16; AC-09; SE-16; SE-17; docs/architecture.md §3 "never move an institution's money"; docs/specs/approval-engine.md "a hash".
+- **Requires:** RL-01; RL-07; RL-12; FC-16; AC-09; SE-16; SE-17; docs/architecture/README.md §3 "never move an institution's money"; docs/specs/approval-engine.md "a hash".
 - **Argued against:** trusting the approval of a request without its
   content, which lets a payee be changed after approval; and leaving
   break-glass able to release payments, which makes Dibon's staff a
@@ -1029,7 +1029,7 @@ its own entry.
   database, and found by a keyed hash (platform-security SE-27), in R1,
   because Roan Capital's borrowers' and guarantors' ID numbers are among
   the first data the platform holds.
-- **Requires:** SE-27; docs/architecture.md "ID numbers encrypted field by field".
+- **Requires:** SE-27; docs/architecture/README.md "ID numbers encrypted field by field".
 - **Argued against:** phase 2, which would leave ID numbers readable by
   anyone with database access, in backups and in replicas, for the whole
   pilot.
@@ -1066,7 +1066,7 @@ its own entry.
   ticket, scoped and expiring, approved by the institution where it runs
   its own operations, which may switch Dibon's access off at any time;
   an access register compared with the institution's records each month.
-- **Requires:** SE-26; docs/architecture.md "Who holds access, by who runs the instance"; docs/onboarding.md "OB-COM-22".
+- **Requires:** SE-26; docs/architecture/README.md "Who holds access, by who runs the instance"; docs/onboarding.md "OB-COM-22".
 - **Argued against:** local accounts for engineers in each instance,
   which a leaver keeps until someone remembers every instance; and
   standing access for convenience, which an outsourcing approval would
@@ -1080,7 +1080,7 @@ its own entry.
 - **Chose:** sign Odoo users in through Keycloak by the code flow with
   OCA's `auth_oidc` module, installed unmodified, as a stated exception
   to the rule that AGPL software runs only as a separate service.
-- **Requires:** docs/architecture.md "One exception, by decision"; docs/specs/access-keycloak.md "auth_oidc".
+- **Requires:** docs/architecture/README.md "One exception, by decision"; docs/specs/access-keycloak.md "auth_oidc".
 - **Argued against:** Odoo's own module, which uses the implicit flow
   and puts tokens in the browser's address bar; and writing our own
   module, which is code to keep for every Odoo version.

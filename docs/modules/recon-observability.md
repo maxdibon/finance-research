@@ -118,7 +118,7 @@ not (FS-095).
 | Surface | Control tower, queue, trace, ledger view | Inside Odoo, Zoho and others, through a wrapper |
 | Moves money | Retries and reversals, controlled (§8) | Payments approved in the ERP (FS-037) |
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -208,7 +208,7 @@ zero, and that is what closing the day means.
   Compliance uses it for the customer's regulatory returns (FC-13).
 - **Data:** transaction-level records are Confidential. A person's full
   payment history, assembled by the trace, is a pile worth more than its
-  rows (docs/architecture.md §7). Bulk export is a separate permission.
+  rows (docs/architecture/README.md §7). Bulk export is a separate permission.
   Retention periods are open — FS-063.
 - **Open legal checks:** FS-063, FS-098.
 
@@ -259,6 +259,6 @@ FS-012, FS-063, FS-099, FS-101, FS-103.
   named prospect; *derived, not reproduced* (clients/).
 - Kapu Pay Technical Documentation, v1.0, Apr 2026 — Operations & Support.
   *Derived, not reproduced.*
-- docs/architecture.md §2, §5, §7.
+- docs/architecture/README.md §2, §5, §7.
 - REVIEW.md FS-418, FS-421 (self-service reversal), FS-431
   (financial-crime), FS-445, FS-453 (traceability).

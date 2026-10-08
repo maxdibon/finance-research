@@ -98,7 +98,7 @@ business-suite (campaigns).
 **Not covered here:** machine-to-machine callbacks to partners and
 merchants. Those belong to each product's API (collect, gateway). Also identity.
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|

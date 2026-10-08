@@ -9,7 +9,7 @@ audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability, collect, gateway, escrow, mfi, sacco, sme-recon, omni-channel, business-suite, core, mandates]
 consumed_by: [business-suite]
 review_ids: [FS-006, FS-033, FS-043, FS-048, FS-151, FS-156, FS-157, FS-159, FS-220, FS-223, FS-224, FS-225, FS-226, FS-227, FS-228, FS-229, FS-446, FS-497, FS-532]
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 ---
 
 # Insights — governed metrics and natural-language questions
@@ -59,18 +59,18 @@ number, traceable to a transaction.
 |---|---|---|---|---|
 | IN-01 | Dibon first: Odoo 20's MCP server, read-only, for our own CRM, helpdesk and sales data, one API key per person | Planned | FS-151, FS-156, FS-220 | 1 |
 | IN-02 | Semantic layer: every metric defined once, with its owner, its source authority and its grain | Planned | FS-006, FS-220 — FS-225 | 2 |
-| IN-03 | Analytical copies of the three authorities, read-only and stamped with how fresh they are | Planned | docs/architecture.md §2 — FS-228 | 2 |
+| IN-03 | Analytical copies of the three authorities, read-only and stamped with how fresh they are | Planned | docs/architecture/README.md §2 — FS-228 | 2 |
 | IN-04 | Dashboards per product in Apache Superset, built only on semantic-layer metrics | Planned | FS-220, FS-230 | 2 |
 | IN-05 | Natural-language questions answered only through the semantic layer; each answer shows the definition, the query and the freshness | Planned | FS-006 | 2 |
 | IN-06 | "Cannot answer from governed metrics" as an answer, with the nearest metric that exists | Planned | GateKeepr STANDARDS.md §6, carried over | 2 |
 | IN-07 | An MCP server over the semantic layer, for institutions' AI clients | Planned | FS-159 | 2 |
 | IN-08 | A self-hosted model served by KServe on Liquid's GPUs; a hosted model only for data classes allowed to leave | Planned | FS-043, FS-048, FS-220 — FS-227 | 2 |
 | IN-09 | Row-level security per institution and role, from access | Planned | access AC-09 | 2 |
-| IN-10 | A data-class gate: Restricted data never reaches a model; Confidential data only a self-hosted one | Planned | docs/architecture.md §7; FS-157 | 2 |
+| IN-10 | A data-class gate: Restricted data never reaches a model; Confidential data only a self-hosted one | Planned | docs/architecture/README.md §7; FS-157 | 2 |
 | IN-11 | A log of every question and answer: who asked, what was returned, from which definitions | Planned | FS-006 | 2 |
 | IN-12 | The product metric catalogue: the metrics each module's dashboards publish, defined here once | Planned | FS-220 | 2 |
 | IN-13 | An evaluation set of questions with known answers, run on every change, broken on purpose to prove it fails | Planned | FS-229; building-a-master §4 | 2 |
-| IN-14 | Exports as a separate permission | Planned | docs/architecture.md §7 | 2 |
+| IN-14 | Exports as a separate permission | Planned | docs/architecture/README.md §7 | 2 |
 | IN-15 | The customer's own BI tool connects to the governed metrics: Metabase, Power BI, Tableau and Zoho Analytics first, more to follow; Superset stays the default | Planned | Owner, 2026-10-05 (FS-446). Through the semantic layer (IN-02), with row-level security (IN-09). Metabase's open-source edition is AGPL: run unmodified and separately (architecture §6.1) | 2 |
 | IN-16 | Funder view: an institution's investors and lenders see governed portfolio metrics (arrears by age, non-performing loans under the lender regulations' reg 57, collections, yield, growth, concentration), aggregated, with no personal data, under their own role | Planned | Owner, 2026-10-06 (FS-497) | 2 |
 | IN-17 | Investor pack: a monthly report, signed, and a pseudonymised loan tape, with the funder's covenant thresholds and any breach flagged; the tape only under a data-sharing agreement between the institution and the funder; delivered in the funder view, never by email (FS-532) | Planned | Owner, 2026-10-06 (FS-497). A pseudonymised tape is still personal data (privacy PR-17) | 2 |
@@ -87,7 +87,7 @@ mandates, for the governance view (IN-18).
 (IN-15) directly; business-suite, for questions over Odoo data (IN-01).
 Each product's dashboards will be built on its metrics.
 
-**Who holds which record** (docs/architecture.md §2):
+**Who holds which record** (docs/architecture/README.md §2):
 
 | Record | System of record | This module |
 |---|---|---|
@@ -162,7 +162,7 @@ authority would need to correct here as well as at home.
   access and are logged.
 - **Licences:** Superset is Apache-2.0 (FS-230). Metabase's open-source
   edition, where a customer chooses it (IN-15), is AGPL: run unmodified
-  and separately (docs/architecture.md §6.1).
+  and separately (docs/architecture/README.md §6.1).
 - **Data:** answers inherit the class of the data behind them.
 
 ## 8 · Controls
@@ -202,6 +202,6 @@ FS-048, FS-225, FS-227, FS-228, FS-229.
 - REVIEW.md FS-006, FS-033, FS-043, FS-151, FS-156, FS-159, FS-220,
   FS-223.
 - Odoo 20.0 documentation — AI MCP server.
-- docs/architecture.md §2, §6, §6.1, §7.
+- docs/architecture/README.md §2, §6, §6.1, §7.
 - GateKeepr building-a-master.md §4 (verify a check by breaking it);
   STANDARDS.md §6 — principles carried over.

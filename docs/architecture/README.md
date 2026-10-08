@@ -2,10 +2,10 @@
 id: architecture
 name: Platform architecture — who holds what
 kind: architecture
-version: 0.2.0
+version: 0.3.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649]
 last_reviewed: 2026-10-08
 ---
 
@@ -20,11 +20,36 @@ list only the rows that apply to them. They do not restate the rules. Where
 a module and this file disagree, this file is right until it is changed
 deliberately.
 
+**This folder** (FS-649) holds the principles here, §1 to §10, and the
+views beside them:
+
+| View | What it shows |
+|---|---|
+| [context.md](context.md) | Who and what the platform connects to |
+| [instance.md](instance.md) | What runs in one institution's instance, as R1 deploys it; the environments |
+| [deployment.md](deployment.md) | The sites, the fleet, and what Dibon runs centrally |
+| [runtime.md](runtime.md) | How a payment moves: a repayment in, a disbursement out, as sequence diagrams |
+| [interfaces.md](interfaces.md) | The rules every service's contract follows |
+| [quality.md](quality.md) | Quality goals, measurable, and where each is met |
+| [constraints.md](constraints.md) | What we design within, and where it comes from |
+| [risks.md](risks.md) | What could undo the design, and what we do about it |
+
+**Who reads it, for what:**
+
+| Reader | Start with |
+|---|---|
+| A regulator, an auditor or an institution's risk team | §3, §2, §7, [constraints](constraints.md), [deployment](deployment.md), [risks](risks.md) |
+| An institution's IT team | [Context](context.md), §4, §5, [instance](instance.md), [deployment](deployment.md), §9 |
+| A builder | §2, §6, [interfaces](interfaces.md), [runtime](runtime.md), then the [specs](../specs/README.md) |
+| Security | §7, §9, [deployment](deployment.md), platform-security |
+| Operations | [Deployment](deployment.md), [quality](quality.md), [service management](../service-management/README.md) |
+
+The rationale behind each rule is in [decisions.md](../decisions.md), the
+record of architecture decisions.
+
 ---
 
 ## 1 · The portfolio, by layer
-
-Draft, pending FS-034.
 
 | Layer | Contents |
 |---|---|
@@ -312,7 +337,7 @@ against this paragraph.
 - **Event bus:** Kafka between services.
 - **Security baseline:** perimeter, cluster, data, backup, vulnerability
   management, the build pipeline, round-the-clock detection and endpoints
-  (docs/modules/platform-security.md, SE-01 to SE-25, FS-464, FS-470).
+  (docs/modules/platform-security.md, SE-01 to SE-27, FS-464, FS-470).
 - **Traceability:** every transaction carries one identifier end to end;
   each processing step is a signed event (CloudEvents, signed with the
   service's SPIFFE identity, keys in OpenBao), hash-chained and anchored in
@@ -333,13 +358,9 @@ against this paragraph.
 - **Observability:** Prometheus (metrics), Loki (logs), Tempo or Jaeger
   (traces), Grafana (dashboards, alerting, SLOs). Grafana is for
   operations. Business BI is insights, a separate module.
-- **Mandates:** one engine for signing mandates (who may approve what,
-  maker-checker, committee chains, quorum steps) and for the records behind
-  debit mandates. Designed in MFI PRD FR-6 as a platform service; Collect,
-  Sacco, MFI (MF-07), Escrow (ES-05), Gateway and sme-recon are its
-  consumers. Approvers will be able to act from Outlook or Gmail through a
-  signed, single-use link, with step-up at the act for anything that moves
-  money; never by reply (mandates MD-18, FS-449).
+- **Mandates:** one engine for signing and debit mandates, every
+  consumer's approvals in one place (docs/modules/mandates.md;
+  docs/specs/approval-engine.md); never approval by reply (MD-18, FS-449).
 - **Identity verification:** national register lookup (NPDM, formerly IPRS) on
   onboarding, or the mobile operator's check of the phone number against
   the registered name, as at Onit Bank (FS-392). The result is stored on
@@ -348,14 +369,11 @@ against this paragraph.
   number, the phone number and the SIM's IMSI, and a SIM change, from a
   swap or a recycled number, will hold money movement until the customer
   is re-verified (identity ID-12 to ID-14, financial-crime FC-02, FS-448).
-- **Insights:** reads from the three authorities through a semantic layer
-  of governed metric definitions. **It never writes.** Every answer shows
-  the definition and query behind it. Superset is the default; a
-  customer's own BI tool will connect through the same layer (insights
-  IN-15, FS-446). The model is not chosen yet — FS-043.
-- **Access and identity:** Keycloak for login, roles and step-up (access);
-  the national register (NPDM, formerly IPRS) and verification vendors for
-  who a person is (identity verification).
+- **Insights reads the three authorities and never writes;** every answer
+  shows its definition and query (docs/modules/insights.md; FS-446,
+  FS-043).
+- **Access:** Keycloak for sign-in, roles and step-up
+  (docs/specs/access-keycloak.md).
 - **Documents:** one document vault per institution (identity ID-15,
   FS-500). **Where a document lives** (FS-527):
   - **The vault:** every document that carries personal data. KYC and
@@ -394,8 +412,8 @@ Today's AGPL services: Grafana, Loki and Tempo (observability). Today's
 MPL service: OpenBao (secrets). **Databases are PostgreSQL**, Fineract's
 included, not MySQL or MariaDB (GPL-2.0) (FS-464). Wazuh (GPL-2.0) is not
 adopted: round-the-clock detection is bought as a managed service
-(platform-security SE-13). **Commercial licences** (Odoo Enterprise if
-used, Sophos, Microsoft Intune) are bought, not open source, and are named
+(platform-security SE-13). **Commercial licences** (Odoo Enterprise,
+required, §8, FS-644; Sophos; Microsoft Intune) are bought, not open source, and are named
 in the module that uses them. Insights
 uses Superset, which is Apache-2.0 (FS-230). **CNCF projects are Apache-2.0**, so they
 are the default where they fit (FS-217).
@@ -571,7 +589,7 @@ the audit trail and matches in reconciliation agree (FS-634).
 - Pricing and business models (FS-024).
 - The legal questions it points at: FS-037, FS-049, FS-056, FS-057, FS-061,
   FS-428.
-- Whether the portfolio map in §1 is final (FS-034).
+- How each service is built or run: the specs (docs/specs/README.md).
 
 ## 12 · Sources
 
@@ -581,3 +599,7 @@ the audit trail and matches in reconciliation agree (FS-634).
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — §1, §4, FR-6.
 - KapuPay Discussion, meeting notes, 8 Jun 2026.
 - Automated Channels Reconciliation proposal — the observability stack.
+- The specs (docs/specs/), the journeys (docs/journeys/) and the decisions
+  of October 2026, FS-584 to FS-649.
+- ISO/IEC/IEEE 42010, arc42 and the C4 model, for the views beside this
+  file (FS-649).

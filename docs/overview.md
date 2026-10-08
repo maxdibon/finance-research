@@ -32,11 +32,11 @@ money instead of five that disagree.
 
 1. **We hold nobody's money unless we are licensed to.** Funds sit at the
    institution, the merchant or a licensed partner. We prompt, instruct,
-   match and report (docs/architecture.md §3).
+   match and report (docs/architecture/README.md §3).
 2. **Every record has one home.** The funds ledger holds money and loans:
    accounts, balances and loan schedules. Odoo holds the parties and the
    obligations outside the ledger: invoices, fees and charges. The recon
-   engine holds what happened between them (docs/architecture.md §2).
+   engine holds what happened between them (docs/architecture/README.md §2).
 3. **Nothing is guessed.** An unmatched payment stays visible until
    evidence places it. In these documents, a capability we have not built
    is not described as though we had. The customer-facing portfolio is the
@@ -51,7 +51,7 @@ money instead of five that disagree.
    at the act.** No Dibon role, break-glass included, may initiate,
    approve or release an institution's payment; anything that moves money,
    approves or reveals a person asks who is acting at that moment, not
-   only at login (docs/architecture.md §3, §7; FS-588).
+   only at login (docs/architecture/README.md §3, §7; FS-588).
 
 ## Who it is for
 
@@ -141,7 +141,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 
 | If you want | Read |
 |---|---|
-| Who holds which record, and where the licence line is | [architecture.md](architecture.md) |
+| Who holds which record, and where the licence line is | [architecture.md](architecture/README.md) |
 | Why something was decided, and what it cost | [decisions.md](decisions.md) |
 | How each component is built or run, and how they connect | [specs/](specs/README.md) |
 | What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
