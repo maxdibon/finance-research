@@ -5,8 +5,8 @@ kind: guide
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537]
-last_reviewed: 2026-10-06
+review_ids: [FS-492, FS-534, FS-537, FS-631]
+last_reviewed: 2026-10-08
 ---
 
 # Start here
@@ -37,7 +37,8 @@ decisions follow from it.
    Roan Capital's pilot), the v1 rule, and the definition of done.
 3. Read [customers.md](customers.md) and the delivery map in
    [customers/roan-capital.md](customers/roan-capital.md).
-4. Clone, set the hook and run the checks (README, "Checks"). Ask the
+4. Clone, set the hook and run the checks (README, "Checks"); to read in
+   a browser, README "Reading the documents". Ask the
    CTIO for `sources/confidential/protected-names.txt`; without it the
    names check fails, by design.
 

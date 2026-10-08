@@ -9,6 +9,23 @@ Markdown: the full portfolio (DC-FS-PF-001) and a short overview
 (DC-FS-PF-002), each as a PDF and a web preview (FS-333, FS-352, FS-362). Designs still go to
 Markdown or a preview before they reach the PDF (FS-009).
 
+## Reading the documents
+
+The documents are Markdown, readable on GitHub or in any editor. To read
+them in a browser, every id a link, with a contents list and related
+documents on each page, build the HTML reader (FS-631):
+
+1. Install a current Node.js. The reader needs no packages.
+2. Clone this repository.
+3. In its folder, run `node tools/site.js --reader`.
+4. Open `build/site/index.html`.
+
+Run it again after each pull. `--reader` builds without the
+protected-names list, which only the owner's clones hold; it says so on
+every page, and refuses to build if any other check fails (FS-617). With
+the list, `node tools/site.js` builds the same, and the pre-commit hook
+rebuilds it on every commit.
+
 ## Where things live
 
 ```
@@ -36,7 +53,9 @@ docs/                the work. The only place we edit
   approval-pack.md   what customers file with their regulator about us
   assurance.md       testing for institutions we do not supply; conflicts
   bank-channel.md    banks offering SME Recon and Odoo to their SMEs
-  specs/             build specifications, one per R1 component
+  specs/             how each component is built or run; README.md is
+                     the index, with how the specs connect
+  incident-management.md  severities; who is told, how and with what
   journeys/          user journeys, step by step, with the capabilities each
                      step relies on; gaps named; statuses computed
   testing.md         acceptance items, tagged tests, the coverage matrix
@@ -118,7 +137,10 @@ fresh clone needs the list before it can commit.
    to allow it (FS-420). Nothing from `clients/` or
    `sources/confidential/` is reproduced in `docs/`. Material from those
    folders is written about, never copied.
-6. **ASCII diagrams**, at most 100 characters wide (FS-064, FS-579).
+6. **ASCII diagrams**, at most 100 characters wide (FS-064, FS-579). In a
+   box: the name in capitals, as docs/specs/README.md names it; what it
+   does, in lower case; what it runs on, in `[snake_case]` (FS-632).
+   Mermaid only in the specs index, as a trial (FS-628).
 7. **Two ledger models, always:** the customer has a core banking system,
    or it does not (FS-065).
 8. **Commit as you go**, with the reasoning in the message. Pushing is the

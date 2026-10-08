@@ -8,8 +8,8 @@ classification: Internal
 audience: [mfi, sacco, bank]
 depends_on: [access, identity, mandates, messaging, rails, recon-observability, financial-crime]
 consumed_by: [mfi, sacco, collect, omni-channel, insights, financial-crime, decisioning]
-review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431, FS-450, FS-453, FS-574, FS-578]
-last_reviewed: 2026-10-06
+review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431, FS-450, FS-453, FS-574, FS-578, FS-626, FS-633]
+last_reviewed: 2026-10-08
 ---
 
 # Kapu Core
@@ -69,7 +69,7 @@ in the MFI PRD; the rest is **Planned** until a deployment is live.
 | KC-04 | Loans: products, schedules, charges, repayments split by component | Designed | MFI PRD FR-7 | 1 |
 | KC-05 | General ledger: chart of accounts, accrual accounting, journal entries for every transaction | Planned | FS-316 | 1 |
 | KC-06 | Tellers and cashiers: tills, cash in and out, till balancing | Planned | recon-observability RO-10 | 2 |
-| KC-07 | End of day: accruals, closing and batch jobs on the institution's own cycle | Planned | FS-316 | 1 |
+| KC-07 | End of day on the institution's own cycle: checks first, then accruals, closing and batch jobs at the configured time, watched, each failure told by severity and a severity 1 paged by phone | Planned | FS-316; FS-633: docs/specs/end-of-day-runner.md | 1 |
 | KC-08 | Maker-checker on core transactions, through the mandate engine | Planned | mandates MD-12 | 1 |
 | KC-09 | Mobile-money deposits and repayments posted in real time (M-Pesa, Airtel Money, T-Kash) | Planned | rails RL-03 to RL-05 | 1 |
 | KC-10 | Standard reports, and regulatory returns for SASRA and CBK | Planned | FS-184. Assembled by financial-crime FC-13 (FS-431) | 2 |

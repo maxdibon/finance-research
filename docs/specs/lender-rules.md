@@ -2,11 +2,16 @@
 id: lender-rules
 name: Lender rules — build specification
 kind: spec
+type: build
+release: R1
+implements: [mfi]
+depends_on: [kapu-core-fineract]
+used_by: [end-of-day-runner]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565]
-last_reviewed: 2026-10-06
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629]
+last_reviewed: 2026-10-08
 ---
 
 # Lender rules — build specification
@@ -14,8 +19,9 @@ last_reviewed: 2026-10-06
 How Kapu MFI on Kapu Core (Apache Fineract) is designed to apply the CBK
 Non-Deposit Taking Credit Providers Regulations 2026 (law register LR-03)
 to Roan Capital's loans in R1. Nothing here is built; every behaviour is
-**designed**. Where the design relies on Fineract behaviour that has not
-been verified, it says **to confirm against Fineract**.
+**designed**. Fineract's side is in docs/specs/kapu-core-fineract.md, settled from
+its documentation (FS-625); what only a running instance can show is that
+spec's §9.
 
 ## 1 · Purpose and scope
 
@@ -33,8 +39,7 @@ been verified, it says **to confirm against Fineract**.
 | MF-38 | Borrower access: receipts, status, statements by link | reg 39(1) | Yes; rules in the module row, design to add here (FS-531) |
 | MF-29 | Automated decisions explained, AI disclosed | reg 60 | No: Roan Capital has no automated lending decisions in R1, vetting stays human (MFI §7). It applies once a score or AI system takes part in a decision |
 
-**Also out of R1:** the end-of-day lockout (RC-21, a gap in the delivery
-map); court-ordered interest (reg 29(4)), handled by a flag and a manual
+**Also out of R1:** court-ordered interest (reg 29(4)), handled by a flag and a manual
 step; recovery of land security (reg 30(3)), which waits on MF-18.
 
 **One component owns the rules:** the *lender-rules service* in the Kapu
@@ -42,6 +47,38 @@ MFI service layer. Fineract stays the system of record for loans,
 schedules and balances (KC-04). The service decides what Fineract may
 post and corrects what it should not hold. Fineract does not apply the
 in duplum rule itself.
+
+**Where it sits** (inside Kapu MFI's service layer, not a product of its
+own: FS-629).
+
+```
+  +---------------------+
+  | END-OF-DAY RUNNER   |
+  | closes the day      |
+  | [kapu_service]      |
+  +---------------------+
+        | the day's steps
+        v
+  +---------------------+  waivers, default interest  +---------------------+
+  | LENDER RULES        |---------------------------->| KAPU CORE           |
+  | corrects            |<----------------------------| records             |
+  | [kapu_service]      |  balances, schedules        | [apache_fineract]   |
+  +---------------------+                             +---------------------+
+        | templates, hours and recipients checked
+        v
+  +---------------------+
+  | MESSAGING           |
+  | sends SMS           |
+  | [kapu_service]      |
+  +---------------------+
+```
+
+**Related:** implements [mfi](../modules/mfi.md); depends on
+[kapu-core-fineract](kapu-core-fineract.md) (and messaging, to write);
+used by [end-of-day-runner](end-of-day-runner.md); journeys
+[JN-04](../journeys/loan-to-disbursement.md),
+[JN-05](../journeys/guarantor.md) and
+[JN-06](../journeys/restructuring.md).
 
 ## 2 · The rules
 
@@ -80,9 +117,9 @@ it became non-performing (29(3)).
 
 | Concern | Fineract | Service layer |
 |---|---|---|
-| Interest on non-performing loans | Product's NPA setting; whether NPA stops income accrual is to confirm against Fineract | Recomputes the bucket daily regardless |
+| Interest on non-performing loans | Product's non-performing setting; Fineract stops accruing income on a non-performing loan (kapu-core-fineract §4) | Recomputes the bucket daily regardless |
 | Roan's 1% a day default interest | Not set up as a Fineract overdue charge for capped products | Posted daily as a dated charge of `min(daily amount, room)` |
-| Anything else over the cap | — | Same-day waiver of the excess (waive charge or waive interest; transaction to confirm against Fineract) |
+| Anything else over the cap | — | Same-day waiver of the excess (Fineract's waive-interest or waive-charge command, kapu-core-fineract §5) |
 | Write-off | Fineract write-off | Only on a credit decision to stop recovery, never as the cap mechanism |
 
 Waiving is preferred to write-off: the statement shows only what may
@@ -115,16 +152,14 @@ and on full early repayment owes no interest for the rest of the term
 - Payoff = outstanding principal + fees due + interest accrued to the
   payment date. No early-repayment fee may exist on a product.
 
-**Where enforced.** A Fineract loan product carries a repayment
-(transaction processing) strategy. No classic strategy is known to give
-principal, then fees, then interest; Fineract's advanced payment
-allocation may allow the order per allocation category, possibly only
-for some schedule types. **Which fits is to confirm against Fineract.**
-If neither does, a custom transaction processor is added as a Fineract
-extension. The service compares every posted breakdown with its own
-allocation and raises a mismatch event on any difference. Whether
-Fineract's payoff or foreclosure drops unearned interest on flat-rate
-loans is to confirm against Fineract; if not, the service waives it in
+**Where enforced.** Every loan product uses Fineract's progressive
+schedule with advanced payment allocation, whose order is a setting:
+past-due principal, fees, penalties, interest; then due; then in advance
+(kapu-core-fineract §4). A custom transaction processor, Fineract's
+documented extension, is the fallback if check F3 fails. The service
+compares every posted breakdown with its own allocation and raises a
+mismatch event on any difference. Whether Fineract's payoff drops unearned
+interest on flat-rate loans is check F2; if not, the service waives it in
 the same posting.
 
 **Edge cases.** Payments during the end-of-day run; reversals (re-run
@@ -188,8 +223,9 @@ customer, who has accepted (55; also 54(7)).
 4. Changing an existing loan is a *variation*: a notice setting out the
    changes (54(8)), effective no earlier than 30 days after delivery and
    only once the borrower's acceptance is recorded; otherwise the loan
-   keeps its terms. How a rate change reaches a live loan (loan
-   reschedule or otherwise) is to confirm against Fineract.
+   keeps its terms. A rate change reaches a live loan as a reschedule
+   request with the new rate from the day it takes effect, within the
+   product's range (kapu-core-fineract §6).
 
 ### 2.5 Non-performing classification — reg 57, MF-25
 
@@ -208,8 +244,9 @@ nothing is past due beyond the threshold, which closes the cap episode.
 
 **Where enforced.** The service is the authority. Fineract's NPA days
 are set to match where a product's tenor range sits wholly on one side
-of 30 days; a product spanning both is flagged at configuration. Whether
-the NPA flag can be set by API is to confirm against Fineract.
+of 30 days; a product spanning both is flagged at configuration. Fineract's
+flag cannot be set by API: it follows the product's overdue days, and
+clears after a re-age, so the service keeps its own (kapu-core-fineract §6).
 
 ### 2.6 Collection conduct — reg 30, MF-26
 
@@ -341,13 +378,13 @@ with platform naming): `kapu.mfi.loan.nonperforming`,
 `kapu.mfi.product.version.activated`, `kapu.mfi.loan.variation.accepted`,
 `kapu.mfi.message.blocked`, `kapu.mfi.complaint.overdue`.
 
-**End of day** (KC-07), Africa/Nairobi:
+**End of day** (KC-07), Africa/Nairobi, run by the end-of-day runner after
+its checks (end-of-day-runner):
 
 1. Close the day's intake: post repayments dated today; ask M-Pesa Pull
    Transactions (RL-20) for missed confirmations.
-2. Fineract's date-driven jobs (arrears ageing and similar; list to
-   confirm against Fineract). Its overdue-penalty job is not used for
-   capped products.
+2. Fineract's close of business (kapu-core-fineract §7). Its
+   overdue-penalty step is not used for capped products.
 3. Classification: open or close cap episodes; emit events.
 4. Default interest posted by the service, capped at room.
 5. Cap sweep: waive any excess over `P_npl` the same day.

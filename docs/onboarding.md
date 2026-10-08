@@ -5,7 +5,7 @@ kind: checklist
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620]
+review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633]
 last_reviewed: 2026-10-08
 ---
 
@@ -49,6 +49,7 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-18 | The operator agreements for the SIM-change, IMSI and name checks with Safaricom, Airtel and Telkom: the institution's own, or Dibon's; and the limit and holding period after a SIM change | Customer's compliance lead | identity ID-12 to ID-14, financial-crime FC-02; compliance LC-13; FS-448 |
 | OB-COM-19 | Access to each bank it pays out through: the bank access request sent (docs/outreach/bank-access-request.md), the channel each bank grants (API, host-to-host files, or internet banking), its cut-offs, and the signing certificates it requires | Customer's finance lead | rails RL-01, RL-07; FS-586, FS-588 |
 | OB-COM-20 | Its business calendar (working hours, its own closures) and its transaction rules: windows, limits per tier and per cycle, allow- and deny-lists | Customer's operations lead | core KC-15; financial-crime FC-16; FS-574 |
+| OB-COM-21 | For each core banking system we integrate with and each rail: its end-of-day window, what happens to postings during it, its cut-off and value dating, and its statement day, so reconciliation knows what is in transit (docs/architecture.md §10) | Customer's IT lead | recon-observability RO-04; FS-630 |
 
 ## Kapu Collect
 
@@ -93,7 +94,7 @@ Module: [core](modules/core.md)
 | OB-KC-01 | Products: savings, loans and shares, with interest, fee and charge rules | Operations lead | core KC-02 to KC-04 |
 | OB-KC-02 | Chart of accounts | Finance lead | core KC-05 |
 | OB-KC-03 | Branches, tellers and tills | Operations lead | core KC-06 |
-| OB-KC-04 | End-of-day cycle and the returns it files | Finance lead | core KC-07, KC-10 |
+| OB-KC-04 | End-of-day cycle: the runner's times; each check's class, agreed against the criteria in docs/specs/end-of-day-runner.md §4; the tolerance for unapplied money; who is told of what (docs/incident-management.md §3); and the returns it files | Finance lead, with our operations | core KC-07, KC-10 |
 | OB-KC-05 | Data from its current system, and a signed-off migration reconciliation | Finance lead | core KC-11 |
 
 ## Kapu MFI

@@ -1,8 +1,8 @@
 # Dibon financial services — session handoff
 
-    version: 1.4.0
-    updated: 2026-10-07
-    supersedes: 1.3.0; adds 7 October (FS-590 to FS-610)
+    version: 1.5.0
+    updated: 2026-10-08
+    supersedes: 1.4.0; adds 8 October (FS-611 to FS-634)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -82,7 +82,25 @@ Each has a register row and, where it changed the design, an entry in
   institution's payout path (FS-586, FS-587).
 - **What is approved is what is sent**, and **no Dibon role, break-glass
   included, moves an institution's money** (FS-588).
-- **Diagrams are plain text, at most 100 columns** (FS-064, FS-579).
+- **Diagrams are plain text, at most 100 columns** (FS-064, FS-579). In a
+  box: the name in capitals as the components table in
+  `docs/specs/README.md` names it, what it does in lower case, what it
+  runs on in `[snake_case]` (FS-632). Mermaid only in the specs index, as
+  a trial (FS-628); the reader draws the ASCII with box lines.
+- **Specs come in two kinds** on one template (FS-627): build (a service
+  we write) and component (a product we configure). §1 ends with "Where it
+  sits" and a Related line; relations in front matter, both ways; closing
+  with tests (or "Checks before the build") and open questions.
+- **Kapu Core is Fineract 1.15.x, pinned, never forked; every product
+  progressive with advanced payment allocation; Fineract's maker-checker
+  off; only Kapu MFI's service account may approve, disburse or
+  restructure** (FS-626). The Mifos web app is open.
+- **The night's close** (FS-633): checks at 21:00 and 23:45, blocking or
+  warning by written criteria agreed with the institution; the business
+  date moves at midnight regardless and only the close waits; two people
+  to override; a severity 1 is a phone call. **Time** (FS-634): UTC
+  stored, Nairobi business dates, three dates per money record, NTP with a
+  500 ms alarm, references before time in matching (architecture §10).
 - **Bank payouts: one approval within limits a bank agrees by mandate
   letter, two above them** or through internet banking (RL-07, FS-594).
 - **Payroll is paid from the employer's own accounts, never through
@@ -102,16 +120,23 @@ Each has a register row and, where it changed the design, an entry in
   scoring) blocks decisioning's build. Roan's requirement document is
   Dibon's own and commits appraisal, a behaviour score and automatic
   downgrades to the MVP.
-- **User journeys** in `docs/journeys/`: JN-01 to JN-04 written (the
+- **User journeys** in `docs/journeys/`: JN-01 to JN-06 written (the
   electronic and manual identity checks, the business borrower, a loan
-  to disbursement). Still to write for R1: JN-05 (guarantor), JN-06
-  (restructuring), JN-07 (borrower's documents), JN-08 (complaint), JN-14
+  to disbursement, a guarantor, a restructure). Still to write for R1: JN-07 (borrower's documents), JN-08 (complaint), JN-14
   (settlement and the collateral's discharge), JN-13
   (a bank disbursement to settlement, return, recall or reversal). Each
   journey found gaps, settled with the owner one by one.
-- **Build specifications** in `docs/specs/`: the lender rules and the
-  approval engine. Still to write: the sanctions adapter, the M-Pesa
-  port, the API contracts, guarantors and borrower access.
+- **Specifications** in `docs/specs/` (index: `README.md`, with the map and
+  the components table): approval engine, lender rules, Kapu Core on
+  Fineract, the end-of-day runner, observability on Grafana. Next, in
+  order: access-keycloak, event-bus-kafka (one catalogue of event names),
+  odoo, rails, messaging; then the sanctions adapter, guarantors and
+  borrower access. **On-call:** Grafana OnCall's open-source edition was
+  archived on 2026-03-24; GoAlert self-hosted with Twilio is proposed, the
+  choice is the owner's (observability-grafana §5).
+- **Incident management** (`docs/incident-management.md`): severities, the
+  notification plan, what a notice says. Its times are proposals until
+  agreed with the rota and each customer.
 - **Vendors for identity:** Smile ID, MetaMap and Prembly read from their
   API references (partners PT-30, PT-33, PT-53); Smile ID and Prembly
   proposed as the candidates; the owner has reached out to Prembly and
@@ -244,7 +269,10 @@ customers, regulation, assurance, references, dependencies, scope,
 no typed status, a flow diagram showing every step and failure, anything
 outside the release named in §4 Gaps, every journey indexed),
 **overview** (every document under `docs/` linked from the overview,
-directly or by its folder) and `reviewed`. The pre-commit hook runs them,
+directly or by its folder), **specs** (template front matter and sections,
+relations both ways, §1's diagram and Related line, the index, box names
+from the components table), **links** (every relative link and every
+`docs/…` path resolves; REVIEW.md exempt as history) and `reviewed`. The pre-commit hook runs them,
 then rebuilds the reader.
 
 **When a check fails, fix the document, not the check.** A check changes
@@ -260,6 +288,12 @@ only with a register row.
 - **`REVIEW.md` may end without a newline**, and its last row then has no
   trailing `\n` to anchor on.
 - **Files are a mix of CRLF and LF.** Normalise before matching.
+- **A blank line inside a Markdown table splits it**: the next row becomes
+  a header and loses its anchor in the reader. Two were found in REVIEW.md.
+- **A heredoc with nested quotes can fail in the Bash tool.** Write the
+  script with the file tool instead.
+- **A preview server serving `build/site` locks the folder on Windows**;
+  the reader now empties it rather than deleting it.
 - **Adding a capability row** can trip several checks at once: scope,
   references, dependencies (both front matter and §4 prose, both ways),
   customers, obligations. Moving one into R1 means a Roan map row, the
@@ -319,8 +353,9 @@ only with a register row.
   FS-205, FS-329, FS-340), bank connections (FS-344), and business
   registry access for business borrowers (FS-564).
 - **To confirm technically:** Odoo Sign link-only completion emails
-  (FS-532); Fineract's working days and holidays fed from the business
-  calendar (KC-15); whether the business registry's API returns
+  (FS-532); Fineract's thirteen checks on a running 1.15 instance
+  (kapu-core-fineract §9, F1 to F13); Grafana and on-call checks
+  (observability-grafana §8); whether the business registry's API returns
   beneficial owners (FS-566, FS-568); M-Pesa validation on tills and any
   Pochi API (CO-21); each bank's signing and certificate requirements.
 - Proposals awaiting go: the OPEN rows whose notes say "Proposal in chat".

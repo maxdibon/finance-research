@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-074, FS-548, FS-558, FS-560]
-last_reviewed: 2026-10-06
+review_ids: [FS-074, FS-548, FS-558, FS-560, FS-627]
+last_reviewed: 2026-10-08
 ---
 
 # Testing
@@ -28,7 +28,7 @@ is evidence; a test is the evidence for Built.
 |---|---|---|
 | The law and the requirement | docs/regulation.md; the customer's delivery map | Here |
 | The capability | Its module's §3 | Here |
-| **Acceptance items** | The specs' "Acceptance tests" tables (`lender-rules A5`); every step and §3 row of a journey (`JN-02 2.4`, `JN-02 3a`) | Here, with the spec or the journey |
+| **Acceptance items** | The build specs' "Acceptance tests" tables (`lender-rules A5`) and the component specs' "Checks before the build" (`kapu-core-fineract F3`), run on a working instance before the build relies on them; every step and §3 row of a journey (`JN-02 2.4`, `JN-02 3a`) | Here, with the spec or the journey |
 | **The tests** | The code repository, beside the code they test | The person who builds the code |
 | **The results** | CI, on every commit, as a JUnit report | CI |
 | **The coverage matrix** | Generated in the code repository from the tags and the results | A script, not a person |

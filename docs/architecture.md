@@ -5,7 +5,7 @@ kind: architecture
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634]
 last_reviewed: 2026-10-08
 ---
 
@@ -446,7 +446,54 @@ is operating many instances, met by building every instance from the same
 code and configuration (GitOps), upgrading the fleet together, and
 watching all of them in one place (platform-security SE-23; recon RO-16).
 
-## 10 · What this document does not decide
+## 10 · Time and dates
+
+One set of rules for every service, so that dates in the ledger, times in
+the audit trail and matches in reconciliation agree (FS-634).
+
+- **Three dates on every money record.** The *value date*: when it
+  happened, from the source (an M-Pesa receipt's time, a bank's value
+  date). The *business date*: the ledger day it belongs to, Africa/Nairobi,
+  moved only by the end-of-day runner (docs/specs/end-of-day-runner.md).
+  The *created time*: our clock, for audit.
+- **Times are stored in UTC,** as ISO 8601 with the zone; business dates
+  and anything shown to people are Africa/Nairobi, which has no daylight
+  saving (UTC+3 all year). Fineract's tenant time zone is Africa/Nairobi.
+- **A time from outside is kept as received,** beside our own receipt
+  time: M-Pesa's local time carries no zone; bank statements carry a
+  booking date and a value date, sometimes no time at all.
+- **Every host keeps time by NTP** (chrony) against one primary source,
+  Liquid's (to confirm), with a Kenyan public pool as fallback. Drift over
+  500 ms is an alert, and blocks the night's close (end-of-day-runner C9):
+  one-time codes (30-second windows), signed events and the order of the
+  audit trail all depend on it.
+- **Matching never relies on time alone.** Reconciliation matches on the
+  reference first (the M-Pesa receipt, the bank's reference, our
+  instruction id), then the amount, then the time within a window.
+- **Cut-offs make timing items, not breaks.** A payment at 23:59:58 in
+  M-Pesa's day may reach us at 00:00:03; a bank may book after its own end
+  of day with the next value date; a core like Bankers' Realm holds
+  deposits until its end of day (FS-630). Each is *in transit*, with the
+  day it should clear, and becomes a break only if it does not clear in
+  the next cycle (recon-observability RO-04). Each source's statement day,
+  cut-off and end-of-day window is recorded at onboarding (OB-COM-21).
+
+**Where time matters most:**
+
+| Component | What time does to it |
+|---|---|
+| Access (Keycloak) | One-time code windows, token expiry, how fresh a step-up must be |
+| Approval engine | Time in each step, reminders, escalation; how old a step-up may be |
+| Rails | How long an instruction stays valid; bank cut-offs (RTGS, EFT, PesaLink); reversal windows |
+| Lender rules | Day counts: non-performing status, the arrears cap, 30-day notices, complaint clocks, on the business calendar (core KC-15) |
+| Transaction rules (financial-crime FC-16) | Time windows, such as a lockout overnight |
+| Messaging | The hours collection messages may be sent (reg 30) |
+| Event bus, audit chain (recon RO-24) | Event times, order, how long a signature stays valid |
+| Odoo | General-ledger summaries by business date; signing times as evidence |
+| Decisioning, reports, returns | The "as at" date of statements and returns |
+| Documents, complaints | Retention and complaint clocks |
+
+## 11 · What this document does not decide
 
 - Product status — each module's §3.
 - Pricing and business models (FS-024).
@@ -454,7 +501,7 @@ watching all of them in one place (platform-security SE-23; recon RO-16).
   FS-428.
 - Whether the portfolio map in §1 is final (FS-034).
 
-## 11 · Sources
+## 12 · Sources
 
 - REVIEW.md decisions FS-025 to FS-033, FS-042 to FS-045.
 - odoo-reconciliation.md (GateKeepr brief), §2 and §3. The principles

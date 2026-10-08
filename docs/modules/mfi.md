@@ -8,7 +8,7 @@ classification: Internal
 audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway, sme-recon, business-suite, escrow, decisioning]
 consumed_by: [omni-channel, insights, business-suite, sacco]
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532, FS-582, FS-581, FS-602, FS-618, FS-619]
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532, FS-582, FS-581, FS-602, FS-618, FS-619, FS-625, FS-629]
 last_reviewed: 2026-10-08
 ---
 
@@ -82,7 +82,7 @@ FS-393.
 | MF-06 | Vetting with an assessed limit. An approval above it is flagged as an override: immutable, justified, and tracked as a cohort | Designed | MFI PRD FR-5 | 1 |
 | MF-07 | Approval chains by product and amount tier, with no self-approval; overrides always end with the override authority | Designed | MFI PRD FR-6. Belongs to the shared mandates module — FS-138 | 1 |
 | MF-08 | Repayments split automatically by component, in a configurable order, with the breakdown stored on every transaction | Designed | MFI PRD FR-7. For non-deposit-taking lenders the order is fixed by law: principal, then fees, then interest (MF-22, FS-435) | 1 |
-| MF-09 | Restructuring: a reschedule (same loan, new schedule), a refinance or rollover (a new loan pays off the old, with an immutable chain back to it), or a top-up; on the borrower's request or with prior notice (CBK lender regulations reg 28(3)); approved through the mandate engine as its own request; a new key information document the borrower accepts; arrears interest never capitalised into new principal, and the arrears cap not reset by it (reg 29(3)); restructured loans flagged and tracked as a cohort, with a limit on how often one loan is restructured | Designed | MFI PRD FR-8; owner, 2026-10-06: in R1 (FS-516). How Fineract does it is still FS-139 | 1 |
+| MF-09 | Restructuring: a reschedule (same loan, new schedule), a refinance or rollover (a new loan pays off the old, with an immutable chain back to it), or a top-up; on the borrower's request or with prior notice (CBK lender regulations reg 28(3)); approved through the mandate engine as its own request; a new key information document the borrower accepts; arrears interest never capitalised into new principal, and the arrears cap not reset by it (reg 29(3)); restructured loans flagged and tracked as a cohort, with a limit on how often one loan is restructured | Designed | MFI PRD FR-8; owner, 2026-10-06: in R1 (FS-516). In Fineract: re-aging, a reschedule request or a top-up, and a refinance refused while interest is overdue (docs/specs/kapu-core-fineract.md §6; FS-139, FS-625) | 1 |
 | MF-10 | Repayment by M-Pesa push prompt and paybill with automatic matching; bank transfers matched by the accountant | Designed | MFI PRD FR-9.1, FR-9.2. Whose shortcode — FS-140 | 1 |
 | MF-11 | Disbursement by M-Pesa B2C or bank transfer, only from an approved application, with maker-checker on the disbursement itself | Designed | MFI PRD FR-9.3 | 1 |
 | MF-12 | Payment failures in a retry and exception queue the accountant can see | Designed | MFI PRD FR-9.4. Delivered by recon-observability | 1 |
@@ -107,7 +107,7 @@ FS-393.
 | MF-31 | Collateral API: the register read and its changes published as events, for the institution's systems and partners (valuers, insurers, vehicle trackers), scoped by role | Planned | Owner, 2026-10-06 (FS-496). Partner clients per access AC-04 | 2 |
 | MF-32 | LPO and invoice financing for SMEs: the lender sees purchase orders and invoices confirmed in the SME's Odoo and SME Recon, with the SME's consent; repaid from the buyer's payment; the supplier paid through Escrow on delivery where agreed | Planned | Owner, 2026-10-06 (FS-522). Ordinary lending under the CBK lender regulations (LR-03) | 2 |
 | MF-34 | Loan agreements: the agreement and key information document generated from the product version and the loan's terms, from templates approved under maker-checker; signed by the borrower and guarantors through Odoo Sign (business-suite BS-02) with a code to their bound phone; the offered and the signed versions filed in the document vault against the loan (identity ID-15), the signed one with its signing certificate and a hash recorded in the loan's trace (recon RO-23); the borrower's copy by link (identity ID-17), never as an attachment | Planned | Owner, 2026-10-06: in R1 (FS-516). Electronic signatures: Kenya Information and Communications Act s.83B; whether this meets an advanced signature for loans and guarantees is for counsel | 1 |
-| MF-35 | Loan officers: each borrower and loan assigned to an officer, reassigned in bulk on leave or exit with a second person's approval and the history kept; joining in Odoo HR creates the Keycloak role, the Fineract staff record and an enrolled field device; performance by officer (portfolio, disbursements, arrears, collections, overrides, visits); officers never approve their own applications and handle no cash | Planned | Owner, 2026-10-06 (FS-517). Fineract assigns loans to staff (to confirm against Fineract). Owner, 2026-10-06: in R1 | 1 |
+| MF-35 | Loan officers: each borrower and loan assigned to an officer, reassigned in bulk on leave or exit with a second person's approval and the history kept; joining in Odoo HR creates the Keycloak role, the Fineract staff record and an enrolled field device; performance by officer (portfolio, disbursements, arrears, collections, overrides, visits); officers never approve their own applications and handle no cash | Planned | Owner, 2026-10-06 (FS-517). Fineract assigns loans to staff, and reassigns them in bulk (docs/specs/kapu-core-fineract.md §5). Owner, 2026-10-06: in R1 | 1 |
 | MF-36 | Pay-day limits: a limit approved once like any loan; each draw from the phone to M-Pesa, Airtel Money, T-Kash or the bank without further approval, checked on every draw for the limit left, employment still active (a leaver in Odoo HR blocks it), deduction headroom on the next payroll and arrears; repaid by check-off over one to three payrolls | Planned | Owner, 2026-10-06 (FS-518). The lender notifies CBK of a new channel 30 days before launch (reg 27) | 2 |
 | MF-37 | Guarantors: consent sought and recorded before anyone is appointed, the guarantee signed (MF-34); the guarantor kept informed by periodic loan statements; recourse only after non-judicial recovery from the borrower is exhausted, and no demand before the guarantor has had 14 days' notice of the default | Planned | CBK lender regulations reg 39(3), reg 42 (LR-03); owner, 2026-10-06: in R1 (FS-531) | 1 |
 | MF-38 | Borrower access: a receipt for every transaction; a message at each change of status (approved, disbursed, due, overdue, restructured, settled); a free statement on request, by a single-use link to our own page, never as an attachment | Planned | CBK lender regulations reg 39(1) (LR-03); owner, 2026-10-06: in R1 (FS-531) | 1 |
@@ -175,6 +175,12 @@ money PIN or credentials.
        |                 |                  |                  |
   SMS reminders from schedule events; failures to the recon queue
 ```
+
+**Inside the service layer** (FS-629): the *lender-rules service* applies
+the CBK lender regulations to every loan (docs/specs/lender-rules.md); the
+approval engine decides (docs/specs/approval-engine.md); Fineract records
+(docs/specs/kapu-core-fineract.md); the end-of-day runner closes each day
+(docs/specs/end-of-day-runner.md).
 
 ## 6 · Rails and integrations
 
@@ -246,7 +252,7 @@ CBK regulatory returns sit in financial-crime (FC-13), not here.
 
 ## 11 · Open questions
 
-FS-088, FS-139, FS-141.
+FS-088, FS-141.
 
 ## 12 · Sources
 

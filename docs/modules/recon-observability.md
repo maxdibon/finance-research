@@ -8,7 +8,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime, core, escrow, crb, rails, insights, platform-security, decisioning]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618]
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618, FS-101, FS-633, FS-634]
 last_reviewed: 2026-10-08
 ---
 
@@ -70,7 +70,7 @@ reconciliation, is Planned (FS-405).
 | RO-01 | Ingest rail, bank and ledger events: real-time callbacks, API pulls, statement files | Designed | Proposal: data pipeline. Prototype: manual load of CSV, XLSX, MT940, fixed-width | 1 |
 | RO-02 | Matching engine with configurable rules. Outcomes: matched clean, matched with variance, unmatched on our side, unmatched at the counterparty, duplicate. Rules match one to one, one to many and many to many (a bank's single batched entry against many transfers), with tolerances per rule (amount, date, reference); each rule runs automatically or as suggest-then-approve; the share matched automatically is published per cycle (FS-509) | Designed | Proposal: analysis engine. Prototype: Recon Workbench | 1 |
 | RO-03 | Three-way matching: ledger, statement and expected | Designed | Prototype: Manual Recon | 1 |
-| RO-04 | Intraday and end-of-day cycles, mirroring the customer's own cycle | Designed | Proposal: functional spec. Prototype: Control Tower cycle table | 1 |
+| RO-04 | Intraday and end-of-day cycles, mirroring the customer's own cycle; a cut-off difference held as in transit, with the day it should clear, and a break only if it does not clear in the next cycle | Designed | Proposal: functional spec. Prototype: Control Tower cycle table | 1 |
 | RO-05 | Exception queue, ordered by SLA remaining rather than by amount, with owner and age | Designed | Proposal: SLA routing. Prototype: Exception Queue | 1 |
 | RO-06 | Transaction trace: every hop, with both sides' evidence | Designed | Prototype: Transaction Trace | 1 |
 | RO-07 | Remediation: status query, retry, repost, reversal — each audited | Designed | Proposal: actors and corrective workflows. Prototype: status query that completes a break. Control rule in §8 — FS-097 | 1 |
@@ -81,7 +81,7 @@ reconciliation, is Planned (FS-405).
 | RO-13 | Evidence for a period, assembled from traces rather than retyped | Designed | Prototype: Recon Attestation | 2 |
 | RO-16 | Observability: metrics (Prometheus), logs (Loki), traces (Tempo or Jaeger), dashboards (Grafana) | Designed | Proposal: Observability. Kapu technical documentation uses the same stack. Metrics, logs and dashboards ran at Onit Bank in Collect (collect CO-11, FS-390); traces are not evidenced there, so the row stays Designed | 1 |
 | RO-17 | Alerting and SLOs, including reconciliation SLOs such as match rate | Designed | Proposal: Alerting & SLO | 1 |
-| RO-18 | On-call and incident response | Designed | Proposal: Grafana IRM. On-prem availability unverified — FS-101 | 1 |
+| RO-18 | On-call and incident response | Designed | Proposal: Grafana IRM, which is cloud-only; Grafana OnCall's open-source edition was archived on 2026-03-24 (FS-101). Proposed instead: Grafana alerting with GoAlert, self-hosted (docs/specs/observability-grafana.md), routed by docs/incident-management.md | 1 |
 | RO-19 | Role-based field masking, MFA, access audit, encryption at rest and in transit | Designed | Proposal: Security Features. Prototype: role-based masking | 1 |
 | RO-20 | Processor settlement reports: gross transactions matched to net, batched settlements after fees | Planned | Needed if payment processors are partners — FS-096, FS-102 | 2 |
 | RO-21 | M-Pesa Pull Transactions as a source: each shortcode's transactions fetched on a schedule and whenever a callback is late, so the ledger is matched against the rail's full record | Planned | Owner, 2026-10-03 (FS-388); rails RL-20; RO-01 | 1 |
@@ -232,8 +232,9 @@ zero, and that is what closing the day means.
 Cloud-native on Kubernetes, as the July proposal describes. It will run
 on the customer's premises or on Liquid's Azure Stack (FS-032). For an
 institution it will sit beside the core. For Kapu products it will run
-once, shared, inside Kapu's own deployment. Grafana IRM may not be available outside Grafana's
-own cloud — FS-101.
+once, shared, inside Kapu's own deployment. On-call runs
+beside it on GoAlert, as proposed in docs/specs/observability-grafana.md
+(FS-101).
 
 ## 10 · What it does not do
 

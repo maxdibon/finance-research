@@ -965,3 +965,58 @@ its own entry.
 - **Costs (inferred):** three more R1 capabilities for a team of four;
   the ladder's stages must be fitted to the conduct rules before Roan
   Capital's day 30 and day 47 can be configured (open answer 3).
+
+## FS-626 · Kapu Core: Fineract 1.15, progressive loans, one writer
+
+- **Chose:** Apache Fineract 1.15.x, pinned and never forked; every loan
+  product on the progressive schedule with advanced payment allocation,
+  so the regulated repayment order is a setting and restructuring has
+  Fineract's re-aging, reschedule and top-up; Fineract's own
+  maker-checker off, and its approve, disburse and restructure
+  permissions held only by Kapu MFI's service account, acting on the
+  approval engine's yes. The Mifos web app is left open.
+- **Requires:** docs/specs/kapu-core-fineract.md §4; docs/specs/kapu-core-fineract.md §6; KC-08; MF-09.
+- **Argued against:** the older cumulative schedule, which keeps the
+  classic reschedule but loses re-aging, a rate change on a live loan and
+  the configurable order, so reg 56 would need a custom extension; and
+  running Fineract's maker-checker beside the engine, two approval
+  records that can disagree.
+- **Costs (inferred):** flat interest on progressive loans is recent
+  (1.13), so thirteen checks run on an instance before the build relies
+  on it; each Fineract upgrade waits for them.
+
+## FS-627 · Specs: two kinds, one template, checked; navigation both ways
+
+- **Chose:** a spec template with two kinds, build (a service we write)
+  and component (a product we configure), sharing §1 with a "Where it
+  sits" diagram and a Related line, and ending in tests and open
+  questions; relations in the front matter, checked both ways; an index
+  with the map and the components every diagram names; a check that
+  every link and path resolves; the reader showing related documents,
+  what links to each page, a contents list and links to sections.
+- **Requires:** docs/specs/_template.md; docs/specs/README.md "Name in diagrams".
+- **Argued against:** leaving specs free-form, as the two existing ones
+  had drifted to five and twelve sections; and typed links on every
+  section reference, which would end plain Markdown (FS-563).
+- **Costs (inferred):** front matter to keep current as specs are added;
+  a renamed component means a change to the components table and every
+  diagram that draws it.
+
+## FS-633 · The night's close: checks first, a phone call when it fails
+
+- **Chose:** an end-of-day runner per institution: checks at 21:00 and
+  23:45, each blocking or a warning by written criteria agreed with the
+  institution; the business date moves at midnight whatever they say,
+  and only the close waits on a blocking check; two people may override,
+  never on a check a regulation drives; every failure routed by the
+  incident-management plan, a severity 1 by phone call to the on-call
+  engineer. On-call proposed on GoAlert, self-hosted, since Grafana's
+  own on-call is now cloud-only.
+- **Requires:** KC-07; RO-18; docs/specs/end-of-day-runner.md §4; docs/incident-management.md §3; docs/specs/observability-grafana.md §5.
+- **Argued against:** Fineract's scheduler alone, which runs the close
+  with no checks before it and calls no one; holding the business date
+  with the close, which would refuse the next day's payments as being in
+  the future; and Grafana Cloud IRM, which takes alerts out of Kenya.
+- **Costs (inferred):** a service to build and run, and one more,
+  GoAlert, for on-call; a Twilio account for calls; and a rota of three
+  carrying night pages until it grows.

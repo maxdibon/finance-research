@@ -2,10 +2,15 @@
 id: approval-engine
 name: Approval engine — build specification
 kind: spec
+type: build
+release: R1
+implements: [mandates]
+depends_on: [kapu-core-fineract]
+used_by: []
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627]
 last_reviewed: 2026-10-08
 ---
 
@@ -15,8 +20,9 @@ How the signing side of the mandates module (docs/modules/mandates.md) is
 designed to be built for R1, Roan Capital's pilot. The source is the MFI
 PRD, FR-6 (sources/kapu), and Roan Capital's delivery map
 (docs/customers/roan-capital.md). Nothing here is built; every behaviour
-is **designed**. Where the design relies on Fineract behaviour that has
-not been verified, it says **to confirm against Fineract**.
+is **designed**. Fineract's side is in docs/specs/kapu-core-fineract.md, settled from
+its documentation (FS-625); what only a running instance can show is that
+spec's §9.
 
 ## 1 · Purpose and scope
 
@@ -50,6 +56,34 @@ for them: a *subject type* is configuration, not code.
 holds it and for how long, to the originator, the approvers and the
 auditor (§6). This is the tracking FS-494 asks for, and it costs nothing
 extra: the engine holds the facts already.
+
+**Where it sits.**
+
+```
+  approvers: console, email, app
+        |
+        v
+  +---------------------+  roles, step-up      +---------------------+
+  | APPROVAL ENGINE     |--------------------->| ACCESS              |
+  | decides             |                      | signs in, steps up  |
+  | [kapu_service]      |                      | [keycloak]          |
+  +---------------------+                      +---------------------+
+     ^ request    | approved, declined
+     |            v
+  +---------------------+  approve, reject,    +---------------------+
+  | KAPU MFI            |--------------------->| KAPU CORE           |
+  | asks, then acts     |  disburse            | records             |
+  | [kapu_service]      |                      | [apache_fineract]   |
+  +---------------------+                      +---------------------+
+```
+
+**Related:** implements [mandates](../modules/mandates.md); depends on
+[kapu-core-fineract](kapu-core-fineract.md) (and access-keycloak, to
+write); used by none yet (rails, to write, will be); journeys
+[JN-02](../journeys/manual-identity-check.md),
+[JN-04](../journeys/loan-to-disbursement.md),
+[JN-05](../journeys/guarantor.md) and
+[JN-06](../journeys/restructuring.md).
 
 ## 2 · Concepts
 
@@ -302,21 +336,22 @@ channel. The products act on `request.approved`, never on a decision.
 
 **Recommendation: the engine decides; Fineract records.** Fineract has
 its own maker-checker, which can hold a command until a second user
-checks it (to confirm against Fineract). Running both would put two
+checks it: a global setting, then one per permission (kapu-core-fineract §4). Running both would put two
 approval records side by side that can disagree. So:
 
 1. Kapu MFI creates the loan application in Fineract (state: submitted
    and pending approval) and submits a request to the engine with the
-   Fineract loan id as subject.
+   Fineract loan id as subject. The loan carries our application id as
+   its external id (kapu-core-fineract §5).
 2. Approvers decide in the engine: console, email or app.
 3. On `request.approved`, Kapu MFI calls Fineract's approve command with
-   the service account, putting the engine's request id in the note or
-   an external id (to confirm against Fineract).
+   the service account, putting the engine's request id in the command's note (whether it
+   also takes an external id is kapu-core-fineract check F9).
 4. On `request.declined`, Kapu MFI calls Fineract's reject command; on a
-   withdrawal, its withdraw command (to confirm against Fineract).
+   withdrawal, its `withdrawnByApplicant` command (kapu-core-fineract §5).
 5. Fineract's own maker-checker stays off for the commands the engine
    governs, and staff roles in Fineract lose the approve, reject and
-   disburse permissions (permission codes to confirm against Fineract).
+   disburse permissions (the permission codes are in kapu-core-fineract §4).
 6. Disbursement (MF-11) is a second request, `loan.disbursement`, with
    its own maker-checker chain. On approval, Kapu MFI pays through the
    rail (RL-03 or RL-07) and posts the disbursal to Fineract when the

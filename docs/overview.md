@@ -5,8 +5,8 @@ kind: overview
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-572]
-last_reviewed: 2026-10-06
+review_ids: [FS-572, FS-627, FS-631, FS-633]
+last_reviewed: 2026-10-08
 ---
 
 # Dibon financial services — the portfolio
@@ -127,12 +127,13 @@ own payments first, and insights runs on our own data first (FS-033).
 | Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |
 | Who keeps our commitments, and whom we hire next | [operating-model.md](operating-model.md) |
 | What we build next, release by release | [delivery-plan.md](delivery-plan.md) |
-| How an R1 component is built | [specs/](specs/): the lender rules, the approval engine |
+| How an R1 component is built or run, and how the specs connect | [specs/](specs/README.md): the approval engine, lender rules, Kapu Core on Fineract, the end-of-day runner, observability |
 | What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
 | How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](testing.md) |
 | What personal data we process, why and for how long | [privacy.md](privacy.md) |
 | Which documents an institution keeps, under which law, for how long | [documents.md](documents.md) |
 | How the service and the company keep going when something fails | [business-continuity.md](business-continuity.md) |
+| How an incident is ranked, and who is told, how and with what | [incident-management.md](incident-management.md) |
 | Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
 | Which laws apply to us and our customers, and what each drives | [regulation.md](regulation.md) |
 | What a customer files with its regulator about us | [approval-pack.md](approval-pack.md) |
@@ -144,7 +145,7 @@ own payments first, and insights runs on our own data first (FS-033).
 | How big each market segment is | business/market-sizing.xlsx |
 | Drafts to partners, operators and regulators | [outreach/](outreach/) |
 | Everything still open | [REVIEW.md](../REVIEW.md) |
-| All of it as linked pages, every id a link | build/site/index.html, rebuilt on every commit (FS-567) |
+| All of it as linked pages, every id a link | build/site/index.html, rebuilt on every commit (FS-567); to build it yourself, README "Reading the documents" (FS-631) |
 
 Packs for each buyer type will sit in packs/ and will list modules rather
 than copy them.

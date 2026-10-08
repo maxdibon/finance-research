@@ -5,7 +5,7 @@ kind: journey
 release: R1
 owner: Solution architect
 classification: Internal
-review_ids: [FS-139, FS-516, FS-548, FS-623, FS-624]
+review_ids: [FS-139, FS-516, FS-548, FS-623, FS-624, FS-625]
 last_reviewed: 2026-10-08
 ---
 
@@ -58,6 +58,7 @@ classified by its schedule (reg 57).
         v
   7 Applied: reschedule, refinance or top-up
         |-- the loan is non-performing ........ cap carried (3f)
+        |-- refinance with interest overdue ... refused (3i)
         v
   8 Confirmed to borrower and guarantors; flagged as restructured
         v
@@ -74,7 +75,7 @@ classified by its schedule (reg 57).
 | 4 | The restructure goes up its own approval chain (approval subject `loan.restructure`), each decision re-authenticated, no one deciding twice | Approvers | MD-01, MD-05, MD-06, MD-10 |
 | 5 | Each guarantor is told of the restructure, and asked to consent where it raises or extends their exposure, before it goes ahead | Guarantors; platform | MF-37, ID-11, ID-17 |
 | 6 | The borrower is given notice of the new terms, at least thirty days before they take effect, and accepts them by signing the variation as they signed the original agreement, with a code to their phone | Borrower | MF-34, BS-02, ID-11, MF-24 |
-| 7 | The restructure is applied in Kapu Core: a new schedule on the same loan, a new loan paying off the old with a chain back to it, or a top-up disbursed as in JN-04 steps 7 and 8. Where the collateral or the amount secured changes, the collateral registry notice is amended | Platform; Credit Officer | KC-04, MF-09, MF-11, MF-03 |
+| 7 | The restructure is applied in Kapu Core: the same loan re-aged or rescheduled, or a top-up loan that closes the old one, with a chain back to it, its net disbursed as in JN-04 steps 7 and 8 (docs/specs/kapu-core-fineract.md §6). Where the collateral or the amount secured changes, the collateral registry notice is amended | Platform; Credit Officer | KC-04, MF-09, MF-11, MF-03 |
 | 8 | The borrower and the guarantors receive the new terms by link; the loan is flagged as restructured and tracked as a cohort | Platform | MF-38, MF-14, MF-09 |
 | 9 | Every event is chained and the records kept for at least seven years | Platform | RO-24, FC-12 |
 
@@ -90,6 +91,7 @@ classified by its schedule (reg 57).
 | f | 7 | **The loan is non-performing when restructured.** The cap's episode carries over, and the classification follows payment on the new schedule, never reset by the restructure alone (regs 29(3), 57) | MF-21, MF-25 |
 | g | 2 | **A top-up would take the borrower above their tier's limit.** Refused; more evidence and a higher tier first | ID-19 |
 | h | 1 to 8 | **No connection.** As JN-02 §3 i: nothing moves offline | ID-15 |
+| i | 7 | **A refinance or top-up while interest is overdue.** Fineract's top-up would pay that interest off out of the new loan's principal, capitalising it (reg 29). Refused until the overdue interest is paid or waived | MF-09, MF-21 |
 
 ## 4 · Gaps
 
@@ -97,7 +99,6 @@ classified by its schedule (reg 57).
 |---|---|---|---|
 | Whether reg 54(7)'s thirty days' notice applies when the borrower asks for the restructure, which can delay relief to a borrower in distress | A question for counsel | The design waits the thirty days | Ask counsel (FS-624) |
 | Whether a guarantor must consent to a restructure that raises or extends their exposure, and what happens to the guarantee if they will not | A question for counsel | The design asks for consent and holds without it (§3 d) | Ask counsel (FS-624) |
-| How Fineract applies each kind of restructure | To confirm against Fineract (FS-139) | — | Confirm before the build |
 
 ## 5 · Open questions
 
