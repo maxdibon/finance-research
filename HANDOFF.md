@@ -113,9 +113,11 @@ Each has a register row and, where it changed the design, an entry in
 - **Payroll is paid from the employer's own accounts, never through
   Dibon**: net pay, statutory and check-off remittances in one approved
   run (business-suite BS-19, phase 2, FS-606, FS-608).
-- **The portfolio's version is what a reader holds.** Only v1.0 has gone
-  out; the work is v1.1, a draft, and the build refuses a named copy of a
-  draft (FS-595).
+- **The portfolio's version is what a reader holds.** v1.0 and v1.1
+  (issued 2026-10-09, FS-678) have gone out. The next edit starts v1.2 as
+  a draft: bump the version and set status draft in document.json first,
+  or the build prints an issued v1.1 that differs from what readers hold.
+  The build refuses a named copy of a draft (FS-595).
 - **Every decision from FS-490 names what it requires** in a `Requires:`
   line, and the check proves each item exists (FS-515).
 
@@ -379,9 +381,9 @@ only with a register row.
   page edge and, since FS-593, content running under the footer. On
   product and closing pages the last block is pushed to the bottom, so
   one extra line of copy anywhere above it overflows. **Versions are what a reader
-  holds** (FS-595): only v1.0 has gone out. Between issues an edition is
+  holds** (FS-595): v1.0 and v1.1 have gone out. Between issues an edition is
   `"status": "draft"` in `design/portfolio-pdf/document.json` (now v1.1,
-  draft), printed as a review draft, and the build refuses a named copy of
+  issued), printed as a review draft, and the build refuses a named copy of
   it; the version moves only when an edition is issued.
 - **A PDF open in a viewer** makes the build write a timestamped file.
 
