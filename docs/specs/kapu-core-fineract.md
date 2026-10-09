@@ -11,8 +11,8 @@ used_by: [approval-engine, lender-rules, end-of-day-runner]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667]
-last_reviewed: 2026-10-08
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674]
+last_reviewed: 2026-10-09
 ---
 
 # Kapu Core on Apache Fineract — component specification
@@ -40,7 +40,7 @@ the law allows, and Fineract records the result.
 | KC-05 | General ledger: accrual accounting, a journal entry for every transaction | Yes |
 | KC-07 | End of day, run by the end-of-day runner (end-of-day-runner) | Yes |
 | KC-08 | Maker-checker through the approval engine, not Fineract's own | Yes |
-| KC-09 | Mobile-money repayments posted in real time | Yes |
+| KC-09 | Mobile-money repayments posted in real time | Yes, M-Pesa; Airtel Money and T-Kash later |
 | KC-12 | Hosted per institution, isolated, on Liquid's Azure Stack | Yes |
 | KC-15 | Working days and holidays set from the business calendar | Yes |
 | MF-09 | Restructuring: reschedule, refinance, top-up (§6) | Yes |

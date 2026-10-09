@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-531, FS-533, FS-548, FS-621, FS-622, FS-668]
+review_ids: [FS-531, FS-533, FS-548, FS-621, FS-622, FS-668, FS-674]
 last_reviewed: 2026-10-09
 ---
 
@@ -102,7 +102,6 @@ default (reg 42(4)); recovery expenses only as necessary, itemised
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| MS-12, the guarantor choosing their channels for statements and notices | phase 1, not in R1 | Statements and notices go by SMS with a link, and by email where there is one; the guarantor cannot choose | Accepted for R1 (FS-622) |
 | A guarantor's total exposure across every loan they guarantee | Sacco only (sacco SC-08) | The officer checks the guarantor's other guarantees by hand | Asked of Roan Capital (delivery map, open answer 16) (FS-622) |
 
 ## 5 · Open questions

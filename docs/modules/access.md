@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [messaging, identity]
 consumed_by: [mandates, messaging, rails, recon-observability, identity, financial-crime, core, collect, gateway, mfi, sacco, sme-recon, escrow, crb, omni-channel, insights, business-suite, platform-security, decisioning]
-review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491, FS-498, FS-503, FS-504, FS-588, FS-618, FS-642]
-last_reviewed: 2026-10-08
+review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491, FS-498, FS-503, FS-504, FS-588, FS-618, FS-642, FS-675]
+last_reviewed: 2026-10-09
 ---
 
 # Access — login, roles and step-up
@@ -59,7 +59,7 @@ reach.
 |---|---|---|---|---|
 | AC-01 | One identity provider for the platform: OpenID Connect, OAuth 2, SAML | Planned | FS-194; Keycloak documentation | 1 |
 | AC-02 | Staff single sign-on for Odoo, Fineract, Grafana and our portals | Planned | FS-194 | 1 |
-| AC-03 | Member and customer login for apps and internet banking: passkeys, one-time codes, recovery codes | Planned | Keycloak: WebAuthn and passkeys, OTP, recovery codes | 1 |
+| AC-03 | Member and customer login for apps and internet banking: passkeys and one-time codes; never printed recovery codes, since recovery is by identity verification (AC-15). In R1, borrowers and guarantors by a code to their bound phone; passkeys with the app | Planned | Keycloak: WebAuthn and passkeys, OTP (access-keycloak §4, FS-675) | 1 |
 | AC-04 | Partner and merchant API clients: client credentials, mutual TLS, financial-grade API profiles (FAPI 1, FAPI 2, OAuth 2.1) | Planned | Keycloak: built-in FAPI client profiles | 1 |
 | AC-05 | Step-up authentication at the act, by level of authentication — the mechanism behind mandates MD-10 | Planned | Keycloak: step-up authentication; FS-132. Also the step-up behind approval from email, mandates MD-18 (FS-449, FS-453) | 1 |
 | AC-06 | Approval on a phone for a request started elsewhere (CIBA) | Planned | Keycloak: CIBA policy per realm | 2 |

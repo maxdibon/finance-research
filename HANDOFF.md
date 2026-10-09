@@ -2,7 +2,7 @@
 
     version: 1.5.0
     updated: 2026-10-09
-    supersedes: 1.4.0; adds 8 and 9 October (FS-611 to FS-671)
+    supersedes: 1.4.0; adds 8 and 9 October (FS-611 to FS-677)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -162,10 +162,12 @@ Each has a register row and, where it changed the design, an entry in
   template ids (checked against the catalogue) and a "stops partway" row.
   JN-16 (the unplaced payment) is written. Next, in order: JN-13, JN-14,
   JN-07, JN-08, JN-17, JN-18, JN-19.
-- **The specs and the plan disagree on R1** (FS-671): 26 capabilities
-  that the specs or JN-16 rely on in R1 are missing from the delivery
-  plan's "R1 in detail". Await the owner's call on each before writing
-  more specs; the journeys check catches it only in journeys.
+- **R1's scope was swept** (FS-671, FS-674, FS-675): 24 capabilities the
+  specs relied on moved into the delivery plan's "R1 in detail" (with
+  Roan's map and CU-01); MS-05 and MS-06 stay out. The check now fails
+  a spec's "Yes" in R1 that the plan leaves out. RO-24, in R1, anchors
+  the chain in a transparency log, so Trillian or Rekor is needed before
+  R1's build. The Unclaimed Financial Assets Act is LR-38 (FS-673).
 - **Every spec** (FS-667) carries a status (draft until the owner agrees it),
   Data, Quality and metrics, and Threats sections, and tests with ids; the
   check enforces them. **Events** are named only from the catalogue in

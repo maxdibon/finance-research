@@ -11,7 +11,7 @@ used_by: [access-keycloak, lender-rules, observability-grafana]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668]
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674]
 last_reviewed: 2026-10-09
 ---
 
@@ -35,11 +35,11 @@ the channel reported.
 | MS-01 | One messaging API: send from a template, status, inbound | Yes |
 | MS-02 | SMS in Kenya directly to the operators, under Dibon's PRSP licence | Yes |
 | MS-03 | A sender ID per institution | Yes |
-| MS-05 | Routing and failover across routes | Yes |
-| MS-06 | WhatsApp with Meta-approved templates | Yes, with consent; whether lenders may use it is FS-165 |
+| MS-05 | Routing and failover across routes | No: one route in R1, switched by hand from the runbook (FS-674) |
+| MS-06 | WhatsApp with Meta-approved templates | No: SMS and email in R1; WhatsApp once FS-165 is answered (FS-674) |
 | MS-09 | A truthful status per message | Yes |
-| MS-10 | Replies, keywords, STOP | Yes |
-| MS-11 | Consent per person, channel and purpose, held in Odoo | Yes |
+| MS-10 | Replies, keywords, STOP | Yes, replies and STOP |
+| MS-11 | Consent per person, channel and purpose, held in Odoo | Yes, for SMS and email |
 | MS-12 | Events become messages from templates, on each person's channels, with the regulatory overrides | Yes |
 | MS-14 | Templates with merge fields; SMS length in the right alphabet | Yes |
 | MS-15 | Quiet hours and rate limits | Yes |

@@ -679,6 +679,11 @@ test('specs: a test without an id fails', () => {
   assert.deepStrictEqual(names(f), ['specs']);
 });
 
+test('specs: a capability counted in R1 that the delivery plan leaves out fails', () => {
+  const f = runWith((d) => patch(d, SPEC('messaging'), (t) => t.replace(/^(\| MS-05 \|.*\|) No:[^|]*\|$/m, '$1 Yes |')));
+  assert.deepStrictEqual(names(f), ['specs']);
+});
+
 // ── journeys: status, messages, stopping partway (FS-668) ────────────────
 const JN = (f) => path.join('docs', 'journeys', `${f}.md`);
 

@@ -11,8 +11,8 @@ used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, 
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667]
-last_reviewed: 2026-10-08
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675]
+last_reviewed: 2026-10-09
 ---
 
 # The event bus on Kafka — component specification
@@ -35,8 +35,8 @@ it never holds the record of anything (the authorities do).
 | Id | Capability | In R1 |
 |---|---|---|
 | RO-23 | Every step a signed event, carrying one transaction id end to end | Yes |
-| RO-24 | Events hash-chained, so a change shows | Yes |
-| RO-25 | The chain anchored in an append-only transparency log | Yes, design; the log's choice open (§13) |
+| RO-24 | Events hash-chained, so a change shows, and the chain anchored in an append-only transparency log | Yes; the log's choice open (§13) |
+| RO-25 | A transaction's journey verified by anyone holding our public keys, and exported as evidence | Yes |
 | MS-12 | Messages made from product events | Yes, as a consumer |
 
 **Out of R1:** streams processing for insights, tiered storage, events
@@ -239,7 +239,8 @@ period.
 
 **For the owner:**
 
-1. The transparency log: Trillian or Rekor (RO-25).
+1. The transparency log: Trillian or Rekor (RO-24). Needed before R1's
+   build, since RO-24 is in R1 (FS-675).
 2. JSON Schema or Avro for event data; designed: JSON Schema, since the
    envelope is JSON; Fineract's Avro converted by the adapter.
 3. Retention on topics: 7 days proposed.

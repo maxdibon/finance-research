@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638]
-last_reviewed: 2026-10-08
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675]
+last_reviewed: 2026-10-09
 ---
 
 # Delivery plan — phase 1 in releases
@@ -44,25 +44,36 @@ the check keeps the two in step):
   title searches and charge registration (MF-18) and programmatic NTSA
   (MF-05) are phase 2, as the document's exclusions say; land titles are
   stored in R1 under MF-03 (FS-581).
-- **Approvals:** MD-01, MD-02, MD-05, MD-06, MD-08 (reminders and
-  escalation), MD-09 (the 3-of-3 committee), MD-10, MD-18 (approval from
-  email).
+- **Approvals:** MD-01, MD-02, MD-03 (the chain frozen at submission),
+  MD-04 (roles resolved to people when needed), MD-05, MD-06, MD-07 (a
+  flag ends with its authority), MD-08 (reminders and escalation), MD-09
+  (the 3-of-3 committee), MD-10, MD-18 (approval from email).
 - **Identity:** ID-01, ID-02, ID-03 (re-verification), ID-07 (business registration), ID-10 (what is kept, and each query's cost), ID-11 (the phone number confirmed), ID-19 (KYC tiers), ID-15 (the
-  document vault), ID-17 (sharing documents out).
+  document vault), ID-17 (sharing documents out), ID-12 (the number bound to its SIM).
 - **Messaging:** MS-01, MS-02 (SMS through our own gateway, FS-565),
-  MS-03 (Roan Capital's sender ID), MS-09 (delivery status), MS-19 (email,
+  MS-03 (Roan Capital's sender ID), MS-09 (delivery status), MS-10
+  (replies and STOP), MS-11 (consent, for SMS and email), MS-12 (events
+  become messages), MS-14 (templates), MS-15 (quiet hours), MS-19 (email,
   for approvals and links).
 - **Core:** KC-01, KC-04, KC-07, KC-08, KC-15 (the business calendar) on Kapu
-  Core (Fineract, PostgreSQL).
+  Core (Fineract, PostgreSQL); KC-09 (M-Pesa repayments posted as they
+  land; Airtel Money and T-Kash later).
 - **Money in and out:** RL-07 (bank transfers), with M-Pesa already built
-  (RL-03); before a payout, MF-20 and RL-21 (the registered name
+  (RL-03), with RL-20 (Pull Transactions, so a missed callback is
+  found) and CO-21 (an unplaced payment: the payer asked, then placed or
+  returned by day 7); before a payout, MF-20 and RL-21 (the registered name
   confirmed), RL-10 (an unanswered payment is a state) and RL-14 (a
   repeat never pays twice) (FS-570); RL-01 (each payout one instruction,
   cancellable, recallable, reversible) and RL-29 (a bank account holder's
   name confirmed) (FS-586).
-- **Reconciliation and evidence:** RO-02, RO-05, RO-16, RO-17, RO-19, RO-24,
-  RO-27 (one audit trail across modules).
-- **Access:** AC-05, AC-09.
+- **Reconciliation and evidence:** RO-02, RO-04 (the end-of-day cycle;
+  intraday later), RO-05, RO-16, RO-17, RO-18 (on-call), RO-19, RO-23 (one
+  id end to end, every step a signed event), RO-24, RO-25 (evidence
+  anyone holding our public keys can verify), RO-27 (one audit trail
+  across modules).
+- **Access:** AC-03 (borrowers and guarantors by a code to their bound
+  phone; passkeys with the app), AC-05, AC-09, AC-13 (codes through our
+  messaging).
 - **Business suite:** BS-01 (CRM for leads), BS-20 (the public request page
   and calculator), BS-02 (Odoo Sign, for loan
   agreements).
@@ -84,8 +95,13 @@ FS-495).
 **The platform and security minimum for any go-live:**
 
 - **Access:** AC-01 (one identity provider), AC-02 (staff single sign-on),
-  AC-08 (a realm per institution), AC-16 (two authenticators for staff and
-  approvers).
+  AC-08 (a realm per institution), AC-10 (session expiry and sign-out
+  everywhere), AC-11 (login and admin events to monitoring), AC-14 (block
+  now: in R1 by a call to the institution or from the console), AC-15
+  (recovery only after identity checks: in R1 by staff, with the ID),
+  AC-16 (two authenticators for staff and approvers).
+- **Core:** KC-05 (the general ledger), KC-12 (hosted per institution,
+  isolated).
 - **Security:** SE-01, SE-02, SE-04, SE-05, SE-08, SE-09, SE-10, SE-11,
   SE-12, SE-13, SE-17, SE-18, SE-19, SE-20, SE-21, SE-22, SE-26 (privileged
   access), SE-27 (ID numbers and other Restricted fields encrypted one by
@@ -156,7 +172,10 @@ not:
 - **Not in R1:** statement ingestion and appraisal ratios, the behaviour
   score and automatic downgrades (Roan RC-05, RC-11, RC-14, RC-15, the
   map's gaps) wait for R1's second step or a later release; agree that
-  with Roan Capital before the next sprint.
+  with Roan Capital before the next sprint. Messaging's routing across
+  providers (MS-05: one route in R1, switched by hand from the runbook)
+  and WhatsApp (MS-06: SMS and email only, until FS-165 is answered) are
+  phase 1 but not R1 (FS-674).
 
 **R1 in three increments**, each accepted by Roan Capital before the next
 (its document's agile approach):

@@ -936,11 +936,26 @@ function checkSpecs(root) {
   const ids = new Set(files.map((f) => path.basename(f, '.md')));
   const index = fs.existsSync(path.join(root, SPECS, 'README.md')) ? read(root, path.join(SPECS, 'README.md')) : '';
   const names = componentNames(root);
+  const info = capabilityInfo(root);
+  const r1 = new Set(citedIds(r1Scope(root), new Set([...info.keys()].map((c) => c.slice(0, 2)))));
   const rel = new Map();
   for (const file of files) {
     const text = read(root, file);
     const at = (line, m) => failures.push(fail('specs', file, line, m));
     const id = path.basename(file, '.md');
+    // A capability a spec counts in R1 is in the delivery plan's "R1 in
+    // detail" (FS-674): the two drifted apart once, by 26 rows.
+    let inTable = false;
+    text.split('\n').forEach((l, i) => {
+      if (/^\| Id \|.*\| In R1 \|\s*$/.test(l)) { inTable = true; return; }
+      if (!l.startsWith('|')) { inTable = false; return; }
+      if (!inTable) return;
+      const c = l.split('|').map((s) => s.trim());
+      const cap = c[1];
+      if (info.has(cap) && /^yes/i.test(c[c.length - 2]) && !r1.has(cap)) {
+        at(i + 1, `${cap} is "Yes" in R1 here, but the delivery plan's "R1 in detail" does not include it`);
+      }
+    });
     const keys = frontMatterKeys(text) || [];
     for (const k of SPEC_KEYS) if (!keys.includes(k)) at(1, `front matter missing "${k}"`);
     if ((text.match(/^id: *(\S+)/m) || [])[1] !== id) at(1, `id does not match file name "${id}"`);

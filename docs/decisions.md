@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-09
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1201,3 +1201,26 @@ its own entry.
 - **Costs (inferred):** three more sections in every spec, kept current;
   contract files to generate and test; every new event added to the
   catalogue before it is published.
+
+## FS-674 · R1's scope swept: what the specs rely on is in the plan
+
+- **Chose:** 24 phase-1 capabilities the specs and JN-16 relied on moved
+  into R1: the unplaced payment (CO-21), Pull Transactions (RL-20), the
+  number bound to its SIM (ID-12), the general ledger and M-Pesa posting
+  (KC-05, KC-09), hosting per institution (KC-12), the approval engine's
+  frozen chains, roles and flags (MD-03, MD-04, MD-07), messaging's
+  events, replies, consent, templates and quiet hours (MS-10 to MS-12,
+  MS-14, MS-15), access's codes, sessions, events, block and recovery
+  (AC-03, AC-10, AC-11, AC-13 to AC-15), and reconciliation's end-of-day
+  cycle, on-call, signed events and verifiable evidence (RO-04, RO-18,
+  RO-23, RO-25). Eight narrowed to what R1 needs, as the specs say.
+  Routing across SMS providers (MS-05) and WhatsApp (MS-06) stay out. A
+  check fails any spec's "Yes" in R1 that the plan leaves out (FS-675).
+- **Requires:** CO-21; RL-20; ID-12; RO-25; docs/delivery-plan.md "R1 in detail".
+- **Argued against:** leaving the specs ahead of the plan, which would
+  have built R1 on capabilities nobody scheduled; and moving the specs
+  back to the plan, which would have left R1 without a ledger, replies
+  or a way to return an unplaced payment.
+- **Costs (inferred):** a larger R1 (the v1 cap is unchanged, since all
+  were phase 1); the transparency log chosen before R1's build; a
+  follow-up team and a reversal policy at Roan Capital.

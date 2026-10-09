@@ -11,8 +11,8 @@ used_by: []
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667]
-last_reviewed: 2026-10-08
+review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667, FS-674]
+last_reviewed: 2026-10-09
 ---
 
 # End-of-day runner — build specification
@@ -33,7 +33,7 @@ and did it close?*
 |---|---|---|
 | KC-07 | End of day: checks, the scheduled run, monitoring and escalation, on the institution's own cycle | Yes |
 | KC-15 | The business calendar the dates come from | Yes |
-| RO-04 | Reconciliation's end-of-day cycle, run after the close | Yes |
+| RO-04 | Reconciliation's end-of-day cycle, run after the close | Yes, end of day; intraday later |
 | RO-17 | Alerts and SLOs: the run's own | Yes |
 | RO-18 | On-call: a severity 1 pages by phone | Yes |
 | MF-12 | Loans the close could not process, in the exception queue | Yes |

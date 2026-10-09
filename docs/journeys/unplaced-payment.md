@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-661, FS-663, FS-668, FS-670]
+review_ids: [FS-548, FS-661, FS-663, FS-668, FS-670, FS-672, FS-673, FS-674]
 last_reviewed: 2026-10-09
 ---
 
@@ -87,8 +87,8 @@ returned at day 7 (collect CO-21, FS-663).
 | 6 | The payment is posted to the account dated by its M-Pesa receipt, not the day it was placed, and the payer receives the receipt | Platform | T06 | MF-10, MF-22, MF-38 |
 | 7 | With no answer after 24 hours, the payer is reminded | Platform | T29 | CO-21 |
 | 8 | At 48 hours, the follow-up team calls the payer, and the call is recorded on the ticket | Follow-up team | — | CO-21, RO-05 |
-| 9 | At day 7, unclaimed, the money goes back to the payer: an M-Pesa reversal within its window, or a refund approved by two people; the payer is told, with the return's reference | Approvers; platform | T30 | CO-21, RL-01, MD-01, MD-06 |
-| 10 | Every event is chained, and the ticket and its evidence kept for at least seven years | Platform | — | RO-24, FC-12 |
+| 9 | At day 7, unclaimed, the money goes back to the payer: an M-Pesa reversal of the original payment, within Safaricom's window, or else a refund paid to the number; either one approved by two people. The payer is told, with the return's reference | Approvers; platform | T30 | CO-21, RL-01, MD-01, MD-06 |
+| 10 | Every event is chained, and the ticket and its evidence kept for at least seven years; for money that could not be returned (3f), the payer's name and last known number ten years after it is reported (Unclaimed Financial Assets Act s.32) | Platform | — | RO-24, FC-12 |
 
 ## 3 · When it goes wrong
 
@@ -99,7 +99,7 @@ returned at day 7 (collect CO-21, FS-663).
 | c | 5 | **The account is closed, or its loan already settled.** The payer is asked whether it was meant for another account; if not, it is returned as in step 9 | CO-21, RL-01 |
 | d | 6 | **The payment is more than the loan owes.** What the loan owes is applied, as the regulated order sets; anything beyond the payoff goes back to the payer | MF-22, RL-01 |
 | e | 9 | **M-Pesa's reversal window has passed.** A refund by B2C instead, to the paying number, after the registered name is confirmed and two people approve | RL-01, RL-21, MD-06 |
-| f | 9 | **The return fails:** the number is closed, or the bank account gone. The money stays in a suspense account, never income, reported in the morning report until it is placed or the law's unclaimed-funds procedure applies (§5) | RO-05, RO-08 |
+| f | 9 | **The return fails:** the number is closed, or the bank account gone. The money stays in a suspense account, never income, in the morning report until it is placed. The institution keeps trying to find the payer, and writes to them before reporting. Once the period counsel confirms has passed (§5), it reports the money to the Unclaimed Financial Assets Authority by 1 November and pays it over, which ends its liability (the Act ss.19, 20, 22, 23) | RO-05, RO-08 |
 | g | 1 to 9 | **The platform is down.** Payments still land in the paybill (architecture §3); they are caught up from M-Pesa's records when it returns, and placed through these same steps | RL-20, CO-21 |
 | h | 3 to 8 | **The payer stops partway:** a reply with a name but no account, or a link opened and left. It is kept on the ticket; the clock runs on; the reminder, the call and the return at day 7 follow as usual | CO-21 |
 | i | 1 | **The same customer pays repeatedly from a number not on their record.** After the payment is placed, the customer is asked to add the number; once confirmed by code to that number, it is bound to their record and future payments match on it | ID-11, ID-12 |
@@ -110,18 +110,18 @@ returned at day 7 (collect CO-21, FS-663).
 |---|---|---|---|
 | Flowza as the inbox for replies (step 4) | Not yet fit for institutions' customers: hosting, its transfer clause, its unofficial WhatsApp channel (FS-664 to FS-666) | Replies by SMS reach messaging's inbound path and are recorded on the ticket | Close FS-664 to FS-666 before R1 go-live, or run R1 without Flowza |
 | Case management for a suspicious reply (step 5, 3b) | financial-crime FC-08 is phase 2 | A ticket for the compliance officer in Odoo Helpdesk, as decided for identity mismatches | Accept for R1 |
-| CO-21, the holding queue, the payer asked, the return at day 7 (steps 1, 3, 5, 7 to 9) | phase 1, not in R1 | Unmatched repayments wait in MF-10's matching; the accountant contacts payers by hand, with no clock and no return rule | Move CO-21 into R1: Roan Capital's repayments land on its own paybill, and FS-663 designed this for them |
-| RL-20, M-Pesa Pull Transactions (3g) | phase 1, not in R1 | A missed callback is found only on the next statement; the night's check C3 (end-of-day-runner §4) cannot run as designed | Move RL-20 into R1 |
-| ID-12, binding a number to the customer (3i) | phase 1, not in R1 | The number is confirmed by code (ID-11) and noted on the record, but not bound to its SIM | Move ID-12 into R1: access-keycloak §3 already assumes customers' numbers are bound, and ID-13 holds on a SIM change |
-| MS-10, inbound replies (step 4) | phase 1, not in R1 | The payer's reply is not captured; the accountant asks them to call | Move MS-10 into R1: without it nobody can answer step 3 |
-| MS-12, product events becoming messages (step 3) | phase 1, not in R1, though the messaging spec counts it in R1 | Messages sent by hand from the ticket | Move MS-12 into R1: every template in the R1 catalogue rides on it |
 | RO-08, suspense holding exactly the open breaks (3f) | phase 1, not in R1 | A suspense account in the general ledger, reconciled by hand each morning | Accept for R1 |
 
 ## 5 · Open questions
 
-- **For counsel:** when an unclaimed payment cannot be returned (3f), what
-  the Unclaimed Financial Assets Act requires of the institution, and
-  when. The Act is not yet in the law register, and has not been read.
+- **For counsel:** an unplaced payment that cannot be returned (3f) is
+  held by the institution as a "holder" under the Unclaimed Financial
+  Assets Act (law register LR-38). Is it held in a fiduciary capacity
+  (s.13, abandoned after two years) or a credit memo (s.14, five years)?
+  Do the Act's regulations add anything (not yet fetched)?
+- **For Safaricom:** how long after a payment a C2B reversal can still be
+  made, in writing; until then, a reversal is tried first, and a refund
+  follows if Safaricom refuses it.
 - **For Roan Capital:** who forms its follow-up team, and their hours;
   whether day 7 suits its customers.
 - **For the owner:** whether a till payment, which carries no reference,

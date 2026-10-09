@@ -11,8 +11,8 @@ used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667]
-last_reviewed: 2026-10-08
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675]
+last_reviewed: 2026-10-09
 ---
 
 # Access on Keycloak — component specification
@@ -44,8 +44,8 @@ person's identity and KYC stay with their authority (architecture §2).
 | AC-10 | Session rules: expiry, revocation, sign-out everywhere | Yes |
 | AC-11 | Login, admin and step-up events to observability | Yes |
 | AC-13 | One-time codes through our messaging service | Yes |
-| AC-14 | Block now, from any channel | Yes |
-| AC-15 | Recovery only after identity verification | Yes |
+| AC-14 | Block now, from any channel | Yes: in R1 by a call to the institution or from the console; other channels later |
+| AC-15 | Recovery only after identity verification | Yes: in R1 by staff, with the ID |
 | AC-16 | Two authenticators for staff and approvers: an authenticator app and a security key or passkey | Yes |
 
 **Out of R1:** partner and merchant API clients with FAPI profiles
