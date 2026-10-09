@@ -108,11 +108,12 @@ returned at day 7 (collect CO-21, FS-663).
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| Flowza as the inbox for replies (step 4) | Not yet fit for institutions' customers: hosting, its transfer clause, its unofficial WhatsApp channel (FS-664 to FS-666) | Replies by SMS reach messaging's inbound path (MS-10) and are recorded on the ticket | Close FS-664 to FS-666 before R1 go-live, or run R1 without Flowza |
+| Flowza as the inbox for replies (step 4) | Not yet fit for institutions' customers: hosting, its transfer clause, its unofficial WhatsApp channel (FS-664 to FS-666) | Replies by SMS reach messaging's inbound path and are recorded on the ticket | Close FS-664 to FS-666 before R1 go-live, or run R1 without Flowza |
 | Case management for a suspicious reply (step 5, 3b) | financial-crime FC-08 is phase 2 | A ticket for the compliance officer in Odoo Helpdesk, as decided for identity mismatches | Accept for R1 |
 | CO-21, the holding queue, the payer asked, the return at day 7 (steps 1, 3, 5, 7 to 9) | phase 1, not in R1 | Unmatched repayments wait in MF-10's matching; the accountant contacts payers by hand, with no clock and no return rule | Move CO-21 into R1: Roan Capital's repayments land on its own paybill, and FS-663 designed this for them |
 | RL-20, M-Pesa Pull Transactions (3g) | phase 1, not in R1 | A missed callback is found only on the next statement; the night's check C3 (end-of-day-runner §4) cannot run as designed | Move RL-20 into R1 |
 | ID-12, binding a number to the customer (3i) | phase 1, not in R1 | The number is confirmed by code (ID-11) and noted on the record, but not bound to its SIM | Move ID-12 into R1: access-keycloak §3 already assumes customers' numbers are bound, and ID-13 holds on a SIM change |
+| MS-10, inbound replies (step 4) | phase 1, not in R1 | The payer's reply is not captured; the accountant asks them to call | Move MS-10 into R1: without it nobody can answer step 3 |
 | MS-12, product events becoming messages (step 3) | phase 1, not in R1, though the messaging spec counts it in R1 | Messages sent by hand from the ticket | Move MS-12 into R1: every template in the R1 catalogue rides on it |
 | RO-08, suspense holding exactly the open breaks (3f) | phase 1, not in R1 | A suspense account in the general ledger, reconciled by hand each morning | Accept for R1 |
 

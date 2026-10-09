@@ -1,8 +1,8 @@
 # Dibon financial services — session handoff
 
     version: 1.5.0
-    updated: 2026-10-08
-    supersedes: 1.4.0; adds 8 and 9 October (FS-611 to FS-668)
+    updated: 2026-10-09
+    supersedes: 1.4.0; adds 8 and 9 October (FS-611 to FS-671)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -160,8 +160,12 @@ Each has a register row and, where it changed the design, an entry in
 - **Every journey** (FS-668) has a status and validated_with, a target
   time, the moments that matter, a data line, a Messages column of
   template ids (checked against the catalogue) and a "stops partway" row.
-  Next to write, in order: JN-16, JN-13, JN-14, JN-07, JN-08, JN-17,
-  JN-18, JN-19.
+  JN-16 (the unplaced payment) is written. Next, in order: JN-13, JN-14,
+  JN-07, JN-08, JN-17, JN-18, JN-19.
+- **The specs and the plan disagree on R1** (FS-671): 26 capabilities
+  that the specs or JN-16 rely on in R1 are missing from the delivery
+  plan's "R1 in detail". Await the owner's call on each before writing
+  more specs; the journeys check catches it only in journeys.
 - **Every spec** (FS-667) carries a status (draft until the owner agrees it),
   Data, Quality and metrics, and Threats sections, and tests with ids; the
   check enforces them. **Events** are named only from the catalogue in
