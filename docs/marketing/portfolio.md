@@ -5,7 +5,7 @@ kind: marketing
 version: 0.2.0
 owner: Commercial lead
 classification: Public once approved
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-09
 ---
 
 # Dibon Financial Services portfolio
@@ -136,7 +136,8 @@ paper, with credit-bureau submissions coming soon.
 **Heading:** We do not hold your money
 **Text:** Funds stay in your accounts, at your bank, or with a licensed
 partner. Our software prompts, instructs, matches and reports, so regulated
-custody stays where it belongs.
+custody stays where it belongs. If our software stops, your customers
+still pay you directly.
 
 ### One source
 
@@ -148,8 +149,9 @@ engine. Nothing is quietly copied.
 ### Evidence
 
 **Heading:** Nothing is guessed
-**Text:** An unmatched payment stays visible until evidence places it. An
-unconfirmed payment is pending, not failed and not successful. Every number
+**Text:** An unmatched payment stays visible, and its payer is asked,
+until evidence places it. An unconfirmed payment is pending, not failed
+and not successful. Every number
 traces back to one transaction.
 
 ## How we build, the stack
@@ -613,7 +615,8 @@ platform, and every product uses it.
 **Eyebrow:** Deployment options
 **Heading:** Where it runs, and who runs it
 **Intro:** Every option runs the same software with the same controls. What
-changes is where it runs, and how much of the running Dibon takes on.
+changes is where it runs, how much of the running Dibon takes on, and how
+fast it comes back if a site is lost.
 **Columns:**
 - You run it
 - Dibon runs it
@@ -750,9 +753,9 @@ ITIL 4.
   instance; no institution's data is reachable from another's.
 - How it is tested: Security testing in every release, and independent
   penetration tests before go-live.
-- How it recovers: Backups at two Kenyan sites, one offline; payments back
-  within 4 hours of losing a site, at most 5 minutes lost; tested with you
-  twice a year.
+- How it recovers: Backups at two Kenyan sites, one offline under three
+  keys; payments back within 4 hours of losing a site, at most 5 minutes
+  lost; tested with you twice a year.
 - How it is watched: Around the clock; you hear from us within 4 hours of
   a confirmed security incident, then every 4 hours.
 - How data is handled: Designed in line with Kenya's Data Protection Act,
