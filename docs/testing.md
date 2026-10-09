@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-074, FS-548, FS-558, FS-560, FS-627, FS-668]
+review_ids: [FS-074, FS-548, FS-558, FS-560, FS-627, FS-668, FS-669]
 last_reviewed: 2026-10-09
 ---
 
@@ -42,6 +42,23 @@ of a journey is written in the code repository as a Given/When/Then
 scenario (Gherkin, run by Cucumber, as Fineract's own end-to-end tests
 are), tagged with the item: `@JN-04-3c`. A journey reaches status
 "tested" when every one of its scenarios passes.
+
+**From journeys to stories** (FS-669). A journey is the whole path one
+person takes; a story is one piece of work small enough to build and
+test in a few days. The journey's steps are the backbone of a story map:
+the stories for each step sit beneath it, and the release line is drawn
+across them.
+
+- **Stories live in the code repository's issue tracker,** beside the
+  code they change. Odoo Project keeps what the customer sees:
+  onboarding, user acceptance, sign-off (§4).
+- **Each story cites** the journey step or §3 row it serves
+  (`JN-04 7`), the capability (`MF-11`), and the acceptance items that
+  prove it done (`JN-04 3e`, `approval-engine A15`).
+- **No story without a journey step or a spec item behind it,** so nothing
+  is built that no one goes through.
+- **The form:** "As a *role*, I want *something*, so that *benefit*",
+  with its acceptance items; small, independent and testable.
 
 ## 2 · Tagging and the coverage matrix
 

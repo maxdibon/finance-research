@@ -148,6 +148,11 @@ fresh clone needs the list before it can commit.
    or it does not (FS-065).
 8. **Commit as you go**, with the reasoning in the message. Pushing is the
    owner's call.
+9. **Stories come from journeys** (FS-669). In the code repository's
+   issue tracker, each story reads "As a *role*, I want *something*, so
+   that *benefit*", and cites its journey step (`JN-04 7`), its
+   capability (`MF-11`) and the acceptance items that prove it done
+   (docs/testing.md §1).
 
 ## What git does not see, and why
 
