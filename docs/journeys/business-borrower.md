@@ -3,10 +3,12 @@ id: jn-03-business-borrower
 name: JN-03 · A business borrower, its people and its owners
 kind: journey
 release: R1
+status: draft
+validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-090, FS-205, FS-415, FS-536, FS-548, FS-551, FS-562, FS-564, FS-566, FS-568]
-last_reviewed: 2026-10-06
+review_ids: [FS-090, FS-205, FS-415, FS-536, FS-548, FS-551, FS-562, FS-564, FS-566, FS-568, FS-668]
+last_reviewed: 2026-10-09
 ---
 
 # JN-03 · A business borrower, its people and its owners
@@ -31,6 +33,9 @@ be authorised and verified (reg 23).
   are verified, the business tier is set, and the checklist is complete;
   the application goes on to JN-04, with directors' guarantees through
   JN-05. Or the application is held.
+- **Target:** the business verified within 1 working day, the registry permitting (proposed).
+- **Moments that matter:** gathering the directors and their details; a delay at the registry, told what is pending and why.
+- **Data:** the company's record, its directors, shareholders and beneficial owners, each person's identity as JN-01 (privacy PR-01, PR-05).
 
 ## 2 · Steps
 
@@ -61,19 +66,20 @@ be authorised and verified (reg 23).
   9 On to JN-04; directors' guarantees through JN-05
         :
     Later: directors or owners change ...... re-check (3h)
+    Stops partway .................... kept, resumed or lapsed (3j)
 ```
 
-| # | Step | Who | Capabilities |
-|---|---|---|---|
-| 1 | The Credit Officer opens a business application with the company's registration number; the business product's checklist appears | Credit Officer | MF-01, KC-01, ID-02, MF-02 |
-| 2 | The applicant is verified as an individual, as in JN-01, and their authority to act for the company is shown: a director on the registry's record, or a board resolution on the checklist (reg 23) | Credit Officer; applicant | ID-01, ID-11, ID-02 |
-| 3 | The platform fetches the company's record from the business registry: its status, directors and shareholders, the content of a CR12. The company is never asked for what the registry can give, and its eCitizen login is never held. The result is kept with the registry's reference and the cost of the query | Platform | ID-07, ID-10 |
-| 4 | The company declares its beneficial owners on the form. The platform sets them beside the shareholders fetched, and each director, shareholder and beneficial owner the institution's policy names is verified as an individual: in person as in JN-01, or by a single-use upload link to their documents | Credit Officer; platform | ID-07, ID-01, ID-15, MS-19 |
-| 5 | Sanctions screening runs on the company and on every person named in steps 2 to 4 | Platform | FC-05 |
-| 6 | The documents the registry cannot give (the KRA PIN certificate, the board resolution to borrow, bank and M-Pesa statements, others per product) are captured or uploaded, type-checked, scanned and filed in the vault | Credit Officer; applicant | ID-15, ID-02 |
-| 7 | The business tier is set from the evidence held. The checklist passes the completeness gate, and the company is written to Kapu Core as a business client with its people linked | Platform | ID-19, MF-02, KC-01 |
-| 8 | Every event from step 2 is chained, access to the documents is logged, and the records are kept for at least seven years | Platform | RO-24, RO-19, FC-12 |
-| 9 | The application goes on to JN-04, within the business tier's limit; directors' guarantees go through JN-05 | Credit Officer | ID-19, MF-37 |
+| # | Step | Who | Messages | Capabilities |
+|---|---|---|---|---|
+| 1 | The Credit Officer opens a business application with the company's registration number; the business product's checklist appears | Credit Officer | — | MF-01, KC-01, ID-02, MF-02 |
+| 2 | The applicant is verified as an individual, as in JN-01, and their authority to act for the company is shown: a director on the registry's record, or a board resolution on the checklist (reg 23) | Credit Officer; applicant | T31 | ID-01, ID-11, ID-02 |
+| 3 | The platform fetches the company's record from the business registry: its status, directors and shareholders, the content of a CR12. The company is never asked for what the registry can give, and its eCitizen login is never held. The result is kept with the registry's reference and the cost of the query | Platform | — | ID-07, ID-10 |
+| 4 | The company declares its beneficial owners on the form. The platform sets them beside the shareholders fetched, and each director, shareholder and beneficial owner the institution's policy names is verified as an individual: in person as in JN-01, or by a single-use upload link to their documents | Credit Officer; platform | — | ID-07, ID-01, ID-15, MS-19 |
+| 5 | Sanctions screening runs on the company and on every person named in steps 2 to 4 | Platform | — | FC-05 |
+| 6 | The documents the registry cannot give (the KRA PIN certificate, the board resolution to borrow, bank and M-Pesa statements, others per product) are captured or uploaded, type-checked, scanned and filed in the vault | Credit Officer; applicant | T32 | ID-15, ID-02 |
+| 7 | The business tier is set from the evidence held. The checklist passes the completeness gate, and the company is written to Kapu Core as a business client with its people linked | Platform | — | ID-19, MF-02, KC-01 |
+| 8 | Every event from step 2 is chained, access to the documents is logged, and the records are kept for at least seven years | Platform | — | RO-24, RO-19, FC-12 |
+| 9 | The application goes on to JN-04, within the business tier's limit; directors' guarantees go through JN-05 | Credit Officer | — | ID-19, MF-37 |
 
 ## 3 · When it goes wrong
 
@@ -88,6 +94,7 @@ be authorised and verified (reg 23).
 | g | 4 | **A shareholder is itself a company.** Its record is fetched in turn, until the chain reaches natural persons. Where it is a foreign company, no register is connected: its documents are taken certified, and the compliance officer reviews the chain (§4) | ID-07, ID-09 |
 | h | 7, later | **The directors or owners change,** or the company returns for another loan. The registry is fetched again and any new person verified before a new loan | ID-03, ID-07 |
 | i | 1 to 6 | **The branch has no connection.** As JN-02 §3 i: nothing is verified offline | ID-15 |
+| j | 1 to 7 | **The applicant stops partway.** The draft is kept for 30 days (proposed); registry results already fetched are refreshed if older than the product allows; after 30 days the application lapses | MF-01, ID-15 |
 
 ## 4 · Gaps
 

@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-074, FS-548, FS-558, FS-560, FS-627]
-last_reviewed: 2026-10-08
+review_ids: [FS-074, FS-548, FS-558, FS-560, FS-627, FS-668]
+last_reviewed: 2026-10-09
 ---
 
 # Testing
@@ -36,6 +36,12 @@ is evidence; a test is the evidence for Built.
 An acceptance item says what must be true in the words of the business.
 A test proves it in code. Neither is copied into the other's repository:
 the test names the item, and the item never names the test.
+
+**Journeys become executable scenarios** (FS-668): each step and §3 row
+of a journey is written in the code repository as a Given/When/Then
+scenario (Gherkin, run by Cucumber, as Fineract's own end-to-end tests
+are), tagged with the item: `@JN-04-3c`. A journey reaches status
+"tested" when every one of its scenarios passes.
 
 ## 2 · Tagging and the coverage matrix
 

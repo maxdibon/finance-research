@@ -3,10 +3,12 @@ id: jn-15-micro-trader
 name: JN-15 · A trader who does not read, paid to his own till
 kind: journey
 release: phase 2
+status: draft
+validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-637]
-last_reviewed: 2026-10-08
+review_ids: [FS-548, FS-637, FS-668]
+last_reviewed: 2026-10-09
 ---
 
 # JN-15 · A trader who does not read, paid to his own till
@@ -29,6 +31,9 @@ an institution can add. Every step must work without reading words.
 - **Starts when:** an institution or a supplier offers him his own till.
 - **Ends when:** he is paid in his own name, told without reading,
   saving, and repaying a stock loan from his sales.
+- **Target:** each payment confirmed to him within a minute (proposed).
+- **Moments that matter:** hearing that he has been paid; the first loan offer, explained by voice before he accepts.
+- **Data:** his identity as JN-01, his payments and the voice line's record (privacy PR-01, PR-02, PR-07).
 
 ## 2 · Steps
 
@@ -56,18 +61,19 @@ an institution can add. Every step must work without reading words.
         |-- a repayment missed ............. reminders by voice, in hours (3f)
         :
     Phone lost at any step ............... blocked by a call (3g)
+    Stops partway .................... kept, resumed or lapsed (3h)
 ```
 
-| # | Step | Who | Capabilities |
-|---|---|---|---|
-| 1 | The institution's officer enrols him in person: his national ID checked against the register, his own SIM bound to it, the lightest KYC tier. The officer reads him the terms; he confirms with a code to his own phone, which he reads as numbers | Officer; trader | ID-01, ID-12, ID-19 |
-| 2 | He gets his own till, or an account number under the institution's or supplier's paybill, registered in his own name, so buyers see his name before they pay | Institution | CO-21, RL-24 |
-| 3 | A buyer pays; the payment is matched to him by his till or account number, with no book to write in | Platform | CO-21, RO-02 |
-| 4 | He is told at once in a way that needs no reading: the amount as numbers by SMS, and the running total on the voice line in Swahili or English | Platform; trader | MS-12, OC-22 |
-| 5 | At the end of the day he calls the voice line for his total. If he sells for a supplier, the supplier sees each seller's payments matched against the stock given out | Trader; supplier | OC-22, SR-03, SR-06 |
-| 6 | A share of each day's takings goes to savings in his own account, or his chama's, by a standing order he agreed to | Trader | RL-23, SC-19 |
-| 7 | After months of payments, a lender offers a stock loan with a limit from his payment history, explained by voice before he accepts | Lender | DE-02, MF-06, OC-22 |
-| 8 | He repays in small daily amounts from his sales, matched automatically | Platform | MF-10, RO-02 |
+| # | Step | Who | Messages | Capabilities |
+|---|---|---|---|---|
+| 1 | The institution's officer enrols him in person: his national ID checked against the register, his own SIM bound to it, the lightest KYC tier. The officer reads him the terms; he confirms with a code to his own phone, which he reads as numbers | Officer; trader | T31 | ID-01, ID-12, ID-19 |
+| 2 | He gets his own till, or an account number under the institution's or supplier's paybill, registered in his own name, so buyers see his name before they pay | Institution | — | CO-21, RL-24 |
+| 3 | A buyer pays; the payment is matched to him by his till or account number, with no book to write in | Platform | — | CO-21, RO-02 |
+| 4 | He is told at once in a way that needs no reading: the amount as numbers by SMS, and the running total on the voice line in Swahili or English | Platform; trader | — | MS-12, OC-22 |
+| 5 | At the end of the day he calls the voice line for his total. If he sells for a supplier, the supplier sees each seller's payments matched against the stock given out | Trader; supplier | — | OC-22, SR-03, SR-06 |
+| 6 | A share of each day's takings goes to savings in his own account, or his chama's, by a standing order he agreed to | Trader | — | RL-23, SC-19 |
+| 7 | After months of payments, a lender offers a stock loan with a limit from his payment history, explained by voice before he accepts | Lender | — | DE-02, MF-06, OC-22 |
+| 8 | He repays in small daily amounts from his sales, matched automatically | Platform | — | MF-10, RO-02 |
 
 ## 3 · When it goes wrong
 
@@ -80,6 +86,7 @@ an institution can add. Every step must work without reading words.
 | e | 7 | **The loan is declined.** The reasons are explained by voice; where the decision was automated he is told so, and can ask for a person | MF-29, OC-22 |
 | f | 8 | **A repayment is missed.** Reminders by voice and SMS, only to him, only in working hours, with no shaming words | MF-26 |
 | g | 1 to 8 | **His phone is lost or stolen.** He blocks his access by calling from any phone; recovery only after re-verification | AC-14, ID-13 |
+| h | 1 | **He stops partway through enrolment.** The officer keeps the draft for 30 days (proposed); nothing is opened until it is complete | ID-19, ID-01 |
 
 ## 4 · Gaps
 

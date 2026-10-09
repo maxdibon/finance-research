@@ -3,10 +3,12 @@ id: jn-02-manual-identity-check
 name: JN-02 · A borrower verified by hand
 kind: journey
 release: R1
+status: draft
+validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-329, FS-544, FS-547, FS-548, FS-551, FS-555, FS-556, FS-557, FS-558, FS-559, FS-561]
-last_reviewed: 2026-10-06
+review_ids: [FS-329, FS-544, FS-547, FS-548, FS-551, FS-555, FS-556, FS-557, FS-558, FS-559, FS-561, FS-668]
+last_reviewed: 2026-10-09
 ---
 
 # JN-02 · A borrower verified by hand
@@ -31,6 +33,9 @@ document, and it never clears a check that failed.
   tier no higher than the institution allows for it, and the application
   goes on to the loan journey (JN-04); or the verification is declined and
   the application stops at identity.
+- **Target:** the manual verification decided within 4 working hours of submission (proposed).
+- **Moments that matter:** hearing that the electronic check is unavailable without feeling suspected; waiting for the second approval, told when they will hear.
+- **Data:** as JN-01, plus images of the original document and a live photo, kept in the vault (privacy PR-01, PR-05).
 
 ## 2 · Steps
 
@@ -66,19 +71,20 @@ document, and it never clears a check that failed.
   9 On to JN-04, within the tier's limit
         :
     Later: document expires, or a check appears -> re-check (3h)
+    Stops partway .................... kept, resumed or lapsed (3k)
 ```
 
-| # | Step | Who | Capabilities |
-|---|---|---|---|
-| 1 | The Credit Officer starts the borrower's application and enters the document type and number; the product's document checklist appears | Credit Officer | MF-01, KC-01, ID-02, MF-02 |
-| 2 | The platform looks for an electronic check for that document. It finds none, or the register has been down for longer than the institution's set wait, and only then offers the manual route. The officer picks the reason from a fixed list; the officer cannot choose the route otherwise | Platform; Credit Officer | ID-01 |
-| 3 | Sanctions screening runs as it does for every borrower; the manual route does not skip it | Platform | FC-05 |
-| 4 | The officer examines the original document with the borrower present, photographs its front and back and takes a live photo of the borrower, and records a short attestation. The images are type-checked, scanned for malware and filed in the vault against the application | Credit Officer | ID-15 |
-| 5 | The verification goes for a second approval, as an approval request of its own (subject type `kyc.manual_verification` in docs/specs/approval-engine.md: configuration, not a new capability); the approver is found by role | Platform | MD-01, MD-02, AC-09 |
-| 6 | The approver opens the images, the reason and the attestation, and approves, declines or returns it, re-authenticating at the moment of the decision. The approver cannot be the officer who captured it | Approver | MD-05, MD-06, MD-10, AC-05 |
-| 7 | On approval, the borrower is recorded as verified manually, with the reason, both people, the time and the evidence references. The tier is set from that evidence and capped for a manual check, and the identity item on the checklist passes | Platform | ID-01, ID-19, MF-02, KC-01 |
-| 8 | Every event in steps 2 to 7 is chained, access to the images is logged, and the record is kept for at least seven years | Platform | RO-24, RO-19, FC-12 |
-| 9 | The application goes on to JN-04, where the amount offered cannot exceed the tier's limit | Credit Officer | ID-19 |
+| # | Step | Who | Messages | Capabilities |
+|---|---|---|---|---|
+| 1 | The Credit Officer starts the borrower's application and enters the document type and number; the product's document checklist appears | Credit Officer | — | MF-01, KC-01, ID-02, MF-02 |
+| 2 | The platform looks for an electronic check for that document. It finds none, or the register has been down for longer than the institution's set wait, and only then offers the manual route. The officer picks the reason from a fixed list; the officer cannot choose the route otherwise | Platform; Credit Officer | — | ID-01 |
+| 3 | Sanctions screening runs as it does for every borrower; the manual route does not skip it | Platform | — | FC-05 |
+| 4 | The officer examines the original document with the borrower present, photographs its front and back and takes a live photo of the borrower, and records a short attestation. The images are type-checked, scanned for malware and filed in the vault against the application | Credit Officer | — | ID-15 |
+| 5 | The verification goes for a second approval, as an approval request of its own (subject type `kyc.manual_verification` in docs/specs/approval-engine.md: configuration, not a new capability); the approver is found by role | Platform | — | MD-01, MD-02, AC-09 |
+| 6 | The approver opens the images, the reason and the attestation, and approves, declines or returns it, re-authenticating at the moment of the decision. The approver cannot be the officer who captured it | Approver | — | MD-05, MD-06, MD-10, AC-05 |
+| 7 | On approval, the borrower is recorded as verified manually, with the reason, both people, the time and the evidence references. The tier is set from that evidence and capped for a manual check, and the identity item on the checklist passes | Platform | — | ID-01, ID-19, MF-02, KC-01 |
+| 8 | Every event in steps 2 to 7 is chained, access to the images is logged, and the record is kept for at least seven years | Platform | — | RO-24, RO-19, FC-12 |
+| 9 | The application goes on to JN-04, where the amount offered cannot exceed the tier's limit | Credit Officer | — | ID-19 |
 
 ## 3 · When it goes wrong
 
@@ -94,6 +100,7 @@ document, and it never clears a check that failed.
 | h | 7, later | **The document expires, or an electronic check becomes available for it.** The check is re-run; on a match the record becomes verified electronically and the tier may rise, on a mismatch §3 a applies | ID-03, ID-19 |
 | i | 1 to 4 | **The branch has no connection.** Nothing can be verified offline: the register, screening, the vault and the approver all need the platform. The console says so and the application waits. Photos taken on a phone and uploaded later are not accepted, because nothing would show the officer saw the original. A mobile-data fallback at the branch is Roan Capital's to arrange | ID-15 |
 | j | 6 | **The approver cannot be reached.** The request waits in the approver's queue; approval from email reaches them away from the desk. After the set time it is sent a reminder, then escalated to another holder of the role | MD-18, MD-08 |
+| k | 1 to 6 | **The borrower stops partway.** The draft is kept for 30 days (proposed); a verification awaiting approval stays in the approver's queue; after 30 days the application lapses | MF-01, ID-15 |
 
 ## 4 · Gaps
 

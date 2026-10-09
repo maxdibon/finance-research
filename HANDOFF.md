@@ -2,7 +2,7 @@
 
     version: 1.5.0
     updated: 2026-10-08
-    supersedes: 1.4.0; adds 8 October (FS-611 to FS-667)
+    supersedes: 1.4.0; adds 8 and 9 October (FS-611 to FS-668)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -157,6 +157,11 @@ Each has a register row and, where it changed the design, an entry in
   delightful to use is the sixth idea; draw, test with five users per
   role, measure; manuals by role, the key holder's written first. No
   designer on the team yet.
+- **Every journey** (FS-668) has a status and validated_with, a target
+  time, the moments that matter, a data line, a Messages column of
+  template ids (checked against the catalogue) and a "stops partway" row.
+  Next to write, in order: JN-16, JN-13, JN-14, JN-07, JN-08, JN-17,
+  JN-18, JN-19.
 - **Every spec** (FS-667) carries a status (draft until the owner agrees it),
   Data, Quality and metrics, and Threats sections, and tests with ids; the
   check enforces them. **Events** are named only from the catalogue in

@@ -3,10 +3,12 @@ id: jn-06-restructuring
 name: JN-06 · A loan restructured
 kind: journey
 release: R1
+status: draft
+validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-139, FS-516, FS-548, FS-623, FS-624, FS-625]
-last_reviewed: 2026-10-08
+review_ids: [FS-139, FS-516, FS-548, FS-623, FS-624, FS-625, FS-668]
+last_reviewed: 2026-10-09
 ---
 
 # JN-06 · A loan restructured
@@ -34,6 +36,9 @@ classified by its schedule (reg 57).
 - **Ends when:** the new terms are in force and everyone holds their
   copy; or the restructure is declined, or lapses, and the loan keeps its
   terms.
+- **Target:** the offer made within 2 working days of the request; the new terms in force after the 30 days' notice (reg 54(7); counsel, FS-624) (proposed).
+- **Moments that matter:** asking for relief, treated with dignity; the notice period, knowing exactly when relief starts.
+- **Data:** the request and its reason, the refreshed appraisal and the signed variation (privacy PR-03, PR-18).
 
 ## 2 · Steps
 
@@ -65,19 +70,20 @@ classified by its schedule (reg 57).
   9 Chained, logged, kept seven years
         :
     No connection at any step ............. waits (3h)
+    Stops partway .................... kept, resumed or lapsed (3j)
 ```
 
-| # | Step | Who | Capabilities |
-|---|---|---|---|
-| 1 | The Credit Officer records the request: reschedule, refinance or top-up, the reason, and whether it came from the borrower or is proposed by Roan Capital. The credit policy's limits apply, among them how often one loan may be restructured | Credit Officer | MF-09, MF-01 |
-| 2 | The appraisal is refreshed: decisioning recomputes the statement metrics and the behaviour score, and the borrower's tier sets the most a top-up may add | Platform; Credit Officer | DE-01, DE-02, DE-03, ID-19, MF-06 |
-| 3 | The new terms are priced from the product version: the schedule, the APR, the total cost of credit and a new key information document. Arrears interest is never capitalised into new principal | Platform | MF-09, MF-23, MF-21, KC-04 |
-| 4 | The restructure goes up its own approval chain (approval subject `loan.restructure`), each decision re-authenticated, no one deciding twice | Approvers | MD-01, MD-05, MD-06, MD-10 |
-| 5 | Each guarantor is told of the restructure, and asked to consent where it raises or extends their exposure, before it goes ahead | Guarantors; platform | MF-37, ID-11, ID-17 |
-| 6 | The borrower is given notice of the new terms, at least thirty days before they take effect, and accepts them by signing the variation as they signed the original agreement, with a code to their phone | Borrower | MF-34, BS-02, ID-11, MF-24 |
-| 7 | The restructure is applied in Kapu Core: the same loan re-aged or rescheduled, or a top-up loan that closes the old one, with a chain back to it, its net disbursed as in JN-04 steps 7 and 8 (docs/specs/kapu-core-fineract.md §6). Where the collateral or the amount secured changes, the collateral registry notice is amended | Platform; Credit Officer | KC-04, MF-09, MF-11, MF-03 |
-| 8 | The borrower and the guarantors receive the new terms by link; the loan is flagged as restructured and tracked as a cohort | Platform | MF-38, MF-14, MF-09 |
-| 9 | Every event is chained and the records kept for at least seven years | Platform | RO-24, FC-12 |
+| # | Step | Who | Messages | Capabilities |
+|---|---|---|---|---|
+| 1 | The Credit Officer records the request: reschedule, refinance or top-up, the reason, and whether it came from the borrower or is proposed by Roan Capital. The credit policy's limits apply, among them how often one loan may be restructured | Credit Officer | — | MF-09, MF-01 |
+| 2 | The appraisal is refreshed: decisioning recomputes the statement metrics and the behaviour score, and the borrower's tier sets the most a top-up may add | Platform; Credit Officer | — | DE-01, DE-02, DE-03, ID-19, MF-06 |
+| 3 | The new terms are priced from the product version: the schedule, the APR, the total cost of credit and a new key information document. Arrears interest is never capitalised into new principal | Platform | — | MF-09, MF-23, MF-21, KC-04 |
+| 4 | The restructure goes up its own approval chain (approval subject `loan.restructure`), each decision re-authenticated, no one deciding twice | Approvers | T26, T27 | MD-01, MD-05, MD-06, MD-10 |
+| 5 | Each guarantor is told of the restructure, and asked to consent where it raises or extends their exposure, before it goes ahead | Guarantors; platform | T34 | MF-37, ID-11, ID-17 |
+| 6 | The borrower is given notice of the new terms, at least thirty days before they take effect, and accepts them by signing the variation as they signed the original agreement, with a code to their phone | Borrower | T11, T04 | MF-34, BS-02, ID-11, MF-24 |
+| 7 | The restructure is applied in Kapu Core: the same loan re-aged or rescheduled, or a top-up loan that closes the old one, with a chain back to it, its net disbursed as in JN-04 steps 7 and 8 (docs/specs/kapu-core-fineract.md §6). Where the collateral or the amount secured changes, the collateral registry notice is amended | Platform; Credit Officer | — | KC-04, MF-09, MF-11, MF-03 |
+| 8 | The borrower and the guarantors receive the new terms by link; the loan is flagged as restructured and tracked as a cohort | Platform | T12 | MF-38, MF-14, MF-09 |
+| 9 | Every event is chained and the records kept for at least seven years | Platform | — | RO-24, FC-12 |
 
 ## 3 · When it goes wrong
 
@@ -92,6 +98,7 @@ classified by its schedule (reg 57).
 | g | 2 | **A top-up would take the borrower above their tier's limit.** Refused; more evidence and a higher tier first | ID-19 |
 | h | 1 to 8 | **No connection.** As JN-02 §3 i: nothing moves offline | ID-15 |
 | i | 7 | **A refinance or top-up while interest is overdue.** Fineract's top-up would pay that interest off out of the new loan's principal, capitalising it (reg 29). Refused until the overdue interest is paid or waived | MF-09, MF-21 |
+| j | 1 to 6 | **The borrower stops partway.** As c: an offer not accepted in time lapses, and the loan keeps its terms | MF-24, MF-09 |
 
 ## 4 · Gaps
 

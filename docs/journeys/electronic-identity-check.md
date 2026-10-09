@@ -3,10 +3,12 @@ id: jn-01-electronic-identity-check
 name: JN-01 · An individual borrower, verified electronically
 kind: journey
 release: R1
+status: draft
+validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-202, FS-340, FS-548, FS-551, FS-555, FS-556, FS-562]
-last_reviewed: 2026-10-06
+review_ids: [FS-202, FS-340, FS-548, FS-551, FS-555, FS-556, FS-562, FS-668]
+last_reviewed: 2026-10-09
 ---
 
 # JN-01 · An individual borrower, verified electronically
@@ -29,6 +31,9 @@ electronic check covers the document.
   evidence, and every identity item on the product's checklist is
   complete; the application goes on to JN-04. Or the application is held
   at identity.
+- **Target:** verified within 15 minutes, with the borrower present (proposed).
+- **Moments that matter:** being asked for documents, and knowing why each is needed; the result, said plainly: verified, or exactly what is missing.
+- **Data:** name, date of birth, phone, the ID number (Restricted, encrypted, SE-27), a photo and the checklist's documents; only what the product's checklist names (privacy PR-01, PR-05, PR-06).
 
 ## 2 · Steps
 
@@ -60,18 +65,19 @@ electronic check covers the document.
   8 On to JN-04, within the tier's limit
         :
     Later: a document expires ........... re-check (3j)
+    Stops partway .................... kept, resumed or lapsed (3l)
 ```
 
-| # | Step | Who | Capabilities |
-|---|---|---|---|
-| 1 | The Credit Officer opens the application and enters the document type, its number and the borrower's name, date of birth and phone number; a one-time code sent to that phone confirms the number before anything else is sent to it; the product's document checklist appears | Credit Officer; borrower | MF-01, KC-01, ID-02, MF-02, ID-11 |
-| 2 | The platform checks the national register, directly or through the vendor, and compares the name and date of birth. The result is kept with the register's reference and the fields compared, never a copy of the register's record, and the cost of the query is logged (Roan Capital RC-02) | Platform | ID-01, ID-10 |
-| 3 | Where the register returns a photo, the officer compares it with the borrower in front of them and confirms it in the console | Credit Officer | ID-01 |
-| 4 | Sanctions screening runs against the UN and domestic lists | Platform | FC-05 |
-| 5 | The documents on the checklist (the ID, the KRA PIN certificate, a photo, others per product) are captured at the console, or sent by the borrower through a single-use, short-lived upload link by email. Each file is type-checked, scanned for malware and filed in the vault against the application | Credit Officer; borrower | ID-15, ID-02, MS-19 |
-| 6 | The tier is set from the evidence held: the register's match, the photo compared in person, and the documents. The identity items on the checklist pass the completeness gate, and the verified identity is written to the borrower's record in Kapu Core | Platform | ID-19, MF-02, KC-01 |
-| 7 | Every event from step 2 is chained, access to the documents is logged, and the records are kept for at least seven years | Platform | RO-24, RO-19, FC-12 |
-| 8 | The application goes on to JN-04, where the amount offered cannot exceed the tier's limit | Credit Officer | ID-19 |
+| # | Step | Who | Messages | Capabilities |
+|---|---|---|---|---|
+| 1 | The Credit Officer opens the application and enters the document type, its number and the borrower's name, date of birth and phone number; a one-time code sent to that phone confirms the number before anything else is sent to it; the product's document checklist appears | Credit Officer; borrower | T31 | MF-01, KC-01, ID-02, MF-02, ID-11 |
+| 2 | The platform checks the national register, directly or through the vendor, and compares the name and date of birth. The result is kept with the register's reference and the fields compared, never a copy of the register's record, and the cost of the query is logged (Roan Capital RC-02) | Platform | — | ID-01, ID-10 |
+| 3 | Where the register returns a photo, the officer compares it with the borrower in front of them and confirms it in the console | Credit Officer | — | ID-01 |
+| 4 | Sanctions screening runs against the UN and domestic lists | Platform | — | FC-05 |
+| 5 | The documents on the checklist (the ID, the KRA PIN certificate, a photo, others per product) are captured at the console, or sent by the borrower through a single-use, short-lived upload link by email. Each file is type-checked, scanned for malware and filed in the vault against the application | Credit Officer; borrower | T32 | ID-15, ID-02, MS-19 |
+| 6 | The tier is set from the evidence held: the register's match, the photo compared in person, and the documents. The identity items on the checklist pass the completeness gate, and the verified identity is written to the borrower's record in Kapu Core | Platform | — | ID-19, MF-02, KC-01 |
+| 7 | Every event from step 2 is chained, access to the documents is logged, and the records are kept for at least seven years | Platform | — | RO-24, RO-19, FC-12 |
+| 8 | The application goes on to JN-04, where the amount offered cannot exceed the tier's limit | Credit Officer | — | ID-19 |
 
 ## 3 · When it goes wrong
 
@@ -88,6 +94,7 @@ electronic check covers the document.
 | i | 1 to 5 | **The branch has no connection.** As JN-02 §3 i: nothing is verified offline, and the application waits | ID-15 |
 | j | 6, later | **A document expires,** or the borrower returns after it has. The check is re-run before a new loan; on a mismatch §3 a applies | ID-03, ID-19 |
 | k | 1 | **The code does not arrive, or the borrower cannot give it.** The officer resends it or corrects the number; the application holds until the number is confirmed, because reminders, receipts and upload links will go to it | ID-11 |
+| l | 1 to 6 | **The borrower stops partway.** The application is kept as a draft for 30 days (proposed); checks already passed stand until they expire, and the officer resumes where it stopped; after 30 days it lapses and its documents follow their retention | MF-01, ID-15 |
 
 ## 4 · Gaps
 

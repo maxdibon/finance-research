@@ -678,3 +678,21 @@ test('specs: a test without an id fails', () => {
   const f = runWith((d) => patch(d, SPEC('messaging'), (t) => t.replace(/^\| M1 \|/m, '| first |')));
   assert.deepStrictEqual(names(f), ['specs']);
 });
+
+// ── journeys: status, messages, stopping partway (FS-668) ────────────────
+const JN = (f) => path.join('docs', 'journeys', `${f}.md`);
+
+test('journeys: a status outside the lifecycle fails', () => {
+  const f = runWith((d) => patch(d, JN('guarantor'), (t) => t.replace(/^status: draft$/m, 'status: done')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: a step sending a template the catalogue lacks fails', () => {
+  const f = runWith((d) => patch(d, JN('guarantor'), (t) => t.replace('| T19 |', '| T99 |')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});
+
+test('journeys: a journey with no "stops partway" row fails', () => {
+  const f = runWith((d) => patch(d, JN('micro-trader'), (t) => t.replace('**He stops partway through enrolment.**', '**He changes his mind.**')));
+  assert.deepStrictEqual(names(f), ['journeys']);
+});

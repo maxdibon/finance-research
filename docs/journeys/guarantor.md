@@ -3,10 +3,12 @@ id: jn-05-guarantor
 name: JN-05 · A guarantor, from consent to release
 kind: journey
 release: R1
+status: draft
+validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-531, FS-533, FS-548, FS-621, FS-622]
-last_reviewed: 2026-10-08
+review_ids: [FS-531, FS-533, FS-548, FS-621, FS-622, FS-668]
+last_reviewed: 2026-10-09
 ---
 
 # JN-05 · A guarantor, from consent to release
@@ -32,6 +34,9 @@ default (reg 42(4)); recovery expenses only as necessary, itemised
 - **Ends when:** the loan is repaid and the guarantee released, or the
   guarantor has paid what a lawful demand asked; or the guarantor
   declines and is never appointed.
+- **Target:** consent answered within 48 hours of the request (proposed; the window is an open question).
+- **Moments that matter:** the consent request: whose loan, how much, and their rights, in plain words; the fourteen days' notice: calm and factual, never pressure.
+- **Data:** the guarantor's identity as JN-01, their consent and signed guarantee, and the statements sent to them (privacy PR-01, PR-03, PR-07).
 
 ## 2 · Steps
 
@@ -63,19 +68,20 @@ default (reg 42(4)); recovery expenses only as necessary, itemised
   9 Chained, logged, kept seven years
         :
     No connection at any step ........... waits (3i)
+    Stops partway .................... kept, resumed or lapsed (3j)
 ```
 
-| # | Step | Who | Capabilities |
-|---|---|---|---|
-| 1 | The Credit Officer names the guarantor on the application. The guarantor is verified as an individual, against the national register and with a one-time code to their own phone, and screened against the sanctions lists | Credit Officer; platform | MF-37, ID-01, ID-11, FC-05 |
-| 2 | The platform asks the guarantor for consent directly, never through the borrower: a link to our own page shows whose loan, how much, their exposure and their rights, and the guarantor consents with a code to their own confirmed phone. The consent is recorded before they are appointed | Guarantor; platform | MF-37, ID-17, ID-11, MS-02 |
-| 3 | The guarantor signs the guarantee with the loan agreement in Odoo Sign, with a code to their phone; the signed guarantee is filed in the vault | Guarantor | MF-34, BS-02, ID-15 |
-| 4 | While the loan runs, the guarantor receives periodic loan statements by link, with delivery recorded; information, never collection pressure | Platform | MF-37, MF-38, MS-09, ID-17 |
-| 5 | If the borrower defaults, recovery is pursued against the borrower first, through the collection ladder, each step recorded until non-judicial recovery is exhausted | Credit Officer; platform | MF-39, MF-14 |
-| 6 | The guarantor is given fourteen days' notice of the borrower's default, on a channel that reports delivery, counted on the business calendar | Platform | MF-37, MS-09, KC-15 |
-| 7 | After the notice has run and recovery from the borrower is recorded as exhausted, a demand to the guarantor is approved under maker-checker (approval subject `guarantee.demand`), with any recovery expenses itemised | Approvers | MF-37, MD-01, MD-06, MF-21 |
-| 8 | A payment by the guarantor is applied to the loan in the regulated order and matched; when the loan is repaid, by anyone, the guarantee is released and the guarantor told | Platform | MF-22, RO-02, MF-37 |
-| 9 | Every event is chained and the records kept for at least seven years | Platform | RO-24, FC-12 |
+| # | Step | Who | Messages | Capabilities |
+|---|---|---|---|---|
+| 1 | The Credit Officer names the guarantor on the application. The guarantor is verified as an individual, against the national register and with a one-time code to their own phone, and screened against the sanctions lists | Credit Officer; platform | T31 | MF-37, ID-01, ID-11, FC-05 |
+| 2 | The platform asks the guarantor for consent directly, never through the borrower: a link to our own page shows whose loan, how much, their exposure and their rights, and the guarantor consents with a code to their own confirmed phone. The consent is recorded before they are appointed | Guarantor; platform | T18, T04 | MF-37, ID-17, ID-11, MS-02 |
+| 3 | The guarantor signs the guarantee with the loan agreement in Odoo Sign, with a code to their phone; the signed guarantee is filed in the vault | Guarantor | T04 | MF-34, BS-02, ID-15 |
+| 4 | While the loan runs, the guarantor receives periodic loan statements by link, with delivery recorded; information, never collection pressure | Platform | T19 | MF-37, MF-38, MS-09, ID-17 |
+| 5 | If the borrower defaults, recovery is pursued against the borrower first, through the collection ladder, each step recorded until non-judicial recovery is exhausted | Credit Officer; platform | — | MF-39, MF-14 |
+| 6 | The guarantor is given fourteen days' notice of the borrower's default, on a channel that reports delivery, counted on the business calendar | Platform | T20 | MF-37, MS-09, KC-15 |
+| 7 | After the notice has run and recovery from the borrower is recorded as exhausted, a demand to the guarantor is approved under maker-checker (approval subject `guarantee.demand`), with any recovery expenses itemised | Approvers | T33 | MF-37, MD-01, MD-06, MF-21 |
+| 8 | A payment by the guarantor is applied to the loan in the regulated order and matched; when the loan is repaid, by anyone, the guarantee is released and the guarantor told | Platform | T21 | MF-22, RO-02, MF-37 |
+| 9 | Every event is chained and the records kept for at least seven years | Platform | — | RO-24, FC-12 |
 
 ## 3 · When it goes wrong
 
@@ -90,6 +96,7 @@ default (reg 42(4)); recovery expenses only as necessary, itemised
 | g | 7 | **The guarantor says they never consented.** It is a complaint, on the 30-day clock, and the recorded consent and signed guarantee are the evidence; without them the guarantor is not liable (reg 42(2)) | MF-28, ID-15 |
 | h | 7 | **Recovery expenses are added to the demand.** Only those necessary, each itemised with its justification (reg 43) | MF-21 |
 | i | 1 to 8 | **No connection.** As JN-02 §3 i: nothing moves offline | ID-15 |
+| j | 2 to 3 | **The guarantor starts but does not finish.** The link stays valid until the consent window ends; then the request lapses as in a | MF-37 |
 
 ## 4 · Gaps
 

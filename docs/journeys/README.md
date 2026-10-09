@@ -5,8 +5,8 @@ kind: index
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-558, FS-637]
-last_reviewed: 2026-10-08
+review_ids: [FS-548, FS-558, FS-637, FS-668]
+last_reviewed: 2026-10-09
 ---
 
 # User journeys
@@ -35,7 +35,25 @@ in the build.
 5. **§2 opens with a flow diagram** in plain text: every step by its
    number at the start of a line, every §3 row as "(3x)", and no
    capability ids, so the table stays their one place (FS-558).
-6. **Every journey is listed below.**
+6. **A status and its evidence** (FS-668): `status` is draft, agreed (the
+   owner's go), validated (walked through with real users, named in
+   `validated_with`) or tested (its acceptance items pass).
+7. **§1 states a target, the moments that matter, and the data:** the
+   end-to-end time we hold ourselves to; the two or three moments where
+   the person is anxious or decides whether to trust us; and what
+   personal data the journey collects, with its privacy rows.
+8. **Every step names the messages it sends,** by template id from the
+   messaging catalogue (docs/specs/messaging.md §4), or "—".
+9. **§3 says what happens when someone stops partway:** what is kept, for
+   how long, how they resume, and when it lapses.
+10. **Every journey is listed below.**
+
+**Checked against the GOV.UK Service Standard's questions, in our words**
+(not enforced by the tool): does it solve the whole problem, not one
+screen? Is it joined up across the channels the person uses? Is it as
+simple as it can be? Can everyone use it, including those who do not
+read easily (docs/experience.md)? Has it been tried with real people? Is
+it tested end to end?
 
 Copy [_template.md](_template.md) and keep every heading.
 
@@ -55,4 +73,8 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | to write |
 | JN-13 | A bank disbursement, from release to settlement, return, recall or reversal | R1 | to write |
 | JN-14 | A loan settled: the collateral discharged with NTSA, the registry notice cancelled, the originals released | R1 | to write |
+| JN-16 | An unplaced payment: the payer asked, escalated, returned at day 7 | R1 | to write |
+| JN-17 | The accountant's morning: the report, exceptions, reconciliation breaks, a held close | R1 | to write |
+| JN-18 | A member of staff joins, moves and leaves: roles by mandate, hardware keys | R1 | to write |
+| JN-19 | An outage: the institution on its fallback runbook, then everything brought back in | R1 | to write |
 | JN-15 | A trader who does not read, paid to his own till, told by voice, saving and borrowing for stock | phase 2 | [micro-trader.md](micro-trader.md) |

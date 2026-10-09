@@ -3,10 +3,12 @@ id: jn-04-loan-to-disbursement
 name: JN-04 · A loan from application to disbursement
 kind: journey
 release: R1
+status: draft
+validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574, FS-582, FS-602, FS-619]
-last_reviewed: 2026-10-08
+review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574, FS-582, FS-602, FS-619, FS-668]
+last_reviewed: 2026-10-09
 ---
 
 # JN-04 · A loan from application to disbursement
@@ -31,6 +33,9 @@ docs/specs/approval-engine.md.
 - **Ends when:** the money reaches the borrower, the loan is live in
   Kapu Core with its schedule, and the borrower has a receipt; or the
   application is declined, or the offer lapses.
+- **Target:** from a complete application to money received within 1 working day unsecured, 3 working days secured (proposed).
+- **Moments that matter:** waiting on the committee, told where it is and when to expect an answer; reading the key information document, with the full cost clear before signing; the money arriving, with a receipt.
+- **Data:** the application, statements, the decision record, collateral documents and the signed agreement (privacy PR-02, PR-03, PR-18).
 
 ## 2 · Steps
 
@@ -70,20 +75,21 @@ docs/specs/approval-engine.md.
  10 Chained, logged, kept; on the officer's book
         :
     No connection at any step ................. waits (3l)
+    Stops partway .................... kept, resumed or lapsed (3p)
 ```
 
-| # | Step | Who | Capabilities |
-|---|---|---|---|
-| 1 | The Credit Officer opens the loan for a verified borrower: product, amount, tenor and purpose. The amount cannot exceed the borrower's tier limit | Credit Officer | MF-01, ID-19, KC-04 |
-| 2 | For a secured product, the vehicle's logbook and the NTSA search are captured; the collateral registry is searched by the vehicle's serial number and the certificate filed; once the security agreement is signed, the notice is registered and its number, time and expiry recorded, and the borrower is sent their copy within ten working days. The committee cannot open the application until the logbook is attached (RC-09) | Credit Officer | MF-03, MF-04, ID-15 |
-| 3 | Decisioning computes the statement metrics, and for a repeat borrower the behaviour score and risk class, into a decision record; the officer reads it, appraises, and records an assessed limit with reasons | Credit Officer; platform | MF-06, ID-15, DE-01, DE-02, DE-03, DE-04 |
-| 4 | The platform prices the loan from the product version: the schedule, the APR and the total cost of credit, and generates the key information document | Platform | MF-23, KC-04, MF-34 |
-| 5 | The application goes up its chain by product and amount: the Credit Officer, then the Business Credit Committee (three of three), then the Head Office Committee above the set amount. Each decision is recorded with identity, comment and time, re-authenticated at the act, and may be made from email; no one decides two steps in a row; an override always ends with the override authority | Approvers | MD-01, MD-02, MF-07, MD-09, MD-05, MD-06, MD-10, MD-18, MD-08 |
-| 6 | The borrower, and any guarantors (JN-05), receive the agreement and the key information document as a link; they read the key information document and accept it before signing; they sign in Odoo Sign with a one-time code to their confirmed phone; the offered and signed versions are filed in the vault, and the email carries only a link | Borrower; guarantors | MF-34, BS-02, ID-11, ID-15, MS-19, MF-37 |
-| 7 | A disbursement is prepared from the approved and signed loan only, and a second person approves it | Finance; approver | MF-11, KC-08 |
-| 8 | The money is paid by M-Pesa B2C from Roan Capital's own shortcode, or by bank transfer through its bank; the loan is posted in Kapu Core with its schedule | Platform | RL-03, RL-07, MF-11, KC-04 |
-| 9 | The borrower receives a receipt by SMS with a link to their own page | Platform | MF-38, MS-02 |
-| 10 | Every event is chained and kept for at least seven years, and the loan counts on the Credit Officer's book | Platform | RO-24, FC-12, MF-35 |
+| # | Step | Who | Messages | Capabilities |
+|---|---|---|---|---|
+| 1 | The Credit Officer opens the loan for a verified borrower: product, amount, tenor and purpose. The amount cannot exceed the borrower's tier limit | Credit Officer | T01 | MF-01, ID-19, KC-04 |
+| 2 | For a secured product, the vehicle's logbook and the NTSA search are captured; the collateral registry is searched by the vehicle's serial number and the certificate filed; once the security agreement is signed, the notice is registered and its number, time and expiry recorded, and the borrower is sent their copy within ten working days. The committee cannot open the application until the logbook is attached (RC-09) | Credit Officer | — | MF-03, MF-04, ID-15 |
+| 3 | Decisioning computes the statement metrics, and for a repeat borrower the behaviour score and risk class, into a decision record; the officer reads it, appraises, and records an assessed limit with reasons | Credit Officer; platform | — | MF-06, ID-15, DE-01, DE-02, DE-03, DE-04 |
+| 4 | The platform prices the loan from the product version: the schedule, the APR and the total cost of credit, and generates the key information document | Platform | — | MF-23, KC-04, MF-34 |
+| 5 | The application goes up its chain by product and amount: the Credit Officer, then the Business Credit Committee (three of three), then the Head Office Committee above the set amount. Each decision is recorded with identity, comment and time, re-authenticated at the act, and may be made from email; no one decides two steps in a row; an override always ends with the override authority | Approvers | T26, T27 | MD-01, MD-02, MF-07, MD-09, MD-05, MD-06, MD-10, MD-18, MD-08 |
+| 6 | The borrower, and any guarantors (JN-05), receive the agreement and the key information document as a link; they read the key information document and accept it before signing; they sign in Odoo Sign with a one-time code to their confirmed phone; the offered and signed versions are filed in the vault, and the email carries only a link | Borrower; guarantors | T02, T04 | MF-34, BS-02, ID-11, ID-15, MS-19, MF-37 |
+| 7 | A disbursement is prepared from the approved and signed loan only, and a second person approves it | Finance; approver | T26 | MF-11, KC-08 |
+| 8 | The money is paid by M-Pesa B2C from Roan Capital's own shortcode, or by bank transfer through its bank; the loan is posted in Kapu Core with its schedule | Platform | — | RL-03, RL-07, MF-11, KC-04 |
+| 9 | The borrower receives a receipt by SMS with a link to their own page | Platform | T05 | MF-38, MS-02 |
+| 10 | Every event is chained and kept for at least seven years, and the loan counts on the Credit Officer's book | Platform | — | RO-24, FC-12, MF-35 |
 
 ## 3 · When it goes wrong
 
@@ -104,6 +110,7 @@ docs/specs/approval-engine.md.
 | m | 7 | **It is between 11 pm and 4 am,** Roan Capital's end-of-day window (RC-21). Staff release nothing in the window, by Roan Capital's procedure; a transaction rule holds what the system sends by itself, a queued payout or a retry, until the window closes | FC-16, KC-15 |
 | n | 2 | **The registry search shows an earlier lender's security right on the vehicle.** The application is held and the committee sees the certificate; it goes on only if that right is discharged, or if the committee accepts ranking behind it | MF-03, MF-07 |
 | o | 7 | **A collateral step the institution made blocking is still open,** such as joint registration with NTSA. The disbursement is held until the step's evidence is filed; the step's owner is reminded and, past its due date, escalated | MF-04, MD-08 |
+| p | 1 to 6 | **The borrower stops partway.** A draft is kept for 30 days; an offer not signed in 7 days lapses, the application closed with its reasons (both proposed); nothing is disbursed without both signatures | MF-01, MF-34 |
 
 ## 4 · Gaps
 

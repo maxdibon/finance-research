@@ -709,6 +709,8 @@ function checkScope(root) {
 // opens with a flow diagram that shows every step and every §3 row.
 const JOURNEYS = path.join('docs', 'journeys');
 const RELEASES = ['R1', 'R2', 'R3', 'R4', 'R5', 'phase 2'];
+// FS-668: draft, agreed by the owner, walked through with real users, tested.
+const JOURNEY_STATUSES = ['draft', 'agreed', 'validated', 'tested'];
 
 function capabilityInfo(root) {
   const info = new Map();
@@ -785,6 +787,9 @@ function checkJourneys(root) {
   const wantHeadings = headings(read(root, path.join(JOURNEYS, '_template.md')));
   const index = read(root, path.join(JOURNEYS, 'README.md'));
   const statusWord = new RegExp(`\\b(${STATUSES.join('|')})\\b`);
+  const catalogue = path.join(root, 'docs', 'specs', 'messaging.md');
+  const templates = new Set(fs.existsSync(catalogue)
+    ? [...read(root, path.join('docs', 'specs', 'messaging.md')).matchAll(/^\| (T\d+) \|/gm)].map((m) => m[1]) : []);
   const failures = [];
   for (const file of files) {
     const text = read(root, file);
@@ -802,6 +807,22 @@ function checkJourneys(root) {
     // The flow diagram (FS-558) names every step by number and every §3 row
     // as "(3x)"; it carries no capability ids, so the table stays their one place.
     if (j.diagram === null) at(0, '§2 has no flow diagram (a fence with no language, before the table)');
+    // FS-668: a status, the evidence, a target, the moments, the data,
+    // the messages each step sends, and what happens when someone stops.
+    const front = (text.match(/^---\n([\s\S]*?)\n---\n/) || [])[1] || '';
+    const jstatus = (front.match(/^status: *(\S+)/m) || [])[1];
+    if (!JOURNEY_STATUSES.includes(jstatus)) at(1, `status "${jstatus || ''}" is not one of ${JOURNEY_STATUSES.join(', ')}`);
+    if (!/^validated_with: *\S/m.test(front)) at(1, 'front matter missing "validated_with"');
+    const s1 = (text.split(/^## 1 · .*$/m)[1] || '').split(/^## /m)[0];
+    for (const k of ['Target', 'Moments that matter', 'Data']) if (!s1.includes(`- **${k}:**`)) at(0, `§1 has no "${k}" line`);
+    const s2 = (text.split(/^## 2 · .*$/m)[1] || '').split(/^## /m)[0];
+    if (!s2.includes('| # | Step | Who | Messages | Capabilities |')) at(0, '§2\'s table has no Messages column before Capabilities');
+    for (const line of s2.split('\n').filter((l) => /^\| \d+ \|/.test(l))) {
+      const c = line.split('|').slice(1, -1).map((x) => x.trim());
+      const msg = c[c.length - 2] || '';
+      if (msg !== '—') for (const tid of msg.split(/,\s*/)) if (!templates.has(tid)) at(0, `step ${c[0]} sends ${tid}, which the messaging catalogue does not have`);
+    }
+    if (!j.steps.some((s) => s.section === 3 && /stops partway|starts but does not finish/i.test(s.text))) at(0, '§3 has no "stops partway" row');
     for (const s of j.steps) {
       if (j.diagram === null) break;
       const shown = s.section === 2 ? new RegExp(`^\\s*${s.step}\\s`, 'm').test(j.diagram) : j.diagram.includes(`(3${s.step})`);
