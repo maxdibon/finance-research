@@ -73,7 +73,7 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | to write |
 | JN-13 | A bank disbursement, from release to settlement, return, recall or reversal | R1 | to write |
 | JN-14 | A loan settled: the collateral discharged with NTSA, the registry notice cancelled, the originals released | R1 | to write |
-| JN-16 | An unplaced payment: the payer asked, escalated, returned at day 7 | R1 | to write |
+| JN-16 | An unplaced payment: the payer asked, escalated, returned at day 7 | R1 | [unplaced-payment.md](unplaced-payment.md) |
 | JN-17 | The accountant's morning: the report, exceptions, reconciliation breaks, a held close | R1 | to write |
 | JN-18 | A member of staff joins, moves and leaves: roles by mandate, hardware keys | R1 | to write |
 | JN-19 | An outage: the institution on its fallback runbook, then everything brought back in | R1 | to write |
