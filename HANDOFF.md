@@ -1,8 +1,8 @@
 # Dibon financial services — session handoff
 
     version: 1.5.0
-    updated: 2026-10-09
-    supersedes: 1.4.0; adds 8 and 9 October (FS-611 to FS-677)
+    updated: 2026-10-10
+    supersedes: 1.4.0; adds 8 to 10 October (FS-611 to FS-706)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -171,6 +171,15 @@ Each has a register row and, where it changed the design, an entry in
   a spec's "Yes" in R1 that the plan leaves out. RO-24, in R1, anchors
   the chain in a transparency log, so Trillian or Rekor is needed before
   R1's build. The Unclaimed Financial Assets Act is LR-38 (FS-673).
+- **Technology** (FS-703): every component we run is in
+  docs/architecture/technology.md, by class, with its alternatives and
+  verdict; a spec names nothing that has no row; each row re-checked
+  every quarter. Settled: Envoy Gateway as the default edge (a trial
+  against APISIX open), Coraza as an external processor, OpenBao on
+  PostgreSQL, no Kafka at site B under warm standby, no schema registry,
+  Barman Cloud for database backups, Tempo, Rekor v2 witnessed, GitLab
+  with runners in Kenya and Flux; Warpgate to evaluate. How components
+  interact: docs/architecture/flows.md, one question per flow.
 - **Every spec** (FS-667) carries a status (draft until the owner agrees it),
   Data, Quality and metrics, and Threats sections, and tests with ids; the
   check enforces them. **Events** are named only from the catalogue in

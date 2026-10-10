@@ -5,8 +5,8 @@ kind: architecture
 version: 0.3.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662]
-last_reviewed: 2026-10-08
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703]
+last_reviewed: 2026-10-10
 ---
 
 # Platform architecture — who holds what
@@ -33,6 +33,8 @@ views beside them:
 | [quality.md](quality.md) | Quality goals, measurable, and where each is met |
 | [constraints.md](constraints.md) | What we design within, and where it comes from |
 | [risks.md](risks.md) | What could undo the design, and what we do about it |
+| [technology.md](technology.md) | Every component we run, by class: its licence, who governs it, the alternatives, our verdict |
+| [flows.md](flows.md) | How the components work together, one question at a time: first, a request coming in through the edge |
 
 **Who reads it, for what:**
 
@@ -369,9 +371,9 @@ against this paragraph.
 - **Traceability:** every transaction carries one identifier end to end;
   each processing step is a signed event (CloudEvents, signed with the
   service's SPIFFE identity, keys in OpenBao), hash-chained and anchored in
-  an append-only transparency log (Trillian or Rekor), so its journey can
+  an append-only transparency log (Rekor v2, witnessed; FS-700), so its journey can
   be verified by anyone holding our public keys (recon RO-23 to RO-25,
-  FS-453). OpenTelemetry and Jaeger carry operational traces; they are not
+  FS-453). OpenTelemetry and Tempo carry operational traces; they are not
   the evidence.
 - **Financial crime and compliance:** one service for fraud scoring,
   sanctions and PEP screening, cases and the reports institutions file
@@ -383,7 +385,7 @@ against this paragraph.
   Linux Foundation fork of HashiCorp Vault, under MPL-2.0, with the same
   API. Vault itself has been under the Business Source License since
   August 2023, which §6.1 does not allow without a decision (FS-403).
-- **Observability:** Prometheus (metrics), Loki (logs), Tempo or Jaeger
+- **Observability:** Prometheus (metrics), Loki (logs), Tempo
   (traces), Grafana (dashboards, alerting, SLOs). Grafana is for
   operations. Business BI is insights, a separate module.
 - **Mandates:** one engine for signing and debit mandates, every

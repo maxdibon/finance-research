@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-09
+last_reviewed: 2026-10-10
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1224,3 +1224,28 @@ its own entry.
 - **Costs (inferred):** a larger R1 (the v1 cap is unchanged, since all
   were phase 1); the transparency log chosen before R1's build; a
   follow-up team and a reversal policy at Roan Capital.
+
+## FS-703 · Technology re-evaluated, with a register kept current
+
+- **Chose:** a register of every component we run, by class, with its
+  licence, governance, alternatives and verdict, re-checked each quarter;
+  pipeline steps pinned to a commit or digest, images only from a
+  project's own builds or ours, never Bitnami's. With it: Envoy Gateway as
+  the default edge, decided by a trial against APISIX, Coraza called as an
+  external processor (FS-698, FS-699); OpenBao's data in PostgreSQL, since
+  OpenBao has no cross-site replication (FS-693); no Kafka at site B under
+  cold or warm standby, the outboxes keeping 7 days and refilling a fresh
+  cluster (FS-694); no runtime schema registry in R1 (FS-697); CloudNativePG's
+  Barman Cloud plugin for database backups (FS-699); Tempo for traces;
+  Rekor v2 as the transparency log, witnessed (FS-700); GitLab Premium with
+  runners in Kenya, and Flux (FS-701); Warpgate to evaluate as the bastion
+  (FS-695).
+- **Requires:** RO-24; docs/architecture/technology.md "The register"; docs/architecture/flows.md "A request coming in: the edge".
+- **Argued against:** keeping choices made in passing (APISIX, pgBackRest)
+  without a recorded comparison; copying Kafka between sites, which can
+  leave events and data from different moments; a schema registry, a
+  service to run for protection the pipeline gives; Trillian v1, which
+  needs MySQL; running GitLab ourselves.
+- **Costs (inferred):** a gateway trial; a quarterly review of the
+  register; outboxes kept 7 days; a slower failover while Kafka is
+  rebuilt; GitLab Premium seats.

@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661]
-last_reviewed: 2026-10-08
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661, FS-698, FS-699, FS-701]
+last_reviewed: 2026-10-10
 ---
 
 # Platform Security
@@ -54,8 +54,8 @@ not go live on less.
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| SE-01 | A web application firewall in front of every public endpoint (Coraza with the OWASP core rule set) | Planned | FS-459, FS-464 | 1 |
-| SE-02 | An API gateway (Apache APISIX) with rate limits per client, and financial-grade API profiles through access (FAPI 2.0, AC-04) | Planned | FS-464 | 1 |
+| SE-01 | A web application firewall in front of every public endpoint (Coraza with the OWASP core rule set, called by the edge proxy as an external processor; FS-699) | Planned | FS-459, FS-464 | 1 |
+| SE-02 | An API gateway (Envoy Gateway, decided by a trial against Apache APISIX, FS-698; docs/architecture/flows.md §1) with rate limits per client, and financial-grade API profiles through access (FAPI 2.0, AC-04) | Planned | FS-464 | 1 |
 | SE-03 | Protection from denial-of-service attacks upstream, from the hosting provider | Planned | FS-464. To confirm with Liquid (PT-01) | 1 |
 | SE-04 | Kubernetes built and checked to the CIS Benchmarks (RKE2), the check run on every change | Planned | FS-461, FS-464 | 1 |
 | SE-05 | Network traffic denied by default between workloads (Cilium), each service with its own identity (SPIFFE/SPIRE), and encrypted between services | Planned | FS-464; the same identity signs traceability events (recon RO-23) | 1 |
@@ -63,9 +63,9 @@ not go live on less.
 | SE-07 | Runtime detection on every node (Falco) | Planned | FS-464 | 1 |
 | SE-08 | Disks encrypted on every node, databases encrypted at rest (PostgreSQL with transparent data encryption), keys in OpenBao and rotated on a schedule | Planned | FS-403, FS-464 | 1 |
 | SE-09 | TLS everywhere, with certificates issued and renewed automatically (cert-manager, OpenBao PKI) | Planned | FS-464 | 1 |
-| SE-10 | Backups of clusters, databases and the document vault (Velero, pgBackRest; identity ID-15) to object storage in Kenya and to a second Kenyan site, with an immutable copy; restores tested every quarter against recovery objectives per service | Planned | FS-464. The portfolio promises recovery tests twice a year; quarterly exceeds it | 1 |
-| SE-11 | Vulnerability management: images and dependencies scanned (Trivy, OSV-Scanner), a software bill of materials per release, fixes prioritised by CISA's known-exploited list, EPSS and CVSS v4 within set times | Planned | FS-462, FS-464 | 1 |
-| SE-12 | A pipeline that refuses unsafe builds: secrets scanning (Gitleaks), static and dynamic testing (Opengrep, ZAP), signed images with build provenance (cosign, SLSA), a private registry (Harbor) | Planned | FS-462, FS-464 | 1 |
+| SE-10 | Backups of clusters, databases and the document vault (Velero for the clusters; CloudNativePG's Barman Cloud plugin for the databases, FS-699; identity ID-15) to object storage in Kenya and to a second Kenyan site, with an immutable copy; restores tested every quarter against recovery objectives per service | Planned | FS-464. The portfolio promises recovery tests twice a year; quarterly exceeds it | 1 |
+| SE-11 | Vulnerability management: images and dependencies scanned (Trivy, pinned by digest and mirrored in Harbor; OSV-Scanner; FS-699), a software bill of materials per release, fixes prioritised by CISA's known-exploited list, EPSS and CVSS v4 within set times | Planned | FS-462, FS-464 | 1 |
+| SE-12 | A pipeline that refuses unsafe builds: secrets scanning (Gitleaks), static and dynamic testing (Opengrep, ZAP), signed images with build provenance (cosign, SLSA, recorded in Rekor), a private registry (Harbor); on GitLab, with runners in Kenya (FS-701); every step pinned to a commit or digest, never a tag, and images only from a project's own builds or ours, never Bitnami's (FS-699) | Planned | FS-462, FS-464 | 1 |
 | SE-13 | Round-the-clock detection and response: managed detection and response from a security operations centre (Sophos MDR through Liquid), fed by our logs and endpoint agents | Planned | FS-458, FS-464. To confirm terms with Liquid | 1 |
 | SE-14 | Endpoints: staff laptops and our servers with endpoint protection, disk encryption and device management (Sophos endpoint, Microsoft Intune); field devices enrolled with Android Enterprise (omni-channel OC-19) | Planned | FS-459, FS-464 | 1 |
 | SE-15 | Mobile apps built and tested to OWASP MASVS level 2 (MobSF in the pipeline), with Play Integrity and App Attest | Planned | FS-462, FS-464. The field-officer app (OC-17) and member apps (OC-01) | 1 |

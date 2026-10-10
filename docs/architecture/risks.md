@@ -5,8 +5,8 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-649]
-last_reviewed: 2026-10-08
+review_ids: [FS-649, FS-695]
+last_reviewed: 2026-10-10
 ---
 
 # Risks and technical debt
@@ -28,7 +28,7 @@ Each row points to its register row, where its status lives.
 | Business registry access | Business borrowers blocked | The BRS request | FS-564 |
 | Odoo's user count unconfirmed | Cost higher than planned | Read the agreement | FS-036 |
 | On-call tool and phone route not chosen | A severity 1 not heard | Choose; the fallback SMS | FS-633 |
-| The bastion not chosen | Engineers' sessions unrecorded | Choose under the licence rule | FS-645 |
+| The bastion not chosen | Engineers' sessions unrecorded | Evaluate Warpgate (Apache-2.0) before R1 go-live | FS-645, FS-695 |
 | One AGPL module inside Odoo | A change to it would have to be published | Never modified | FS-646 |
 | Event names drift from the catalogue | Services diverge again | Every name from the event bus catalogue; a name not in it is not published | FS-667 |
 | Counsel's answers on restructuring | Relief delayed thirty days | Ask counsel | FS-624 |

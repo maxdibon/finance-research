@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-074, FS-548, FS-558, FS-560, FS-627, FS-668, FS-669]
-last_reviewed: 2026-10-09
+review_ids: [FS-074, FS-548, FS-558, FS-560, FS-627, FS-668, FS-669, FS-701]
+last_reviewed: 2026-10-10
 ---
 
 # Testing
@@ -49,7 +49,8 @@ test in a few days. The journey's steps are the backbone of a story map:
 the stories for each step sit beneath it, and the release line is drawn
 across them.
 
-- **Stories live in the code repository's issue tracker,** beside the
+- **Stories live in the code repository's issue tracker** (GitLab
+  issues, FS-701), beside the
   code they change. Odoo Project keeps what the customer sees:
   onboarding, user acceptance, sign-off (§4).
 - **Each story cites** the journey step or §3 row it serves

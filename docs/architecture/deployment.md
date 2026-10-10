@@ -5,7 +5,7 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692]
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703]
 last_reviewed: 2026-10-10
 ---
 
@@ -39,11 +39,12 @@ in [the README](README.md) §9; recovery objectives in platform-security
   |                                          |      |                                          |
   | engineers' Keycloak (hardware keys)      |      | one backup copy offline (SE-20)          |
   | fleet Grafana . GoAlert                  |      | backup keys split among five             |
-  | GitOps . pipeline . signed registry      |      | holders, three to open (SE-21)           |
+  | GitLab runners . Flux . Harbor . Rekor   |      | holders, three to open (SE-21)           |
   +------------------------------------------+      +------------------------------------------+
 
   out of the country only by name: detection telemetry to the managed security service
   (SE-13); WhatsApp, Twilio and email platforms carry notifications and links only (§7)
+  GitLab.com holds our code and pipeline definitions, never customer data; runners stay in Kenya
 
   on an institution's premises: the same layout in its data centre, with its own second site
 ```
@@ -57,8 +58,8 @@ in [the README](README.md) §9; recovery objectives in platform-security
   (SE-10, SE-22, SE-23). Losing site A loses at most 5 minutes of tier-1
   data and takes up to 4 hours to recover (platform-security §3).
 - **Dibon central** runs the fleet, never a ledger: engineers' Keycloak,
-  the fleet's Grafana and on-call, GitOps, the pipeline and the signed
-  image registry. It holds no institution's data; its loss stops changes
+  the fleet's Grafana and on-call, GitLab's runners in Kenya, Flux,
+  Harbor, and the transparency log (FS-700, FS-701). It holds no institution's data; its loss stops changes
   and fleet views, not any institution's service.
 - **Offline:** one backup copy offline, its keys opened only by three of
   five key holders (§4; SE-20, SE-21).
@@ -73,7 +74,8 @@ not yet contracted (partners PT-01, FS-032).
 **Within a site, every tier-1 component fails over by itself, in
 seconds:** PostgreSQL through CloudNativePG (Apache-2.0) with a
 synchronous standby, so a server's loss loses nothing; Kafka on three
-brokers, each message held by three of them; OpenBao on three nodes;
+brokers, each message held by three of them; OpenBao on three nodes,
+its data in PostgreSQL (FS-693);
 Keycloak and our services on two replicas or more (FS-655).
 
 **Across sites, each institution chooses** (FS-651, FS-655):
@@ -99,7 +101,9 @@ fact, which a ledger cannot allow: two sites could accept the same money
 twice. Consensus databases (YugabyteDB, CockroachDB) avoid conflicts but
 need three sites, add a round trip between sites to every write, and are
 not supported by Fineract or Keycloak. Kafka stretched across sites needs
-three locations; MirrorMaker 2 copies asynchronously and suits recovery.
+three locations; MirrorMaker 2 copies asynchronously and suits hot
+standby. Under cold and warm standby nothing is copied: the outboxes,
+in the replicated databases, refill a fresh cluster (FS-694).
 So:
 
 | Runs in both sites at once | Has one writer, and fails over |
@@ -142,8 +146,8 @@ site B takes over (FS-691).
   | KAPU CORE . ACCESS . ODOO .. full size      |    | KAPU CORE . ACCESS . ODOO .. at zero        |
   |                                             |    |                                             |
   | DATABASE  primary + synchronous standby  1  |--->| DATABASE  replica cluster, streaming     1  |
-  | EVENT BUS  three brokers                 2  |--->| EVENT BUS  three small brokers, mirrored 2  |
-  | OPENBAO  three nodes                     3  |--->| OPENBAO  standing, from snapshots        3  |
+  | EVENT BUS  three brokers                 2  |    | EVENT BUS  none: built on failover       2  |
+  | OPENBAO  three nodes, data in DATABASE   3  |    | OPENBAO  at zero, data in DATABASE       3  |
   | OBJECT STORAGE  the vault's files        4  |--->| OBJECT STORAGE  replicated, locked       4  |
   | OBSERVABILITY  watches A and B              |<-->| OBSERVABILITY  watches B and A              |
   +---------------------------------------------+    +---------------------------------------------+
@@ -163,8 +167,8 @@ the active site only.
 | # | Store | At site A | To site B | RPO | RTO | Kept within (SLO) | On failover |
 |---|---|---|---|---|---|---|---|
 | 1 | Databases: Fineract, every service's, Keycloak's, the approval engine's, Odoo's | CloudNativePG: a primary and a synchronous standby, so a server's loss loses nothing | A replica cluster streaming asynchronously, and every WAL segment archived to site B's object storage (SE-22) | 5 minutes | Minutes, to promote | Lag under 60 seconds; paged at 3 minutes, before the 5-minute objective is at risk | Promoted; the last transaction it applied marks the start of the loss window |
-| 2 | Event bus | Three brokers, each message on three | MirrorMaker 2: topics and consumers' offsets | 5 minutes | Minutes | Lag under 60 seconds | Site B's topics used; every service's outbox republishes what was not mirrored, and consumers drop duplicates by event id (event-bus-kafka §6) |
-| 3 | OpenBao | Three nodes, Raft | An encrypted snapshot every 5 minutes (proposed), restored into a small standing cluster at site B | 5 minutes | Minutes, then unsealed | Snapshot under 5 minutes old; paged at 10 | Unsealed with site B's own key, not the backup keys, which are for the offline copy (§4) |
+| 2 | Event bus | Three brokers, each message on three | Nothing: every service's outbox keeps each published event 7 days, in its database (1) | As its database | Minutes, to build a cluster from code | Outbox age under 5 minutes | A fresh cluster built from GitOps; the relays republish 7 days of events, and consumers skip any they have applied (event-bus-kafka §6, FS-694) |
+| 3 | OpenBao | Three nodes, its data in PostgreSQL | With the databases (1) | As the databases | Minutes, then unsealed | As the databases | Started against the promoted database; unsealed with site B's own key, not the backup keys, which are for the offline copy (§4) (FS-693) |
 | 4 | Object storage: the vault's files, Odoo's filestore | Ceph, or Azure Blob | Bucket replication, versioned and locked against deletion at site B | 15 minutes for the vault; 1 hour for Odoo's files (tier 2) | None: already there | Backlog under 15 minutes | Site B's buckets used |
 | — | Images, manifests, configuration | Dibon central's registry and GitOps | Both sites pull the same signed images | — | Minutes | — | The active-site setting switched in GitOps |
 
@@ -196,17 +200,17 @@ OpenBao unseal key held at site B; the runbook rehearsed once.
 | 1 | **Detect.** Site A fails its health checks from site B and from Dibon central; a severity 1 incident opens, on-call is paged by phone, and the institution is told (incident management) | Observability; on-call engineer |
 | 2 | **Decide.** If site A will not be back within an hour, fail over; the decision is recorded with its time. Payouts are already paused by safe mode, while collections keep landing in the institution's own paybills (SE-24) | Incident manager, with the institution's contact |
 | 3 | **Fence site A.** Make sure it cannot write: its traffic withdrawn at DNS and the provider's network, its workers stopped if it can be reached. Two writers are worse than an outage | On-call engineer |
-| 4 | **Promote the stores at site B:** databases, then OpenBao from its last snapshot, then the event bus. Record each one's last applied point: that is the loss window | On-call engineer |
-| 5 | **Start the services at site B** at full size, by switching the active site in GitOps; consumers resume from mirrored offsets | On-call engineer |
+| 4 | **Promote the stores at site B:** the databases, OpenBao's data with them; then OpenBao started and unsealed. Record the last applied point: that is the loss window | On-call engineer |
+| 5 | **Start the services at site B** at full size, by switching the active site in GitOps: a fresh event bus first, refilled from the outboxes; consumers skip what they have applied | On-call engineer |
 | 6 | **Switch traffic.** DNS to site B; callbacks follow the name | On-call engineer |
 | 7 | **Check before reopening.** Smoke tests; for the loss window, M-Pesa's transactions pulled (rails RL-20) and bank statements matched; every queued payout checked against the rail's statement before release (FS-661); the day's close run if the failover crossed it | On-call engineer; the institution's accountant |
 | 8 | **Reopen.** Safe mode lifted; the institution told; staff sign in again, since sessions do not survive | Incident manager |
 | 9 | **Afterwards.** Site A rebuilt from code as the new standby (SE-23); a fail-back at a planned window, by the same steps; the incident's review | Engineering; incident manager |
 
-**Open:** whether OpenBao offers replication between clusters, or
-snapshots remain the way (to confirm in OpenBao's documentation); whether
-site B needs its own Kafka at all, or the outboxes alone can refill a
-fresh one; site B's provider (§1).
+**Settled** (FS-703): OpenBao has no replication between clusters (its
+issue #38 is open), so its data lives in PostgreSQL, a backend its
+documentation calls production ready (FS-693); site B runs no Kafka under
+cold or warm standby (FS-694). **Open:** site B's provider (§1).
 
 ## 3 · The offline copy
 

@@ -11,8 +11,8 @@ used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675]
-last_reviewed: 2026-10-09
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695]
+last_reviewed: 2026-10-10
 ---
 
 # Access on Keycloak — component specification
@@ -347,8 +347,8 @@ On a running 26.8 instance, before the build relies on each (FS-642):
 1. Whether staff use Fineract's own screens (kapu-core-fineract §13),
    which decides whether Fineract needs a staff client at all.
 2. Which bastion records engineers' sessions where Dibon runs the
-   instance (Teleport's community edition is no longer open-source, so a
-   tool must be chosen against architecture §6.1; FS-645).
+   instance: Warpgate to evaluate, signing in through this Keycloak
+   (FS-645, FS-695).
 
 **For Roan Capital:**
 

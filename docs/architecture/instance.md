@@ -5,8 +5,8 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-491, FS-649, FS-663]
-last_reviewed: 2026-10-08
+review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704]
+last_reviewed: 2026-10-10
 ---
 
 # One instance, as R1 deploys it
@@ -23,7 +23,7 @@ sites is in [deployment](deployment.md).
   +------------------------------------------------------------------------------------------+
   | EDGE                                                                                     |
   | filters and routes                                                                       |
-  | [coraza, apisix]                                                                         |
+  | [envoy, coraza]                                                                          |
   | web application firewall (SE-01); API gateway with rate limits (SE-02)                   |
   +------------------------------------------------------------------------------------------+
                                                 |
@@ -58,7 +58,7 @@ sites is in [deployment](deployment.md).
 
 | Box | What it is | Spec or module |
 |---|---|---|
-| EDGE | The only way in: a web application firewall and an API gateway | platform-security SE-01, SE-02 |
+| EDGE | The only way in: a web application firewall and an API gateway; how it works, [flows](flows.md) §1 | platform-security SE-01, SE-02 |
 | KAPU MFI | The lending product's service: applications, collateral, vetting, the only writer to the ledger | mfi |
 | APPROVAL ENGINE | Approval chains and decisions, step-up at each | [approval-engine](../specs/approval-engine.md) |
 | LENDER RULES | The CBK lender regulations applied to each loan | [lender-rules](../specs/lender-rules.md) |

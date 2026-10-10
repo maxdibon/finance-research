@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688]
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703]
 last_reviewed: 2026-10-10
 ---
 
@@ -80,13 +80,13 @@ SE-14), service financial management, organisational change management.
 | Kind | What | Who approves | The customer |
 |---|---|---|---|
 | Standard | Pre-approved, low risk, done before: a routine patch, a setting within tested bounds, a certificate renewed | No one each time; the kind itself is approved, and listed | Not told, unless they can see it |
-| Normal | Everything else: a reviewed pull request | The CTIO, after a second engineer's review | Told before it reaches them, when they can see its effect: these are the release notes the support offer promises |
+| Normal | Everything else: a reviewed merge request | The CTIO, after a second engineer's review | Told before it reaches them, when they can see its effect: these are the release notes the support offer promises |
 | Emergency | Restoring service, or closing a security hole | The on-call engineer and the CTIO | Told with the incident; the change reviewed within two working days |
 
-**The change record is the pull request**, with a template: what changes,
+**The change record is the merge request** in GitLab (FS-701), with a template: what changes,
 why, the risk, how it was tested, how it is undone, which institutions
 it reaches, and a label for its kind. Release notes are generated from
-the merged pull requests.
+the merged merge requests.
 
 **When no change runs** (the change calendar):
 
@@ -188,9 +188,9 @@ Act it is the controller and we its processor. What we give it:
 | Known errors, the desk's knowledge base | Odoo Knowledge |
 | Paging and escalation | GoAlert, proposed ([observability-grafana](../specs/observability-grafana.md) §5) |
 | Monitoring, availability, SLOs | Grafana and its stack |
-| Change records, release notes | Pull requests, with a template and labels |
+| Code, change records, release notes, stories | GitLab Premium on GitLab.com, runners in Kenya: merge requests with a template and labels, issues (FS-701) |
 | The change calendar | The pipeline's deployment rule; Odoo Calendar for people |
-| The configuration record | Generated from GitOps; a Grafana dashboard and a reader page |
+| The configuration record | Generated from GitOps (Flux, through GitLab's agent); a Grafana dashboard and a reader page |
 | Notices to customers | Odoo email templates |
 | A status page for customers (optional) | Gatus (Apache-2.0) or Uptime Kuma (MIT), self-hosted |
 
@@ -206,11 +206,10 @@ as part of the operating system ([architecture](../architecture/README.md)
 | Item | Today | Next |
 |---|---|---|
 | Odoo Enterprise for Dibon's own use: does the agreement cover Helpdesk, Knowledge and Calendar for us, not only customers' instances? | Assumed ([architecture](../architecture/README.md) §8) | Confirm with Odoo (FS-640) |
-| Which GitOps tool: Argo CD or Flux | Not named anywhere | Choose before the configuration record is built |
 | The on-call tool | GoAlert proposed | The owner's choice ([observability-grafana](../specs/observability-grafana.md) §12) |
 | A status page | None; customers learn of an incident from our notices | Optional; offered first to the Complete tier |
-| The pull-request template and the pipeline's change-window rule | Not built | Build with SE-23 |
+| The merge-request template and the pipeline's change-window rule | Not built | Build with SE-23 |
 | Helpdesk ticket types, SLA policies, request types | Not configured | Configure before R1 go-live |
 | Service-level targets | Proposed defaults ([§5](#5--service-levels)) | Agree in Roan Capital's contract |
-| The bastion that records engineers' sessions where Dibon runs the instance | Not chosen; Teleport's community edition is no longer open-source | Choose against the licence rule ([architecture](../architecture/README.md) §6.1; FS-645) |
+| The bastion that records engineers' sessions where Dibon runs the instance | Warpgate to evaluate; Teleport's community edition is no longer open source ([technology](../architecture/technology.md)) | Evaluate before R1 go-live (FS-645, FS-695) |
 | An ISO/IEC 20000-1 certification body | No KENAS-accredited body found; SGS advertises it ([compliance](../compliance.md) LC-10) | Stay "in line with" until a route is confirmed |
