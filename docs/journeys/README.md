@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680]
+review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684]
 last_reviewed: 2026-10-10
 ---
 
@@ -72,7 +72,7 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-11 | A transfer out through a larger bank: RTGS, EFT or SWIFT | R2 | to write |
 | JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | to write |
 | JN-13 | A bank disbursement, from release to settlement, return or recall | R1 | [bank-disbursement.md](bank-disbursement.md) |
-| JN-14 | A loan settled: the collateral discharged with NTSA, the registry notice cancelled, the originals released | R1 | to write |
+| JN-14 | A loan settled: guarantors released, the registry notice cancelled, NTSA's joint registration removed, the originals handed back | R1 | [loan-settled.md](loan-settled.md) |
 | JN-16 | An unplaced payment: the payer asked, escalated, returned at day 7 | R1 | [unplaced-payment.md](unplaced-payment.md) |
 | JN-17 | The accountant's morning: the report, exceptions, reconciliation breaks, a held close | R1 | to write |
 | JN-18 | A member of staff joins, moves and leaves: roles by mandate, hardware keys | R1 | to write |

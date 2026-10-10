@@ -162,8 +162,9 @@ Each has a register row and, where it changed the design, an entry in
 - **Every journey** (FS-668) has a status and validated_with, a target
   time, the moments that matter, a data line, a Messages column of
   template ids (checked against the catalogue) and a "stops partway" row.
-  JN-16 (the unplaced payment) is written. Next, in order: JN-13, JN-14,
-  JN-07, JN-08, JN-17, JN-18, JN-19.
+  JN-16 (the unplaced payment), JN-13 (a bank disbursement) and JN-14
+  (a loan settled) are written. Next, in order: JN-07, JN-08, JN-17,
+  JN-18, JN-19.
 - **R1's scope was swept** (FS-671, FS-674, FS-675): 24 capabilities the
   specs relied on moved into the delivery plan's "R1 in detail" (with
   Roan's map and CU-01); MS-05 and MS-06 stay out. The check now fails

@@ -11,7 +11,7 @@ used_by: [access-keycloak, lender-rules, observability-grafana]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680]
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684]
 last_reviewed: 2026-10-10
 ---
 
@@ -187,6 +187,8 @@ Event names are in the event bus catalogue (event-bus-kafka §5).
 | T16 | Complaint acknowledged | `kapu.mfi.complaint.logged` | Notice | SMS, email | complaint reference, the date it will be answered by | MF-28; reg 40 |
 | T17 | Complaint resolved | `kapu.mfi.complaint.resolved` | Notice | SMS, email | complaint reference, link | MF-28 |
 | T35 | Disbursement on its way, later than expected | `kapu.mfi.disbursement.delayed` | Transactional | SMS | amount, the bank, when they will hear next | MF-38; rails RL-10 |
+| T37 | The amount to settle | On request | Transactional | SMS | amount, the date it is valid to, how to pay, link | MF-22, MF-38; reg 56(3), (4) |
+| T38 | Collateral released: originals ready to collect | `kapu.mfi.collateral.released` | Transactional | SMS | what is ready, where, from when, what to bring | MF-03, MF-38 |
 | T36 | Disbursement returned by your bank | `kapu.mfi.disbursement.returned` | Transactional | SMS | amount, the bank, nothing owed on it, how to give another account | MF-38; rails RL-01 |
 
 **Guarantors**
