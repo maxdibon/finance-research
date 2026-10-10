@@ -5,7 +5,7 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691]
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692]
 last_reviewed: 2026-10-10
 ---
 
@@ -78,12 +78,20 @@ Keycloak and our services on two replicas or more (FS-655).
 
 **Across sites, each institution chooses** (FS-651, FS-655):
 
-| Model | The second site | If the first is lost: data | Back in | Who decides to fail over | Suits |
-|---|---|---|---|---|---|
-| Cold standby | Backups and the code to rebuild; nothing running | Minutes, from continuous archiving (SE-22) | About a day | People | Small Saccos and lenders that can wait a day |
-| **Warm standby (the default)** | Databases replicating; services at minimum size, grown on failover | At most 5 minutes | 4 hours | People | Most institutions; what the recovery objectives in platform-security §3 assume |
-| Hot standby | Everything at full size | At most 5 minutes | About 30 minutes | The on-call engineer, from the runbook | Larger Saccos, banks |
-| Hot, automatic | Everything at full size, and a small witness at a third location | At most 5 minutes; none if the sites are near enough to replicate synchronously | About 5 minutes | Automatic: the witness keeps both sites from believing they are live | Banks that need it |
+| Model | The second site | RPO: data lost if site A is lost | RTO: back in | Tier 1 available, a month | Who decides to fail over | Suits |
+|---|---|---|---|---|---|---|
+| Cold standby | Backups and the code to rebuild; nothing running | At most 5 minutes: the WAL archive reaches site B at least every 5 minutes (SE-22) | About a day | 99.9%, a site disaster outside it | People | Small Saccos and lenders that can wait a day |
+| **Warm standby (the default)** | Databases replicating; services deployed at zero, started on failover | At most 5 minutes | 4 hours | 99.9%, a site disaster outside it | People | Most institutions; what the recovery objectives in platform-security §3 assume |
+| Hot standby | Everything at full size | At most 5 minutes | About 30 minutes | 99.9%, a site disaster inside it | The on-call engineer, from the runbook | Larger Saccos, banks |
+| Hot, automatic | Everything at full size, and a small witness at a third location | At most 5 minutes; none if the sites are near enough to replicate synchronously | About 5 minutes | 99.95%, a site disaster inside it | Automatic: the witness keeps both sites from believing they are live | Banks that need it |
+
+Every model keeps a server's loss inside the site: nothing lost, back in
+minutes. RPO and RTO are for tier 1; tiers 2 and 3 have their own
+(platform-security §3). 99.9% a month allows about 43 minutes down, so
+a site's loss fits inside it only when recovery takes less: under hot
+standby, not under cold or warm (§2, "Warm standby, the default, in
+detail"). The figures are proposed until each contract sets them
+(FS-692).
 
 **Active-active only where it is safe.** Multi-writer PostgreSQL (pgEdge's
 Spock, EDB Postgres Distributed) settles conflicting writes after the
@@ -152,13 +160,13 @@ the active site only.
 
 **How each store is copied:**
 
-| # | Store | At site A | To site B | Kept within (SLO) | On failover |
-|---|---|---|---|---|---|
-| 1 | Databases: Fineract, every service's, Keycloak's, the approval engine's, Odoo's | CloudNativePG: a primary and a synchronous standby, so a server's loss loses nothing | A replica cluster streaming asynchronously, and every WAL segment archived to site B's object storage (SE-22) | Lag under 60 seconds; paged at 3 minutes, before the 5-minute objective is at risk | Promoted; the last transaction it applied marks the start of the loss window |
-| 2 | Event bus | Three brokers, each message on three | MirrorMaker 2: topics and consumers' offsets | Lag under 60 seconds | Site B's topics used; every service's outbox republishes what was not mirrored, and consumers drop duplicates by event id (event-bus-kafka §6) |
-| 3 | OpenBao | Three nodes, Raft | An encrypted snapshot every 5 minutes (proposed), restored into a small standing cluster at site B | Snapshot under 5 minutes old; paged at 10 | Unsealed with site B's own key, not the backup keys, which are for the offline copy (§4) |
-| 4 | Object storage: the vault's files, Odoo's filestore | Ceph, or Azure Blob | Bucket replication, versioned and locked against deletion at site B | Backlog under 15 minutes | Site B's buckets used |
-| — | Images, manifests, configuration | Dibon central's registry and GitOps | Both sites pull the same signed images | — | The active-site setting switched in GitOps |
+| # | Store | At site A | To site B | RPO | RTO | Kept within (SLO) | On failover |
+|---|---|---|---|---|---|---|---|
+| 1 | Databases: Fineract, every service's, Keycloak's, the approval engine's, Odoo's | CloudNativePG: a primary and a synchronous standby, so a server's loss loses nothing | A replica cluster streaming asynchronously, and every WAL segment archived to site B's object storage (SE-22) | 5 minutes | Minutes, to promote | Lag under 60 seconds; paged at 3 minutes, before the 5-minute objective is at risk | Promoted; the last transaction it applied marks the start of the loss window |
+| 2 | Event bus | Three brokers, each message on three | MirrorMaker 2: topics and consumers' offsets | 5 minutes | Minutes | Lag under 60 seconds | Site B's topics used; every service's outbox republishes what was not mirrored, and consumers drop duplicates by event id (event-bus-kafka §6) |
+| 3 | OpenBao | Three nodes, Raft | An encrypted snapshot every 5 minutes (proposed), restored into a small standing cluster at site B | 5 minutes | Minutes, then unsealed | Snapshot under 5 minutes old; paged at 10 | Unsealed with site B's own key, not the backup keys, which are for the offline copy (§4) |
+| 4 | Object storage: the vault's files, Odoo's filestore | Ceph, or Azure Blob | Bucket replication, versioned and locked against deletion at site B | 15 minutes for the vault; 1 hour for Odoo's files (tier 2) | None: already there | Backlog under 15 minutes | Site B's buckets used |
+| — | Images, manifests, configuration | Dibon central's registry and GitOps | Both sites pull the same signed images | — | Minutes | — | The active-site setting switched in GitOps |
 
 **What we promise, and what we watch:**
 
