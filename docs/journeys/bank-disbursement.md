@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-668, FS-680]
+review_ids: [FS-548, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-668, FS-680, FS-682, FS-683]
 last_reviewed: 2026-10-10
 ---
 
@@ -93,9 +93,9 @@ per bank account, with the limit from that bank's mandate letter
 | 1 | The finance officer prepares the disbursement from the approved and signed loan only, to an account in the borrower's own name: the individual's for a personal loan, the company's for a business loan. The account is one seen on the statements filed at appraisal, or on the bank's letter | Finance officer | — | MF-11, RL-01, ID-15 |
 | 2 | The account holder's name is confirmed through the bank's account-validation service where it offers one, and the result kept with the instruction | Platform | — | RL-29, RL-07 |
 | 3 | A second person approves, re-authenticated at the act, from the console or email. The approval records a hash of the amount, payee name, bank, account, rail and reference | Approver | T26 | MD-01, MD-06, MD-18, AC-05, KC-08 |
-| 4 | The instruction is released by the path configured for the bank account. Within the limit in the bank's mandate letter, with API or host-to-host access, it goes straight through, signed with Roan Capital's key over mutual TLS. Otherwise the platform builds a bulk-payment file, with its line count, total and hash on the approval record; it is downloaded to the designated machine, uploaded to internet banking and deleted; the signatories check the totals in the bank's portal and release it there | Platform; signatories | — | RL-07, RL-01, FC-16 |
+| 4 | The instruction is released by the path configured for the bank account. Within the limit in the bank's mandate letter, with API or host-to-host access, it goes straight through: signed with Roan Capital's key inside OpenBao and sent over mutual TLS, with no person in between. Otherwise by file, in layers (FS-683): the platform builds it only when asked, with its line count, total and hash on the approval record; the finance officer downloads it once, after step-up, to the designated machine, uploads it to internet banking and deletes it, and a second download raises an alert. Before release, the portal's view of the uploaded batch is exported and uploaded back, and the platform compares every line (name, account, amount) with the approval; where the portal cannot export, the signatories compare every line against the approval screen. Only the signatories release it, never the person who uploaded, and only on a match | Platform; finance officer; signatories | — | RL-07, RL-01, RL-12, AC-05, FC-16 |
 | 5 | The bank's status closes the "sent" state: accepted or rejected, from its API, its status report, or its portal | Platform; accountant | — | RL-01, RL-07, RL-10 |
-| 6 | The bank's statement arrives (MT940, CAMT.053 or CSV). Every line is compared with what was approved, and the payment matched to its instruction | Platform | — | RL-07, RO-02, RO-04 |
+| 6 | Within the hour, the bank's debit alerts, or a same-day statement where the bank gives one, are compared with the approval. The statement (MT940, CAMT.053 or CSV) then arrives; every line is compared with what was approved, and the payment matched to its instruction | Platform | — | RL-07, RO-02, RO-04 |
 | 7 | Only then is the disbursement posted in Kapu Core, dated by the bank's value date, so the schedule runs from the day the money left. The borrower receives the receipt by SMS with the bank's reference and a link to their page | Platform | T05 | KC-04, MF-38, MS-12 |
 | 8 | Every event is chained, the approval and the bank's evidence kept with the instruction for at least seven years | Platform | — | RO-24, RO-19, FC-12 |
 
@@ -106,7 +106,7 @@ per bank account, with the limit from that bank's mandate letter
 | a | 2 | **The name the bank returns does not match the borrower.** The payout is held before it is sent. The finance officer asks the borrower for the right account, or the bank's letter; a new account is a new payee, approved afresh | RL-29, MF-11 |
 | b | 3 | **The approver prepared the disbursement.** Refused: one person never completes two consecutive steps | MD-06, KC-08 |
 | c | 4 | **The amount, payee or account changed after approval.** The adapter refuses an instruction whose hash differs from the approval's; any change re-opens approval (FS-588) | RL-01 |
-| d | 4, 6 | **The file in the bank's portal differs from the approval:** a line count, total or line the signatories do not recognise. They do not release it; the file is deleted and a ticket opened. On the statement, a line that was not approved, or was altered, is a severity 1 incident | RL-07, RO-05, BS-01 |
+| d | 4, 6 | **The batch in the portal differs from the approval:** a line count, total, name, account or amount. It is not released: the batch is deleted from the portal, the file deleted, and a ticket opened. After release, a line that was not approved, or was altered, is a severity 1 incident, and a recall is requested at once (3i) | RL-07, RO-05, BS-01 |
 | e | 1 to 4 | **The borrower withdraws, or the account details change, before release.** The instruction is cancelled with its reason, and nothing is posted. Once the bank has it, cancellation is a recall (3i) | RL-01 |
 | f | 5 | **The bank rejects the payment:** the account is closed, dormant or invalid. Nothing left the account. The borrower is asked for an account in their own name, which is confirmed (step 2) and approved (step 3) afresh | RL-01, RL-29, MF-12 |
 | g | 5 | **No answer comes from the bank.** The payment is pending, not failed: the bank's status is asked, and the statement settles it. It is never resent blind. If the target time passes, the borrower is told it is on its way and when they will hear next (T35) | RL-10, RL-14, MF-12 |
@@ -120,9 +120,10 @@ per bank account, with the limit from that bank's mandate letter
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| API or host-to-host access at NCBA and Access Bank (FS-344) | Open: Roan Capital's request to each bank | Every bank payout goes by the internet-banking file, released by the signatories | Accept for R1; Roan Capital sends each bank the access request (RC-18) |
+| API or host-to-host access at NCBA and Access Bank (FS-344) | Open: Roan Capital's request to each bank | Every bank payout goes by the internet-banking file, released by the signatories, with the protections in step 4 | Accept for R1. Host-to-host is the first thing Roan Capital asks NCBA for: it takes the file out of anyone's hands (FS-683) |
+| The portal's export of an uploaded batch (step 4) | Depends on each bank's portal | The signatories compare every line against the approval screen; practical at Roan Capital's volumes | Accept for R1; ask NCBA and Access Bank |
 | A bank account-validation service (step 2) | Depends on each bank; PesaLink's name lookup (RL-06) is phase 2 | The finance officer checks the account against the borrower's statement or bank letter, and records that check on the instruction | Accept for R1; ask NCBA and Access Bank what they offer |
-| SE-14, managed devices for staff | R2 | The bank file lands on an ordinary laptop | Accept for R1 with one designated, encrypted machine at Roan Capital for bank files, named in its runbook |
+| SE-14, managed devices for staff | R2 | The bank file lands on an ordinary laptop | Accept for R1 with one designated machine at Roan Capital, used only for bank work: disk encryption, patched, endpoint protection, no email or general browsing, only finance staff signing in, internet banking reachable only from it where the bank allows; named in its runbook (FS-682) |
 
 ## 5 · Open questions
 
@@ -130,9 +131,15 @@ per bank account, with the limit from that bank's mandate letter
   6); who its bank signatories are, and whether every bulk file needs two
   of them; whether a loan is ever paid to someone other than the
   borrower, such as a car dealer for a vehicle loan, and on what
-  evidence.
-- **For NCBA and Access Bank:** account validation; the cut-off for each
-  rail; how a return is reported, and in what time; their recall
-  procedure and its time limit.
+  evidence; who uploads bank files and who releases them, never the
+  same person.
+- **For NCBA and Access Bank:** host-to-host access; account validation,
+  and whether names are checked on upload; whether the portal can export
+  an uploaded batch before release; dual control, so one person uploads
+  and another releases; limits per batch and per payment; internet
+  banking restricted to one machine, and hardware tokens for signatories;
+  an alert to a second person on each release; debit alerts or a
+  same-day statement; the cut-off for each rail; how a return is
+  reported, and in what time; their recall procedure and its time limit.
 - **For the owner:** whether two business days is the right time to
   withdraw a file the signatories have not released (3l).
