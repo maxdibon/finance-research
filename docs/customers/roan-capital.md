@@ -5,8 +5,8 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674]
-last_reviewed: 2026-10-09
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681]
+last_reviewed: 2026-10-10
 ---
 
 # Roan Capital — delivery map
@@ -49,7 +49,7 @@ missing. *Gap* means no capability does it yet.
 
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
-| RC-01 | Borrowers as individuals, businesses and statement-based entities | KC-01, MF-01 | Partial | Kapu Core holds individuals and businesses; the statement-based entity type is not modelled |
+| RC-01 | Borrowers as individuals, businesses and statement-based entities | KC-01, MF-01, ID-01, ID-07, ID-15, DE-02 | Covered | Covered (FS-681). Roan Capital's answer: a "statement-based entity" is not a third kind of borrower but the evidence a borrower gives: individual KYC, KYB, and bank and mobile-money statements for both the individual and the business where applicable. Kapu Core holds individuals and businesses with their people linked; each product's checklist (MF-02) asks for a set per party, and appraisal reads each (DE-02). Which borrower needs which set: open answers 17 to 21 |
 | RC-02 | National ID and passport checked against IPRS in real time, with the cost of each query logged | ID-01, MF-02, ID-10 | Partial | The cost of each query is logged by ID-10 (FS-562). The document logs KES 5 a query; direct access is KES 20 a check plus KES 50,000 to connect (partners PT-29, compliance LC-12). Passport coverage unconfirmed (FS-329). Roan Capital provides the credentials (assumption 1) |
 | RC-03 | Company status and directors checked with the Business Registration Service | ID-07 | Covered | ID-07 moved to phase 1, so it is in the MVP (FS-415) |
 | RC-04 | Documents uploaded and stored: ID, KRA PIN, photo, certificate of incorporation, directors' guarantees; status per document | ID-02, MF-02, ID-15 | Covered | Stored in the document vault (ID-15, FS-500) |
@@ -81,7 +81,7 @@ missing. *Gap* means no capability does it yet.
 
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
-| RC-18 | Disbursement under maker-checker, through NCBA and Access Bank internet banking | MF-11, RL-07, MF-20, RL-21, RL-10, RL-14, RL-01, RL-29 | Covered | Covered (FS-618): bank access is Roan Capital's request to send, not a missing capability. Each payout is one instruction from approval to settlement, cancellable, recallable and reversible (RL-01); bank payouts by API, host-to-host files, or an internet-banking file Roan Capital's signatories release, until NCBA and Access Bank grant more (RL-07); the account holder's name confirmed first (RL-29); Roan Capital sends each bank the access request (FS-586, FS-587). Before an M-Pesa disbursement the registered name is confirmed (MF-20, RL-21); an unanswered payment is settled by a status query and a repeat never pays twice (RL-10, RL-14) (FS-570). Maker-checker is MF-11. Bank APIs are RL-07, Planned; Roan Capital opens the NCBA API talks (assumption 2). The document names Access Bank in §2.1 only. M-Pesa B2C ran in production at Onit Bank (RL-03), with the name confirmed by Hakikisha (MF-20) |
+| RC-18 | Disbursement under maker-checker, through NCBA and Access Bank internet banking | MF-11, RL-07, MF-20, RL-21, RL-10, RL-14, RL-01, RL-29, RL-12 | Covered | Covered (FS-618): bank access is Roan Capital's request to send, not a missing capability. Each payout is one instruction from approval to settlement, cancellable, recallable and reversible (RL-01); bank payouts by API, host-to-host files, or an internet-banking file Roan Capital's signatories release, until NCBA and Access Bank grant more (RL-07); the account holder's name confirmed first (RL-29); Roan Capital sends each bank the access request (FS-586, FS-587). Before an M-Pesa disbursement the registered name is confirmed (MF-20, RL-21); an unanswered payment is settled by a status query and a repeat never pays twice (RL-10, RL-14) (FS-570). Maker-checker is MF-11. Bank APIs are RL-07, Planned; Roan Capital opens the NCBA API talks (assumption 2). The document names Access Bank in §2.1 only. M-Pesa B2C ran in production at Onit Bank (RL-03), with the name confirmed by Hakikisha (MF-20) |
 | RC-19 | Repayments reconciled by parsing M-Pesa and bank statement narrations | MF-10, RO-02, RO-05, CO-21, KC-09, RL-20, RO-04 | Covered | Covered (FS-618): paybill repayments, Pull Transactions and statement parsing, matched many to many (RO-02). Better with M-Pesa C2B on Roan Capital's paybill (RL-03, Built at Onit Bank): each repayment arrives with its account reference, and Pull Transactions (RL-20) finds any missed confirmation. Statement parsing becomes the fallback |
 | RC-20 | SMS or WhatsApp reminder on day 25 of a 30-day loan | MF-13, MS-01, MS-02, MS-03, MS-09, MS-10, MS-11, MS-12, MS-14, MS-15 | Covered | Owner, 2026-10-06: the demo and the platform run on Dibon's messaging service, not Roan Capital's own gateway, superseding the document's assumption 5 (FS-565): SMS direct to the operators under our PRSP licence (compliance LC-03), a sender ID for Roan Capital registered with each operator (onboarding OB-COM-09), and a truthful delivery status. WhatsApp (MS-06) stays outside R1 |
 | RC-21 | End-of-day lockout, 11 pm to 4 am: no fund movements, while leads and interest calculation continue | KC-07, FC-16, KC-15 | Covered | Covered (FS-618). Roan Capital's procedure: staff release nothing in the window. A transaction rule holds what the system sends by itself, a queued payout or a retry, until 04:00 (FC-16), on the business calendar (KC-15) (FS-571, FS-574) |
@@ -149,9 +149,14 @@ choice (MF-04, FS-619).
 | 11 | Until PEP screening (FC-06, phase 2): a question on the application form, whether the borrower holds or held a public office, and the compliance officer's review of any yes. Agree? | FS-562 | Open |
 | 12 | Do you pull credit bureau reports before lending today? If so, the bureau lookup (CR-02) comes into R1 | FS-570 | Open |
 | 13 | The definitions behind the appraisal and scoring (RC-05, RC-11, RC-14, RC-15): the formulas for turnover, the liquidity metric and the retainer ratio; the behaviour score's scale and weights, and how statement scoring is weighted down over time; the risk classes and the downgrade thresholds; and synthetic or anonymised sample statements from each bank | FS-582 | Open |
-| 14 | Borrowers that are "statement-based entities" (RC-01): what are they, and how are they verified? | FS-618 | Open |
+| 14 | Borrowers that are "statement-based entities" (RC-01): what are they, and how are they verified? | FS-618 | Answered (2026-10-10, FS-681): not a third kind of borrower; borrowers give a mix of individual KYC, KYB, and bank and mobile-money statements for both the individual and the business where applicable |
 | 15 | The manual collateral steps (RC-10): the list per collateral type, which steps hold approval or disbursement, and the vehicle tracking provider | FS-619 | Open |
 | 16 | Does Roan Capital limit how much one person may guarantee across loans? If so, the limit and how it is counted (RC-41) | FS-622 | Open |
+| 17 | Which borrowers give which set (RC-01): an employed individual, an individual with a business, a sole trader, a company? | FS-681 | Open |
+| 18 | A sole trader under a registered business name, which is not a company: is the borrower the person, with the business-name search as the KYB? | FS-681 | Open |
+| 19 | For a company, whose personal statements: every director, or the directors who guarantee? | FS-681 | Open |
+| 20 | Does appraisal combine the individual's and the business's statements into one figure, or assess each and then decide? (with open answer 13) | FS-681 | Open |
+| 21 | How many months of each statement: bank and mobile money, individual and business (RC-05 says 3 to 12)? | FS-681 | Open |
 
 The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text

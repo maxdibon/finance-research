@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675]
-last_reviewed: 2026-10-09
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680]
+last_reviewed: 2026-10-10
 ---
 
 # Delivery plan — phase 1 in releases
@@ -59,7 +59,8 @@ the check keeps the two in step):
   Core (Fineract, PostgreSQL); KC-09 (M-Pesa repayments posted as they
   land; Airtel Money and T-Kash later).
 - **Money in and out:** RL-07 (bank transfers), with M-Pesa already built
-  (RL-03), with RL-20 (Pull Transactions, so a missed callback is
+  (RL-03), with RL-12 (signing keys and rail credentials in OpenBao,
+  never exported, FS-680), RL-20 (Pull Transactions, so a missed callback is
   found) and CO-21 (an unplaced payment: the payer asked, then placed or
   returned by day 7); before a payout, MF-20 and RL-21 (the registered name
   confirmed), RL-10 (an unanswered payment is a state) and RL-14 (a

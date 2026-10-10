@@ -122,7 +122,6 @@ per bank account, with the limit from that bank's mandate letter
 |---|---|---|---|
 | API or host-to-host access at NCBA and Access Bank (FS-344) | Open: Roan Capital's request to each bank | Every bank payout goes by the internet-banking file, released by the signatories | Accept for R1; Roan Capital sends each bank the access request (RC-18) |
 | A bank account-validation service (step 2) | Depends on each bank; PesaLink's name lookup (RL-06) is phase 2 | The finance officer checks the account against the borrower's statement or bank letter, and records that check on the instruction | Accept for R1; ask NCBA and Access Bank what they offer |
-| RL-12, signing keys and rail credentials held in OpenBao, never exported | phase 1, not in R1 | Nowhere safe to keep the bank's signing certificate, or the M-Pesa credentials R1 already uses | Move RL-12 into R1: R1 cannot pay by any rail without it |
 | SE-14, managed devices for staff | R2 | The bank file lands on an ordinary laptop | Accept for R1 with one designated, encrypted machine at Roan Capital for bank files, named in its runbook |
 
 ## 5 · Open questions

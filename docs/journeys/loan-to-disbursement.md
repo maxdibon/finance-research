@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574, FS-582, FS-602, FS-619, FS-668, FS-680]
+review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574, FS-582, FS-602, FS-619, FS-668, FS-680, FS-681]
 last_reviewed: 2026-10-10
 ---
 
@@ -82,7 +82,7 @@ docs/specs/approval-engine.md.
 |---|---|---|---|---|
 | 1 | The Credit Officer opens the loan for a verified borrower: product, amount, tenor and purpose. The amount cannot exceed the borrower's tier limit | Credit Officer | T01 | MF-01, ID-19, KC-04 |
 | 2 | For a secured product, the vehicle's logbook and the NTSA search are captured; the collateral registry is searched by the vehicle's serial number and the certificate filed; once the security agreement is signed, the notice is registered and its number, time and expiry recorded, and the borrower is sent their copy within ten working days. The committee cannot open the application until the logbook is attached (RC-09) | Credit Officer | — | MF-03, MF-04, ID-15 |
-| 3 | Decisioning computes the statement metrics, and for a repeat borrower the behaviour score and risk class, into a decision record; the officer reads it, appraises, and records an assessed limit with reasons | Credit Officer; platform | — | MF-06, ID-15, DE-01, DE-02, DE-03, DE-04 |
+| 3 | Decisioning computes the statement metrics from each party's statements, the individual's and the business's where there is one (RC-01), and for a repeat borrower the behaviour score and risk class, into a decision record; the officer reads it, appraises, and records an assessed limit with reasons | Credit Officer; platform | — | MF-06, ID-15, DE-01, DE-02, DE-03, DE-04 |
 | 4 | The platform prices the loan from the product version: the schedule, the APR and the total cost of credit, and generates the key information document | Platform | — | MF-23, KC-04, MF-34 |
 | 5 | The application goes up its chain by product and amount: the Credit Officer, then the Business Credit Committee (three of three), then the Head Office Committee above the set amount. Each decision is recorded with identity, comment and time, re-authenticated at the act, and may be made from email; no one decides two steps in a row; an override always ends with the override authority | Approvers | T26, T27 | MD-01, MD-02, MF-07, MD-09, MD-05, MD-06, MD-10, MD-18, MD-08 |
 | 6 | The borrower, and any guarantors (JN-05), receive the agreement and the key information document as a link; they read the key information document and accept it before signing; they sign in Odoo Sign with a one-time code to their confirmed phone; the offered and signed versions are filed in the vault, and the email carries only a link | Borrower; guarantors | T02, T04 | MF-34, BS-02, ID-11, ID-15, MS-19, MF-37 |

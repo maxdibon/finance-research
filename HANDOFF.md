@@ -210,8 +210,9 @@ Each has a register row and, where it changed the design, an entry in
   lending, records each notice, sends the borrower their copy within ten
   working days, warns before expiry and cancels at settlement, by hand on
   BRS's eCitizen portal in R1. No API is documented (partners PT-55).
-- **Roan Capital's map** is nearly all Covered (FS-618); three rows stay
-  Partial, each with a stated gap: RC-01, RC-02 and RC-36. R1 gained the
+- **Roan Capital's map** is nearly all Covered (FS-618); two rows stay
+  Partial, each with a stated gap: RC-02 and RC-36 (RC-01 Covered,
+  FS-681). R1 gained the
   collection ladder (MF-39), the public request page and calculator
   (BS-20) and one audit trail across modules (RO-27); the authenticator
   app is named in R1 (AC-16); the descoped collateral steps are tracked

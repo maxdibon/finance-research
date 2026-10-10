@@ -7,8 +7,8 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-090, FS-205, FS-415, FS-536, FS-548, FS-551, FS-562, FS-564, FS-566, FS-568, FS-668]
-last_reviewed: 2026-10-09
+review_ids: [FS-090, FS-205, FS-415, FS-536, FS-548, FS-551, FS-562, FS-564, FS-566, FS-568, FS-668, FS-681]
+last_reviewed: 2026-10-10
 ---
 
 # JN-03 · A business borrower, its people and its owners
@@ -76,7 +76,7 @@ be authorised and verified (reg 23).
 | 3 | The platform fetches the company's record from the business registry: its status, directors and shareholders, the content of a CR12. The company is never asked for what the registry can give, and its eCitizen login is never held. The result is kept with the registry's reference and the cost of the query | Platform | — | ID-07, ID-10 |
 | 4 | The company declares its beneficial owners on the form. The platform sets them beside the shareholders fetched, and each director, shareholder and beneficial owner the institution's policy names is verified as an individual: in person as in JN-01, or by a single-use upload link to their documents | Credit Officer; platform | — | ID-07, ID-01, ID-15, MS-19 |
 | 5 | Sanctions screening runs on the company and on every person named in steps 2 to 4 | Platform | — | FC-05 |
-| 6 | The documents the registry cannot give (the KRA PIN certificate, the board resolution to borrow, bank and M-Pesa statements, others per product) are captured or uploaded, type-checked, scanned and filed in the vault | Credit Officer; applicant | T32 | ID-15, ID-02 |
+| 6 | The documents the registry cannot give (the KRA PIN certificate, the board resolution to borrow, the company's bank and M-Pesa statements, the personal statements of the people the product names, others per product) are captured or uploaded, type-checked, scanned and filed in the vault | Credit Officer; applicant | T32 | ID-15, ID-02 |
 | 7 | The business tier is set from the evidence held. The checklist passes the completeness gate, and the company is written to Kapu Core as a business client with its people linked | Platform | — | ID-19, MF-02, KC-01 |
 | 8 | Every event from step 2 is chained, access to the documents is logged, and the records are kept for at least seven years | Platform | — | RO-24, RO-19, FC-12 |
 | 9 | The application goes on to JN-04, within the business tier's limit; directors' guarantees go through JN-05 | Credit Officer | — | ID-19, MF-37 |
