@@ -5,8 +5,8 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660]
-last_reviewed: 2026-10-08
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691]
+last_reviewed: 2026-10-10
 ---
 
 # Deployment: sites, the fleet, and what is central
@@ -38,8 +38,8 @@ in [the README](README.md) §9; recovery objectives in platform-security
   | [kapu_service]                           |      | [offline_media]                          |
   |                                          |      |                                          |
   | engineers' Keycloak (hardware keys)      |      | one backup copy offline (SE-20)          |
-  | fleet Grafana . GoAlert                  |      | backup keys split between two            |
-  | GitOps . pipeline . signed registry      |      | people, sealed (SE-21)                   |
+  | fleet Grafana . GoAlert                  |      | backup keys split among five             |
+  | GitOps . pipeline . signed registry      |      | holders, three to open (SE-21)           |
   +------------------------------------------+      +------------------------------------------+
 
   out of the country only by name: detection telemetry to the managed security service
@@ -60,8 +60,8 @@ in [the README](README.md) §9; recovery objectives in platform-security
   the fleet's Grafana and on-call, GitOps, the pipeline and the signed
   image registry. It holds no institution's data; its loss stops changes
   and fleet views, not any institution's service.
-- **Offline:** one backup copy offline; the backup keys split between two
-  people and sealed (SE-20, SE-21).
+- **Offline:** one backup copy offline, its keys opened only by three of
+  five key holders (§4; SE-20, SE-21).
 - **On an institution's premises:** the same layout, in its data centre
   and its second site, run by it or by Dibon (README §9).
 
@@ -109,6 +109,96 @@ of database where its failure is a wrong balance.
 option, the managed level and the support tier, as managed levels were
 kept apart from support tiers (FS-360); each support tier may suggest a
 default. Each model's recovery objectives go into the contract.
+
+### Warm standby, the default, in detail
+
+What runs where, how each store reaches site B, what we promise, and how
+site B takes over (FS-691).
+
+```
+                 users, staff, approvers, borrowers; the rails' callbacks
+                                         |
+                     one name in DNS, pointing at the active site
+                     |                                      :
+                     v                                      v after failover
+  +---------------------------------------------+    +---------------------------------------------+
+  | SITE A                                      |    | SITE B                                      |
+  | active: all traffic, the one writer         |    | warm standby: copies arriving, idle         |
+  | [liquid_azure_stack]                        |    | [liquid_or_second_provider]                 |
+  |                                             |    |                                             |
+  | EDGE ................... in traffic         |    | EDGE ................... no traffic         |
+  | SERVICES ............... full size          |    | SERVICES ............... at zero            |
+  |   Kapu MFI, approvals, lender rules,        |    |   the same signed images; rails, the        |
+  |   rails, recon, messaging, identity,        |    |   runner and every consumer off, so         |
+  |   the end-of-day runner                     |    |   nothing pays or closes twice              |
+  | KAPU CORE . ACCESS . ODOO .. full size      |    | KAPU CORE . ACCESS . ODOO .. at zero        |
+  |                                             |    |                                             |
+  | DATABASE  primary + synchronous standby  1  |--->| DATABASE  replica cluster, streaming     1  |
+  | EVENT BUS  three brokers                 2  |--->| EVENT BUS  three small brokers, mirrored 2  |
+  | OPENBAO  three nodes                     3  |--->| OPENBAO  standing, from snapshots        3  |
+  | OBJECT STORAGE  the vault's files        4  |--->| OBJECT STORAGE  replicated, locked       4  |
+  | OBSERVABILITY  watches A and B              |<-->| OBSERVABILITY  watches B and A              |
+  +---------------------------------------------+    +---------------------------------------------+
+                     |                                      |
+                     +---- WAL archive, backups (SE-10) ---->+----> OFFLINE: the weekly copy (§3)
+```
+
+Site B holds every image and manifest site A runs, deployed by the same
+GitOps, but **at zero**: only the stores receive. Anything that acts on
+the world (rails, the end-of-day runner, Fineract's jobs, every Kafka
+consumer) stays off until site B is promoted, so the two sites never both
+pay, post or close the day. The edge runs in both; DNS sends traffic to
+the active site only.
+
+**How each store is copied:**
+
+| # | Store | At site A | To site B | Kept within (SLO) | On failover |
+|---|---|---|---|---|---|
+| 1 | Databases: Fineract, every service's, Keycloak's, the approval engine's, Odoo's | CloudNativePG: a primary and a synchronous standby, so a server's loss loses nothing | A replica cluster streaming asynchronously, and every WAL segment archived to site B's object storage (SE-22) | Lag under 60 seconds; paged at 3 minutes, before the 5-minute objective is at risk | Promoted; the last transaction it applied marks the start of the loss window |
+| 2 | Event bus | Three brokers, each message on three | MirrorMaker 2: topics and consumers' offsets | Lag under 60 seconds | Site B's topics used; every service's outbox republishes what was not mirrored, and consumers drop duplicates by event id (event-bus-kafka §6) |
+| 3 | OpenBao | Three nodes, Raft | An encrypted snapshot every 5 minutes (proposed), restored into a small standing cluster at site B | Snapshot under 5 minutes old; paged at 10 | Unsealed with site B's own key, not the backup keys, which are for the offline copy (§4) |
+| 4 | Object storage: the vault's files, Odoo's filestore | Ceph, or Azure Blob | Bucket replication, versioned and locked against deletion at site B | Backlog under 15 minutes | Site B's buckets used |
+| — | Images, manifests, configuration | Dibon central's registry and GitOps | Both sites pull the same signed images | — | The active-site setting switched in GitOps |
+
+**What we promise, and what we watch:**
+
+| | Promise (SLA, in the contract) | Our own targets (SLO, in Grafana, RO-17) |
+|---|---|---|
+| Tier 1 available | 99.9% a month, measured at the edge (RC-35), outside agreed windows and a declared site disaster | 99.95% a month |
+| A server lost | Nothing lost; back in minutes, automatically | Failover inside the site under 2 minutes |
+| Site A lost | Tier 1: at most 5 minutes of data, back within 4 hours. Tier 2: 1 hour, 8 hours. Tier 3: 24 hours, 72 hours (platform-security §3) | Replication lag, snapshot age and backlog as above; back within 2 hours in drills |
+| Payments in the loss window | Recovered from the rails' own records and matched again | Every one found within the first business day |
+| Standby ready | Failover exercised with the institution twice a year | Checked daily, automatically: replicas healthy, images pullable, site B's addresses on every allowlist, DNS time-to-live 60 seconds; restores tested every quarter (SE-10) |
+
+**A site's loss sits outside the 99.9%.** 99.9% a month allows about 43
+minutes down; recovering a site takes up to 4 hours. Under warm standby
+the contract measures a site disaster by its own objectives, not by the
+monthly figure. An institution that needs a site's loss inside the 99.9%
+chooses hot, automatic standby.
+
+**Ready before go-live:** site B's outbound addresses registered with
+Safaricom and with each bank that allowlists callers; M-Pesa callbacks
+and bank endpoints addressed by name, never by site A's address; site B's
+OpenBao unseal key held at site B; the runbook rehearsed once.
+
+**Recovering from the loss of site A:**
+
+| # | Step | Who |
+|---|---|---|
+| 1 | **Detect.** Site A fails its health checks from site B and from Dibon central; a severity 1 incident opens, on-call is paged by phone, and the institution is told (incident management) | Observability; on-call engineer |
+| 2 | **Decide.** If site A will not be back within an hour, fail over; the decision is recorded with its time. Payouts are already paused by safe mode, while collections keep landing in the institution's own paybills (SE-24) | Incident manager, with the institution's contact |
+| 3 | **Fence site A.** Make sure it cannot write: its traffic withdrawn at DNS and the provider's network, its workers stopped if it can be reached. Two writers are worse than an outage | On-call engineer |
+| 4 | **Promote the stores at site B:** databases, then OpenBao from its last snapshot, then the event bus. Record each one's last applied point: that is the loss window | On-call engineer |
+| 5 | **Start the services at site B** at full size, by switching the active site in GitOps; consumers resume from mirrored offsets | On-call engineer |
+| 6 | **Switch traffic.** DNS to site B; callbacks follow the name | On-call engineer |
+| 7 | **Check before reopening.** Smoke tests; for the loss window, M-Pesa's transactions pulled (rails RL-20) and bank statements matched; every queued payout checked against the rail's statement before release (FS-661); the day's close run if the failover crossed it | On-call engineer; the institution's accountant |
+| 8 | **Reopen.** Safe mode lifted; the institution told; staff sign in again, since sessions do not survive | Incident manager |
+| 9 | **Afterwards.** Site A rebuilt from code as the new standby (SE-23); a fail-back at a planned window, by the same steps; the incident's review | Engineering; incident manager |
+
+**Open:** whether OpenBao offers replication between clusters, or
+snapshots remain the way (to confirm in OpenBao's documentation); whether
+site B needs its own Kafka at all, or the outboxes alone can refill a
+fresh one; site B's provider (§1).
 
 ## 3 · The offline copy
 
