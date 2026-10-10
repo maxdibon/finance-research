@@ -11,8 +11,8 @@ used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, 
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675]
-last_reviewed: 2026-10-09
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680]
+last_reviewed: 2026-10-10
 ---
 
 # The event bus on Kafka — component specification
@@ -143,11 +143,11 @@ every consumer has moved. A name not in this table is not published.
 | Domain | Events | Producer | Main consumers |
 |---|---|---|---|
 | mandates | `kapu.mandates.request.submitted`, `.step.opened`, `.decision.recorded`, `.step.completed`, `.step.stalled`, `.sla.breached`, `.step.escalated`, `.request.approved`, `.request.declined`, `.request.returned`, `.request.withdrawn`, `.mandate.activated` | Approval engine | Kapu MFI, messaging (T26, T27), recon |
-| mfi | `kapu.mfi.application.submitted`, `.loan.approved`, `.loan.declined`, `.loan.disbursed`, `.loan.settled`, `.loan.variation.issued`, `.loan.variation.accepted`, `.product.version.activated`, `.guarantor.named`, `.guarantor.statement.due`, `.guarantor.notice.issued`, `.guarantee.released`, `.complaint.logged`, `.complaint.resolved`, `.complaint.overdue` | Kapu MFI | Messaging, insights |
+| mfi | `kapu.mfi.application.submitted`, `.loan.approved`, `.loan.declined`, `.loan.disbursed`, `.loan.settled`, `.loan.variation.issued`, `.loan.variation.accepted`, `.product.version.activated`, `.guarantor.named`, `.guarantor.statement.due`, `.guarantor.notice.issued`, `.guarantee.released`, `.disbursement.delayed`, `.disbursement.returned`, `.complaint.logged`, `.complaint.resolved`, `.complaint.overdue` | Kapu MFI | Messaging, insights |
 | mfi (lender rules) | `kapu.mfi.loan.nonperforming`, `.loan.performing`, `.loan.cap.reached`, `.loan.charge.waived`, `.repayment.allocated`, `.repayment.allocation.mismatch`, `.loan.ladder.changed` | Lender rules | Messaging, recon, insights |
 | core | `kapu.core.loan.approved`, `.loan.disbursed`, `.repayment.posted`, `.transaction.reversed`, `.loan.closed` | Kapu Core, through the adapter (kapu-core-fineract §5) | Recon, lender rules |
 | core (the close) | `kapu.core.eod.checked`, `.held`, `.released`, `.closed`, `.failed`, `.reported` | End-of-day runner | Observability, recon |
-| rails | `kapu.rails.payment.received`, `.payout.sent`, `.payout.confirmed`, `.payout.failed`, `.payout.unknown`, `.reversal.completed` | Rails | Kapu MFI, recon |
+| rails | `kapu.rails.payment.received`, `.payout.sent`, `.payout.confirmed`, `.payout.failed`, `.payout.unknown`, `.payout.cancelled`, `.payout.returned`, `.recall.completed`, `.reversal.completed` | Rails | Kapu MFI, recon |
 | collect | `kapu.collect.payment.unplaced`, `.payment.still_unplaced`, `.payment.returned` | Collect | Messaging (T28 to T30) |
 | recon | `kapu.recon.exception.opened`, `.exception.resolved` | Reconciliation | Service desk, insights |
 | access | `kapu.access.role.changed`, `.blocked`, `.recovered` | Access | Messaging (T23, T25), audit |

@@ -7,8 +7,8 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574, FS-582, FS-602, FS-619, FS-668]
-last_reviewed: 2026-10-09
+review_ids: [FS-399, FS-400, FS-402, FS-516, FS-548, FS-551, FS-561, FS-564, FS-565, FS-569, FS-570, FS-571, FS-574, FS-582, FS-602, FS-619, FS-668, FS-680]
+last_reviewed: 2026-10-10
 ---
 
 # JN-04 · A loan from application to disbursement
@@ -87,7 +87,7 @@ docs/specs/approval-engine.md.
 | 5 | The application goes up its chain by product and amount: the Credit Officer, then the Business Credit Committee (three of three), then the Head Office Committee above the set amount. Each decision is recorded with identity, comment and time, re-authenticated at the act, and may be made from email; no one decides two steps in a row; an override always ends with the override authority | Approvers | T26, T27 | MD-01, MD-02, MF-07, MD-09, MD-05, MD-06, MD-10, MD-18, MD-08 |
 | 6 | The borrower, and any guarantors (JN-05), receive the agreement and the key information document as a link; they read the key information document and accept it before signing; they sign in Odoo Sign with a one-time code to their confirmed phone; the offered and signed versions are filed in the vault, and the email carries only a link | Borrower; guarantors | T02, T04 | MF-34, BS-02, ID-11, ID-15, MS-19, MF-37 |
 | 7 | A disbursement is prepared from the approved and signed loan only, and a second person approves it | Finance; approver | T26 | MF-11, KC-08 |
-| 8 | The money is paid by M-Pesa B2C from Roan Capital's own shortcode, or by bank transfer through its bank; the loan is posted in Kapu Core with its schedule | Platform | — | RL-03, RL-07, MF-11, KC-04 |
+| 8 | The money is paid by M-Pesa B2C from Roan Capital's own shortcode, or by bank transfer through its bank (JN-13); the loan is posted in Kapu Core with its schedule | Platform | — | RL-03, RL-07, MF-11, KC-04 |
 | 9 | The borrower receives a receipt by SMS with a link to their own page | Platform | T05 | MF-38, MS-02 |
 | 10 | Every event is chained and kept for at least seven years, and the loan counts on the Credit Officer's book | Platform | — | RO-24, FC-12, MF-35 |
 

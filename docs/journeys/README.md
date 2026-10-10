@@ -5,8 +5,8 @@ kind: index
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-558, FS-637, FS-668]
-last_reviewed: 2026-10-09
+review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680]
+last_reviewed: 2026-10-10
 ---
 
 # User journeys
@@ -71,7 +71,7 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-10 | A deposit paid to the institution's paybill or till | R2 | to write |
 | JN-11 | A transfer out through a larger bank: RTGS, EFT or SWIFT | R2 | to write |
 | JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | to write |
-| JN-13 | A bank disbursement, from release to settlement, return, recall or reversal | R1 | to write |
+| JN-13 | A bank disbursement, from release to settlement, return or recall | R1 | [bank-disbursement.md](bank-disbursement.md) |
 | JN-14 | A loan settled: the collateral discharged with NTSA, the registry notice cancelled, the originals released | R1 | to write |
 | JN-16 | An unplaced payment: the payer asked, escalated, returned at day 7 | R1 | [unplaced-payment.md](unplaced-payment.md) |
 | JN-17 | The accountant's morning: the report, exceptions, reconciliation breaks, a held close | R1 | to write |
