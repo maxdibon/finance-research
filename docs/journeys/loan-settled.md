@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-519, FS-548, FS-602, FS-619, FS-668, FS-684, FS-687]
+review_ids: [FS-519, FS-548, FS-602, FS-619, FS-668, FS-684, FS-687, FS-685, FS-686]
 last_reviewed: 2026-10-10
 ---
 
@@ -51,8 +51,10 @@ evidence (mfi MF-04, FS-619).
   being told they are free.
 - **Data:** the payoff amount and payments; the collateral's records,
   registry and NTSA references; the borrower's identity checked at
-  collection, and their signature on the custody log (privacy PR-02,
-  PR-03).
+  collection, and their signature on the custody log; where someone
+  else collects, their name and ID number (Restricted, encrypted one by
+  one, SE-27) and the authority; for an estate, the grant and the death
+  certificate (privacy PR-02, PR-03).
 
 ## 2 · Steps
 
@@ -108,9 +110,9 @@ evidence (mfi MF-04, FS-619).
 | d | 2, 3 | **The borrower disputes the final amount.** A complaint is logged with its clock and acknowledged; the loan is not closed while it runs, and no arrears action is taken on the disputed amount | MF-28 |
 | e | 5 | **The collateral also secures another of the borrower's live loans.** It is not released, and the borrower is told which loan still holds it; the settled loan's guarantors are released all the same | MF-03 |
 | f | 5 | **The registry's portal or NTSA does not answer,** or a step is late. The step is retried and stays open; its owner is reminded, then it is escalated; the registry's ten working days are tracked as a deadline | MF-04, MD-08 |
-| g | 7 | **Someone other than the borrower comes for the originals.** Released only on the borrower's signed authority naming that person, with both IDs checked and the authority filed; otherwise not | MF-03, ID-15 |
+| g | 7 | **Someone other than the borrower comes for the originals.** Only on the borrower's authority (FS-685). The borrower asks for it on their page; it is generated from Roan Capital's template, naming the collector and their ID number, what is released and the date it is valid to, and signed in Odoo Sign with a code to the borrower's bound phone. It is single-use, and the borrower can revoke it until it is used. At the counter, the collector's ID is checked against the authority, and a code goes to the borrower's phone that the collector must give, so a stolen or forged authority is not enough. The authority, the check, the code and the collector's signature are filed in the vault and linked to the custody log entry. A borrower who cannot use their phone signs a paper authority, confirmed by a call to their registered number before release | MF-03, MF-34, BS-02, AC-13, ID-15 |
 | h | 7 | **The originals cannot be found in custody.** An incident: the custody log shows who last held them; Roan Capital replaces the document at its own cost (a duplicate logbook from NTSA), and the borrower is told the date | MF-03, BS-01 |
-| i | 7 | **The borrower has died.** The originals go only to the legal representative named in a grant of representation, reviewed by the compliance officer | MF-03, BS-01 |
+| i | 7 | **The borrower has died.** The originals go only to the personal representative: the executor or administrator named in a grant of representation (Law of Succession Act s.3, s.79). Anyone else taking them intermeddles with the estate, an offence (s.45); a chief's letter is not a grant. Checked: the court's certified copy of the grant, confirmed with the registry that issued it; any limit on the grant (s.54); the representative's ID against the name on the grant; the death certificate. Reviewed by the compliance officer before release; Roan Capital is protected when it acts in good faith on the grant (s.92). Moving the vehicle to an heir is the representative's act, after the grant is confirmed (s.55, s.71) | MF-03, ID-15, BS-01 |
 | j | 2 | **The platform is down.** The payment still lands in Roan Capital's own paybill or account (architecture §3) and is applied when the platform returns; "settled" follows then | MF-10, RL-20 |
 | k | 1, 7 | **The borrower stops partway:** asks for the amount and does not pay, or does not come for the originals. The figure lapses on its date and the loan runs on as agreed; uncollected originals stay in custody, and the borrower is reminded after 30 days and then every 90 (proposed) | MF-38, MF-03 |
 
@@ -129,6 +131,7 @@ evidence (mfi MF-04, FS-619).
 - **For Roan Capital:** the settlement letter's template; its policy on
   small balances left after the last payment; the hold before releasing
   originals; who holds the custody log and who approves a release; how
-  it removes a joint registration with NTSA today, and how long it takes.
+  it removes a joint registration with NTSA today, and how long it takes;
+  the wording of the authority to collect (3g).
 - **Decided** (FS-687): "settled" is sent at once, since the loan is paid;
   only the originals wait for the hold.

@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645]
-last_reviewed: 2026-10-08
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688]
+last_reviewed: 2026-10-10
 ---
 
 # Service management
@@ -165,6 +165,19 @@ engineer**: against a ticket, scoped and expiring, approved by the
 institution where it runs its own operations, and entered in the access
 register ([architecture](../architecture/README.md) §9, SE-26). The access cases follow the
 runbooks in [the operating model](../operating-model.md) (FS-505).
+
+**An institution's customers' complaints are the institution's** (FS-688):
+it decides them, and it speaks to its customer. Under the Data Protection
+Act it is the controller and we its processor. What we give it:
+
+| Support | What it is |
+|---|---|
+| Tooling, in R1 | The complaints register in Odoo Helpdesk with the lender regulations' clocks (48 hours, 7 days, 30 days, reg 40), warnings before each, the acknowledgement and resolution messages (messaging T16, T17), and the record CBK requires ([lender-rules](../specs/lender-rules.md) §2.8, mfi MF-28) |
+| Evidence on request | Within the time the support tier sets: the transaction's verifiable journey (recon RO-25), statements, approvals, message delivery logs, who did what and when |
+| Procedure and training | A complaint-handling procedure for the institution's runbook, and a module in [training](../training/README.md) |
+| Second line | A complaint that turns on how the platform behaved becomes a ticket to us at its severity; we investigate and give the institution the findings for its answer |
+| Never | We never decide a complaint, and never contact the customer for the institution |
+| An option, under Operated | Dibon runs the first line: logs, acknowledges, gathers the evidence; the institution decides. The lender regulations allow it but not the determination of compliance (reg 31): 30 days' notice to CBK, and the institution stays liable |
 
 ## 7 · Tools
 
