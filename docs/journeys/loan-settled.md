@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-519, FS-548, FS-602, FS-619, FS-668, FS-684]
+review_ids: [FS-519, FS-548, FS-602, FS-619, FS-668, FS-684, FS-687]
 last_reviewed: 2026-10-10
 ---
 
@@ -130,6 +130,5 @@ evidence (mfi MF-04, FS-619).
   small balances left after the last payment; the hold before releasing
   originals; who holds the custody log and who approves a release; how
   it removes a joint registration with NTSA today, and how long it takes.
-- **For the owner:** whether "settled" should wait for the hold, or be
-  sent at once with the release following (proposed: at once, since the
-  loan is paid; only the originals wait).
+- **Decided** (FS-687): "settled" is sent at once, since the loan is paid;
+  only the originals wait for the hold.
