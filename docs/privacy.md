@@ -5,8 +5,8 @@ kind: register
 version: 0.1.0
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532, FS-582, FS-591, FS-620]
-last_reviewed: 2026-10-08
+review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532, FS-582, FS-591, FS-620, FS-689]
+last_reviewed: 2026-10-10
 ---
 
 # Privacy register — what personal data we process, why, and for how long
@@ -40,8 +40,12 @@ within 48 hours (s.43(3)), impact assessments for high-risk processing
   that period and no more, unless the institution's own policy is longer.
 - **Rights** (s.26): to be informed, to access, to object, and to have false
   or misleading data corrected or deleted. Requests go to the controller;
-  we help the institution answer within the time the regulations set (to
-  read in LR-18 and set here).
+  we help the institution answer within the regulations' times (LR-18,
+  read for FS-689): access within seven days, free, in a common
+  electronic form where asked electronically (reg 9); a correction within
+  fourteen days, a refusal in writing with reasons within seven (reg 10);
+  data moved to another provider within thirty days, for a reasonable fee
+  (reg 11). A borrower's path is JN-07.
 - **In Kenya** (s.48): personal data stays in Kenya. A transfer out, such
   as to a vendor or a managed-detection service abroad, is named in its row
   and needs proof of safeguards to the Data Commissioner before it starts.
