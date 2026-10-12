@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747]
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750]
 last_reviewed: 2026-10-12
 ---
 
@@ -96,8 +96,8 @@ the merged merge requests.
 - in the freeze before a customer's go-live;
 - outside the windows agreed with each customer.
 
-The pipeline refuses a deployment in those windows unless the change is
-labelled emergency; Odoo Calendar shows the windows to people.
+GitLab's deploy freezes refuse a deployment in those windows unless the
+change is labelled emergency (docs/specs/gitlab.md §4.5); Odoo Calendar shows the windows to people.
 
 **An institution's own changes** follow the same idea already: a product
 version, an approval chain, a transaction rule or a check's class is

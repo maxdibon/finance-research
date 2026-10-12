@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711]
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750]
 last_reviewed: 2026-10-12
 ---
 
@@ -44,6 +44,7 @@ as the components table below names it.
 | [event-bus-kafka](event-bus-kafka.md) | Component | Kafka as the event bus: the CloudEvents envelope, signing and the audit chain, one catalogue of event names, delivery rules | recon-observability | R1 |
 | [access-keycloak](access-keycloak.md) | Component | Keycloak as access: four realms, levels of authentication and step-up, roles granted by mandate, sign-in for every service | access | R1 |
 | [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
+| [gitlab](gitlab.md) | Component | GitLab: groups and roles, protected main, approvals and code owners, push rules, runners in Kenya, secrets from OpenBao, protected environments and deploy freezes, planning; tiers checked | platform-security | R1 |
 
 **To write, in the order R1 needs them:** odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
 rails (M-Pesa and bank instructions, their lifecycle and signing).
@@ -124,3 +125,7 @@ Every box in a spec's diagram is named as this table names it (FS-632).
 | ENDPOINT PROTECTION | Blocks malware and reports what happens on a device | `[sophos_or_wazuh]` | [endpoints](endpoints.md) |
 | MANAGED DETECTION | Watches devices and servers, isolates a threat | `[sophos_mdr_or_wazuh]` | [endpoints](endpoints.md) |
 | BASTION | People's only way in to servers and databases, sessions recorded | `[warpgate]` | [endpoints](endpoints.md) |
+| GITLAB | Code, documents, reviews, planning and pipelines | `[gitlab]` | [gitlab](gitlab.md) |
+| RUNNER | Runs pipeline jobs, in Kenya | `[gitlab_runner]` | [gitlab](gitlab.md) |
+| HARBOR | Keeps signed images, a copy at each site | `[harbor]` | [gitlab](gitlab.md) |
+| FLUX | Applies the manifests to each cluster | `[flux]` | [gitlab](gitlab.md) |

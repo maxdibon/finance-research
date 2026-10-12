@@ -5,7 +5,7 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712]
+review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750]
 last_reviewed: 2026-10-12
 ---
 
@@ -125,7 +125,7 @@ yet tried) · *Bought* (commercial, chosen with its supplier). All checked
 
 | Component | Role | Licence | Governed by | Verdict | Alternatives | Why |
 |---|---|---|---|---|---|---|
-| GitLab, Premium on GitLab.com | Code, merge requests, issues, pipelines, environments | MIT core; Premium bought | GitLab Inc. | Keep (FS-701) | GitHub; GitLab self-managed, if code must stay in Kenya | One place for code, change records and stories |
+| GitLab, Premium on GitLab.com | Code, merge requests, issues, pipelines, environments; settings in specs/gitlab.md | MIT core; Premium bought | GitLab Inc. | Keep (FS-701) | GitHub; GitLab self-managed, if code must stay in Kenya | One place for code, change records and stories |
 | GitLab runners | Run every pipeline, in Kenya | MIT | GitLab Inc. | Keep (FS-701) | Hosted runners | Secrets and test data never leave Kenya |
 | Flux, through GitLab's agent | GitOps: the clusters follow the repository | Apache-2.0 | CNCF (graduated) | Keep (FS-701) | Argo CD | Integrated with GitLab |
 | Harbor | The image registry each site pulls from | Apache-2.0 | CNCF (graduated) | Keep | GitLab's registry | Replicated to each site, so a failover does not wait on Dibon central |

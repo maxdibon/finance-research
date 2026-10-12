@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749]
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750]
 last_reviewed: 2026-10-12
 ---
 
@@ -42,8 +42,13 @@ architect, the security lead and the engineering lead, and the owner for
 the compliance and risk officer.
 
 **In GitLab,** each role is a group (`@dibon/architects`,
-`@dibon/security`, …) and a person joins every group whose role they
-hold. Code owners name groups, so the approval follows the role.
+`@dibon/security`, …), filled from Keycloak by single sign-on, and a
+person joins every group whose role they hold. Code owners name groups,
+so the approval follows the role. **GitLab only lets a Developer or
+above approve as a code owner,** so every role holder who approves needs
+that role, and a seat, the compliance and risk officer and the
+commercial lead included; the delivery lead plans as a Planner. The
+settings are in [the GitLab spec](specs/gitlab.md) §4.
 
 ## 2 · A merge request, step by step
 
@@ -128,16 +133,21 @@ say who decides.
 2. **A normal change** is approved in its merge request by the service
    owner, after a peer's review; also by the security lead when it
    changes a security control, and by the product owner when customers
-   will see it.
+   will see it. Its deployment to production then waits for the service
+   owner's approval in GitLab (protected environments with deployment
+   approvals), so what was approved is what is deployed.
 3. **An emergency change** is made by the on-call engineer with the
    service owner, or the security lead when it closes a security hole,
    and is reviewed in a merge request within two working days.
-4. **The pipeline refuses** a deployment inside the change calendar's
-   blackouts unless it is labelled `kind::emergency`.
+4. **GitLab's deploy freezes hold the change calendar's blackouts:**
+   the deploy job refuses inside them unless the change is labelled
+   `kind::emergency`, its approval recorded.
 5. **The weekly meeting reviews** the coming week's normal changes, last
    week's emergencies, and any change that failed; and watches four
    measures: how often we deploy, how long a change takes to reach
-   production, how many changes fail, and how fast we recover.
+   production, how many changes fail, and how fast we recover. Our own
+   job computes them from GitLab's deployment records, since GitLab's
+   dashboards for them are Ultimate (gitlab spec §7).
 6. **Where a customer runs its own change board,** we attend it, and its
    approval is added to ours.
 7. **A board meets weekly** once more than one customer's windows have to
