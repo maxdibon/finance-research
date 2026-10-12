@@ -5,7 +5,7 @@ kind: policy
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714]
+review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762]
 last_reviewed: 2026-10-12
 ---
 
@@ -49,6 +49,7 @@ contract.
 | 6 | **Data it exports is its to protect;** we log what left, and how | Identity ID-17 |
 | 7 | **It names who approves Dibon's access to its instance, and who can switch it off at any hour** | Onboarding OB-COM-22; architecture §9 |
 | 8 | **Its duties to its regulators stay its own** (breach notices, returns, customers' complaints); we support with evidence on request | Privacy (s.43); service management §6; incident management |
+| 9 | **Its lawful basis and its notices to customers cover every check run for it,** our verification and bureau vendors' included; it keeps the consents, and uses the results for its own KYC and credit decisions only, never resold or passed on | The services agreement and DPA, to be written (FS-748); privacy; identity ID-10 |
 
 ## 3 · Partners
 
@@ -66,3 +67,4 @@ vendors, Twilio, GitLab and the rest. Checked before selection
 | 6 | **Evidence of security every year:** a certificate or a questionnaire; **sub-processors named** | Partner register; technology register checks each quarter |
 | 7 | **Data returned or deleted when we part,** with a certificate | The contract |
 | 8 | **Its software runs unmodified and separately** where its licence requires | Architecture §6.1 |
+| 9 | **Whatever it needs an institution to accept is known before we sign:** its product terms attached, changed only with notice, and carried into our agreements with institutions; its results usable in the institution's own records and credit models | The contract; partners C17 (FS-762) |
