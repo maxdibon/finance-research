@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-12
 ---
 
 # API and statement-feed requests — banks and mobile money
@@ -30,6 +30,10 @@ the detailed questions live in one place.
 ---
 
 ## Email 1 · Banks — NCBA and KCB
+
+**Superseded** by docs/outreach/bank-api-requests-2026-10.md (FS-715),
+which adds SBM Bank, real-time alerts and two sites to allow-list. Kept
+as history; send those letters instead.
 
 Send one per bank. For KCB, address it to the corporate relationship
 manager and copy the bank's API or developer-platform team, if you have a
