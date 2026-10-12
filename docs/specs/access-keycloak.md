@@ -224,7 +224,7 @@ refresh one.
   authority, finance, collections, auditor, administrator (RC-34; the
   list is its open answer 7). The approval engine reads them (AC-09,
   MD-04).
-- **Joiners, movers, leavers from Odoo HR** (MF-35): a joiner gets a user
+- **Joiners, movers, leavers from Odoo's Employees app** (BS-12, MF-35): a joiner gets a user
   with no roles; a leaver is disabled, signed out everywhere and has
   their authenticators removed, within minutes of the exit being
   recorded. An invitation lapses after 72 hours; an account never
@@ -237,7 +237,9 @@ refresh one.
   fine-grained admin permissions withhold it.
 - **The nightly comparison:** every role mapping in Keycloak is checked
   against an approved `access.role.change`; a mapping without one is an
-  alert, like Fineract's (approval-engine §9).
+  alert, like Fineract's (approval-engine §9). Every enabled staff user is
+  also checked against a current employee record in Odoo; a user without
+  one, or past its departure date, is an alert (FS-769).
 
 ## 7 · Contracts
 

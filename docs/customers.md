@@ -59,7 +59,7 @@ each capability's status beside it, read from its module.
 | Module | Capabilities |
 |---|---|
 | [access](modules/access.md) | AC-03, AC-05, AC-09, AC-13, AC-16 |
-| [business-suite](modules/business-suite.md) | BS-01, BS-02, BS-20 |
+| [business-suite](modules/business-suite.md) | BS-01, BS-02, BS-20, BS-12 |
 | [collect](modules/collect.md) | CO-21 |
 | [core](modules/core.md) | KC-01, KC-04, KC-07, KC-08, KC-09, KC-15 |
 | [decisioning](modules/decisioning.md) | DE-01, DE-02, DE-03, DE-04 |

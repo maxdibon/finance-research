@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767]
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769]
 last_reviewed: 2026-10-12
 ---
 
@@ -80,7 +80,9 @@ the check keeps the two in step):
   messaging).
 - **Business suite:** BS-01 (CRM for leads), BS-20 (the public request page
   and calculator), BS-02 (Odoo Sign, for loan
-  agreements).
+  agreements), BS-12 (the employee record only, in Odoo's Employees
+  app, which provisions staff access; payroll, leave and attendance
+  later, FS-769).
 - **Decisioning:** DE-01 (the contract and decision records), DE-02
   (statement metrics), DE-03 (the behaviour score), DE-04 (risk classes),
   rules only, evidence for people (FS-582).
