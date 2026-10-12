@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-503, FS-548, FS-645, FS-668, FS-769, FS-776]
+review_ids: [FS-503, FS-548, FS-645, FS-668, FS-769, FS-776, FS-777]
 last_reviewed: 2026-10-12
 ---
 
@@ -43,7 +43,7 @@ An institution's own staff follow JN-18.
 - **Target:** a joiner able to work on their first day; a leaver's access
   ended everywhere within the hour of the exit being recorded, the same
   day at the latest (rules for Dibon 5); a key share re-split within a
-  week (proposed).
+  week (owner, FS-777).
 - **Moments that matter:** the first day, with keys, a laptop and the
   training done before any production access; the first ticket that
   needs an institution's data, where the engineer learns that access is
@@ -93,13 +93,13 @@ An institution's own staff follow JN-18.
 | # | Step | Who | Messages | Capabilities |
 |---|---|---|---|---|
 | 1 | The team lead records the joiner in Dibon's Odoo: role, manager, start date. Before any access: the contract with its confidentiality clause, and the checks Dibon's staff security policy sets | Team lead | — | BS-12 |
-| 2 | The joiner's identity is created in Dibon's central Keycloak with no access. In person, the security lead registers two hardware security keys, one carried and one kept apart as the backup | Security lead | — | SE-26 |
+| 2 | From that record, the joiner's identity is created in Dibon's central Keycloak with no access. In person, the security lead registers two hardware security keys, one carried and one kept apart as the backup | Security lead | — | SE-26 |
 | 3 | Their laptop is enrolled before first use: disk encryption, endpoint protection, device management. No institution's data ever lives on it (endpoints §2) | Security lead | — | SE-14 |
-| 4 | The engineering lead asks for the groups their role needs (GitLab by role, the `ops` realms' tooling, OpenBao's policies); the security lead approves each, never the person asking; then the groups are mapped. Security and privacy training, and the ways of working, are done before any production access. The engineer is told by email what changed | Engineering lead; security lead | T42 | SE-26, AC-11 |
+| 4 | The engineering lead asks for the groups their role needs (GitLab by role, the `ops` realms' tooling, OpenBao's policies) by a merge request to Dibon's group memberships, kept as code; the security lead approves it as code owner, never the person asking; the pipeline applies it. Security and privacy training, and the ways of working, are done before any production access. The engineer is told by email what changed | Engineering lead; security lead | T42 | SE-26, AC-11 |
 | 5 | Their first access to an institution's data or production is just in time: a ticket, a named scope (read-only logs, one maintenance action), 4 hours by default, through the bastion, the session recorded. They never see Restricted data, and never hold a product role | Engineer; operations lead | — | SE-26, SE-18, SE-27 |
 | 6 | **A move** (into the on-call rota after shadowing, or into the security lead's role): the new groups approved as in step 4, the old removed by the same approval on the day, never accumulated | Engineering lead; security lead | T42 | SE-26 |
 | 7 | **Becoming a recovery key holder:** the setup ceremony, with the CTIO and two witnesses; the share encrypted to their keys; then the quarterly drills (the key holder's manual) | Security lead; CTIO | — | SE-21 |
-| 8 | **An exit:** the team lead records it in Dibon's Odoo the day it happens, or ahead with its date. The central identity is disabled and signed out everywhere, which ends their access to every instance, GitLab, the on-call tool and OpenBao at once | Team lead; security lead | T42 | SE-26, AC-10 |
+| 8 | **An exit:** the team lead records it in Dibon's Odoo the day it happens, or ahead with its date. From that record the central identity is disabled and signed out everywhere, which ends their access to every instance, GitLab, the on-call tool and OpenBao at once | Team lead; security lead | T42 | SE-26, AC-10 |
 | 9 | Their hardware keys are revoked and returned; any personal access token and SSH key removed; their open merge requests reassigned; any secret they could read in production rotated | Security lead; engineering lead | — | SE-26, SE-12 |
 | 10 | If they held a recovery key share or half of a break-glass account, a new holder is chosen and the share re-split in a new ceremony; the old share becomes useless | Security lead; CTIO | — | SE-21, SE-26 |
 | 11 | Their laptop and any phone with work access are wiped and returned, as the lost-laptop runbook's last two steps (endpoints §5) | Security lead | — | SE-14 |
@@ -122,15 +122,9 @@ An institution's own staff follow JN-18.
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| SE-14, Dibon's own devices enrolled and protected (steps 3, 11) | Not in R1's list; the endpoints spec proposes Dibon's devices before R1 go-live (FS-708) | Laptops set up by hand to the baseline in endpoints §3, checked at the access review | Bring Dibon's own devices into R1, as the endpoints spec proposes |
-| Joiners and leavers from Dibon's Odoo to the central Keycloak (steps 1, 8) | Specified for institutions (access-keycloak §6, FS-769), not for Dibon | The security lead creates and disables the central identity by hand, from the team lead's record | The same provisioning for Dibon's own Odoo and central Keycloak |
-| How Dibon's group grants are approved (step 4) | Not specified: institutions use the approval engine; Dibon's central Keycloak has none | The security lead approves by ticket | Dibon's group memberships kept as code, changed by merge request with the security lead as code owner (GitLab's approvals) |
 | Dibon's staff security policy: screening and confidentiality (step 1) | Missing (FS-748) | The contract's confidentiality clause | Write it with the policy register |
 
 ## 5 · Open questions
 
-- **For the owner:** the targets (a leaver's access ended within the hour;
-  a key share re-split within a week); and whether Dibon's group grants
-  become code approved by merge request.
 - **For the security lead:** which secrets count as "could read" for a
   leaver, so their rotation is a list, not a judgement.

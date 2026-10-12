@@ -11,7 +11,7 @@ used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770]
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777]
 last_reviewed: 2026-10-12
 ---
 
@@ -242,6 +242,14 @@ refresh one.
   on the request's effective date: approved ahead, a joiner's roles start
   on the start date and a mover's change on the date of the move, never
   before.
+- **Dibon's own engineers** (FS-777, JN-20): the same provisioning, from
+  Dibon's Odoo to Dibon's central Keycloak: a joiner gets an identity
+  with no access, an exit disables it, which ends every instance at once.
+  Their group memberships are code, in the platform repository: a grant
+  or removal is a merge request, approved by the security lead as code
+  owner and never by the person asking; the pipeline applies it to the
+  central Keycloak, and the nightly comparison checks the live groups
+  against the code.
 - **An institution's administrator** manages its users (create, disable,
   reset after identity verification) but cannot map an approval role:
   fine-grained admin permissions withhold it.

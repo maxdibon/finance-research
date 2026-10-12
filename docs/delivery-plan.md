@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775]
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777]
 last_reviewed: 2026-10-12
 ---
 
@@ -109,14 +109,17 @@ FS-495).
 - **Core:** KC-05 (the general ledger), KC-12 (hosted per institution,
   isolated).
 - **Security:** SE-01, SE-02, SE-04, SE-05, SE-08, SE-09, SE-10, SE-11,
-  SE-12, SE-13, SE-17, SE-18, SE-19, SE-20, SE-21, SE-22, SE-24 (safe
-  mode, decided in advance, FS-775), SE-26 (privileged access), SE-27 (ID numbers and other Restricted fields encrypted one by
+  SE-12, SE-14 (Dibon's own devices only; institutions' in R2, FS-777),
+  SE-17, SE-18, SE-19, SE-20, SE-21, SE-22, SE-24 (safe mode, decided in
+  advance, FS-775), SE-26 (privileged access), SE-27 (ID numbers and other Restricted fields encrypted one by
   one, FS-638).
 - **Testing:** ID-20 (the identity simulator), so every R1 journey's
   failures can be tested (docs/testing.md).
 
-The rest of the security baseline (SE-03, SE-06, SE-07, SE-14 to SE-16,
-SE-23, SE-25) follows in R2, before a bank goes live.
+The rest of the security baseline (SE-03, SE-06, SE-07, SE-13 managed
+detection, our rota watching until then, SE-14 for institutions'
+devices, SE-15, SE-16, SE-23, SE-25) follows in R2, before a bank goes
+live (FS-777).
 
 ## The v1 rule
 

@@ -11,7 +11,7 @@ used_by: []
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769]
+review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777]
 last_reviewed: 2026-10-12
 ---
 
@@ -31,7 +31,7 @@ lost.
 
 | Id | Capability | In R1 |
 |---|---|---|
-| SE-14 | Endpoints: protection, disk encryption, device management | Proposed for Dibon's own devices before R1 go-live (FS-708); institutions' in R2 |
+| SE-14 | Endpoints: protection, disk encryption, device management | Yes, for Dibon's own devices (owner, 2026-10-12, FS-777); institutions' in R2 |
 | SE-13 | Managed detection and response, round the clock | No: R2, bought through Liquid; our rota watches until then |
 | SE-18 | Security events collected and kept | Yes |
 | AC-16 | Two authenticators for staff and approvers | Yes |
@@ -200,13 +200,11 @@ PR-13).
 1. **For Liquid:** which machines Sophos covers, what it may do without
    asking, where its telemetry is processed, how fast it calls us, and
    the price per machine (docs/outreach/liquid-partner-request.md).
-2. **For the owner:** Dibon's own devices under SE-14 before R1 go-live,
-   though SE-14 is otherwise R2 (FS-708).
-3. **For the owner:** where Dibon's own email and files live, and how
+2. **For the owner:** where Dibon's own email and files live, and how
    they are recovered (FS-710).
-4. **For the owner:** a backup for this repository's private folders,
+3. **For the owner:** a backup for this repository's private folders,
    encrypted and in Kenya, never in git (FS-710).
-5. Fleet's free edition: whether disk-encryption enforcement and the
+4. Fleet's free edition: whether disk-encryption enforcement and the
    other policies we need are in it.
 6. How the bastion learns that a device is enrolled and compliant: a
    device certificate issued by device management, checked at the
