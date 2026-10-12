@@ -855,6 +855,11 @@ function checkOverview(root, files) {
     .filter((m) => !/^[a-z]+:/i.test(m[1]))
     .map((m) => path.posix.normalize(path.posix.join('docs', m[1])).replace(/\/?$/, m[1].endsWith('/') ? '/' : ''));
   const folders = links.filter((l) => l.endsWith('/') || l.endsWith('/README.md')).map((l) => (l.endsWith('/') ? l : `${path.posix.dirname(l)}/`));
+  // A delivery map is reached through the customer register, which the
+  // customers check holds to link every one (FS-720).
+  if (links.includes('docs/customers.md') && fs.existsSync(path.join(root, CUSTOMERS))) {
+    for (const m of read(root, CUSTOMERS).matchAll(/\]\((customers\/[^)\s#]+\.md)\)/g)) links.push(`docs/${m[1]}`);
+  }
   return files
     .map((f) => f.split(path.sep).join('/'))
     .filter((f) => f.startsWith('docs/') && f.endsWith('.md') && f !== 'docs/overview.md' && !path.posix.basename(f).startsWith('_'))

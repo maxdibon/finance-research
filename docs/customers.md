@@ -5,8 +5,8 @@ kind: register
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420, FS-443, FS-612, FS-674, FS-680]
-last_reviewed: 2026-10-10
+review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420, FS-443, FS-612, FS-674, FS-680, FS-720]
+last_reviewed: 2026-10-12
 ---
 
 # Customers — who we deliver to, and what each depends on
@@ -27,6 +27,16 @@ delivering to, its stage, and the capabilities its delivery depends on
    believed to allow it, to be confirmed (FS-420). People are never named.
 4. **Material from clients/ is written about, never copied.** The
    requirement documents themselves stay there.
+
+**A delivery map** (docs/customers/, one per customer in delivery, linked
+from its row) takes the customer's own requirements, row by row, and sets
+each against the capabilities that meet it: the engagement; requirements
+against capabilities, each *Covered*, or *Partial* with its gap stated;
+what is out of scope; the open answers only the customer can settle; and
+where the detail is. **To add one** when a customer reaches "In delivery":
+copy the shape of an existing map, link it from the row, and keep its
+capabilities and the row's "Depends on" the same; the check holds the two
+together.
 
 **Stages:** Proposal, In delivery, Live, Past.
 

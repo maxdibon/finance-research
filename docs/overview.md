@@ -5,7 +5,7 @@ kind: overview
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719]
+review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720]
 last_reviewed: 2026-10-12
 ---
 
@@ -155,7 +155,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 
 | If you want | Read |
 |---|---|
-| Who our customers are, and what we are building for each | [customers.md](customers.md); each customer's delivery map in [customers](customers/README.md) |
+| Who our customers are, and what we are building for each | [customers.md](customers.md), with each customer's delivery map linked from its row |
 | What we build next, release by release | [delivery-plan.md](delivery-plan.md) |
 | What a customer and each product need to go live | [onboarding.md](onboarding.md) |
 | Which partners we are talking to | [partners.md](partners.md) |
