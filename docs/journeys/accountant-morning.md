@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-633, FS-634, FS-668, FS-765, FS-766, FS-767]
+review_ids: [FS-548, FS-633, FS-634, FS-668, FS-765, FS-766, FS-767, FS-778]
 last_reviewed: 2026-10-12
 ---
 
@@ -41,7 +41,7 @@ someone with a date.
   ticket is closed with the accountant's note, which is the sign-off.
 - **Target:** at least 98% of the day's transactions matched
   automatically, published each cycle (owner, FS-767); every exception owned
-  by 10:00 and the morning signed off by 12:00 (proposed); a held close released before the institution's
+  by 10:00 and the morning signed off by 12:00 (owner, FS-778); a held close released before the institution's
   working day starts, or overridden by two people.
 - **Moments that matter:** the report's first line, which must say
   plainly whether the night closed and how much matched by itself; a held close, where the accountant
@@ -133,9 +133,6 @@ someone with a date.
   the accountant's working hours; the tolerance for unapplied money; and
   where its books are kept today (Odoo, another package, spreadsheets),
   which decides BS-08 (delivery map, open answer 24).
-- **For the owner:** the targets: every exception owned by 10:00 and the
-  morning signed off by 12:00; and that the report's email carries
-  counts, amounts and references only, with names behind sign-in.
 - **For NCBA and Access Bank:** when each day's statement is available,
   which decides how much of step 4 the morning can settle (outreach,
   the account requests).

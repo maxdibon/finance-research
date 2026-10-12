@@ -76,6 +76,11 @@ test('register: an unknown status fails', () => {
   assert.deepStrictEqual(names(f), ['register']);
 });
 
+test('register: a heading holding table cells fails', () => {
+  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(# .*)$/m, '$1 | DECIDED | a note |')));
+  assert.deepStrictEqual(names(f), ['register']);
+});
+
 test('review-ids: citing an id the register does not have fails', () => {
   // Assembled at run time so this file does not itself cite a missing id.
   const missing = ['FS', '999'].join('-');
@@ -469,7 +474,7 @@ test('handbook: an HB id cited in docs that the handbook lacks fails', () => {
 });
 
 test('handbook: a journey past draft with no procedure from it fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'journeys', 'complaint.md'), (t) => t.replace(/^status: draft$/m, 'status: agreed')));
+  const f = runWith((d) => patch(d, path.join('docs', 'journeys', 'electronic-identity-check.md'), (t) => t.replace(/^status: draft$/m, 'status: agreed')));
   assert.deepStrictEqual(names(f), ['handbook']);
 });
 

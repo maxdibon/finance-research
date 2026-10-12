@@ -5,7 +5,7 @@ kind: handbook
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-771, FS-772, FS-775]
+review_ids: [FS-771, FS-772, FS-775, FS-778]
 last_reviewed: 2026-10-12
 ---
 
@@ -16,8 +16,7 @@ falls. Each names who does it and where it comes from; times are the
 institution's, on its business calendar. In the institution's Odoo,
 each duty is a recurring task in Project with its owner, so a missed one
 shows as overdue (FS-772); the daily duties are already tickets or
-queues of their own. Targets marked *proposed* await
-the owner's decision.
+queues of their own.
 
 ## Every day
 
@@ -25,8 +24,8 @@ the owner's decision.
 |---|---|---|---|
 | 06:00 | The morning report arrives; the morning's ticket opens | Accountant | JN-17 |
 | By 09:00 | Yesterday's bank statement forwarded whole, or uploaded | Accountant | JN-17; RO-01 |
-| By 10:00 | Every exception owned (*proposed*) | Accountant | JN-17 |
-| By 12:00 | The morning signed off by closing its ticket (*proposed*) | Accountant | JN-17 |
+| By 10:00 | Every exception owned | Accountant | JN-17 |
+| By 12:00 | The morning signed off by closing its ticket | Accountant | JN-17 |
 | Through the day | Unplaced payments: answers placed; the 48-hour calls; returns at day 7 | Accountant; follow-up team | JN-16 |
 | Through the day | Complaints logged the day they are made, worked to 14 days, never past 30 | Whoever hears it; complaints handler | JN-08 |
 | The day it happens | A joiner, move or exit recorded in Odoo; a leaver's bank and M-Pesa access ended | Manager; finance lead | JN-18; HB-10 to HB-13 |

@@ -94,6 +94,11 @@ function parseRegister(root) {
 function checkRegister(root) {
   const failures = [];
   const rows = parseRegister(root);
+  // A heading holding a table's cells is a script's slip (FS-779): it
+  // renders as a huge title and hides the rows it should have changed.
+  read(root, 'REVIEW.md').split('\n').forEach((line, i) => {
+    if (/^#/.test(line) && / \| /.test(line)) failures.push(fail('register', 'REVIEW.md', i + 1, 'a heading holds table cells'));
+  });
   rows.forEach((row, i) => {
     const expected = `FS-${String(i + 1).padStart(3, '0')}`;
     if (row.id !== expected) {
