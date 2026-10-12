@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-10
+last_reviewed: 2026-10-12
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -699,7 +699,7 @@ its own entry.
   over its socket, as the scanner in our offering; Sophos or another
   commercial engine where a customer pays for it, possibly bought through
   Liquid. A new licence row allows this one GPL-2.0 service by name.
-- **Requires:** ID-15; docs/architecture/README.md §6.1 "one named service: ClamAV"; docs/outreach/liquid-partner-request.md "Sophos scanning".
+- **Requires:** ID-15; docs/architecture/README.md §6.1 "which scans uploads to the document vault (FS-525)"; docs/outreach/liquid-partner-request.md "Sophos scanning".
 - **Argued against:** no scanning, which leaves an upload path open to
   any customer's phone; and a commercial engine for everyone, which puts a
   licence cost on institutions that do not want it.
@@ -1249,3 +1249,22 @@ its own entry.
 - **Costs (inferred):** a gateway trial; a quarterly review of the
   register; outboxes kept 7 days; a slower failover while Kafka is
   rebuilt; GitLab Premium seats.
+
+## FS-712 · Managed security through Liquid first; our own on Wazuh where a client chooses it
+
+- **Chose:** Sophos managed detection and endpoint protection, with
+  Microsoft Intune, bought through Liquid, for Dibon's own estate and as
+  the default for institutions while the customer base grows. For a client
+  who prefers it or cannot pay for Sophos, our own tier: Wazuh, Microsoft
+  Defender Antivirus and ClamAV, and Fleet to evaluate for device
+  management, watched by our rota. Wazuh's GPL-2.0 core is allowed as a
+  second named service, run unmodified and separately, as ClamAV is. No
+  customer data on any device (FS-711).
+- **Requires:** SE-14; docs/specs/endpoints.md "Two tiers"; docs/architecture/README.md §6.1 "and Wazuh".
+- **Argued against:** our own tier as the default now, which would make a
+  team of four the night watch before there is revenue to staff it; Sophos
+  only, which would price out small lenders and Saccos.
+- **Costs (inferred):** a second offering to keep tested; Wazuh's hosting,
+  about 4 vCPU and 8 GiB per 25 devices per institution; honest wording on
+  night-time response for the own tier.
+

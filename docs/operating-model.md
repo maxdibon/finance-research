@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-467, FS-470, FS-471, FS-472, FS-473, FS-474, FS-475, FS-476, FS-477, FS-505, FS-532, FS-686]
-last_reviewed: 2026-10-10
+review_ids: [FS-467, FS-470, FS-471, FS-472, FS-473, FS-474, FS-475, FS-476, FS-477, FS-505, FS-532, FS-686, FS-711]
+last_reviewed: 2026-10-12
 ---
 
 # Operating model — the people who keep the commitments
@@ -124,7 +124,9 @@ do. In rough order of frequency: a forgotten PIN or password; a lockout; a
 new phone with the old one in hand; a lost or stolen phone; a SIM replaced
 or swapped; a changed number; a customer tricked into giving away a PIN or
 code; a recycled number; a lost authenticator for staff or approvers; a
-leaver or a change of role; a field device lost; a phone shared by several
+leaver or a change of role; a field device lost; a laptop lost, stolen or
+damaged (report within the hour; cut off; assess; replace; record:
+docs/specs/endpoints.md §5); a phone shared by several
 customers; a customer abroad; a deceased customer (only the personal representative
 under a grant acts for the estate: JN-14 §3 i, law register LR-39); an account-takeover
 attempt. **The agent may block (AC-14); it never unblocks or resets** (AC-15

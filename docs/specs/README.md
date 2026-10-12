@@ -5,8 +5,8 @@ kind: index
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667]
-last_reviewed: 2026-10-08
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711]
+last_reviewed: 2026-10-12
 ---
 
 # Specifications
@@ -43,6 +43,7 @@ as the components table below names it.
 | [messaging](messaging.md) | Build | The messaging service and the R1 template catalogue: what each event sends, to whom, with which fields, and who approves the words | messaging | R1 |
 | [event-bus-kafka](event-bus-kafka.md) | Component | Kafka as the event bus: the CloudEvents envelope, signing and the audit chain, one catalogue of event names, delivery rules | recon-observability | R1 |
 | [access-keycloak](access-keycloak.md) | Component | Keycloak as access: four realms, levels of authentication and step-up, roles granted by mandate, sign-in for every service | access | R1 |
+| [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
 
 **To write, in the order R1 needs them:** odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
 rails (M-Pesa and bank instructions, their lifecycle and signing).
@@ -118,3 +119,8 @@ Every box in a spec's diagram is named as this table names it (FS-632).
 | M-PESA | Safaricom's mobile money | `[rail]` | — |
 | BANKS | The institution's banks | `[rail]` | — |
 | TWILIO | Places the on-call phone calls and SMS | `[partner]` | — |
+| DEVICE | A staff laptop or phone | `[endpoint]` | [endpoints](endpoints.md) |
+| DEVICE MANAGEMENT | Enrols devices, sets and checks their policy | `[intune_or_fleet]` | [endpoints](endpoints.md) |
+| ENDPOINT PROTECTION | Blocks malware and reports what happens on a device | `[sophos_or_wazuh]` | [endpoints](endpoints.md) |
+| MANAGED DETECTION | Watches devices and servers, isolates a threat | `[sophos_mdr_or_wazuh]` | [endpoints](endpoints.md) |
+| BASTION | People's only way in to servers and databases, sessions recorded | `[warpgate]` | [endpoints](endpoints.md) |

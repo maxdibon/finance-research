@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661, FS-698, FS-699, FS-701]
-last_reviewed: 2026-10-10
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661, FS-698, FS-699, FS-701, FS-711, FS-712]
+last_reviewed: 2026-10-12
 ---
 
 # Platform Security
@@ -67,7 +67,7 @@ not go live on less.
 | SE-11 | Vulnerability management: images and dependencies scanned (Trivy, pinned by digest and mirrored in Harbor; OSV-Scanner; FS-699), a software bill of materials per release, fixes prioritised by CISA's known-exploited list, EPSS and CVSS v4 within set times | Planned | FS-462, FS-464 | 1 |
 | SE-12 | A pipeline that refuses unsafe builds: secrets scanning (Gitleaks), static and dynamic testing (Opengrep, ZAP), signed images with build provenance (cosign, SLSA, recorded in Rekor), a private registry (Harbor); on GitLab, with runners in Kenya (FS-701); every step pinned to a commit or digest, never a tag, and images only from a project's own builds or ours, never Bitnami's (FS-699) | Planned | FS-462, FS-464 | 1 |
 | SE-13 | Round-the-clock detection and response: managed detection and response from a security operations centre (Sophos MDR through Liquid), fed by our logs and endpoint agents | Planned | FS-458, FS-464. To confirm terms with Liquid | 1 |
-| SE-14 | Endpoints: staff laptops and our servers with endpoint protection, disk encryption and device management (Sophos endpoint, Microsoft Intune); field devices enrolled with Android Enterprise (omni-channel OC-19) | Planned | FS-459, FS-464 | 1 |
+| SE-14 | Endpoints: staff laptops and our servers with endpoint protection, disk encryption and device management (through Liquid: Sophos endpoint, Microsoft Intune; or our own tier where a client chooses it: Wazuh, Microsoft Defender Antivirus, Fleet; FS-712; docs/specs/endpoints.md); field devices enrolled with Android Enterprise (omni-channel OC-19) | Planned | FS-459, FS-464 | 1 |
 | SE-15 | Mobile apps built and tested to OWASP MASVS level 2 (MobSF in the pipeline), with Play Integrity and App Attest | Planned | FS-462, FS-464. The field-officer app (OC-17) and member apps (OC-01) | 1 |
 | SE-16 | A threat model per product (STRIDE for security, LINDDUN for privacy), reviewed at each major change; the payment-instruction path first, written before it is built (rails RL-01, RL-07; FS-588) | Planned | FS-462, FS-464 | 1 |
 | SE-17 | An independent penetration test every year and before each customer's go-live, by a tester we do not otherwise use for assurance; the payment-instruction path always in scope (FS-588) | Planned | FS-464; approval pack item 8; assurance rule 1 | 1 |

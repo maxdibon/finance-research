@@ -5,8 +5,8 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705]
-last_reviewed: 2026-10-10
+review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712]
+last_reviewed: 2026-10-12
 ---
 
 # Technology: the register of components we run
@@ -96,7 +96,10 @@ yet tried) · *Bought* (commercial, chosen with its supplier). All checked
 | Rekor v2 | The transparency log for chain heads and image signatures (RO-24, SE-12) | Apache-2.0 | Sigstore (OpenSSF) | Keep (FS-700) | Trillian v1, which needs MySQL (GPL); the public Sigstore instance, without a service level and outside Kenya | Built on Trillian Tessera, files only, checked with standard tools; its checkpoints witnessed |
 | Warpgate | The bastion: people's way in, sessions recorded | Apache-2.0 | Warp Tech | Evaluate (FS-695) | Teleport (its community edition is no longer open source); Apache Guacamole; HashiCorp Boundary (BSL) | One gateway for SSH, Kubernetes and PostgreSQL, sign-in through Keycloak |
 | ClamAV | Scans uploads to the vault | GPL-2.0, a separate service | Cisco | Keep (FS-525) | A commercial engine where a customer pays | Allowed as a named service |
-| Sophos MDR and endpoint; Microsoft Intune | Detection round the clock; laptops (SE-13, SE-14) | Commercial | Sophos; Microsoft | Bought, through Liquid | Wazuh (GPL) | Bought rather than run (FS-464) |
+| Sophos MDR and endpoint; Microsoft Intune | Managed detection round the clock; endpoint protection; device management (SE-13, SE-14) | Commercial | Sophos; Microsoft | Bought through Liquid: the default tier, for Dibon and for institutions (FS-712) | Our own tier, below | People watching round the clock, able to isolate a machine; the managed tier while the customer base grows |
+| Wazuh | Detection in our own tier: file changes, vulnerabilities, configuration checks, logs, automatic blocking | GPL-2.0 core, unmodified and separate, by decision; indexer and dashboard Apache-2.0 | Wazuh Inc. | Keep, for a client who prefers it or cannot pay for Sophos (FS-712) | Sophos MDR; Elastic Security | Open, broad; about 4 vCPU and 8 GiB per 25 devices; needs people to watch it |
+| Microsoft Defender Antivirus | Malware protection in our own tier, Windows | Comes with Windows | Microsoft | Keep, in our own tier | Sophos | Already on every Windows device |
+| Fleet | Device management in our own tier | MIT core; some features paid | Fleet Device Management | Evaluate (FS-712) | Intune | Windows, macOS, Linux and phones, policies in git |
 
 ### Platform
 

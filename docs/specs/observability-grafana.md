@@ -7,12 +7,12 @@ status: draft
 release: R1
 implements: [recon-observability]
 depends_on: [access-keycloak, messaging]
-used_by: [end-of-day-runner, event-bus-kafka]
+used_by: [end-of-day-runner, event-bus-kafka, endpoints]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-101, FS-633, FS-640, FS-642, FS-648, FS-653, FS-667]
-last_reviewed: 2026-10-08
+review_ids: [FS-101, FS-633, FS-640, FS-642, FS-648, FS-653, FS-667, FS-711]
+last_reviewed: 2026-10-12
 ---
 
 # Observability on Grafana, with on-call — component specification
@@ -64,7 +64,7 @@ on); security event monitoring, which is the managed detection service
 **Related:** implements
 [recon-observability](../modules/recon-observability.md); depends on
 [access-keycloak](access-keycloak.md) and [messaging](messaging.md); used by
-[end-of-day-runner](end-of-day-runner.md) and [event-bus-kafka](event-bus-kafka.md); routes by
+[end-of-day-runner](end-of-day-runner.md), [event-bus-kafka](event-bus-kafka.md) and [endpoints](endpoints.md); routes by
 [incident management](../service-management/incident-management.md).
 
 ## 2 · Version and hosting
