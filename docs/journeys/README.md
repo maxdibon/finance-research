@@ -5,8 +5,8 @@ kind: index
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689]
-last_reviewed: 2026-10-10
+review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763]
+last_reviewed: 2026-10-12
 ---
 
 # User journeys
@@ -66,7 +66,7 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-05 | A guarantor: consent, statements and notice | R1 | [guarantor.md](guarantor.md) |
 | JN-06 | A loan restructured | R1 | [restructuring.md](restructuring.md) |
 | JN-07 | A borrower viewing and sharing their own documents | R1 | [own-documents.md](own-documents.md) |
-| JN-08 | A complaint, against the 30-day clock | R1 | to write |
+| JN-08 | A complaint, against the 30-day clock | R1 | [complaint.md](complaint.md) |
 | JN-09 | Self-sign-up by USSD into the lightest KYC tier | phase 2 | to write |
 | JN-10 | A deposit paid to the institution's paybill or till | R2 | to write |
 | JN-11 | A transfer out through a larger bank: RTGS, EFT or SWIFT | R2 | to write |

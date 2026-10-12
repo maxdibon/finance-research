@@ -11,8 +11,8 @@ used_by: [access-keycloak, lender-rules, observability-grafana]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685]
-last_reviewed: 2026-10-10
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763]
+last_reviewed: 2026-10-12
 ---
 
 # Messaging and its templates — build specification
@@ -185,7 +185,8 @@ Event names are in the event bus catalogue (event-bus-kafka §5).
 | T14 | Settled | `kapu.mfi.loan.settled` | Transactional | SMS | loan ending, date, what happens to the collateral, link | MF-38, MF-03 |
 | T15 | Statement link | On request | Notice | SMS | single-use link, hours valid | MF-38, ID-17 |
 | T16 | Complaint acknowledged | `kapu.mfi.complaint.logged` | Notice | SMS, email | complaint reference, the date it will be answered by | MF-28; reg 40 |
-| T17 | Complaint resolved | `kapu.mfi.complaint.resolved` | Notice | SMS, email | complaint reference, link | MF-28 |
+| T17 | Complaint resolved | `kapu.mfi.complaint.resolved` | Notice | SMS, email | complaint reference, single-use link to the written answer: what was found, what was done, and that the customer may go to CBK, or to the Data Commissioner for personal data | MF-28; reg 40; JN-08 |
+| T41 | Complaint still being dealt with | `kapu.mfi.complaint.pending` | Notice | SMS, email | complaint reference, the date it will be answered by | MF-28; reg 40(4); JN-08 |
 | T35 | Disbursement on its way, later than expected | `kapu.mfi.disbursement.delayed` | Transactional | SMS | amount, the bank, when they will hear next | MF-38; rails RL-10 |
 | T37 | The amount to settle | On request | Transactional | SMS | amount, the date it is valid to, how to pay, link | MF-22, MF-38; reg 56(3), (4) |
 | T38 | Collateral released: originals ready to collect | `kapu.mfi.collateral.released` | Transactional | SMS | what is ready, where, from when, what to bring | MF-03, MF-38 |

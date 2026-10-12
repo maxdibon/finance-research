@@ -11,7 +11,7 @@ used_by: [end-of-day-runner]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763]
 last_reviewed: 2026-10-12
 ---
 
@@ -378,7 +378,7 @@ catalogue, event-bus-kafka §5): `kapu.mfi.loan.nonperforming`,
 `kapu.mfi.loan.charge.waived`, `kapu.mfi.repayment.allocated`,
 `kapu.mfi.repayment.allocation.mismatch`, `kapu.mfi.loan.ladder.changed`,
 `kapu.mfi.product.version.activated`, `kapu.mfi.loan.variation.accepted`,
-`kapu.messaging.message.blocked` (published by messaging), `kapu.mfi.complaint.overdue`.
+`kapu.messaging.message.blocked` (published by messaging), `kapu.mfi.complaint.pending`, `kapu.mfi.complaint.overdue`.
 
 **End of day** (KC-07), Africa/Nairobi, run by the end-of-day runner after
 its checks (end-of-day-runner):
@@ -464,7 +464,7 @@ exception to the accountant's queue (MF-12).
 | A15 | Collection template to an alternative contact | Send | Refused; blocked event | MF-26, 30(1)(c), (e) |
 | A16 | Template with a banned term | Approval | Refused | MF-26, 30(1)(b) |
 | A17 | Written complaint, unresolved | Day 7 with no acknowledgement | Overdue event | MF-28, 40(3) |
-| A18 | Oral complaint | 48 hours unresolved | Written confirmation task due | MF-28, 40(4) |
+| A18 | Oral complaint | 48 hours unresolved | Pending event; written confirmation sent (messaging T41) | MF-28, 40(4) |
 
 ## 9 · Open questions
 
