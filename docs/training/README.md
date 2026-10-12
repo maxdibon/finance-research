@@ -5,15 +5,17 @@ kind: plan
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-660]
-last_reviewed: 2026-10-08
+review_ids: [FS-660, FS-771]
+last_reviewed: 2026-10-12
 ---
 
 # Training
 
 **What this covers:** who is trained, on what, how and when (FS-660).
 Manuals are short, task-based and built from the journeys: each step a
-person takes becomes a task card. What the design can make obvious needs
+person takes becomes a task card. They say *how* on the screen; the
+institution's [handbook](../handbook/README.md) says *what and when*, and
+each task card links to the procedure it serves (FS-771). What the design can make obvious needs
 no manual (docs/experience.md).
 
 ## The manuals
@@ -50,7 +52,7 @@ and the voice line explain themselves (docs/experience.md §1).
 | Before go-live | User acceptance with the institution's people doubles as their training (docs/testing.md §4) |
 | Each release | The tasks that changed |
 | Twice a year | A session for each institution, as every support tier promises |
-| A new joiner | Their role's manual, assigned when they join in Odoo HR (mfi MF-35) |
+| A new joiner | Their role's manual, assigned when they join in Odoo (handbook HB-10) |
 | Every quarter | The key holders' restore test, as a drill |
 
 **Measured:** tasks completed unaided after training; questions to the

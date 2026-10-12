@@ -11,7 +11,7 @@ used_by: []
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770]
 last_reviewed: 2026-10-12
 ---
 
@@ -117,7 +117,7 @@ the database role the service runs as cannot update or delete them.
 | Field | Type | Notes |
 |---|---|---|
 | id | uuid | |
-| subject_type | text | `loan.application`, `loan.disbursement`, `loan.restructure` (FS-516), `mandate.change`, `access.role.change` (a role granted or removed, decided by a second person at step-up; access-keycloak §6, FS-642), `manual.act` (a payout or approval made by hand while the platform was down, approved afterwards by the institution's approvers so the nightly comparison can explain it; FS-661), `kyc.manual_verification` (the manual identity route, FS-547; docs/journeys/manual-identity-check.md), `payment.reversal` and `payment.recall` (a reversal or recall of a sent instruction, rails RL-01, FS-587), `guarantee.demand` (a demand to a guarantor, only after the notice and the recovery from the borrower, mfi MF-37, FS-622); later `bill.payment` and `payroll.run` (a month's payroll and its remittances, business-suite BS-19, FS-606) |
+| subject_type | text | `loan.application`, `loan.disbursement`, `loan.restructure` (FS-516), `mandate.change`, `access.role.change` (a role granted or removed, decided by a second person at step-up; access-keycloak §6, FS-642; raised automatically from a job position's role set, and carrying the date it takes effect, FS-770), `manual.act` (a payout or approval made by hand while the platform was down, approved afterwards by the institution's approvers so the nightly comparison can explain it; FS-661), `kyc.manual_verification` (the manual identity route, FS-547; docs/journeys/manual-identity-check.md), `payment.reversal` and `payment.recall` (a reversal or recall of a sent instruction, rails RL-01, FS-587), `guarantee.demand` (a demand to a guarantor, only after the notice and the recovery from the borrower, mfi MF-37, FS-622); later `bill.payment` and `payroll.run` (a month's payroll and its remittances, business-suite BS-19, FS-606) |
 | product_code | text | The Fineract product short name, or `*` |
 | version | int | Increments on every change |
 | effective_from | timestamptz | Africa/Nairobi in the UI, UTC stored |
@@ -449,6 +449,7 @@ STRIDE for security, LINDDUN for privacy (platform-security SE-16):
 | A21 | A request's decisions | Any stored decision is altered | The hash chain no longer verifies | RO-24 |
 | A22 | A request in progress | The originator opens it | They see the current step, who holds it, how long it has waited and when it is due | FS-494 |
 | A23 | A three-member unanimous committee | One member's exit is recorded | The exit goes ahead; the administrator and the manager are told the committee is short; a move of a second member warns its approver first | Rule 8, FS-769 |
+| A24 | A joiner recorded on Wednesday, starting Monday | Their position's roles are approved on Friday | The roles are mapped on Monday, not before; the joiner is told by email (T42) | access-keycloak §6, FS-770 |
 
 ## 15 · Open questions
 

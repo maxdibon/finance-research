@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-498, FS-503, FS-548, FS-645, FS-668, FS-768, FS-769]
+review_ids: [FS-498, FS-503, FS-548, FS-645, FS-668, FS-768, FS-769, FS-770]
 last_reviewed: 2026-10-12
 ---
 
@@ -23,7 +23,8 @@ leaver's access ends within minutes of the exit being recorded (rules,
 institutions 1 and 3).
 
 Dibon's own engineers join and leave differently, through Dibon's central
-identity and hardware keys: that is JN-20.
+identity and hardware keys: that is JN-20. The institution's procedures
+for this journey are its handbook's §2 (HB-10 to HB-17).
 
 ## 1 · Who and where
 
@@ -95,12 +96,12 @@ identity and hardware keys: that is JN-20.
 
 | # | Step | Who | Messages | Capabilities |
 |---|---|---|---|---|
-| 1 | The manager records the joiner in Odoo's Employees app: name, work email and phone, job position, manager and start date; and asks for the roles the job needs | Manager | — | BS-12, MF-35 |
+| 1 | The manager records the joiner in Odoo's Employees app: name, work email and phone, job position, manager and start date. Recording the position asks for its role set, from the institution's position-to-roles table (handbook HB-01) | Manager | — | BS-12, MF-35 |
 | 2 | From that record the provisioning service creates the user in the institution's `staff` realm, with no roles. Before Keycloak emails the invitation to set a password and register authenticators, the administrator checks the joiner's ID in person | Platform; administrator | — | BS-12, AC-01, AC-08, AC-02 |
-| 3 | Each role is a request to the approval engine, decided by a second person, re-authenticated at the act; only then is the role mapped. A request from the approver for themselves is refused. The person is told what was granted | Manager; approver | T26, T42 | AC-09, MD-01, MD-05, MD-06, MD-10, AC-05 |
+| 3 | Each role, from the position's set or asked for beyond it in the back office with a reason, is a request to the approval engine, decided by a second person, re-authenticated at the act, ahead of the start date; the role is mapped on the start date, not before. A request from the approver for themselves is refused. The person is told what was granted | Manager; approver | T26, T42 | AC-09, MD-01, MD-05, MD-06, MD-10, AC-05 |
 | 4 | For a credit officer, the staff record in Kapu Core is created and borrowers assigned to them, with a second person's approval; an officer never approves their own applications | Credit lead; approver | — | MF-35, MD-06 |
 | 5 | On first sign-in the joiner sets a password and registers two authenticators (an authenticator app, and a security key or passkey where Roan Capital uses one), on a device that meets our minimum and never keeps customer data; the training module for their role is done before they work on live data | Joiner | — | AC-16, AC-10 |
-| 6 | **A move:** the new job position is recorded in Odoo; the new role is requested and approved as in step 3, and the old role removed by the same approval, on the day the move takes effect, never accumulated | Manager; approver | T26, T42 | BS-12, AC-09, MD-01, MD-06 |
+| 6 | **A move:** the new job position is recorded in Odoo, which asks for the new position's roles and the removal of the old ones in one request, approved as in step 3 and applied on the date of the move, never accumulated | Manager; approver | T26, T42 | BS-12, AC-09, MD-01, MD-06 |
 | 7 | The mover's borrowers are reassigned in bulk with a second person's approval, the history kept. Approval steps are named by role and resolved to people when needed, so a step waiting on the old role goes to its other holders | Credit lead; approver | — | MF-35, MD-04 |
 | 8 | **An exit:** the manager records the departure in Odoo the day it happens, or ahead with its date. Within minutes of that date the provisioning service disables the user, signed out everywhere, and their authenticators removed; links in approval emails stop working, since each needs step-up at the act | Manager; platform | T42 | BS-12, AC-10, AC-16, MD-18 |
 | 9 | Approvals waiting on the leaver resolve to the role's other holders; requests they started stay with their history, under their manager | Platform | T26 | MD-04, MD-08 |
