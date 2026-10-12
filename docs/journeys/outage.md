@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-651, FS-661, FS-668, FS-773]
+review_ids: [FS-548, FS-651, FS-661, FS-668, FS-773, FS-774]
 last_reviewed: 2026-10-12
 ---
 
@@ -21,8 +21,29 @@ under its own two-person control. This journey is the outage from Roan
 Capital's side: told quickly and plainly, working on its fallback
 runbook, then every payment, payout, approval and complaint brought back
 in, with nothing lost, nothing paid twice, and every balance right.
-Dibon runs the recovery; Roan Capital runs its fallback, and Dibon never
-operates it (FS-588).
+
+**Two jobs, and who does each** (FS-774):
+
+- **Getting the platform back is Dibon's:** finding the fault and fixing
+  it, or moving to the second site; pulling in the payments that landed
+  meanwhile and posting each with its own date; checking queued payouts
+  against the rails' statements before anything is released; and telling
+  Roan Capital what is happening throughout.
+- **Keeping the business going without the platform is Roan Capital's,**
+  with its own tools: borrowers keep paying its paybill; a payout that
+  cannot wait is made by two of its own staff from its M-Pesa business
+  portal or internet banking; an urgent approval is signed on its manual
+  approval form; calls and complaints go in its outage log.
+
+**Dibon never touches Roan Capital's money, even in an emergency and
+even if asked:** no one at Dibon signs in to its M-Pesa portal or bank,
+holds those credentials, signs its approval form, or pays anyone for it.
+We advise by phone ("release nothing from the platform yet"); its staff
+act. Three reasons (FS-588): controlling an institution's money would
+put us in custody, with the licence questions that brings (architecture
+§3); if no Dibon role can move its money, nobody who breaks into Dibon
+can either; and Roan Capital, the regulated lender, stays answerable for
+its own payments.
 
 ## 1 · Who and where
 
