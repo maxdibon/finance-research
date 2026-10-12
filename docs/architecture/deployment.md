@@ -5,8 +5,8 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703]
-last_reviewed: 2026-10-10
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775]
+last_reviewed: 2026-10-12
 ---
 
 # Deployment: sites, the fleet, and what is central
@@ -210,7 +210,7 @@ OpenBao unseal key held at site B; the runbook rehearsed once.
 **Settled** (FS-703): OpenBao has no replication between clusters (its
 issue #38 is open), so its data lives in PostgreSQL, a backend its
 documentation calls production ready (FS-693); site B runs no Kafka under
-cold or warm standby (FS-694). **Open:** site B's provider (§1).
+cold or warm standby (FS-694). **Open:** site B's provider (§1), needed before Roan Capital's go-live, since its contract takes warm standby (FS-775).
 
 ## 3 · The offline copy
 

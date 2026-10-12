@@ -5,7 +5,7 @@ kind: handbook
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-771, FS-772]
+review_ids: [FS-771, FS-772, FS-775]
 last_reviewed: 2026-10-12
 ---
 
@@ -54,4 +54,5 @@ the owner's decision.
 |---|---|---|---|
 | By 1 November | Money that could not be returned to its payer, reported to the Unclaimed Financial Assets Authority once the period has run | Finance lead | JN-16 (3f); LQ-08 |
 | Twice a year | A training session with Dibon | Operations lead | Training |
+| Twice a year | The fallback runbook rehearsed with Dibon, in its tabletop: names, limits and forms checked | Operations lead | JN-19; HB-70 to HB-78; business continuity |
 | With each release | The handbook and manuals reviewed for the tasks that changed | Operations lead, with Dibon | Handbook rule 4 |

@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-651, FS-661, FS-668, FS-773, FS-774]
+review_ids: [FS-548, FS-651, FS-661, FS-668, FS-773, FS-774, FS-775]
 last_reviewed: 2026-10-12
 ---
 
@@ -68,7 +68,7 @@ its own payments.
   acknowledgement, then every hour; for a site lost, back within 4 hours,
   with at most 5 minutes of data to recover from M-Pesa's and the bank's
   records (warm standby, deployment §1); every manual act entered within
-  one working day of recovery (proposed).
+  one working day of recovery (owner, FS-775).
 - **Moments that matter:** the first call, which says what still works
   and what not to do; a borrower paying during the outage, who must find
   the payment counted, on its own date, without a penalty; coming back,
@@ -121,7 +121,7 @@ its own payments.
 |---|---|---|---|---|
 | 1 | Health checks fail from the second site and from Dibon central; a severity 1 incident opens and the on-call engineer is phoned, then the next in the rota, then the CTIO | Platform; on-call engineer | — | RO-16, RO-17, RO-18 |
 | 2 | Within 30 minutes of acknowledging, Dibon calls and emails Roan Capital's operations and incident contacts: what happened, whether money can move and balances are right, what to do and not do ("release no payouts from the platform until we confirm"), who leads, and when the next update comes. No personal data in the notice | Customer experience; incident lead | — | RO-18 |
-| 3 | Roan Capital's operations lead decides to enter safe mode and opens its fallback runbook (handbook §7). Payouts on the platform are held; new ones queue | Operations lead; on-call engineer | — | SE-24, RL-10 |
+| 3 | Roan Capital's operations lead decides to enter safe mode and opens its fallback runbook (handbook HB-70 to HB-78). Payouts on the platform are held; new ones queue | Operations lead; on-call engineer | — | SE-24, RL-10 |
 | 4 | Borrowers keep paying Roan Capital's paybill from the M-Pesa menu; with our validation check down, M-Pesa completes the payment anyway, and Safaricom's own SMS confirms it to the payer. Every reminder already sent carries the paybill | Borrower | — | MF-10, MF-13 |
 | 5 | A payout that cannot wait (a disbursement promised today) is made by hand from the M-Pesa business portal or internet banking, by two people under Roan Capital's own control, each written in the outage log with its amount, payee, reference and time | Finance officer; signatories | — | RL-14 |
 | 6 | An approval that cannot wait is made on the manual approval form, signed by the approvers the chain would name. Calls, complaints and promises to pay are written in the outage log with the time received | Approvers; credit officers; complaints handler | — | MF-28 |
@@ -150,17 +150,14 @@ its own payments.
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| SE-24, safe mode decided in advance (steps 3, 11) | R2 | The on-call engineer holds payouts by configuration on the operations lead's word; the rest of safe mode's rules already hold in R1 (M-Pesa's validation fallback set to complete at onboarding; RL-10 and RL-14 against double payment; manual acts approved afterwards) | Bring SE-24 into R1: every R1 journey's outage row relies on it |
 | SE-23, a clean rebuild from code (3g) | R2 | A restore into an environment rebuilt by hand from the deployment's records, slower and less certain | Accept for R1; first in R2 |
-| The second site for warm standby (step 8) | Open: its provider (deployment §1) | Recovery from backups: about a day, as cold standby | Settle the provider before Roan Capital's go-live, or agree cold standby in its contract |
+| The second site for warm standby (step 8) | Open: its provider (deployment §1) | Recovery from backups: about a day, as cold standby | Settle the provider before Roan Capital's go-live: its contract takes warm standby (owner, FS-775) |
 | Messages during an outage (steps 2, 7) | The incident notices are written by people, not templates in the messaging catalogue | Customer experience writes each from the notice's six points (incident management §4) | Accept for R1; the notice templates written before go-live, as incident management §4 says |
 
 ## 5 · Open questions
 
-- **For Roan Capital** (its fallback runbook, onboarding OB-COM-23): who
-  decides to enter and leave safe mode; who may pay out by hand, within
-  what limit; its manual approval form; whom we call first, and second.
-- **For the owner:** bringing SE-24 into R1; the target of one working
-  day to enter every manual act; whether Roan Capital's contract takes
-  warm standby (4 hours) or cold (about a day) until the second site is
-  settled.
+- **For Roan Capital** (its fallback runbook, onboarding OB-COM-23;
+  delivery map, open answer 27): the names and limits in handbook §7: who
+  decides to enter and leave safe mode; who may pay out by hand, and
+  within what limit; its manual approval form; whom we call first, and
+  second.

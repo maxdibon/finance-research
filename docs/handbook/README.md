@@ -5,7 +5,7 @@ kind: handbook
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-771, FS-772]
+review_ids: [FS-771, FS-772, FS-775]
 last_reviewed: 2026-10-12
 ---
 
@@ -76,4 +76,4 @@ and the reader.
 | 4 · Every day | The accountant's morning; unplaced payments; the end-of-day window | JN-17, JN-16 | When those journeys are agreed |
 | 5 · Lending | Application to disbursement; bank payouts; restructures; settlement | JN-04, JN-13, JN-06, JN-14 | When those journeys are agreed |
 | 6 · Customers | Complaints; documents and data requests | JN-08, JN-07 | When those journeys are agreed |
-| 7 · When things go wrong | The fallback runbook; incidents; who to call at Dibon | JN-19; OB-COM-23 | With JN-19 |
+| [7 · When things go wrong](when-things-go-wrong.md) | HB-70 to HB-78: safe mode, payments and payouts by hand, the manual form, the outage log, bringing it back in, M-Pesa down, a suspected attack | JN-19; OB-COM-23 | Drafted |
