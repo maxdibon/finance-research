@@ -11,7 +11,7 @@ used_by: []
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750]
+review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750, FS-751, FS-753]
 last_reviewed: 2026-10-12
 ---
 
@@ -20,7 +20,7 @@ last_reviewed: 2026-10-12
 How Dibon uses GitLab for R1: where code and documents live, how a change
 is reviewed and approved, how work is planned, and how a release reaches
 the clusters (FS-701, FS-750). It is the tool behind
-[ways of working](../ways-of-working.md): that page says who decides;
+[ways of working](../service-management/ways-of-working.md): that page says who decides;
 this one says how GitLab is set to enforce it. Sources: GitLab's
 documentation on merge requests, approvals, code owners, protected
 environments, deployment approvals, deploy freezes, push rules, SAML
@@ -80,7 +80,7 @@ Ultimate (§3).
 **Related:** implements
 [platform-security](../modules/platform-security.md); depends on
 [access-keycloak](access-keycloak.md); used by none yet; the rules it
-enforces are [ways of working](../ways-of-working.md) and
+enforces are [ways of working](../service-management/ways-of-working.md) and
 [service management](../service-management/README.md) §2; the release
 path is [flows](../architecture/flows.md) §4.
 
@@ -146,7 +146,7 @@ path is [flows](../architecture/flows.md) §4.
 
 - **One top-level group,** with a subgroup per area: `docs`, `code`,
   `platform` (manifests, runners).
-- **A GitLab group per role** (ways-of-working §1): `@dibon/owners`,
+- **A GitLab group per role** (ways-of-working §1): `@dibon/executives`,
   `@dibon/architects`, `@dibon/security`, `@dibon/compliance`,
   `@dibon/product`, `@dibon/delivery`, `@dibon/engineering`,
   `@dibon/service`, `@dibon/commercial`; filled from the engineers'
@@ -155,7 +155,7 @@ path is [flows](../architecture/flows.md) §4.
 
   | GitLab role | Who | Why |
   |---|---|---|
-  | Owner | The owner and one deputy | Two, so the group is never locked out; no more |
+  | Owner | The executive sponsor and one deputy | GitLab's own role, not ours: two, so the group is never locked out; no more |
   | Maintainer | The engineering lead and the service owner | Settings, protected branches and environments, deploy freezes |
   | Developer | Engineers, and **every role holder who approves**: the compliance and risk officer and the commercial lead included | Code owner approval needs Developer or above |
   | Planner | The delivery lead and the project manager | Plans issues and epics without changing code |

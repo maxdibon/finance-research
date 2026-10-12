@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750]
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753]
 last_reviewed: 2026-10-12
 ---
 
@@ -20,13 +20,15 @@ GitLab (FS-701).
 ## 1 · Roles, not people
 
 A role is a responsibility; one person may hold several, and today the
-CTIO holds many. Approvals go to roles, so they stay right as people
+CTIO holds many. "Executive sponsor" is the role that directs and pays;
+it is named so as not to be confused with the service owner, who runs
+the platform, or with GitLab's Owner role (FS-751). Approvals go to roles, so they stay right as people
 change. **No one approves their own work:** where the author is the only
 holder of a role, the role's deputy approves.
 
 | Role | Accountable for | Approves | Held today by |
 |---|---|---|---|
-| **Owner** | Direction, money, what we promise customers | Decisions that cost something (docs/decisions.md); scope and releases (docs/delivery-plan.md) | The CTIO |
+| **Executive sponsor** | Direction, money, what we promise customers | Decisions that cost something (docs/decisions.md); scope and releases (docs/delivery-plan.md) | The CTIO |
 | **Solution architect** | How the platform fits together | docs/architecture/, docs/specs/, the technology register, interfaces | The CTIO |
 | **Security lead** | Security controls, keys, access, the edge | docs/modules/platform-security.md, the endpoints and access specs; every spec's Threats section; any change to a security control | The CTIO |
 | **Compliance and risk officer** | The law, privacy, our duties to regulators; data protection officer if the Act requires one | docs/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Vacant: the CTIO until hired |
@@ -38,7 +40,8 @@ holder of a role, the role's deputy approves.
 
 **Deputies:** each role names one in GitLab, never the role holder;
 until there are more people, a second engineer deputises for the
-architect, the security lead and the engineering lead, and the owner for
+architect, the security lead and the engineering lead, and the executive
+sponsor for
 the compliance and risk officer.
 
 **In GitLab,** each role is a group (`@dibon/architects`,
@@ -48,7 +51,7 @@ so the approval follows the role. **GitLab only lets a Developer or
 above approve as a code owner,** so every role holder who approves needs
 that role, and a seat, the compliance and risk officer and the
 commercial lead included; the delivery lead plans as a Planner. The
-settings are in [the GitLab spec](specs/gitlab.md) §4.
+settings are in [the GitLab spec](../specs/gitlab.md) §4.
 
 ## 2 · A merge request, step by step
 
@@ -106,14 +109,15 @@ a person approves; never with a secret or a client's material.
    what it requires, what was argued against, what it costs) and, for a
    component, its technology register row.
 3. **It is approved by** the solution architect; and the security lead
-   when it touches a security control; and the owner when it costs money
+   when it touches a security control; and the executive sponsor when it
+   costs money
    or changes what a customer was promised. The service owner and the
    compliance and risk officer are consulted when it changes how we run
    or what the law requires.
 4. **It is decided within five working days,** or brought to the weekly
    meeting's architecture slot (twenty minutes), where open architecture
    questions are heard.
-5. **A disagreement** goes to the owner, who decides; the decision and
+5. **A disagreement** goes to the executive sponsor, who decides; the decision and
    what was argued against are recorded.
 6. **A decision is reopened** only by a new register row, never by
    editing the old entry.
@@ -124,7 +128,7 @@ a person approves; never with a secret or a client's material.
 ## 4 · Change advisory: the rules
 
 The kinds of change, what the customer is told, and the change calendar
-are in [service management](service-management/README.md) §2. These rules
+are in [service management](README.md) §2. These rules
 say who decides.
 
 1. **Standard changes** run without approval each time. The service owner

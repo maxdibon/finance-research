@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750]
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753]
 last_reviewed: 2026-10-12
 ---
 
@@ -36,6 +36,7 @@ optimise and automate.
 | Practice | Where |
 |---|---|
 | Incident management | [incident-management.md](incident-management.md): severities, the notification plan, what a notice says, the record and its closure |
+| Roles, merge requests, architecture review and change authority | [ways-of-working.md](ways-of-working.md): who approves what, how a change is made, the rules that stand in for review boards |
 | Problem management | [§4 Problems and known errors](#4--problems-and-known-errors) |
 | Change enablement | [§2 Change enablement](#2--change-enablement) |
 | Release management | Folded into [§2 Change enablement](#2--change-enablement) |
