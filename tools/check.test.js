@@ -684,6 +684,11 @@ test('specs: a capability counted in R1 that the delivery plan leaves out fails'
   assert.deepStrictEqual(names(f), ['specs']);
 });
 
+test('links: a link to a folder, not its README, fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'overview.md'), (t) => t.replace('](outreach/README.md)', '](outreach/)')));
+  assert.deepStrictEqual(names(f), ['links']);
+});
+
 // ── journeys: status, messages, stopping partway (FS-668) ────────────────
 const JN = (f) => path.join('docs', 'journeys', `${f}.md`);
 

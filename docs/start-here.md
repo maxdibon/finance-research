@@ -5,7 +5,7 @@ kind: guide
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714]
+review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719]
 last_reviewed: 2026-10-12
 ---
 
@@ -46,7 +46,7 @@ decisions follow from it.
 
 | Role | Read next | Why |
 |---|---|---|
-| Builder (developer, Odoo engineer) | The modules R1 touches: [mfi](modules/mfi.md), [mandates](modules/mandates.md), [identity](modules/identity.md), [core](modules/core.md), [access](modules/access.md), [platform-security](modules/platform-security.md); then the build specs in [specs/](specs/), the [journeys](journeys/README.md) and [testing.md](testing.md) | Each module's §3 is the list of capabilities, with status and phase; a spec says how one is built; a journey is what a person goes through, and each of its steps and failures is an acceptance item to test |
+| Builder (developer, Odoo engineer) | The modules R1 touches: [mfi](modules/mfi.md), [mandates](modules/mandates.md), [identity](modules/identity.md), [core](modules/core.md), [access](modules/access.md), [platform-security](modules/platform-security.md); then the build specs in [specs/](specs/README.md), the [journeys](journeys/README.md) and [testing.md](testing.md) | Each module's §3 is the list of capabilities, with status and phase; a spec says how one is built; a journey is what a person goes through, and each of its steps and failures is an acceptance item to test |
 | DevSecOps | [platform-security](modules/platform-security.md) (recovery tiers, incident commitments), [business-continuity.md](business-continuity.md), [operating-model.md](operating-model.md) | The commitments we make to customers are kept by the rota |
 | Customer experience and project management | [onboarding.md](onboarding.md), [customers.md](customers.md), [approval-pack.md](approval-pack.md) | What a customer needs to go live, and what it files with its regulator |
 | Odoo implementation | [business-suite](modules/business-suite.md), [sme-recon](modules/sme-recon.md), [bank-channel.md](bank-channel.md) | SME Recon and the bank channel are R3 |

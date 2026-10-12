@@ -1040,6 +1040,11 @@ function checkLinks(root, files) {
         if (/^[a-z]+:/i.test(m[1])) continue;
         const target = path.posix.normalize(path.posix.join(dir, m[1]));
         if (!exists(target)) { failures.push(fail('links', file, i + 1, `links to ${m[1]}, which does not exist`)); continue; }
+        // A folder opens as a bare listing, or not at all: link its README (FS-719).
+        if (fs.statSync(path.join(root, ...target.split('/'))).isDirectory()) {
+          failures.push(fail('links', file, i + 1, `links to the folder ${m[1]}; link ${m[1].replace(/\/?$/, '/')}README.md instead, and give the folder one if it has none`));
+          continue;
+        }
         if (m[2] && target.endsWith('.md') && !anchorsOf(read(root, target)).has(m[2])) failures.push(fail('links', file, i + 1, `links to ${m[1]}#${m[2]}, which is no heading there`));
       }
       for (const m of line.matchAll(/(?<![\w./-])(docs\/[\w./-]*\.md)\b/g)) {
