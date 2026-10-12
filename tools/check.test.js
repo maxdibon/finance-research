@@ -76,6 +76,16 @@ test('register: an unknown status fails', () => {
   assert.deepStrictEqual(names(f), ['register']);
 });
 
+test('register: an open row without a criticality fails', () => {
+  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\|) OPEN \| Low \|/m, '$1 OPEN | — |')));
+  assert.deepStrictEqual(names(f), ['register']);
+});
+
+test('register: a closed row still rated fails', () => {
+  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-001 \|[^|]*\|[^|]*\|) DECIDED \| — \|/m, '$1 DECIDED | High |')));
+  assert.deepStrictEqual(names(f), ['register']);
+});
+
 test('register: a heading holding table cells fails', () => {
   const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(# .*)$/m, '$1 | DECIDED | a note |')));
   assert.deepStrictEqual(names(f), ['register']);

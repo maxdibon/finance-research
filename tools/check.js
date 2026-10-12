@@ -28,6 +28,8 @@ const PUBLIC_PATHS = [path.join('docs', 'marketing'), path.join('docs', 'outreac
 
 const STATUSES = ['Live', 'Built', 'Designed', 'Planned'];
 const REVIEW_STATUSES = ['OPEN', 'DECIDED', 'ANSWERED', 'DECLINED'];
+// FS-779: every open row is rated; a closed row has none.
+const CRITICALITIES = ['Critical', 'High', 'Medium', 'Low'];
 const DIAGRAM_WIDTH = 100; // FS-579: was 78
 
 function walk(root, rel = '') {
@@ -86,7 +88,7 @@ function parseRegister(root) {
     if (!/^\| FS-\d{3} \|/.test(text)) return;
     const cells = text.split('|').slice(1, -1).map((c) => c.trim());
     rows.push({ line: i + 1, id: cells[0], raisedBy: cells[1], point: cells[2],
-      status: cells[3], notes: cells[4], cellCount: cells.length });
+      status: cells[3], criticality: cells[4], notes: cells[5], cellCount: cells.length });
   });
   return rows;
 }
@@ -104,11 +106,17 @@ function checkRegister(root) {
     if (row.id !== expected) {
       failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} out of sequence; expected ${expected}`));
     }
-    if (row.cellCount !== 5) {
-      failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} has ${row.cellCount} cells; expected 5`));
+    if (row.cellCount !== 6) {
+      failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} has ${row.cellCount} cells; expected 6`));
     }
     if (!REVIEW_STATUSES.includes(row.status)) {
       failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} status "${row.status}" not in ${REVIEW_STATUSES.join('/')}`));
+    }
+    if (row.status === 'OPEN' && !CRITICALITIES.includes(row.criticality)) {
+      failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} is open with criticality "${row.criticality}"; one of ${CRITICALITIES.join('/')}`));
+    }
+    if (row.status !== 'OPEN' && row.criticality !== '—') {
+      failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} is ${row.status} but still rated "${row.criticality}"; a closed row has —`));
     }
     if (!row.raisedBy) failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} has no raiser`));
     if (row.status === 'DECLINED' && !row.notes) {
@@ -1226,7 +1234,7 @@ function counts(root) {
   }
   const p = parsePartners(root);
   return {
-    register: { rows: rows.length, byStatus: tally(rows.map((r) => r.status)), byRaiser: tally(rows.map((r) => r.raisedBy)) },
+    register: { rows: rows.length, byStatus: tally(rows.map((r) => r.status)), openByCriticality: tally(rows.filter((r) => r.status === 'OPEN').map((r) => r.criticality)), byRaiser: tally(rows.map((r) => r.raisedBy)) },
     modules,
     journeys: journeyCounts(root),
     partners: {

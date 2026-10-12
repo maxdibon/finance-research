@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757]
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757, FS-780]
 last_reviewed: 2026-10-12
 ---
 
@@ -199,6 +199,31 @@ Act it is the controller and we its processor. What we give it:
 | Notices to customers | Odoo email templates |
 | A status page for customers (optional) | Gatus (Apache-2.0) or Uptime Kuma (MIT), self-hosted |
 
+### Whose record each is, and the link between them
+
+Two sets of records: Dibon's, for the platform and for institutions'
+requests to us; and each institution's own, in its own Odoo, for its
+customers and staff (FS-780). Neither copies the other; each names the
+other's reference.
+
+| Practice | Dibon's record | The institution's record | The link |
+|---|---|---|---|
+| Incidents | Dibon's Odoo Helpdesk, one ticket per incident ([incident management](incident-management.md)); paging in GoAlert; Grafana | Its outage log and fallback runbook (handbook HB-70 to HB-78) | Our notices by phone and email; the incident's reference on both sides |
+| Requests and questions | Dibon's Helpdesk, a ticket type each (§6) | Its own Helpdesk for its customers; the morning's ticket (JN-17) | Its staff raise a ticket to us, carrying its own ticket's reference, never its customers' data (rules for institutions 4) |
+| Problems and known errors | A problem ticket in Dibon's Helpdesk (§4); the fix a GitLab issue and merge request, each naming the other; known errors in Dibon's Odoo Knowledge | — | Release notes name the problems fixed; the service review goes through them |
+| Changes and releases | GitLab: merge requests, approvals, protected environments, deploy freezes, release notes (§2) | Its own changes (positions, approval chains, products) through the approval engine, by maker-checker | Release notes to each institution; its handbook reviewed with each release (handbook rule 4) |
+| Knowledge | Design: this repository and its reader. Engineering runbooks: GitLab, beside the code. The desk: Dibon's Odoo Knowledge | Its handbook, in its Knowledge or the reader (FS-772); training | One source each, published, never copied by hand |
+| Configuration | Generated from GitOps (§3) | Its settings, with their history in the approval engine | The configuration record lists both |
+| Access | Dibon's access register; the central Keycloak as code (FS-777) | Its Keycloak realm, Odoo's Employees app, the quarterly review (HB-17) | Compared each month (SE-26) |
+| Complaints | None: we never decide one | Its complaints register (JN-08) | One about how the platform behaved becomes a ticket to us (§6) |
+
+**The bridge, in R1:** the institution's staff are portal users of
+Dibon's Odoo, which needs no licence (FS-026), and raise tickets there,
+with email to our desk as the fallback. Each ticket carries the
+institution's own reference, and ours goes back into its ticket. The two
+Odoos are not connected by API in R1; a connection that mirrors status
+both ways can come later.
+
 **Not bought:** a separate service-management suite (ServiceNow, Jira
 Service Management, Freshservice), which would split the record of every
 request across two systems and hold customer data outside Kenya. Of the
@@ -215,6 +240,7 @@ as part of the operating system ([architecture](../architecture/README.md)
 | A status page | None; customers learn of an incident from our notices | Optional; offered first to the Complete tier |
 | The merge-request template and the pipeline's change-window rule | Not built | Build with SE-23 |
 | Helpdesk ticket types, SLA policies, request types | Not configured | Configure before R1 go-live |
+| The bridge from an institution's Helpdesk to ours | Portal and email in R1 (§7) | Its staff's portal accounts set up at onboarding; an API connection later (FS-780) |
 | Service-level targets | Proposed defaults ([§5](#5--service-levels)) | Agree in Roan Capital's contract |
 | The bastion that records engineers' sessions where Dibon runs the instance | Warpgate to evaluate; Teleport's community edition is no longer open source ([technology](../architecture/technology.md)) | Evaluate before R1 go-live (FS-645, FS-695) |
 | An ISO/IEC 20000-1 certification body | No KENAS-accredited body found; SGS advertises it ([compliance](../compliance.md) LC-10) | Stay "in line with" until a route is confirmed |

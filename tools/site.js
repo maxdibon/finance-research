@@ -103,7 +103,8 @@ function indexIds(root, files) {
       if (!line.startsWith('|')) continue;
       const c = cells(line);
       if (!ID_CELL.test(c[0] || '') || defs.has(c[0])) continue;
-      let target = { page: pageOf(f), anchor: c[0], text: c[1] || '' };
+      // A register row's second cell is its raiser; its point is the third.
+      let target = { page: pageOf(f), anchor: c[0], text: (c[0].startsWith('FS-') ? c[2] : c[1]) || '' };
       // A journey's index row points at the journey itself.
       const link = c[0].startsWith('JN-') && (c[c.length - 1].match(/\]\(([^)]+\.md)\)/) || [])[1];
       if (link) target = { page: pageOf(path.posix.join(path.posix.dirname(f), link)), anchor: null, text: c[1] };
@@ -443,6 +444,35 @@ function shell(title, page, content, note = '') {
 const NAMES_MISSING = (f) => f.check === 'names' && /protected-names list missing/.test(f.message);
 const READER_NOTE = 'Built for reading, without the protected-names check: this clone has no list. Commits still need the full checks.';
 
+// The register stays one table in id order, its record; the Review page
+// leads with the open rows by criticality, then the register (FS-779).
+const CRITICALITY_ORDER = ['Critical', 'High', 'Medium', 'Low'];
+
+function reviewBody(body) {
+  const lines = body.split('\n');
+  const at = lines.findIndex((l) => /^\| Id \| Raised by \| Point \| Status \| Criticality \| Notes \|$/.test(l));
+  if (at < 0) return body;
+  const rows = lines.filter((l) => /^\| FS-\d{3} \|/.test(l)).map((l) => l.split('|').slice(1, -1).map((s) => s.trim()));
+  const open = rows.filter((c) => c[3] === 'OPEN')
+    .sort((a, b) => CRITICALITY_ORDER.indexOf(a[4]) - CRITICALITY_ORDER.indexOf(b[4]) || a[0].localeCompare(b[0]));
+  const tally = (list, i) => list.reduce((m, c) => { m[c[i]] = (m[c[i]] || 0) + 1; return m; }, {});
+  const byCrit = tally(open, 4);
+  const byStatus = tally(rows.filter((c) => c[3] !== 'OPEN'), 3);
+  const summary = [
+    '## Open, by criticality',
+    '',
+    `${open.length} open: ${CRITICALITY_ORDER.map((k) => `${byCrit[k] || 0} ${k}`).join(', ')}. Closed: ${Object.entries(byStatus).map(([k, n]) => `${n} ${k.toLowerCase()}`).join(', ')}.`,
+    '',
+    '| Criticality | Id | Point |',
+    '|---|---|---|',
+    ...open.map((c) => `| ${c[4]} | ${c[0]} | ${c[2]} |`),
+    '',
+    '## The register, in id order',
+    '',
+  ];
+  return [...lines.slice(0, at), ...summary, ...lines.slice(at)].join('\n');
+}
+
 function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
   const all = runAll(root);
   const excused = opts.reader ? all.filter(NAMES_MISSING) : [];
@@ -459,9 +489,11 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
   const cited = new Map();
   const pages = [];
   for (const f of files) {
-    const { fields, body } = frontMatter(read(root, f));
+    const fm = frontMatter(read(root, f));
+    const { fields } = fm;
+    const body = f === 'REVIEW.md' ? reviewBody(fm.body) : fm.body;
     const page = pageOf(f);
-    const journey = f.startsWith('docs/journeys/') && !f.endsWith('README.md');
+    const journey =f.startsWith('docs/journeys/') && !f.endsWith('README.md');
     const rows = new Set();
     if (journey) {
       let sec = '';
