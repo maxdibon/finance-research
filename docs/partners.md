@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-last_reviewed: 2026-10-07
+last_reviewed: 2026-10-12
 ---
 
 # Partners — candidates, conversations and selection decisions
@@ -138,4 +138,5 @@ Statuses: **OPEN** · **DECIDED** (recorded in docs/decisions.md) ·
 | C13 | Sender ID per institution | Each institution messages under its own name (messaging MS-03) |
 | C14 | Current, published work on CBK, payments and lending regulation | The questions are new (lender regulations, NPS Bill 2026); a firm that is already writing on them is already reading them |
 | C15 | Conflicts: acts for a competitor, or for Safaricom or a bank on the other side | A conflict surfaces when we most need the advice |
+| C17 | Accepts our partner rules (docs/rules.md §3): a processing agreement first, data in Kenya or a named transfer, only what each call needs, no standing access, a breach told within 24 hours, yearly evidence, sub-processors named, data returned or deleted at exit | Their failure becomes ours: the institution and its regulator hold us to account (FS-713) |
 | C16 | Fees suited to the matter | A small lender's licence application cannot carry a top-tier rate |

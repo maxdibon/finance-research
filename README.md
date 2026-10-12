@@ -51,6 +51,7 @@ docs/                the work. The only place we edit
   overview.md        the portfolio story; links modules, restates nothing
   onboarding.md      what each customer and product needs to go live
   compliance.md      licences, registrations and certifications
+  rules.md           what we hold ourselves, customers and partners to
   regulation.md      the law register: what applies and what it drives
   approval-pack.md   what customers file with their regulator about us
   assurance.md       testing for institutions we do not supply; conflicts
