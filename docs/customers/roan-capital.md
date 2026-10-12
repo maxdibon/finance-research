@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773]
 last_reviewed: 2026-10-12
 ---
 
@@ -169,6 +169,7 @@ choice (MF-04, FS-619).
 | 24 | The accountant's morning (JN-17): who receives the morning report besides the accountant, and who deputises; the accountant's hours; and where Roan Capital keeps its books today (Odoo, another package, spreadsheets), which decides whether the core's daily totals need posting to Odoo (BS-08, phase 2) | FS-765 | Open |
 | 25 | Do you collect any repayments through Airtel Money (or T-Kash)? If so, its rail (RL-04) and its automatic chase come into R1 with M-Pesa | FS-767 | Open |
 | 26 | Staff access (JN-18): who approves a staff member's role changes; who your two administrators are; who tells the administrator of joiners, moves and leavers; and whether staff use Roan Capital's own devices. The role list itself is open answer 7 | FS-768 | Open |
+| 27 | Its fallback runbook for an outage (JN-19; onboarding OB-COM-23): who decides to enter and leave safe mode; who may pay out by hand, and within what limit; its manual approval form; whom we call first and second. And whether its contract takes warm standby (back in 4 hours) or cold (about a day) until our second site is settled | FS-773 | Open |
 
 The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text
