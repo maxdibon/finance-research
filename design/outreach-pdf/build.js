@@ -7,7 +7,8 @@
 //
 //   node design/outreach-pdf/build.js
 //
-// Writes build/outreach/<name>.html and .pdf, which git ignores.
+// Writes build/outreach/<name>.html and .pdf, which git ignores, then the
+// spreadsheets to answer them (questionnaire.py).
 
 'use strict';
 
@@ -43,8 +44,11 @@ const inline = (s) => esc(s).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
 // The appendices use three shapes: a bold line (a heading), a numbered
 // list whose items may wrap, and a plain paragraph.
+// Each question is numbered by its section's letter (A1, A2), so a reply
+// by email can cite it, and the spreadsheet uses the same ids (FS-730).
 function toHtml(md) {
   let title = '';
+  let section = '';
   const html = md.split(/\n\s*\n/).map((block) => {
     const lines = block.split('\n');
     if (/^\d+\. /.test(lines[0])) {
@@ -53,14 +57,15 @@ function toHtml(md) {
         if (/^\d+\. /.test(l)) items.push(l.replace(/^\d+\. /, ''));
         else items[items.length - 1] += ' ' + l.trim();
       }
-      return `<ol>${items.map((i) => `<li>${inline(i)}</li>`).join('')}</ol>`;
+      return `<ol class="q">${items.map((i, n) => `<li><span class="qid">${section}${n + 1}</span><span>${inline(i)}</span></li>`).join('')}</ol>`;
     }
     const joined = lines.map((l) => l.trim()).join(' ');
     const bold = joined.match(/^\*\*([^*]+)\*\*$/);
     if (bold && !title) { title = bold[1]; return ''; }
-    if (bold) return `<h2>${esc(bold[1])}</h2>`;
+    if (bold) { section = (bold[1].match(/^([A-Z]). /) || [, ''])[1]; return `<h2>${esc(bold[1])}</h2>`; }
     // A bold lead-in with text after it: the lead-in is the heading.
     const lead = joined.match(/^\*\*([^*]+)\*\*\s+(.+)$/);
+    if (lead && title) section = (lead[1].match(/^([A-Z]). /) || [, ''])[1];
     if (lead && title) return `<h2>${esc(lead[1].replace(/\.$/, ''))}</h2><p>${inline(lead[2])}</p>`;
     return `<p>${inline(joined)}</p>`;
   }).join('\n');
@@ -107,6 +112,9 @@ main { padding: 7mm 18mm 16mm; }
 main > p:first-child { color: var(--muted); font-style: italic; }
 h2 { break-after: avoid; margin: 5mm 0 2mm; padding-bottom: 1.5mm; border-bottom: 0.6mm solid var(--amber); font: 700 10.5pt/1.3 var(--display); color: var(--plum); }
 ol { margin: 0; padding-left: 6mm; }
+ol.q { list-style: none; padding-left: 0; }
+ol.q li { display: grid; grid-template-columns: 9mm 1fr; padding-left: 0; }
+.qid { font: 700 8.5pt/1.6 var(--display); color: var(--plum); }
 li { margin: 0 0 1.2mm; padding-left: 1mm; break-inside: avoid; }
 li::marker { font: 700 9pt var(--display); color: var(--plum); }
 strong { color: var(--aubergine); }
@@ -156,3 +164,7 @@ for (const [letter, kicker, name] of [
   fs.writeFileSync(htmlOut, page({ kicker, title, html }));
   printPdf(htmlOut, path.join(OUT, `${name}-${issued}.pdf`));
 }
+
+// The same questions as spreadsheets to answer, one per bank (FS-730).
+const py = process.platform === 'win32' ? 'py' : 'python3';
+execFileSync(py, [path.join(__dirname, 'questionnaire.py')], { stdio: 'inherit' });

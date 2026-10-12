@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-033, FS-125, FS-126, FS-344, FS-691, FS-715, FS-716, FS-717, FS-718, FS-722, FS-723, FS-724, FS-725, FS-726, FS-727]
+review_ids: [FS-033, FS-125, FS-126, FS-344, FS-691, FS-715, FS-716, FS-717, FS-718, FS-722, FS-723, FS-724, FS-725, FS-726, FS-727, FS-729, FS-730]
 last_reviewed: 2026-10-12
 ---
 
@@ -23,12 +23,14 @@ every letter.
 
 **Before sending:**
 
-- **The letter goes in the email body; its checklist as a PDF on Dibon's
-  letterhead** (FS-717): `node design/outreach-pdf/build.js` prints one
-  PDF per bank to build/outreach/, from this file: Dibon-checklist-for-NCBA
-  and -for-KCB (Appendix A), -for-SBM-Bank (Appendix B). No bank sees
-  another's name (FS-722). A signed letter on letterhead only
-  when a bank asks for one.
+- **The letter goes in the email body; attach the checklist as a PDF to
+  read and as a spreadsheet to answer** (FS-717, FS-730), both naming
+  only that bank, the questions numbered alike (A1, A2), the
+  spreadsheet's answers chosen from a list. One command builds both,
+  from this file, to build/outreach/: `node design/outreach-pdf/build.js`
+  (Dibon-checklist-for-… and Dibon-questionnaire-for-… NCBA, KCB and
+  SBM-Bank). No bank sees another's name (FS-722). A signed letter on
+  letterhead only when a bank asks for one.
 
 - **Fill in names, account numbers and contacts in the email client,
   never in this file.** Placeholders are in `[square brackets]`.
