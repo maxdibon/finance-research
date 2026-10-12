@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-668, FS-688, FS-763]
+review_ids: [FS-548, FS-668, FS-688, FS-763, FS-764]
 last_reviewed: 2026-10-12
 ---
 
@@ -44,8 +44,9 @@ customer for it.
 - **Ends when:** the customer has the outcome in writing, with its
   reasons and where to go if not satisfied; any remedy is posted; the
   record is closed with the regulation's fields.
-- **Target:** acknowledged the same working day; resolved within 14 days
-  (proposed); never beyond 30 days from the customer's report (reg 40(5)).
+- **Target:** acknowledged on logging; resolved within 14 days; never
+  beyond 30 days from the customer's report (reg 40(5)). Both agreed by
+  the owner (FS-764).
 - **Moments that matter:** the first contact, where the customer must
   feel heard once, with a reference, and never have to tell the story
   twice; the wait, where they know the date they will be answered by and
@@ -117,7 +118,7 @@ customer for it.
 
 | # | At step | What happens | Capabilities |
 |---|---|---|---|
-| a | 2 to 11 | **The clock runs short.** At day 25 with no outcome, the handler and the manager are warned; at day 30 the overdue event fires, the manager takes it over, and the breach is recorded with its reason. The customer is told the new date (T41); the complaint is still answered | MF-28, KC-15 |
+| a | 2 to 11 | **The clock runs short.** At day 12 the handler is warned of the 14-day target; at day 25 with no outcome, the handler and the manager are warned; at day 30 the overdue event fires, the manager takes it over, and the breach is recorded with its reason. The customer is told the new date (T41); the complaint is still answered | MF-28, KC-15 |
 | b | 1 | **The complaint is made to Dibon,** by email or to our desk. We pass it to Roan Capital the same working day and do not answer it; its clock runs from when we received it, since the customer reported it then | BS-01 |
 | c | 1 | **It concerns the customer's personal data:** access, a correction, an objection. It is a rights request with its own, shorter clock (seven days for access, fourteen for a correction; JN-07), and a complaint as well where they complain; the answer names the Data Commissioner | MF-28, ID-17 |
 | d | 1 | **"A loan I never took," or a payment the customer did not make.** It goes to the restricted compliance team in the helpdesk; the account is blocked at once; collection on the loan pauses; the evidence (the identity checks, the signing, the phone that confirmed it) is gathered; Roan Capital decides whether to report to the police. The customer still gets the acknowledgement and the answer | BS-01, AC-14, FC-12, ID-15 |
@@ -134,7 +135,6 @@ customer for it.
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| MF-39's pause on a disputed amount (step 6) | MF-39 is in R1, but its text does not yet say that a disputed amount holds the ladder | The handler pauses the loan's collection by hand and notes it on the complaint | Add the pause to MF-39 and the lender rules before the build |
 | IN-18, the governance view with the complaints clock, and the report to CBK (step 12) | phase 2 | A monthly export from the complaints register with reg 40(6)'s fields, in whatever form CBK sets | Accept for R1 |
 | WhatsApp as a channel to complain (MS-06) | Not in R1 (LQ-10) | SMS, phone, email and letter | Accept for R1 |
 | Replies in Flowza's inbox (step 1) | Not yet fit for institutions' customers (FS-664 to FS-666) | SMS replies reach messaging's inbound path and are added to the complaint | As JN-16 |
@@ -146,9 +146,6 @@ customer for it.
   (delivery map, open answer 22); whether interest keeps accruing on an
   amount in dispute while the complaint runs, corrected if it is upheld
   (open answer 23).
-- **For the owner:** acknowledging every complaint on logging rather than
-  by day 7, and a 14-day working target inside the 30 days, both
-  proposed here.
 - **For the Odoo engineer:** whether Helpdesk's service-level policies
   can carry the three clocks, or the lender rules service computes them
   from desk events (lender-rules §2.8).

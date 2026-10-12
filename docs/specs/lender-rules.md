@@ -11,7 +11,7 @@ used_by: [end-of-day-runner]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764]
 last_reviewed: 2026-10-12
 ---
 
@@ -301,8 +301,12 @@ after 48 hours is confirmed in writing (40(4)); resolved within 30 days
 (40(5)); a record kept (40(6)) and reported to CBK (40(7)).
 
 **Behaviour.** Each complaint carries received-at, channel (oral or
-written) and three clocks: 48 hours, 7 days, 30 days, with warnings at
-day 5 and day 25 and an overdue event on any breach. The record holds
+written) and three clocks: 48 hours, 7 days, 30 days, counted in calendar
+days from the customer's report. It is acknowledged on logging (T16), not
+by day 7, and worked to a target of 14 days inside the 30 (owner,
+2026-10-12, FS-764); warnings at day 12, for the target, and day 25, and
+an overdue event on any breach; the 7-day clock stays as the backstop if
+the acknowledgement was not delivered. The record holds
 40(6)'s fields: date, nature, status, reason pending, time to resolve,
 outcome.
 
@@ -319,6 +323,10 @@ warning days 40 to 47, hard closure day 47 (days from disbursement).
 
 **The ladder** is a collection state the service moves by day, separate
 from non-performing status. The day-25 reminder obeys working hours.
+**A disputed amount holds it** (MF-39, FS-764): while a complaint about an
+amount is open (§2.8), no reminder or ladder action is taken on that
+amount; the hold is recorded on the loan and lifts when the complaint
+closes. Whether interest accrues on it meanwhile is Roan open answer 23.
 Hard closure stops new lending and opens recovery; the cap still runs,
 and a vehicle sale still waits for its 30-day notice. Unless the
 agreement sets a shorter default period, the loan becomes non-performing
@@ -465,6 +473,8 @@ exception to the accountant's queue (MF-12).
 | A16 | Template with a banned term | Approval | Refused | MF-26, 30(1)(b) |
 | A17 | Written complaint, unresolved | Day 7 with no acknowledgement | Overdue event | MF-28, 40(3) |
 | A18 | Oral complaint | 48 hours unresolved | Pending event; written confirmation sent (messaging T41) | MF-28, 40(4) |
+| A19 | Complaint logged | Day 12 with no outcome | Target warning to the handler | MF-28 (FS-764) |
+| A20 | KES 5,000 of the day-30 amount disputed in an open complaint | Day 30 default run | No default-run message or action on the KES 5,000; the rest proceeds; the hold recorded | MF-39, MF-28 |
 
 ## 9 · Open questions
 
