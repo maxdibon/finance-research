@@ -11,7 +11,7 @@ used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, 
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763]
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768]
 last_reviewed: 2026-10-12
 ---
 
@@ -155,7 +155,7 @@ every consumer has moved. A name not in this table is not published.
 | rails | `kapu.rails.payment.received`, `.payout.sent`, `.payout.confirmed`, `.payout.failed`, `.payout.unknown`, `.payout.cancelled`, `.payout.returned`, `.recall.completed`, `.reversal.completed` | Rails | Kapu MFI, recon |
 | collect | `kapu.collect.payment.unplaced`, `.payment.still_unplaced`, `.payment.returned` | Collect | Messaging (T28 to T30) |
 | recon | `kapu.recon.exception.opened`, `.exception.resolved` | Reconciliation | Service desk, insights |
-| access | `kapu.access.role.changed`, `.blocked`, `.recovered` | Access | Messaging (T23, T25), audit |
+| access | `kapu.access.role.changed`, `.user.disabled`, `.blocked`, `.recovered` | Access | Messaging (T23, T25, T42), audit |
 | identity | `kapu.identity.sim.changed` | Identity | Messaging (T24), access |
 | messaging | `kapu.messaging.message.sent`, `.delivered`, `.failed`, `.held`, `.blocked`, `.opted_out` | Messaging | Products, Odoo, observability |
 

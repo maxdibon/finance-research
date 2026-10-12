@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532, FS-582, FS-591, FS-620, FS-689, FS-763]
+review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532, FS-582, FS-591, FS-620, FS-689, FS-763, FS-768]
 last_reviewed: 2026-10-12
 ---
 
@@ -79,6 +79,7 @@ officer and the institution (FS-063).
 | PR-17 | Investor loan tapes: pseudonymised loan-level data an institution shares with its funders | insights IN-17 | Borrowers | Confidential | The institution's legitimate interest or contract with its funder, to confirm per institution | As the data-sharing agreement sets, no longer than the funding | Needed | Only if a funder is abroad: the institution's transfer, under s.48 |
 | PR-18 | Credit decisioning: statement metrics, behaviour scores and internal risk classes, which is profiling | decisioning DE-01 to DE-04; DE-06 in phase 2 | Borrowers and applicants | Confidential; forbidden inputs never read (social media, the characteristics the Act names in its definition of profiling) | Contract (assessing the loan asked for); the institution's legitimate interest for risk classes, to confirm per institution | With the loan file: 7 years, as PR-02 | Needed (profiling; whether the Act's impact-assessment duty applies is to confirm) | No |
 | PR-19 | Complaints: the register, its clocks, the evidence gathered and the outcome | mfi MF-28; business-suite BS-01; JN-08 | Borrowers, guarantors, payers, anyone who complains; staff complained about | Confidential; Restricted where it alleges fraud or concerns a member of staff (the helpdesk's restricted team) | Legal obligation (lender regulations reg 40) | 7 years after closing (documents DT-26, proposed) | Not needed | No |
+| PR-20 | Staff accounts: identity, roles, authenticators and the history of every grant and exit, for an institution's staff and Dibon's engineers | access AC-01, AC-02, AC-09, AC-16; platform-security SE-26; JN-18 | Institutions' staff; Dibon's staff | Confidential | Contract (employment); legitimate interest (security); legal obligation (who approved what, kept with the records it touched) | The account while employed; its grants and exits 7 years after leaving, with the audit trail (proposed) | Not needed | No |
 
 ## Open
 

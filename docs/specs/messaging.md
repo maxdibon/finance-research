@@ -11,7 +11,7 @@ used_by: [access-keycloak, lender-rules, observability-grafana]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763]
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768]
 last_reviewed: 2026-10-12
 ---
 
@@ -213,6 +213,7 @@ Event names are in the event bus catalogue (event-bus-kafka §5).
 | T23 | Access blocked, at the person's request | `kapu.access.blocked` | Security | Every channel | how to recover | AC-14 |
 | T24 | SIM changed: money movement held | `kapu.identity.sim.changed` | Security | Every channel but the changed SIM | how to re-verify | ID-13 |
 | T25 | Recovered: new device, number or PIN | `kapu.access.recovered` | Security | Every channel | what changed, lower limits until when | AC-15 |
+| T42 | Your access changed | `kapu.access.role.changed`, `kapu.access.user.disabled` | Security | Email, to the staff member's work address | the role granted or removed, or the account disabled; who approved it; when; "if you did not expect this, tell your administrator" | AC-09; JN-18 |
 | T31 | Phone confirmation code | Identity, on enrolment | Code | SMS | code, minutes valid | ID-11, AC-13 |
 | T32 | Document upload link | Identity, from the checklist | Transactional | Email, or SMS | single-use link, hours valid | ID-15 |
 
