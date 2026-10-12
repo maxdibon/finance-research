@@ -7,19 +7,24 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-633, FS-634, FS-668, FS-765]
+review_ids: [FS-548, FS-633, FS-634, FS-668, FS-765, FS-766]
 last_reviewed: 2026-10-12
 ---
 
 # JN-17 · The accountant's morning, from the night's report to a day signed off
 
 Each night the end-of-day runner checks the day, closes it in Kapu Core,
-runs the lender rules and reconciles (end-of-day-runner §3). At 06:00 the
-morning report reaches Roan Capital's accountant. This journey is what
-they do with it: read whether the night closed, work the exceptions and
-the reconciliation breaks, release a held close, and sign the day off,
-so that every shilling the ledger shows is matched to M-Pesa or the bank,
-and every one it does not is owned by someone with a date.
+runs the lender rules and reconciles (end-of-day-runner §3). **The
+matching is not the accountant's work:** every M-Pesa repayment is posted
+and matched to its loan as it lands, a payment whose confirmation never
+arrived is found and posted automatically, and every bank statement line
+is matched to its instruction, all day and overnight. At 06:00 the
+morning report tells the accountant how much matched by itself and what
+did not. This journey is what they do with the remainder: confirm the
+night closed, settle the few items the rules could not, release a held
+close, and sign the day off, so that every shilling the ledger shows is
+matched to M-Pesa or the bank, and every one that is not is owned by
+someone with a date.
 
 ## 1 · Who and where
 
@@ -34,11 +39,12 @@ and every one it does not is owned by someone with a date.
 - **Ends when:** the night's close is confirmed; every exception and
   break is matched, placed, or owned with a due date; the morning's
   ticket is closed with the accountant's note, which is the sign-off.
-- **Target:** every exception owned by 10:00 and the morning signed off
-  by 12:00 (proposed); a held close released before the institution's
+- **Target:** at least 98% of the day's transactions matched
+  automatically, published each cycle (proposed); every exception owned
+  by 10:00 and the morning signed off by 12:00 (proposed); a held close released before the institution's
   working day starts, or overridden by two people.
 - **Moments that matter:** the report's first line, which must say
-  plainly whether the night closed; a held close, where the accountant
+  plainly whether the night closed and how much matched by itself; a held close, where the accountant
   needs to know that payments are still landing and no borrower is
   charged wrongly; the figures agreeing (ledger, M-Pesa, bank), which is
   what lets them sign.
@@ -58,7 +64,8 @@ and every one it does not is owned by someone with a date.
         v
   3 Loans the close could not process: each traced and fixed
         v
-  4 Reconciliation breaks: M-Pesa and the bank against the ledger
+  4 Matched automatically; the accountant settles only what the rules
+    could not
         |-- a payment posted twice ................... reversed by two people (3d)
         |-- a break nobody can explain ............... nothing posted by hand (3e)
         v
@@ -82,10 +89,10 @@ and every one it does not is owned by someone with a date.
 
 | # | Step | Who | Messages | Capabilities |
 |---|---|---|---|---|
-| 1 | At 06:00 the morning report reaches the accountant and our operations by email: closed, held or failed; each check's result; the time of each step; loans closed and locked; any hold or override; reconciliation breaks and unapplied money, as counts and amounts. The morning's ticket opens in the helpdesk with the same summary and links into the back office | Platform | — | KC-07, RO-04, RO-17, BS-01 |
-| 2 | The accountant signs in and opens the exception queue, ordered by the time left on each item's SLA, not by amount, each with its owner and age; fields they need not see are masked | Accountant | — | AC-02, AC-16, RO-05, MF-12, RO-19 |
+| 1 | At 06:00 the morning report reaches the accountant and our operations by email: closed, held or failed; the share of the day's transactions matched automatically, by channel; each check's result; the time of each step; loans closed and locked; any hold or override; reconciliation breaks and unapplied money, as counts and amounts. The morning's ticket opens in the helpdesk with the same summary and links into the back office | Platform | — | KC-07, RO-04, RO-17, BS-01 |
+| 2 | The accountant signs in and opens the exception queue, which holds only what automatic matching could not settle, ordered by the time left on each item's SLA, not by amount, each with its owner and age; fields they need not see are masked | Accountant | — | AC-02, AC-16, RO-05, MF-12, RO-19 |
 | 3 | Each loan the close could not process is listed with its ticket. Our operations find the cause; once fixed, the loan closes in the next run or the catch-up, with every accrual dated as it should have been | Accountant; Dibon operations | — | MF-12, KC-07, KC-04 |
-| 4 | Each break is worked by its outcome: unmatched on our side (a repayment M-Pesa recorded and the ledger did not, found by Pull Transactions), unmatched at the counterparty, matched with a variance, or a duplicate. A missed repayment is posted with its own M-Pesa date, and the borrower gets the receipt; a cut-off difference is held in transit with the day it should clear, a break only if it does not | Accountant | T06 | RO-02, RO-04, RL-20, RL-07, MF-10, MF-22, KC-09 |
+| 4 | Matching has already run without the accountant: each M-Pesa repayment posted as it landed and matched to its loan by its reference or paying phone; a repayment whose confirmation never arrived found by Pull Transactions and posted with its own M-Pesa date, its receipt sent; each bank statement line matched to its instruction; a cut-off difference held in transit until the day it should clear. The accountant sees only what the rules could not settle, each by its outcome: a suggested match to approve, a variance outside tolerance, an item unmatched on our side or the counterparty's, a duplicate | Platform; accountant | T06 | RO-02, RO-04, RL-20, RL-07, MF-10, MF-22, KC-09 |
 | 5 | Payments that could not be placed are worked through the unplaced-payment path (JN-16): those the payer has answered are placed today; the rest follow its reminders, calls and day-7 return | Accountant | — | CO-21, MF-10 |
 | 6 | Disbursements: one with no answer from the rail or bank is pending, never failed, until a status query or the statement settles it, and never resent blind; a return is matched and reversed (JN-13); a bank file not released by the cut-off is chased with the signatories. A borrower whose money is late is told when they will hear next | Accountant; finance officer | T35 | RL-10, RL-14, RL-01, MF-11 |
 | 7 | The warning checks go to their owners: intraday breaks not yet acknowledged, to the accountant; holidays missing from the calendar, to the finance lead to add under maker-checker; a half-applied product change or low disk space, to our operations | Accountant; finance lead; Dibon operations | — | KC-07, KC-15, KC-08 |
