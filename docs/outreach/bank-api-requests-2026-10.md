@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-033, FS-125, FS-126, FS-344, FS-691, FS-715, FS-716, FS-717, FS-718, FS-722, FS-723, FS-724, FS-725, FS-726, FS-727, FS-729, FS-730]
+review_ids: [FS-033, FS-125, FS-126, FS-344, FS-691, FS-715, FS-716, FS-717, FS-718, FS-722, FS-723, FS-724, FS-725, FS-726, FS-727, FS-729, FS-730, FS-733]
 last_reviewed: 2026-10-12
 ---
 
@@ -103,9 +103,9 @@ Dibon's accounts
 > running, we would welcome a conversation about working together more
 > widely.
 >
-> Kind regards,
-> [Name]
-> [Title], Dibon Company Limited
+> Kind regards,\
+> [Name]\
+> [Title], Dibon Company Limited\
 > [Phone] · [Email]
 
 ---
@@ -156,9 +156,9 @@ Dibon's accounts
 > Could we meet in the next two weeks to agree the steps, the agreements
 > and any fees?
 >
-> Kind regards,
-> [Name]
-> [Title], Dibon Company Limited
+> Kind regards,\
+> [Name]\
+> [Title], Dibon Company Limited\
 > [Phone] · [Email]
 
 ---
@@ -195,9 +195,9 @@ corporate credit card
 > four digits of a card number, never the full number. Could we meet in
 > the next two weeks to agree the steps and any fees?
 >
-> Kind regards,
-> [Name]
-> [Title], Dibon Company Limited
+> Kind regards,\
+> [Name]\
+> [Title], Dibon Company Limited\
 > [Phone] · [Email]
 
 **Attach Appendix B, not A.**

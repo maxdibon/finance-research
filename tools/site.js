@@ -283,8 +283,10 @@ function render(body, ctx) {
       const buf = [];
       for (; i < lines.length && lines[i].startsWith('>'); i++) buf.push(lines[i].replace(/^> ?/, ''));
       const alert = (buf[0] || '').match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*$/);
-      const text = inline((alert ? buf.slice(1) : buf).join(' '), ctx);
-      out.push(alert ? `<div class="alert alert-${alert[1].toLowerCase()}"><b>${alert[1][0]}${alert[1].slice(1).toLowerCase()}</b><p>${text}</p></div>` : `<blockquote><p>${text}</p></blockquote>`);
+      // A quote keeps its own paragraphs, lists and emphasis: the outreach
+      // letters are quotes, copied from this page into an email (FS-733).
+      const inner = render((alert ? buf.slice(1) : buf).join('\n'), ctx);
+      out.push(alert ? `<div class="alert alert-${alert[1].toLowerCase()}"><b>${alert[1][0]}${alert[1].slice(1).toLowerCase()}</b>${inner}</div>` : `<blockquote>${inner}</blockquote>`);
       continue;
     }
     if (line.startsWith('|')) {
@@ -320,9 +322,17 @@ function render(body, ctx) {
       continue;
     }
     if (!line.trim()) { i++; continue; }
+    // A rule between sections.
+    if (/^-{3,}\s*$/.test(line)) { out.push('<hr>'); i++; continue; }
     const para = [];
-    for (; i < lines.length && lines[i].trim() && !/^(#{1,4} |\||```|>|\s*(-|\d+\.) )/.test(lines[i]); i++) para.push(lines[i].trim());
-    if (para.length) out.push(`<p>${inline(para.join(' '), ctx)}</p>`);
+    for (; i < lines.length && lines[i].trim() && !/^(#{1,4} |\||```|>|\s*(-|\d+\.) )/.test(lines[i]) && !/^-{3,}\s*$/.test(lines[i]); i++) para.push(lines[i].trim());
+    // A line ending in a backslash breaks there, as in CommonMark, so a
+    // letter's sign-off keeps its lines (FS-733).
+    if (para.length) {
+      out.push(`<p>${para.map((l, k) => (l.endsWith('\\')
+        ? `${inline(l.slice(0, -1), ctx)}<br>`
+        : inline(l, ctx) + (k < para.length - 1 ? ' ' : ''))).join('')}</p>`);
+    }
     else i++;
   }
   return out.join('\n');
@@ -410,7 +420,7 @@ nav.rel b{color:var(--muted);font-weight:600}details.back{margin:4px 0 8px}
 nav.toc{font-size:13px;margin:8px 0 16px;display:flex;flex-wrap:wrap;gap:4px 14px}nav.toc b{color:var(--muted);font-weight:600;margin-right:4px}nav.toc a{text-decoration:none}
 .alert{border-left:4px solid var(--note);background:var(--card);padding:8px 12px;margin:12px 0;border-radius:0 6px 6px 0}.alert b{color:var(--note)}.alert p{margin:4px 0 0}
 .alert-warning,.alert-important{border-color:var(--warn)}.alert-warning b,.alert-important b{color:var(--warn)}.alert-caution{border-color:var(--caution)}.alert-caution b{color:var(--caution)}
-blockquote{border-left:3px solid var(--line);margin:12px 0;padding:0 12px;color:var(--muted)}
+blockquote{border-left:3px solid var(--line);margin:12px 0;padding:2px 14px}blockquote>p:first-child{margin-top:6px}
 #q{width:100%;max-width:520px;padding:8px 10px;font-size:15px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px}
 #hits div{padding:4px 0;border-bottom:1px solid var(--line)}
 .reader{margin:0;padding:6px 16px;background:var(--planned-bg);color:var(--planned);font-size:13px}#hits small{color:var(--muted)}

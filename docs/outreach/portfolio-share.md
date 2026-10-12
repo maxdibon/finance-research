@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-last_reviewed: 2026-10-03
+last_reviewed: 2026-10-12
 ---
 
 # Sharing the portfolio with a contact
@@ -58,8 +58,8 @@ conversation and introductions, and does not pitch one product.
 >
 > With thanks,
 >
-> [Your name]
-> [Title], Dibon Consulting
+> [Your name]\
+> [Title], Dibon Consulting\
 > [phone] · [email]
 
 ## Shorter, for WhatsApp

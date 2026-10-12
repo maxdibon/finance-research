@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-12
 ---
 
 # Partner requests, October 2026
@@ -55,8 +55,8 @@ with volume comes with it (PT-40).
 >
 > With thanks,
 >
-> [Your name]
-> Technology Lead, Dibon Consulting
+> [Your name]\
+> Technology Lead, Dibon Consulting\
 > +254 792 745 509 · [your email]
 
 ## 2 · NPDM: letter of intent for direct register access
@@ -138,8 +138,8 @@ Dibon's banking platform
 >
 > With thanks,
 >
-> [Your name]
-> Technology Lead, Dibon Consulting
+> [Your name]\
+> Technology Lead, Dibon Consulting\
 > +254 792 745 509 · [your email]
 
 ## 4 · Airtel Money: launch, and the same checks
@@ -182,8 +182,8 @@ adjust the second paragraph if it was not.
 >
 > With thanks,
 >
-> [Your name]
-> Technology Lead, Dibon Consulting
+> [Your name]\
+> Technology Lead, Dibon Consulting\
 > +254 792 745 509 · [your email]
 
 ## 5 · Telkom: T-Kash
@@ -224,6 +224,6 @@ built (FS-393).
 >
 > With thanks,
 >
-> [Your name]
-> Technology Lead, Dibon Consulting
+> [Your name]\
+> Technology Lead, Dibon Consulting\
 > +254 792 745 509 · [your email]

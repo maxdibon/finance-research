@@ -5,8 +5,8 @@ kind: outreach
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-586, FS-587]
-last_reviewed: 2026-10-06
+review_ids: [FS-586, FS-587, FS-733]
+last_reviewed: 2026-10-12
 ---
 
 # A customer's request to its own banks
@@ -58,9 +58,9 @@ copying the bank's cash-management or API team where there is one.
 > Could we meet in the next two weeks with your cash-management team, and
 > Dibon's, to agree the steps, the agreements and any fees?
 >
-> Kind regards,
-> [Name]
-> [Title], [Institution]
+> Kind regards,\
+> [Name]\
+> [Title], [Institution]\
 > [Phone] · [Email]
 
 **After the reply:** each bank's answers go into the partners register

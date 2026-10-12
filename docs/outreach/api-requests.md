@@ -73,9 +73,9 @@ goes through that relationship.
 > own integration is running, we would welcome a conversation about
 > working together more widely.
 >
-> Kind regards,
-> [Name]
-> [Title], Dibon Company Limited
+> Kind regards,\
+> [Name]\
+> [Title], Dibon Company Limited\
 > [Phone] · [Email]
 
 ---
@@ -119,9 +119,9 @@ shortcode(s), and copy the Daraja or API support team.
 > Could we arrange a call to go through these, and to confirm the
 > remaining go-live steps for our production access?
 >
-> Kind regards,
-> [Name]
-> [Title], Dibon Company Limited
+> Kind regards,\
+> [Name]\
+> [Title], Dibon Company Limited\
 > [Phone] · [Email]
 
 ---
@@ -159,9 +159,9 @@ Limited
 > The attached checklist has the technical detail. Could we arrange a call
 > to go through it?
 >
-> Kind regards,
-> [Name]
-> [Title], Dibon Company Limited
+> Kind regards,\
+> [Name]\
+> [Title], Dibon Company Limited\
 > [Phone] · [Email]
 
 ---
@@ -199,9 +199,9 @@ the API or developer team, if you have a contact there.
 > The attached checklist has the technical detail. Could we arrange a call
 > to go through it?
 >
-> Kind regards,
-> [Name]
-> [Title], Dibon Company Limited
+> Kind regards,\
+> [Name]\
+> [Title], Dibon Company Limited\
 > [Phone] · [Email]
 
 ---

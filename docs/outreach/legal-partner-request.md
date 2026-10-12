@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-12
 ---
 
 # First approach to a legal partner
@@ -63,6 +63,6 @@ VAT and the NPS Bill 2026
 >
 > With thanks,
 >
-> [Your name]
-> Technology Lead, Dibon Consulting
+> [Your name]\
+> Technology Lead, Dibon Consulting\
 > +254 792 745 509 · [your email]
