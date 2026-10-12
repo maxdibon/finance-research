@@ -11,8 +11,8 @@ used_by: []
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667]
-last_reviewed: 2026-10-08
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769]
+last_reviewed: 2026-10-12
 ---
 
 # Approval engine — build specification
@@ -199,7 +199,16 @@ Each rule has a test in §11.
    who loses the role can no longer vote; if the quorum can no longer be
    reached, the step is *stalled* and escalates to the institution
    admin, who may re-open it with the current members. Votes from members
-   still eligible stand.
+   still eligible stand. **A role left too thin is caught first**
+   (FS-769, JN-18): every `access.role.change` that removes someone, and
+   every exit, is checked against the active mandate steps that name the
+   role; where the holders left would be fewer than a quorum step's N, or
+   than its whole membership when unanimous, or no one eligible for a
+   sequential step once MD-06 is applied, the approver of a move sees a
+   warning naming the steps before deciding. An exit is never held back:
+   the administrator and the manager are told at once, and the role shows
+   as short in the administrator's view until filled. The same check runs
+   nightly.
 9. **Withdrawal.** The originator may withdraw a request until it is
    approved.
 10. **SLAs** (MD-08). When a step passes `sla_hours`, its approvers are
@@ -439,6 +448,7 @@ STRIDE for security, LINDDUN for privacy (platform-security SE-16):
 | A20 | A loan approved in Fineract without an approved request | The nightly comparison runs | An exception is raised | §9 |
 | A21 | A request's decisions | Any stored decision is altered | The hash chain no longer verifies | RO-24 |
 | A22 | A request in progress | The originator opens it | They see the current step, who holds it, how long it has waited and when it is due | FS-494 |
+| A23 | A three-member unanimous committee | One member's exit is recorded | The exit goes ahead; the administrator and the manager are told the committee is short; a move of a second member warns its approver first | Rule 8, FS-769 |
 
 ## 15 · Open questions
 

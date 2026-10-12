@@ -11,7 +11,7 @@ used_by: []
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712]
+review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769]
 last_reviewed: 2026-10-12
 ---
 
@@ -150,7 +150,7 @@ someone already watching.
    register, the lesson in the review.
 
 A damaged laptop follows steps 4 and 5. A leaver's devices go through
-JN-18.
+JN-20.
 
 ## 6 · Data
 

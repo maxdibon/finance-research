@@ -11,7 +11,7 @@ used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750]
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769]
 last_reviewed: 2026-10-12
 ---
 
@@ -227,7 +227,8 @@ refresh one.
 - **Joiners, movers, leavers from Odoo HR** (MF-35): a joiner gets a user
   with no roles; a leaver is disabled, signed out everywhere and has
   their authenticators removed, within minutes of the exit being
-  recorded. The provisioning service calls Keycloak's admin API.
+  recorded. An invitation lapses after 72 hours; an account never
+  signed into is disabled after 30 days (FS-769). The provisioning service calls Keycloak's admin API.
 - **Granting a role is a mandated act** (access §8): a request to the
   approval engine (subject `access.role.change`), decided by a second
   person at `loa3`; only then does the provisioning service map the role.

@@ -11,7 +11,7 @@ used_by: []
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750, FS-751, FS-753, FS-757, FS-758]
+review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750, FS-751, FS-753, FS-757, FS-758, FS-769]
 last_reviewed: 2026-10-12
 ---
 
@@ -327,7 +327,7 @@ continuity, suppliers):
   A customer's confidential detail is referred to, never copied into an
   issue.
 - **A joiner** is added to their role groups in Keycloak, and so to
-  GitLab, with the GitLab role §4.1 gives them (JN-18).
+  GitLab, with the GitLab role §4.1 gives them (JN-20).
 - **A leaver** is removed from Keycloak the same day, which ends their
   GitLab access; their tokens are revoked and their open merge requests
   reassigned. Each month the members are compared with the roles.

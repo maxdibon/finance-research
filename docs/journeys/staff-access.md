@@ -7,7 +7,7 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-498, FS-503, FS-548, FS-645, FS-668, FS-768]
+review_ids: [FS-498, FS-503, FS-548, FS-645, FS-668, FS-768, FS-769]
 last_reviewed: 2026-10-12
 ---
 
@@ -23,7 +23,7 @@ leaver's access ends within minutes of the exit being recorded (rules,
 institutions 1 and 3).
 
 Dibon's own engineers join and leave differently, through Dibon's central
-identity and hardware keys; that path is §3 (k).
+identity and hardware keys: that is JN-20.
 
 ## 1 · Who and where
 
@@ -40,7 +40,7 @@ identity and hardware keys; that path is §3 (k).
   for a leaver, none, with their work reassigned and the change in the
   audit trail and the next access review.
 - **Target:** a joiner able to work on their first day, the request made
-  two working days ahead (proposed); a mover's old roles removed the day
+  two working days ahead (owner, FS-769); a mover's old roles removed the day
   the move takes effect; a leaver's access ended within minutes of the
   exit being recorded, and the exit recorded the same day.
 - **Moments that matter:** the first day, when the joiner signs in with
@@ -87,8 +87,7 @@ identity and hardware keys; that path is §3 (k).
     A role mapped without approval .................. found that night (3f)
     On leave ........................................ approvals flow on (3g)
     The platform down ............................... the exit applied first (3j)
-    One of Dibon's engineers ........................ the central path (3k)
-    Stops partway ................................... the request waits, then lapses (3l)
+    Stops partway ................................... the request waits, then lapses (3k)
 ```
 
 | # | Step | Who | Messages | Capabilities |
@@ -112,22 +111,20 @@ identity and hardware keys; that path is §3 (k).
 | a | 3, 6 | **A role is refused,** or two roles conflict: the same person as maker and checker on one chain. Not granted; the request records why. The person has no role until one is approved, so can do nothing that needs one | MD-05, MD-06, AC-09 |
 | b | 8 | **A sudden or hostile exit.** The administrator disables the user at once; out of hours, the contact Roan Capital named calls Dibon's desk, which switches the user off on that request and records it (rules, institutions 7). Sessions end everywhere at once | AC-10, AC-09 |
 | c | 5 | **An authenticator is lost** (a phone stolen, a key mislaid). It is revoked at once; a new one is registered only after a second administrator checks the person's identity in person or by video | AC-16 |
-| d | 6, 8 | **A role is left with too few holders,** such as a three-member committee down to two. Its approvals cannot be decided until someone is appointed; the manager is warned before the exit or move takes effect, so it is filled first | MD-09, MD-04 |
+| d | 6, 8 | **A role is left with too few holders,** such as a three-member committee down to two. The approval engine checks every role change and exit against the chains that name the role (approval-engine §4, rule 8): a move's approver sees the warning before deciding; an exit is never held back, but the administrator and the manager are told at once, and the role shows as short until it is filled. Its approvals cannot be decided until someone is appointed | MD-09, MD-04 |
 | e | 8 | **The leaver is an administrator.** There are always at least two; the last cannot be disabled until another is created. No Dibon role, break-glass included, can stand in for an institution's role | AC-09 |
 | f | 11 | **A role is mapped without an approval,** by someone working round the engine. The nightly comparison finds it, alerts, and the role is removed; it is investigated as a security incident | AC-09, AC-11 |
 | g | 7, 9 | **The person is on leave.** Their roles stay; their approvals, if not decided in time, are reminded and escalated to other holders; their borrowers are reassigned for the leave if it is long, with approval | MD-08, MF-35 |
-| h | 5 | **The invitation is not taken up** within 72 hours: it lapses, and the administrator sends another. An account never signed into is disabled after 30 days (proposed) | AC-10 |
+| h | 5 | **The invitation is not taken up** within 72 hours: it lapses, and the administrator sends another. An account never signed into is disabled after 30 days (owner, FS-769) | AC-10 |
 | i | 8 | **The leaver was a bank signatory, held an internet-banking token, or used the M-Pesa portal.** Those are outside the platform: Roan Capital tells NCBA and Safaricom the same day and recovers the token; the designated bank machine's sign-in is removed (JN-13) | — |
 | j | 8 | **The platform is down** when someone leaves. Nobody can sign in meanwhile; when it returns, the exit is applied before anyone else signs in, and any bank or portal access is ended by Roan Capital as in (i) | AC-10 |
-| k | 1 to 11 | **The person is one of Dibon's engineers.** One identity in Dibon's central Keycloak, brokered into each instance's `ops` realm and never copied; hardware security keys, each with a registered backup; no standing access to an institution's data, only access against a ticket, scoped and expiring; never a product role or an institution's money. A joiner's laptop is enrolled before first use and their GitLab groups follow their role. A leaver's central identity is disabled the same day, which ends every instance's access at once; their keys are revoked, any break-glass or backup-key share they held is re-split, and their devices wiped and returned (endpoints §5) | SE-26, AC-11 |
-| l | 3, 6 | **The request stops partway:** a role asked for and not decided. It waits in its state; the approver is reminded, then it escalates; the person has no new role until it is decided | MD-08 |
+| k | 3, 6 | **The request stops partway:** a role asked for and not decided. It waits in its state; the approver is reminded, then it escalates; the person has no new role until it is decided | MD-08 |
 
 ## 4 · Gaps
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
 | BS-12, joiners and leavers recorded in Odoo HR, which provisions Keycloak (MF-35 assumes it) | phase 1, not in R1 | The manager asks the administrator, who creates or disables the user in the back office | Accept for R1 |
-| A warning when a role would have fewer holders than a chain needs (3d) | Not specified | The administrator checks the committee's membership before an exit or move | Add to the approval engine's role checks before the build |
 | An away status, so approvals skip a person on leave (3g) | Not specified | Reminders and escalation after the step's due time | Accept for R1 |
 | MD-11, the signing mandate mirrored at the bank (step i: bank and M-Pesa portal access are outside the platform) | phase 2 | Roan Capital changes its bank mandate itself, the same day | Accept for R1 |
 | SE-14, managed devices for the institution's staff (step 5) | R2 | Our device minimum agreed at onboarding, and the designated bank machine (JN-13) | Accept for R1 |
@@ -138,6 +135,3 @@ identity and hardware keys; that path is §3 (k).
   role changes; who its two administrators are; who tells the
   administrator of joiners, moves and leavers; and whether staff use
   Roan Capital's own devices. Its role list is open answer 7.
-- **For the owner:** the targets (two working days' notice for a joiner;
-  an unused account disabled after 30 days); and whether Dibon's
-  engineers deserve a journey of their own rather than §3 (k).

@@ -5,7 +5,7 @@ kind: policy
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762]
+review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762, FS-769]
 last_reviewed: 2026-10-12
 ---
 
@@ -28,7 +28,7 @@ for minutes and says so ([endpoints](specs/endpoints.md) §2).
 | 2 | **Secrets only in OpenBao**, never in code, chat, email or on a laptop | Gitleaks in the pipeline (SE-12); [flows](architecture/flows.md) §3 |
 | 3 | **Production only by ticket, through the bastion, for a set time, recorded.** No standing access to data; no shared accounts | Architecture §9 (FS-645); service management §6; [endpoints](specs/endpoints.md) |
 | 4 | **Hardware keys for anything that reaches production or signs**, each with a registered backup | SE-26; access AC-16 |
-| 5 | **A leaver loses every access the same day;** access is reviewed every quarter | Access, one switch for Dibon's engineers (architecture §9); JN-18 |
+| 5 | **A leaver loses every access the same day;** access is reviewed every quarter | Access, one switch for Dibon's engineers (architecture §9); JN-18 for institutions' staff, JN-20 for ours |
 | 6 | **A new tool that touches personal data needs a technology register row and a processing agreement first** | [Technology](architecture/technology.md) rule 1; [privacy](privacy.md) |
 | 7 | **Report a suspected incident or a lost device within the hour,** without blame | [Incident management](service-management/incident-management.md); [endpoints](specs/endpoints.md) §5 |
 | 8 | **Every change is reviewed by a second person** before it reaches a customer | Service management §2 (merge requests) |
