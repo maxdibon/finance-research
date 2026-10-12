@@ -11,8 +11,8 @@
 // id a table defines (a capability, a register row, a requirement, a law,
 // a partner) becomes an anchor, and every mention of it anywhere becomes a
 // link to that anchor. Each capability row lists where it is cited, and a
-// journey shows each capability's status beside it, computed from the
-// modules. A plain docs/… path becomes a link, and so does a section
+// journey, the customer register and each delivery map show each
+// capability's status beside it, computed from the modules (FS-721). A plain docs/… path becomes a link, and so does a section
 // reference ("approval-engine §9", "architecture.md §10", "(§4)"). Each page
 // opens with what it relates to (from its front matter), what links to it,
 // and, when long, its contents. ASCII diagrams are drawn with box lines,
@@ -462,7 +462,7 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
       }
     }
     const ctx = {
-      root, file: f, page, defs, caps, docs: idx.docs, keys: idx.keys, self: null, row: null, badges: f.startsWith('docs/journeys/'),
+      root, file: f, page, defs, caps, docs: idx.docs, keys: idx.keys, self: null, row: null, badges: f.startsWith('docs/journeys/') || f === 'docs/customers.md' || f.startsWith('docs/customers/'),
       journey, rows,
       cite(id) {
         if (this.self === id) return;

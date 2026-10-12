@@ -1,6 +1,7 @@
 // Prints the bank requests' checklists (FS-717, FS-718) as PDFs on Dibon's
 // letterhead, from docs/outreach/bank-api-requests-2026-10.md: Appendix A
-// for the operational accounts, Appendix B for the credit card. Every word
+// for each bank holding operational accounts, Appendix B for the credit
+// card, one PDF per bank, with a footer and page numbers on every page. Every word
 // comes from that file; this one holds only the layout, in the
 // portfolio's brand.
 //
@@ -82,7 +83,11 @@ function page({ kicker, title, html }) {
   --display: "Montserrat", "Segoe UI", Arial, sans-serif;
   --body: "Source Sans 3", "Segoe UI", Arial, sans-serif;
 }
-@page { size: A4; margin: 14mm 0 10mm; }
+@page {
+  size: A4; margin: 14mm 0 14mm;
+  @bottom-left { content: "Dibon Company Limited · Checklist v${esc(version)} · ${esc(issued)}"; padding-left: 18mm; font: 600 6.5pt var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  @bottom-right { content: "Page " counter(page) " of " counter(pages); padding-right: 18mm; font: 600 6.5pt var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+}
 @page :first { margin-top: 0; }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: #fff; }
@@ -111,7 +116,7 @@ main { padding-bottom: 0; }
   <div class="brand"><img alt="Dibon" src="${logo}"><span class="wordmark">Dibon<br>Consulting</span></div>
   <div class="kicker">${esc(kicker)}</div>
   <h1>${esc(title)}</h1>
-  <div class="meta">Dibon Company Limited · ${esc(longDate)} · Checklist v${esc(version)}</div>
+  <div class="meta">Dibon Company Limited · ${esc(longDate)}</div>
 </header>
 <main>
 ${html}
@@ -136,9 +141,11 @@ function printPdf(htmlOut, pdfOut) {
 }
 
 fs.mkdirSync(OUT, { recursive: true });
+// One PDF per bank, so no bank receives a document naming another (FS-722).
 for (const [letter, kicker, name] of [
-  ['A', 'For NCBA and KCB · operational accounts', 'Dibon-bank-checklist-accounts'],
-  ['B', 'For SBM Bank · corporate credit card', 'Dibon-bank-checklist-card'],
+  ['A', 'For NCBA · operational accounts', 'Dibon-checklist-for-NCBA'],
+  ['A', 'For KCB · operational accounts', 'Dibon-checklist-for-KCB'],
+  ['B', 'For SBM Bank · corporate credit card', 'Dibon-checklist-for-SBM-Bank'],
 ]) {
   const { title, html } = toHtml(appendix(letter));
   if (!title) throw new Error(`Appendix ${letter} has no bold title line`);

@@ -487,13 +487,23 @@ function checkCustomers(root) {
   if (!fs.existsSync(path.join(root, CUSTOMERS))) return [fail('customers', CUSTOMERS, 0, 'customer register missing')];
   const known = new Set(moduleFiles(root).flatMap((f) => capabilityRows(read(root, f)).map((r) => r.id)));
   const failures = [];
-  read(root, CUSTOMERS).split('\n').forEach((line, i) => {
+  // "Depends on" lives at the foot of the register, one subsection per
+  // customer (FS-721): "### CU-01 · Name", then its capabilities by module.
+  const text = read(root, CUSTOMERS);
+  const foot = text.split(/^## What each customer depends on\s*$/m)[1] || '';
+  const dependsOf = new Map();
+  for (const block of foot.split(/^### /m).slice(1)) {
+    const id = (block.match(/^(CU-\d{2})\b/) || [])[1];
+    if (id) dependsOf.set(id, new Set(block.split('\n').slice(1).join('\n').match(ID_RE) || []));
+  }
+  text.split('\n').forEach((line, i) => {
     const cells = line.split('|').slice(1, -1).map((c) => c.trim());
     if (!/^CU-\d{2}$/.test(cells[0] || '')) return;
-    if (cells.length !== 11) { failures.push(fail('customers', CUSTOMERS, i + 1, `${cells[0]} has ${cells.length} cells; expected 11`)); return; }
-    const depends = new Set(cells[8].match(ID_RE) || []);
+    if (cells.length !== 10) { failures.push(fail('customers', CUSTOMERS, i + 1, `${cells[0]} has ${cells.length} cells; expected 10`)); return; }
+    if (!dependsOf.has(cells[0])) { failures.push(fail('customers', CUSTOMERS, i + 1, `${cells[0]} has no "### ${cells[0]}" under "What each customer depends on"`)); return; }
+    const depends = dependsOf.get(cells[0]);
     for (const id of depends) if (!known.has(id)) failures.push(fail('customers', CUSTOMERS, i + 1, `${cells[0]} depends on ${id}, which no module defines`));
-    const link = cells[9].match(/\]\(([^)]+)\)/);
+    const link = cells[8].match(/\]\(([^)]+)\)/);
     if (!link) return;
     const rel = path.join('docs', ...link[1].split('/'));
     if (!fs.existsSync(path.join(root, rel))) { failures.push(fail('customers', CUSTOMERS, i + 1, `${cells[0]} delivery file ${link[1]} missing`)); return; }

@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-033, FS-125, FS-126, FS-344, FS-691, FS-715, FS-716, FS-717, FS-718]
+review_ids: [FS-033, FS-125, FS-126, FS-344, FS-691, FS-715, FS-716, FS-717, FS-718, FS-722, FS-723]
 last_reviewed: 2026-10-12
 ---
 
@@ -23,9 +23,10 @@ every letter.
 **Before sending:**
 
 - **The letter goes in the email body; its checklist as a PDF on Dibon's
-  letterhead** (FS-717): `node design/outreach-pdf/build.js` prints
-  Appendix A (for NCBA and KCB) and Appendix B (for SBM Bank) to
-  build/outreach/, from this file. A signed letter on letterhead only
+  letterhead** (FS-717): `node design/outreach-pdf/build.js` prints one
+  PDF per bank to build/outreach/, from this file: Dibon-checklist-for-NCBA
+  and -for-KCB (Appendix A), -for-SBM-Bank (Appendix B). No bank sees
+  another's name (FS-722). A signed letter on letterhead only
   when a bank asks for one.
 
 - **Fill in names, account numbers and contacts in the email client,
