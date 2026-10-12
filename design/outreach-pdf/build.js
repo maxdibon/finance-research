@@ -1,7 +1,7 @@
 // Prints the bank requests' checklists (FS-717, FS-718) as PDFs on Dibon's
 // letterhead, from docs/outreach/bank-api-requests-2026-10.md: Appendix A
 // for each bank holding operational accounts, Appendix B for the credit
-// card, one PDF per bank, with a footer and page numbers on every page. Every word
+// card, one PDF per bank, with the proposals' footer band on every page. Every word
 // comes from that file; this one holds only the layout, in the
 // portfolio's brand.
 //
@@ -84,9 +84,12 @@ function page({ kicker, title, html }) {
   --body: "Source Sans 3", "Segoe UI", Arial, sans-serif;
 }
 @page {
-  size: A4; margin: 14mm 0 14mm;
-  @bottom-left { content: "Dibon Company Limited · Checklist v${esc(version)} · ${esc(issued)}"; padding-left: 18mm; font: 600 6.5pt var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  @bottom-right { content: "Page " counter(page) " of " counter(pages); padding-right: 18mm; font: 600 6.5pt var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  size: A4; margin: 14mm 0 12mm;
+  /* The proposals' footer band (FS-728): Chrome prints page-margin boxes on
+     every page, so the band, its text and the page number repeat. Widths
+     exclude padding: 162 + 18 and 21 + 9 make the page's 210mm. */
+  @bottom-left { content: "Dibon Consulting  ·  Checklist v${esc(version)}  ·  ${esc(longDate)}"; width: 162.4mm; height: 12mm; margin: 0; padding-left: 18mm; background: var(--aubergine); color: #cdb3c9; font: 600 6.5pt var(--display); letter-spacing: 0.14em; text-transform: uppercase; vertical-align: middle; }
+  @bottom-right { content: counter(page); width: 21mm; height: 12mm; margin: 0; padding-right: 9mm; background: var(--amber); color: var(--aubergine); font: 700 11pt var(--display); text-align: right; vertical-align: middle; }
 }
 @page :first { margin-top: 0; }
 * { box-sizing: border-box; }

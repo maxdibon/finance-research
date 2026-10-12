@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-033, FS-125, FS-126, FS-344, FS-691, FS-715, FS-716, FS-717, FS-718, FS-722, FS-723, FS-724, FS-725]
+review_ids: [FS-033, FS-125, FS-126, FS-344, FS-691, FS-715, FS-716, FS-717, FS-718, FS-722, FS-723, FS-724, FS-725, FS-726, FS-727]
 last_reviewed: 2026-10-12
 ---
 
@@ -86,7 +86,10 @@ Dibon's accounts
 > We would also like to know how NCBA confirms an account holder's
 > name before we pay, and how cancellations, recalls and returns work.
 > We would like to start the payment set-up now, alongside the rest, as
-> it takes the longest.
+> it takes the longest. The checklist also asks what else you offer that
+> we are building towards: collections, virtual accounts, PesaLink,
+> direct debits, statements shared with a customer's consent, and a
+> partner programme.
 >
 > The attached checklist sets out the detail we need. Answers to what you
 > can share now, and the right team for the rest, would let us start.
@@ -141,7 +144,10 @@ Dibon's accounts
 > We would also like to know how KCB confirms an account holder's
 > name before we pay, and how cancellations, recalls and returns work.
 > We would like to start the payment set-up now, alongside the rest, as
-> it takes the longest.
+> it takes the longest. The checklist also asks what else you offer that
+> we are building towards: collections, virtual accounts, PesaLink,
+> direct debits, statements shared with a customer's consent, and a
+> partner programme.
 >
 > The attached checklist sets out the detail we need. Answers to what you
 > can share now, and the right team for the rest, would let us start.
@@ -253,7 +259,26 @@ Answer what applies; "not available" is a useful answer too.
 4. Cancelling, recalling and returns, with their time limits.
 5. Cut-off times for each payment type, and your holiday calendar.
 
-**F. Security and onboarding**
+**F. What else you offer that we are building towards.** Not a request
+yet; it tells us what to plan for:
+
+1. **Collections into our account:** payments to your paybill or at your
+   branches and agents, carrying our account reference, each with an
+   alert.
+2. **Virtual account numbers:** a distinct number for each of our
+   customers, all landing in one account, so every payment says whose it
+   is.
+3. **PesaLink:** sending through you, and the name lookup before a
+   payment.
+4. **Direct debits and standing orders:** collecting a repayment under a
+   customer's mandate.
+5. **Statements shared with a customer's consent:** a borrower letting a
+   lender we serve read their statements directly, instead of uploading
+   files that can be edited.
+6. **A partner or developer programme:** how we connect institutions that
+   bank with you, each with its own consent and credentials.
+
+**G. Security and onboarding**
 
 1. Authentication: OAuth, certificates, mutual TLS, API keys.
 2. **Allow-listing: we run from two sites in Kenya, so both sites'
@@ -265,7 +290,7 @@ Answer what applies; "not available" is a useful answer too.
 5. Support: a technical contact, hours, how to escalate; maintenance
    windows, and how you tell us of them.
 
-**G. How we handle the data**
+**H. How we handle the data**
 
 We are asking for our own accounts' data and will handle it under the
 Data Protection Act, 2019, in Kenya. Credentials and certificates are
