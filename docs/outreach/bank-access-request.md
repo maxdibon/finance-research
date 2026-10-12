@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-586, FS-587, FS-733]
+review_ids: [FS-586, FS-587, FS-733, FS-767]
 last_reviewed: 2026-10-12
 ---
 
@@ -41,7 +41,8 @@ copying the bank's cash-management or API team where there is one.
 >    processed, and returned, by API, webhook or status file, carrying our
 >    own reference on every message.
 > 3. **Statements:** end-of-day, and intraday if available, as MT940,
->    CAMT.053 or CSV, by SFTP or API.
+>    CAMT.053 or CSV, by SFTP or API; and, until then, a daily statement
+>    by email as CSV, Excel or MT940 rather than PDF.
 > 4. **Account-name validation:** confirming the account holder's name
 >    for a destination account before we pay it, where you offer it.
 > 5. **Cancelling, recalling and reversing:** how we cancel an instruction

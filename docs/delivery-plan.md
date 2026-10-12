@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680]
-last_reviewed: 2026-10-10
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767]
+last_reviewed: 2026-10-12
 ---
 
 # Delivery plan — phase 1 in releases
@@ -67,8 +67,11 @@ the check keeps the two in step):
   repeat never pays twice) (FS-570); RL-01 (each payout one instruction,
   cancellable, recallable, reversible) and RL-29 (a bank account holder's
   name confirmed) (FS-586).
-- **Reconciliation and evidence:** RO-02, RO-04 (the end-of-day cycle;
-  intraday later), RO-05, RO-16, RO-17, RO-18 (on-call), RO-19, RO-23 (one
+- **Reconciliation and evidence:** RO-01 (statement files only: NCBA's
+  statement email forwarded whole or uploaded, checked before matching;
+  its API later, FS-767), RO-02, RO-04 (the end-of-day cycle; intraday
+  later), RO-05, RO-07 (items in transit chased automatically, for
+  M-Pesa), RO-16, RO-17 (98% matched automatically, FS-766), RO-18 (on-call), RO-19, RO-23 (one
   id end to end, every step a signed event), RO-24, RO-25 (evidence
   anyone holding our public keys can verify), RO-27 (one audit trail
   across modules).

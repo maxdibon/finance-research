@@ -7,8 +7,8 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-668, FS-680, FS-682, FS-683]
-last_reviewed: 2026-10-10
+review_ids: [FS-548, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-668, FS-680, FS-682, FS-683, FS-767]
+last_reviewed: 2026-10-12
 ---
 
 # JN-13 · A bank disbursement, from release to settlement, return or recall
@@ -95,7 +95,7 @@ per bank account, with the limit from that bank's mandate letter
 | 3 | A second person approves, re-authenticated at the act, from the console or email. The approval records a hash of the amount, payee name, bank, account, rail and reference | Approver | T26 | MD-01, MD-06, MD-18, AC-05, KC-08 |
 | 4 | The instruction is released by the path configured for the bank account. Within the limit in the bank's mandate letter, with API or host-to-host access, it goes straight through: signed with Roan Capital's key inside OpenBao and sent over mutual TLS, with no person in between. Otherwise by file, in layers (FS-683): the platform builds it only when asked, with its line count, total and hash on the approval record; the finance officer downloads it once, after step-up, to the designated machine, uploads it to internet banking and deletes it, and a second download raises an alert. Before release, the portal's view of the uploaded batch is exported and uploaded back, and the platform compares every line (name, account, amount) with the approval; where the portal cannot export, the signatories compare every line against the approval screen. Only the signatories release it, never the person who uploaded, and only on a match | Platform; finance officer; signatories | — | RL-07, RL-01, RL-12, AC-05, FC-16 |
 | 5 | The bank's status closes the "sent" state: accepted or rejected, from its API, its status report, or its portal | Platform; accountant | — | RL-01, RL-07, RL-10 |
-| 6 | Within the hour, the bank's debit alerts, or a same-day statement where the bank gives one, are compared with the approval. The statement (MT940, CAMT.053 or CSV) then arrives; every line is compared with what was approved, and the payment matched to its instruction | Platform | — | RL-07, RO-02, RO-04 |
+| 6 | Within the hour, the bank's debit alerts, or a same-day statement where the bank gives one, are compared with the approval. The statement (MT940, CAMT.053 or CSV) then arrives: by API once the bank offers one; in R1, the bank's statement email forwarded whole to Roan Capital's statement address, or uploaded, and checked before any line is matched (FS-767). Every line is compared with what was approved, and the payment matched to its instruction | Platform | — | RL-07, RO-01, RO-02, RO-04 |
 | 7 | Only then is the disbursement posted in Kapu Core, dated by the bank's value date, so the schedule runs from the day the money left. The borrower receives the receipt by SMS with the bank's reference and a link to their page | Platform | T05 | KC-04, MF-38, MS-12 |
 | 8 | Every event is chained, the approval and the bank's evidence kept with the instruction for at least seven years | Platform | — | RO-24, RO-19, FC-12 |
 

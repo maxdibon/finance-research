@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime, core, escrow, crb, rails, insights, platform-security, decisioning]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618, FS-101, FS-633, FS-634, FS-635, FS-699, FS-700]
-last_reviewed: 2026-10-10
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618, FS-101, FS-633, FS-634, FS-635, FS-699, FS-700, FS-767]
+last_reviewed: 2026-10-12
 ---
 
 # Recon & Observability
@@ -67,20 +67,20 @@ reconciliation, is Planned (FS-405).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| RO-01 | Ingest rail, bank and ledger events: real-time callbacks, API pulls, statement files | Designed | Proposal: data pipeline. Prototype: manual load of CSV, XLSX, MT940, fixed-width | 1 |
+| RO-01 | Ingest rail, bank and ledger events: real-time callbacks, API pulls, statement files. Statement files come by API or SFTP; until a bank offers either, by the bank's statement email forwarded whole to the institution's statement address, its DKIM signature checked, or uploaded in the back office by a named user. **A file is checked before any line is matched:** the account is the institution's registered one; the opening balance is the last statement's closing, with no gap or overlap in dates; the lines sum to the closing balance; the same file is never loaded twice, and lines overlapping an earlier file are not counted twice. A file that fails is rejected with the reason, and nothing in it is matched or posted | Designed | Proposal: data pipeline. Prototype: manual load of CSV, XLSX, MT940, fixed-width. R1: statement files only, for NCBA, until its API (owner, 2026-10-12, FS-767) | 1 |
 | RO-02 | Matching engine with configurable rules. Outcomes: matched clean, matched with variance, unmatched on our side, unmatched at the counterparty, duplicate. Rules match one to one, one to many and many to many (a bank's single batched entry against many transfers), with tolerances per rule (amount, date, reference); each rule runs automatically or as suggest-then-approve; the share matched automatically is published per cycle (FS-509) | Designed | Proposal: analysis engine. Prototype: Recon Workbench | 1 |
 | RO-03 | Three-way matching: ledger, statement and expected | Designed | Prototype: Manual Recon | 1 |
 | RO-04 | Intraday and end-of-day cycles, mirroring the customer's own cycle; a cut-off difference held as in transit, with the day it should clear, and a break only if it does not clear in the next cycle | Designed | Proposal: functional spec. Prototype: Control Tower cycle table | 1 |
 | RO-05 | Exception queue, ordered by SLA remaining rather than by amount, with owner and age | Designed | Proposal: SLA routing. Prototype: Exception Queue | 1 |
 | RO-06 | Transaction trace: every hop, with both sides' evidence | Designed | Prototype: Transaction Trace | 1 |
-| RO-07 | Remediation: status query, retry, repost, reversal — each audited. An item in transit is chased automatically: its source's status query or statement, as onboarding records it, asked on a schedule until the item clears or its clear-by day passes; matched only on a reference and the amount, never on time alone | Designed | Proposal: actors and corrective workflows. Prototype: status query that completes a break. Control rule in §8 — FS-097. Chasing in transit: FS-635 | 1 |
+| RO-07 | Remediation: status query, retry, repost, reversal — each audited. An item in transit is chased automatically: its source's status query or statement, as onboarding records it, asked on a schedule until the item clears or its clear-by day passes; matched only on a reference and the amount, never on time alone | Designed | Proposal: actors and corrective workflows. Prototype: status query that completes a break. Control rule in §8 — FS-097. Chasing in transit: FS-635. R1: for M-Pesa; Airtel Money with rails RL-04; a bank's items by its next statement (owner, 2026-10-12, FS-767) | 1 |
 | RO-08 | Ledger replica, checked two ways: real-time assertions from posting events, and a nightly batch proof that subledgers sum to their parents. Suspense holds exactly the open breaks | Designed | Prototype: GL & Subledger | 1 |
 | RO-09 | Treasury and float: where the money sits, and hours of float left at the current burn; for an institution that reaches the rails through a larger bank, the settlement account's balance against the transfers queued for release (rails RL-27) | Designed | Prototype: Treasury & Float. Owner, 2026-10-06: phase 1, in R2 (FS-585) | 1 |
 | RO-10 | Branch and till cash by currency and denomination | Designed | Prototype: Branches & Tellers. For institutions with cash; not every customer | 2 |
 | RO-11 | Duplicate and anomaly detection | Designed | Proposal: fraud detection and risk mitigation. Rule-based in the specification; nothing learned | 1 |
 | RO-13 | Evidence for a period, assembled from traces rather than retyped | Designed | Prototype: Recon Attestation | 2 |
 | RO-16 | Observability: metrics (Prometheus), logs (Loki), traces (Tempo), dashboards (Grafana) | Designed | Proposal: Observability. Kapu technical documentation uses the same stack. Metrics, logs and dashboards ran at Onit Bank in Collect (collect CO-11, FS-390); traces are not evidenced there, so the row stays Designed | 1 |
-| RO-17 | Alerting and SLOs, including reconciliation SLOs such as match rate | Designed | Proposal: Alerting & SLO | 1 |
+| RO-17 | Alerting and SLOs, including reconciliation SLOs such as match rate: at least 98% of the day's transactions matched automatically, published each cycle by channel, an alert below it | Designed | Proposal: Alerting & SLO. The 98%: owner, 2026-10-12 (FS-766, FS-767) | 1 |
 | RO-18 | On-call and incident response | Designed | Proposal: Grafana IRM, which is cloud-only; Grafana OnCall's open-source edition was archived on 2026-03-24 (FS-101). Proposed instead: Grafana alerting with GoAlert, self-hosted (docs/specs/observability-grafana.md), routed by docs/service-management/incident-management.md | 1 |
 | RO-19 | Role-based field masking, MFA, access audit, encryption at rest and in transit | Designed | Proposal: Security Features. Prototype: role-based masking | 1 |
 | RO-20 | Processor settlement reports: gross transactions matched to net, batched settlements after fees | Planned | Needed if payment processors are partners — FS-096, FS-102 | 2 |
@@ -223,6 +223,10 @@ zero, and that is what closing the day means.
   - *Money* — retries of payouts, reposts, reversals — needs maker-checker
     through the mandate engine. Each act is attributed at the moment it
     happens.
+- **A statement file is evidence only once it passes its checks** (RO-01).
+  Where it arrived by the bank's own email, its signature shows it is the
+  bank's; where it was uploaded, the upload is attributed, and the checks
+  are what make an edited file stand out.
 - **Append-only.** Every break, retry, SLA breach and resolution stays in
   the audit. Nothing is rewritten.
 - **Role-based masking.** Each role sees only the fields it needs (RO-19).
