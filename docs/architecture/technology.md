@@ -5,7 +5,7 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750]
+review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759]
 last_reviewed: 2026-10-12
 ---
 
@@ -48,6 +48,7 @@ Each component has one class, by the job it does in the platform:
 | **Platform** | What everything runs on: Kubernetes, the network, certificates, cluster backups |
 | **Operations** | How we see and answer: telemetry, dashboards, on-call, the service desk |
 | **Delivery** | How code becomes a running, signed release: the repository, pipelines, scanners, the registry, GitOps |
+| **Collaboration** | How the team talks, meets and keeps what it shares: chat, meetings, shared credentials, the code's mirror |
 
 ## 3 · The register
 
@@ -137,6 +138,19 @@ yet tried) · *Bought* (commercial, chosen with its supplier). All checked
 | ZAP | Dynamic testing | Apache-2.0 | Checkmarx-sponsored | Keep | — | The standard |
 | MobSF | Mobile app testing | GPL-3.0, a test tool only | Community | Keep (§6.1) | — | Never shipped |
 
+### Collaboration
+
+All open (FS-759): chosen with the team, each against the licence rule
+and the rule that no customer data leaves our own systems.
+
+| Component | Role | Licence | Governed by | Verdict | Alternatives | Why |
+|---|---|---|---|---|---|---|
+| Team chat: Zulip or Mattermost | Notifications from GitLab and Grafana; quick coordination, written into a merge request or the register when it decides anything | Zulip: Apache-2.0, every feature in the free self-hosted edition. Mattermost: the compiled Team Edition MIT, its source AGPL-3.0 | Kandra Labs; Mattermost Inc. | Evaluate: a week's trial of each with the team | Rocket.Chat (MIT community edition); Slack or Microsoft Teams, hosted outside Kenya | Self-hosted in Kenya, with GitLab integrations. Zulip's topics suit writing things down; Mattermost feels like Slack. What Mattermost's free edition includes in 2026 is to confirm |
+| Video meetings | The weekly meeting, customers' reviews | Jitsi Meet: Apache-2.0 | 8x8 and its community | Evaluate | Google Meet, Microsoft Teams, Zoom | Self-hosted if we want recordings kept in Kenya; otherwise whatever the customer uses |
+| Shared credentials | The few logins that cannot use single sign-on: providers' portals, GitLab's break-glass Owner | Vaultwarden: AGPL-3.0, run unmodified; Bitwarden's clients | Its community | Evaluate | Bitwarden or 1Password, hosted | Never for secrets the platform uses, which stay in OpenBao |
+| The code's mirror | A second copy of every repository, in Kenya (gitlab spec §5) | Plain git over SSH; or Gitea: MIT | — ; Gitea Ltd | Evaluate: plain git proposed | Forgejo, GPL-3.0 since v9, which the licence rule would need a decision for | A mirror only has to receive and hold; a browsing interface is a nicety |
+| Email, calendar and files | The company's own mail, calendar and shared files | — | — | Open: not written down (FS-710) | Microsoft 365; Google Workspace; Odoo's own | Decides where client material is backed up |
+
 ## 4 · Open
 
 - The gateway trial: Envoy Gateway against APISIX, with Coraza both ways
@@ -147,3 +161,5 @@ yet tried) · *Bought* (commercial, chosen with its supplier). All checked
   checkpoint reaches its witnesses only once the files are at the second
   site (FS-700).
 - The provider protection's terms with Liquid (SE-03).
+- The collaboration tools above: chat, meetings, shared credentials, the
+  mirror, and where email and files live (FS-759).

@@ -411,8 +411,9 @@ our evidence (§14):
 4. The number of Premium seats: every role holder who approves needs
    Developer, so a seat.
 5. **For the team lead:** the team's chat tool, for notifications and
-   quick coordination (§8).
-6. The git server for the mirror at Dibon central: a bare server over
-   SSH, or Forgejo or Gitea (§5).
+   quick coordination (§8): Zulip or Mattermost, tracked in the
+   technology register's Collaboration class (FS-759).
+6. The git server for the mirror at Dibon central (§5): plain git over
+   SSH proposed, or Gitea; Forgejo is GPL-3.0 now (technology register).
 7. One repository per service, or one for all the code: the engineering
    lead's call before the first code moves (§6).
