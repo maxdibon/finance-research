@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763, FS-765, FS-768, FS-769, FS-773]
+review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763, FS-765, FS-768, FS-769, FS-773, FS-776]
 last_reviewed: 2026-10-12
 ---
 
@@ -77,5 +77,5 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-17 | The accountant's morning: the report, exceptions, reconciliation breaks, a held close | R1 | [accountant-morning.md](accountant-morning.md) |
 | JN-18 | A member of staff joins, moves and leaves: roles by mandate, hardware keys | R1 | [staff-access.md](staff-access.md) |
 | JN-19 | An outage: the institution on its fallback runbook, then everything brought back in | R1 | [outage.md](outage.md) |
-| JN-20 | One of Dibon's engineers joins, moves and leaves: one central identity, hardware keys, access by ticket, GitLab and devices | R1 | to write |
+| JN-20 | One of Dibon's engineers joins, moves and leaves: one central identity, hardware keys, access by ticket, GitLab and devices | R1 | [engineer-access.md](engineer-access.md) |
 | JN-15 | A trader who does not read, paid to his own till, told by voice, saving and borrowing for stock | phase 2 | [micro-trader.md](micro-trader.md) |
