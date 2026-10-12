@@ -5,7 +5,7 @@ kind: handbook
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-768, FS-769, FS-770, FS-771]
+review_ids: [FS-768, FS-769, FS-770, FS-771, FS-772]
 last_reviewed: 2026-10-12
 ---
 
@@ -18,11 +18,14 @@ quarterly access review the institution signs.
 
 ## HB-10 · A joiner
 
+**From:** JN-18, steps 1 to 5.
+
 **Who:** the manager; the administrator; the access approver. **When:**
 at least two working days before the start date.
 
 1. The manager records the joiner in Odoo's Employees app: name, work
-   email and phone, job position, manager, start date.
+   email and phone, job position, manager, start date. Its onboarding
+   plan gives each person below their task, linked to this procedure.
 2. The platform creates their user with no roles, and asks for the
    position's roles (HB-01).
 3. The administrator checks the joiner's ID in person; only then is the
@@ -37,6 +40,8 @@ at least two working days before the start date.
 on the user. **Rule:** rules for institutions 1; AC-16.
 
 ## HB-11 · Deciding a role request
+
+**From:** JN-18, step 3; approval-engine §4.
 
 **Who:** the access approver, never the person asking or the one being
 granted.
@@ -53,6 +58,8 @@ granted.
 
 ## HB-12 · A move
 
+**From:** JN-18, steps 6 and 7.
+
 **Who:** the manager; the access approver; the credit lead for a
 portfolio.
 
@@ -68,11 +75,14 @@ portfolio.
 
 ## HB-13 · A leaver
 
+**From:** JN-18, steps 8 to 10 and (i).
+
 **Who:** the manager; the credit lead; the finance lead. **When:** the
 day they leave, or ahead with the date.
 
-1. The manager records the departure date in Odoo. At that date the
-   platform disables the user, signs them out everywhere and removes
+1. The manager records the departure date in Odoo, and starts its
+   offboarding plan, which gives each person below their task. At that
+   date the platform disables the user, signs them out everywhere and removes
    their authenticators, within minutes.
 2. Their borrowers are reassigned as in HB-12.
 3. **Outside the platform, the same day:** if they were a bank
@@ -81,10 +91,13 @@ day they leave, or ahead with the date.
    removes their sign-in from the designated bank machine.
 4. Their devices and keys are returned.
 
-**Record:** the employee record; the disable event; the bank's and
-Safaricom's confirmation. **Rule:** rules for institutions 3.
+**Record:** the employee record; the offboarding plan's tasks, each
+closed by its owner; the disable event; the bank's and Safaricom's
+confirmation. **Rule:** rules for institutions 3.
 
 ## HB-14 · A sudden or hostile exit
+
+**From:** JN-18 (b).
 
 1. The administrator disables the user at once, without waiting for
    Odoo; sessions end everywhere.
@@ -96,6 +109,8 @@ Safaricom's confirmation. **Rule:** rules for institutions 3.
 
 ## HB-15 · A lost authenticator
 
+**From:** JN-18 (c).
+
 1. The person tells the administrator at once; the authenticator is
    revoked.
 2. A second administrator checks their identity in person or by video;
@@ -105,11 +120,15 @@ Safaricom's confirmation. **Rule:** rules for institutions 3.
 
 ## HB-16 · Administrators
 
+**From:** JN-18 (e).
+
 At least two at all times. The last one cannot be disabled until another
 is created. An administrator manages users but never grants an approval
 role, and never holds `access-approver` (HB-02).
 
 ## HB-17 · The quarterly access review
+
+**From:** JN-18, step 11.
 
 **Who:** the operations lead, with Dibon. **When:** in the first week of
 each quarter.

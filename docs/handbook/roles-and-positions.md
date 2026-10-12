@@ -5,7 +5,7 @@ kind: handbook
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-770, FS-771]
+review_ids: [FS-770, FS-771, FS-772]
 last_reviewed: 2026-10-12
 ---
 
@@ -18,6 +18,8 @@ second person approves them before they take effect (access-keycloak §6,
 approval-engine §3).
 
 ## HB-01 · The position-to-roles table
+
+**From:** FS-770; access-keycloak §6.
 
 **Who keeps it:** the institution's operations lead. **Changed by:**
 HB-03.
@@ -51,6 +53,8 @@ list (for Roan Capital, its delivery map's open answer 7):
 
 ## HB-02 · Roles never held together
 
+**From:** approval-engine §4 (MD-06).
+
 The pairs in the table's last column are refused when requested, so one
 person cannot both create a user and grant them a role, or propose a
 correction and approve it. The approval engine also refuses anyone
@@ -58,6 +62,8 @@ deciding two consecutive steps of the same request, whatever roles they
 hold (MD-06).
 
 ## HB-03 · Changing the table
+
+**From:** approval-engine §4, rule 11.
 
 1. The operations lead proposes the change: a new position, a role added
    to or taken from a position.

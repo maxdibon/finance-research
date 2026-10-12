@@ -5,7 +5,7 @@ kind: handbook
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-771]
+review_ids: [FS-771, FS-772]
 last_reviewed: 2026-10-12
 ---
 
@@ -22,9 +22,12 @@ links to the procedure it serves. Dibon's own runbooks stay in
 **Rules for the handbook:**
 
 1. **One procedure per entry,** with an id (HB-01): who does it, when,
-   the steps, the record kept, the rule or regulation behind it, and the
-   journey it comes from. A procedure says nothing a journey contradicts;
-   when a journey changes, its procedures change in the same commit.
+   the steps, the record kept, the rule or regulation behind it, and a
+   **From:** line naming the journey or spec section it comes from. A
+   procedure says nothing a journey contradicts; when a journey changes,
+   its procedures change in the same commit. **The check holds it**
+   (FS-772): each procedure names an existing journey or spec, every HB id
+   cited in docs/ exists, and a journey past draft has its procedures.
 2. **The template stays generic:** roles by function, never names; an
    institution's values (its positions, approvers, hours, tolerances) are
    blanks in square brackets, filled from its delivery file.
@@ -33,6 +36,35 @@ links to the procedure it serves. Dibon's own runbooks stay in
    institution, and never committed here (customers.md rule 4).
 4. **Reviewed with each release,** and whenever the institution changes a
    position, an approver or a procedure.
+
+## Where it lives
+
+**In GitLab, for Dibon:** the template, in this folder, changed by merge
+request with the delivery lead as its code owner; Dibon's own runbooks;
+and the reader on GitLab Pages for Dibon's staff. Institutions have no
+GitLab access (specs/gitlab.md §11).
+
+**In each institution's Odoo, in R1** (FS-772):
+
+| What | Odoo | How it links |
+|---|---|---|
+| Each procedure | Knowledge, an article per HB id, published from the template with each release, the institution's values filled in; or the reader, per institution, behind its own sign-in (open question below) | Its HB id and version |
+| Each job position | Employees: the position names its roles (HB-01), its procedures and its training | From the position to everything the person needs |
+| Joining and leaving | Employees: onboarding and offboarding plans, a task for each person in HB-10 and HB-13 | Each task links its procedure; closing it is the record |
+| Requests and the morning | Helpdesk: each ticket type, the morning's ticket and the complaints register link their procedure | The procedure opens from the ticket |
+| The calendar | Project: each duty a recurring task with an owner | Overdue when missed |
+
+**Later:** training courses in eLearning per role, with completion
+recorded as HB-10's evidence; until then, the training plan's sessions
+and the reader.
+
+## Open questions
+
+- **For the Odoo consultants:** staff who work in Kapu MFI's back office
+  but rarely in Odoo would need an Odoo user to read Knowledge, the
+  onboarding plans' tasks and Project: which of them need a paid user,
+  and is there a read-only way? The answer decides Knowledge or the
+  reader for the procedures' text.
 
 ## Sections
 

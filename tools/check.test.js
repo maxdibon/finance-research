@@ -456,6 +456,23 @@ test('journeys: a journey missing from the index fails', () => {
   assert.deepStrictEqual(names(f), ['journeys']);
 });
 
+const HB_PEOPLE = path.join('docs', 'handbook', 'people-and-access.md');
+
+test('handbook: a procedure without a From line fails', () => {
+  const f = runWith((d) => patch(d, HB_PEOPLE, (t) => t.replace('**From:** JN-18 (c).', '')));
+  assert.deepStrictEqual(names(f), ['handbook']);
+});
+
+test('handbook: an HB id cited in docs that the handbook lacks fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'journeys', 'staff-access.md'), (t) => t.replace('(HB-10 to HB-17)', '(HB-10 to HB-19)')));
+  assert.deepStrictEqual(names(f), ['handbook']);
+});
+
+test('handbook: a journey past draft with no procedure from it fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'journeys', 'complaint.md'), (t) => t.replace(/^status: draft$/m, 'status: agreed')));
+  assert.deepStrictEqual(names(f), ['handbook']);
+});
+
 test('journeys: a heading that differs from the template fails', () => {
   const f = runWith((d) => patch(d, JOURNEY, (t) => t.replace('## 4 · Gaps', '## 4 · Missing')));
   assert.deepStrictEqual(names(f), ['journeys']);

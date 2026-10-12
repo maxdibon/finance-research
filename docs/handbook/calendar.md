@@ -5,7 +5,7 @@ kind: handbook
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-771]
+review_ids: [FS-771, FS-772]
 last_reviewed: 2026-10-12
 ---
 
@@ -13,7 +13,10 @@ last_reviewed: 2026-10-12
 
 Every recurring duty an institution has on the platform, by when it
 falls. Each names who does it and where it comes from; times are the
-institution's, on its business calendar. Targets marked *proposed* await
+institution's, on its business calendar. In the institution's Odoo,
+each duty is a recurring task in Project with its owner, so a missed one
+shows as overdue (FS-772); the daily duties are already tickets or
+queues of their own. Targets marked *proposed* await
 the owner's decision.
 
 ## Every day

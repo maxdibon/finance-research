@@ -853,6 +853,69 @@ function checkJourneys(root) {
   return failures;
 }
 
+// ── handbook ─────────────────────────────────────────────────────────────
+// The handbook and the journeys stay in step (FS-771, FS-772). Each
+// procedure ("## HB-01 · ...") has a unique id and a **From:** line naming
+// the journey (JN-xx) or the spec section ("access-keycloak §6") it comes
+// from, and that source exists. An HB id cited anywhere in docs/ exists.
+// A journey past draft has at least one procedure that comes from it.
+const HANDBOOK = path.join('docs', 'handbook');
+
+function checkHandbook(root, files) {
+  const dir = path.join(root, HANDBOOK);
+  if (!fs.existsSync(dir)) return [];
+  const failures = [];
+  const journeys = new Map();
+  for (const file of journeyFiles(root)) {
+    const text = read(root, file);
+    const id = (text.match(/^name: *(JN-\d{2})\b/m) || [])[1];
+    if (id) journeys.set(id, { file, status: (text.match(/^status: *(\S+)/m) || [])[1] });
+  }
+  const specDir = path.join(root, SPECS);
+  const specs = new Set(fs.existsSync(specDir) ? fs.readdirSync(specDir).filter((f) => f.endsWith('.md')).map((f) => f.slice(0, -3)) : []);
+  const ids = new Set();
+  const fromJourneys = new Set();
+  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.md') && !f.startsWith('_'))) {
+    const file = path.join(HANDBOOK, name);
+    let entry = null;
+    const close = () => {
+      if (entry && !entry.from) failures.push(fail('handbook', file, entry.line, `${entry.id} has no **From:** line naming its journey or spec`));
+      entry = null;
+    };
+    read(root, file).split('\n').forEach((line, i) => {
+      if (/^## /.test(line)) close();
+      const h = line.match(/^## (HB-\d{2}) · /);
+      if (h) {
+        if (ids.has(h[1])) failures.push(fail('handbook', file, i + 1, `${h[1]} is used twice`));
+        ids.add(h[1]);
+        entry = { id: h[1], line: i + 1, from: false };
+        return;
+      }
+      if (!entry || !/^\*\*From:\*\*/.test(line)) return;
+      entry.from = true;
+      const js = [...line.matchAll(/\bJN-\d{2}\b/g)].map((m) => m[0]);
+      const sp = [...line.matchAll(/\b([a-z][a-z0-9-]+) §\d/g)].map((m) => m[1]).filter((s) => specs.has(s));
+      for (const j of js) {
+        if (journeys.has(j)) fromJourneys.add(j);
+        else failures.push(fail('handbook', file, i + 1, `${entry.id} comes from ${j}, which is not a journey`));
+      }
+      if (!js.length && !sp.length) failures.push(fail('handbook', file, i + 1, `${entry.id}'s From line names no journey (JN-xx) or spec section (name §n)`));
+    });
+    close();
+  }
+  for (const file of files.filter((f) => f.endsWith('.md') && f.split(path.sep).join('/').startsWith('docs/'))) {
+    read(root, file).split('\n').forEach((line, i) => {
+      for (const m of line.matchAll(/\bHB-\d{2}\b/g)) {
+        if (!ids.has(m[0])) failures.push(fail('handbook', file, i + 1, `${m[0]} is not in the handbook`));
+      }
+    });
+  }
+  for (const [id, j] of journeys) {
+    if (JOURNEY_STATUSES.indexOf(j.status) > 0 && !fromJourneys.has(id)) failures.push(fail('handbook', j.file, 1, `${id} is ${j.status}, but no handbook procedure comes from it`));
+  }
+  return failures;
+}
+
 // ── overview ─────────────────────────────────────────────────────────────
 // Every document under docs/ is reachable from the overview (FS-575): linked
 // directly, or inside a folder the overview links ("journeys/" or
@@ -1192,6 +1255,7 @@ function runAll(root) {
     ...checkDependencies(root),
     ...checkScope(root),
     ...checkJourneys(root),
+    ...checkHandbook(root, files),
     ...checkOverview(root, files),
     ...checkSpecs(root),
     ...checkLinks(root, files),
