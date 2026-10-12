@@ -11,8 +11,8 @@ used_by: []
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667, FS-674]
-last_reviewed: 2026-10-09
+review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667, FS-674, FS-765]
+last_reviewed: 2026-10-12
 ---
 
 # End-of-day runner — build specification
@@ -214,7 +214,11 @@ minutes while running, so silence is itself an alert.
 
 **The morning report**, 06:00, by email to the institution's accountant
 and our operations: each check's result, the times of each step, loans
-closed and locked, any hold and override, and reconciliation breaks.
+closed and locked, any hold and override, and reconciliation breaks. It
+also opens the morning's ticket in the institution's helpdesk, which
+the accountant closes to sign the day off (JN-17). Proposed (FS-765):
+the email carries counts, amounts and references only, never a name or
+a phone number; the detail is behind sign-in, in the back office.
 
 ## 8 · Security and audit
 
