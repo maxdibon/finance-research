@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-125, FS-376, FS-411, FS-457, FS-586, FS-715, FS-719]
+review_ids: [FS-125, FS-376, FS-411, FS-457, FS-586, FS-715, FS-719, FS-725]
 last_reviewed: 2026-10-12
 ---
 
@@ -20,7 +20,7 @@ folder, says what has gone out.
 
 | Draft | To | What it asks | Notes |
 |---|---|---|---|
-| [bank-api-requests-2026-10.md](bank-api-requests-2026-10.md) | NCBA and KCB (operational accounts); SBM Bank (the credit card) | Statements without downloading them, real-time alerts, balances on demand; payments for later | Letter in the email body, checklist as a PDF (FS-715 to FS-718) |
+| [bank-api-requests-2026-10.md](bank-api-requests-2026-10.md) | NCBA and KCB (operational accounts); SBM Bank (the credit card) | Statements without downloading them, real-time alerts, balances on demand; payments set up now with NCBA and KCB | Letter in the email body, checklist as a PDF (FS-715 to FS-718) |
 | [partner-requests-2026-10.md](partner-requests-2026-10.md) | A banking-as-a-service bank; NPDM; Safaricom; Airtel Money; Telkom | A Collect and Escrow partner; direct register access; Daraja's security APIs and Hakikisha; launch and the same checks; T-Kash | Five drafts (FS-380 to FS-388, FS-411) |
 | [liquid-partner-request.md](liquid-partner-request.md) | Liquid Intelligent Technologies | Its Azure Stack in Nairobi, Sophos managed detection and endpoint protection, partnership | Partners PT-01 (FS-457, FS-464) |
 | [legal-partner-request.md](legal-partner-request.md) | Bowmans Kenya | A first approach for Dibon's own legal questions | Partners PT-43 (FS-432, FS-435, FS-440) |

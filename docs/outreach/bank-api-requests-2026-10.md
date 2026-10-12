@@ -5,7 +5,7 @@ kind: outreach
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-033, FS-125, FS-126, FS-344, FS-691, FS-715, FS-716, FS-717, FS-718, FS-722, FS-723]
+review_ids: [FS-033, FS-125, FS-126, FS-344, FS-691, FS-715, FS-716, FS-717, FS-718, FS-722, FS-723, FS-724, FS-725]
 last_reviewed: 2026-10-12
 ---
 
@@ -15,7 +15,8 @@ last_reviewed: 2026-10-12
 KCB, which hold Dibon's operational accounts, and to SBM Bank, which
 runs Dibon's corporate credit card. Each asks for statements without
 downloading them, an alert the moment money moves, and balances on
-demand. They replace
+demand; NCBA and KCB are also asked to set up payments now, since that
+takes longest and R1 pays through NCBA (FS-724, FS-725). They replace
 Email 1 in [api-requests.md](api-requests.md), which was drafted on 5
 October and not sent. Appendix A, the technical checklist, goes with
 every letter.
@@ -54,7 +55,7 @@ every letter.
 **To:** [Relationship manager], NCBA Bank Kenya; copy [cash management
 or API team]
 
-**Subject:** Automated statements, real-time alerts and balances for
+**Subject:** Statements, real-time alerts, balances and payments for
 Dibon's accounts
 
 > Dear [Relationship manager],
@@ -65,7 +66,7 @@ Dibon's accounts
 > our receipts and payments are recorded and reconciled as they happen,
 > instead of from statements downloaded by hand.
 >
-> We are asking for four things, in whichever form NCBA offers:
+> We are asking for five things, in whichever form NCBA offers:
 >
 > 1. **Statements without downloading them:** end-of-day, and intraday
 >    where available, as MT940, CAMT.053 or CSV, by API or host-to-host
@@ -77,11 +78,15 @@ Dibon's accounts
 >    account, by API.
 > 4. **A transaction found by its reference,** so a payment can be
 >    confirmed without waiting for the statement.
+> 5. **Sending payments:** single and bulk payments from our accounts, by
+>    API or host-to-host files (ISO 20022, or your own format), approved
+>    under our signing mandate, with a status report on each payment
+>    carrying our reference.
 >
-> So that we can plan further, we would also like to know what NCBA
-> offers for sending payments by API or host-to-host, for status reports
-> on each payment, and for confirming an account holder's name before we
-> pay.
+> We would also like to know how NCBA confirms an account holder's
+> name before we pay, and how cancellations, recalls and returns work.
+> We would like to start the payment set-up now, alongside the rest, as
+> it takes the longest.
 >
 > The attached checklist sets out the detail we need. Answers to what you
 > can share now, and the right team for the rest, would let us start.
@@ -105,7 +110,7 @@ Dibon's accounts
 **To:** [Corporate relationship manager], KCB Bank Kenya; copy [API or
 developer platform team]
 
-**Subject:** Automated statements, real-time alerts and balances for
+**Subject:** Statements, real-time alerts, balances and payments for
 Dibon's accounts
 
 > Dear [Relationship manager],
@@ -116,7 +121,7 @@ Dibon's accounts
 > our receipts and payments are recorded and reconciled as they happen,
 > instead of from statements downloaded by hand.
 >
-> We are asking for four things, in whichever form KCB offers:
+> We are asking for five things, in whichever form KCB offers:
 >
 > 1. **Statements without downloading them:** end-of-day, and intraday
 >    where available, as MT940, CAMT.053 or CSV, by API or host-to-host
@@ -128,10 +133,15 @@ Dibon's accounts
 >    account, by API.
 > 4. **A transaction found by its reference,** so a payment can be
 >    confirmed without waiting for the statement.
+> 5. **Sending payments:** single and bulk payments from our accounts, by
+>    API or host-to-host files (ISO 20022, or your own format), approved
+>    under our signing mandate, with a status report on each payment
+>    carrying our reference.
 >
-> So that we can plan further, we would also like to know what KCB offers
-> for sending payments by API or host-to-host, for status reports on each
-> payment, and for confirming an account holder's name before we pay.
+> We would also like to know how KCB confirms an account holder's
+> name before we pay, and how cancellations, recalls and returns work.
+> We would like to start the payment set-up now, alongside the rest, as
+> it takes the longest.
 >
 > The attached checklist sets out the detail we need. Answers to what you
 > can share now, and the right team for the rest, would let us start.
@@ -232,7 +242,7 @@ Answer what applies; "not available" is a useful answer too.
 2. A single transaction found by your reference, or by ours.
 3. Limits on how often we may call.
 
-**E. For later: payments**
+**E. Payments, asked for now**
 
 1. Sending single and bulk payments by API or host-to-host (ISO 20022
    pain.001, or your format), and how approval works: on your side, ours,
