@@ -53,6 +53,7 @@ docs/                the work. The only place we edit
   compliance.md      licences, registrations and certifications
   rules.md           what we hold ourselves, customers and partners to
   legal-questions.md what we need counsel to answer, and what each changes
+  ways-of-working.md roles, merge requests, architecture and change rules
   regulation.md      the law register: what applies and what it drives
   approval-pack.md   what customers file with their regulator about us
   assurance.md       testing for institutions we do not supply; conflicts

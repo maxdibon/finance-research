@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703]
-last_reviewed: 2026-10-10
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747]
+last_reviewed: 2026-10-12
 ---
 
 # Service management
@@ -80,8 +80,8 @@ SE-14), service financial management, organisational change management.
 | Kind | What | Who approves | The customer |
 |---|---|---|---|
 | Standard | Pre-approved, low risk, done before: a routine patch, a setting within tested bounds, a certificate renewed | No one each time; the kind itself is approved, and listed | Not told, unless they can see it |
-| Normal | Everything else: a reviewed merge request | The CTIO, after a second engineer's review | Told before it reaches them, when they can see its effect: these are the release notes the support offer promises |
-| Emergency | Restoring service, or closing a security hole | The on-call engineer and the CTIO | Told with the incident; the change reviewed within two working days |
+| Normal | Everything else: a reviewed merge request | The service owner, after a peer's review; with the security lead for a security control (ways-of-working §4) | Told before it reaches them, when they can see its effect: these are the release notes the support offer promises |
+| Emergency | Restoring service, or closing a security hole | The on-call engineer with the service owner, or the security lead for a security hole (ways-of-working §4) | Told with the incident; the change reviewed within two working days |
 
 **The change record is the merge request** in GitLab (FS-701), with a template: what changes,
 why, the risk, how it was tested, how it is undone, which institutions

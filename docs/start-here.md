@@ -5,7 +5,7 @@ kind: guide
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744]
+review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745]
 last_reviewed: 2026-10-12
 ---
 
@@ -54,6 +54,9 @@ decisions follow from it.
 | Sales and partnerships | [marketing/portfolio.md](marketing/portfolio.md), [partners.md](partners.md), [competitors.md](competitors.md) | What we say outside, and to whom |
 
 ## The rules that matter most
+
+- **Every change is a merge request,** approved by the roles that own
+  what it touches ([ways-of-working.md](ways-of-working.md)).
 
 - **Record before answering.** Every point raised gets a row in
   [REVIEW.md](../REVIEW.md) with an FS id. Decisions that cost something
