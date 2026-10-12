@@ -52,6 +52,7 @@ docs/                the work. The only place we edit
   onboarding.md      what each customer and product needs to go live
   compliance.md      licences, registrations and certifications
   rules.md           what we hold ourselves, customers and partners to
+  legal-questions.md what we need counsel to answer, and what each changes
   regulation.md      the law register: what applies and what it drives
   approval-pack.md   what customers file with their regulator about us
   assurance.md       testing for institutions we do not supply; conflicts

@@ -11,8 +11,8 @@ used_by: [end-of-day-runner]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667]
-last_reviewed: 2026-10-08
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744]
+last_reviewed: 2026-10-12
 ---
 
 # Lender rules — build specification
@@ -468,18 +468,15 @@ exception to the accountant's queue (MF-12).
 
 ## 9 · Open questions
 
-**For the owner, with counsel:**
+**For counsel** (docs/legal-questions.md, with what is designed
+meanwhile):
 
-1. Do fees and penalties count in the reg 29 bucket (designed: yes)?
-   Does 29(5)'s "outstanding principal amount" mean principal at
-   non-performance (designed) or current principal?
-2. On rollover or restructure of a non-performing loan, does the cap
-   carry over (designed: yes)?
-3. Is the effective annual rate acceptable to CBK as the APR, and is
-   mandatory insurance a third-party cost?
-4. Reg 57: is "after thirty days" counted from the due date (designed)?
-5. Working hours for reg 30: is 08:00 to 18:00, Monday to Saturday,
-   right?
+1. What counts within reg 29's cap, and on which principal: LQ-01.
+2. Whether the cap carries over a rollover or restructure: LQ-02.
+3. The effective annual rate as the APR; insurance as a third-party
+   cost: LQ-03.
+4. Reg 57's thirty days, counted from the due date: LQ-04.
+5. Reg 30's working hours: LQ-05.
 
 **For Roan Capital:**
 

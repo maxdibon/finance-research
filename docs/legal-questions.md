@@ -1,0 +1,52 @@
+---
+id: legal-questions
+name: Legal questions — what we need counsel to answer, and what each answer changes
+kind: register
+version: 0.1.0
+owner: Compliance and risk officer
+classification: Internal
+review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744]
+last_reviewed: 2026-10-12
+---
+
+# Legal questions
+
+**What this tracks:** every question we need a lawyer to answer, where it
+came from, whose it is, and, once answered, what the answer changed in the
+design (FS-742). A document that raises a question cites its LQ id here
+instead of holding the question itself, so nothing is asked twice or
+lost.
+
+**Rules for this file:**
+
+1. **Whose question it is** decides who pays for the answer: *Dibon* for
+   our own position and our design; *Institutions* where the answer
+   binds every lender we serve, which Dibon asks once and shares; *an
+   institution* by name only where it is that institution's alone, and
+   then it goes to its own counsel through its delivery map.
+2. **Questions for an institution, not a lawyer,** stay in its delivery
+   map's open answers (docs/customers/).
+3. **Status:** *Open* (not yet asked), *With counsel* (asked, with the
+   date), *Answered* (with the date and the answer's source).
+4. **An answer is applied before the row closes:** the design changed,
+   or confirmed, with the register row that did it.
+
+**Counsel:** none engaged yet. Bowmans Kenya is the first choice
+(partners PT-43, decision SD-12); the approach is drafted
+(outreach/legal-partner-request.md).
+
+## The register
+
+| Id | Question | Raised in | Whose | Law | Status | Designed meanwhile | Refs |
+|---|---|---|---|---|---|---|---|
+| LQ-01 | Do fees and penalties count within the cap on interest owed on a non-performing loan, and does "outstanding principal amount" mean principal when the loan became non-performing, or principal now? | lender-rules §9 | Institutions | CBK lender regulations reg 29 (LR-03) | Open | Yes, they count; principal at non-performance | FS-400 |
+| LQ-02 | On a rollover or restructure of a non-performing loan, does the cap carry over? | lender-rules §9 | Institutions | Reg 29 (LR-03) | Open | Yes, it carries over | FS-400 |
+| LQ-03 | Is the effective annual rate acceptable to CBK as the APR, and is mandatory insurance a third-party cost? | lender-rules §9 | Institutions | Reg 59 (LR-03) | Open | The effective annual rate; insurance as a third-party cost | FS-400 |
+| LQ-04 | Is a loan non-performing "after thirty days" counted from the due date? | lender-rules §9 | Institutions | Reg 57 (LR-03) | Open | Counted from the due date | FS-400 |
+| LQ-05 | Are 08:00 to 18:00, Monday to Saturday, the "working hours" within which a borrower may be contacted about collection? | lender-rules §9 | Institutions | Reg 30 (LR-03) | Open | Those hours, held by quiet hours (MS-15) | FS-400 |
+| LQ-06 | Does reg 54(7)'s thirty days' notice apply when the borrower asks for the restructure, delaying relief to a borrower in distress? | JN-06 §4 | Institutions | Reg 54(7) (LR-03) | Open | The design waits the thirty days | FS-624 |
+| LQ-07 | Must a guarantor consent to a restructure that raises or extends their exposure, and what happens to the guarantee if they will not? | JN-06 §4 | Institutions | Reg 42 (LR-03); the law of guarantees | Open | Consent asked; the restructure held without it | FS-624 |
+| LQ-08 | Is an unplaced payment that cannot be returned held "in a fiduciary capacity" (abandoned after two years) or as a "credit memo" (five years)? Do the Act's regulations add anything? | JN-16 §5 | Institutions | Unclaimed Financial Assets Act ss.13, 14 (LR-38) | Open | Kept in suspense, reported in the morning report; the payer written to before any report | FS-673 |
+| LQ-09 | Which of Dibon's services need CBK authorisation as a payment service provider today, and which would under the 2026 Bill? | compliance LC-06 | Dibon | National Payment System Act s.2; the NPS Bill, 2026 | Open | Money never passes through Dibon; we apply for our own authorisation (FS-031) | FS-031, FS-376 |
+| LQ-10 | May a lender send borrowers reminders and offers on WhatsApp, under Meta's commerce rules for financial services and the lender regulations' contact rules? | FS-165 | Institutions | Reg 30 (LR-03); Meta's business policy | Open | WhatsApp left out of R1 until answered (FS-674); notices and links only | FS-165, FS-737 |
+| LQ-11 | In the NDA with an institution: should the indemnity be capped, and should disputes go to arbitration rather than the courts? | The NDA's internal note (clients/, out of git) | Dibon | Contract | Open | Uncapped; the courts of Kenya | FS-740 |

@@ -5,7 +5,7 @@ kind: overview
 version: 0.2.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720]
+review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744]
 last_reviewed: 2026-10-12
 ---
 
@@ -178,6 +178,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
 | What personal data we process, why and for how long | [privacy.md](privacy.md) |
 | What we hold ourselves, our customers and our partners to | [rules.md](rules.md) |
+| What we need counsel to answer, and what each answer changes | [legal-questions.md](legal-questions.md) |
 | Which documents an institution keeps, under which law, for how long | [documents.md](documents.md) |
 | What a customer files with its regulator about us | [approval-pack.md](approval-pack.md) |
 | Testing we offer institutions we do not supply, and its conflict register | [assurance.md](assurance.md) |

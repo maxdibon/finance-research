@@ -7,8 +7,8 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-139, FS-516, FS-548, FS-623, FS-624, FS-625, FS-668]
-last_reviewed: 2026-10-09
+review_ids: [FS-139, FS-516, FS-548, FS-623, FS-624, FS-625, FS-668, FS-744]
+last_reviewed: 2026-10-12
 ---
 
 # JN-06 · A loan restructured
@@ -104,8 +104,8 @@ classified by its schedule (reg 57).
 
 | Gap | Release or phase today | In its absence | Proposed |
 |---|---|---|---|
-| Whether reg 54(7)'s thirty days' notice applies when the borrower asks for the restructure, which can delay relief to a borrower in distress | A question for counsel | The design waits the thirty days | Ask counsel (FS-624) |
-| Whether a guarantor must consent to a restructure that raises or extends their exposure, and what happens to the guarantee if they will not | A question for counsel | The design asks for consent and holds without it (§3 d) | Ask counsel (FS-624) |
+| Whether reg 54(7)'s thirty days' notice applies when the borrower asks for the restructure, which can delay relief to a borrower in distress | A question for counsel | The design waits the thirty days | Ask counsel: LQ-06 (FS-624) |
+| Whether a guarantor must consent to a restructure that raises or extends their exposure, and what happens to the guarantee if they will not | A question for counsel | The design asks for consent and holds without it (§3 d) | Ask counsel: LQ-07 (FS-624) |
 
 ## 5 · Open questions
 

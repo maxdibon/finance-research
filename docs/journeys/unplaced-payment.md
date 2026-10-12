@@ -7,8 +7,8 @@ status: draft
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-661, FS-663, FS-668, FS-670, FS-672, FS-673, FS-674]
-last_reviewed: 2026-10-09
+review_ids: [FS-548, FS-661, FS-663, FS-668, FS-670, FS-672, FS-673, FS-674, FS-744]
+last_reviewed: 2026-10-12
 ---
 
 # JN-16 · An unplaced payment, from arrival to its account or back to the payer
@@ -118,7 +118,7 @@ returned at day 7 (collect CO-21, FS-663).
   held by the institution as a "holder" under the Unclaimed Financial
   Assets Act (law register LR-38). Is it held in a fiduciary capacity
   (s.13, abandoned after two years) or a credit memo (s.14, five years)?
-  Do the Act's regulations add anything (not yet fetched)?
+  Do the Act's regulations add anything (not yet fetched)? (LQ-08)
 - **For Safaricom:** how long after a payment a C2B reversal can still be
   made, in writing; until then, a reversal is tried first, and a refund
   follows if Safaricom refuses it.

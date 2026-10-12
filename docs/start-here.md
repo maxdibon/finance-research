@@ -5,7 +5,7 @@ kind: guide
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719]
+review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744]
 last_reviewed: 2026-10-12
 ---
 
@@ -50,7 +50,7 @@ decisions follow from it.
 | DevSecOps | [platform-security](modules/platform-security.md) (recovery tiers, incident commitments), [business-continuity.md](business-continuity.md), [operating-model.md](operating-model.md) | The commitments we make to customers are kept by the rota |
 | Customer experience and project management | [onboarding.md](onboarding.md), [customers.md](customers.md), [approval-pack.md](approval-pack.md) | What a customer needs to go live, and what it files with its regulator |
 | Odoo implementation | [business-suite](modules/business-suite.md), [sme-recon](modules/sme-recon.md), [bank-channel.md](bank-channel.md) | SME Recon and the bank channel are R3 |
-| Compliance and risk | [rules.md](rules.md), [regulation.md](regulation.md), [compliance.md](compliance.md), [privacy.md](privacy.md), [financial-crime](modules/financial-crime.md), [assurance.md](assurance.md) | The law register, our own licences, and what the institution cannot hand to us |
+| Compliance and risk | [rules.md](rules.md), [legal-questions.md](legal-questions.md), [regulation.md](regulation.md), [compliance.md](compliance.md), [privacy.md](privacy.md), [financial-crime](modules/financial-crime.md), [assurance.md](assurance.md) | The law register, our own licences, and what the institution cannot hand to us |
 | Sales and partnerships | [marketing/portfolio.md](marketing/portfolio.md), [partners.md](partners.md), [competitors.md](competitors.md) | What we say outside, and to whom |
 
 ## The rules that matter most
@@ -120,6 +120,7 @@ Ids are never reused; a retired capability id is listed in its module
 | PR | privacy.md | A processing of personal data |
 | DT | documents.md | A type of document an institution keeps, with its law and retention |
 | LC | compliance.md | A licence, registration or certification we hold or need |
+| LQ | legal-questions.md | A question for counsel, and what its answer changes |
 | PT | partners.md | A partner candidate |
 | SD | partners.md | A partner selection decision |
 | C1 to C9 | partners.md | The criteria partners are judged against |
