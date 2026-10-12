@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753]
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757]
 last_reviewed: 2026-10-12
 ---
 
@@ -31,42 +31,46 @@ optimise and automate.
 
 ## 1 · The practices, mapped
 
+Each practice has an owner, a role from
+[ways of working](ways-of-working.md) §1: as ITIL 4 has it, the role
+answerable for how well the practice works (FS-756).
+
 **Adopted in R1:**
 
-| Practice | Where |
-|---|---|
-| Incident management | [incident-management.md](incident-management.md): severities, the notification plan, what a notice says, the record and its closure |
-| Roles, merge requests, architecture review and change authority | [ways-of-working.md](ways-of-working.md): who approves what, how a change is made, the rules that stand in for review boards |
-| Problem management | [§4 Problems and known errors](#4--problems-and-known-errors) |
-| Change enablement | [§2 Change enablement](#2--change-enablement) |
-| Release management | Folded into [§2 Change enablement](#2--change-enablement) |
-| Service configuration management | [§3 The configuration record](#3--the-configuration-record); [platform-security](../modules/platform-security.md) SE-23 |
-| Service level management | [§5 Service levels](#5--service-levels); targets to agree per contract |
-| Service request management | [§6 Service requests](#6--service-requests) |
+| Practice | Where | Practice owner |
+|---|---|---|
+| Incident management | [incident-management.md](incident-management.md): severities, the notification plan, what a notice says, the record and its closure | Operations lead |
+| Roles, merge requests, architecture review and change authority | [ways-of-working.md](ways-of-working.md): who approves what, how a change is made, the rules that stand in for review boards | Team lead |
+| Problem management | [§4 Problems and known errors](#4--problems-and-known-errors) | Operations lead |
+| Change enablement | [§2 Change enablement](#2--change-enablement) | Operations lead, the change authority |
+| Release management | Folded into [§2 Change enablement](#2--change-enablement) | Engineering lead |
+| Service configuration management | [§3 The configuration record](#3--the-configuration-record); [platform-security](../modules/platform-security.md) SE-23 | Operations lead |
+| Service level management | [§5 Service levels](#5--service-levels); targets to agree per contract | Product owners |
+| Service request management | [§6 Service requests](#6--service-requests) | Operations lead |
 
 **Already covered elsewhere:**
 
-| Practice | Where |
-|---|---|
-| Service desk | [The operating model](../operating-model.md): the AI-first desk on Odoo Helpdesk ([business-suite](../modules/business-suite.md) BS-01) |
-| Monitoring and event management | [Observability on Grafana](../specs/observability-grafana.md) (RO-16 to RO-18) |
-| Service continuity management | [Business continuity](../business-continuity.md); [platform-security](../modules/platform-security.md) SE-20 to SE-25 |
-| Information security management | [Platform security](../modules/platform-security.md); ISO 27001 ([compliance](../compliance.md) LC-04) |
-| Supplier management | [Partners](../partners.md); suppliers in [business continuity](../business-continuity.md) |
-| Service catalogue management | The modules, from [the overview](../overview.md) |
-| Service validation and testing | [Testing](../testing.md); each [spec](../specs/README.md)'s acceptance tests |
-| Service design, business analysis | [Specs](../specs/README.md); [journeys](../journeys/README.md) |
-| Knowledge management | This repository; the desk's knowledge base ([§4](#4--problems-and-known-errors)) |
-| Continual improvement | [REVIEW.md](../../REVIEW.md): every point raised, recorded and closed, is the improvement register |
-| Measurement and reporting | Grafana for the platform; [insights](../modules/insights.md) for customers |
-| Relationship management | [Customers](../customers.md); the service reviews each support tier promises |
-| Architecture management | [Architecture](../architecture/README.md) |
-| Deployment management | GitOps and signed images ([platform-security](../modules/platform-security.md) SE-06, SE-12, SE-23) |
-| Infrastructure and platform management | [Architecture](../architecture/README.md) §9; [platform-security](../modules/platform-security.md) |
-| Software development and management | The code repository; [testing](../testing.md) |
-| Risk management | [Compliance](../compliance.md); [regulation](../regulation.md); threat models ([platform-security](../modules/platform-security.md) SE-16) |
-| Workforce and talent management | [The operating model](../operating-model.md) |
-| Project, portfolio and strategy management | [The delivery plan](../delivery-plan.md) |
+| Practice | Where | Practice owner |
+|---|---|---|
+| Service desk | [The operating model](../operating-model.md): the AI-first desk on Odoo Helpdesk ([business-suite](../modules/business-suite.md) BS-01) | Operations lead |
+| Monitoring and event management | [Observability on Grafana](../specs/observability-grafana.md) (RO-16 to RO-18) | Operations lead |
+| Service continuity management | [Business continuity](../business-continuity.md); [platform-security](../modules/platform-security.md) SE-20 to SE-25 | Operations lead, with the security lead |
+| Information security management | [Platform security](../modules/platform-security.md); ISO 27001 ([compliance](../compliance.md) LC-04) | Security lead |
+| Supplier management | [Partners](../partners.md); suppliers in [business continuity](../business-continuity.md) | Commercial lead |
+| Service catalogue management | The modules, from [the overview](../overview.md) | Product owners |
+| Service validation and testing | [Testing](../testing.md); each [spec](../specs/README.md)'s acceptance tests | Engineering lead |
+| Service design, business analysis | [Specs](../specs/README.md); [journeys](../journeys/README.md) | Solution architect |
+| Knowledge management | This repository; the desk's knowledge base ([§4](#4--problems-and-known-errors)) | Team lead |
+| Continual improvement | [REVIEW.md](../../REVIEW.md): every point raised, recorded and closed, is the improvement register | Team lead |
+| Measurement and reporting | Grafana for the platform; [insights](../modules/insights.md) for customers | Operations lead |
+| Relationship management | [Customers](../customers.md); the service reviews each support tier promises | Delivery lead for customers; commercial lead for partners |
+| Architecture management | [Architecture](../architecture/README.md) | Solution architect |
+| Deployment management | GitOps and signed images ([platform-security](../modules/platform-security.md) SE-06, SE-12, SE-23) | Operations lead |
+| Infrastructure and platform management | [Architecture](../architecture/README.md) §9; [platform-security](../modules/platform-security.md) | Operations lead |
+| Software development and management | The code repository; [testing](../testing.md) | Engineering lead |
+| Risk management | [Compliance](../compliance.md); [regulation](../regulation.md); threat models ([platform-security](../modules/platform-security.md) SE-16) | Compliance and risk officer |
+| Workforce and talent management | [The operating model](../operating-model.md) | Team lead |
+| Project, portfolio and strategy management | [The delivery plan](../delivery-plan.md) | Team lead |
 
 **Later, when the size calls for them:** availability management and
 capacity and performance management (SLOs already exist, RO-17; capacity
@@ -81,8 +85,8 @@ SE-14), service financial management, organisational change management.
 | Kind | What | Who approves | The customer |
 |---|---|---|---|
 | Standard | Pre-approved, low risk, done before: a routine patch, a setting within tested bounds, a certificate renewed | No one each time; the kind itself is approved, and listed | Not told, unless they can see it |
-| Normal | Everything else: a reviewed merge request | The service owner, after a peer's review; with the security lead for a security control (ways-of-working §4) | Told before it reaches them, when they can see its effect: these are the release notes the support offer promises |
-| Emergency | Restoring service, or closing a security hole | The on-call engineer with the service owner, or the security lead for a security hole (ways-of-working §4) | Told with the incident; the change reviewed within two working days |
+| Normal | Everything else: a reviewed merge request | The operations lead, after a peer's review; with the security lead for a security control (ways-of-working §4) | Told before it reaches them, when they can see its effect: these are the release notes the support offer promises |
+| Emergency | Restoring service, or closing a security hole | The on-call engineer with the operations lead, or the security lead for a security hole (ways-of-working §4) | Told with the incident; the change reviewed within two working days |
 
 **The change record is the merge request** in GitLab (FS-701), with a template: what changes,
 why, the risk, how it was tested, how it is undone, which institutions

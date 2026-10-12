@@ -5,7 +5,7 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753]
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757]
 last_reviewed: 2026-10-12
 ---
 
@@ -20,29 +20,30 @@ GitLab (FS-701).
 ## 1 · Roles, not people
 
 A role is a responsibility; one person may hold several, and today the
-CTIO holds many. "Executive sponsor" is the role that directs and pays;
-it is named so as not to be confused with the service owner, who runs
-the platform, or with GitLab's Owner role (FS-751). Approvals go to roles, so they stay right as people
+CTIO holds many. The names avoid ITIL's own: in ITIL 4 a *sponsor*
+sits at the customer and pays for using a service, and a *service owner*
+answers for one service; so the team lead directs the team, the
+operations lead runs the platform, and each product owner is also the
+ITIL service owner of its product (FS-751, FS-755 to FS-757). Approvals go to roles, so they stay right as people
 change. **No one approves their own work:** where the author is the only
 holder of a role, the role's deputy approves.
 
 | Role | Accountable for | Approves | Held today by |
 |---|---|---|---|
-| **Executive sponsor** | Direction, money, what we promise customers | Decisions that cost something (docs/decisions.md); scope and releases (docs/delivery-plan.md) | The CTIO |
+| **Team lead** | Direction, money, what we promise customers; chairs the weekly meeting | Decisions that cost something (docs/decisions.md); scope and releases (docs/delivery-plan.md) | The CTIO |
 | **Solution architect** | How the platform fits together | docs/architecture/, docs/specs/, the technology register, interfaces | The CTIO |
 | **Security lead** | Security controls, keys, access, the edge | docs/modules/platform-security.md, the endpoints and access specs; every spec's Threats section; any change to a security control | The CTIO |
 | **Compliance and risk officer** | The law, privacy, our duties to regulators; data protection officer if the Act requires one | docs/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Vacant: the CTIO until hired |
-| **Product owner**, one per product | What a product does, and in which phase | Its module in docs/modules/, its journeys | Kapu MFI: the CTIO until named |
+| **Product owner**, one per product | What a product does, and in which phase; as ITIL's service owner, that it meets what was agreed | Its module in docs/modules/, its journeys | Kapu MFI: the CTIO until named |
 | **Delivery lead** | Each customer's delivery | docs/customers/, customers.md, onboarding.md, the delivery plan's dates, training | The project manager |
 | **Engineering lead** | How code is built and tested | The code repository; docs/testing.md; each build spec's tests | The CTIO |
-| **Service owner** | Running the platform | docs/service-management/, operating-model.md, deployment and runbooks; normal changes (§4) | A DevSecOps engineer, to name |
+| **Operations lead** | Running the platform; the change authority for normal changes | docs/service-management/, operating-model.md, deployment and runbooks; normal changes (§4) | A DevSecOps engineer, to name |
 | **Commercial lead** | What we sell, and to whom | docs/marketing/, partners.md, competitors.md | To name |
 
 **Deputies:** each role names one in GitLab, never the role holder;
 until there are more people, a second engineer deputises for the
-architect, the security lead and the engineering lead, and the executive
-sponsor for
-the compliance and risk officer.
+architect, the security lead and the engineering lead, and the team lead
+for the compliance and risk officer.
 
 **In GitLab,** each role is a group (`@dibon/architects`,
 `@dibon/security`, …), filled from Keycloak by single sign-on, and a
@@ -88,7 +89,7 @@ protected main branch. Nobody pushes to main.
 | Compliance | docs/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Compliance and risk officer |
 | Products | docs/modules/, docs/journeys/ | Product owner |
 | Delivery | docs/customers/, customers.md, onboarding.md, delivery-plan.md, docs/training/ | Delivery lead |
-| Operations | docs/service-management/, operating-model.md, business-continuity.md | Service owner |
+| Operations | docs/service-management/, operating-model.md, business-continuity.md | Operations lead |
 | Commercial | docs/marketing/, partners.md, competitors.md | Commercial lead |
 | Tools | tools/, design/ | Engineering lead |
 
@@ -109,15 +110,15 @@ a person approves; never with a secret or a client's material.
    what it requires, what was argued against, what it costs) and, for a
    component, its technology register row.
 3. **It is approved by** the solution architect; and the security lead
-   when it touches a security control; and the executive sponsor when it
+   when it touches a security control; and the team lead when it
    costs money
-   or changes what a customer was promised. The service owner and the
+   or changes what a customer was promised. The operations lead and the
    compliance and risk officer are consulted when it changes how we run
    or what the law requires.
 4. **It is decided within five working days,** or brought to the weekly
    meeting's architecture slot (twenty minutes), where open architecture
    questions are heard.
-5. **A disagreement** goes to the executive sponsor, who decides; the decision and
+5. **A disagreement** goes to the team lead, who decides; the decision and
    what was argued against are recorded.
 6. **A decision is reopened** only by a new register row, never by
    editing the old entry.
@@ -129,19 +130,19 @@ a person approves; never with a secret or a client's material.
 
 The kinds of change, what the customer is told, and the change calendar
 are in [service management](README.md) §2. These rules
-say who decides.
+say who decides: ITIL's *change authority*.
 
-1. **Standard changes** run without approval each time. The service owner
+1. **Standard changes** run without approval each time. The operations lead
    keeps their list; a change joins it only after it has run as a normal
    change without incident at least three times.
-2. **A normal change** is approved in its merge request by the service
-   owner, after a peer's review; also by the security lead when it
+2. **A normal change** is approved in its merge request by the operations
+   lead, after a peer's review; also by the security lead when it
    changes a security control, and by the product owner when customers
-   will see it. Its deployment to production then waits for the service
-   owner's approval in GitLab (protected environments with deployment
+   will see it. Its deployment to production then waits for the operations
+   lead's approval in GitLab (protected environments with deployment
    approvals), so what was approved is what is deployed.
 3. **An emergency change** is made by the on-call engineer with the
-   service owner, or the security lead when it closes a security hole,
+   operations lead, or the security lead when it closes a security hole,
    and is reviewed in a merge request within two working days.
 4. **GitLab's deploy freezes hold the change calendar's blackouts:**
    the deploy job refuses inside them unless the change is labelled
@@ -151,7 +152,7 @@ say who decides.
    measures: how often we deploy, how long a change takes to reach
    production, how many changes fail, and how fast we recover. Our own
    job computes them from GitLab's deployment records, since GitLab's
-   dashboards for them are Ultimate (gitlab spec §7).
+   dashboards for them are Ultimate (gitlab spec §15).
 6. **Where a customer runs its own change board,** we attend it, and its
    approval is added to ours.
 7. **A board meets weekly** once more than one customer's windows have to

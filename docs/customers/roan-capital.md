@@ -5,8 +5,8 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681]
-last_reviewed: 2026-10-10
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755]
+last_reviewed: 2026-10-12
 ---
 
 # Roan Capital — delivery map
@@ -42,6 +42,13 @@ the NTSA and land registry steps done by hand and tracked in the system
 **Fit:** *Covered* means the capabilities listed do what the requirement
 asks. *Partial* means they cover part of it, and the note says what is
 missing. *Gap* means no capability does it yet.
+
+**Its roles, in ITIL's terms** (FS-755): the *sponsor*, who pays for
+the service, a director of Roan Capital; the *customer*, who sets the
+requirements and owns the outcomes, Roan Capital's project lead, who
+confirmed the requirement document; the *users*, its credit officers,
+committees, finance staff and accountant (RC-34). People are named only
+in its own records.
 
 ## 2 · Requirements against capabilities
 

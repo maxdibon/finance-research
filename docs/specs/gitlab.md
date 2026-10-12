@@ -11,7 +11,7 @@ used_by: []
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750, FS-751, FS-753]
+review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750, FS-751, FS-753, FS-757, FS-758]
 last_reviewed: 2026-10-12
 ---
 
@@ -135,7 +135,7 @@ path is [flows](../architecture/flows.md) §4.
 | Service Desk | Free | No | Odoo Helpdesk is the service desk |
 | Container registry; dependency proxy | Free | No | Harbor is the registry each site pulls from |
 | Value stream analytics | Free | Yes | Lead time per stage |
-| DORA metrics | Ultimate | No | The four measures computed by our own job from deployments (§6) |
+| DORA metrics | Ultimate | No | The four measures computed by our own job from deployments (§15) |
 | Audit events | Free and above | Yes | Exported to our observability; streaming is Ultimate |
 | Compliance center and frameworks | Premium | Yes | The regulated projects labelled, their settings checked |
 | GitLab Duo (AI) | Add-on | No | Not adopted; Claude works through merge requests (ways-of-working §2) |
@@ -146,17 +146,17 @@ path is [flows](../architecture/flows.md) §4.
 
 - **One top-level group,** with a subgroup per area: `docs`, `code`,
   `platform` (manifests, runners).
-- **A GitLab group per role** (ways-of-working §1): `@dibon/executives`,
+- **A GitLab group per role** (ways-of-working §1): `@dibon/team-lead`,
   `@dibon/architects`, `@dibon/security`, `@dibon/compliance`,
   `@dibon/product`, `@dibon/delivery`, `@dibon/engineering`,
-  `@dibon/service`, `@dibon/commercial`; filled from the engineers'
+  `@dibon/operations`, `@dibon/commercial`; filled from the engineers'
   Keycloak groups by single sign-on.
 - **GitLab roles by job:**
 
   | GitLab role | Who | Why |
   |---|---|---|
-  | Owner | The executive sponsor and one deputy | GitLab's own role, not ours: two, so the group is never locked out; no more |
-  | Maintainer | The engineering lead and the service owner | Settings, protected branches and environments, deploy freezes |
+  | Owner | The team lead and one deputy | GitLab's own role, not ours: two, so the group is never locked out; no more |
+  | Maintainer | The engineering lead and the operations lead | Settings, protected branches and environments, deploy freezes |
   | Developer | Engineers, and **every role holder who approves**: the compliance and risk officer and the commercial lead included | Code owner approval needs Developer or above |
   | Planner | The delivery lead and the project manager | Plans issues and epics without changing code |
   | Reporter | Anyone who only reads and comments | |
@@ -200,9 +200,9 @@ commits only from verified addresses.
 ### 4.5 Environments and the change calendar
 
 - **Protected environments:** `production` and `staging` per
-  institution; only the service and security groups may deploy.
+  institution; only the operations and security groups may deploy.
 - **Deployment approvals:** a production deployment waits for the change
-  authority's approval in GitLab (ways-of-working §4): the service owner,
+  authority's approval in GitLab (ways-of-working §4): the operations lead,
   and the security lead for a security control.
 - **Deploy freezes:** the nightly close (21:00 to 03:00 Africa/Nairobi),
   the month-end days, and each customer's go-live freeze, as freeze
@@ -218,7 +218,134 @@ commits only from verified addresses.
 - **Scoped labels:** `kind::`, `release::`, `area::`, `priority::`.
 - **Boards** by iteration and by release.
 
-## 5 · Contracts
+## 5 · Moving in, and being able to leave
+
+**Moving in, this repository first,** then the code:
+
+1. Create the group, its subgroups and the role groups; turn on single
+   sign-on and two-factor authentication.
+2. Set main's protection, the approval rules, the push rules and the
+   protected environments **before anyone pushes**.
+3. Import each repository from GitHub with GitLab's importer, keeping
+   its history; switch every clone's remote.
+4. Point the reader's address at GitLab Pages; the GitHub repository is
+   archived, read-only, and kept for ninety days, then deleted.
+
+**Being able to leave, or to work through an outage** (business
+continuity, suppliers):
+
+- **Push mirroring** from every project to a git server of ours at Dibon
+  central, in Kenya, so the code and its history are always held twice.
+- **A nightly export** of each project's issues, merge requests and
+  their threads, through GitLab's API, into the backup store (SE-10,
+  SE-20).
+- **When GitLab.com is down:** work goes on in local clones; deploys
+  wait, which harms nothing running; an urgent fix is an emergency
+  change, deployed by the operations lead from the mirror and recorded
+  in GitLab afterwards.
+- **A restore from the mirror and the export** is tested twice a year
+  with the other recovery drills.
+
+## 6 · Repositories and releases
+
+- **Documents:** this repository, in `docs`.
+- **Code:** one repository per service that deploys on its own (Kapu MFI,
+  the approval engine, the lender rules, rails, messaging,
+  reconciliation, identity), so each versions and releases on its own;
+  shared libraries in their own; the shared CI components in
+  `ci-components`.
+- **Manifests:** one `platform` repository, a folder per institution
+  and stage, which Flux follows.
+- **Versions:** semantic versions per service; a tag `vX.Y.Z` on main,
+  protected; release notes drawn from the merge requests' changelog
+  lines.
+- **Environments:** named `<institution>/<stage>`, such as
+  `roan-capital/staging` and `roan-capital/production`; each production
+  protected (§4.5).
+- **Promotion, never rebuilding:** the same signed image, by digest,
+  moves from staging to production.
+
+## 7 · Identity and tokens
+
+- **Single sign-on** through the engineers' Keycloak, for the web and
+  for git; two-factor authentication for the few accounts outside it,
+  such as the break-glass Owner.
+- **SSH keys** backed by hardware security keys (the `-sk` key types),
+  by policy and the access review, where GitLab.com cannot enforce the
+  type for a group.
+- **Personal access tokens** avoided; where one is needed, scoped and
+  expiring within thirty days (proposed). Automation uses service
+  accounts and project or group access tokens, never a person's token.
+- **Claude** works as a service account with the Developer role, in the
+  projects agreed: it pushes branches and opens merge requests, never
+  merges, never holds Maintainer; its token sits in OpenBao and is
+  rotated monthly.
+- **Restricting the group to known networks** (Premium) is not used in
+  R1: people work from anywhere, behind single sign-on and hardware keys.
+
+## 8 · Integrations and communication
+
+- **Grafana:** every deployment marked on its dashboards, from GitLab's
+  deployment events, through a webhook into Loki.
+- **Odoo Helpdesk:** a ticket names the issue or merge request that fixes
+  it; the merge request template has the ticket's number; nothing of the
+  customer's is copied across.
+- **Notifications:** each person's own, by email; merge-request and
+  pipeline events to the team's channel once a chat tool is chosen
+  (open, §18).
+- **Where discussion happens:** decisions in merge-request threads and
+  register rows; chat for quick coordination, and whatever chat
+  decides is written into the merge request or the register.
+
+## 9 · Dependencies and large files
+
+- **Renovate** opens merge requests for dependency and image updates:
+  security fixes at once, the rest grouped weekly, each pinned digest
+  moved. It is AGPL-3.0, run unmodified as a scheduled job on our
+  runners, as the licence rule allows (architecture §6.1); GitLab's own
+  dependency scanning is Ultimate.
+- **Git LFS** for binary files: images, PDFs, spreadsheets, Word files,
+  fonts; repository sizes watched.
+- **Generated files** (`build/`) are never committed: the pipeline makes
+  them.
+
+## 10 · Seats, storage and limits
+
+- **Seats:** every person in the group takes a Premium seat; every
+  approver needs the Developer role (§4.1). About ten today: the
+  engineers, the customer experience pair, the Odoo consultants, and the
+  compliance and commercial roles as they are filled.
+- **Storage:** GitLab.com sets a quota per group; repositories, LFS,
+  artifacts and Pages count against it. Artifacts expire after thirty
+  days (proposed); usage is checked monthly.
+- **Compute:** our own runners use none of GitLab's compute minutes.
+
+## 11 · Customers, joiners and leavers
+
+- **Customers have no access to GitLab.** What they see goes through
+  Odoo (Project, Helpdesk) and what we choose to share from the reader.
+  A customer's confidential detail is referred to, never copied into an
+  issue.
+- **A joiner** is added to their role groups in Keycloak, and so to
+  GitLab, with the GitLab role §4.1 gives them (JN-18).
+- **A leaver** is removed from Keycloak the same day, which ends their
+  GitLab access; their tokens are revoked and their open merge requests
+  reassigned. Each month the members are compared with the roles.
+
+## 12 · Evidence for auditors
+
+What GitLab records answers these, exported and kept seven years with
+our evidence (§14):
+
+| Asks for | ISO/IEC 27001:2022 | GitLab's record |
+|---|---|---|
+| Change management | A.8.32 | Merge requests: the approvals, the pipeline's result, the kind of change; deployment approvals |
+| A secure development life cycle; secure coding; security testing | A.8.25, A.8.28, A.8.29 | The pipeline's checks and scans on every merge request |
+| Access to source code; access rights | A.8.4, A.5.15, A.5.18 | Members and roles, single sign-on, the monthly comparison |
+| Separate environments | A.8.31 | Protected environments, per institution and stage |
+| Regulators' change records | The approval pack's change and security items | A quarterly report of merged changes, their kind, approvers and deployments |
+
+## 13 · Contracts
 
 | With | What | How |
 |---|---|---|
@@ -228,7 +355,7 @@ commits only from verified addresses.
 | Clusters | Manifests | The agent and Flux pull; GitLab never pushes into a cluster |
 | Observability | Audit events, deployments | Exported by a scheduled job to Loki; deployments feed the four measures |
 
-## 6 · Data
+## 14 · Data
 
 | What | Class | Kept | Personal data |
 |---|---|---|---|
@@ -236,7 +363,7 @@ commits only from verified addresses.
 | Pipeline logs | Internal | 90 days (proposed) | None: secrets and data masked |
 | Audit events and deployment records | Internal | Exported and kept 7 years with our evidence | Staff actions |
 
-## 7 · Quality and metrics
+## 15 · Quality and metrics
 
 - **The four measures** (ways-of-working §4): deployment frequency, lead
   time for changes, change failure rate, time to restore, computed weekly
@@ -248,7 +375,7 @@ commits only from verified addresses.
   freeze (2); a change to a protected setting or an Owner added (2)
   (observability-grafana §4).
 
-## 8 · Threats
+## 16 · Threats
 
 | Threat | For example | The answer |
 |---|---|---|
@@ -260,7 +387,7 @@ commits only from verified addresses.
 | Elevation of privilege | A developer edits approval rules or deploys to production | Approval rules locked; protected environments; two Owners only |
 | Linkability, identifiability (LINDDUN) | Customer details in an issue | Never: refer to the customer's record, do not copy it |
 
-## 9 · Checks before the build
+## 17 · Checks before the build
 
 | # | Check | Pass |
 |---|---|---|
@@ -268,13 +395,13 @@ commits only from verified addresses.
 | G2 | A merge request touching docs/regulation.md without the compliance officer's approval | Cannot merge |
 | G3 | A push to main | Refused |
 | G4 | A deploy to production during the nightly close, not labelled emergency | Refused by the deploy freeze |
-| G5 | A production deploy without the service owner's approval | Waits |
+| G5 | A production deploy without the operations lead's approval | Waits |
 | G6 | A job fetches a secret from OpenBao by ID token, and by the `secrets` keyword | The first works; the second is recorded as works or not |
 | G7 | A commit adding a file named .env | Refused at push |
 | G8 | A leaver removed from the engineers' Keycloak | Cannot sign in to GitLab |
 | G9 | A merge request's reader preview, visible only to project members | Opens for a member; refused to a stranger |
 
-## 10 · Open questions
+## 18 · Open questions
 
 1. **For the owner:** when to move this repository and the code from
    GitHub to GitLab (FS-701).
@@ -283,3 +410,9 @@ commits only from verified addresses.
 3. Whether GitLab's `secrets` keyword works with OpenBao (G6).
 4. The number of Premium seats: every role holder who approves needs
    Developer, so a seat.
+5. **For the team lead:** the team's chat tool, for notifications and
+   quick coordination (§8).
+6. The git server for the mirror at Dibon central: a bare server over
+   SSH, or Forgejo or Gitea (§5).
+7. One repository per service, or one for all the code: the engineering
+   lead's call before the first code moves (§6).
