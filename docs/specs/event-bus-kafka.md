@@ -11,7 +11,7 @@ used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, 
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782]
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783]
 last_reviewed: 2026-10-13
 ---
 
@@ -152,7 +152,7 @@ every consumer has moved. A name not in this table is not published.
 | mfi (lender rules) | `kapu.mfi.loan.nonperforming`, `.loan.performing`, `.loan.cap.reached`, `.loan.charge.waived`, `.repayment.allocated`, `.repayment.allocation.mismatch`, `.loan.ladder.changed` | Lender rules | Messaging, recon, insights |
 | core | `kapu.core.loan.approved`, `.loan.disbursed`, `.repayment.posted`, `.transaction.reversed`, `.loan.closed` | Kapu Core, through the adapter (kapu-core-fineract §5) | Recon, lender rules |
 | core (the close) | `kapu.core.eod.checked`, `.held`, `.released`, `.closed`, `.failed`, `.reported` | End-of-day runner | Observability, recon |
-| rails | `kapu.rails.payment.received`, `.payout.sent`, `.payout.confirmed`, `.payout.failed`, `.payout.unknown`, `.payout.cancelled`, `.payout.returned`, `.recall.completed`, `.reversal.completed` | Rails | Kapu MFI, recon |
+| rails | `kapu.rails.payment.received`, `.payout.sent`, `.payout.confirmed`, `.payout.failed`, `.payout.unknown`, `.payout.cancelled`, `.payout.returned`, `.recall.completed`, `.reversal.completed` | Rails | Kapu MFI, recon, messaging (T45, T46) |
 | collect | `kapu.collect.payment.unplaced`, `.payment.still_unplaced`, `.payment.returned`, `.deposit.posted`, `.deposit.refused` | Collect | Messaging (T28 to T30, T43, T44) |
 | recon | `kapu.recon.exception.opened`, `.exception.resolved` | Reconciliation | Service desk, insights |
 | access | `kapu.access.role.changed`, `.user.disabled`, `.blocked`, `.recovered` | Access | Messaging (T23, T25, T42), audit |
