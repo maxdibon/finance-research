@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763, FS-765, FS-768, FS-769, FS-773, FS-776, FS-782, FS-783]
+review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763, FS-765, FS-768, FS-769, FS-773, FS-776, FS-782, FS-783, FS-784]
 last_reviewed: 2026-10-13
 ---
 
@@ -70,7 +70,7 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-09 | Self-sign-up by USSD into the lightest KYC tier | phase 2 | to write |
 | JN-10 | A deposit paid to the institution's paybill or till | R2 | [deposit.md](deposit.md) |
 | JN-11 | A transfer out through a larger bank: RTGS, EFT or SWIFT | R2 | [transfer-out.md](transfer-out.md) |
-| JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | to write |
+| JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | [transfer-in.md](transfer-in.md) |
 | JN-13 | A bank disbursement, from release to settlement, return or recall | R1 | [bank-disbursement.md](bank-disbursement.md) |
 | JN-14 | A loan settled: guarantors released, the registry notice cancelled, NTSA's joint registration removed, the originals handed back | R1 | [loan-settled.md](loan-settled.md) |
 | JN-16 | An unplaced payment: the payer asked, escalated, returned at day 7 | R1 | [unplaced-payment.md](unplaced-payment.md) |

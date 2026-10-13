@@ -11,7 +11,7 @@ used_by: [access-keycloak, lender-rules, observability-grafana]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783]
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784]
 last_reviewed: 2026-10-13
 ---
 
@@ -235,6 +235,7 @@ Event names are in the event bus catalogue (event-bus-kafka §5).
 | T44 | Deposit not accepted | `kapu.collect.deposit.refused` | Transactional | SMS | amount, that no money left their wallet, the reason in plain words (number not recognised; contact the bank; above the limit, and how to raise it); never an account holder's name | CO-21; JN-10 |
 | T45 | Transfer sent | `kapu.rails.payout.sent` (a customer's transfer) | Transactional | SMS | amount, the recipient's bank and account ending, the reference to give the recipient, the day it should arrive | RL-27; JN-11 |
 | T46 | Transfer not completed | `kapu.rails.payout.failed`, `kapu.rails.payout.returned` (a customer's transfer) | Transactional | SMS | amount, the reason in plain words, that it is back in their account and from which date | RL-27, RL-01; JN-11 |
+| T47 | Transfer received | `kapu.rails.payment.received` (a bank transfer applied to a customer's account) | Transactional | SMS | amount, the sender's name, the reference, account ending, date; never the balance | RL-27; JN-12 |
 
 The payer may not be a customer: T28 to T30 name no account holder and
 no other person, and carry nothing but the payer's own payment. Replies
