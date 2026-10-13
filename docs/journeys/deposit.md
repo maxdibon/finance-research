@@ -42,7 +42,7 @@ placed continues as JN-16.
   money moved, and they were told why.
 - **Target:** refused or accepted within M-Pesa's validation window (a
   few seconds); posted and confirmed within a minute of M-Pesa's
-  confirmation (proposed); matched by the next reconciliation cycle.
+  confirmation (owner, FS-782); matched by the next reconciliation cycle.
 - **Moments that matter:** the PIN, where the depositor trusts that the
   number they typed is right; the first seconds after, when they want to
   know it reached their own account; a refusal, which must say plainly
@@ -130,5 +130,3 @@ placed continues as JN-16.
 - **For the first bank:** its deposit limits per tier, its rules for a
   dormant account, and its rule for a deposit that breaks a limit after
   M-Pesa completed it (apply or return).
-- **For the owner:** the target of a minute from M-Pesa's confirmation to
-  the depositor's receipt.
