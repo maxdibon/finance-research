@@ -43,8 +43,8 @@ PesaLink and SWIFT follow the same steps and are phase 2 (§4).
   date, and they were told why.
 - **Target:** an instruction approved and released before the larger
   bank's cut-off for its rail, the same business day if given before the
-  bank's own cut-off (proposed); the customer told within a minute of
-  release.
+  bank's own cut-off; the customer told within a minute of release
+  (owner, FS-783).
 - **Moments that matter:** handing over the instruction, when the
   customer needs to know when the money will arrive; the money leaving,
   with a reference they can give the recipient; a return, which must say
@@ -120,7 +120,7 @@ PesaLink and SWIFT follow the same steps and are phase 2 (§4).
 | j | 1 | **A transfer abroad.** SWIFT through the larger bank, with its charges and exchange rate: phase 2 | RL-28 |
 | k | 1 | **An instant transfer** by PesaLink: phase 2 | RL-06 |
 | l | 1 to 8 | **The platform is down.** The bank's own staff send urgent transfers from the larger bank's internet banking under its two-person control, recorded as manual acts and approved afterwards; anything queued is checked against the statement before release, so nothing goes twice (JN-19) | RL-14, MD-01 |
-| m | 3 | **The instruction stops partway:** entered and not approved. The approver is reminded, then the request escalates; an instruction not released by the end of its business day lapses and the reserved amount returns to the customer, who is told (proposed) | MD-08 |
+| m | 3 | **The instruction stops partway:** entered and not approved. The approver is reminded, then the request escalates; an instruction not released by the end of its business day lapses and the reserved amount returns to the customer, who is told (owner, FS-783) | MD-08 |
 | n | 1 | **An instruction not given in person,** by letter or email, above the bank's threshold or to a recipient the customer has not paid before: the officer calls the customer back on the number on record before entering it, and notes the call | — |
 
 ## 4 · Gaps
@@ -143,7 +143,3 @@ PesaLink and SWIFT follow the same steps and are phase 2 (§4).
   direct member of any rail (FS-585).
 - **For the first bank:** its fees, its approval tiers, and its rule for
   the fee on a rejected transfer.
-- **For the owner:** the targets (released the same business day if given
-  before the bank's cut-off; the customer told within a minute of
-  release), and an unreleased instruction lapsing at the end of its
-  business day.
