@@ -15,6 +15,10 @@ sources/gatekeepr/
 # the vendor, and only summarised in docs/competitors.md.
 sources/market/
 
+# The owner's handwritten design notes, photographed (FS-790): the source of the
+# recon redesign, transcribed in its README.md beside them. Kept, not committed.
+sources/dibon/recon-notes/
+
 # Kenyan legislation fetched from Kenya Law (FS-429). Public, and fetched
 # again from the links in docs/regulation.md; kept out of git for size.
 sources/regulation/
