@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime, core, escrow, crb, rails, insights, platform-security, decisioning]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618, FS-101, FS-633, FS-634, FS-635, FS-699, FS-700, FS-767]
-last_reviewed: 2026-10-12
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618, FS-101, FS-633, FS-634, FS-635, FS-699, FS-700, FS-767, FS-792]
+last_reviewed: 2026-10-13
 ---
 
 # Recon & Observability
@@ -74,7 +74,7 @@ reconciliation, is Planned (FS-405).
 | RO-05 | Exception queue, ordered by SLA remaining rather than by amount, with owner and age | Designed | Proposal: SLA routing. Prototype: Exception Queue | 1 |
 | RO-06 | Transaction trace: every hop, with both sides' evidence | Designed | Prototype: Transaction Trace | 1 |
 | RO-07 | Remediation: status query, retry, repost, reversal — each audited. An item in transit is chased automatically: its source's status query or statement, as onboarding records it, asked on a schedule until the item clears or its clear-by day passes; matched only on a reference and the amount, never on time alone | Designed | Proposal: actors and corrective workflows. Prototype: status query that completes a break. Control rule in §8 — FS-097. Chasing in transit: FS-635. R1: for M-Pesa; Airtel Money with rails RL-04; a bank's items by its next statement (owner, 2026-10-12, FS-767) | 1 |
-| RO-08 | Ledger replica, checked two ways: real-time assertions from posting events, and a nightly batch proof that subledgers sum to their parents. Suspense holds exactly the open breaks | Designed | Prototype: GL & Subledger | 1 |
+| RO-08 | Ledger replica, checked two ways: real-time assertions from posting events, and a nightly batch proof that subledgers sum to their parents. Suspense holds exactly the open breaks. Designed as three ledgers that must agree: the master, a shadow rebuilt from the master's postings near real time, and a companion that computes on its own from the source events (docs/specs/recon.md §3) | Designed | Prototype: GL & Subledger. Three ledgers: the owner's notes (FS-790, FS-791, FS-792) | 1 |
 | RO-09 | Treasury and float: where the money sits, and hours of float left at the current burn; for an institution that reaches the rails through a larger bank, the settlement account's balance against the transfers queued for release (rails RL-27) | Designed | Prototype: Treasury & Float. Owner, 2026-10-06: phase 1, in R2 (FS-585) | 1 |
 | RO-10 | Branch and till cash by currency and denomination | Designed | Prototype: Branches & Tellers. For institutions with cash; not every customer | 2 |
 | RO-11 | Duplicate and anomaly detection | Designed | Proposal: fraud detection and risk mitigation. Rule-based in the specification; nothing learned | 1 |

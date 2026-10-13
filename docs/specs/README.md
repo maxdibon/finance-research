@@ -5,8 +5,8 @@ kind: index
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750]
-last_reviewed: 2026-10-12
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792]
+last_reviewed: 2026-10-13
 ---
 
 # Specifications
@@ -45,6 +45,7 @@ as the components table below names it.
 | [access-keycloak](access-keycloak.md) | Component | Keycloak as access: four realms, levels of authentication and step-up, roles granted by mandate, sign-in for every service | access | R1 |
 | [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
 | [gitlab](gitlab.md) | Component | GitLab: groups and roles, protected main, approvals and code owners, push rules, runners in Kenya, secrets from OpenBao, protected environments and deploy freezes, planning; tiers checked | platform-security | R1 |
+| [recon](recon.md) | Build | The reconciliation platform: every movement accounted for by count and amount, tracing, auto-correction, and three ledgers that must agree (the master, a shadow, an independent companion) | recon-observability | R1 |
 
 **To write, in the order R1 needs them:** odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
 rails (M-Pesa and bank instructions, their lifecycle and signing).
@@ -96,6 +97,9 @@ says what crosses each line.
 | kapu-core-fineract | access-keycloak | Sign-in by OAuth, the service account, read-only staff roles |
 | approval-engine | rails (to write) | An approved payment's content hash; nothing is sent without it (RL-01) |
 | every spec | event-bus-kafka | Event names, the envelope and signing (RO-23) |
+| kapu-core-fineract | recon | Postings and signed checkpoints, as events; balances read by API; recon never writes back |
+| recon | end-of-day-runner | The intake and break checks (C3 to C6, P5) and the morning's breaks and match rate |
+| recon | approval-engine | Reads approvals, to compare them with the ledger; reversals go back through the engine |
 
 ## Components
 
@@ -114,7 +118,9 @@ Every box in a spec's diagram is named as this table names it (FS-632).
 | EVENT BUS | Carries signed events between services | `[kafka]` | [event-bus-kafka](event-bus-kafka.md) |
 | RAILS | Sends and receives money on M-Pesa and banks | `[kapu_service]` | to write |
 | MESSAGING | SMS, WhatsApp and email to people | `[kapu_service]` | [messaging](messaging.md) |
-| RECONCILIATION | Matches the ledger with the rails | `[kapu_service]` | — (recon-observability) |
+| RECONCILIATION | Matches the ledger with the rails, proves completeness, compares the three ledgers | `[kapu_service]` | [recon](recon.md) |
+| SHADOW LEDGER | Rebuilds the master's ledger from its postings, near real time, in memory | `[kapu_service]` | [recon](recon.md) |
+| COMPANION LEDGER | Computes, on its own, what every account should hold, from the source events and the product's terms | `[kapu_service]` | [recon](recon.md) |
 | ODOO | Back office: signing, HR, helpdesk, general-ledger summaries | `[odoo]` | to write |
 | DATABASE | PostgreSQL, one per service | `[postgresql]` | — |
 | M-PESA | Safaricom's mobile money | `[rail]` | — |

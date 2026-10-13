@@ -5,8 +5,8 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-466, FS-588, FS-649, FS-653, FS-655, FS-660]
-last_reviewed: 2026-10-08
+review_ids: [FS-466, FS-588, FS-649, FS-653, FS-655, FS-660, FS-792]
+last_reviewed: 2026-10-13
 ---
 
 # Quality goals
@@ -29,5 +29,7 @@ checked.
 | Data stays in Kenya | Except flows named in the module that sends them | [README](README.md) §9; [context](context.md) | The flows listed against the egress rules |
 | Restricted data protected | Never in a log; encrypted field by field | SE-18, SE-27 | A test alert with an ID number is caught (observability G8) |
 | Replaceable parts | Each component behind a versioned contract; upgrades without consumers changing | FS-584; [interfaces](interfaces.md) | A change tried in shadow before it takes over |
+| Scale | Per instance: 25 million accounts; 10 million transactions a day, 2,000 a second at peak; the shadow ledger within 5 seconds of the master; the companion's close of every account within 2 hours (FS-791, FS-792) | [recon](../specs/recon.md) §12: Valkey for the shadow, partitioned stores, the close in parallel, files streamed, signing with short-lived keys | A load test before the claim (recon A9) |
+| Ledgers agree | The master, the shadow and the companion agree on every account: the shadow at every checkpoint, the companion at every close; a balance grown without money behind it is a severity 1 | [recon](../specs/recon.md) §3 | Disagreements counted and alerted; none unexplained |
 | Delightful to use | Nine in ten people complete each core task unaided on first try (proposed) | [Experience](../experience.md) | Usability tests and task measures |
 | Nothing needs reading | Anything a person must confirm or be told, also by voice or as numbers | omni-channel; FS-637 | Each channel checked as it is drawn |

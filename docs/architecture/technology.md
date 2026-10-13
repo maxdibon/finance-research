@@ -5,8 +5,8 @@ kind: architecture
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759]
-last_reviewed: 2026-10-12
+review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759, FS-792]
+last_reviewed: 2026-10-13
 ---
 
 # Technology: the register of components we run
@@ -84,6 +84,8 @@ yet tried) · *Bought* (commercial, chosen with its supplier). All checked
 | Apache Kafka, run by Strimzi | The event bus | Apache-2.0 | Apache Software Foundation; CNCF (Strimzi) | Keep; no cluster at site B under cold or warm standby (FS-694) | NATS JetStream; RabbitMQ | Ordered, replayable, the outbox in front of it |
 | Event schemas in the code repository | JSON Schema and AsyncAPI files, checked in the pipeline | — | Dibon | Change: no runtime registry in R1 | Apicurio, on PostgreSQL, when outside parties consume our events; Karapace; Confluent's registry (its licence fails §6.1) | The same protection with nothing to run (FS-697) |
 | Ceph through Rook; Azure Blob | Object storage: the document vault, Odoo's files | LGPL (Ceph), Apache-2.0 (Rook); commercial (Blob) | Ceph Foundation; CNCF (graduated); Microsoft | Keep | MinIO (AGPL) | On premises and on Liquid's Azure Stack (FS-500) |
+| Debezium | Change-data capture from an institution's own core into recon, in integrated mode (recon §3) | Apache-2.0 | The Debezium project; its governance to confirm at evaluation | Evaluate, with the first integrated-mode institution (FS-792) | The core's own extracts, nightly; a vendor's replication tool | Reads the core's log, so no load on its tables and nothing missed between extracts |
+| Valkey | The shadow ledger's balances in memory (recon §12) | BSD-3 | Linux Foundation | Keep (also the gateway's rate limits) | Redis, now AGPL | One in-memory store for the platform, under a permissive licence |
 
 ### Security
 
@@ -101,6 +103,8 @@ yet tried) · *Bought* (commercial, chosen with its supplier). All checked
 | Wazuh | Detection in our own tier: file changes, vulnerabilities, configuration checks, logs, automatic blocking | GPL-2.0 core, unmodified and separate, by decision; indexer and dashboard Apache-2.0 | Wazuh Inc. | Keep, for a client who prefers it or cannot pay for Sophos (FS-712) | Sophos MDR; Elastic Security | Open, broad; about 4 vCPU and 8 GiB per 25 devices; needs people to watch it |
 | Microsoft Defender Antivirus | Malware protection in our own tier, Windows | Comes with Windows | Microsoft | Keep, in our own tier | Sophos | Already on every Windows device |
 | Fleet | Device management in our own tier | MIT core; some features paid | Fleet Device Management | Evaluate (FS-712) | Intune | Windows, macOS, Linux and phones, policies in git |
+| pgAudit | Every schema change and every write not made by the service's own role, logged from each money database, shipped at once off the instance (FS-789; recon §10) | PostgreSQL licence | pgAudit project | Proposed, in R1 for the ledger database | The database's own statement log, which logs too much and proves less | The audit a manipulator cannot reach |
+| Database activity monitoring | Alerts on unusual database activity, from pgAudit's log | Open | — | Open (FS-790): an open-source rule set on our logs, or a proprietary tool where a bank requires one | Guardium-class products; rules in Grafana | Detection of what pgAudit records |
 
 ### Platform
 

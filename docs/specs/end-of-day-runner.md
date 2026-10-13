@@ -6,13 +6,13 @@ type: build
 status: draft
 release: R1
 implements: [core, recon-observability]
-depends_on: [kapu-core-fineract, lender-rules, observability-grafana, access-keycloak, event-bus-kafka]
+depends_on: [kapu-core-fineract, lender-rules, observability-grafana, access-keycloak, event-bus-kafka, recon]
 used_by: []
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667, FS-674, FS-765, FS-778]
-last_reviewed: 2026-10-12
+review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667, FS-674, FS-765, FS-778, FS-792]
+last_reviewed: 2026-10-13
 ---
 
 # End-of-day runner — build specification
@@ -66,7 +66,8 @@ runner), and runs for Saccos' savings and shares.
 [kapu-core-fineract](kapu-core-fineract.md),
 [lender-rules](lender-rules.md),
 [observability-grafana](observability-grafana.md),
-[access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by none; the
+[access-keycloak](access-keycloak.md), [event-bus-kafka](event-bus-kafka.md) and
+[recon](recon.md), which computes the intake and break checks; used by none; the
 plan it notifies by is [incident management](../service-management/incident-management.md).
 
 ## 2 · Concepts

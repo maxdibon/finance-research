@@ -7,12 +7,12 @@ status: draft
 release: R1
 implements: [mfi]
 depends_on: [kapu-core-fineract, messaging, event-bus-kafka]
-used_by: [end-of-day-runner]
+used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764]
-last_reviewed: 2026-10-12
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792]
+last_reviewed: 2026-10-13
 ---
 
 # Lender rules — build specification
@@ -77,7 +77,7 @@ own: FS-629).
 **Related:** implements [mfi](../modules/mfi.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
 [messaging](messaging.md) and [event-bus-kafka](event-bus-kafka.md);
-used by [end-of-day-runner](end-of-day-runner.md); journeys
+used by [end-of-day-runner](end-of-day-runner.md) and [recon](recon.md), whose companion recomputes what the rules produce; journeys
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and
 [JN-06](../journeys/restructuring.md).

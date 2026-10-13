@@ -588,7 +588,7 @@ test('overview: removing a direct link fails', () => {
 const SPEC = (f) => path.join('docs', 'specs', `${f}.md`);
 
 test('specs: a relation one spec states and the other does not fails', () => {
-  const f = runWith((d) => patch(d, SPEC('lender-rules'), (t) => t.replace('used_by: [end-of-day-runner]', 'used_by: []')));
+  const f = runWith((d) => patch(d, SPEC('lender-rules'), (t) => t.replace('used_by: [end-of-day-runner, recon]', 'used_by: [recon]')));
   assert.deepStrictEqual(names(f), ['specs']);
 });
 
