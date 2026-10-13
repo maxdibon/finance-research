@@ -5,8 +5,8 @@ kind: index
 version: 0.1.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763, FS-765, FS-768, FS-769, FS-773, FS-776]
-last_reviewed: 2026-10-12
+review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763, FS-765, FS-768, FS-769, FS-773, FS-776, FS-782]
+last_reviewed: 2026-10-13
 ---
 
 # User journeys
@@ -68,7 +68,7 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-07 | A borrower viewing and sharing their own documents | R1 | [own-documents.md](own-documents.md) |
 | JN-08 | A complaint, against the 30-day clock | R1 | [complaint.md](complaint.md) |
 | JN-09 | Self-sign-up by USSD into the lightest KYC tier | phase 2 | to write |
-| JN-10 | A deposit paid to the institution's paybill or till | R2 | to write |
+| JN-10 | A deposit paid to the institution's paybill or till | R2 | [deposit.md](deposit.md) |
 | JN-11 | A transfer out through a larger bank: RTGS, EFT or SWIFT | R2 | to write |
 | JN-12 | A transfer in through a larger bank, identified and applied or returned | R2 | to write |
 | JN-13 | A bank disbursement, from release to settlement, return or recall | R1 | [bank-disbursement.md](bank-disbursement.md) |

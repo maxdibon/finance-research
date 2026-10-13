@@ -11,8 +11,8 @@ used_by: [access-keycloak, lender-rules, observability-grafana]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768]
-last_reviewed: 2026-10-12
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782]
+last_reviewed: 2026-10-13
 ---
 
 # Messaging and its templates — build specification
@@ -231,6 +231,8 @@ Event names are in the event bus catalogue (event-bus-kafka §5).
 | T28 | A payment we could not place | `kapu.collect.payment.unplaced` | Transactional | SMS, and WhatsApp where the payer has consented | amount, date, M-Pesa reference, how to reply, link | CO-21 |
 | T29 | Reminder, at 24 hours | `kapu.collect.payment.still_unplaced` | Transactional | SMS | the same | CO-21 |
 | T30 | Returned to you | `kapu.collect.payment.returned` | Transactional | SMS | amount, date, the return's reference | CO-21; rails RL-01 |
+| T43 | Deposit received | `kapu.collect.deposit.posted` | Transactional | SMS | amount, account ending, date, M-Pesa receipt, link; never the balance | CO-18; JN-10 |
+| T44 | Deposit not accepted | `kapu.collect.deposit.refused` | Transactional | SMS | amount, that no money left their wallet, the reason in plain words (number not recognised; contact the bank; above the limit, and how to raise it); never an account holder's name | CO-21; JN-10 |
 
 The payer may not be a customer: T28 to T30 name no account holder and
 no other person, and carry nothing but the payer's own payment. Replies
