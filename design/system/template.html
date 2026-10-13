@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Copy this file to start a document. Keep the head; replace the body's
+     content. The footer label repeats on every page; keep it short. -->
+<meta name="dibon-footer" content="Dibon Consulting · Design system · October 2026">
+<title>Design system: every component</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="dibon.css">
+</head>
+<body>
+
+<header class="head">
+  <svg class="corner" viewBox="0 0 70 40" aria-hidden="true" style="stroke: #fff2eb; opacity: .35"><path d="M18 0 C 24 18, 48 28, 70 26"/></svg>
+  <div class="brand"><img alt="Dibon" src="__LOGO__"><span class="wordmark">Dibon<br>Consulting</span></div>
+  <div class="kicker">The kicker: what kind of document this is</div>
+  <h1>The title says what the reader gets, in a line or two</h1>
+  <div class="meta">Dibon Company Limited · 12 October 2026</div>
+</header>
+
+<main>
+  <p class="lead">A lead paragraph, in italic: one or two sentences that tell the reader why this document is in front of them, and what we would like them to do with it.</p>
+
+  <h2>1 · A section heading, numbered</h2>
+  <p>Body text is Source Sans 3 at 10 point. Write plainly: short sentences, the reader's words, <strong>one idea in bold</strong> where it carries the paragraph, and never a register id in anything that leaves the building.</p>
+  <ul>
+    <li><strong>A bullet with a lead-in.</strong> The marker is amber; a numbered list's is plum.</li>
+    <li>A second bullet, plain.</li>
+  </ul>
+
+  <h3>A sub-heading, when a section needs one</h3>
+  <ol class="q">
+    <li><span class="qid">A1</span><span>A numbered question the reader can answer by its id, as the bank letters do.</span></li>
+    <li><span class="qid">A2</span><span>The next question.</span></li>
+  </ol>
+
+  <div class="note"><p><strong>A note</strong> is for the one thing the reader must not miss: a deadline, a condition, a decision we need.</p></div>
+
+  <h2>2 · Tables, figures and tags</h2>
+  <table>
+    <thead><tr><th>What</th><th>Who</th><th>Status</th><th class="num">Amount (KES)</th></tr></thead>
+    <tbody>
+      <tr><td>A row of a table</td><td>A role, never a name</td><td><span class="tag">Planned</span></td><td class="num">120,000</td></tr>
+      <tr><td>Another row</td><td>The finance lead</td><td><span class="tag amber">In discussion</span></td><td class="num">45,500</td></tr>
+      <tr><td>Money, shown as money</td><td>The accountant</td><td><span class="tag money">Settled</span></td><td class="num">9,800</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cards">
+    <div class="card"><h3>A card</h3><p>Two or three side by side, each with a plum top edge.</p></div>
+    <div class="card"><div class="stat">98%<small>matched by itself</small></div></div>
+    <div class="card"><h3>A third</h3><p>Cards wrap to the width they are given.</p></div>
+  </div>
+
+  <h2>3 · A little whimsy</h2>
+  <div class="rule"></div>
+  <p>The double rule opens a section that deserves a pause. The spot illustration below is line-drawn in plum with an amber dashed path, the way the portfolio draws.</p>
+  <svg class="illo" viewBox="0 0 120 40" style="width: 90mm; margin: 2mm 0 3mm" aria-hidden="true">
+    <rect class="ln" x="4" y="10" width="26" height="20" rx="3"/>
+    <path class="am" d="M32 20 C 48 6, 62 34, 78 20"/>
+    <circle class="ln" cx="92" cy="20" r="11"/>
+    <path class="mn" d="M87 20 l4 4 l7 -9"/>
+    <circle class="fill-a" cx="113" cy="9" r="2.2"/>
+  </svg>
+  <p class="wink">An aside with a wink: a short, kind line in the margin of the argument, never in place of it. One per page at most.</p>
+
+  <div class="sign">
+    <p>Yours sincerely,</p>
+    <div class="line"></div>
+    <div class="role">The role signing, Dibon Company Limited</div>
+  </div>
+
+  <div class="colophon"><span><span class="spark"></span>Made in Nairobi</span><span>dibon.co.ke</span></div>
+</main>
+</body>
+</html>

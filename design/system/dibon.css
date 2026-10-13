@@ -1,0 +1,131 @@
+/* Dibon's document design system (FS-781): one stylesheet for every
+   printed document, so that they look like one house without being one
+   template. The tokens and components are the portfolio's and the
+   outreach letters'; the guide is docs/design-system.md.
+
+   Use: link this file from a page built on design/system/template.html,
+   then print it with `node design/system/build.js <page.html>`. */
+
+/* ── Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  /* Colour. Aubergine and plum carry the brand; amber is the accent and
+     never body text; green appears only as money in diagrams. */
+  --aubergine: #280430;
+  --plum: #460d4d;
+  --amber: #fbb236;
+  --amber-text: #8a5a00;   /* amber that passes contrast on white */
+  --cream: #fff2eb;
+  --paper: #fffaf6;
+  --ink: #23122a;
+  --muted: #5e4c66;
+  --line: #ead9dc;
+  --on-dark: #cdb3c9;      /* quiet text on aubergine */
+  --money: #0e7f5a;
+  --money-bg: #e2f3ec;
+
+  /* Type */
+  --display: "Montserrat", "Segoe UI", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+
+  /* Space: the page's margins and the rhythm between blocks */
+  --gutter: 18mm;
+  --gap: 4mm;
+}
+
+/* ── The page ───────────────────────────────────────────────────────── */
+/* The footer band repeats on every page through Chrome's page-margin
+   boxes; build.js writes its label from <meta name="dibon-footer">.
+   Widths exclude padding: 162.4 + 18 and 21 + 9 make the page's 210mm. */
+@page {
+  size: A4;
+  margin: 14mm 0 12mm;
+  @bottom-left { width: 162.4mm; height: 12mm; margin: 0; padding-left: 18mm; background: var(--aubergine); color: var(--on-dark); font: 600 6.5pt var(--display); letter-spacing: 0.14em; text-transform: uppercase; vertical-align: middle; }
+  @bottom-right { content: counter(page); width: 21mm; height: 12mm; margin: 0; padding-right: 9mm; background: var(--amber); color: var(--aubergine); font: 700 11pt var(--display); text-align: right; vertical-align: middle; }
+}
+@page :first { margin-top: 0; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; }
+body { font: 400 10pt/1.45 var(--body); color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+main { padding: 7mm var(--gutter) 0; }
+p { margin: 0 0 2mm; }
+strong { color: var(--aubergine); }
+a { color: var(--plum); }
+
+/* ── Header band: the first page of every document ──────────────────── */
+.head { position: relative; overflow: hidden; background: var(--aubergine); color: var(--cream); padding: 11mm var(--gutter) 8mm; }
+.head::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 42mm; background: var(--amber); clip-path: polygon(45% 0, 100% 0, 100% 100%, 0 100%); }
+.head.compact { padding: 7mm var(--gutter) 6mm; }
+.head.compact::after { width: 30mm; }
+.brand { display: flex; align-items: center; gap: 3mm; }
+.brand img { height: 11mm; }
+.wordmark { font: 700 7pt/1.25 var(--display); letter-spacing: 0.22em; text-transform: uppercase; }
+.kicker { margin-top: 7mm; font: 600 7.5pt/1 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); }
+.head h1 { margin: 3mm 0 0; max-width: 140mm; font: 800 19pt/1.2 var(--display); color: #fff; text-wrap: balance; }
+.head .meta { margin-top: 4mm; font: 600 7.5pt/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; color: var(--on-dark); }
+
+/* ── Headings and the double rule ──────────────────────────────────── */
+h2 { break-after: avoid; margin: 6mm 0 2mm; padding-bottom: 1.5mm; border-bottom: 0.6mm solid var(--amber); font: 700 10.5pt/1.3 var(--display); color: var(--plum); }
+h3 { break-after: avoid; margin: 4mm 0 1.5mm; font: 700 9.5pt/1.3 var(--display); color: var(--aubergine); }
+/* The portfolio's double rule: a short aubergine pair, a long amber pair */
+.rule { display: block; width: 42mm; height: 2.4mm; margin: 0 0 3mm; background:
+  linear-gradient(var(--aubergine), var(--aubergine)) 0 0 / 9mm 0.8mm no-repeat,
+  linear-gradient(var(--aubergine), var(--aubergine)) 0 1.6mm / 9mm 0.8mm no-repeat,
+  linear-gradient(var(--amber), var(--amber)) 11.5mm 0 / 30.5mm 0.8mm no-repeat,
+  linear-gradient(var(--amber), var(--amber)) 11.5mm 1.6mm / 30.5mm 0.8mm no-repeat; }
+.lead { color: var(--muted); font-style: italic; }
+
+/* ── Lists ──────────────────────────────────────────────────────────── */
+ul, ol { margin: 0 0 2mm; padding-left: 6mm; }
+li { margin: 0 0 1.2mm; padding-left: 1mm; break-inside: avoid; }
+li::marker { font: 700 9pt var(--display); color: var(--plum); }
+ul li::marker { color: var(--amber); }
+/* Numbered questions a reader answers by id (A1, A2): the outreach letters */
+ol.q { list-style: none; padding-left: 0; }
+ol.q li { display: grid; grid-template-columns: 9mm 1fr; padding-left: 0; }
+.qid { font: 700 8.5pt/1.6 var(--display); color: var(--plum); }
+
+/* ── Tables ─────────────────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; margin: 1mm 0 3mm; font-size: 9pt; }
+th { text-align: left; font: 700 7.5pt/1.3 var(--display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--plum); background: #f6eef4; padding: 1.8mm 2mm; border-bottom: 0.4mm solid var(--amber); }
+td { padding: 1.6mm 2mm; border-bottom: 0.25mm solid var(--line); vertical-align: top; }
+tr { break-inside: avoid; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ── Blocks ─────────────────────────────────────────────────────────── */
+/* A note: something the reader must not miss */
+.note { margin: 2mm 0 3mm; padding: 2.5mm 3.5mm; background: var(--cream); border-left: 1.2mm solid var(--amber); break-inside: avoid; }
+.note > :last-child { margin-bottom: 0; }
+/* Cards: two or three side by side */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(50mm, 1fr)); gap: var(--gap); margin: 2mm 0 3mm; }
+.card { padding: 3mm 3.5mm; border: 0.3mm solid var(--line); border-top: 1mm solid var(--plum); background: var(--paper); break-inside: avoid; }
+.card h3 { margin-top: 0; }
+/* A figure worth reading at a glance */
+.stat { font: 800 18pt/1 var(--display); color: var(--aubergine); }
+.stat small { display: block; margin-top: 1mm; font: 600 7pt/1.2 var(--display); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+/* Tags: a status, a phase, a tier */
+.tag { display: inline-block; padding: 0.4mm 1.8mm; border-radius: 2mm; font: 700 6.5pt/1.5 var(--display); letter-spacing: 0.08em; text-transform: uppercase; background: #f6eef4; color: var(--plum); }
+.tag.amber { background: #fff1d6; color: var(--amber-text); }
+.tag.money { background: var(--money-bg); color: var(--money); }
+/* Signatures: letters and agreements */
+.sign { margin-top: 10mm; break-inside: avoid; }
+.sign .line { width: 60mm; border-bottom: 0.3mm solid var(--ink); height: 12mm; margin-bottom: 1.5mm; }
+.sign .role { font: 600 8pt/1.3 var(--display); color: var(--muted); }
+
+/* ── Whimsy: a little, in the margins (docs/design-system.md §5) ────── */
+/* Corner line-art, top right of a page or a header band */
+.corner { position: absolute; top: 0; right: 0; width: 70mm; height: 40mm; fill: none; stroke: var(--amber); stroke-width: 1.6; stroke-linecap: round; pointer-events: none; }
+.corner .dot { fill: var(--amber); stroke: none; }
+/* An aside with a wink: italic, muted, an amber squiggle before it */
+.wink { position: relative; margin: 3mm 0; padding-left: 9mm; color: var(--muted); font: italic 400 9pt/1.4 var(--body); break-inside: avoid; }
+.wink::before { content: ""; position: absolute; left: 0; top: 1.4mm; width: 7mm; height: 2.4mm; background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 10'%3E%3Cpath d='M1 6 C 5 0, 9 0, 13 5 S 21 10, 27 3' fill='none' stroke='%23fbb236' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+/* Spot illustrations: line drawings in plum, amber dashes, money in green */
+.illo { display: block; }
+.illo .ln { fill: none; stroke: var(--plum); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.illo .am { fill: none; stroke: var(--amber); stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 3 3; }
+.illo .mn { fill: none; stroke: var(--money); stroke-width: 2.2; stroke-linecap: round; }
+.illo .fill-a { fill: var(--amber); }
+.illo .fill-p { fill: var(--plum); }
+/* The sign-off at the very end */
+.colophon { margin: 8mm 0 4mm; padding-top: 3mm; border-top: 0.4mm solid var(--line); display: flex; justify-content: space-between; align-items: center; color: var(--muted); font: 600 6.5pt/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase; }
+.colophon .spark { display: inline-block; width: 2.2mm; height: 2.2mm; margin-right: 1.5mm; border-radius: 50%; background: var(--amber); vertical-align: -0.2mm; }

@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-771, FS-772, FS-775, FS-778]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # 3 · The calendar
@@ -28,7 +28,7 @@ queues of their own.
 | By 12:00 | The morning signed off by closing its ticket | Accountant | JN-17 |
 | Through the day | Unplaced payments: answers placed; the 48-hour calls; returns at day 7 | Accountant; follow-up team | JN-16 |
 | Through the day | Complaints logged the day they are made, worked to 14 days, never past 30 | Whoever hears it; complaints handler | JN-08 |
-| The day it happens | A joiner, move or exit recorded in Odoo; a leaver's bank and M-Pesa access ended | Manager; finance lead | JN-18; HB-10 to HB-13 |
+| The day it happens | A joiner, move or exit recorded in Odoo; a leaver's bank and M-Pesa access ended | Manager; finance lead | JN-18; HB-20 to HB-23 |
 | 23:00 to 04:00 | Nothing released: the end-of-day window | All staff | RC-21 |
 | 23:45, if told | A held close: the cause fixed, or the override with Dibon's on-call engineer | Finance lead | JN-17 (3a) |
 
@@ -45,7 +45,7 @@ queues of their own.
 
 | When | Duty | Who | From |
 |---|---|---|---|
-| First week | The access review, signed | Operations lead | HB-17; rules for institutions 3 |
+| First week | The access review, signed | Operations lead | HB-27; rules for institutions 3 |
 
 ## Every year
 

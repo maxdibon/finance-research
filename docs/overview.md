@@ -6,7 +6,7 @@ version: 0.2.0
 owner: Solution architect
 classification: Internal
 review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # Dibon financial services — the portfolio
@@ -169,6 +169,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | How we run it: incidents, changes, problems, service levels, the configuration record, the tools | [service-management/](service-management/README.md) |
 | What an institution does on the platform, who does it and when: the handbook template | [handbook/](handbook/README.md) |
 | How people learn it: manuals and training, by role | [training/](training/README.md) |
+| How our printed documents look: tokens, components, templates and a little whimsy | [design-system.md](design-system.md) |
 | How the service and the company keep going when something fails | [business-continuity.md](business-continuity.md) |
 
 **Law and assurance**

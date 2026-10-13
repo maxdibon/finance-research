@@ -1,0 +1,141 @@
+---
+id: design-system
+name: Design system — how Dibon's documents look, so they are one house without being one template
+kind: guide
+version: 0.1.0
+owner: Commercial lead
+classification: Internal
+review_ids: [FS-728, FS-781]
+last_reviewed: 2026-10-13
+---
+
+# Design system
+
+**What this is:** the look every printed document shares (portfolios,
+proposals, letters, checklists, agreements, handbooks), so a reader
+knows it is ours at a glance, while each document keeps the layout its
+job needs (FS-728, FS-781). Consistent, not identical; and a little
+whimsy, in its place.
+
+**The parts:**
+
+| Part | What it is | Where |
+|---|---|---|
+| The stylesheet | Tokens and every component, for HTML printed to PDF | [design/system/dibon.css](../design/system/dibon.css) |
+| The template | One page using every component: copy it to start | [design/system/template.html](../design/system/template.html) |
+| The printer | Inlines the stylesheet and logo, writes the footer band, prints A4 | [design/system/build.js](../design/system/build.js) |
+| Word | The same bands, headings, lists and tables for docx-js | [design/system/docx.js](../design/system/docx.js) |
+| The logo | White for dark bands; vector candidates in white, amber and plum | design/brand/ |
+
+```bash
+node design/system/build.js                      # the template, as a check
+node design/system/build.js my-letter.html       # any page that links dibon.css
+```
+
+The portfolio ([design/portfolio-pdf/](../design/portfolio-pdf/build.js))
+and the bank-channel proposal keep their own builders, with the same
+tokens; a new document starts from the template.
+
+## 1 · Principles
+
+1. **One house, many rooms.** Every document has the header band on its
+   first page and the footer band on every page. Inside, choose the
+   components the job needs.
+2. **Plain words first.** Short sentences, the reader's words, one idea in
+   bold where it carries the paragraph (docs/experience.md).
+3. **Customer-safe, inside as well as out.** Say what a customer is working
+   towards; never judge their systems.
+4. **Roles, never names,** in anything we keep; a name appears only on a
+   named copy, recorded in the distribution log on the CRM opportunity.
+5. **No register ids in anything that leaves the building.** The public
+   check fails on one in the portfolio's copy.
+6. **Look at it.** Render every page and look before sending; measuring is
+   not looking.
+
+## 2 · Tokens
+
+| Token | Value | Use |
+|---|---|---|
+| Aubergine | `#280430` | Bands, titles, strong text |
+| Plum | `#460d4d` | Headings, markers, line drawings |
+| Amber | `#fbb236` | The accent: rules, corners, page numbers, dots. Never body text |
+| Amber text | `#8a5a00` | Amber words on white, where contrast matters |
+| Cream | `#fff2eb` | Notes, text on aubergine |
+| Paper | `#fffaf6` | Cards and full-page backgrounds |
+| Ink | `#23122a` | Body text |
+| Muted | `#5e4c66` | Leads, asides, captions |
+| Line | `#ead9dc` | Table rules, borders |
+| Money | `#0e7f5a` on `#e2f3ec` | Money in diagrams and tags, nothing else |
+
+**Type:** Montserrat for display (titles, headings, kickers, labels, in
+capitals with tracking for the small ones); Source Sans 3 for body text at
+10 point. Word documents use Calibri unless the brand fonts are installed.
+
+**Page:** A4; side margins 18 mm; the footer band 12 mm high, with the
+page number in its amber corner.
+
+## 3 · Components
+
+| Component | Class | When |
+|---|---|---|
+| Header band | `.head` (`.compact` for letters) | The top of the first page: logo, kicker, title, meta line |
+| Footer band | from `<meta name="dibon-footer">` | Every page: "Dibon Consulting · what it is · when" |
+| Kicker | `.kicker` | What kind of document this is, above the title |
+| Lead | `.lead` | One or two sentences on why the reader has this |
+| Section heading | `h2` | Numbered ("1 · Scope"), with the amber rule beneath |
+| Double rule | `.rule` | Opening a section that deserves a pause |
+| Questions | `ol.q` with `.qid` | Questions a reader answers by id (A1, A2) |
+| Note | `.note` | The one thing the reader must not miss |
+| Table | `table`, `td.num` | Columns of facts; numbers right-aligned |
+| Cards | `.cards` > `.card` | Two or three things side by side |
+| Figure | `.stat` | A number worth reading at a glance |
+| Tag | `.tag`, `.amber`, `.money` | A status, a phase, a tier |
+| Signature | `.sign` | Letters and agreements |
+| Corner line-art | `svg.corner` | A drawn curve in a page's or band's corner |
+| Aside | `.wink` | A kind line in the margin of the argument |
+| Illustration | `svg.illo` | Line drawings: plum lines, amber dashes, green money |
+| Colophon | `.colophon` | The sign-off at the very end |
+
+## 4 · Documents, and what each starts from
+
+| Document | Starts from | Notes |
+|---|---|---|
+| Portfolio and its editions | design/portfolio-pdf/ | Its own pages and builder; copy only in docs/marketing/portfolio.md |
+| A proposal, a one-pager | The template | Cover in the header band; cards and figures inside |
+| A request or checklist to a bank or partner | The template, as the bank letters do | Numbered questions (`ol.q`); a spreadsheet beside it if they will answer in one |
+| A letter | The template, `.head.compact`; or Word through docx.js when the reader will edit it | Signature by role |
+| An agreement, an NDA | Word through docx.js | No whimsy at all |
+| An institution's handbook | Markdown in docs/handbook/, published to its Odoo or the reader | The reader's own look |
+
+## 5 · A little whimsy
+
+We like a little whimsy: it makes a document feel made by people who
+enjoy the work. It lives in the margins, never in the substance.
+
+**Where it may go:**
+
+- A **corner line-art** curve or a dot in a band or a page's corner.
+- A **spot illustration**, line-drawn, where a picture explains faster
+  than a paragraph.
+- An **aside** (`.wink`): a short, kind line beside the argument, such as
+  "We read the regulations so your team does not have to."
+- The **kicker** and the **colophon**: "Made in Nairobi".
+
+**Where it never goes:** figures, prices, dates and terms; anything a
+regulator, an auditor or a court will read; agreements; incident notices
+and anything about a customer's problem; anything at someone's expense.
+
+**How much:** one touch per page at most, and none on a page that is
+mostly numbers. If it needs explaining, it is not whimsy; cut it.
+
+## 6 · Before it goes out
+
+- [ ] Printed and every page looked at, not only measured.
+- [ ] The header band on page 1, the footer band and page number on every
+      page.
+- [ ] The footer label says what it is and when.
+- [ ] No register ids, no names (except a named copy's recipient, logged),
+      no customer data.
+- [ ] A version for anything a reader will hold, and the status "draft"
+      until it is issued.
+- [ ] Whimsy within §5.

@@ -1,8 +1,8 @@
 # Dibon financial services — session handoff
 
-    version: 1.5.0
-    updated: 2026-10-12
-    supersedes: 1.4.0; adds 8 to 12 October (FS-611 to FS-744)
+    version: 1.6.0
+    updated: 2026-10-13
+    supersedes: 1.5.0; adds the rest of 12 October (FS-745 to FS-781)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -120,6 +120,28 @@ Each has a register row and, where it changed the design, an entry in
   The build refuses a named copy of a draft (FS-595).
 - **Every decision from FS-490 names what it requires** in a `Requires:`
   line, and the check proves each item exists (FS-515).
+- **In an outage, Dibon gets the platform back; the institution keeps its
+  business going with its own portal, bank, form and log; Dibon never
+  touches its money, even if asked** (FS-774). Safe mode (SE-24) is in
+  R1; Roan Capital's contract takes warm standby, so the second site's
+  provider is needed before its go-live (FS-775).
+- **Matching is the platform's job;** the accountant settles only what
+  the rules could not, against a target of 98% matched automatically
+  (FS-766). M-Pesa items in transit are chased automatically in R1
+  (RO-07); NCBA comes in by its statement email forwarded whole, or
+  uploaded, checked before matching (RO-01), until its API (FS-767).
+- **Roles follow the job position:** recording someone in Odoo's
+  Employees app (BS-12, the employee record only, in R1) asks for the
+  position's roles; a second person approves ahead; roles start on the
+  start date (FS-769, FS-770). Dibon's engineers the same way, their group
+  memberships as code approved by the security lead (FS-777).
+- **Each institution has a handbook** (docs/handbook/): what and when,
+  one procedure per HB id, drawn from a journey; manuals say how, later
+  (FS-771). Its copy lives in its own Odoo (FS-772).
+- **The register rates every open row** Critical, High, Medium or Low
+  (FS-779).
+- **Our printed documents share one look,** with a little whimsy in the
+  margins: docs/design-system.md (FS-781).
 
 ## What is in flight
 
@@ -129,12 +151,11 @@ Each has a register row and, where it changed the design, an entry in
   scoring) blocks decisioning's build. Roan's requirement document is
   Dibon's own and commits appraisal, a behaviour score and automatic
   downgrades to the MVP.
-- **User journeys** in `docs/journeys/`: JN-01 to JN-06 written (the
-  electronic and manual identity checks, the business borrower, a loan
-  to disbursement, a guarantor, a restructure). JN-15 (a trader who does not read, phase 2) also written. Still to write for R1: JN-07 (borrower's documents), JN-08 (complaint), JN-14
-  (settlement and the collateral's discharge), JN-13
-  (a bank disbursement to settlement, return, recall or reversal). Each
-  journey found gaps, settled with the owner one by one.
+- **User journeys** in `docs/journeys/`: **every R1 journey is drafted**:
+  JN-01 to JN-08, JN-13, JN-14, JN-16 to JN-20 (JN-15 is phase 2; JN-10
+  to JN-12 are R2, unwritten). All are `draft`. **Agreeing one now needs
+  its handbook procedures**: the check fails an agreed journey with none.
+  JN-18 and JN-19 have theirs (HB-20 to HB-27, HB-70 to HB-78).
 - **Architecture** is a folder (`docs/architecture/`, FS-649): README.md
   keeps §1 to §10, so "architecture §N" references hold; beside it the
   views: context, instance, deployment, runtime (sequence diagrams),
@@ -162,9 +183,7 @@ Each has a register row and, where it changed the design, an entry in
 - **Every journey** (FS-668) has a status and validated_with, a target
   time, the moments that matter, a data line, a Messages column of
   template ids (checked against the catalogue) and a "stops partway" row.
-  JN-16 (the unplaced payment), JN-13 (a bank disbursement) and JN-14
-  (a loan settled) are written. Next, in order: JN-07, JN-08, JN-17,
-  JN-18, JN-19.
+  Every R1 journey is now written (above).
 - **R1's scope was swept** (FS-671, FS-674, FS-675): 24 capabilities the
   specs relied on moved into the delivery plan's "R1 in detail" (with
   Roan's map and CU-01); MS-05 and MS-06 stay out. The check now fails
@@ -199,8 +218,7 @@ Each has a register row and, where it changed the design, an entry in
   instance, no standing access to data, just-in-time grants approved by
   the institution where it runs operations, an access register compared
   monthly (SE-26, architecture §9). **Messaging** (`messaging.md`, FS-648):
-  the R1 catalogue of 30 templates (27, then 3 for unplaced payments,
-  FS-663); the institution owns and approves its
+  the R1 catalogue of templates (T01 onward; count them there); the institution owns and approves its
   words; a message never carries the outstanding balance. Next, in order:
   rails, reconciliation, kapu-mfi, identity, odoo, decisioning; then the sanctions adapter, guarantors and
   borrower access. **On-call:** Grafana OnCall's open-source edition was
@@ -216,9 +234,16 @@ Each has a register row and, where it changed the design, an entry in
   Odoo Enterprise for our own use, the GitOps tool, a status page. Its times are proposals until
   agreed with the rota and each customer.
 - **Vendors for identity:** Smile ID, MetaMap and Prembly read from their
-  API references (partners PT-30, PT-33, PT-53); Smile ID and Prembly
-  proposed as the candidates; the owner has reached out to Prembly and
-  will provide its updates.
+  API references (partners PT-30, PT-33, PT-53). Prembly sent its
+  reseller agreement and DPA; we reviewed them (FS-762) and prepared our
+  changes letter (sources/confidential/prembly/, out of git), for the
+  commercial lead to send. Bureau and register data resold is LQ-12.
+- **Service management** now says whose record each practice is, Dibon's
+  or the institution's, and the bridge: its staff as portal users of
+  Dibon's Odoo (FS-780). **Ways of working** (roles, merge requests,
+  architecture review, change advisory) and the **GitLab spec** are in
+  service-management/ and specs/gitlab.md (FS-745 to FS-758); monorepo
+  and the mirror server left open (FS-760).
 - **The collateral registry** (Movable Property Security Rights Act and
   its regulations, law register LR-23, LR-37): MF-03 now searches before
   lending, records each notice, sends the borrower their copy within ten
@@ -309,7 +334,8 @@ git log --oneline -15
 git status --short
 ```
 
-Rows that block R1: `grep "blocks R1" REVIEW.md | grep "| OPEN |"`.
+The most pressing: `grep -E "\| OPEN \| (Critical|High) \|" REVIEW.md`.
+The reader's Review page lists every open row by criticality.
 Proposals awaiting go: `grep "| OPEN |" REVIEW.md | grep "Proposal in chat"`.
 
 ## How the owner wants you to work
@@ -336,6 +362,10 @@ Proposals awaiting go: `grep "| OPEN |" REVIEW.md | grep "Proposal in chat"`.
 - **Roles, never names**, for people. **Customer-safe language** inside as
   well as outside.
 - **Status is evidence:** Live, Built, Designed or Planned.
+- **Rate every new open row** Critical, High, Medium or Low; a row you
+  close loses its rating (the register check holds both).
+- **Documents for outside readers** start from docs/design-system.md: one
+  look, a little whimsy in the margins, never in figures or terms.
 - **Never sign in, or enter a password, on a live site.**
 
 ## The checks
@@ -351,7 +381,11 @@ outside the release named in §4 Gaps, every journey indexed),
 directly or by its folder), **specs** (template front matter and sections,
 relations both ways, §1's diagram and Related line, the index, box names
 from the components table), **links** (every relative link and every
-`docs/…` path resolves; REVIEW.md exempt as history) and `reviewed`. The pre-commit hook runs them,
+`docs/…` path resolves; REVIEW.md exempt as history), **handbook** (every
+procedure has a From line naming an existing journey or spec section; HB
+ids cited exist; an agreed journey has procedures) and `reviewed`. The
+**register** check also fails an open row without a criticality, a closed
+one with one, and a heading holding table cells. The pre-commit hook runs them,
 then rebuilds the reader.
 
 **When a check fails, fix the document, not the check.** A check changes
@@ -364,6 +398,20 @@ only with a register row.
   each anchor and stop unless it matches exactly once. **Count a regex's
   matches with a global regex**: `match` without `g` returns the capture
   groups too, and once made every anchor look doubled.
+- **A replacement that matches nothing can still write somewhere.** A
+  script on 10 October wrote ten rows' notes into the register's title,
+  which rendered as a huge heading while the rows stayed OPEN (FS-779).
+  Count every anchor and stop unless it matches once; the register check
+  now fails a heading with table cells.
+- **The phase-1 cap is full (249).** A new capability fails the scope
+  check; scope an existing one into R1 instead, as BS-12 was (FS-769).
+- **The delivery plan's R1 counts are typed:** recompute after any change
+  to R1's lists (a script that reads "R1 in detail", checked against the
+  old figures first; FS-781 found 133).
+- **HB ids carry their section in the tens digit** (HB-2x is section 2);
+  REVIEW.md before FS-781 cites the old numbers (HB-01 to HB-17).
+- **Two edits to one file built from the same original** overwrite each
+  other: load a file once per script, apply every edit, write once.
 - **`REVIEW.md` may end without a newline**, and its last row then has no
   trailing `\n` to anchor on.
 - **Files are a mix of CRLF and LF.** Normalise before matching.
@@ -402,7 +450,22 @@ only with a register row.
   it; the version moves only when an edition is issued.
 - **A PDF open in a viewer** makes the build write a timestamped file.
 
-## Waiting on the owner, outside the repository (as at 2026-10-06)
+## Waiting on the owner, outside the repository (as at 2026-10-12)
+
+- **To send:** the Prembly changes letter (FS-762); the corrected NDA to
+  Roan Capital (FS-740, clients/); the bank requests to NCBA, KCB and SBM
+  (docs/outreach/bank-api-requests-2026-10.md).
+- **Roan Capital's open answers** (delivery map §4), now 1 to 27; most
+  pressing 7 (roles, which becomes its position-to-roles table), 13
+  (scoring definitions) and 22 to 27 (complaints, interest on a disputed
+  amount, the morning's recipients and its books, Airtel Money, staff
+  access, its fallback runbook).
+- **The Odoo consultants:** which read-only staff need a paid user
+  (handbook README), and Odoo Enterprise for Dibon's own use (FS-640).
+- **The second site's provider,** before Roan Capital's go-live (FS-775).
+- **Counsel** (SD-12) for the LQ register; none engaged.
+
+### Earlier (as at 2026-10-06)
 
 - The NPS Bill comments (`docs/outreach/nps-bill-2026-comments.md`) are
   **due 9 October**; the Bowmans letter has not been sent.
@@ -426,8 +489,11 @@ only with a register row.
 
 ## Left half-done, or asked and not yet answered
 
-- **The R1 journeys still to write** (above), and the R2 ones indexed
-  (JN-10 to JN-12).
+- **Agree the R1 journeys one by one,** writing each one's handbook
+  procedures first (handbook §4 to §6 are still empty); the R2 journeys
+  JN-10 to JN-12 are unwritten.
+- **The six Critical rows** (FS-202, FS-205, FS-340, FS-367, FS-735,
+  FS-736) and fourteen High ones.
 - **Rows that block R1:** identity access and vendor choice (FS-202,
   FS-205, FS-329, FS-340), bank connections (FS-344), and business
   registry access for business borrowers (FS-564).

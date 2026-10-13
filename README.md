@@ -63,6 +63,9 @@ docs/                the work. The only place we edit
                      incident management and ways of working inside it
   journeys/          user journeys, step by step, with the capabilities each
                      step relies on; gaps named; statuses computed
+  handbook/          the template for each institution's own procedures,
+                     each drawn from a journey (HB ids)
+  design-system.md   how our printed documents look
   testing.md         acceptance items, tagged tests, the coverage matrix
   modules/           one file per product, shared service or channel
     _template.md     copy this; keep every heading
@@ -79,6 +82,8 @@ design/              layout, diagrams and illustrative screens; no copy
   portfolio-preview/ the per-product diagrams both editions draw
   bank-channel-proposal/
                      build.js for the two-page proposal
+  system/            the design system: dibon.css, template.html,
+                     build.js (HTML to PDF) and docx.js (Word)
   brand/             the Dibon logo, the script that extracts it, and the
                      "Dibon Consulting" mark in vector (amber, plum,
                      white): candidates not yet in use
@@ -115,6 +120,7 @@ node design/portfolio-pdf/build.js --edition short   # one edition
 node design/portfolio-pdf/build.js --html-only   # pages only, no PDF
 node design/portfolio-pdf/measure.js    # after a copy change: every page fits
 node design/bank-channel-proposal/build.js --for "Bank"   # the two-page proposal
+node design/system/build.js page.html   # any document on the design system (docs/design-system.md)
 ```
 
 The names check reads `sources/confidential/protected-names.txt`, which is

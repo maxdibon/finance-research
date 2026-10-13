@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757, FS-780]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # Service management
@@ -214,7 +214,7 @@ other's reference.
 | Changes and releases | GitLab: merge requests, approvals, protected environments, deploy freezes, release notes (§2) | Its own changes (positions, approval chains, products) through the approval engine, by maker-checker | Release notes to each institution; its handbook reviewed with each release (handbook rule 4) |
 | Knowledge | Design: this repository and its reader. Engineering runbooks: GitLab, beside the code. The desk: Dibon's Odoo Knowledge | Its handbook, in its Knowledge or the reader (FS-772); training | One source each, published, never copied by hand |
 | Configuration | Generated from GitOps (§3) | Its settings, with their history in the approval engine | The configuration record lists both |
-| Access | Dibon's access register; the central Keycloak as code (FS-777) | Its Keycloak realm, Odoo's Employees app, the quarterly review (HB-17) | Compared each month (SE-26) |
+| Access | Dibon's access register; the central Keycloak as code (FS-777) | Its Keycloak realm, Odoo's Employees app, the quarterly review (HB-27) | Compared each month (SE-26) |
 | Complaints | None: we never decide one | Its complaints register (JN-08) | One about how the platform behaved becomes a ticket to us (§6) |
 
 **The bridge, in R1:** the institution's staff are portal users of

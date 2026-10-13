@@ -13,7 +13,7 @@ const test = require('node:test');
 const { runAll } = require('./check');
 
 const ROOT = path.join(__dirname, '..');
-const COPY = ['README.md', 'REVIEW.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'),
+const COPY = ['README.md', 'REVIEW.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'), path.join('design', 'system'),
   path.join('sources', 'confidential', 'protected-names.txt')];
 
 // A fresh copy of the checked files, perturbed by `edit`, then checked.
@@ -479,7 +479,7 @@ test('handbook: a procedure without a From line fails', () => {
 });
 
 test('handbook: an HB id cited in docs that the handbook lacks fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'journeys', 'staff-access.md'), (t) => t.replace('(HB-10 to HB-17)', '(HB-10 to HB-19)')));
+  const f = runWith((d) => patch(d, path.join('docs', 'journeys', 'staff-access.md'), (t) => t.replace('(HB-20 to HB-27)', '(HB-20 to HB-29)')));
   assert.deepStrictEqual(names(f), ['handbook']);
 });
 

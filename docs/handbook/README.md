@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-771, FS-772, FS-775]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # The institution's handbook
@@ -21,7 +21,7 @@ links to the procedure it serves. Dibon's own runbooks stay in
 
 **Rules for the handbook:**
 
-1. **One procedure per entry,** with an id (HB-01): who does it, when,
+1. **One procedure per entry,** with an id (HB-10): who does it, when,
    the steps, the record kept, the rule or regulation behind it, and a
    **From:** line naming the journey or spec section it comes from. A
    procedure says nothing a journey contradicts; when a journey changes,
@@ -49,13 +49,13 @@ GitLab access (specs/gitlab.md §11).
 | What | Odoo | How it links |
 |---|---|---|
 | Each procedure | Knowledge, an article per HB id, published from the template with each release, the institution's values filled in; or the reader, per institution, behind its own sign-in (open question below) | Its HB id and version |
-| Each job position | Employees: the position names its roles (HB-01), its procedures and its training | From the position to everything the person needs |
-| Joining and leaving | Employees: onboarding and offboarding plans, a task for each person in HB-10 and HB-13 | Each task links its procedure; closing it is the record |
+| Each job position | Employees: the position names its roles (HB-10), its procedures and its training | From the position to everything the person needs |
+| Joining and leaving | Employees: onboarding and offboarding plans, a task for each person in HB-20 and HB-23 | Each task links its procedure; closing it is the record |
 | Requests and the morning | Helpdesk: each ticket type, the morning's ticket and the complaints register link their procedure | The procedure opens from the ticket |
 | The calendar | Project: each duty a recurring task with an owner | Overdue when missed |
 
 **Later:** training courses in eLearning per role, with completion
-recorded as HB-10's evidence; until then, the training plan's sessions
+recorded as HB-20's evidence; until then, the training plan's sessions
 and the reader.
 
 ## Open questions
@@ -70,8 +70,8 @@ and the reader.
 
 | Section | Procedures | Comes from | Status |
 |---|---|---|---|
-| [1 · Roles and positions](roles-and-positions.md) | HB-01 to HB-03: the position-to-roles table, roles never held together, changing the table | FS-770; access-keycloak §6 | Drafted |
-| [2 · People and access](people-and-access.md) | HB-10 to HB-17: joiners, moves, leavers, a hostile exit, a lost authenticator, administrators, the access review | JN-18 | Drafted |
+| [1 · Roles and positions](roles-and-positions.md) | HB-10 to HB-12: the position-to-roles table, roles never held together, changing the table | FS-770; access-keycloak §6 | Drafted |
+| [2 · People and access](people-and-access.md) | HB-20 to HB-27: joiners, moves, leavers, a hostile exit, a lost authenticator, administrators, the access review | JN-18 | Drafted |
 | [3 · The calendar](calendar.md) | Every duty by day, month, quarter and year | All the journeys | Drafted |
 | 4 · Every day | The accountant's morning; unplaced payments; the end-of-day window | JN-17, JN-16 | When those journeys are agreed |
 | 5 · Lending | Application to disbursement; bank payouts; restructures; settlement | JN-04, JN-13, JN-06, JN-14 | When those journeys are agreed |

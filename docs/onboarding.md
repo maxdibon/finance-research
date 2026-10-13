@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # Customer onboarding checklists
@@ -53,7 +53,7 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-22 | Dibon engineers' access: who approves a grant for the institution, its VPN or bastion, the contact who can switch Dibon's access off at any hour; it receives the list of Dibon engineers who may ask for access, with their vetting (docs/architecture/README.md §9) | Customer's IT lead and security contact | platform-security SE-26; FS-645 |
 | OB-COM-23 | Its fallback runbook for when the platform is down (docs/architecture/README.md §3; handbook HB-70 to HB-78): who operates its M-Pesa business portal and internet banking, under its own two-person control; its manual approval form; its counter procedure; who decides to enter and leave safe mode; M-Pesa's validation fallback set to complete | Customer's operations lead | platform-security SE-24; FS-661 |
 | OB-COM-24 | It agrees our rules for institutions (docs/rules.md §2): named users with two authenticators, our device minimum, leavers removed the same day and a quarterly access review it signs, no customer data sent to our desk, test data in training, its regulator duties its own | Customer's operations lead and its compliance lead | FS-713, FS-714 |
-| OB-COM-25 | Its handbook: the template (docs/handbook/) filled from its delivery file, starting with its position-to-roles table (HB-01), and adopted | Customer's operations lead | FS-770, FS-771 |
+| OB-COM-25 | Its handbook: the template (docs/handbook/) filled from its delivery file, starting with its position-to-roles table (HB-10), and adopted | Customer's operations lead | FS-770, FS-771 |
 
 ## Kapu Collect
 

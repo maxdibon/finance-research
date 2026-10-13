@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-768, FS-769, FS-770, FS-771, FS-772]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # 2 · People and access
@@ -16,7 +16,7 @@ they keep are the institution's agreed rules (docs/rules.md §2): named
 users only, two authenticators, a leaver removed the same day, and a
 quarterly access review the institution signs.
 
-## HB-10 · A joiner
+## HB-20 · A joiner
 
 **From:** JN-18, steps 1 to 5.
 
@@ -27,10 +27,10 @@ at least two working days before the start date.
    email and phone, job position, manager, start date. Its onboarding
    plan gives each person below their task, linked to this procedure.
 2. The platform creates their user with no roles, and asks for the
-   position's roles (HB-01).
+   position's roles (HB-10).
 3. The administrator checks the joiner's ID in person; only then is the
    invitation sent.
-4. The access approver decides the role request (HB-11) before the start
+4. The access approver decides the role request (HB-21) before the start
    date; the roles take effect on that date, not before.
 5. On their first day the joiner sets a password, registers two
    authenticators, and completes their role's training before working on
@@ -39,7 +39,7 @@ at least two working days before the start date.
 **Record:** the employee record; the approved role request; the ID check
 on the user. **Rule:** rules for institutions 1; AC-16.
 
-## HB-11 · Deciding a role request
+## HB-21 · Deciding a role request
 
 **From:** JN-18, step 3; approval-engine §4.
 
@@ -48,15 +48,15 @@ granted.
 
 1. The request arrives in the console or by email, naming the person,
    the role, the reason and the date it takes effect.
-2. The approver checks the role against the position (HB-01) and the
-   pairs never held together (HB-02); a warning shows if the change would
+2. The approver checks the role against the position (HB-10) and the
+   pairs never held together (HB-11); a warning shows if the change would
    leave a role with too few holders.
 3. They approve or decline, re-authenticated at the act. The person is
    told by email what changed (T42).
 
 **Record:** the decision in the approval engine. **Rule:** AC-09; MD-06.
 
-## HB-12 · A move
+## HB-22 · A move
 
 **From:** JN-18, steps 6 and 7.
 
@@ -66,14 +66,14 @@ portfolio.
 1. The manager records the new job position in Odoo, with the date of the
    move.
 2. The platform asks for the new position's roles and the removal of the
-   old ones, in one request, decided as in HB-11; both take effect on the
+   old ones, in one request, decided as in HB-21; both take effect on the
    date of the move.
 3. A credit officer's borrowers are reassigned in bulk, with a second
    person's approval; the history is kept.
 
 **Record:** the employee record; the approved request; the reassignment.
 
-## HB-13 · A leaver
+## HB-23 · A leaver
 
 **From:** JN-18, steps 8 to 10 and (i).
 
@@ -84,7 +84,7 @@ day they leave, or ahead with the date.
    offboarding plan, which gives each person below their task. At that
    date the platform disables the user, signs them out everywhere and removes
    their authenticators, within minutes.
-2. Their borrowers are reassigned as in HB-12.
+2. Their borrowers are reassigned as in HB-22.
 3. **Outside the platform, the same day:** if they were a bank
    signatory, held an internet-banking token or used the M-Pesa portal,
    the finance lead tells the bank and Safaricom, recovers the token, and
@@ -95,7 +95,7 @@ day they leave, or ahead with the date.
 closed by its owner; the disable event; the bank's and Safaricom's
 confirmation. **Rule:** rules for institutions 3.
 
-## HB-14 · A sudden or hostile exit
+## HB-24 · A sudden or hostile exit
 
 **From:** JN-18 (b).
 
@@ -103,11 +103,11 @@ confirmation. **Rule:** rules for institutions 3.
    Odoo; sessions end everywhere.
 2. Out of hours, the contact the institution named calls Dibon's desk,
    which switches the user off on that request and records it.
-3. Then HB-13, from step 2.
+3. Then HB-23, from step 2.
 
 **Rule:** rules for institutions 7.
 
-## HB-15 · A lost authenticator
+## HB-25 · A lost authenticator
 
 **From:** JN-18 (c).
 
@@ -118,15 +118,15 @@ confirmation. **Rule:** rules for institutions 3.
 
 **Rule:** AC-16.
 
-## HB-16 · Administrators
+## HB-26 · Administrators
 
 **From:** JN-18 (e).
 
 At least two at all times. The last one cannot be disabled until another
 is created. An administrator manages users but never grants an approval
-role, and never holds `access-approver` (HB-02).
+role, and never holds `access-approver` (HB-11).
 
-## HB-17 · The quarterly access review
+## HB-27 · The quarterly access review
 
 **From:** JN-18, step 11.
 
@@ -138,7 +138,7 @@ each quarter.
    without a current employee record, or holding a role their position
    does not carry.
 2. The operations lead checks each line with the managers, and asks for
-   any correction through HB-11 or HB-13.
+   any correction through HB-21 or HB-23.
 3. The operations lead signs the review.
 
 **Record:** the signed review, kept seven years. **Rule:** rules for

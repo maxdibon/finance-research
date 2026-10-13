@@ -8,7 +8,7 @@ validated_with: not yet
 owner: Solution architect
 classification: Internal
 review_ids: [FS-498, FS-503, FS-548, FS-645, FS-668, FS-768, FS-769, FS-770]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # JN-18 · A member of staff joins, moves and leaves, with roles granted by mandate
@@ -24,7 +24,7 @@ institutions 1 and 3).
 
 Dibon's own engineers join and leave differently, through Dibon's central
 identity and hardware keys: that is JN-20. The institution's procedures
-for this journey are its handbook's §2 (HB-10 to HB-17).
+for this journey are its handbook's §2 (HB-20 to HB-27).
 
 ## 1 · Who and where
 
@@ -96,7 +96,7 @@ for this journey are its handbook's §2 (HB-10 to HB-17).
 
 | # | Step | Who | Messages | Capabilities |
 |---|---|---|---|---|
-| 1 | The manager records the joiner in Odoo's Employees app: name, work email and phone, job position, manager and start date. Recording the position asks for its role set, from the institution's position-to-roles table (handbook HB-01) | Manager | — | BS-12, MF-35 |
+| 1 | The manager records the joiner in Odoo's Employees app: name, work email and phone, job position, manager and start date. Recording the position asks for its role set, from the institution's position-to-roles table (handbook HB-10) | Manager | — | BS-12, MF-35 |
 | 2 | From that record the provisioning service creates the user in the institution's `staff` realm, with no roles. Before Keycloak emails the invitation to set a password and register authenticators, the administrator checks the joiner's ID in person | Platform; administrator | — | BS-12, AC-01, AC-08, AC-02 |
 | 3 | Each role, from the position's set or asked for beyond it in the back office with a reason, is a request to the approval engine, decided by a second person, re-authenticated at the act, ahead of the start date; the role is mapped on the start date, not before. A request from the approver for themselves is refused. The person is told what was granted | Manager; approver | T26, T42 | AC-09, MD-01, MD-05, MD-06, MD-10, AC-05 |
 | 4 | For a credit officer, the staff record in Kapu Core is created and borrowers assigned to them, with a second person's approval; an officer never approves their own applications | Credit lead; approver | — | MF-35, MD-06 |

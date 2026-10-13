@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Solution architect
 classification: Internal
 review_ids: [FS-660, FS-771]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # Training
@@ -52,7 +52,7 @@ and the voice line explain themselves (docs/experience.md §1).
 | Before go-live | User acceptance with the institution's people doubles as their training (docs/testing.md §4) |
 | Each release | The tasks that changed |
 | Twice a year | A session for each institution, as every support tier promises |
-| A new joiner | Their role's manual, assigned when they join in Odoo (handbook HB-10) |
+| A new joiner | Their role's manual, assigned when they join in Odoo (handbook HB-20) |
 | Every quarter | The key holders' restore test, as a drill |
 
 **Measured:** tasks completed unaided after training; questions to the

@@ -12,7 +12,7 @@ version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # Access on Keycloak — component specification
@@ -231,7 +231,7 @@ refresh one.
   signed into is disabled after 30 days (FS-769). The provisioning service calls Keycloak's admin API.
 - **Roles by position** (FS-770): each job position in Odoo carries a
   set of roles, in the institution's position-to-roles table (handbook
-  HB-01), changed only with a second person's approval. Recording a
+  HB-10), changed only with a second person's approval. Recording a
   joiner or a move asks for the position's set automatically, and for a
   move the removal of the old one in the same request; anything beyond
   the set is asked for one person at a time in the back office, with a

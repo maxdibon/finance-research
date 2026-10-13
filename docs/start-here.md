@@ -5,8 +5,8 @@ kind: guide
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753]
-last_reviewed: 2026-10-12
+review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781]
+last_reviewed: 2026-10-13
 ---
 
 # Start here
@@ -126,9 +126,10 @@ Ids are never reused; a retired capability id is listed in its module
 | LQ | legal-questions.md | A question for counsel, and what its answer changes |
 | PT | partners.md | A partner candidate |
 | SD | partners.md | A partner selection decision |
-| C1 to C9 | partners.md | The criteria partners are judged against |
+| C1 to C17 | partners.md | The criteria partners are judged against |
 | CP | competitors.md | A competitor |
 | OB-COM, OB-MF and others | onboarding.md | A go-live item: common to every customer (COM), or per product (its prefix) |
 | DC-FS-PF | README.md | A document code: the two portfolio editions |
 | R1 to R5 | delivery-plan.md | A release |
 | JN | journeys/README.md | A user journey, step by step |
+| HB | handbook/ | A procedure in the institution's handbook; its tens digit is its section (HB-10 to HB-12 are section 1, HB-70 to HB-78 section 7) |

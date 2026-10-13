@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-770, FS-771, FS-772]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # 1 · Roles and positions
@@ -17,12 +17,12 @@ roles; recording someone in a position asks for those roles, and a
 second person approves them before they take effect (access-keycloak §6,
 approval-engine §3).
 
-## HB-01 · The position-to-roles table
+## HB-10 · The position-to-roles table
 
 **From:** FS-770; access-keycloak §6.
 
 **Who keeps it:** the institution's operations lead. **Changed by:**
-HB-03.
+HB-12.
 
 The institution's own table replaces this example, filled from its role
 list (for Roan Capital, its delivery map's open answer 7):
@@ -39,19 +39,19 @@ list (for Roan Capital, its delivery map's open answer 7):
 | Compliance officer | `compliance` | The restricted team in the helpdesk: identity mismatches, suspected fraud, complaints about staff | — |
 | Auditor | `auditor` | Reading the audit trail and reports; nothing else | Any role that acts |
 | Administrator | `administrator` | Creating and disabling users, resets after an identity check; never an approval role | `access-approver` |
-| [The approver of access changes] | `access-approver` | Deciding role requests (HB-11) | `administrator` |
+| [The approver of access changes] | `access-approver` | Deciding role requests (HB-21) | `administrator` |
 
 **Rules for the table:**
 
 - A position's roles are the least the job needs. Anything extra is asked
-  for one person at a time (HB-11), with a reason.
+  for one person at a time (HB-21), with a reason.
 - At least two people hold every role a chain names, and at least two are
   administrators, so no approval waits on one person (approval-engine §4,
   rule 8).
 - No Dibon role appears in the table: Dibon's engineers hold no product
   role and can never approve or release the institution's money (AC-09).
 
-## HB-02 · Roles never held together
+## HB-11 · Roles never held together
 
 **From:** approval-engine §4 (MD-06).
 
@@ -61,7 +61,7 @@ correction and approve it. The approval engine also refuses anyone
 deciding two consecutive steps of the same request, whatever roles they
 hold (MD-06).
 
-## HB-03 · Changing the table
+## HB-12 · Changing the table
 
 **From:** approval-engine §4, rule 11.
 
@@ -71,7 +71,7 @@ hold (MD-06).
    the institution's approval chains (approval-engine §4, rule 11).
 3. From then on, recording someone in the position asks for its new set;
    people already in the position get the change as a role request each,
-   approved as in HB-11.
+   approved as in HB-21.
 
 **Record:** the table's versions, each with who proposed and approved
 it, kept in the approval engine's history.
