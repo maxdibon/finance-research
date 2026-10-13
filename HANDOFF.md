@@ -1,8 +1,8 @@
 # Dibon financial services — session handoff
 
-    version: 1.6.0
+    version: 1.7.0
     updated: 2026-10-13
-    supersedes: 1.5.0; adds the rest of 12 October (FS-745 to FS-781)
+    supersedes: 1.6.0; adds 13 October (FS-782 to FS-795)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -142,6 +142,26 @@ Each has a register row and, where it changed the design, an entry in
   (FS-779).
 - **Our printed documents share one look,** with a little whimsy in the
   margins: docs/design-system.md (FS-781).
+- **Recon is the platform's verifier** (FS-788 to FS-794;
+  docs/specs/recon.md): three ledgers that must always agree, the
+  master, a shadow rebuilt from its postings within 5 seconds, and a
+  companion that computes on its own from the source events, written
+  apart from lender rules. It never writes to the master. In R1: the
+  shadow at go-live, the companion for Roan Capital's product within the
+  first 30 days. Comparisons of money elsewhere move into it.
+- **The ledger database has no superuser and no human login,** pgAudit
+  kept off the instance, and fixes only as approved postings (SE-18,
+  SE-26, kapu-core-fineract §8, check F14; FS-789, FS-793).
+- **Every account has a payment reference with check digits** (CO-21,
+  RO-02; FS-785, FS-793).
+- **Events are signed locally** with short-lived keys OpenBao issues, not
+  a call per event (RO-23; FS-793).
+- **A scale target:** 25 million accounts and 10 million transactions a
+  day per instance, proven by a load test before it is claimed
+  (quality.md; FS-791, FS-792).
+- **Recon's actions and deadlines follow one model** (recon §4.7), each
+  institution's rules set against it at onboarding (OB-RO-04, FS-794).
+  Extensions: Odoo first.
 
 ## What is in flight
 
@@ -151,9 +171,10 @@ Each has a register row and, where it changed the design, an entry in
   scoring) blocks decisioning's build. Roan's requirement document is
   Dibon's own and commits appraisal, a behaviour score and automatic
   downgrades to the MVP.
-- **User journeys** in `docs/journeys/`: **every R1 journey is drafted**:
-  JN-01 to JN-08, JN-13, JN-14, JN-16 to JN-20 (JN-15 is phase 2; JN-10
-  to JN-12 are R2, unwritten). All are `draft`. **Agreeing one now needs
+- **User journeys** in `docs/journeys/`: **every indexed journey is
+  drafted**: R1's JN-01 to JN-08, JN-13, JN-14, JN-16 to JN-20, and R2's
+  JN-10 to JN-12 (a deposit, a transfer out and a transfer in through a
+  larger bank); JN-15 is phase 2. All are `draft`. **Agreeing one now needs
   its handbook procedures**: the check fails an agreed journey with none.
   JN-18 and JN-19 have theirs (HB-20 to HB-27, HB-70 to HB-78).
 - **Architecture** is a folder (`docs/architecture/`, FS-649): README.md
@@ -426,7 +447,13 @@ only with a register row.
   customers, obligations. Moving one into R1 means a Roan map row, the
   CU-01 "Depends on" list and the delivery plan's R1 list together.
 - **A break test can go stale** when the design catches up with it (one
-  used MD-08 as an id Roan did not depend on, until Roan did).
+  used MD-08 as an id Roan did not depend on, until Roan did). Three more
+  went stale in this stretch: after the HB renumbering, after HB-74 began
+  citing JN-08, and after lender-rules gained recon as a user. Run the
+  whole suite after any change to ids or relations.
+- **A new spec touches six others:** each spec it depends on must name it
+  in `used_by` and in its Related line, and the end-of-day runner's
+  `depends_on` too when it consumes it.
 - **Changing a template** changes its `last_reviewed` too.
 - **Subagents claim more than they did.** Check their work.
 - **Look at the portfolio, do not only measure it.** Render changed
@@ -449,6 +476,14 @@ only with a register row.
   issued), printed as a review draft, and the build refuses a named copy of
   it; the version moves only when an edition is issued.
 - **A PDF open in a viewer** makes the build write a timestamped file.
+
+## Waiting on the owner (as at 2026-10-13)
+
+- **In the register:** JN-12's targets (FS-784); the rest of the payment
+  reference, shareable payment instructions and JN-12's step 4 (FS-785);
+  "alongside" mode, Kapu Core beside an institution's own core, as a
+  decision with the CBK question for counsel (FS-786, High); database
+  activity monitoring, left open (FS-794).
 
 ## Waiting on the owner, outside the repository (as at 2026-10-12)
 
@@ -489,9 +524,11 @@ only with a register row.
 
 ## Left half-done, or asked and not yet answered
 
-- **Agree the R1 journeys one by one,** writing each one's handbook
-  procedures first (handbook §4 to §6 are still empty); the R2 journeys
-  JN-10 to JN-12 are unwritten.
+- **Agree the journeys one by one,** writing each one's handbook
+  procedures first (handbook §4 to §6 are still empty).
+- **Recon, next:** the companion's design for Roan Capital's product
+  (it must be ready within the first 30 days of go-live); the load test's
+  plan; the rails spec, still to write, which recon depends on.
 - **The six Critical rows** (FS-202, FS-205, FS-340, FS-367, FS-735,
   FS-736) and fourteen High ones.
 - **Rows that block R1:** identity access and vendor choice (FS-202,
