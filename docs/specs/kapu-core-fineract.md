@@ -11,7 +11,7 @@ used_by: [approval-engine, lender-rules, end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792]
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793]
 last_reviewed: 2026-10-13
 ---
 
@@ -263,6 +263,15 @@ itself is in the end-of-day-runner spec.
   passwords.
 - **The database is Fineract's alone.** Nothing else reads or writes its
   tables; reports and insights read events and the API.
+- **No superuser, no human login** (FS-789, FS-793): CloudNativePG's
+  superuser access turned off; Fineract's role without schema rights;
+  people reach the data only by break-glass, two people, recorded. pgAudit
+  logs every schema change and every write not made by Fineract's role,
+  shipped at once off the instance (SE-18). A correction is an approved
+  posting, never SQL.
+- **Three ledgers** (recon §3): every posting and a signed checkpoint per
+  cycle go to recon as events, with per-account sequence numbers; recon's
+  shadow and companion must agree with Fineract.
 - **Nightly comparison** (approval-engine §9): any loan approved, disbursed
   or restructured in Fineract without an approved request is an alert.
 
@@ -315,6 +324,7 @@ On a running 1.15 instance, before the build relies on each (FS-625):
 | F11 | A payment for a loan mid-close: caught up, or refused with 409 and retried | KC-07, KC-09 |
 | F12 | A missed day caught up; the business date's alarm when it lags | KC-07 |
 | F13 | Kafka events through the adapter: order, duplicates, a broker down and back | RO-23 |
+| F14 | A balance updated directly in the database is caught by recon's companion as a severity 1, and pgAudit's record of it survives the account that made it | FS-789, FS-793; recon A2 |
 
 ## 13 · Open questions
 

@@ -11,7 +11,7 @@ used_by: [end-of-day-runner]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792]
+review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793]
 last_reviewed: 2026-10-13
 ---
 
@@ -37,21 +37,22 @@ happened?*
 |---|---|---|
 | RO-01 | Ingest rail, bank and ledger events, and statement files | Yes, statement files and the M-Pesa feed; change-data capture from an institution's own core later |
 | RO-02 | Matching with configurable rules: one to one, one to many, many to many, with tolerances | Yes |
-| RO-03 | Three-way matching: ledger, statement and expected | No: phase 1, proposed for R2 (FS-792) |
+| RO-03 | Three-way matching: ledger, statement and expected | No: R2 (FS-793) |
 | RO-04 | Intraday and end-of-day cycles; cut-offs held in transit | Yes, end of day; intraday later |
 | RO-05 | The exception queue, by time left | Yes |
 | RO-06 | Transaction trace | No: phase 1; R1 traces through RO-23 to RO-25 |
 | RO-07 | Remediation and the automatic chase of items in transit | Yes, for M-Pesa |
-| RO-08 | The ledger replica: here the shadow and the companion (§3) | No: phase 1, proposed for R1 (FS-792) |
+| RO-08 | The ledger replica: here the shadow and the companion (§3) | Yes: the shadow at go-live; the companion for Roan Capital's product within the first 30 days (FS-793) |
 | RO-09 | Treasury and float | No: R2 |
 | RO-11 | Duplicate and anomaly detection | No: phase 1 |
 | RO-17 | Alerting and SLOs, the match rate among them | Yes |
 | RO-19 | Masking by role, access audit | Yes |
 | RO-26 | Fee verification | No: phase 2 |
+| RO-28 | The extension catalogue | No: phase 2 |
 
-**Out of R1:** the companion, three-way matching with expected payments,
-treasury, the extension catalogue (§7), change-data capture from an
-institution's own core.
+**Out of R1:** the companion beyond Roan Capital's product, three-way
+matching with expected payments, treasury, duplicate detection and
+change-data capture (all R2); the extension catalogue (RO-28, phase 2).
 
 **Where it sits.**
 
@@ -153,6 +154,11 @@ and [JN-12](../journeys/transfer-in.md).
    companion works the same.
 6. **Parallel runs:** before a go-live, a migration or a core replacement,
    the companion runs beside the old system and the new until they agree.
+7. **The companion is independent by construction** (FS-793): written
+   from the regulations and the product's terms, not from lender rules'
+   code, and built by someone other than lender rules' author. Two
+   implementations of the same rules is the point: a mistake in one shows
+   as a disagreement with the other.
 
 ## 4 · What recon does
 
@@ -177,7 +183,7 @@ institution:
 | Complete automatically | A read settles it: a status query, a pulled transaction, a statement line | Recon, alone (RO-07) |
 | Reverse | Money moved wrongly | The institution's approval chain, never recon alone (MD-01) |
 | A person in the middle | Anything the institution's rules say a person must see first | The role its rules name |
-| A ticket | A customer or a transaction needs someone to act | A ticket per customer or transaction in Odoo (or Zoho), with the evidence |
+| A ticket | A break needs a person to act | A ticket only for a break that needs a person, and one ticket per root cause, linking every customer and transaction it touches; at millions of transactions a day, never one per transaction (FS-793) |
 | An alert | A system fails: M-Pesa down, a feed silent, a checkpoint missing | On-call, through observability |
 
 **4.5 Finance's manual reconciliation.** What the rules could not
@@ -212,8 +218,9 @@ rates of its day (RO-02, RO-26).
 
 ## 7 · Extensions
 
-A catalogue of proven extensions, built, tested and signed by Dibon, which
-an institution switches on and configures (FS-791): raise a ticket in Odoo
+A catalogue of proven extensions (RO-28, phase 2; R1 and R2 run the same
+actions built in), built, tested and signed by Dibon, which an
+institution switches on and configures (FS-791): raise a ticket in Odoo
 or Zoho; alert; pause a rail; notify a customer through messaging;
 propose a reversal for approval. Two kinds: **per transaction**, which act
 on one customer's break, and **per system**, which act on a source or a
@@ -341,10 +348,9 @@ source, by its rhythm.
 
 **For the owner:**
 
-1. Which of the proposals for R1 and R2 to take (FS-792).
-2. Database activity monitoring: an open-source tool on pgAudit, or a
+1. Database activity monitoring: an open-source tool on pgAudit, or a
    proprietary one for banks that require it (FS-790).
-3. The extension catalogue: which extensions ship first.
+2. The extension catalogue: which extensions ship first.
 
 **For the customer:** its rules for each action (who is the person in the
 middle, which breaks may complete alone), and each channel's SLA.

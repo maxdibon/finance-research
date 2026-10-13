@@ -11,7 +11,7 @@ used_by: [recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793]
 last_reviewed: 2026-10-13
 ---
 
@@ -367,7 +367,8 @@ approval records side by side that can disagree. So:
    rail confirms.
 5. A nightly comparison lists any Fineract loan approved or disbursed
    without an approved request (reconciliation RO-02). There should be
-   none; one is an incident.
+   none; one is an incident. Recon runs it and raises it (recon §8); the
+   engine stays the authority.
 
 ## 10 · Beyond R1: bill payments (FS-494)
 

@@ -11,7 +11,7 @@ used_by: []
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667, FS-674, FS-765, FS-778, FS-792]
+review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667, FS-674, FS-765, FS-778, FS-792, FS-793]
 last_reviewed: 2026-10-13
 ---
 
@@ -124,7 +124,9 @@ lower a blocking check below the criteria. Each check's class is agreed
 with the institution at onboarding (OB-KC-04), as part of the operations
 conversation, and reviewed after every incident it took part in.
 
-**The checks, with their proposed class:**
+**The checks, with their proposed class.** C3 to C6 and P5 are computed
+by recon and published to the runner, which decides whether to hold or
+close (recon §8, FS-793):
 
 | # | Check | Class | Why |
 |---|---|---|---|

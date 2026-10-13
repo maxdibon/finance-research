@@ -11,7 +11,7 @@ used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, 
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792]
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793]
 last_reviewed: 2026-10-13
 ---
 
@@ -131,7 +131,7 @@ Every event is a **CloudEvent 1.0** in structured JSON:
 | `txid` | The transaction's id, end to end (RO-23) |
 | `institution` | The institution's id |
 | `prevhash` | The hash of the producer's previous event on this subject (RO-24) |
-| `sig` | A detached signature over the event, by the producing service's identity, its key in OpenBao (RO-23) |
+| `sig` | A detached signature over the event, by the producing service's identity: signed locally with a short-lived key OpenBao issues to that identity and rotates, so OpenBao is called per key, not per event (RO-23, FS-793) |
 
 **Facts, not records.** An event may carry a fact as it was at the time
 (an amount, the payer name the rail reported); never a Restricted value;

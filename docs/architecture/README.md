@@ -5,8 +5,8 @@ kind: architecture
 version: 0.3.0
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712]
-last_reviewed: 2026-10-12
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793]
+last_reviewed: 2026-10-13
 ---
 
 # Platform architecture — who holds what
@@ -98,6 +98,13 @@ not keep them apart.
 | **Funds ledger** — the institution's core banking system; or Kapu Core, on Apache Fineract, where the institution has none or is replacing it (§4) | Accounts, balances, postings, loan schedules, deposits | Parties' contact details beyond what the core needs; tickets; matching state |
 | **Odoo** — who, and what is owed | Parties, memberships, roles, obligations (invoices, fees, charges), payments *as records of obligations met*, tickets, documents, signatures (Odoo Sign) | Balances of funds; transaction-level rail events; matching state |
 | **Recon engine** — what happened between them | Ingested rail and bank events, statements, matches, exceptions, the audit of every resolution | Parties; obligations; balances as an authority |
+
+**And one verifier.** Recon is also the platform's verifier (FS-793,
+docs/specs/recon.md): it holds a shadow of the funds ledger, rebuilt
+from its postings, and a companion that computes on its own what every
+account should hold, and raises any disagreement among the three. It
+never writes to an authority; a correction goes back through the
+authority that owns the record.
 
 ### Whose parties Odoo holds
 

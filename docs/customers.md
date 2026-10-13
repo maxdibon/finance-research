@@ -6,7 +6,7 @@ version: 0.1.0
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420, FS-443, FS-612, FS-674, FS-680, FS-720, FS-721]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-13
 ---
 
 # Customers — who we deliver to, and what each depends on
@@ -69,7 +69,7 @@ each capability's status beside it, read from its module.
 | [messaging](modules/messaging.md) | MS-01, MS-02, MS-03, MS-09, MS-10, MS-11, MS-12, MS-14, MS-15, MS-19 |
 | [mfi](modules/mfi.md) | MF-01, MF-02, MF-03, MF-04, MF-05, MF-06, MF-07, MF-09, MF-10, MF-11, MF-12, MF-13, MF-14, MF-15, MF-18, MF-20, MF-21, MF-22, MF-23, MF-24, MF-25, MF-26, MF-28, MF-34, MF-35, MF-37, MF-38, MF-39 |
 | [rails](modules/rails.md) | RL-01, RL-07, RL-10, RL-12, RL-14, RL-20, RL-21, RL-29 |
-| [recon-observability](modules/recon-observability.md) | RO-01, RO-02, RO-04, RO-05, RO-07, RO-16, RO-17, RO-18, RO-19, RO-23, RO-24, RO-25, RO-27 |
+| [recon-observability](modules/recon-observability.md) | RO-01, RO-02, RO-04, RO-05, RO-07, RO-08, RO-16, RO-17, RO-18, RO-19, RO-23, RO-24, RO-25, RO-27 |
 
 ### CU-02 · Onit Bank
 

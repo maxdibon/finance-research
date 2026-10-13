@@ -5,8 +5,8 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775]
-last_reviewed: 2026-10-12
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793]
+last_reviewed: 2026-10-13
 ---
 
 # Roan Capital — delivery map
@@ -92,7 +92,7 @@ in its own records.
 | RC-19 | Repayments reconciled by parsing M-Pesa and bank statement narrations | MF-10, RO-02, RO-05, CO-21, KC-09, RL-20, RO-04, RO-01, RO-07 | Covered | Covered (FS-618): paybill repayments, Pull Transactions and statement parsing, matched many to many (RO-02). In R1, NCBA's statement arrives by its email forwarded whole, or uploaded, and is checked before matching (RO-01); M-Pesa items in transit are chased automatically (RO-07) (FS-767). Better with M-Pesa C2B on Roan Capital's paybill (RL-03, Built at Onit Bank): each repayment arrives with its account reference, and Pull Transactions (RL-20) finds any missed confirmation. Statement parsing becomes the fallback |
 | RC-20 | SMS or WhatsApp reminder on day 25 of a 30-day loan | MF-13, MS-01, MS-02, MS-03, MS-09, MS-10, MS-11, MS-12, MS-14, MS-15 | Covered | Owner, 2026-10-06: the demo and the platform run on Dibon's messaging service, not Roan Capital's own gateway, superseding the document's assumption 5 (FS-565): SMS direct to the operators under our PRSP licence (compliance LC-03), a sender ID for Roan Capital registered with each operator (onboarding OB-COM-09), and a truthful delivery status. WhatsApp (MS-06) stays outside R1 |
 | RC-21 | End-of-day lockout, 11 pm to 4 am: no fund movements, while leads and interest calculation continue | KC-07, FC-16, KC-15 | Covered | Covered (FS-618). Roan Capital's procedure: staff release nothing in the window. A transaction rule holds what the system sends by itself, a queued payout or a retry, until 04:00 (FC-16), on the business calendar (KC-15) (FS-571, FS-574) |
-| RC-22 | Reconciliation dashboard: matched and unmatched, with a manual-match tool | RO-02, RO-05, MF-12 | Covered | |
+| RC-22 | Reconciliation dashboard: matched and unmatched, with a manual-match tool | RO-02, RO-05, MF-12, RO-08 | Covered | The shadow ledger from go-live, and the companion recomputing each loan within the first 30 days, so the three ledgers are checked before any loan falls due (FS-793) |
 
 ### Operational risk, compliance and oversight (§2.2)
 
