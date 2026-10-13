@@ -11,7 +11,7 @@ used_by: [end-of-day-runner]
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793]
+review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794]
 last_reviewed: 2026-10-13
 ---
 
@@ -195,6 +195,46 @@ weekly and monthly trends; performance by region, branch and rail;
 balances and their discrepancies. In Superset, on the governed metrics
 (insights; FS-791).
 
+**4.7 The model for actions and deadlines** (FS-794). Each institution
+sets its own rules, against the same criteria, so that no two are
+configured from a blank page and none falls below the floor. The rules
+are configuration, maker-checker and effective-dated, agreed at
+onboarding (OB-RO-04), and reviewed after any incident they took part in,
+as the end-of-day runner's checks are.
+
+*Which action a break gets.* Four questions, in order; the first "yes"
+decides:
+
+| # | The question | If yes | The floor the institution cannot lower |
+|---|---|---|---|
+| 1 | Is it a system fault: a source silent, a rail down, a checkpoint missing, the ledgers disagreeing? | An alert to on-call, by severity; the institution told as incident management says | A ledger disagreement is severity 2; a balance grown without money is severity 1 |
+| 2 | Can a read settle it: a status query, a pulled transaction, a statement line, including posting money the rail's own record shows has moved (CO-20)? | Completed automatically by recon | Only on the rail's own record, never on an inference |
+| 3 | Would settling it otherwise move money or change a balance: a reversal, a return, a correction? | A proposal through the institution's approval chain | Never automatic, whatever the amount |
+| 4 | Otherwise | A ticket to the role that owns it, one per root cause | — |
+
+*When a person must look first,* even where the rule would complete it
+alone: above the institution's amount threshold; anything touching a
+customer's money; anything with a regulatory side (sanctions, suspicious
+patterns, unclaimed money, a missing reg 32 detail); the first time a
+new kind of break is seen; any reversal. The institution may add to this
+list, never remove from it.
+
+*Each channel's deadlines.* Three clocks per channel, each from the
+rail's own settlement rules, the regulations, the promise the
+institution makes its customers, and its cut-offs on the business
+calendar. The defaults below come from the journeys the owner agreed; an
+institution may tighten them, and loosens one only within what the rail
+and the law allow.
+
+| Channel | Arrival to posting | In transit, clears by | A break owned by, and resolved by |
+|---|---|---|---|
+| M-Pesa paybill or till, in | Within a minute of M-Pesa's confirmation (JN-10) | The same cycle | Owned by 10:00 the next morning; an unplaced payment returned at day 7 (JN-16, JN-17) |
+| M-Pesa payout | The status within the rail's timeout; pending until a query or the statement settles it | The same cycle | Owned by 10:00; never resent blind (JN-13) |
+| Bank transfer in, the bank's API | Within an hour of its credit (JN-12) | The next business day | Unidentified: returned within five business days, or the bank's window if shorter (JN-12) |
+| Bank transfer in, statement only | By 10:00 the morning after (JN-12) | The next business day | As above |
+| Bank transfer out, EFT or RTGS | Released the same business day if instructed before the cut-off (JN-11) | EFT the next business day; RTGS the same day | Owned by 10:00; an unreleased instruction lapses at the end of its day (JN-11) |
+| A ledger disagreement | — | — | Severity 2: acknowledged within 15 minutes, worked until explained (incident management) |
+
 ## 5 · Split transactions
 
 A payment's legs are computed by the companion before they are matched:
@@ -220,8 +260,8 @@ rates of its day (RO-02, RO-26).
 
 A catalogue of proven extensions (RO-28, phase 2; R1 and R2 run the same
 actions built in), built, tested and signed by Dibon, which an
-institution switches on and configures (FS-791): raise a ticket in Odoo
-or Zoho; alert; pause a rail; notify a customer through messaging;
+institution switches on and configures (FS-791). **Odoo first** (owner,
+FS-794): raise and update a ticket in Odoo Helpdesk, then Zoho; alert; pause a rail; notify a customer through messaging;
 propose a reversal for approval. Two kinds: **per transaction**, which act
 on one customer's break, and **per system**, which act on a source or a
 rail. Institutions never upload code; a new extension enters the
@@ -349,8 +389,9 @@ source, by its rhythm.
 **For the owner:**
 
 1. Database activity monitoring: an open-source tool on pgAudit, or a
-   proprietary one for banks that require it (FS-790).
-2. The extension catalogue: which extensions ship first.
+   proprietary one for banks that require it. Left open by the owner
+   (FS-794).
 
-**For the customer:** its rules for each action (who is the person in the
-middle, which breaks may complete alone), and each channel's SLA.
+**For the customer:** its rules against §4.7's model: its amount
+threshold, who is the person in the middle, and any deadline it tightens
+(onboarding OB-RO-04).

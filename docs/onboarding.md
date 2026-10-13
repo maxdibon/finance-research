@@ -5,7 +5,7 @@ kind: checklist
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775]
+review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794]
 last_reviewed: 2026-10-13
 ---
 
@@ -136,7 +136,7 @@ Module: [recon-observability](modules/recon-observability.md)
 | OB-RO-01 | A posting-event feed, or a ledger extract on its cycle | IT lead | recon-observability §4 |
 | OB-RO-02 | Chart-of-accounts mapping | Finance lead | recon-observability §4 |
 | OB-RO-03 | Rail credentials or statements, for every channel | Finance lead | recon-observability §6 |
-| OB-RO-04 | The response time it expects for each type of break | Operations lead | Break queues by SLA |
+| OB-RO-04 | Its rules for recon's actions and deadlines, against the model in docs/specs/recon.md §4.7: its amount threshold, who looks first, and any channel deadline it tightens; maker-checker, effective-dated | Operations lead, with the finance lead | Break queues by SLA (FS-794) |
 
 ## SME Reconciliation
 
