@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-14
 ---
 
 # Partners — candidates, conversations and selection decisions
@@ -41,7 +41,7 @@ under way) · **Live** · **Unconfirmed** (sources disagree on the stage) ·
 
 | Id | Partner | Type | What we would use it for | Countries (claimed) | Verified | Stage | Last event | Next step | Owner | Refs |
 |---|---|---|---|---|---|---|---|---|---|---|
-| PT-01 | Liquid Intelligent Technologies, with Microsoft Azure Stack | Hosting, strategic | Host deployments in-country; route to market | KE UG TZ RW ZM ZW NG (owner) | None | Candidate | 2026-10-01: named as the target strategic partner. 2026-10-05: research: its Nairobi Azure Stack Hub dates from 2020, current catalogue unconfirmed; a partner programme with reseller terms; a Sophos Platinum Partner selling managed detection (FS-457, FS-458) | Send the partner enquiry (docs/outreach/liquid-partner-request.md): services on the Stack today, a second Kenyan site, DDoS protection, partner terms, Sophos MDR and endpoint, GPUs | Architect | FS-048, FS-105, FS-110, FS-457, FS-458, FS-464 |
+| PT-01 | Liquid Intelligent Technologies, with Microsoft Azure Stack | Hosting, strategic | Host deployments in-country; route to market | KE UG TZ RW ZM ZW NG (owner) | None | Candidate | 2026-10-01: named as the target strategic partner. 2026-10-05: research: its Nairobi Azure Stack Hub dates from 2020, current catalogue unconfirmed; a partner programme with reseller terms; a Sophos Platinum Partner selling managed detection (FS-457, FS-458). 2026-10-14: Microsoft's documentation read: Azure Stack Hub's Blob storage is general-purpose v1, locally redundant, immutable blobs from release 2008, no tiers or lifecycle rules yet (FS-822) | Send the partner enquiry (docs/outreach/liquid-partner-request.md): services on the Stack today, a second Kenyan site, DDoS protection, storage in detail (S1 to S10), partner terms, Sophos MDR and endpoint, GPUs | Architect | FS-048, FS-105, FS-110, FS-457, FS-458, FS-464, FS-822 |
 | PT-02 | Safaricom — M-Pesa (Daraja) | Mobile money, direct | Collections, payouts, status queries in KE; Daraja security APIs (SIM-swap query, IMSI) for authorised partners | KE | KE (operator) | Live | 2026-10-03: owner. M-Pesa Express, C2B, B2C, B2B, status, balance and reversals ran in production at Onit Bank, Feb 2025 to Jun 2026 | Send partner-requests draft 3 (docs/outreach/partner-requests-2026-10.md); confirm the go-live date and whose shortcodes are used | Architect | FS-056, FS-088, FS-125, FS-127, FS-386 |
 | PT-03 | Airtel Money | Mobile money, direct; possible group-level agreement | Collections and payouts; one agreement across most of the footprint | KE UG TZ RW ZM NG | None | Unconfirmed | 2026-10-03: owner. The API integration was probably built for Onit Bank but never launched; to confirm with the technical lead. The phone-number name check ran at Onit under Onit's own agreement | Send partner-requests draft 4 (docs/outreach/partner-requests-2026-10.md); ask about a group agreement | Architect | FS-088, FS-125, FS-392, FS-393, FS-394 |
 | PT-04 | Telkom — T-Kash | Mobile money, direct | Collections and payouts in KE | KE | KE (operator) | Unconfirmed | Listed as a channel in the Collect API | Send partner-requests draft 5 (docs/outreach/partner-requests-2026-10.md); confirm integration status | Architect | FS-088, FS-125, FS-129, FS-393, FS-394 |
