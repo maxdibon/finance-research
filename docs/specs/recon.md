@@ -8,11 +8,11 @@ release: R1
 implements: [recon-observability]
 depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine]
 used_by: [end-of-day-runner]
-version: 0.1.0
+version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794]
-last_reviewed: 2026-10-13
+review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796]
+last_reviewed: 2026-10-14
 ---
 
 # Reconciliation platform — build specification
@@ -159,6 +159,98 @@ and [JN-12](../journeys/transfer-in.md).
    code, and built by someone other than lender rules' author. Two
    implementations of the same rules is the point: a mistake in one shows
    as a disagreement with the other.
+
+### 3.1 The companion for Roan Capital's product (R1)
+
+The first companion: every loan on Roan Capital's 30-day product,
+recomputed day by day without reading Fineract's schedule or lender
+rules' results, and compared with both (FS-793, FS-796).
+
+**3.1.1 What it reads, and nothing else.**
+
+| Input | From | Why this source |
+|---|---|---|
+| The product version's terms: amount and tenor limits, the rate and its unit, flat or reducing, the fee and when it is taken, default interest and its base, the default period, rounding | The product version record lender rules signs when a version is approved (MF-24), with its hash | The terms as approved, not as configured in Fineract |
+| Each loan's contract: amount, product version, borrower's references | The approved request (`kapu.mandates.request.approved`) and the signed agreement's record | What was approved and signed |
+| The disbursement and its value date | The rail's own record: the bank's statement or M-Pesa's confirmation (`kapu.rails.payout.confirmed`) | When money actually left |
+| Every repayment, with its rail date | The rail's own record (`kapu.rails.payment.received`), identified by the account's payment reference (RO-02) | When money actually arrived |
+| Waivers, recovery expenses, restructures, write-offs | Their approved requests in the approval engine | Only what was approved, never a posting |
+| The business calendar | KC-15's signed calendar | Due dates and working days |
+| The readings of the law not yet settled | The interpretation record (3.1.3) | One policy, two implementations |
+
+**3.1.2 What it computes, per loan, each day and on each repayment.**
+
+1. **Disbursed:** principal; the fee, deducted at disbursement; the
+   interest for the term by the product's method; the due date from the
+   value date and the term, on the business calendar.
+2. **Each repayment, as reg 56 orders:** dated by the rail's time, never
+   by posting; applied to due principal, then fees and charges, then
+   interest; anything beyond what is due to principal; a full early
+   repayment owing interest only to its date.
+3. **Default interest:** from the first day past due, at the product's
+   daily rate on its base, posted day by day.
+4. **Classification (reg 57):** non-performing on the first day past the
+   shorter of 30 days and the agreement's default period, counted from
+   the due date; performing again when nothing is past due beyond it.
+5. **The cap (reg 29):** on each non-performing day, the episode's
+   `P_npl` and its bucket; nothing beyond the room; a new episode after a
+   cure, from that moment's principal.
+6. **Approved adjustments,** each from its approval's own figures.
+7. **The day's general ledger:** the expected movement on each GL account
+   the product uses (the loan portfolio, interest, fee and penalty
+   income, suspense), for the comparison with the shadow and the master.
+
+**3.1.3 The interpretation record.** Where the law or Roan Capital has not
+yet settled a reading (open answers 3, 4 and 23; LQ-01 and LQ-04), the
+reading is written once, as a versioned, effective-dated record approved
+by two people, which both lender rules and the companion read. The code
+stays independent; the policy is shared, because two programs reading
+the law differently would only produce noise. Today's readings: the cap on
+the principal when the loan became non-performing, fees inside the
+bucket; days counted from the due date; the rate's unit and the base of
+the 1% a day as Roan Capital answers; whether interest runs on a disputed
+amount as open answer 23 settles. Rounding is a product term: the same
+precision and the same rule in both.
+
+**3.1.4 What it compares, and when.**
+
+| When | Compared with | Tolerance | A difference is |
+|---|---|---|---|
+| Within 5 minutes of each repayment's posting | Fineract's breakdown of that posting (principal, fees, penalties, interest) | Exact, to the cent | A break, severity 3; lender rules raises its own mismatch, independently |
+| After each night's close and lender rules' steps | Each loan's principal, fees, penalties, interest, total outstanding, days past due, classification, `P_npl`, bucket and room | Exact, to the cent | A break per loan, severity 3; severity 2 if the classification or the cap differs, or if more than 1% of loans differ (one cause, many loans) |
+| The same night | The shadow's and Fineract's GL movements for the day | Exact | Severity 2 |
+| Any time | A balance higher than its money explains | None | Severity 1 (FS-789) |
+
+The companion never corrects anything: each break goes to the queue with
+the companion's working, the master's figures, and the inputs behind
+both, and is settled by an approved posting or by fixing whichever
+calculation was wrong.
+
+**3.1.5 Edge cases it must get right,** each an acceptance test (§14):
+a repayment at 23:40 on the due date, posted after midnight; a backdated
+repayment, which re-runs the loan from that date; a reversed repayment;
+a part payment; an overpayment beyond the payoff; full early repayment;
+a payment during the close; a restructure, which inherits the open cap
+episode; a waiver; a recovery expense outside the bucket; a disputed
+amount held by a complaint.
+
+**3.1.6 How it starts within the first 30 days.**
+
+- **From go-live:** every input above is archived as it arrives, in the
+  companion's own append-only store, since the event bus keeps events
+  only seven days. Nothing is computed yet; nothing is lost.
+- **By day 20:** the companion runs, replaying every loan from the
+  archive, in silence: its breaks recorded, not raised, while it is
+  checked against the worked examples and the first live loans.
+- **By day 25,** before the first loan falls due on day 30 and before the
+  first default interest on day 31: its breaks raised as in 3.1.4.
+- **Migrated loans,** if any: they start from the signed-off migration
+  balance (KC-11) as an opening position, recomputed forward from there.
+
+**3.1.7 Who builds it.** Someone other than lender rules' author, from
+the regulations, the product version record and the worked examples in
+lender-rules §2.9, never from lender rules' code (rule 7). Both are tested
+against the same worked examples, which are the shared truth.
 
 ## 4 · What recon does
 
@@ -383,6 +475,15 @@ source, by its rhythm.
 | A8 | A new statement source in a known format | Configured | Read and matched with no code change | §6 |
 | A9 | 10 million transactions in a day, 2,000 a second at peak | The load test | The shadow within 5 seconds; the companion's close within 2 hours | Quality |
 | A10 | Recon's own result altered in its store | The chain is verified | The change shows | RO-24 |
+| A11 | Lender-rules §2.9's worked example: KES 100,000, nothing repaid | The companion runs to day 121 | Its figures match the example's table on days 30, 61 and 120, and nothing accrues from day 121 | §3.1, MF-21 |
+| A12 | The same loan, KES 30,000 paid on day 70 | Recomputed | All to principal; default interest 700 a day; the bucket reaches the cap on day 142 with 600 posted | §3.1, MF-22 |
+| A13 | A repayment at 23:40 on day 30, posted at 06:00 on day 31 | Compared | Dated day 30; no default interest expected; Fineract's figures agree, or a break | §3.1.5, MF-22 |
+| A14 | A repayment backdated by five days | Posted | The loan recomputed from that date; every later day compared again | §3.1.5 |
+| A15 | Fineract allocates a payment to interest before principal | The posting's breakdown is compared | A break within 5 minutes, with both breakdowns; lender rules' own mismatch raised separately | §3.1.4 |
+| A16 | Full early repayment on day 10 of a 30-day loan | Compared | Interest only to day 10; no fee; a difference is a break | §3.1.2, MF-22 |
+| A17 | A loan restructured while non-performing | Recomputed | The open cap episode carried over; the new terms from the approval's figures | §3.1.2, MF-09 |
+| A18 | The interpretation record's reading changes, effective from a date | Both read it | Loans recomputed from that date by both; no break from the change itself | §3.1.3 |
+| A19 | The companion starts on day 20 | It replays the archive | Every loan since go-live recomputed; breaks recorded, not raised, until day 25 | §3.1.6 |
 
 ## 15 · Open questions
 
