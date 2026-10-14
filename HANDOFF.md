@@ -1,8 +1,8 @@
 # Dibon financial services — session handoff
 
-    version: 1.7.0
-    updated: 2026-10-13
-    supersedes: 1.6.0; adds 13 October (FS-782 to FS-795)
+    version: 1.8.0
+    updated: 2026-10-14
+    supersedes: 1.7.0; adds 14 October (FS-796 to FS-818)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -162,9 +162,55 @@ Each has a register row and, where it changed the design, an entry in
 - **Recon's actions and deadlines follow one model** (recon §4.7), each
   institution's rules set against it at onboarding (OB-RO-04, FS-794).
   Extensions: Odoo first.
+- **The product version document is a product's one authority**
+  (lender-rules §2.4; FS-800 to FS-802): written in the vocabulary, in
+  three groups (A the published terms, B eligibility and limits, C how it
+  runs) plus the never-terms the regulations forbid; approved as a
+  `product.version` request by two people, then CBK's letter where reg 55
+  needs it; applied to Fineract through the API. Lender rules and the
+  companion each read the signed document and never talk to each other;
+  a reading of the law not yet settled goes in one interpretation record
+  both read (recon §3.1.3).
+- **Publication by stage** (FS-803 to FS-805): a draft, and a version
+  awaiting CBK, are private; an active one is public, on its product page
+  and in every key information document (regs 47, 48); the pricing model
+  goes to CBK only.
+- **Client material lives in Dibon's Odoo Documents** (rules, Dibon 10).
+  Product drafts are the exception, in `docs/products/` until the
+  workspaces exist, because they hold no personal data (FS-806).
+- **Recon can start from a cut-off** (recon rule 8; FS-798): where an
+  institution already runs a core, from a signed opening position, all
+  before it taken as reconciled. The companion's inputs are archived from
+  go-live, because the event bus keeps seven days.
+- **Charges the borrower did not cause** (an outage, a partner's outage,
+  planned work, a payment we did not process) are waived through
+  disruption windows and a standing waiver (lender-rules §2.10; FS-799).
+- **Roan Capital's eight roles** come from its prototype, each with what
+  it does and never does (delivery map §1; FS-811), and the prototype's
+  lessons are listed as what we take and what we do not (FS-807, FS-812).
+- **We never ask for answers by email.** A questionnaire is a Word
+  document with a form field per question, read back by script into its
+  source, never retyped (`tools/products/`; FS-816, FS-817).
 
 ## What is in flight
 
+- **Roan Capital's 30-day loan** (FS-813 to FS-817): the draft is
+  `docs/products/roan-capital-30-day-loan-v1.md`, filled from the
+  prototype, every item with its source and its ask. Its three
+  questionnaires (A product terms, B eligibility and limits, C how it
+  runs) are built, looked at and **not yet sent**; rebuild them with
+  `tools/products/questionnaires.js` before sending, since `build/` is
+  not kept. Returned files go in `clients/roan-capital/` and are read
+  back with `tools/products/read-back.js`; the steps are in
+  `docs/products/README.md`. They carry most of Roan's open answers (4,
+  10, 12, 13, 16 to 21, 28, 29). Two questions for counsel came out of
+  the prototype: a minimum of 14 days' interest on early repayment, which
+  reg 56 appears to forbid (LQ-13), and excise duty on fees, which the
+  prototype leaves out (LQ-14).
+- **The Data Commissioner:** Dibon is registered as a data processor
+  (compliance LC-01, its number recorded; the certificate's expiry still
+  to record). The controller registration is still needed (LC-02,
+  FS-367, Critical).
 - **R1, Roan Capital's pilot** (customers CU-01). The delivery map is
   `docs/customers/roan-capital.md`; Roan's open answers are its §4, and
   answer 13 (the formulas, weights and thresholds behind appraisal and
@@ -318,6 +364,13 @@ Each has a register row and, where it changed the design, an entry in
   *about* them.
 - **Binary files** are refused by the pre-commit hook unless listed in
   `.githooks/allowed-binaries`.
+- **`docs/products/`** holds product drafts by exception (above);
+  **`tools/products/`** builds questionnaires and reads them back. The
+  read-back needs only Node; the builder needs the docx package from
+  outside the repository (DOCX_MODULE).
+- **Also kept local, never committed:** `sources/odpc_registration.png`
+  (untracked) and `sources/dibon/recon-notes/` (ignored), the owner's
+  handwritten recon notes with their transcript.
 - **`design/card_design.png`** is a third-party design image the owner
   shared as inspiration for page 17. It stays local and untracked; never
   commit it.
@@ -478,21 +531,43 @@ only with a register row.
   issued), printed as a review draft, and the build refuses a named copy of
   it; the version moves only when an edition is issued.
 - **A PDF open in a viewer** makes the build write a timestamped file.
+- **A guard for a table's header can swallow a real row of the same
+  name**: the vocabulary's "Term" row was skipped that way (FS-816).
+  Compare row counts before and after any table edit.
+- **No `python` or `pdftoppm` on this machine.** `py` with PyMuPDF renders
+  a PDF to PNG; Word through PowerShell COM exports a .docx to PDF, and
+  can fill a document's form fields to test a read-back.
+- **The docx package cannot make Word form fields.** The builder writes a
+  marker paragraph and swaps in the content control's XML after packing
+  (`tools/products/questionnaires.js`).
+- **Roan Capital's prototype** 404s on a typed URL: move through it by
+  clicking inside the app. The owner signs in; Claude only reads.
 
-## Waiting on the owner (as at 2026-10-13)
+## Waiting on the owner (as at 2026-10-14)
 
 - **In the register:** JN-12's targets (FS-784); the rest of the payment
   reference, shareable payment instructions and JN-12's step 4 (FS-785);
   "alongside" mode, Kapu Core beside an institution's own core, as a
   decision with the CBK question for counsel (FS-786, High); database
   activity monitoring, left open (FS-794).
+- **Three High rows that may be ready to close:** FS-791 (the scale
+  proposal, which FS-792's "go ahead" may have settled); FS-796 (the
+  companion's design, recon §3.1: the interpretation record and who
+  builds the companion); FS-812 (building and testing from product
+  documents in three layers; FS-816 and FS-817 made the drafts data the
+  check validates, the schema and test products in code are still to
+  agree). Ask before closing them.
+- **To send:** Roan Capital's three product questionnaires, to its
+  product owner, credit lead and operations lead.
 
 ## Waiting on the owner, outside the repository (as at 2026-10-12)
 
 - **To send:** the Prembly changes letter (FS-762); the corrected NDA to
   Roan Capital (FS-740, clients/); the bank requests to NCBA, KCB and SBM
   (docs/outreach/bank-api-requests-2026-10.md).
-- **Roan Capital's open answers** (delivery map §4), now 1 to 27; most
+- **Roan Capital's open answers** (delivery map §4), now 1 to 29 (28 the
+  approval chain, 29 the product's terms and CBK's approval of its
+  pricing); most
   pressing 7 (roles, which becomes its position-to-roles table), 13
   (scoring definitions) and 22 to 27 (complaints, interest on a disputed
   amount, the morning's recipients and its books, Airtel Money, staff
@@ -528,9 +603,13 @@ only with a register row.
 
 - **Agree the journeys one by one,** writing each one's handbook
   procedures first (handbook §4 to §6 are still empty).
-- **Recon, next:** the companion's design for Roan Capital's product
-  (it must be ready within the first 30 days of go-live); the load test's
-  plan; the rails spec, still to write, which recon depends on.
+- **Recon, next:** the companion's design is drafted (recon §3.1,
+  FS-796) and waits on the owner; then the load test's plan and the rails
+  spec, still to write, which recon depends on.
+- **Product documents in code:** the schema, Dibon's starter templates
+  and synthetic test products, built from lender-rules §2.9's worked
+  examples (FS-812); and the back office's product form, which replaces
+  the questionnaires.
 - **The six Critical rows** (FS-202, FS-205, FS-340, FS-367, FS-735,
   FS-736) and fourteen High ones.
 - **Rows that block R1:** identity access and vendor choice (FS-202,
