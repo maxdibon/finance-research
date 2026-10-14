@@ -11,7 +11,7 @@ used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815]
 last_reviewed: 2026-10-14
 ---
 
@@ -623,6 +623,9 @@ exception to the accountant's queue (MF-12).
 | A22 | A disruption window over M-Pesa, days 30 to 31 | A loan due on day 30 is paid on day 32 | Default interest for days 31 and 32 waived under the standing waiver; classification counts from day 30 | §2.10 |
 | A23 | A version whose rate unit is missing | Submitted | Refused: the vocabulary requires it | §2.4 |
 | A24 | A version the companion cannot compute | Activation | Refused | §2.4; recon §3.1 |
+| A25 | A version with a minimum interest period, or any charge, on early repayment | Submitted | Refused as a never-term, naming it | §2.4; 56(3), (4) |
+| A26 | A version with a KES 500 fee | Its key information document is generated | The fee shown with its excise duty of KES 100, inside the total cost of credit; no excise on interest or insurance premiums | §2.4; MF-23 |
+| A27 | A version with rates by risk class | Published | The page shows the range; each borrower's key information document shows their own rate | §2.4; 59(2)(c) |
 
 ## 9 · Open questions
 
