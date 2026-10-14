@@ -11,7 +11,7 @@ used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802]
 last_reviewed: 2026-10-14
 ---
 
@@ -203,10 +203,11 @@ becomes non-performing (57(3)); bureau listing and its notice period;
 collection conduct; complaint channels and the right to go to CBK
 (50(3)).
 
-**Where enforced.** Service layer, from the product configuration
-Fineract uses, so the calculator (RC-29) and live loans agree. Generated
-per product version, stored with a hash, shown before the agreement is
-accepted; the acceptance is recorded on the loan.
+**Where enforced.** Service layer, from the product version document
+(§2.4), so the calculator (RC-29), the key information document and live
+loans all come from one source. Generated per product version, stored
+with a hash, shown before the agreement is accepted; the acceptance is
+recorded on the loan.
 
 ### 2.4 Price changes — reg 55, MF-24
 
@@ -228,6 +229,60 @@ customer, who has accepted (55; also 54(7)).
    keeps its terms. A rate change reaches a live loan as a reschedule
    request with the new rate from the day it takes effect, within the
    product's range (kapu-core-fineract §6).
+
+**The product version document is the one authority** (FS-800, FS-801,
+FS-802). Every term of a product lives in one signed document; Fineract,
+this service, the key information document, the calculator and recon's
+companion all take the terms from it, and none keeps terms of its own.
+
+- **Written in a vocabulary,** not free text (below). The schema is code,
+  in the code repository, changed only by merge request; adding a term
+  means this service, the Fineract mapping and the companion support it
+  together.
+- **Drafted in the back office** by the institution's product owner, on a
+  form bound to the vocabulary, usually from one of Dibon's starter
+  templates. Before it can be submitted, the form previews sample
+  schedules, the APR and total cost of credit, the draft key information
+  document, and the companion's own figures for the same samples; if
+  this service's preview and the companion's disagree, it cannot be
+  submitted.
+- **Approved** as a `product.version` request (approval engine), by two
+  people, each re-authenticated; then held until CBK's letter is recorded
+  (rule 2 above); then activated from its effective date, for new loans.
+- **On activation** the service applies it to Fineract through the API,
+  never by hand (kapu-core-fineract §4); generates the key information
+  document and the calculator from it; and publishes
+  `kapu.mfi.product.version.activated` with its id and hash.
+- **Stored once, never changed:** in this service's append-only store in
+  the institution's instance, signed, with its approvals and CBK's letter;
+  its hash anchored in the audit chain; the key information document in
+  the vault. A change is a new version. The institution's documents are
+  its records, never in Dibon's repositories.
+- **Each loan names its version:** the approved request carries the
+  version's id and hash, so every calculation uses the terms the loan was
+  approved and signed under.
+- **A version recon's companion cannot compute cannot be activated.**
+
+**The vocabulary** (the first version; each term a field with its allowed
+values):
+
+| Term | Values |
+|---|---|
+| Amount limits | Minimum and maximum, KES |
+| Term | Length and unit (days, weeks, months); minimum and maximum |
+| Repayment frequency | Once at maturity, weekly, monthly |
+| Interest method | Flat, or reducing balance |
+| Interest rate and its unit | A number, with its period: for the term, a month or a year |
+| Fees | Each fee: a fixed amount or a percentage of principal; taken at disbursement or added to the schedule |
+| Insurance | As a fee, or a third party's cost passed on at cost (reg 59(2)(f)) |
+| Default interest | Rate, period (a day), base (principal outstanding, or the overdue amount), from which day past due |
+| Default period | The days past due at which the agreement makes a loan non-performing, if shorter than reg 57's |
+| Collection ladder | Its stages by day (MF-39) |
+| Holiday rule | Whether a due date on a holiday moves, and which way (KC-15) |
+| Rounding | Precision and rule |
+
+The repayment order and the cap are the regulations', not a term; a
+reading not yet settled is the interpretation record's (recon §3.1.3).
 
 ### 2.5 Non-performing classification — reg 57, MF-25
 
@@ -363,6 +418,36 @@ is 70,000, reached on day 99 (open question 1).
 (cap 100,000), clears its arrears, then falls back at principal 60,000:
 the new episode's cap is 60,000.
 
+### 2.10 Charges the borrower did not cause — reg 56, MF-22, MF-39
+
+**Regulation.** A repayment is credited on the date it is paid (56(1));
+fairness forbids charging a customer for the lender's own failure (41).
+
+**Behaviour** (FS-799, FS-802):
+
+1. **Paid, but processed late** (our outage, a callback lost, a payment
+   held in the paybill or at the bank): posted with the date the money
+   arrived, from the rail's own record. The loan is re-run from that date,
+   and any default interest, fee or ladder step the gap caused is reversed
+   in the same run, automatically, since the evidence is the rail's own
+   record (recon §4.7). The borrower is told (messaging T48).
+2. **Could not pay, because a rail was down** (M-Pesa or a bank, or
+   planned work on one): a **disruption window** is declared with the
+   incident: its cause, the channels, the start and end, approved by two
+   people (incident management §5). For any loan falling due, or due a
+   charge or a ladder step, inside the window, the charges for the window
+   are waived under the **standing waiver** the institution approved once
+   at onboarding (OB-MF-09), not loan by loan; reminders and the ladder
+   hold until the window closes. The borrower is told (T48).
+3. **Classification stays honest:** reg 57's days past due are not
+   altered by a window; the charges are waived, not the clock.
+4. **Charges already paid** are refunded through the institution's
+   approval chain, since that moves money.
+5. **Recon's companion reads the windows too,** so a charge either rule
+   missed is a break.
+6. **When the cause was Dibon's,** the institution's lost income is
+   settled under the service agreement's service credits (FS-748).
+
 ## 3 · Interfaces
 
 **Endpoints** (lender-rules service, internal):
@@ -475,6 +560,10 @@ exception to the accountant's queue (MF-12).
 | A18 | Oral complaint | 48 hours unresolved | Pending event; written confirmation sent (messaging T41) | MF-28, 40(4) |
 | A19 | Complaint logged | Day 12 with no outcome | Target warning to the handler | MF-28 (FS-764) |
 | A20 | KES 5,000 of the day-30 amount disputed in an open complaint | Day 30 default run | No default-run message or action on the KES 5,000; the rest proceeds; the hold recorded | MF-39, MF-28 |
+| A21 | Paid at 14:00 on day 30; our platform down until day 31 | Posted on day 31 | Dated day 30; no default interest; the loan re-run; T48 sent | MF-22, 56(1); §2.10 |
+| A22 | A disruption window over M-Pesa, days 30 to 31 | A loan due on day 30 is paid on day 32 | Default interest for days 31 and 32 waived under the standing waiver; classification counts from day 30 | §2.10 |
+| A23 | A version whose rate unit is missing | Submitted | Refused: the vocabulary requires it | §2.4 |
+| A24 | A version the companion cannot compute | Activation | Refused | §2.4; recon §3.1 |
 
 ## 9 · Open questions
 

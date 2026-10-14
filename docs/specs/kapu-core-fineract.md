@@ -11,8 +11,8 @@ used_by: [approval-engine, lender-rules, end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793]
-last_reviewed: 2026-10-13
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802]
+last_reviewed: 2026-10-14
 ---
 
 # Kapu Core on Apache Fineract — component specification
@@ -144,6 +144,12 @@ FS-185. Groups (KC-01, later).
 | Moves out of non-performing only when arrears are cleared | On |
 | Can be used for top-up | On, where the credit policy allows top-ups |
 | Overdue penalty charges | None, for capped products |
+
+**Applied from the product version document,** never by hand
+(lender-rules §2.4, FS-802): the service sets each loan product's
+settings through the API from the signed document; each night recon
+compares Fineract's live product settings, and each loan's copied terms,
+with the document its version names (check F15).
 
 **Roles and permissions:** staff roles never hold `APPROVE_LOAN`,
 `REJECT_LOAN`, `WITHDRAW_LOAN`, `DISBURSE_LOAN`, `DISBURSETOSAVINGS_LOAN`,
@@ -325,6 +331,7 @@ On a running 1.15 instance, before the build relies on each (FS-625):
 | F12 | A missed day caught up; the business date's alarm when it lags | KC-07 |
 | F13 | Kafka events through the adapter: order, duplicates, a broker down and back | RO-23 |
 | F14 | A balance updated directly in the database is caught by recon's companion as a severity 1, and pgAudit's record of it survives the account that made it | FS-789, FS-793; recon A2 |
+| F15 | A product setting changed directly in Fineract is found the next morning, against the product version document | lender-rules §2.4, FS-802 |
 
 ## 13 · Open questions
 

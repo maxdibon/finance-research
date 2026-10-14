@@ -8,10 +8,10 @@ release: R1
 implements: [recon-observability]
 depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine]
 used_by: [end-of-day-runner]
-version: 0.2.0
+version: 0.3.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796]
+review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802]
 last_reviewed: 2026-10-14
 ---
 
@@ -159,6 +159,18 @@ and [JN-12](../journeys/transfer-in.md).
    code, and built by someone other than lender rules' author. Two
    implementations of the same rules is the point: a mistake in one shows
    as a disagreement with the other.
+8. **A cut-off and an opening position** (FS-798, FS-802). The shadow and
+   the companion start at a cut-off, from an opening position taken from
+   the master: every account's balance and, for loans, the schedule,
+   accrued interest, classification and any open cap episode. The
+   institution's finance lead and Dibon sign it as the agreed start
+   (onboarding OB-RO-05); what the institution already knows is
+   unreconciled comes across as open items with owners, not hidden in the
+   balances. With an institution's own core, change-data capture's initial
+   snapshot is the opening position. Inputs are archived from the
+   cut-off. Reports say "reconciled since" the cut-off, never more: what
+   came before is agreed, not proven. A new cut-off takes the same two
+   signatures and lists every difference it absorbs.
 
 ### 3.1 The companion for Roan Capital's product (R1)
 
@@ -170,13 +182,14 @@ rules' results, and compared with both (FS-793, FS-796).
 
 | Input | From | Why this source |
 |---|---|---|
-| The product version's terms: amount and tenor limits, the rate and its unit, flat or reducing, the fee and when it is taken, default interest and its base, the default period, rounding | The product version record lender rules signs when a version is approved (MF-24), with its hash | The terms as approved, not as configured in Fineract |
+| The product version document, in its vocabulary (lender-rules §2.4): every term the companion needs | The signed document; the companion keeps its own copy, verifying the signature, the hash and the approval | The terms as approved, not as configured in Fineract |
 | Each loan's contract: amount, product version, borrower's references | The approved request (`kapu.mandates.request.approved`) and the signed agreement's record | What was approved and signed |
 | The disbursement and its value date | The rail's own record: the bank's statement or M-Pesa's confirmation (`kapu.rails.payout.confirmed`) | When money actually left |
 | Every repayment, with its rail date | The rail's own record (`kapu.rails.payment.received`), identified by the account's payment reference (RO-02) | When money actually arrived |
 | Waivers, recovery expenses, restructures, write-offs | Their approved requests in the approval engine | Only what was approved, never a posting |
 | The business calendar | KC-15's signed calendar | Due dates and working days |
 | The readings of the law not yet settled | The interpretation record (3.1.3) | One policy, two implementations |
+| Disruption windows | Declared with an incident, approved by two people (lender-rules §2.10) | Charges the borrower did not cause |
 
 **3.1.2 What it computes, per loan, each day and on each repayment.**
 
@@ -220,6 +233,7 @@ precision and the same rule in both.
 | After each night's close and lender rules' steps | Each loan's principal, fees, penalties, interest, total outstanding, days past due, classification, `P_npl`, bucket and room | Exact, to the cent | A break per loan, severity 3; severity 2 if the classification or the cap differs, or if more than 1% of loans differ (one cause, many loans) |
 | The same night | The shadow's and Fineract's GL movements for the day | Exact | Severity 2 |
 | Any time | A balance higher than its money explains | None | Severity 1 (FS-789) |
+| Each night | Fineract's live product settings, and each loan's copied terms, against the product version document | Exact | Severity 2 (kapu-core-fineract F15) |
 
 The companion never corrects anything: each break goes to the queue with
 the companion's working, the master's figures, and the inputs behind
@@ -236,9 +250,10 @@ amount held by a complaint.
 
 **3.1.6 How it starts within the first 30 days.**
 
-- **From go-live:** every input above is archived as it arrives, in the
-  companion's own append-only store, since the event bus keeps events
-  only seven days. Nothing is computed yet; nothing is lost.
+- **The cut-off is go-live** (rule 8), with an empty opening position
+  for new loans. **From go-live,** every input above is archived as it
+  arrives, in the companion's own append-only store, since the event bus
+  keeps events only seven days. Nothing is computed yet; nothing is lost.
 - **By day 20:** the companion runs, replaying every loan from the
   archive, in silence: its breaks recorded, not raised, while it is
   checked against the worked examples and the first live loans.
@@ -247,7 +262,14 @@ amount held by a complaint.
 - **Migrated loans,** if any: they start from the signed-off migration
   balance (KC-11) as an opening position, recomputed forward from there.
 
-**3.1.7 Who builds it.** Someone other than lender rules' author, from
+**3.1.7 How lender rules and the companion relate: they never talk**
+(FS-797). They share two signed records (the product version document and
+the interpretation record) and the same source events. What lender rules
+produces, its postings to Fineract and its events, is what recon compares
+the companion against, never an input to it. A disagreement is a break;
+the fix goes back through lender rules or an approved request.
+
+**3.1.8 Who builds it.** Someone other than lender rules' author, from
 the regulations, the product version record and the worked examples in
 lender-rules §2.9, never from lender rules' code (rule 7). Both are tested
 against the same worked examples, which are the shared truth.
@@ -484,6 +506,8 @@ source, by its rhythm.
 | A17 | A loan restructured while non-performing | Recomputed | The open cap episode carried over; the new terms from the approval's figures | §3.1.2, MF-09 |
 | A18 | The interpretation record's reading changes, effective from a date | Both read it | Loans recomputed from that date by both; no break from the change itself | §3.1.3 |
 | A19 | The companion starts on day 20 | It replays the archive | Every loan since go-live recomputed; breaks recorded, not raised, until day 25 | §3.1.6 |
+| A20 | An institution with its own core; a signed opening position at a cut-off, with two known open items | The comparison starts | Computed forward from the opening position; the two items open with owners; reports say "reconciled since" the cut-off | §3 rule 8 |
+| A21 | A product setting changed directly in Fineract | The night's comparison | A severity 2 break naming the setting and the document's value | §3.1.4 |
 
 ## 15 · Open questions
 

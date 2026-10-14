@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-466, FS-471, FS-633, FS-639]
-last_reviewed: 2026-10-08
+review_ids: [FS-466, FS-471, FS-633, FS-639, FS-802]
+last_reviewed: 2026-10-14
 ---
 
 # Incident management
@@ -106,6 +106,11 @@ in the twice-yearly tabletop ([business continuity](../business-continuity.md)).
   escalated, resolved. Nothing is rewritten.
 - A rule that paged without need is tuned; a failure no rule caught gets
   one.
+- **A disruption window** is declared for any incident that stopped
+  borrowers paying or delayed their payments' processing: its cause, the
+  channels, the start and end, approved by the operations lead and the
+  institution's contact. Lender rules and recon's companion read it, so
+  no borrower is charged for it (lender-rules §2.10, FS-802).
 
 ## 6 · Open
 
