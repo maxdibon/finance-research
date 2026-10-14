@@ -11,7 +11,7 @@ used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811]
 last_reviewed: 2026-10-14
 ---
 
@@ -285,11 +285,12 @@ values):
 | Term | Values |
 |---|---|
 | Amount limits | Minimum and maximum, KES |
-| Term | Length and unit (days, weeks, months); minimum and maximum |
-| Repayment frequency | Once at maturity, weekly, monthly |
+| Term | Length and unit (days, weeks, months); minimum and maximum, or a list of allowed terms (14 or 30 days) |
+| Repayment frequency | Once at maturity, daily, weekly, monthly; when the first instalment falls (the day after disbursement) |
 | Interest method | Flat, or reducing balance |
 | Interest rate and its unit | A number, with its period: for the term, a month or a year |
-| Fees | Each fee: a fixed amount or a percentage of principal; taken at disbursement or added to the schedule |
+| Fees | Each fee: a fixed amount, a percentage of principal, or tiers by amount; once per loan or once per client (a membership fee); taken at disbursement, added to the schedule, or paid upfront before the application, and whether it is refundable |
+| Never a term | A minimum interest period on early repayment, or any early-repayment charge: reg 56(3) and (4) forbid them (FS-807, LQ-13) |
 | Insurance | As a fee, or a third party's cost passed on at cost (reg 59(2)(f)) |
 | Default interest | Rate, period (a day), base (principal outstanding, or the overdue amount), from which day past due |
 | Default period | The days past due at which the agreement makes a loan non-performing, if shorter than reg 57's |

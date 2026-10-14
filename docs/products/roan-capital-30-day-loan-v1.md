@@ -5,7 +5,7 @@ kind: product-version
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806]
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807]
 last_reviewed: 2026-10-14
 ---
 
@@ -25,18 +25,19 @@ Roan Capital's instance; this file is only the working draft.
 
 | Term | Value | Status |
 |---|---|---|
-| Amount limits | Minimum KES ____ ; maximum KES ____ | **Blank:** Roan Capital to give (RC-30) |
-| Term | 30 days | From the requirement document |
-| Repayment frequency | Once, at maturity (day 30 from the disbursement's value date) | From the requirement document; to confirm |
-| Interest method | Flat, for the term | **To confirm** (the worked example in lender-rules §2.9 assumes it) |
-| Interest rate and its unit | ____ % per ____ (the calculator's range is 1% to 50%) | **Blank: open answer 4**, the rate's unit |
-| Fees | Processing fee: ____ (fixed KES, or % of principal), taken at disbursement / added to the schedule | **Blank:** Roan Capital to give |
-| Insurance | ____ : a fee, or a third party's cost passed on at cost (reg 59(2)(f)) | **Blank:** Roan Capital to give; decides whether it is in the APR (LQ-03) |
-| Default interest | 1% a day, from day 31 (the first day past due), on ____ | **Blank: open answer 3**, the base (principal outstanding, or the overdue amount) |
+| Amount limits | Minimum KES 3,000; maximum KES 100,000 | **The prototype's,** to confirm (open answer 29) |
+| Term | 30 days (the prototype also offers 14 days: a second term of this product, or a product of its own) | The requirement document; the 14-day term **to confirm** |
+| Repayment frequency | **Daily**, the first instalment the day after disbursement (KES 13,000 over 30 days: KES 434 a day, the last smaller) | **The prototype's,** to confirm; not once at maturity, as first assumed |
+| Interest method | Flat, on the principal | **The prototype's,** to confirm |
+| Interest rate and its unit | 1% a day (KES 3,000 on KES 10,000 over 30 days) | **The prototype's,** answering open answer 4 if Roan Capital confirms; CBK's approval of the pricing (reg 55) to record |
+| Fees | Membership, KES 100, once per client; application, KES 500 (KES 3,000 to 19,999) or KES 1,000 (KES 20,000 to 100,000); both paid upfront on the first loan, non-refundable; remittance, KES 120; chattels mortgage, KES 500 (KES 5,001 to 9,999) or KES 1,000 (KES 10,000 to 100,000); deducted at disbursement | **The prototype's,** to confirm |
+| Insurance | "LIF", KES 200, deducted at disbursement | **The prototype's;** to confirm what it is, and whether it is a fee or a third party's cost (LQ-03) |
+| Default interest | 1% a day, on overdue daily instalments | **The prototype's,** answering open answer 3 if Roan Capital confirms |
 | Default period | ____ days past due (reg 57's 30 days, or shorter if the agreement says so) | **Blank:** lender-rules open question 7; non-performing on day 61 if 30 |
 | Collection ladder | Reminder day 25; default run days 30 to 40; final warning days 40 to 47; closure day 47 | From the requirement document (RC-27) |
 | Holiday rule | A due date on a holiday: moves to the next working day / stays | **Blank:** Roan Capital's credit policy (OB-COM-20) |
-| Rounding | KES, to ____ decimal places, rounding ____ (half up, or half to even) | **Blank:** proposed: 2 places, half up |
+| Rounding | KES, to 2 decimal places; daily instalments rounded up to the shilling, the last instalment the remainder (the prototype) | To confirm |
+| Early repayment | Interest only to the repayment date; never a minimum (the prototype's 14 days is not carried over: reg 56(3), (4); LQ-13) | The regulation's |
 
 **Not terms, and so not here:** the repayment order (reg 56) and the cap
 on a non-performing loan (reg 29) are the regulations'; any reading not

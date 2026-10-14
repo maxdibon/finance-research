@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807]
 last_reviewed: 2026-10-14
 ---
 
@@ -49,6 +49,29 @@ requirements and owns the outcomes, Roan Capital's project lead, who
 confirmed the requirement document; the *users*, its credit officers,
 committees, finance staff and accountant (RC-34). People are named only
 in its own records.
+
+**Its roles** (FS-811): the eight positions in the prototype, agreed by
+the owner, designed against our controls. Every position is a role set in
+its position-to-roles table (handbook HB-10); a function a few people
+also hold is a role added to their position, never a position of its own.
+
+| Position | What it does | What it never does |
+|---|---|---|
+| Loan Officer | Onboards clients, drafts and submits applications, house visits, follow-ups | Approves anything |
+| Credit Manager | Approves a loan's first stage; may originate | Approves an application it originated, or two stages of one (MD-06) |
+| Head Office | Approves the second stage | Releases the payout of a loan it approved (MF-11, MD-06) |
+| Chief Executive Officer | Approves the third stage; flags' override (MD-07); write-offs and payment reversals, each as a request a second person decides | Acts alone on money |
+| Finance / Cashier | Prepares payouts (the maker); matches an unidentified payment to its loan on the rail's record; the morning's sign-off (JN-17) | Records a repayment without a rail record behind it; releases a payout it prepared |
+| Collections Officer | Works the collection ladder: calls, visits, promises to pay, logged | Records repayments; contacts anyone but the borrower and guarantor (reg 30) |
+| Auditor | Reads everything, the audit log included | Changes anything |
+| Super Admin | Creates and disables users; settings that move no money | Approves, grants an approval role, changes a product alone (a product version needs two people, lender-rules §2.4) |
+
+**Functions to assign within the positions** (proposed, to confirm): the
+access approver (HB-11) and the finance lead, the Chief Executive
+Officer; the complaints handler (JN-08) and the compliance officer, the
+Credit Manager, never for a loan it decided. The prototype's "everything"
+for the Super Admin, and its repayments recorded by hand, are not carried
+over (FS-807).
 
 ## 2 · Requirements against capabilities
 
@@ -119,7 +142,7 @@ in its own records.
 |---|---|---|---|---|
 | RC-32 | Time-based one-time codes (Google Authenticator) for every approver | AC-05, MD-10, AC-16 | Covered | Covered (FS-618): an authenticator app with time-based one-time codes is one of every approver's two authenticators, in R1 (AC-16). The prototype's fixed code is open answer 1. Step-up at the act is Planned. The prototype accepts a fixed code (123456): production must never |
 | RC-33 | An immutable audit trail of every action, searchable by user, account, date and action | RO-19, MD-05, RO-24, RO-27, RO-23, RO-25 | Covered | Access audit and decision records exist, and every step of a transaction is signed and chained (RO-24). One trail across modules, actions outside transactions included, searchable by user, account, date and action, is RO-27, in R1 (FS-618) |
-| RC-34 | Roles: Credit Officer, committee members, Head Office Committee, administrator | AC-09, BS-12 | Covered | Covered (FS-618): the role list is configuration, open answer 7. The prototype has eight roles (adding CEO, finance, collections, auditor). Agree the list |
+| RC-34 | Roles: Credit Officer, committee members, Head Office Committee, administrator | AC-09, BS-12 | Covered | The prototype's eight roles, agreed by the owner (FS-811); their design is §1, "Its roles" |
 | RC-35 | Monitoring: Prometheus, Grafana, Loki; 99.9% uptime | RO-16, RO-17, RO-18 | Covered | Ran for Collect at Onit Bank (collect CO-11). Uptime sits with the support tier. Availability: warm standby (owner, 2026-10-12, FS-775): back within 4 hours if a site is lost, at most 5 minutes of data recovered from the rails; the second site's provider to settle before go-live (deployment §1) |
 | RC-36 | AML/CFT duties as a licensed or registered lender: sanctions screening at onboarding and on every list change, records for seven years. Not in the document; required by the CBK lender regulations, reg 64 (law register LR-03) | FC-05, FC-12 | Partial | Added by Dibon (FS-431). Both are phase 1; PEP screening, cases and STR drafting (FC-06, FC-08, FC-09) are phase 2 |
 | RC-37 | Conduct and disclosure rules for a licensed or registered lender: repayment order, APR and key information document, price changes, non-performing classification, collection conduct, complaints. Not in the document; required by the CBK lender regulations (law register LR-03) | MF-22, MF-23, MF-24, MF-25, MF-26, MF-28 | Covered | Covered (FS-618): the rules are designed; fitting the document's penalty and ladder within them is open answers 3 and 4. Added by Dibon (FS-435). The document's day-30 penalty interest and day-47 closure ladder (RC-26, RC-27) must fit within these and the arrears cap (MF-21) |
@@ -149,7 +172,7 @@ choice (MF-04, FS-619).
 | 4 | The interest rate's unit | FS-395 | Open |
 | 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413, FS-415, FS-581 | Answered: BRS in v1; land titles stored in the MVP, searches manual |
 | 6 | Disbursement banks: NCBA only, or NCBA and Access Bank? (RC-18) | FS-395 | Open |
-| 7 | The role list (RC-34) | FS-395 | Open |
+| 7 | The role list (RC-34) | FS-395, FS-811 | Answered (2026-10-14): the prototype's eight, agreed by the owner; to confirm with Roan Capital, with the approval chain (answer 28) |
 | 8 | Approval chain and loan products | FS-399, FS-400 | Answered: both are configuration |
 | 9 | Will Roan Capital be named as a reference once live? | FS-401 | Open |
 | 10 | Loan agreement and guarantee templates, how borrowers sign, and the restructuring policy (RC-38, RC-39) | FS-516 | Open: the owner is asking |
@@ -170,6 +193,8 @@ choice (MF-04, FS-619).
 | 25 | Do you collect any repayments through Airtel Money (or T-Kash)? If so, its rail (RL-04) and its automatic chase come into R1 with M-Pesa | FS-767 | Open |
 | 26 | Staff access (JN-18): who approves a staff member's role changes; who your two administrators are; who tells the administrator of joiners, moves and leavers; and whether staff use Roan Capital's own devices. The role list itself is open answer 7 | FS-768 | Open |
 | 27 | Its fallback runbook for an outage (JN-19; onboarding OB-COM-23): who decides to enter and leave safe mode; who may pay out by hand, and within what limit; its manual approval form; whom we call first and second; the names and limits in handbook §7 | FS-773, FS-775 | Open. Its availability model is settled: warm standby (owner, 2026-10-12, FS-775) |
+| 28 | The approval chain: the requirement document has the Credit Officer, then the Business Credit Committee (three of three, unanimous), then the Head Office Committee above a threshold (RC-12); the prototype has the Credit Manager, then Head Office, then the CEO, for every loan. Which is Roan Capital's? Both are configuration | FS-807, FS-811 | Open |
+| 29 | The product's terms as the prototype sets them (1% a day flat interest, 14- and 30-day terms, daily instalments, default interest on overdue instalments, the fees by amount): are they Roan Capital's, and has CBK approved this pricing (reg 55)? And its "minimum 14 days' interest on prepayment", which the regulations appear to forbid (reg 56(3), (4); LQ-13) | FS-807 | Open |
 
 The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text

@@ -5,7 +5,7 @@ kind: register
 version: 0.1.0
 owner: Compliance lead
 classification: Internal
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-14
 ---
 
 # Licences, registrations and certifications
@@ -24,8 +24,8 @@ our customers' obligations, are in the law register, docs/regulation.md
 
 | Id | What | Status | Why it matters | Requires | First step | Owner | Refs |
 |---|---|---|---|---|---|---|---|
-| LC-01 | ODPC registration as a **data processor** | Held | Processing customers' data on their behalf | Certificate valid 24 months; renew at least 30 days before expiry | Record the certificate number and expiry date here | Compliance lead | FS-361 |
-| LC-02 | ODPC registration as a **data controller** | Needed | Dibon decides how its own staff and customer data is used; registration is by role, and the small-business exemption does not cover financial services | Application and fee on the ODPC portal; both roles can be held together | Apply on the ODPC portal | Compliance lead | FS-367 |
+| LC-01 | ODPC registration as a **data processor** | Held | Processing customers' data on their behalf | Certificate valid 24 months; renew at least 30 days before expiry | Registered and active on the Data Commissioner's public register (as at 2026-10-14): number INST-948138E328D, Kiambu. Record the certificate's expiry date here, and renew 30 days before it | Compliance lead | FS-361, FS-810 |
+| LC-02 | ODPC registration as a **data controller** | Needed | Dibon decides how its own staff and customer data is used; registration is by role, and the small-business exemption does not cover financial services | Application and fee on the ODPC portal; both roles can be held together | Apply on the ODPC portal: the public register shows Dibon as a data processor only (2026-10-14) | Compliance lead | FS-367, FS-810 |
 | LC-03 | PRSP licence, Communications Authority of Kenya | Held | SMS direct to the operators | As licensed | Record the licence number and renewal date here | Compliance lead | FS-160 |
 | LC-04 | ISO/IEC 27001:2022 certification | Needed | Banks ask for independent attestation of their providers (CBK cybersecurity guidance, 2017 and 2019); it backs every "designed in line with" claim | An information security management system in operation; Stage 1 and Stage 2 audits, Stage 2 within 6 months of Stage 1; a 3-year certificate with yearly surveillance audits | Gap analysis (internal or a consultant), then quotes from the two KENAS-accredited bodies: KEBS Certification Body and Interdigicert (Cert-Trust). BSI also certifies in Kenya under foreign accreditation | Compliance lead | FS-361 |
 | LC-05 | SASRA vendor terms for Saccos (circular SASRA/GG/1/2023) | Needed: working towards (FS-368) | Before any regulated Sacco can contract Kapu Sacco or Collect | NPS Act compliance or membership of a self-regulatory body SASRA recognises; penetration tests twice a year; an annual IT audit; 24/7 monitoring; attacks reported to SASRA within 12 hours; separate environments per Sacco; a bank guarantee of at least 10% of Paybill float, and insurance | Confirm with SASRA which self-regulatory bodies it recognises, and price the bank guarantee | Commercial lead | FS-368 |
