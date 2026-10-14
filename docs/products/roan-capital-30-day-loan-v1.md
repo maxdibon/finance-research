@@ -2,10 +2,10 @@
 id: roan-capital-30-day-loan-v1
 name: Roan Capital — 30-day loan, product version 1 (draft)
 kind: product-version
-version: 0.3.0
+version: 0.4.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823]
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826]
 last_reviewed: 2026-10-14
 ---
 
@@ -49,12 +49,12 @@ documents are client material: kept in clients/, never in git.
 | A3 | Repayment frequency | Daily, the first instalment the day after disbursement (KES 13,000 over 30 days: KES 434 a day, the last smaller) | The prototype; first assumed once at maturity | Choose: Daily / Weekly / Once at maturity |
 | A4 | Interest method | Flat, on the principal | The prototype | Confirm |
 | A5 | Interest rate and its unit | 1% a day (KES 3,000 on KES 10,000 over 30 days); CBK's approval of the pricing (reg 55) to record | The prototype (open answer 4) | Confirm |
-| A6 | Fees | Membership, KES 100, once per client; application, KES 500 (KES 3,000 to 19,999) or KES 1,000 (KES 20,000 to 100,000); both paid upfront on the first loan, non-refundable; remittance, KES 120; chattels mortgage, KES 500 (KES 5,001 to 9,999) or KES 1,000 (KES 10,000 to 100,000); deducted at disbursement | The prototype | Confirm |
+| A6 | Fees | Membership, KES 100, once per client; application, KES 500 (KES 3,000 to 19,999) or KES 1,000 (KES 20,000 to 100,000); both paid upfront on the first loan, non-refundable; remittance, KES 120; chattels mortgage, KES 500 (KES 5,001 to 9,999) or KES 1,000 (KES 10,000 to 100,000); deducted at disbursement. Two questions: is the application fee charged on every loan, or only the first? And do loans below KES 5,001 carry no chattels mortgage fee? | The prototype | Confirm |
 | A7 | Insurance | "LIF", KES 200, deducted at disbursement: what it covers, and whether it is a fee or a third party's cost (LQ-03) | The prototype | Provide |
 | A8 | Default interest | 1% a day, on overdue daily instalments | The prototype (open answer 3) | Confirm |
-| A9 | Default period | Reg 57's 30 days past due, or shorter if the agreement says so; non-performing on day 61 if 30 | The regulations (lender-rules open question 7) | Choose: 30 days / Shorter (give the days) |
+| A9 | Default period | We suggest 30 days past due, the longest reg 57 allows; shorter only if your agreement says so. Non-performing from day 61 if 30 | The regulations; Dibon's suggestion | Choose: 30 days / Shorter (give the days) |
 | A10 | Collection ladder | Reminder day 25; default run days 30 to 40; final warning days 40 to 47; closure day 47 | The requirement document (RC-27) | Confirm |
-| A11 | Holiday rule | A due date that falls on a holiday | None yet (OB-COM-20) | Choose: Moves to the next working day / Stays |
+| A11 | Holiday rule | We suggest a due date that falls on a holiday moves to the next working day | Dibon's suggestion | Choose: Moves to the next working day / Stays |
 | A12 | Rounding | KES, to 2 decimal places; daily instalments rounded up to the shilling, the last instalment the remainder | The prototype | Confirm |
 | A13 | Early repayment | Interest only to the repayment date; never a minimum (the prototype's 14 days is not carried over: LQ-13) | The regulations (reg 56(3), (4)) | — |
 | A14 | Rate type | Fixed | The prototype | Confirm |
@@ -189,7 +189,11 @@ the schema in the code repository (lender-rules §2.4), not here.
       "from_day_past_due": 1
     }
   },
-  "default_period": {"item": "A9", "options": [{"days_past_due": 30}, {"days_past_due": null}]},
+  "default_period": {
+    "item": "A9",
+    "proposed": {"days_past_due": 30},
+    "options": [{"days_past_due": 30}, {"days_past_due": null}]
+  },
   "collection_ladder": {
     "item": "A10",
     "proposed": {
@@ -204,6 +208,7 @@ the schema in the code repository (lender-rules §2.4), not here.
   },
   "holiday_rule": {
     "item": "A11",
+    "proposed": {"due_on_holiday": "next_working_day"},
     "options": [{"due_on_holiday": "next_working_day"}, {"due_on_holiday": "unchanged"}]
   },
   "rounding": {
