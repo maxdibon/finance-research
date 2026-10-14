@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime, core, escrow, crb, rails, insights, platform-security, decisioning]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618, FS-101, FS-633, FS-634, FS-635, FS-699, FS-700, FS-767, FS-792, FS-793]
-last_reviewed: 2026-10-13
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618, FS-101, FS-633, FS-634, FS-635, FS-699, FS-700, FS-767, FS-792, FS-793, FS-812]
+last_reviewed: 2026-10-14
 ---
 
 # Recon & Observability
@@ -82,7 +82,7 @@ reconciliation, is Planned (FS-405).
 | RO-16 | Observability: metrics (Prometheus), logs (Loki), traces (Tempo), dashboards (Grafana) | Designed | Proposal: Observability. Kapu technical documentation uses the same stack. Metrics, logs and dashboards ran at Onit Bank in Collect (collect CO-11, FS-390); traces are not evidenced there, so the row stays Designed | 1 |
 | RO-17 | Alerting and SLOs, including reconciliation SLOs such as match rate: at least 98% of the day's transactions matched automatically, published each cycle by channel, an alert below it | Designed | Proposal: Alerting & SLO. The 98%: owner, 2026-10-12 (FS-766, FS-767) | 1 |
 | RO-18 | On-call and incident response | Designed | Proposal: Grafana IRM, which is cloud-only; Grafana OnCall's open-source edition was archived on 2026-03-24 (FS-101). Proposed instead: Grafana alerting with GoAlert, self-hosted (docs/specs/observability-grafana.md), routed by docs/service-management/incident-management.md | 1 |
-| RO-19 | Role-based field masking, MFA, access audit, encryption at rest and in transit | Designed | Proposal: Security Features. Prototype: role-based masking | 1 |
+| RO-19 | Role-based field masking, MFA, access audit, encryption at rest and in transit. Personal data shown masked, revealed only on request, each reveal written to the audit trail (FS-812) | Designed | Proposal: Security Features. Prototype: role-based masking | 1 |
 | RO-20 | Processor settlement reports: gross transactions matched to net, batched settlements after fees | Planned | Needed if payment processors are partners — FS-096, FS-102 | 2 |
 | RO-21 | M-Pesa Pull Transactions as a source: each shortcode's transactions fetched on a schedule and whenever a callback is late, so the ledger is matched against the rail's full record | Planned | Owner, 2026-10-03 (FS-388); rails RL-20; RO-01 | 1 |
 | RO-22 | Self-service M-Pesa reversal: the customer forwards the payment's SMS; the payment is checked against the wallet and the core and the disputed funds held; the merchant consents by SMS or voice within a set time; the reversal goes through M-Pesa, then the core; a partial recovery is credited and reported; disputes become tickets | Planned | Owner, 2026-10-05 (FS-421). The need is set out in Dibon's M-Pesa reversal technical proposal for KCB (v1.0, Dec 2022, proposed only; clients/kcb/, outside git; FS-418): reversals took 24 to 48 hours through staff, the M-Pesa portal and emails. Builds on the reversal API that ran at Onit Bank (rails RL-03) | 2 |

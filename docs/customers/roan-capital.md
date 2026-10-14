@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812]
 last_reviewed: 2026-10-14
 ---
 
@@ -72,6 +72,20 @@ Officer; the complaints handler (JN-08) and the compliance officer, the
 Credit Manager, never for a loan it decided. The prototype's "everything"
 for the Super Admin, and its repayments recorded by hand, are not carried
 over (FS-807).
+
+**What we take from the prototype** (FS-807, agreed FS-812): masked
+personal data revealed on request, each reveal logged (RO-19); the
+collections workbench (MF-39); the cost of credit shown as the application
+is entered, and charges itemised to the net payout (MF-01, MF-23); PAR 1,
+7 and 30 and money collected against due (MF-14); its CSV reports (MF-15);
+the application in its paper form's sections (MF-01); its session limits
+(AC-10). **What we do not:** the public demo panel (open answer 1: remove
+it now); an all-powerful Super Admin; product settings saved by one
+person; repayments recorded by hand and payouts started by a typed
+reference (the rails' own records instead); Google sign-in (Keycloak; a
+Google broker later if wanted); recovery codes for staff (a second
+administrator and an identity check, AC-16); the minimum interest on
+early repayment (LQ-13).
 
 ## 2 · Requirements against capabilities
 

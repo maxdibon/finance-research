@@ -8,8 +8,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [messaging, identity]
 consumed_by: [mandates, messaging, rails, recon-observability, identity, financial-crime, core, collect, gateway, mfi, sacco, sme-recon, escrow, crb, omni-channel, insights, business-suite, platform-security, decisioning]
-review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491, FS-498, FS-503, FS-504, FS-588, FS-618, FS-642, FS-675]
-last_reviewed: 2026-10-09
+review_ids: [FS-132, FS-142, FS-144, FS-156, FS-159, FS-170, FS-193, FS-194, FS-195, FS-196, FS-197, FS-198, FS-201, FS-206, FS-449, FS-491, FS-498, FS-503, FS-504, FS-588, FS-618, FS-642, FS-675, FS-812]
+last_reviewed: 2026-10-14
 ---
 
 # Access — login, roles and step-up
@@ -66,7 +66,7 @@ reach.
 | AC-07 | Federation with an institution's own identity provider; directory federation (LDAP) | Planned | Keycloak: identity brokering, user federation; FS-195 | 1 |
 | AC-08 | Tenancy: a realm per institution, inside that institution's own instance | Planned | Keycloak realms; FS-197, settled by FS-491 (an isolated instance per institution) | 1 |
 | AC-09 | Roles and groups per institution, read by the mandate engine to resolve approvers; Keycloak is their one authority, and Odoo, Fineract and the products hold no approval roles of their own. No Dibon role, break-glass included, may initiate, approve or release an institution's payment (architecture §3, FS-588) | Planned | FS-142, FS-201; decided by the owner, 2026-10-06 (FS-498) | 1 |
-| AC-10 | Session rules: expiry, revocation, and sign-out everywhere | Planned | Keycloak session management | 1 |
+| AC-10 | Session rules: expiry, revocation, and sign-out everywhere; the limits are the institution's settings (for Roan Capital: 10 hours at most, sign-out after 60 idle minutes; FS-812) | Planned | Keycloak session management | 1 |
 | AC-11 | Login, admin and step-up events streamed to observability | Planned | recon-observability RO-16 | 1 |
 | AC-12 | Tokens for AI clients over MCP: per person, scoped, expiring; never shared | Planned | FS-156, FS-159 | 2 |
 | AC-13 | One-time codes delivered through our messaging service | Planned | messaging MS-02 | 1 |
