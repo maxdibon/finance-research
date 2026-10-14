@@ -568,8 +568,7 @@ only with a register row.
 
 ## Waiting on the owner, outside the repository (as at 2026-10-12)
 
-- **To send:** the Prembly changes letter (FS-762); the corrected NDA to
-  Roan Capital (FS-740, clients/); the bank requests to NCBA, KCB and SBM
+- **To send:** the Prembly changes letter (FS-762); the bank requests to NCBA, KCB and SBM
   (docs/outreach/bank-api-requests-2026-10.md).
 - **Roan Capital's open answers** (delivery map §4), now 1 to 29 (28 the
   approval chain, 29 the product's terms and CBK's approval of its

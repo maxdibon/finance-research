@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827]
 last_reviewed: 2026-10-14
 ---
 
@@ -35,6 +35,16 @@ the NTSA and land registry steps done by hand and tracked in the system
   runs on Vercel; real borrower data stays off it (FS-398).
 - **Secrets:** OpenBao, not HashiCorp Vault as the document says (FS-403).
 - **Database:** PostgreSQL, not MySQL as the document says (FS-464).
+- **Confidentiality:** a non-disclosure agreement, dated 4 August 2026,
+  signed by both parties, for three years; Roan Capital returned it
+  signed on 4 August, and Dibon sent the executed copy with the
+  requirement document on 20 August (clients/, not in git; FS-827). It is
+  the text reviewed in FS-738, so those points are its terms: the
+  corrections drafted in FS-740 go into the services agreement and the
+  data processing terms instead, not a new NDA. Among them, processors
+  under it need Roan Capital's written consent (its 8.2(vi), 18.2), and
+  the Data Protection Act's 48 hours apply to a breach notice whatever
+  its 72 say.
 - **Reference:** Roan Capital is to be asked to be named once live
   (FS-401). Until it agrees, its name stays out of the portfolio and
   outreach.
@@ -181,7 +191,7 @@ choice (MF-04, FS-619).
 | # | Question | Raised | Status |
 |---|---|---|---|
 | 1 | Remove the prototype's public demo panel (accounts, a shared password, a fixed 2FA code) before anyone outside the team sees it | FS-395 | Open |
-| 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules. Every non-deposit-taking lender must now be licensed or registered with CBK, applying by about 29 Mar 2027 (NDTCP Regulations 2026, FS-423) | FS-400, FS-423 | Open |
+| 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules. Every non-deposit-taking lender must now be licensed or registered with CBK, applying by about 29 Mar 2027 (NDTCP Regulations 2026, FS-423) | FS-400, FS-423, FS-827 | Open, for a senior management meeting, not an operational one (owner, 2026-10-14). The owner understands Roan Capital has applied and has not yet been licensed: to confirm there |
 | 3 | 1% a day default interest: within the in duplum rule? | FS-400 | Answered for the cap: reg 29 of the lender regulations stops recoverable interest at the principal owing, enforced by MF-21. Whether the rate itself fits the pricing and disclosure rules (RC-37) is open |
 | 4 | The interest rate's unit | FS-395 | Open |
 | 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413, FS-415, FS-581 | Answered: BRS in v1; land titles stored in the MVP, searches manual |
