@@ -11,7 +11,7 @@ used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808]
 last_reviewed: 2026-10-14
 ---
 
@@ -268,7 +268,10 @@ companion all take the terms from it, and none keeps terms of its own.
   and key information document are published from the signed document on
   the institution's product page, its calculator and every channel,
   always the current version, older versions kept for the loans made
-  under them (business-suite BS-20). Where rates vary by the borrower's
+  under them (business-suite BS-20). An institution with no website yet
+  (Roan Capital, until R2) publishes at its offices and in the channels it
+  uses, and gives the key information document before every agreement
+  (MF-34; FS-808). Where rates vary by the borrower's
   creditworthiness (reg 59(2)(c)), the page shows the range, and each
   borrower's rate is in their own key information document.
 - **The pricing model is not in the document.** Reg 59(2)(a) to (e)'s

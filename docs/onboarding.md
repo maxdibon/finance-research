@@ -5,7 +5,7 @@ kind: checklist
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794, FS-802]
+review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794, FS-802, FS-808]
 last_reviewed: 2026-10-14
 ---
 
@@ -114,7 +114,7 @@ Module: [mfi](modules/mfi.md)
 | OB-MF-05 | Its CBK licence or registration as a lender, or its application (due by about 29 Mar 2027), which decides the conduct and disclosure rules the product applies | Compliance lead | mfi MF-22 to MF-29; law register LR-03; FS-435 |
 | OB-MF-06 | Its appraisal and scoring definitions: the statement formulas, the behaviour score's weights, its risk classes and their thresholds; and the risk assessment behind its lightest KYC tier | Credit lead; compliance lead | decisioning DE-02 to DE-04; identity ID-19; FS-551, FS-582 |
 | OB-MF-07 | Its collateral registry access: the officers who will search and register on the registry's portal, each with their own eCitizen account, never a shared one | Credit lead | mfi MF-03; FS-602 |
-| OB-MF-08 | Its public pages: the website and domain for the "Request a loan" form and the calculator, the consent wording, and who receives new leads | Customer's marketing or operations lead | business-suite BS-20; FS-618 |
+| OB-MF-08 | Its public pages: the website and domain for the "Request a loan" form and the calculator, the consent wording, and who receives new leads (for Roan Capital, in R2: it has no website yet, FS-808) | Customer's marketing or operations lead | business-suite BS-20; FS-618 |
 | OB-MF-09 | Its standing waiver for charges a borrower did not cause: during a declared disruption window, or because a payment was processed late (lender-rules §2.10); approved by two people, reviewed yearly | Credit lead, with the compliance officer | MF-22, MF-39; FS-799, FS-802 |
 
 ## Kapu Sacco

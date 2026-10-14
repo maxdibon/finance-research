@@ -5,8 +5,8 @@ kind: plan
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793]
-last_reviewed: 2026-10-13
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808]
+last_reviewed: 2026-10-14
 ---
 
 # Delivery plan — phase 1 in releases
@@ -27,8 +27,8 @@ release that needs it.
 
 | Release | Started by | Scope | Size |
 |---|---|---|---|
-| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 104 capabilities from the map (1 Built, 38 Designed, 65 Planned), plus 30 further platform, security and testing capabilities (computed 2026-10-13, FS-793) |
-| **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); for a microfinance bank, rails through a larger bank and its settlement account's float (RL-27, RO-09; FS-585); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability; the companion ledger for deposits and bank transfers, expected payments (RO-03), duplicate detection (RO-11), matching by leg against the rails' tariffs, change-data capture from the bank's own core, and the load test before a bank of scale (FS-793) | Mostly Built or Designed: the Onit record |
+| **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 103 capabilities from the map (1 Built, 38 Designed, 64 Planned), plus 30 further platform, security and testing capabilities (computed 2026-10-14, FS-808) |
+| **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); for a microfinance bank, rails through a larger bank and its settlement account's float (RL-27, RO-09; FS-585); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability; the companion ledger for deposits and bank transfers, expected payments (RO-03), duplicate detection (RO-11), matching by leg against the rails' tariffs, change-data capture from the bank's own core, and the load test before a bank of scale (FS-793); Roan Capital's public pages, its website with the "Request a loan" form, the calculator and its published products (BS-20), since it has no website yet (FS-808) | Mostly Built or Designed: the Onit record |
 | **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
 | **R4 · Saccos and Kapu Core** | The first Sacco or core customer signs | Kapu Sacco, Kapu Core, member apps and USSD, the field-officer app | Sacco, Core and omni-channel phase-1 rows |
 | **R5 · The rest of v1** | After R1, in the order sales ask | Escrow, CRB, financial crime beyond R1, insights, the remaining platform services | What is left of phase 1 |
@@ -80,8 +80,7 @@ the check keeps the two in step):
 - **Access:** AC-03 (borrowers and guarantors by a code to their bound
   phone; passkeys with the app), AC-05, AC-09, AC-13 (codes through our
   messaging).
-- **Business suite:** BS-01 (CRM for leads), BS-20 (the public request page
-  and calculator), BS-02 (Odoo Sign, for loan
+- **Business suite:** BS-01 (CRM for leads), BS-02 (Odoo Sign, for loan
   agreements), BS-12 (the employee record only, in Odoo's Employees
   app, which provisions staff access; payroll, leave and attendance
   later, FS-769).
@@ -157,11 +156,11 @@ Four people lead the build (FS-477):
 | Who | Owns in R1 |
 |---|---|
 | The system developer | Kapu Core and Kapu MFI on Fineract: products, schedules, charges, the lender rules (MF-21 to MF-26), restructuring (MF-09), loan agreements (MF-34), loan officers (MF-35), disbursement and repayment on M-Pesa and bank transfer, reusing the M-Pesa code that ran at Onit Bank (rails RL-03) |
-| An Odoo engineer | Everything Odoo does for Roan Capital: leads and the public "Request a loan" page and calculator (BS-01; Roan RC-28, RC-29), documents, the service desk (docs/operating-model.md) |
+| An Odoo engineer | Everything Odoo does for Roan Capital: leads entered by staff (BS-01; the public "Request a loan" page and calculator follow in R2, with its website: RC-28, RC-29, FS-808), documents, the service desk (docs/operating-model.md) |
 | A DevSecOps engineer | The platform: Kubernetes, Keycloak (AC-01, AC-02, AC-08), OpenBao, the document vault (ID-15), the build pipeline, backups and the security minimum (SE rows above) |
 | The CTIO | Architecture and reviews; the approval engine's design (MD-01 to MD-18); security lead; Roan Capital's acceptance with the project manager |
 
-**Building less is the plan.** Four people cannot build 134 capabilities
+**Building less is the plan.** Four people cannot build 133 capabilities
 from scratch, so R1 uses what already exists and builds only what does
 not:
 

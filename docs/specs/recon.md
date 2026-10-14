@@ -11,7 +11,7 @@ used_by: [end-of-day-runner]
 version: 0.3.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802]
+review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809]
 last_reviewed: 2026-10-14
 ---
 
@@ -110,9 +110,20 @@ and [JN-12](../journeys/transfer-in.md).
   approvals, the product's terms, the tariffs and tax rules) and so
   catches a master that is consistently wrong, which a shadow would copy
   (owner, FS-791).
-- **Source:** anything recon reads: a rail's callbacks or pulls, a bank's
+- **Source:** a feed recon reads: a rail's callbacks or pulls, a bank's
   API or statement, the master's events, an institution's core by
   change-data capture.
+- **Rail event:** one movement of money as a payment rail records it: an
+  M-Pesa callback or pulled transaction, a bank's credit or debit alert or
+  statement line, a payout's status. Every rail's events are normalised
+  into one shape carrying the rail's own reference (RL-02). It is the
+  evidence that money moved, or did not, independent of any ledger.
+- **Source event** (FS-809): anything that happened outside the master,
+  from which the companion computes: rail events, the largest kind;
+  approvals; the signed product version document; approved adjustments;
+  the business calendar; disruption windows. The master's own postings
+  are never a source event for the companion, since they are what it is
+  compared against; they are the shadow's input.
 - **Completeness proof:** for a channel and a cycle, the count and amount
   the source reports against the count and amount the ledger holds, by
   currency.

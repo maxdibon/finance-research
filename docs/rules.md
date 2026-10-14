@@ -5,7 +5,7 @@ kind: policy
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762, FS-769, FS-805]
+review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762, FS-769, FS-805, FS-806]
 last_reviewed: 2026-10-14
 ---
 
@@ -33,7 +33,7 @@ for minutes and says so ([endpoints](specs/endpoints.md) §2).
 | 7 | **Report a suspected incident or a lost device within the hour,** without blame | [Incident management](service-management/incident-management.md); [endpoints](specs/endpoints.md) §5 |
 | 8 | **Every change is reviewed by a second person** before it reaches a customer | Service management §2 (merge requests) |
 | 9 | **Security and privacy training every year,** and for key holders before they hold a share | [Training](training/README.md) |
-| 10 | **Client material lives in Dibon's Odoo Documents, in Kenya,** one workspace per customer, read by role, every access logged: requirement documents, agreements, certificates, product drafts. **Never in a repository or on one laptop;** documents link to it, and those without access see only the link | business-suite BS-01; [gitlab](specs/gitlab.md) §2; FS-805 |
+| 10 | **Client material lives in Dibon's Odoo Documents, in Kenya,** one workspace per customer, read by role, every access logged: requirement documents, agreements, certificates, product drafts. **Never in a repository or on one laptop;** documents link to it, and those without access see only the link. **Exception, until the workspaces exist** (owner, 2026-10-14, FS-806): product version drafts, which hold no personal data, are kept in [products/](products/README.md) | business-suite BS-01; [gitlab](specs/gitlab.md) §2; FS-805, FS-806 |
 
 ## 2 · Institutions
 

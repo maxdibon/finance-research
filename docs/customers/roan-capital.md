@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808]
 last_reviewed: 2026-10-14
 ---
 
@@ -108,8 +108,8 @@ in its own records.
 
 | Ref | Requirement | Capabilities | Fit | Note |
 |---|---|---|---|---|
-| RC-28 | A public "Request a Loan" page and lead capture, with lead status from New to Converted or Dropped | BS-01, BS-20 | Covered | The public page, the lead and its conversion into a draft application are BS-20, in R1 (FS-618) |
-| RC-29 | Loan calculator service and a public calculator page, from the same product configuration as live loans | KC-04, BS-20 | Covered | The public calculator, priced from the same product version as live loans, is BS-20, in R1 (FS-618) |
+| RC-28 | A public "Request a Loan" page and lead capture, with lead status from New to Converted or Dropped | BS-01, BS-20 | Covered | The public page, the lead and its conversion into a draft application are BS-20, in R1 (FS-618)  R2: Roan Capital has no website yet (owner, 2026-10-14, FS-808); until then leads are entered by staff in the CRM (BS-01) |
+| RC-29 | Loan calculator service and a public calculator page, from the same product configuration as live loans | KC-04, BS-20 | Covered | The public calculator, priced from the same product version as live loans, is BS-20, in R1 (FS-618)  The public page is R2 with the website (FS-808); the back office's calculator, from the same product version, stays in R1 |
 | RC-30 | Loan products: rates, fees, insurance, penalties, amount and tenor limits; changes apply only to new loans | KC-04 | Covered | Fineract copies the product's terms onto each loan when it is created |
 | RC-31 | Product changes approved under maker-checker, and audited | MD-01, MD-02, KC-08 | Covered | |
 
@@ -184,16 +184,16 @@ its link goes to Roan Capital's own product page.
 
 | Product | Version | Status | Where |
 |---|---|---|---|
-| 30-day loan | 1 | Draft: seven blanks, among them open answers 3 (the default interest's base) and 4 (the rate's unit), and the amount limits, fees, insurance, default period and holiday rule | Restricted: Roan Capital's workspace in Dibon's Odoo Documents (rules, Dibon 10), until active |
+| 30-day loan | 1 | Draft: seven blanks, among them open answers 3 (the default interest's base) and 4 (the rate's unit), and the amount limits, fees, insurance, default period and holiday rule | [The draft](../products/roan-capital-30-day-loan-v1.md), in git by exception until Roan Capital's workspace in Dibon's Odoo Documents exists (rules, Dibon 10; FS-806) |
 
 Statuses: draft, awaiting approval, awaiting CBK, active, retired.
 
 ## 6 · Where the detail is
 
-- The requirement document, the full review and the product drafts:
-  restricted, in Roan Capital's workspace in Dibon's Odoo Documents
-  (moving from clients/roan-capital/, which is on one machine and outside
-  git; FS-805).
+- The requirement document and the full review: restricted, in Roan
+  Capital's workspace in Dibon's Odoo Documents (moving from
+  clients/roan-capital/, which is on one machine and outside git;
+  FS-805). Its product drafts are in docs/products/ by exception (FS-806).
 - Capability statuses: the modules named in §2.
 - Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in
   docs/decisions.md and REVIEW.md.
