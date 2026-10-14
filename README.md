@@ -103,7 +103,8 @@ sources/             inputs as received — never edited
 clients/             customer and prospect material, one folder each, moving
                      to Dibon's Odoo Documents (rules, Dibon 10; FS-805);
                      and the KCB and NBK project list — git-ignored
-tools/               check.js, assemble.js, site.js, and their break tests
+tools/               check.js, assemble.js, site.js, and their break tests;
+                     products/: product questionnaires built and read back
 .githooks/           pre-commit: runs the checks
 ```
 

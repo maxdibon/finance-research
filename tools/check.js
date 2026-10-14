@@ -1107,6 +1107,31 @@ function checkSpecs(root) {
 // leads to a file that exists, so a rename cannot strand a reader (FS-627);
 // a link to a section names a heading that exists, by GitHub's anchor
 // (FS-641). REVIEW.md is history and keeps the paths it was written with.
+// ── products ─────────────────────────────────────────────────────────────
+// FS-816, FS-817: a product version's draft is the data its questionnaires
+// are built from and its answers read back into. Every item has an id, a
+// source and an ask from the fixed list; every item asked about is a term
+// of the vocabulary, so the questionnaire can say why it matters.
+function checkProducts(root) {
+  const { parse, purposes } = require('./products/draft');
+  const dir = path.join(root, 'docs', 'products');
+  if (!fs.existsSync(dir)) return [];
+  const why = purposes(read(root, path.join('docs', 'specs', 'lender-rules.md')));
+  const out = [];
+  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.md')).sort()) {
+    const rel = path.join('docs', 'products', name);
+    const text = read(root, rel);
+    if (!/^kind: product-version$/m.test(text)) continue;
+    const d = parse(text);
+    if (!d.items.length) out.push(fail('products', rel, 0, 'no items: tables headed | Id | Term/Rule/Setting | Value | Source | Ask |'));
+    for (const msg of d.problems) out.push(fail('products', rel, Number((msg.match(/^line (d+)/) || [])[1] || 0), msg));
+    for (const it of d.items) {
+      if (it.ask && !why[it.name]) out.push(fail('products', rel, it.line + 1, `${it.id} "${it.name}" is asked about but is not a term of the vocabulary (lender-rules §2.4)`));
+    }
+  }
+  return out;
+}
+
 function githubAnchor(heading) {
   return heading.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[`*]/g, '').trim().toLowerCase()
     .replace(/[^\p{L}\p{N}\p{M}\s_-]/gu, '').replace(/ /g, '-');
@@ -1271,6 +1296,7 @@ function runAll(root) {
     ...checkHandbook(root, files),
     ...checkOverview(root, files),
     ...checkSpecs(root),
+    ...checkProducts(root),
     ...checkLinks(root, files),
     ...checkFrontMatter(root, files),
     ...checkReviewed(root, files),

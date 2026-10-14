@@ -326,6 +326,23 @@ test('customers: a delivery map that drifts from the register fails', () => {
   assert.deepStrictEqual(names(f), ['customers']);
 });
 
+const PRODUCT = path.join('docs', 'products', 'roan-capital-30-day-loan-v1.md');
+
+test('products: an ask outside the fixed list fails', () => {
+  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('| The prototype (open answer 29) | Confirm |', '| The prototype (open answer 29) | Select |')));
+  assert.deepStrictEqual(names(f), ['products']);
+});
+
+test('products: an item asked about that is not in the vocabulary fails', () => {
+  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('| A1 | Amount limits |', '| A1 | Loan size |')));
+  assert.deepStrictEqual(names(f), ['products']);
+});
+
+test('products: an id out of sequence fails', () => {
+  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('| A2 | Term |', '| A3 | Term |')));
+  assert.deepStrictEqual(names(f), ['products']);
+});
+
 const REG = path.join('docs', 'regulation.md');
 
 test('regulation: a Deep law that drives nothing fails', () => {

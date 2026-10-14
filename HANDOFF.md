@@ -404,7 +404,9 @@ relations both ways, §1's diagram and Related line, the index, box names
 from the components table), **links** (every relative link and every
 `docs/…` path resolves; REVIEW.md exempt as history), **handbook** (every
 procedure has a From line naming an existing journey or spec section; HB
-ids cited exist; an agreed journey has procedures) and `reviewed`. The
+ids cited exist; an agreed journey has procedures), **products** (each
+draft's items have an id, a source and an ask from the fixed list, and
+every item asked about is a term of the vocabulary) and `reviewed`. The
 **register** check also fails an open row without a criticality, a closed
 one with one, and a heading holding table cells. The pre-commit hook runs them,
 then rebuilds the reader.

@@ -1,0 +1,179 @@
+// An institution's product questionnaires (FS-815 to FS-817): one Word
+// document per group of the vocabulary, built from the product's draft,
+// with a form field (a Word content control) for every item still to
+// answer, tagged with the item's id so tools/products/read-back.js can
+// read the answers straight back into the draft.
+//
+//   node tools/products/questionnaires.js docs/products/<draft>.md [--out build/products] [--date 2026-10-14]
+//
+// The repository installs no packages: install docx anywhere
+// (`npm install docx`) and point DOCX_MODULE at it if Node cannot find it.
+// The documents land in build/, which git ignores. Render one and look at
+// every page before sending it (design system, the checklist).
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const zip = require('./zip');
+const { parse, purposes } = require('./draft');
+
+const ROOT = path.join(__dirname, '..', '..');
+let docx;
+try { docx = require(process.env.DOCX_MODULE || 'docx'); } catch (e) {
+  console.error('The docx package was not found: `npm install docx` somewhere, then set DOCX_MODULE to its folder.');
+  process.exit(1);
+}
+const ds = require(path.join(ROOT, 'design/system/docx.js'))(docx);
+const { Document, Packer, Paragraph, Table, TableRow, TableCell, WidthType, ShadingType, BorderStyle } = docx;
+
+const args = process.argv.slice(2);
+const opt = (name, dflt) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : dflt; };
+const draftPath = args.find((a) => a.endsWith('.md'));
+if (!draftPath) { console.error('Give the draft: node tools/products/questionnaires.js docs/products/<draft>.md'); process.exit(1); }
+const outDir = path.resolve(opt('--out', path.join(ROOT, 'build/products')));
+const date = opt('--date', new Date().toISOString().slice(0, 10));
+const longDate = new Date(`${date}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+const draft = parse(fs.readFileSync(draftPath, 'utf8'));
+if (draft.problems.length) { console.error(draft.problems.join('\n')); process.exit(1); }
+const why = purposes(fs.readFileSync(path.join(ROOT, 'docs/specs/lender-rules.md'), 'utf8'));
+const [inst, rest] = (draft.front.name || '').split(' — ');
+if (!inst || !rest) { console.error('The front matter\'s name must read "<institution> — <product>, product version <n> (draft)"'); process.exit(1); }
+const product = rest.split(', product version')[0];
+const version = (rest.match(/product version (\d+)/) || [])[1] || '1';
+
+// No register ids leave the building: only the regulations are cited.
+const plain = (s) => s.replace(/\*\*/g, '').replace(/`/g, '')
+  .replace(/RC-01's checklist/g, 'The checklist in your requirement document')
+  .replace(/the documents RC-01 lists/g, 'the documents your requirement document lists')
+  .replace(/\s*\((?:[^()]*?\b(?:open answers?|open questions?|lender-rules|RC-\d|OB-[A-Z]|LQ-\d|FS-\d|MF-\d|ID-\d|DE-\d|CR-\d|crb)[^()]*?)\)/gi, '')
+  .replace(/Not in R1/g, 'Not in the first release')
+  .replace(/;?\s*\b(?:LQ|RC|FS|MF|ID|DE|CR|OB)-[A-Z-]*\d{2,3}\b/g, '')
+  .replace(/\s+([,;.:])/g, '$1').replace(/[:;,]\s*$/, '').trim();
+
+const GROUPS = {
+  A: { file: 'A-product-terms', kicker: 'Product terms', who: 'product owner', title: 'Group A · The product\'s terms',
+    intro: `These are the terms a borrower sees. Once the product is approved by two of ${inst}'s people and CBK, they are published on the product's page and in each key information document, as the lender regulations require (regs 47 and 48).` },
+  B: { file: 'B-eligibility-and-limits', kicker: 'Credit policy', who: 'credit lead', title: 'Group B · Eligibility and limits',
+    intro: `This is ${inst}'s credit policy for the product. Who may borrow is published; the thresholds behind a decision (scores, ratios, limits) stay internal.` },
+  C: { file: 'C-how-it-runs', kicker: 'Operations', who: 'operations lead', title: 'Group C · How it runs',
+    intro: 'This is how the product is operated on the platform. None of it is published.' },
+};
+const ASK_LABEL = { Confirm: 'Confirm', Choose: 'Choose one', Provide: 'Provide', Decide: 'Decide' };
+// The values the read-back keys on; the display text is free to change.
+const CONFIRM = [{ text: 'Confirmed', value: 'confirmed' }, { text: 'Not right: the correct value below', value: 'not-right' }];
+
+const LINE = { style: BorderStyle.SINGLE, size: 4, color: ds.COLOURS.line };
+const para = (runs, o = {}) => new Paragraph({ children: runs, spacing: { after: o.after ?? 40, line: 252 }, keepNext: o.keepNext });
+const cell = (children, w, o = {}) => new TableCell({
+  width: { size: w, type: WidthType.DXA },
+  shading: o.fill ? { type: ShadingType.CLEAR, color: 'auto', fill: o.fill } : undefined,
+  margins: { top: 80, bottom: 80, left: 110, right: 110 },
+  borders: { top: LINE, bottom: LINE, left: LINE, right: LINE },
+  children,
+});
+const W = [2500, 3626, 2900];
+
+// A form field is first written as a marker paragraph, then swapped for
+// the content control's XML once docx has packed the document.
+const fields = [];
+const field = (tag, alias, kind, placeholder, options = []) => {
+  fields.push({ tag, alias, kind, placeholder, options });
+  return para([ds.run(`@@FIELD${fields.length - 1}@@`, { size: 19 })], { after: 60 });
+};
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const RPR = (colour) => `<w:rPr><w:rFonts w:ascii="${ds.FONT}" w:hAnsi="${ds.FONT}"/>${colour ? `<w:color w:val="${colour}"/>` : ''}<w:sz w:val="19"/></w:rPr>`;
+const fieldXml = (f, n) => `<w:sdt><w:sdtPr>${RPR()}<w:alias w:val="${esc(f.alias)}"/><w:tag w:val="${esc(f.tag)}"/><w:id w:val="${41000 + n}"/><w:lock w:val="sdtLocked"/><w:showingPlcHdr/>${
+  f.kind === 'list'
+    ? `<w:dropDownList>${f.options.map((o) => `<w:listItem w:displayText="${esc(o.text)}" w:value="${esc(o.value)}"/>`).join('')}</w:dropDownList>`
+    : '<w:text w:multiLine="1"/>'
+}</w:sdtPr><w:sdtContent><w:p><w:pPr><w:pBdr><w:top w:val="single" w:sz="4" w:space="2" w:color="${ds.COLOURS.line}"/><w:left w:val="single" w:sz="4" w:space="2" w:color="${ds.COLOURS.line}"/><w:bottom w:val="single" w:sz="4" w:space="2" w:color="${ds.COLOURS.line}"/><w:right w:val="single" w:sz="4" w:space="2" w:color="${ds.COLOURS.line}"/></w:pBdr><w:shd w:val="clear" w:color="auto" w:fill="${ds.COLOURS.cream}"/><w:spacing w:before="20" w:after="60" w:line="252" w:lineRule="auto"/></w:pPr><w:r>${RPR(ds.COLOURS.muted)}<w:t xml:space="preserve">${esc(f.placeholder)}</w:t></w:r></w:p></w:sdtContent></w:sdt>`;
+
+function swapFields(xml) {
+  return xml.replace(/<w:p(?: [^>]*)?>(?:(?!<w:p[ >])[\s\S])*?@@FIELD(\d+)@@[\s\S]*?<\/w:p>/g, (m, n) => fieldXml(fields[Number(n)], Number(n)));
+}
+
+function answerCell(it) {
+  const alias = `${it.id} · ${it.name}`;
+  const out = [para([ds.run(ASK_LABEL[it.ask], { bold: true, color: ds.COLOURS.plum, size: 17 })], { after: 40 })];
+  if (it.ask === 'Confirm') {
+    out.push(field(it.id, alias, 'list', 'Confirmed, or not right?', CONFIRM));
+    out.push(field(`${it.id}.note`, `${alias}: correction or comment`, 'text', 'The correct value, or a comment'));
+  } else if (it.ask === 'Choose') {
+    const opts = it.options.map(plain);
+    out.push(field(it.id, alias, 'list', 'Choose one', opts.map((o, i) => ({ text: o, value: String(i + 1) }))));
+    out.push(field(`${it.id}.note`, `${alias}: detail or comment`, 'text', opts.some((o) => /\(give /.test(o)) ? 'The detail asked for, or a comment' : 'A comment, if any'));
+  } else {
+    out.push(field(it.id, alias, 'text', it.ask === 'Decide' ? 'Your decision' : 'Your answer'));
+  }
+  out.push(new Paragraph({ children: [], spacing: { after: 0, line: 120 } }));
+  return out;
+}
+
+function itemRow(it) {
+  const purpose = why[it.name];
+  const left = [para([ds.run(it.id, { color: ds.COLOURS.muted, size: 16 })], { after: 0 }), para([ds.run(plain(it.name), { bold: true, size: 19 })], { after: purpose ? 40 : 0 })];
+  if (purpose) left.push(para([ds.run(plain(purpose), { italics: true, color: ds.COLOURS.muted, size: 17 })], { after: 0 }));
+  const value = plain(it.value);
+  const mid = [para(ds.rich(value, { size: 19 }), { after: 60 }), para([ds.run(`Source: ${/^None yet/.test(it.source) ? 'none yet: this is what we need' : plain(it.source)}`, { color: ds.COLOURS.muted, size: 16 })], { after: 0 })];
+  if (it.ask === 'Choose') mid.splice(1, 0, para([ds.run(`Options: ${it.options.map(plain).join('; ')}`, { color: ds.COLOURS.ink, size: 17 })], { after: 60 }));
+  return new TableRow({ cantSplit: true, children: [cell(left, W[0]), cell(mid, W[1]), cell(answerCell(it), W[2])] });
+}
+
+const head = (labels) => new TableRow({ tableHeader: true, children: labels.map((h, i) => cell([para([ds.run(h, { bold: true, color: ds.COLOURS.plum, size: 18 })], { after: 0 })], W[i], { fill: ds.COLOURS.headFill })) });
+
+fs.mkdirSync(outDir, { recursive: true });
+(async () => {
+  for (const key of 'ABC') {
+    const g = GROUPS[key];
+    const all = draft.items.filter((it) => it.group === key);
+    const ask = all.filter((it) => it.ask);
+    const settled = all.filter((it) => !it.ask);
+    if (!ask.length) { console.log(`group ${key}: nothing to ask`); continue; }
+    fields.length = 0;
+    const count = (k) => ask.filter((it) => it.ask === k).length;
+    const tally = ['Confirm', 'Choose', 'Provide', 'Decide'].filter(count)
+      .map((k) => `${count(k)} to ${k === 'Choose' ? 'choose from options' : k.toLowerCase()}`);
+    const children = [
+      ds.p(`**${longDate}**`, { after: 160 }),
+      new Paragraph({ children: [ds.run(`${product} · product version ${version} (draft)`, { bold: true, color: ds.COLOURS.plum, size: 26 })], spacing: { after: 60 } }),
+      new Paragraph({ children: [ds.run(g.title, { bold: true, color: ds.COLOURS.aubergine, size: 22 })], spacing: { after: 200 } }),
+      ds.p(`**For:** ${inst}'s ${g.who}.`),
+      ds.p(g.intro),
+      ds.p(`What we have comes from your requirement document and the prototype your team built. **${ask.length} items** need your answer: ${tally.join(', ')}. Under each item's name is why it matters; beside each value, where it came from.`, { after: 160 }),
+      ds.h('How to answer'),
+      ds.li('Every answer goes in a field in the last column. Click it, then choose from its list or type.'),
+      ds.li('**Confirm:** choose "Confirmed", or "Not right" and write the correct value in the field beneath.'),
+      ds.li('**Choose one:** pick an option from the list; where it asks for detail, write it beneath.'),
+      ds.li('**Provide** or **Decide:** type the answer.'),
+      ds.li('Unsure? Leave the field as it is, and we will go through it together.'),
+      ds.li('Save the document under its own name and return the file itself to your Dibon delivery lead. We read the answers from the fields, so please do not retype them elsewhere or turn the file into a PDF.'),
+      ds.h('The questions'),
+      new Table({ width: { size: ds.WIDTH, type: WidthType.DXA }, columnWidths: W, rows: [head(['Item', 'What we have', 'Your answer']), ...ask.map(itemRow)] }),
+    ];
+    if (settled.length) {
+      children.push(ds.h('Already settled'), ds.p('Nothing to answer here; for your information.'));
+      for (const it of settled) children.push(ds.li(`**${it.id} · ${plain(it.name)}:** ${plain(it.value)}. Source: ${plain(it.source).replace(/^The /, 'the ')}.`));
+    }
+    children.push(ds.p(`Thank you. Once all three groups are answered, the product goes to two of ${inst}'s people for approval, then to CBK, where its pricing needs approval (reg 55), and only then is it offered to borrowers.`, { before: 240 }));
+    const doc = new Document({
+      creator: 'Dibon Company Limited', title: `${inst} · ${product} · ${g.title}`,
+      subject: `${draft.front.id} · group ${key} · built ${date}`,
+      styles: ds.styles, numbering: ds.numbering,
+      sections: [{ properties: ds.page, headers: { default: ds.header(g.kicker) },
+        footers: { default: ds.footer(`Dibon Consulting · ${inst} · ${product}, group ${key} · ${longDate}`) },
+        children }],
+    });
+    const entries = zip.read(await Packer.toBuffer(doc));
+    const before = entries.get('word/document.xml').toString('utf8');
+    const after = swapFields(before);
+    const left = (after.match(/@@FIELD\d+@@/g) || []).length;
+    const made = (after.match(/<w:sdt>/g) || []).length;
+    if (left || made !== fields.length) throw new Error(`group ${key}: ${made} fields made of ${fields.length}, ${left} markers left`);
+    entries.set('word/document.xml', Buffer.from(after, 'utf8'));
+    const out = path.join(outDir, `${inst.replace(/\s+/g, '-')}-${product.replace(/\s+/g, '-')}-${g.file}.docx`);
+    fs.writeFileSync(out, zip.write(entries));
+    console.log(`${path.relative(ROOT, out)}: ${ask.length} items, ${fields.length} fields; ${settled.length} settled`);
+  }
+})().catch((e) => { console.error(e.message); process.exit(1); });

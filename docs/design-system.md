@@ -5,8 +5,8 @@ kind: guide
 version: 0.1.0
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-728, FS-781]
-last_reviewed: 2026-10-13
+review_ids: [FS-728, FS-781, FS-816, FS-817]
+last_reviewed: 2026-10-14
 ---
 
 # Design system
@@ -105,6 +105,7 @@ page number in its amber corner.
 | A request or checklist to a bank or partner | The template, as the bank letters do | Numbered questions (`ol.q`); a spreadsheet beside it if they will answer in one |
 | A letter | The template, `.head.compact`; or Word through docx.js when the reader will edit it | Signature by role |
 | An agreement, an NDA | Word through docx.js | No whimsy at all |
+| A questionnaire an institution answers | Word through docx.js, with a form field per question (tools/products/questionnaires.js) | Answers read back by script, never retyped; no "reply by email" |
 | An institution's handbook | Markdown in docs/handbook/, published to its Odoo or the reader | The reader's own look |
 
 ## 5 · A little whimsy

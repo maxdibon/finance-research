@@ -11,7 +11,7 @@ used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817]
 last_reviewed: 2026-10-14
 ---
 
@@ -245,7 +245,12 @@ companion all take the terms from it, and none keeps terms of its own.
   schedules, the APR and total cost of credit, the draft key information
   document, and the companion's own figures for the same samples; if
   this service's preview and the companion's disagree, it cannot be
-  submitted.
+  submitted. **Until the form exists** (FS-816, FS-817), Dibon drafts it
+  in docs/products/, each item with an id, its source and its ask
+  (confirm, choose, provide, decide), and the institution answers in
+  Word questionnaires built from the draft, one per group, a form field
+  per item; the answers are read back into the draft by script, never
+  retyped (tools/products/).
 - **Approved** as a `product.version` request (approval engine), by two
   people, each re-authenticated; then held until CBK's letter is recorded
   (rule 2 above); then activated from its effective date, for new loans.
@@ -281,60 +286,62 @@ companion all take the terms from it, and none keeps terms of its own.
 
 **The vocabulary** (FS-813, FS-814): what describes a product, in three
 groups, because they are not all published. Each is a field with its
-allowed values; the schema in the code repository enforces it.
+allowed values; the schema in the code repository enforces it. Why each
+matters is shown beside it wherever an institution is asked about it, in
+the form and in the questionnaires (FS-816).
 
 **A · The product's terms:** in the document, published once active.
 
-| Term | Values |
-|---|---|
-| Amount limits | Minimum and maximum, KES |
-| Term | Length and unit (days, weeks, months); minimum and maximum, or a list of allowed terms (14 or 30 days) |
-| Repayment frequency | Once at maturity, daily, weekly, monthly, or chosen by the borrower to fit their pay cycle within set bounds; when the first instalment falls (the day after disbursement) |
-| Interest method | Flat; or reducing balance, with equal instalments or equal principal |
-| Interest rate and its unit | A number, with its period: for the term, a day, a month or a year |
-| Rate type | Fixed; or variable: a benchmark (KESONIA, the Central Bank Rate) plus a margin, and when it resets |
-| Rate by risk class | One rate, or a rate per risk class (decisioning DE-04): the page shows the range, each borrower's key information document their own (reg 59(2)(c)) |
-| Interest basis | The day count (actual days over 365, or 30 over 360) and when interest accrues |
-| Fees | Each fee: a fixed amount, a percentage of principal, or tiers by amount; once per loan or once per client (a membership fee); taken at disbursement, added to the schedule, or paid upfront before the application, and whether it is refundable |
-| Tax on fees | Excise duty on each fee as the law sets it: 20% of fees charged by financial institutions and by digital lenders, not on interest or insurance premiums (Excise Duty Act, First Schedule, Part II; LQ-14) |
-| Who pays the rail's charges | The borrower or the institution, for M-Pesa's and the bank's own charges on repayments and payouts |
-| Third-party costs | Each: valuation, registration at the collateral registry, a tracking device, insurance premiums; passed on at cost and outside the APR (reg 59(2)(f); LQ-03) |
-| Insurance | As a fee, or a third party's premium; credit life, and what happens to the loan on a death (JN-14) |
-| Grace | Days after a due date before default interest starts |
-| Default interest | Rate, period (a day), base (principal outstanding, or the overdue amount), from which day past due |
-| Default period | The days past due at which the agreement makes a loan non-performing, if shorter than reg 57's |
-| Collateral | Unsecured; or the types accepted (a vehicle, chattels, land, deposits), the loan-to-value, and the steps each needs (MF-03) |
-| Guarantors | How many; each guarantee's limit; for a Sacco, deposits pledged (reg 42; MF-37) |
-| Restructuring | Allowed or not; how often; any fee, inside the cap (reg 54(7); MF-09) |
-| Statements | How often the borrower and each guarantor receive one (reg 47(2); MF-37, MF-38) |
-| Collection ladder | Its stages by day (MF-39) |
-| Holiday rule | Whether a due date on a holiday moves, and which way (KC-15) |
-| Rounding | Precision and rule |
-| Languages | Of the key information document and the agreement: English, Swahili |
+| Term | Values | Why it matters |
+|---|---|---|
+| Amount limits | Minimum and maximum, KES | The smallest and largest loan the product offers |
+| Term | Length and unit (days, weeks, months); minimum and maximum, or a list of allowed terms (14 or 30 days) | How long the borrower has; it sets the due dates |
+| Repayment frequency | Once at maturity, daily, weekly, monthly, or chosen by the borrower to fit their pay cycle within set bounds; when the first instalment falls (the day after disbursement) | When each instalment falls: it sets the repayment schedule |
+| Interest method | Flat; or reducing balance, with equal instalments or equal principal | How interest is worked out; it changes the total cost of credit |
+| Interest rate and its unit | A number, with its period: for the term, a day, a month or a year | The loan's price; published, and pricing needs CBK's approval (reg 55) |
+| Rate type | Fixed; or variable: a benchmark (KESONIA, the Central Bank Rate) plus a margin, and when it resets | Whether the price can change during the loan, and how |
+| Rate by risk class | One rate, or a rate per risk class (decisioning DE-04): the page shows the range, each borrower's key information document their own (reg 59(2)(c)) | Lets the price follow the borrower's risk; the page shows the range (reg 59(2)(c)) |
+| Interest basis | The day count (actual days over 365, or 30 over 360) and when interest accrues | Decides interest to the shilling, so every system agrees |
+| Fees | Each fee: a fixed amount, a percentage of principal, or tiers by amount; once per loan or once per client (a membership fee); taken at disbursement, added to the schedule, or paid upfront before the application, and whether it is refundable | Part of the total cost of credit and the APR, each shown in the key information document |
+| Tax on fees | Excise duty on each fee as the law sets it: 20% of fees charged by financial institutions and by digital lenders, not on interest or insurance premiums (Excise Duty Act, First Schedule, Part II; LQ-14) | What the law adds to fees, shown in the total cost of credit |
+| Who pays the rail's charges | The borrower or the institution, for M-Pesa's and the bank's own charges on repayments and payouts | Whether M-Pesa's and the bank's charges add to what the borrower pays |
+| Third-party costs | Each: valuation, registration at the collateral registry, a tracking device, insurance premiums; passed on at cost and outside the APR (reg 59(2)(f); LQ-03) | Costs passed on at cost, shown apart from the APR |
+| Insurance | As a fee, or a third party's premium; credit life, and what happens to the loan on a death (JN-14) | What protects the loan, and what happens to it on a death |
+| Grace | Days after a due date before default interest starts | When default interest starts after a missed instalment |
+| Default interest | Rate, period (a day), base (principal outstanding, or the overdue amount), from which day past due | The charge on a late payment; it counts within the cap (reg 29) |
+| Default period | The days past due at which the agreement makes a loan non-performing, if shorter than reg 57's | When a late loan becomes non-performing, which starts the cap (reg 57) |
+| Collateral | Unsecured; or the types accepted (a vehicle, chattels, land, deposits), the loan-to-value, and the steps each needs (MF-03) | What secures the loan, and the steps each type needs |
+| Guarantors | How many; each guarantee's limit; for a Sacco, deposits pledged (reg 42; MF-37) | Who else answers for the loan, and for how much (reg 42) |
+| Restructuring | Allowed or not; how often; any fee, inside the cap (reg 54(7); MF-09) | Whether a borrower in difficulty can have new terms (reg 54(7)) |
+| Statements | How often the borrower and each guarantor receive one (reg 47(2); MF-37, MF-38) | How often borrower and guarantor are told where the loan stands (reg 47(2)) |
+| Collection ladder | Its stages by day (MF-39) | What happens on each day a loan is late, and who acts |
+| Holiday rule | Whether a due date on a holiday moves, and which way (KC-15) | Whether a due date on a holiday moves |
+| Rounding | Precision and rule | Keeps every system's figures identical |
+| Languages | Of the key information document and the agreement: English, Swahili | The languages a borrower reads the terms in |
 
 **B · Eligibility and limits:** the institution's credit policy for the
 product. Who may borrow is published; the thresholds behind a decision
 stay internal, as decisioning's risk classes do.
 
-| Rule | Values |
-|---|---|
-| Who may borrow | Individuals, businesses, or both; employed or self-employed; age; for a Sacco, members of at least so many months |
-| Affordability | The limit on instalments against income or turnover, from the statement metrics (reg 38; DE-02) |
-| Limits by KYC tier | The largest loan for each tier (identity ID-19) |
-| First loan and limit growth | The first loan's cap; how the limit grows with repayment history; any wait before borrowing again |
-| Exposure | Loans a borrower may hold at once; top-ups; for a Sacco, a multiple of deposits; each guarantor's total exposure (Roan Capital RC-41) |
-| Bureau | Whether a lookup is required before lending (crb CR-02) |
+| Rule | Values | Why it matters |
+|---|---|---|
+| Who may borrow | Individuals, businesses, or both; employed or self-employed; age; for a Sacco, members of at least so many months | Who the product is for; published |
+| Affordability | The limit on instalments against income or turnover, from the statement metrics (reg 38; DE-02) | Stops lending what a borrower cannot repay (reg 38) |
+| Limits by KYC tier | The largest loan for each tier (identity ID-19) | The largest loan for each level of identity checks |
+| First loan and limit growth | The first loan's cap; how the limit grows with repayment history; any wait before borrowing again | How a new borrower starts, and how the limit grows |
+| Exposure | Loans a borrower may hold at once; top-ups; for a Sacco, a multiple of deposits; each guarantor's total exposure (Roan Capital RC-41) | How much one borrower or guarantor may owe at once |
+| Bureau | Whether a lookup is required before lending (crb CR-02) | Whether a credit report is checked before lending |
 
 **C · How it runs:** configuration the product links to, never published.
 
-| Setting | Values |
-|---|---|
-| Approval chain | By amount tier (mandates MD-01) |
-| Documents | The checklist (identity ID-02) |
-| Disbursement | The channels: M-Pesa or a bank, and which account |
-| Cut-off | When payments stop being released (Roan Capital: 23:00 to 04:00, RC-21) |
-| Purposes | The list a borrower chooses from |
-| Bureau reporting | When the product's loans are reported (crb, phase 2) |
+| Setting | Values | Why it matters |
+|---|---|---|
+| Approval chain | By amount tier (mandates MD-01) | Who must approve each loan, by amount |
+| Documents | The checklist (identity ID-02) | What a borrower must provide |
+| Disbursement | The channels: M-Pesa or a bank, and which account | How the money is paid out, and from where |
+| Cut-off | When payments stop being released (Roan Capital: 23:00 to 04:00, RC-21) | When payouts stop being released |
+| Purposes | The list a borrower chooses from | The reasons a borrower can choose from |
+| Bureau reporting | When the product's loans are reported (crb, phase 2) | When the product's loans are reported to the bureaus |
 
 **Never terms, whatever an institution wants:** a minimum interest period
 or any charge on early repayment (reg 56(3), (4); FS-807, LQ-13); default
