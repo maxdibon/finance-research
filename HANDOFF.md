@@ -459,7 +459,9 @@ from the components table), **links** (every relative link and every
 procedure has a From line naming an existing journey or spec section; HB
 ids cited exist; an agreed journey has procedures), **products** (each
 draft's items have an id, a source and an ask from the fixed list, and
-every item asked about is a term of the vocabulary) and `reviewed`. The
+every item asked about is a term of the vocabulary; its typed block
+names only vocabulary terms and real rows, and every answer settled is
+encoded) and `reviewed`. The
 **register** check also fails an open row without a criticality, a closed
 one with one, and a heading holding table cells. The pre-commit hook runs them,
 then rebuilds the reader.

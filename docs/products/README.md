@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817]
+review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823]
 last_reviewed: 2026-10-14
 ---
 
@@ -24,6 +24,18 @@ with personal data stays out.
 Confirm, Choose (its options split by " / "), Provide, Decide, or "—"
 for nothing to answer. The check holds them to that form.
 
+**And the product as data** (FS-823): below the tables, a fenced code block
+labelled `json product-version`, one entry per term of the
+vocabulary, keyed by its name in lower case with underscores
+(`amount_limits`): `item`, the row's id; `proposed`, what we have;
+`options`, a Choose's options typed, in the same order; `value`, what
+the institution settled; `null` for a blank. The check fails an entry
+that is not a vocabulary term or names no row, typed options that do not
+match the row's, a value on a row still asked, a value with a blank, and
+**a row the institution settled with no typed value**. It does not check
+the values themselves: that is the schema's job, in the code repository
+(lender-rules §2.4).
+
 | Step | Run | Notes |
 |---|---|---|
 | Build the questionnaires | `node tools/products/questionnaires.js docs/products/<draft>.md` | Needs the docx package (`npm install docx` anywhere; DOCX_MODULE points at it). Writes build/products/, one Word document per group, a form field per item still to answer. Render one and look at every page before sending |
@@ -35,6 +47,13 @@ The read-back never overwrites: an answer with a comment, a "not right"
 with no correction, an option that wants detail and has none, or a new
 answer to an item already answered all wait for a person. Reading the
 same file twice changes nothing.
+
+With `--write` it also writes the typed value where the answer carries
+one: a confirmation takes the entry's `proposed`, a choice the matching
+entry of `options`. A correction, an answer typed in, or a choice with a
+blank is listed "to encode", and the check fails until a person writes
+its `value` in the block. So the encoding happens in the same change as
+the answers, never later.
 
 | Institution | Product | Version | Status | Document |
 |---|---|---|---|---|

@@ -11,7 +11,7 @@ used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823]
 last_reviewed: 2026-10-14
 ---
 
@@ -250,7 +250,14 @@ companion all take the terms from it, and none keeps terms of its own.
   (confirm, choose, provide, decide), and the institution answers in
   Word questionnaires built from the draft, one per group, a form field
   per item; the answers are read back into the draft by script, never
-  retyped (tools/products/).
+  retyped (tools/products/). Beside its tables each draft holds the
+  product as data, a typed block with an entry per term (FS-823): what
+  we have, the typed form of each choice's options, and the value once
+  settled; the read-back writes a value when the answer carries one, and
+  a person encodes the rest. Our check holds the block's shape and its
+  terms; **the values are checked by the schema, which stays in the code
+  repository** (FS-823, as events' schemas do), when the product enters
+  it.
 - **Approved** as a `product.version` request (approval engine), by two
   people, each re-authenticated; then held until CBK's letter is recorded
   (rule 2 above); then activated from its effective date, for new loans.

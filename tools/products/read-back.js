@@ -15,7 +15,7 @@
 const fs = require('fs');
 const path = require('path');
 const zip = require('./zip');
-const { parse, rewrite, cellText } = require('./draft');
+const { parse, rewrite, cellText, slug, hasNull } = require('./draft');
 
 const ROOT = path.join(__dirname, '..', '..');
 process.on('uncaughtException', (e) => { console.error(e.code === 'ENOENT' ? `Not found: ${e.path}` : e.message); process.exit(1); });
@@ -72,6 +72,8 @@ const answered = [];
 const changed = [];
 const forPerson = [];
 const updates = [];
+const toEncode = [];
+const typed = JSON.parse(JSON.stringify((draft.typed && draft.typed.data) || {}));
 const items = draft.items.filter((it) => it.group === group);
 const known = new Set();
 // "Shorter (give the days)" with "15 days" beneath → "Shorter: 15 days"
@@ -121,6 +123,15 @@ for (const it of items) {
   }
   answered.push(`${it.id} ${it.name}: ${cellText(value)}`);
   updates.push({ ...it, value, source: by, askText: '—' });
+  // The typed value (FS-823): written when the answer has one, else a
+  // person encodes it; the check fails a settled item without one.
+  const key = slug(it.name);
+  const entry = typed[key];
+  let typedValue;
+  if (entry && it.ask === 'Confirm' && main.value === 'confirmed') typedValue = entry.proposed;
+  if (entry && it.ask === 'Choose' && entry.options) typedValue = entry.options[Number(main.value) - 1];
+  if (typedValue !== undefined && !hasNull(typedValue)) typed[key] = { item: it.id, value: typedValue };
+  else toEncode.push(`${it.id} ${it.name} ("${key}"): ${typedValue !== undefined ? `fill the blanks in ${JSON.stringify(typedValue)} from "${cellText(value)}"` : `"${cellText(value)}"`}`);
 }
 const strangers = [...fields.keys()].filter((t) => !known.has(t));
 for (const t of strangers) forPerson.push(`${t}: a field this draft does not have`);
@@ -134,12 +145,13 @@ console.log(`${path.basename(file)}: ${draftId}, group ${group}, built ${built};
 say('Answered', answered);
 say('Changed a value we had', changed);
 say('For a person to look at', forPerson);
+say('To encode in the typed block, by a person (the check fails until they are)', toEncode);
 console.log('\nStill open, whole draft');
 for (const k of ['Confirm', 'Choose', 'Provide', 'Decide']) if (open[k]) console.log(`  ${k} (${open[k].length}): ${open[k].join('; ')}`);
 if (!Object.keys(open).length) console.log('  Nothing: every ask is answered');
 
 if (args.includes('--write') && updates.length) {
-  let out = rewrite(md, updates);
+  let out = rewrite(md, updates, typed);
   out = out.replace(/^last_reviewed: .*$/m, `last_reviewed: ${new Date().toISOString().slice(0, 10)}`);
   fs.writeFileSync(draftPath, out);
   console.log(`\nWrote ${updates.length} answers into ${path.relative(ROOT, draftPath)}`);

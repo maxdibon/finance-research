@@ -2,10 +2,10 @@
 id: roan-capital-30-day-loan-v1
 name: Roan Capital — 30-day loan, product version 1 (draft)
 kind: product-version
-version: 0.2.0
+version: 0.3.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817]
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823]
 last_reviewed: 2026-10-14
 ---
 
@@ -92,6 +92,201 @@ internal):
 | C4 | Cut-off | No payout released 23:00 to 04:00 (RC-21) | The requirement document | Confirm |
 | C5 | Purposes | The list a borrower chooses from (the prototype asks for a purpose) | The prototype | Provide |
 | C6 | Bureau reporting | Not in R1 (crb, phase 2) | Dibon's plan | — |
+
+**The product, typed** (FS-823). The tables are the conversation with
+Roan Capital; this block is the product as data, one entry per term of
+the vocabulary, keyed by its name. `proposed` is what we have, `options`
+the typed form of a Choose's options in their order, and `value` what Roan
+Capital settled; `null` is a blank still to fill. The read-back writes a
+settled value here when it can, and lists the rest for a person to encode.
+The check holds the block's shape; the values themselves are checked by
+the schema in the code repository (lender-rules §2.4), not here.
+
+```json product-version
+{
+  "amount_limits": {"item": "A1", "proposed": {"min": 3000, "max": 100000, "currency": "KES"}},
+  "term": {
+    "item": "A2",
+    "options": [
+      {"allowed": [30], "unit": "day"},
+      {"allowed": [14, 30], "unit": "day"},
+      {"allowed": [30], "unit": "day", "separate_product": {"allowed": [14], "unit": "day"}}
+    ]
+  },
+  "repayment_frequency": {
+    "item": "A3",
+    "proposed": {"every": "day", "first_due": "day_after_disbursement"},
+    "options": [
+      {"every": "day", "first_due": "day_after_disbursement"},
+      {"every": "week", "first_due": "week_after_disbursement"},
+      {"every": "maturity"}
+    ]
+  },
+  "interest_method": {"item": "A4", "proposed": {"method": "flat", "on": "principal"}},
+  "interest_rate_and_its_unit": {
+    "item": "A5",
+    "proposed": {"value": 1, "unit": "percent", "per": "day"}
+  },
+  "fees": {
+    "item": "A6",
+    "proposed": [
+      {
+        "name": "membership",
+        "amount": 100,
+        "currency": "KES",
+        "once_per": "client",
+        "taken": "upfront",
+        "refundable": false
+      },
+      {
+        "name": "application",
+        "currency": "KES",
+        "once_per": "first_loan",
+        "taken": "upfront",
+        "refundable": false,
+        "tiers": [
+          {"from": 3000, "to": 19999, "amount": 500},
+          {"from": 20000, "to": 100000, "amount": 1000}
+        ]
+      },
+      {
+        "name": "remittance",
+        "amount": 120,
+        "currency": "KES",
+        "once_per": "loan",
+        "taken": "disbursement"
+      },
+      {
+        "name": "chattels_mortgage",
+        "currency": "KES",
+        "once_per": "loan",
+        "taken": "disbursement",
+        "tiers": [
+          {"from": 5001, "to": 9999, "amount": 500},
+          {"from": 10000, "to": 100000, "amount": 1000}
+        ]
+      }
+    ]
+  },
+  "insurance": {
+    "item": "A7",
+    "proposed": {
+      "name": "LIF",
+      "amount": 200,
+      "currency": "KES",
+      "taken": "disbursement",
+      "kind": null,
+      "cover": null
+    }
+  },
+  "default_interest": {
+    "item": "A8",
+    "proposed": {
+      "rate": 1,
+      "unit": "percent",
+      "per": "day",
+      "base": "overdue_instalments",
+      "from_day_past_due": 1
+    }
+  },
+  "default_period": {"item": "A9", "options": [{"days_past_due": 30}, {"days_past_due": null}]},
+  "collection_ladder": {
+    "item": "A10",
+    "proposed": {
+      "counted_from": "disbursement",
+      "stages": [
+        {"stage": "reminder", "from": 25, "to": 25},
+        {"stage": "default_run", "from": 30, "to": 40},
+        {"stage": "final_warning", "from": 40, "to": 47},
+        {"stage": "closure", "from": 47, "to": 47}
+      ]
+    }
+  },
+  "holiday_rule": {
+    "item": "A11",
+    "options": [{"due_on_holiday": "next_working_day"}, {"due_on_holiday": "unchanged"}]
+  },
+  "rounding": {
+    "item": "A12",
+    "proposed": {
+      "currency": "KES",
+      "decimals": 2,
+      "instalment": "up_to_shilling",
+      "last_instalment": "remainder"
+    }
+  },
+  "rate_type": {"item": "A14", "proposed": {"type": "fixed"}},
+  "rate_by_risk_class": {
+    "item": "A15",
+    "proposed": {"by_risk_class": false},
+    "options": [{"by_risk_class": false}, {"by_risk_class": true, "range": null}]
+  },
+  "interest_basis": {
+    "item": "A16",
+    "proposed": {"basis": "days_in_term", "formula": "rate * principal * days"}
+  },
+  "tax_on_fees": {
+    "item": "A17",
+    "proposed": {
+      "excise_duty_percent": 20,
+      "on": "fees",
+      "not_on": ["interest", "insurance_premium"]
+    }
+  },
+  "who_pays_the_rails_charges": {
+    "item": "A18",
+    "options": [{"payer": "borrower"}, {"payer": "institution"}]
+  },
+  "third_party_costs": {
+    "item": "A19",
+    "options": [
+      {"chattels_mortgage_fee": "institution_fee"},
+      {"chattels_mortgage_fee": "third_party_at_cost"}
+    ]
+  },
+  "collateral": {
+    "item": "A21",
+    "proposed": {"types": ["chattels", "vehicle"], "loan_to_value": null}
+  },
+  "guarantors": {"item": "A22", "proposed": {"count": 1, "limit": null}},
+  "languages": {
+    "item": "A25",
+    "proposed": {"languages": ["en", "sw"]},
+    "options": [{"languages": ["en"]}, {"languages": ["en", "sw"]}]
+  },
+  "who_may_borrow": {"item": "B1", "proposed": {"individuals": true, "businesses": true}},
+  "bureau": {
+    "item": "B6",
+    "options": [{"lookup": "every_application"}, {"lookup": "first_loan"}, {"lookup": "none"}]
+  },
+  "approval_chain": {
+    "item": "C1",
+    "options": [
+      {
+        "stages": [
+          {"role": "credit_manager"},
+          {"role": "head_office"},
+          {"role": "chief_executive_officer"}
+        ]
+      },
+      {
+        "stages": [
+          {"role": "credit_officer"},
+          {"role": "credit_committee", "quorum": "all"},
+          {"role": "head_office_committee", "above": null}
+        ]
+      }
+    ]
+  },
+  "documents": {"item": "C2", "proposed": {"checklist": "requirement_document"}},
+  "disbursement": {"item": "C3", "proposed": {"channels": ["mpesa", "ncba_bank_transfer"]}},
+  "cut_off": {
+    "item": "C4",
+    "proposed": {"no_payout_from": "23:00", "to": "04:00", "zone": "Africa/Nairobi"}
+  },
+  "bureau_reporting": {"item": "C6", "proposed": {"reporting": false}}
+}
+```
 
 **Not terms, and so not here:** the repayment order (reg 56) and the cap
 on a non-performing loan (reg 29) are the regulations'; any reading not

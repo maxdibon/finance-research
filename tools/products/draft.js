@@ -59,19 +59,91 @@ function parse(md) {
     const ids = items.filter((it) => it.group === g).map((it) => Number(it.id.slice(1)));
     ids.forEach((n, k) => { if (n !== k + 1) problems.push(`group ${g}: ${g}${n} where ${g}${k + 1} was expected`); });
   }
-  return { front, items, problems, lines };
+  const pending = [];
+  const typed = parseTyped(lines, items, problems, pending, (front.name || '').split(' — ')[0]);
+  return { front, items, problems, pending, lines, typed };
 }
+
+// ── The typed block (FS-823) ─────────────────────────────────────────────
+// The tables are the conversation with the institution; the block is the
+// product as data, one entry per vocabulary term:
+//   { "item": "A1", "proposed": {...}, "options": [{...}, ...], "value": {...} }
+// "proposed" is what we have, "options" the typed form of a Choose's
+// options in their order, "value" what the institution settled. The
+// schema that checks the values themselves is the code repository's
+// (lender-rules §2.4); here only the shape is held.
+const FENCE = '```json product-version';
+const ENTRY_KEYS = new Set(['item', 'proposed', 'options', 'value']);
+const slug = (name) => name.toLowerCase().replace(/['’]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+const hasNull = (v) => v === null || (typeof v === 'object' && Object.values(v).some(hasNull));
+
+// Problems are the draft out of form; pending, settled answers a person
+// has still to encode (the check fails both; the read-back only the first).
+function parseTyped(lines, items, problems, pending, inst) {
+  const start = lines.indexOf(FENCE);
+  if (start < 0) { problems.push(`no typed block: a fenced block opening "${FENCE}"`); return null; }
+  const end = lines.indexOf('```', start + 1);
+  if (end < 0) { problems.push('the typed block is not closed'); return null; }
+  let data;
+  try { data = JSON.parse(lines.slice(start + 1, end).join('\n')); } catch (e) { problems.push(`the typed block is not valid JSON: ${e.message}`); return null; }
+  const byId = new Map(items.map((it) => [it.id, it]));
+  const keyed = new Set();
+  for (const [key, entry] of Object.entries(data)) {
+    const where = `typed block, ${key}`;
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) { problems.push(`${where}: not an object`); continue; }
+    for (const k of Object.keys(entry)) if (!ENTRY_KEYS.has(k)) problems.push(`${where}: "${k}" is not item, proposed, options or value`);
+    const it = byId.get(entry.item);
+    if (!it) { problems.push(`${where}: names item "${entry.item}", which the tables do not have`); continue; }
+    if (slug(it.name) !== key) problems.push(`${where}: ${it.id} is "${it.name}", whose key is "${slug(it.name)}"`);
+    keyed.add(it.id);
+    if (entry.options !== undefined) {
+      if (!Array.isArray(entry.options)) problems.push(`${where}: options is not a list`);
+      else if (it.ask && it.ask !== 'Choose') problems.push(`${where}: options, but ${it.id} is not a Choose`);
+      else if (it.ask === 'Choose' && entry.options.length !== it.options.length) problems.push(`${where}: ${entry.options.length} options typed, ${it.id} offers ${it.options.length}`);
+    }
+    if (entry.value !== undefined) {
+      if (it.ask) problems.push(`${where}: a value, but ${it.id} is still asked (${it.askText.split(':')[0]})`);
+      if (hasNull(entry.value)) problems.push(`${where}: the value has a blank (null) still to encode`);
+    }
+  }
+  for (const it of items) {
+    if (inst && it.source.startsWith(`${inst},`) && !(data[slug(it.name)] && data[slug(it.name)].value !== undefined)) {
+      pending.push(`${it.id} ${it.name} is settled by ${inst} but has no typed value: encode it in the typed block`);
+    }
+  }
+  return { data, start, end };
+}
+
+// The block as written: anything that fits in 100 columns on one line,
+// broken a level at a time where it does not (the diagrams' width, FS-579).
+const WIDTH = 100;
+const oneLine = (v) => (v === null || typeof v !== 'object' ? JSON.stringify(v)
+  : Array.isArray(v) ? `[${v.map(oneLine).join(', ')}]`
+    : `{${Object.entries(v).map(([k, x]) => `${JSON.stringify(k)}: ${oneLine(x)}`).join(', ')}}`);
+function layout(v, indent, prefix, suffix) {
+  const flat = `${indent}${prefix}${oneLine(v)}${suffix}`;
+  if (flat.length <= WIDTH || v === null || typeof v !== 'object') return [flat];
+  const inner = `${indent}  `;
+  const parts = Array.isArray(v) ? v.map((x) => ['', x]) : Object.entries(v).map(([k, x]) => [`${JSON.stringify(k)}: `, x]);
+  const [open, close] = Array.isArray(v) ? ['[', ']'] : ['{', '}'];
+  return [`${indent}${prefix}${open}`,
+    ...parts.flatMap(([p, x], i) => layout(x, inner, p, i < parts.length - 1 ? ',' : '')),
+    `${indent}${close}${suffix}`];
+}
+const formatTyped = (data) => layout(data, '', '', '').join('\n');
 
 // A table cell's text: one line, no pipes.
 const cellText = (s) => String(s).replace(/\r?\n+/g, '; ').replace(/\|/g, '/').replace(/\s+/g, ' ').trim();
 
-// The draft with the given items' rows rewritten.
-function rewrite(md, changed) {
+// The draft with the given items' rows rewritten, and the typed block
+// replaced when one is given.
+function rewrite(md, changed, typedData) {
   const crlf = md.includes('\r\n');
-  const { lines } = parse(md);
+  const { lines, typed } = parse(md);
   for (const it of changed) {
     lines[it.line] = `| ${it.id} | ${it.name} | ${cellText(it.value)} | ${cellText(it.source)} | ${it.askText} |`;
   }
+  if (typedData && typed) lines.splice(typed.start + 1, typed.end - typed.start - 1, ...formatTyped(typedData).split('\n'));
   const out = lines.join('\n');
   return crlf ? out.replace(/\n/g, '\r\n') : out;
 }
@@ -89,4 +161,4 @@ function purposes(lenderRules) {
   return out;
 }
 
-module.exports = { ASKS, HEADS, parse, parseAsk, rewrite, purposes, cellText };
+module.exports = { ASKS, HEADS, FENCE, parse, parseAsk, rewrite, purposes, cellText, slug, hasNull, formatTyped };

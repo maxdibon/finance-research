@@ -1113,7 +1113,7 @@ function checkSpecs(root) {
 // source and an ask from the fixed list; every item asked about is a term
 // of the vocabulary, so the questionnaire can say why it matters.
 function checkProducts(root) {
-  const { parse, purposes } = require('./products/draft');
+  const { parse, purposes, slug } = require('./products/draft');
   const dir = path.join(root, 'docs', 'products');
   if (!fs.existsSync(dir)) return [];
   const why = purposes(read(root, path.join('docs', 'specs', 'lender-rules.md')));
@@ -1125,6 +1125,10 @@ function checkProducts(root) {
     const d = parse(text);
     if (!d.items.length) out.push(fail('products', rel, 0, 'no items: tables headed | Id | Term/Rule/Setting | Value | Source | Ask |'));
     for (const msg of d.problems) out.push(fail('products', rel, Number((msg.match(/^line (d+)/) || [])[1] || 0), msg));
+    for (const msg of d.pending) out.push(fail('products', rel, 0, msg));
+    for (const key of Object.keys((d.typed && d.typed.data) || {})) {
+      if (!Object.keys(why).some((term) => slug(term) === key)) out.push(fail('products', rel, 0, `typed block, ${key}: not a term of the vocabulary (lender-rules §2.4)`));
+    }
     for (const it of d.items) {
       if (it.ask && !why[it.name]) out.push(fail('products', rel, it.line + 1, `${it.id} "${it.name}" is asked about but is not a term of the vocabulary (lender-rules §2.4)`));
     }

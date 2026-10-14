@@ -343,6 +343,21 @@ test('products: an id out of sequence fails', () => {
   assert.deepStrictEqual(names(f), ['products']);
 });
 
+test('products: a typed entry that is not a term of the vocabulary fails', () => {
+  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('"rate_type": {"item": "A14"', '"rate_kind": {"item": "A14"')));
+  assert.deepStrictEqual(names(f), ['products']);
+});
+
+test('products: a Choose whose typed options do not match its options fails', () => {
+  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('"options": [{"payer": "borrower"}, {"payer": "institution"}]', '"options": [{"payer": "borrower"}]')));
+  assert.deepStrictEqual(names(f), ['products']);
+});
+
+test('products: an item the institution settled with no typed value fails', () => {
+  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('| Rate type | Fixed | The prototype | Confirm |', '| Rate type | Fixed | Roan Capital, 2026-10-14 | — |')));
+  assert.deepStrictEqual(names(f), ['products']);
+});
+
 const REG = path.join('docs', 'regulation.md');
 
 test('regulation: a Deep law that drives nothing fails', () => {
