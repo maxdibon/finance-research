@@ -1,8 +1,8 @@
 # Dibon financial services — session handoff
 
-    version: 1.8.0
+    version: 1.9.0
     updated: 2026-10-14
-    supersedes: 1.7.0; adds 14 October (FS-796 to FS-818)
+    supersedes: 1.8.0; adds the evening of 14 October (FS-819 to FS-828)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -191,6 +191,26 @@ Each has a register row and, where it changed the design, an entry in
 - **We never ask for answers by email.** A questionnaire is a Word
   document with a form field per question, read back by script into its
   source, never retyped (`tools/products/`; FS-816, FS-817).
+- **A product is data as well as words** (FS-823, FS-825): each draft
+  holds a typed block beside its tables, one entry per vocabulary term
+  (proposed, options, the settled value). **The schema is defined in the
+  code repository and applied wherever a value enters**: when we draft,
+  when an answer is read back, when a person encodes it, and later in
+  the form, at approval and at activation. Its first files (the schema,
+  the rules across terms, their worked examples) are in
+  `code/lender-rules/` until that repository exists; then they move.
+  The check validates every value against them, and every option we
+  offer, so we never offer a choice a rule forbids. An answer the
+  institution settles must be encoded in the same change.
+- **Roan Capital's NDA is in force:** signed for both parties, dated 4
+  August 2026, for three years (FS-827). Its text is the one FS-738
+  reviewed; FS-740's corrections belong in the services agreement and
+  the data processing terms, not a new NDA. Our processors need Roan
+  Capital's written consent under it.
+- **Licence questions go to a senior management meeting,** not an
+  operational one (FS-827); so do CBK's approval of pricing and consent
+  to processors. The owner understands Roan Capital has applied for its
+  licence and is not yet licensed.
 
 ## What is in flight
 
@@ -198,15 +218,31 @@ Each has a register row and, where it changed the design, an entry in
   `docs/products/roan-capital-30-day-loan-v1.md`, filled from the
   prototype, every item with its source and its ask. Its three
   questionnaires (A product terms, B eligibility and limits, C how it
-  runs) are built, looked at and **not yet sent**; rebuild them with
-  `tools/products/questionnaires.js` before sending, since `build/` is
-  not kept. Returned files go in `clients/roan-capital/` and are read
-  back with `tools/products/read-back.js`; the steps are in
+  runs) are built and looked at; with the agenda, they go to Roan
+  Capital for the meeting below. Returned files go in
+  `clients/roan-capital/` and are read back with
+  `tools/products/read-back.js`; the steps are in
   `docs/products/README.md`. They carry most of Roan's open answers (4,
   10, 12, 13, 16 to 21, 28, 29). Two questions for counsel came out of
   the prototype: a minimum of 14 days' interest on early repayment, which
   reg 56 appears to forbid (LQ-13), and excise duty on fees, which the
   prototype leaves out (LQ-14).
+- **Roan Capital's product and operations meeting, 15 October 2026**
+  (FS-826), 30 minutes: four product decisions, quick choices, who does
+  what, and owners and dates for the rest. In
+  `clients/roan-capital/meeting-2026-10-15/` (not in git): the agenda
+  for Roan Capital, the three questionnaires, and our record mapping
+  each of the 21 questions to where its answer lands, with **the
+  evening's steps**: read the saved questionnaires back and encode what
+  the read-back lists, copy the other answers into the delivery map's
+  §4, send Roan Capital the decisions in writing, close the rows.
+- **Where source data lives and for how long** (FS-819 to FS-822):
+  recon keeps every rail record seven years, in its own security domain,
+  never in Fineract's database. Proposed, awaiting go: one copy of all
+  source data, read by everyone (FS-820), and storage classes built on
+  our own infrastructure, since Liquid's Azure Stack Hub offers one tier
+  with write-once protection (FS-821). Liquid's answers decide FS-821:
+  ten storage questions (S1 to S10) are in its enquiry, not yet sent.
 - **The Data Commissioner:** Dibon is registered as a data processor
   (compliance LC-01, its number recorded; the certificate's expiry still
   to record). The controller registration is still needed (LC-02,
@@ -546,6 +582,18 @@ only with a register row.
 - **The docx package cannot make Word form fields.** The builder writes a
   marker paragraph and swaps in the content control's XML after packing
   (`tools/products/questionnaires.js`).
+- **Heredocs ate escapes three more times** (FS-825): a `\d` lost in
+  check.js, so every draft problem reported line 0; a quote in a test;
+  a regex in an edit script. Write any script containing backslashes,
+  backticks or quotes with the file tool, never in a heredoc.
+- **"Go" is not "push".** On 14 October one change was pushed on a go
+  alone; the owner says "push" when they want it pushed.
+- **Nested backticks break the reader:** an inline code span holding a
+  fenced-block marker rendered as empty code. Describe the marker in
+  words.
+- **The check fails a settled answer that is not encoded**, so the
+  pre-commit hook blocks the commit until it is: encode the read-back's
+  list in the same change.
 - **Roan Capital's prototype** 404s on a typed URL: move through it by
   clicking inside the app. The owner signs in; Claude only reads.
 
@@ -556,19 +604,24 @@ only with a register row.
   "alongside" mode, Kapu Core beside an institution's own core, as a
   decision with the CBK question for counsel (FS-786, High); database
   activity monitoring, left open (FS-794).
-- **Three High rows that may be ready to close:** FS-791 (the scale
-  proposal, which FS-792's "go ahead" may have settled); FS-796 (the
-  companion's design, recon §3.1: the interpretation record and who
-  builds the companion); FS-812 (building and testing from product
-  documents in three layers; FS-816 and FS-817 made the drafts data the
-  check validates, the schema and test products in code are still to
-  agree). Ask before closing them.
-- **To send:** Roan Capital's three product questionnaires, to its
-  product owner, credit lead and operations lead.
+- **Two High rows that may be ready to close:** FS-796 (the companion's
+  design, recon §3.1: the interpretation record and who builds the
+  companion); FS-812 (building and testing from product documents: the
+  drafts are now data, checked against the schema and rules in
+  code/lender-rules/; starter templates and synthetic test products in
+  code remain). Ask before closing them.
+- **Storage, awaiting go:** FS-819's gaps, FS-820 (one copy of source
+  data) and FS-821 (storage classes, after Liquid answers).
 
-## Waiting on the owner, outside the repository (as at 2026-10-12)
+## Waiting on the owner, outside the repository (as at 2026-10-14)
 
-- **To send:** the Prembly changes letter (FS-762); the bank requests to NCBA, KCB and SBM
+- **Tomorrow, 15 October:** Roan Capital's meeting (above); the agenda and
+  questionnaires to send beforehand.
+- **A senior management meeting with Roan Capital:** its licence, CBK's
+  approval of its pricing, and consent to our processors (FS-827).
+- **To send:** the Liquid enquiry, now with its storage questions
+  (docs/outreach/liquid-partner-request.md, FS-822); the Prembly changes
+  letter (FS-762); the bank requests to NCBA, KCB and SBM
   (docs/outreach/bank-api-requests-2026-10.md).
 - **Roan Capital's open answers** (delivery map §4), now 1 to 29 (28 the
   approval chain, 29 the product's terms and CBK's approval of its
@@ -611,12 +664,13 @@ only with a register row.
 - **Recon, next:** the companion's design is drafted (recon §3.1,
   FS-796) and waits on the owner; then the load test's plan and the rails
   spec, still to write, which recon depends on.
-- **Product documents in code:** the schema, Dibon's starter templates
-  and synthetic test products, built from lender-rules §2.9's worked
-  examples (FS-812); and the back office's product form, which replaces
-  the questionnaires.
+- **Product documents in code:** the schema and rules are started in
+  code/lender-rules/ (FS-825); Dibon's starter templates and synthetic
+  test products, built from lender-rules §2.9's worked examples, remain
+  (FS-812); and the back office's product form, which replaces the
+  questionnaires.
 - **The six Critical rows** (FS-202, FS-205, FS-340, FS-367, FS-735,
-  FS-736) and fourteen High ones.
+  FS-736) and seventeen High ones.
 - **Rows that block R1:** identity access and vendor choice (FS-202,
   FS-205, FS-329, FS-340), bank connections (FS-344), and business
   registry access for business borrowers (FS-564).
