@@ -11,8 +11,8 @@ used_by: []
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750, FS-751, FS-753, FS-757, FS-758, FS-769]
-last_reviewed: 2026-10-12
+review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750, FS-751, FS-753, FS-757, FS-758, FS-769, FS-805]
+last_reviewed: 2026-10-14
 ---
 
 # GitLab — code, reviews, planning and pipelines — component specification
@@ -92,7 +92,10 @@ path is [flows](../architecture/flows.md) §4.
   customer data, and the rules keep it so ([rules](../rules.md) §1):
   no personal data, no client material, no secrets in a repository, an
   issue or a comment. A customer's confidential detail is referred to,
-  not copied. Should code have to stay in Kenya, GitLab self-managed is
+  not copied: client material lives in Dibon's Odoo Documents, in Kenya,
+  and a document links to it (rules, Dibon 10; FS-805). Git has no read
+  rights per file or section, so nothing restricted belongs in a project
+  the whole team reads. Should code have to stay in Kenya, GitLab self-managed is
   the alternative, at the cost of running it; GitLab Dedicated, the
   hosted single-tenant option, is Ultimate and offers no African region.
 - **Runners are ours,** self-managed in Kenya at Dibon central: GitLab's

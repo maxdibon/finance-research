@@ -100,7 +100,8 @@ sources/             inputs as received — never edited
   confidential/      client-specific documents — git-ignored
   regulation/ke/     Kenyan legislation, by "as at" date; reports/ and
                      superseded/ beside it — git-ignored
-clients/             customer and prospect material, one folder each,
+clients/             customer and prospect material, one folder each, moving
+                     to Dibon's Odoo Documents (rules, Dibon 10; FS-805);
                      and the KCB and NBK project list — git-ignored
 tools/               check.js, assemble.js, site.js, and their break tests
 .githooks/           pre-commit: runs the checks

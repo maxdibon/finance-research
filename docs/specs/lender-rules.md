@@ -11,7 +11,7 @@ used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805]
 last_reviewed: 2026-10-14
 ---
 
@@ -262,6 +262,19 @@ companion all take the terms from it, and none keeps terms of its own.
   version's id and hash, so every calculation uses the terms the loan was
   approved and signed under.
 - **A version recon's companion cannot compute cannot be activated.**
+- **Who sees it, by stage** (FS-803, FS-805): a draft, or a version
+  approved and awaiting CBK, is the institution's and Dibon's alone; an
+  **active** version is public, as regs 47(1)(d) and 48 require: its terms
+  and key information document are published from the signed document on
+  the institution's product page, its calculator and every channel,
+  always the current version, older versions kept for the loans made
+  under them (business-suite BS-20). Where rates vary by the borrower's
+  creditworthiness (reg 59(2)(c)), the page shows the range, and each
+  borrower's rate is in their own key information document.
+- **The pricing model is not in the document.** Reg 59(2)(a) to (e)'s
+  components (cost of funds, cost of capital, operations, return to
+  shareholders, the risk premium) are the institution's commercial
+  reasoning: they go to CBK with the version, and are never published.
 
 **The vocabulary** (the first version; each term a field with its allowed
 values):

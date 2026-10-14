@@ -5,8 +5,8 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793]
-last_reviewed: 2026-10-13
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805]
+last_reviewed: 2026-10-14
 ---
 
 # Roan Capital — delivery map
@@ -175,10 +175,25 @@ The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text
 inside the table of contents, and misaligned rows in the quality table.
 
-## 5 · Where the detail is
+## 5 · Its products
 
-- The requirement document and the full review: clients/roan-capital/
-  (outside git).
+Each product is a product version document (lender-rules §2.4): a draft
+or one awaiting approval is Roan Capital's and Dibon's alone; an active
+one is public, as the lender regulations require (regs 47(1)(d), 48), and
+its link goes to Roan Capital's own product page.
+
+| Product | Version | Status | Where |
+|---|---|---|---|
+| 30-day loan | 1 | Draft: seven blanks, among them open answers 3 (the default interest's base) and 4 (the rate's unit), and the amount limits, fees, insurance, default period and holiday rule | Restricted: Roan Capital's workspace in Dibon's Odoo Documents (rules, Dibon 10), until active |
+
+Statuses: draft, awaiting approval, awaiting CBK, active, retired.
+
+## 6 · Where the detail is
+
+- The requirement document, the full review and the product drafts:
+  restricted, in Roan Capital's workspace in Dibon's Odoo Documents
+  (moving from clients/roan-capital/, which is on one machine and outside
+  git; FS-805).
 - Capability statuses: the modules named in §2.
 - Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in
   docs/decisions.md and REVIEW.md.
