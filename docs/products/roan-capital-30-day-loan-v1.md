@@ -110,7 +110,7 @@ the schema in the code repository (lender-rules §2.4), not here.
     "options": [
       {"allowed": [30], "unit": "day"},
       {"allowed": [14, 30], "unit": "day"},
-      {"allowed": [30], "unit": "day", "separate_product": {"allowed": [14], "unit": "day"}}
+      {"allowed": [30], "unit": "day"}
     ]
   },
   "repayment_frequency": {
@@ -240,8 +240,8 @@ the schema in the code repository (lender-rules §2.4), not here.
   "third_party_costs": {
     "item": "A19",
     "options": [
-      {"chattels_mortgage_fee": "institution_fee"},
-      {"chattels_mortgage_fee": "third_party_at_cost"}
+      {"items": [{"name": "chattels_mortgage", "kind": "institution_fee"}]},
+      {"items": [{"name": "chattels_mortgage", "kind": "third_party_at_cost"}]}
     ]
   },
   "collateral": {

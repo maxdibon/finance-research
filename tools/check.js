@@ -1112,25 +1112,73 @@ function checkSpecs(root) {
 // are built from and its answers read back into. Every item has an id, a
 // source and an ask from the fixed list; every item asked about is a term
 // of the vocabulary, so the questionnaire can say why it matters.
+// FS-825: and their values, against the vocabulary's schema and the rules
+// across terms, both written as the first files of lender rules' code
+// repository (code/lender-rules/) until it exists; then read from it.
+const SCHEMA = path.join('code', 'lender-rules', 'product-vocabulary.schema.json');
+const RULES_FILE = path.join('code', 'lender-rules', 'rules.js');
 function checkProducts(root) {
   const { parse, purposes, slug } = require('./products/draft');
+  const { validate, subsetProblems } = require('./products/validate');
   const dir = path.join(root, 'docs', 'products');
   if (!fs.existsSync(dir)) return [];
-  const why = purposes(read(root, path.join('docs', 'specs', 'lender-rules.md')));
+  const lr = path.join('docs', 'specs', 'lender-rules.md');
+  const why = purposes(read(root, lr));
   const out = [];
+  let schema = null;
+  try { schema = JSON.parse(read(root, SCHEMA)); } catch (e) { out.push(fail('products', SCHEMA, 0, `the vocabulary's schema cannot be read: ${e.message}`)); }
+  const { apply } = require(path.join(root, RULES_FILE));
+  if (schema) {
+    for (const msg of subsetProblems(schema)) out.push(fail('products', SCHEMA, 0, msg));
+    const terms = Object.keys(why).map(slug);
+    const defined = Object.keys(schema.properties || {});
+    for (const t of terms.filter((x) => !defined.includes(x))) out.push(fail('products', SCHEMA, 0, `"${t}" is a term of the vocabulary (lender-rules §2.4) with no definition here`));
+    for (const t of defined.filter((x) => !terms.includes(x))) out.push(fail('products', SCHEMA, 0, `"${t}" is defined here but is not a term of the vocabulary (lender-rules §2.4)`));
+  }
   for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.md')).sort()) {
     const rel = path.join('docs', 'products', name);
     const text = read(root, rel);
     if (!/^kind: product-version$/m.test(text)) continue;
     const d = parse(text);
     if (!d.items.length) out.push(fail('products', rel, 0, 'no items: tables headed | Id | Term/Rule/Setting | Value | Source | Ask |'));
-    for (const msg of d.problems) out.push(fail('products', rel, Number((msg.match(/^line (d+)/) || [])[1] || 0), msg));
+    for (const msg of d.problems) out.push(fail('products', rel, Number((msg.match(/^line (\d+)/) || [])[1] || 0), msg));
     for (const msg of d.pending) out.push(fail('products', rel, 0, msg));
-    for (const key of Object.keys((d.typed && d.typed.data) || {})) {
+    const data = (d.typed && d.typed.data) || {};
+    for (const key of Object.keys(data)) {
       if (!Object.keys(why).some((term) => slug(term) === key)) out.push(fail('products', rel, 0, `typed block, ${key}: not a term of the vocabulary (lender-rules §2.4)`));
     }
     for (const it of d.items) {
       if (it.ask && !why[it.name]) out.push(fail('products', rel, it.line + 1, `${it.id} "${it.name}" is asked about but is not a term of the vocabulary (lender-rules §2.4)`));
+    }
+    if (!schema) continue;
+    // Every value against its term's schema: what we propose and the
+    // options we offer may hold blanks; a settled value may not.
+    const product = {};
+    for (const [key, entry] of Object.entries(data)) {
+      const sub = schema.properties && schema.properties[key];
+      if (!sub || !entry || typeof entry !== 'object') continue;
+      const at = (part) => `typed block, ${key}.${part}`;
+      if (entry.proposed !== undefined) for (const e of validate(sub, entry.proposed, { root: schema, blanks: true })) out.push(fail('products', rel, 0, `${at('proposed')}: ${e}`));
+      (Array.isArray(entry.options) ? entry.options : []).forEach((o, i) => {
+        for (const e of validate(sub, o, { root: schema, blanks: true })) out.push(fail('products', rel, 0, `${at(`options[${i}]`)}: ${e}`));
+      });
+      if (entry.value !== undefined) for (const e of validate(sub, entry.value, { root: schema })) out.push(fail('products', rel, 0, `${at('value')}: ${e}`));
+      const v = entry.value !== undefined ? entry.value : entry.proposed;
+      if (v !== undefined) product[key] = v;
+    }
+    // The rules across terms, on the product as it stands, and with each
+    // option we offer in its place: we never offer a choice a rule forbids.
+    const broken = new Set(apply(product).map((r) => {
+      out.push(fail('products', rel, 0, `rule ${r.id} (${r.source}): ${r.message}`));
+      return r.id;
+    }));
+    for (const [key, entry] of Object.entries(data)) {
+      if (!entry || entry.value !== undefined || !Array.isArray(entry.options)) continue;
+      entry.options.forEach((o, i) => {
+        for (const r of apply({ ...product, [key]: o })) {
+          if (!broken.has(r.id)) out.push(fail('products', rel, 0, `typed block, ${key}.options[${i}] (${entry.item}): offering it breaks rule ${r.id} (${r.source}): ${r.message}`));
+        }
+      });
     }
   }
   return out;

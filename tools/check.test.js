@@ -13,7 +13,7 @@ const test = require('node:test');
 const { runAll } = require('./check');
 
 const ROOT = path.join(__dirname, '..');
-const COPY = ['README.md', 'REVIEW.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'), path.join('design', 'system'),
+const COPY = ['README.md', 'REVIEW.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'), path.join('design', 'system'), 'code',
   path.join('sources', 'confidential', 'protected-names.txt')];
 
 // A fresh copy of the checked files, perturbed by `edit`, then checked.
@@ -356,6 +356,46 @@ test('products: a Choose whose typed options do not match its options fails', ()
 test('products: an item the institution settled with no typed value fails', () => {
   const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('| Rate type | Fixed | The prototype | Confirm |', '| Rate type | Fixed | Roan Capital, 2026-10-14 | — |')));
   assert.deepStrictEqual(names(f), ['products']);
+});
+
+const SCHEMA = path.join('code', 'lender-rules', 'product-vocabulary.schema.json');
+
+test('products: a proposed value the schema does not allow fails', () => {
+  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('"proposed": {"type": "fixed"}', '"proposed": {"type": "floating"}')));
+  assert.deepStrictEqual(names(f), ['products']);
+});
+
+test('products: a product that breaks a rule across terms fails', () => {
+  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('"proposed": {"min": 3000, "max": 100000, "currency": "KES"}', '"proposed": {"min": 300000, "max": 100000, "currency": "KES"}')));
+  assert.ok(f.some((x) => x.check === 'products' && /amount-limits-in-order/.test(x.message)), JSON.stringify(f));
+});
+
+test('products: a vocabulary term the schema does not define fails', () => {
+  const f = runWith((d) => patch(d, SCHEMA, (t) => t.replace('"bureau_reporting": {', '"bureau_reports": {')));
+  assert.deepStrictEqual(names(f), ['products']);
+});
+
+test('products: a schema keyword outside the validator\'s subset fails', () => {
+  const f = runWith((d) => patch(d, SCHEMA, (t) => t.replace('"uniqueItems": true, "items": {"enum": ["en", "sw"]}', '"uniqueItems": true, "maxItems": 2, "items": {"enum": ["en", "sw"]}')));
+  assert.deepStrictEqual(names(f), ['products']);
+});
+
+test('products: offering an option that breaks a rule fails', () => {
+  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('"options": [{"days_past_due": 30}, {"days_past_due": null}]', '"options": [{"days_past_due": 30}, {"days_past_due": 45}]')));
+  assert.ok(f.some((x) => x.check === 'products' && /default-period-within-reg-57/.test(x.message)), JSON.stringify(f));
+});
+
+test('products: every rule across terms behaves as its worked examples say', () => {
+  const { RULES, apply } = require(path.join(ROOT, 'code', 'lender-rules', 'rules.js'));
+  const examples = JSON.parse(fs.readFileSync(path.join(ROOT, 'code', 'lender-rules', 'rules.examples.json'), 'utf8'));
+  for (const r of RULES) {
+    const mine = examples.filter((e) => e.rule === r.id);
+    assert.ok(mine.some((e) => e.breaks) && mine.some((e) => !e.breaks), `${r.id} needs an example that breaks it and one that does not`);
+  }
+  for (const e of examples) {
+    const broke = apply(e.product).some((x) => x.id === e.rule);
+    assert.strictEqual(broke, e.breaks, `${e.rule}: ${JSON.stringify(e.product)}`);
+  }
 });
 
 const REG = path.join('docs', 'regulation.md');

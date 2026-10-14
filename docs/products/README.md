@@ -5,7 +5,7 @@ kind: index
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823]
+review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823, FS-825]
 last_reviewed: 2026-10-14
 ---
 
@@ -32,9 +32,14 @@ vocabulary, keyed by its name in lower case with underscores
 the institution settled; `null` for a blank. The check fails an entry
 that is not a vocabulary term or names no row, typed options that do not
 match the row's, a value on a row still asked, a value with a blank, and
-**a row the institution settled with no typed value**. It does not check
-the values themselves: that is the schema's job, in the code repository
-(lender-rules §2.4).
+**a row the institution settled with no typed value**. **And it checks
+every value** (FS-825): what we propose, each typed option and each
+settled value against the vocabulary's schema, and the product as it
+stands against the rules across terms (a minimum below its maximum, a
+default period within reg 57, no early-repayment charge, and the rest),
+both in [code/lender-rules/](../../code/lender-rules/README.md). The
+read-back checks a typed value before writing it, and reports any rule
+the answers would break.
 
 | Step | Run | Notes |
 |---|---|---|

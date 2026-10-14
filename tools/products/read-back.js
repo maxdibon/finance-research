@@ -16,6 +16,9 @@ const fs = require('fs');
 const path = require('path');
 const zip = require('./zip');
 const { parse, rewrite, cellText, slug, hasNull } = require('./draft');
+const { validate } = require('./validate');
+const SCHEMA = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'code', 'lender-rules', 'product-vocabulary.schema.json'), 'utf8'));
+const { apply } = require('../../code/lender-rules/rules');
 
 const ROOT = path.join(__dirname, '..', '..');
 process.on('uncaughtException', (e) => { console.error(e.code === 'ENOENT' ? `Not found: ${e.path}` : e.message); process.exit(1); });
@@ -130,7 +133,9 @@ for (const it of items) {
   let typedValue;
   if (entry && it.ask === 'Confirm' && main.value === 'confirmed') typedValue = entry.proposed;
   if (entry && it.ask === 'Choose' && entry.options) typedValue = entry.options[Number(main.value) - 1];
-  if (typedValue !== undefined && !hasNull(typedValue)) typed[key] = { item: it.id, value: typedValue };
+  const invalid = typedValue !== undefined && !hasNull(typedValue) && SCHEMA.properties[key] ? validate(SCHEMA.properties[key], typedValue, { root: SCHEMA }) : [];
+  if (invalid.length) toEncode.push(`${it.id} ${it.name} ("${key}"): the typed value fails the vocabulary's schema, not written: ${invalid.join('; ')}`);
+  else if (typedValue !== undefined && !hasNull(typedValue)) typed[key] = { item: it.id, value: typedValue };
   else toEncode.push(`${it.id} ${it.name} ("${key}"): ${typedValue !== undefined ? `fill the blanks in ${JSON.stringify(typedValue)} from "${cellText(value)}"` : `"${cellText(value)}"`}`);
 }
 const strangers = [...fields.keys()].filter((t) => !known.has(t));
@@ -146,6 +151,8 @@ say('Answered', answered);
 say('Changed a value we had', changed);
 say('For a person to look at', forPerson);
 say('To encode in the typed block, by a person (the check fails until they are)', toEncode);
+const product = Object.fromEntries(Object.entries(typed).map(([k, e]) => [k, e.value !== undefined ? e.value : e.proposed]).filter(([, v]) => v !== undefined));
+say('Rules the product breaks with these answers', apply(product).map((r) => `${r.id} (${r.source}): ${r.message}`));
 console.log('\nStill open, whole draft');
 for (const k of ['Confirm', 'Choose', 'Provide', 'Decide']) if (open[k]) console.log(`  ${k} (${open[k].length}): ${open[k].join('; ')}`);
 if (!Object.keys(open).length) console.log('  Nothing: every ask is answered');

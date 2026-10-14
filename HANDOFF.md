@@ -368,6 +368,9 @@ Each has a register row and, where it changed the design, an entry in
   **`tools/products/`** builds questionnaires and reads them back. The
   read-back needs only Node; the builder needs the docx package from
   outside the repository (DOCX_MODULE).
+- **`code/lender-rules/`** holds the first files of lender rules' code
+  repository: the vocabulary's schema, the rules across terms and their
+  worked examples (FS-825). They move there when it exists.
 - **Also kept local, never committed:** `sources/odpc_registration.png`
   (untracked) and `sources/dibon/recon-notes/` (ignored), the owner's
   handwritten recon notes with their transcript.
@@ -461,7 +464,8 @@ ids cited exist; an agreed journey has procedures), **products** (each
 draft's items have an id, a source and an ask from the fixed list, and
 every item asked about is a term of the vocabulary; its typed block
 names only vocabulary terms and real rows, and every answer settled is
-encoded) and `reviewed`. The
+encoded; every value meets the schema and the rules across terms in
+`code/lender-rules/`) and `reviewed`. The
 **register** check also fails an open row without a criticality, a closed
 one with one, and a heading holding table cells. The pre-commit hook runs them,
 then rebuilds the reader.

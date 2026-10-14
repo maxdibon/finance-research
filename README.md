@@ -105,6 +105,8 @@ clients/             customer and prospect material, one folder each, moving
                      and the KCB and NBK project list — git-ignored
 tools/               check.js, assemble.js, site.js, and their break tests;
                      products/: product questionnaires built and read back
+code/lender-rules/   the vocabulary's schema and rules across terms: the first
+                     files of lender rules' code repository, moving there
 .githooks/           pre-commit: runs the checks
 ```
 

@@ -11,7 +11,7 @@ used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825]
 last_reviewed: 2026-10-14
 ---
 
@@ -254,10 +254,13 @@ companion all take the terms from it, and none keeps terms of its own.
   product as data, a typed block with an entry per term (FS-823): what
   we have, the typed form of each choice's options, and the value once
   settled; the read-back writes a value when the answer carries one, and
-  a person encodes the rest. Our check holds the block's shape and its
-  terms; **the values are checked by the schema, which stays in the code
-  repository** (FS-823, as events' schemas do), when the product enters
-  it.
+  a person encodes the rest. **The schema is defined in the code
+  repository and applied wherever a value enters** (FS-823, FS-825):
+  when we draft, when an institution's answers are read back, when a
+  person encodes them, and later in the form, at approval and at
+  activation. Its first files, the schema and the rules across terms
+  with their worked examples, are written in code/lender-rules/ until
+  the code repository exists, and move there when it does.
 - **Approved** as a `product.version` request (approval engine), by two
   people, each re-authenticated; then held until CBK's letter is recorded
   (rule 2 above); then activated from its effective date, for new loans.
@@ -293,7 +296,8 @@ companion all take the terms from it, and none keeps terms of its own.
 
 **The vocabulary** (FS-813, FS-814): what describes a product, in three
 groups, because they are not all published. Each is a field with its
-allowed values; the schema in the code repository enforces it. Why each
+allowed values; the schema in the code repository enforces it
+(code/lender-rules/ until that repository exists, FS-825). Why each
 matters is shown beside it wherever an institution is asked about it, in
 the form and in the questionnaires (FS-816).
 
