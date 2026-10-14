@@ -5,7 +5,7 @@ kind: product-version
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807]
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814]
 last_reviewed: 2026-10-14
 ---
 
@@ -38,6 +38,41 @@ Roan Capital's instance; this file is only the working draft.
 | Holiday rule | A due date on a holiday: moves to the next working day / stays | **Blank:** Roan Capital's credit policy (OB-COM-20) |
 | Rounding | KES, to 2 decimal places; daily instalments rounded up to the shilling, the last instalment the remainder (the prototype) | To confirm |
 | Early repayment | Interest only to the repayment date; never a minimum (the prototype's 14 days is not carried over: reg 56(3), (4); LQ-13) | The regulation's |
+| Rate type | Fixed | The prototype's |
+| Rate by risk class | One rate for every borrower | The prototype's; to confirm, since the requirement document scores borrowers (RC-11) |
+| Interest basis | Flat on the principal, by days: 1% × principal × days in the term | The prototype's |
+| Tax on fees | Excise duty at 20% on each fee, not on interest or the insurance premium | **Not in the prototype:** its fees carry no excise; LQ-14 |
+| Who pays the rail's charges | ____ : the borrower or Roan Capital, for M-Pesa's charges on repayments and payouts | **Blank** |
+| Third-party costs | The chattels mortgage fee, if it is the collateral registry's own charge, at cost | **To confirm** whether it is Roan Capital's fee or a third party's |
+| Grace | ____ days after an instalment falls due | **Blank** |
+| Collateral | Chattels, under a chattels mortgage (the prototype's application step); vehicles by logbook (RC-08) | To confirm the types and the loan-to-value |
+| Guarantors | One, with the guarantor's limit open (open answer 16) | **To confirm** |
+| Restructuring | ____ | **Blank:** Roan Capital's restructuring policy (open answer 10) |
+| Statements | ____ , to the borrower and the guarantor | **Blank** (reg 47(2)) |
+| Languages | English; Swahili ____ | **To confirm** |
+
+**B · Eligibility and limits** (Roan Capital's credit policy; thresholds
+internal):
+
+| Rule | Value | Status |
+|---|---|---|
+| Who may borrow | Individuals and businesses, with the documents RC-01 lists | Open answers 17 to 19 |
+| Affordability | From bank and M-Pesa statements (RC-05) | **Blank:** open answer 13 |
+| Limits by KYC tier | ____ | **Blank** (OB-MF-06) |
+| First loan and limit growth | The prototype marks a "first loan" | **Blank:** its cap and growth |
+| Exposure | ____ loans at once; top-ups ____ | **Blank** |
+| Bureau | ____ | Open answer 12 |
+
+**C · How it runs** (linked configuration, never published):
+
+| Setting | Value | Status |
+|---|---|---|
+| Approval chain | Credit Manager, Head Office, CEO (the prototype), or the committee chain (RC-12) | Open answer 28 |
+| Documents | RC-01's checklist | Open answers 14, 17 to 21 |
+| Disbursement | M-Pesa, and NCBA by bank transfer (RC-18) | Open answer 6 |
+| Cut-off | No payout released 23:00 to 04:00 (RC-21) | From the requirement document |
+| Purposes | ____ (the prototype asks for a purpose) | **Blank** |
+| Bureau reporting | Not in R1 (crb, phase 2) | — |
 
 **Not terms, and so not here:** the repayment order (reg 56) and the cap
 on a non-performing loan (reg 29) are the regulations'; any reading not

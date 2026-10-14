@@ -11,7 +11,7 @@ used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814]
 last_reviewed: 2026-10-14
 ---
 
@@ -279,27 +279,69 @@ companion all take the terms from it, and none keeps terms of its own.
   shareholders, the risk premium) are the institution's commercial
   reasoning: they go to CBK with the version, and are never published.
 
-**The vocabulary** (the first version; each term a field with its allowed
-values):
+**The vocabulary** (FS-813, FS-814): what describes a product, in three
+groups, because they are not all published. Each is a field with its
+allowed values; the schema in the code repository enforces it.
+
+**A · The product's terms:** in the document, published once active.
 
 | Term | Values |
 |---|---|
 | Amount limits | Minimum and maximum, KES |
 | Term | Length and unit (days, weeks, months); minimum and maximum, or a list of allowed terms (14 or 30 days) |
-| Repayment frequency | Once at maturity, daily, weekly, monthly; when the first instalment falls (the day after disbursement) |
-| Interest method | Flat, or reducing balance |
-| Interest rate and its unit | A number, with its period: for the term, a month or a year |
+| Repayment frequency | Once at maturity, daily, weekly, monthly, or chosen by the borrower to fit their pay cycle within set bounds; when the first instalment falls (the day after disbursement) |
+| Interest method | Flat; or reducing balance, with equal instalments or equal principal |
+| Interest rate and its unit | A number, with its period: for the term, a day, a month or a year |
+| Rate type | Fixed; or variable: a benchmark (KESONIA, the Central Bank Rate) plus a margin, and when it resets |
+| Rate by risk class | One rate, or a rate per risk class (decisioning DE-04): the page shows the range, each borrower's key information document their own (reg 59(2)(c)) |
+| Interest basis | The day count (actual days over 365, or 30 over 360) and when interest accrues |
 | Fees | Each fee: a fixed amount, a percentage of principal, or tiers by amount; once per loan or once per client (a membership fee); taken at disbursement, added to the schedule, or paid upfront before the application, and whether it is refundable |
-| Never a term | A minimum interest period on early repayment, or any early-repayment charge: reg 56(3) and (4) forbid them (FS-807, LQ-13) |
-| Insurance | As a fee, or a third party's cost passed on at cost (reg 59(2)(f)) |
+| Tax on fees | Excise duty on each fee as the law sets it: 20% of fees charged by financial institutions and by digital lenders, not on interest or insurance premiums (Excise Duty Act, First Schedule, Part II; LQ-14) |
+| Who pays the rail's charges | The borrower or the institution, for M-Pesa's and the bank's own charges on repayments and payouts |
+| Third-party costs | Each: valuation, registration at the collateral registry, a tracking device, insurance premiums; passed on at cost and outside the APR (reg 59(2)(f); LQ-03) |
+| Insurance | As a fee, or a third party's premium; credit life, and what happens to the loan on a death (JN-14) |
+| Grace | Days after a due date before default interest starts |
 | Default interest | Rate, period (a day), base (principal outstanding, or the overdue amount), from which day past due |
 | Default period | The days past due at which the agreement makes a loan non-performing, if shorter than reg 57's |
+| Collateral | Unsecured; or the types accepted (a vehicle, chattels, land, deposits), the loan-to-value, and the steps each needs (MF-03) |
+| Guarantors | How many; each guarantee's limit; for a Sacco, deposits pledged (reg 42; MF-37) |
+| Restructuring | Allowed or not; how often; any fee, inside the cap (reg 54(7); MF-09) |
+| Statements | How often the borrower and each guarantor receive one (reg 47(2); MF-37, MF-38) |
 | Collection ladder | Its stages by day (MF-39) |
 | Holiday rule | Whether a due date on a holiday moves, and which way (KC-15) |
 | Rounding | Precision and rule |
+| Languages | Of the key information document and the agreement: English, Swahili |
 
-The repayment order and the cap are the regulations', not a term; a
-reading not yet settled is the interpretation record's (recon §3.1.3).
+**B · Eligibility and limits:** the institution's credit policy for the
+product. Who may borrow is published; the thresholds behind a decision
+stay internal, as decisioning's risk classes do.
+
+| Rule | Values |
+|---|---|
+| Who may borrow | Individuals, businesses, or both; employed or self-employed; age; for a Sacco, members of at least so many months |
+| Affordability | The limit on instalments against income or turnover, from the statement metrics (reg 38; DE-02) |
+| Limits by KYC tier | The largest loan for each tier (identity ID-19) |
+| First loan and limit growth | The first loan's cap; how the limit grows with repayment history; any wait before borrowing again |
+| Exposure | Loans a borrower may hold at once; top-ups; for a Sacco, a multiple of deposits; each guarantor's total exposure (Roan Capital RC-41) |
+| Bureau | Whether a lookup is required before lending (crb CR-02) |
+
+**C · How it runs:** configuration the product links to, never published.
+
+| Setting | Values |
+|---|---|
+| Approval chain | By amount tier (mandates MD-01) |
+| Documents | The checklist (identity ID-02) |
+| Disbursement | The channels: M-Pesa or a bank, and which account |
+| Cut-off | When payments stop being released (Roan Capital: 23:00 to 04:00, RC-21) |
+| Purposes | The list a borrower chooses from |
+| Bureau reporting | When the product's loans are reported (crb, phase 2) |
+
+**Never terms, whatever an institution wants:** a minimum interest period
+or any charge on early repayment (reg 56(3), (4); FS-807, LQ-13); default
+interest beyond the cap (reg 29); contact with anyone but the borrower and
+the guarantor (reg 30). The repayment order and the cap are the
+regulations', not terms; a reading not yet settled is the interpretation
+record's (recon §3.1.3).
 
 ### 2.5 Non-performing classification — reg 57, MF-25
 
