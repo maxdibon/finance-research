@@ -12,7 +12,7 @@ used_by: []
 owner: Role, never a name
 classification: Internal
 review_ids: [FS-627, FS-667]
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-15
 ---
 
 <!--
@@ -37,7 +37,8 @@ last_reviewed: 2026-10-08
   - The last two sections are "Acceptance tests" (build) or "Checks before
     the build" (component), then "Open questions". Every test is a table
     row with an id (A1, K12), so the code can be tagged with it.
-  - `status` is draft, agreed (the owner's go), building or built. Once
+  - `status` is draft, agreed, building or built (what each means: Start
+    here, "Statuses you will meet"). Once
     agreed, a spec changes only through change enablement
     (docs/service-management/README.md §2), and its version moves:
     patch for wording, minor for behaviour, major for a restructure.

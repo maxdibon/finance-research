@@ -7,7 +7,7 @@ released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763, FS-765, FS-768, FS-769, FS-773, FS-776, FS-782, FS-783, FS-784]
-last_reviewed: 2026-10-13
+last_reviewed: 2026-10-15
 ---
 
 # User journeys
@@ -36,9 +36,9 @@ in the build.
 5. **§2 opens with a flow diagram** in plain text: every step by its
    number at the start of a line, every §3 row as "(3x)", and no
    capability ids, so the table stays their one place (FS-558).
-6. **A status and its evidence** (FS-668): `status` is draft, agreed (the
-   owner's go), validated (walked through with real users, named in
-   `validated_with`) or tested (its acceptance items pass).
+6. **A status and its evidence** (FS-668): `status` is draft, agreed,
+   validated (users named in `validated_with`) or tested; what each means
+   is in [Start here](../start-here.md), "Statuses you will meet".
 7. **§1 states a target, the moments that matter, and the data:** the
    end-to-end time we hold ourselves to; the two or three moments where
    the person is anxious or decides whether to trust us; and what

@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781]
-last_reviewed: 2026-10-13
+review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781, FS-855]
+last_reviewed: 2026-10-15
 ---
 
 # Start here
@@ -134,3 +134,128 @@ Ids are never reused; a retired capability id is listed in its module
 | R1 to R5 | delivery-plan.md | A release |
 | JN | journeys/README.md | A user journey, step by step |
 | HB | handbook/ | A procedure in the institution's handbook; its tens digit is its section (HB-10 to HB-12 are section 1, HB-70 to HB-78 section 7) |
+
+## Statuses you will meet
+
+Everything that changes has a status, and each kind of thing has its own
+set (FS-855). This is the one place they are explained. The checks
+enforce them, and the status check holds this section to what they
+enforce: a status they allow that is not here, or one here they do not
+allow, fails. A status changes in a merge request, by the role that
+approves the document.
+
+### Documents kept current
+
+Kinds: `register`, `index`, `overview`, `plan`, `delivery`, `product`,
+`shared-service`, `channel`, `checklist`, `guide`, `service`.
+
+| Status | Means |
+|---|---|
+| **living** | Kept true as things change, never finished. Whoever owns it edits it; the checks keep it honest |
+
+### Documents that are agreed
+
+Kinds: `architecture`, `policy`, `handbook`, `manual`, `partner-model`,
+`marketing`.
+
+| Status | Means |
+|---|---|
+| **draft** | Being written; read it, but do not rely on it yet |
+| **agreed** | The approving role said go (its code owner, §2 of ways of working); we work to it |
+| **superseded** | Replaced by a later document, which it names; kept for the record |
+
+### Outreach letters
+
+| Status | Means |
+|---|---|
+| **draft** | Written, not sent |
+| **sent** | Sent; the letter keeps its own version, since it travels alone |
+| **answered** | The answer is in, and recorded where it belongs |
+| **withdrawn** | Not sent after all, or taken back |
+
+### Product versions
+
+| Status | Means |
+|---|---|
+| **draft** | Being written with the institution; private to it and Dibon |
+| **awaiting-approval** | Complete, waiting for the institution's own approval |
+| **awaiting-cbk** | Approved by the institution, waiting for the Central Bank of Kenya where the law asks for it; still private |
+| **active** | Loans are written on it, and its terms are public (decisions, FS-803) |
+| **retired** | No new loans; the loans made under it keep its terms |
+
+### Specs
+
+| Status | Means |
+|---|---|
+| **draft** | Being written |
+| **agreed** | The owner's go; from now on it changes only through change enablement |
+| **building** | Code is being written against it |
+| **built** | Its acceptance tests pass |
+
+### Journeys
+
+| Status | Means |
+|---|---|
+| **draft** | Being written |
+| **agreed** | The owner's go |
+| **validated** | Walked through with real users, named in `validated_with` |
+| **tested** | Its acceptance items pass |
+
+### Capabilities
+
+| Status | Means |
+|---|---|
+| **Planned** | We intend it; nothing is designed yet |
+| **Designed** | Specified well enough to build |
+| **Built** | Code exists and its tests pass, not yet in use |
+| **Live** | In use by a customer. Say "built" or "live" only when it is |
+
+### Register rows (REVIEW.md)
+
+| Status | Means |
+|---|---|
+| **OPEN** | Raised, not settled; rated Critical, High, Medium or Low |
+| **DECIDED** | Settled by a decision, and the change made |
+| **ANSWERED** | A question, answered; nothing to change |
+| **DECLINED** | Not done, with the reason |
+
+### Documents held with a party (the document register)
+
+| Status | Means |
+|---|---|
+| **to keep** | An original or a record, registered, not yet in the party's folder |
+| **kept** | Kept as received or as sent: read-only, fingerprinted (rules, Dibon 11) |
+| **draft** | Our working document, being written |
+| **shared** | Sent to the party, for comment |
+| **agreed** | Both sides agree it |
+| **superseded** | Replaced by a later version, which is registered |
+| **withdrawn** | Taken back |
+| **internal** | Ours alone, never shared |
+
+### Partner candidates (partners.md)
+
+| Status | Means |
+|---|---|
+| **Candidate** | Named, not contacted |
+| **Contacted** | We have written or called |
+| **In discussion** | Talking terms |
+| **Onboarding** | Terms agreed; integration or paperwork under way |
+| **Live** | Working with us |
+| **Unconfirmed** | Sources disagree on the stage |
+| **Parked** | Set aside for now |
+| **Declined** | Not going ahead |
+
+### Partner decisions (partners.md)
+
+| Status | Means |
+|---|---|
+| **OPEN** | To decide |
+| **DECIDED** | Decided, with the criteria it rests on |
+| **PARKED** | Set aside for now |
+
+### A document's release line
+
+| Status | Means |
+|---|---|
+| **unreleased** | New since the last release, or a template |
+| **YYYY.MM.DD** | The release its content last changed in, such as 2026.10.15; a release moves it, never a person (rules, Dibon 12) |

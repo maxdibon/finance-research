@@ -455,6 +455,23 @@ test('status: a version field on a document that does not go outside fails', () 
   assert.deepStrictEqual(names(f), ['status']);
 });
 
+// FS-855: Start here explains every status the checks allow, and no other.
+const START = path.join('docs', 'start-here.md');
+test('status: a status the checks allow, missing from Start here, fails', () => {
+  const f = runWith((d) => patch(d, START, (t) => t.replace(/^\| \*\*superseded\*\* \| Replaced by a later document.*\n/m, '')));
+  assert.deepStrictEqual(names(f), ['status']);
+});
+
+test('status: a status Start here explains but the checks do not allow fails', () => {
+  const f = runWith((d) => patch(d, START, (t) => t.replace('| **building** |', '| **paused** | Set aside |\n| **building** |')));
+  assert.deepStrictEqual(names(f), ['status']);
+});
+
+test('status: a kind missing from its lifecycle in Start here fails', () => {
+  const f = runWith((d) => patch(d, START, (t) => t.replace('`checklist`, `guide`, ', '`checklist`, ')));
+  assert.deepStrictEqual(names(f), ['status']);
+});
+
 // FS-852: each document says the release it was last released in.
 test('status: a document with no released line fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^released: .*\n/m, '')));

@@ -1202,6 +1202,58 @@ function statusesFor(kind) {
   if (LIFECYCLES.agreed.includes(kind)) return ['draft', 'agreed', 'superseded'];
   return null;
 }
+// FS-855: Start here's "Statuses you will meet" explains every status the
+// checks allow, and no other, so the words and the rules never drift apart
+// (as the words check holds the guide to dibon). Each set is a "###"
+// subsection whose table's first cells are its statuses, in bold; the two
+// document lifecycles also list their kinds.
+const START_HERE = path.join('docs', 'start-here.md');
+function statusSets() {
+  return {
+    'Documents kept current': { statuses: ['living'], kinds: LIFECYCLES.living },
+    'Documents that are agreed': { statuses: statusesFor(LIFECYCLES.agreed[0]), kinds: LIFECYCLES.agreed },
+    'Outreach letters': { statuses: statusesFor('outreach') },
+    'Product versions': { statuses: statusesFor('product-version') },
+    Specs: { statuses: SPEC_STATUSES },
+    Journeys: { statuses: JOURNEY_STATUSES },
+    Capabilities: { statuses: STATUSES },
+    'Register rows (REVIEW.md)': { statuses: REVIEW_STATUSES },
+    'Documents held with a party (the document register)': { statuses: [...new Set(Object.values(DOC_STATUSES).flat())] },
+    'Partner candidates (partners.md)': { statuses: STAGES },
+    'Partner decisions (partners.md)': { statuses: DECISION_STATUSES },
+    "A document's release line": { statuses: ['unreleased', 'YYYY.MM.DD'] },
+  };
+}
+function checkStatusGlossary(root) {
+  if (!fs.existsSync(path.join(root, START_HERE))) return [];
+  const at = (msg) => fail('status', START_HERE, 0, msg);
+  const text = read(root, START_HERE);
+  const start = text.search(/^## Statuses you will meet$/m);
+  if (start < 0) return [at('no "## Statuses you will meet": every status the checks allow is explained there')];
+  const rest = text.slice(start);
+  const end = rest.slice(3).search(/^## /m);
+  const section = end < 0 ? rest : rest.slice(0, end + 3);
+  const subs = new Map(section.split(/^### /m).slice(1).map((part) => {
+    const nl = part.indexOf('\n');
+    return [part.slice(0, nl).trim(), part.slice(nl + 1)];
+  }));
+  const sets = statusSets();
+  const out = [];
+  for (const name of Object.keys(sets).filter((n) => !subs.has(n))) out.push(at(`no "### ${name}" under "Statuses you will meet"`));
+  for (const [name, body] of subs) {
+    const set = sets[name];
+    if (!set) { out.push(at(`"### ${name}" is not a set of statuses the checks know`)); continue; }
+    const shown = body.split('\n').map((l) => (l.match(/^\| \*\*([^*|]+)\*\* \|/) || [])[1]).filter(Boolean);
+    for (const s of set.statuses.filter((x) => !shown.includes(x))) out.push(at(`${name}: the checks allow "${s}", which is not explained here`));
+    for (const s of shown.filter((x) => !set.statuses.includes(x))) out.push(at(`${name}: "${s}" is explained here, but the checks do not allow it`));
+    if (!set.kinds) continue;
+    const listed = [...((body.match(/^Kinds: ([\s\S]*?)\n\n/m) || [])[1] || '').matchAll(/`([a-z-]+)`/g)].map((m) => m[1]);
+    for (const k of set.kinds.filter((x) => !listed.includes(x))) out.push(at(`${name}: the kind "${k}" is not listed`));
+    for (const k of listed.filter((x) => !set.kinds.includes(x))) out.push(at(`${name}: "${k}" is listed, but is not a kind of this set`));
+  }
+  return out;
+}
+
 // FS-852: each document says the release its content was last released in,
 // "released: 2026.10.15", a release in CHANGELOG.md; a document not yet in
 // one says "unreleased", and so does every template (_*.md), so a copy
@@ -1584,6 +1636,7 @@ function runAll(root) {
     ...checkProducts(root),
     ...checkDocRegister(root, files),
     ...checkStatus(root, files),
+    ...checkStatusGlossary(root),
     ...checkVersions(root),
     ...checkChanges(root),
     ...checkWords(root),
