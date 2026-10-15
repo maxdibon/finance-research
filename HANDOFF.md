@@ -146,21 +146,26 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
 
 - Repo `E:\Agents\Claude\Financial Services`, private, `origin`
   `https://github.com/eric-mokaya/finance`, branch `main`.
-- **`REVIEW.md`** is the intake; **`CHANGELOG.md`** the versions;
+- **`REVIEW.md`** is the intake; **`CHANGELOG.md`** the releases, and
+  `docs/marketing/release-notes.md` the same for readers outside Dibon;
+  **`changes/`** the change notes waiting for the next release;
   **`docs/decisions.md`** what each decision cost; **`docs/rules.md`** the
   standing rules; **`docs/document-register.md`** every document held
   with a party, by DR id; **`docs/customers/`** a delivery map per
   customer, on `_template.md`, its changelog in §8.
 - **The reader:** `build/site/index.html`, every document linked and every
   id a link, rebuilt by the pre-commit hook; its Review page lists open
-  rows by criticality, its "Documents by status" page every draft. In the
-  desktop app, `preview_start` name `site`.
+  rows by criticality, its "Documents by status" page every draft, its
+  "Unreleased" page the notes and documents changed since the release;
+  every page's header names its release. In the desktop app,
+  `preview_start` name `site`.
 - **Tools:** `tools/check.js` and its tests; `tools/site.js`, the reader;
   `tools/assemble.js`, the Master; `tools/products/`, product
   questionnaires built and read back (the builder needs the docx package
   via DOCX_MODULE); `tools/originals.js`, originals kept and verified;
   `tools/cut.js`, releases; `tools/release.js`, which release a reader
-  is reading.
+  is reading; `tools/dibon.js` (with `dibon` and `dibon.cmd` at the
+  root), the team's words.
 - **Git-ignored, holding real material:** `clients/` (per party:
   `originals/`, `working/`, meeting folders), `sources/confidential/`,
   `sources/gatekeepr/`, `sources/market/`, `sources/regulation/` (the law
@@ -181,6 +186,7 @@ node --test tools/check.test.js    # breaks each check on purpose
 node tools/site.js                 # builds build/site/; the hook does this too
 node tools/originals.js verify clients/roan-capital
 git tag --list                     # the releases: docs-<YYYY.MM.DD>, <customer>-<YYYY.MM.DD>
+node tools/dibon.js status         # the branch, the release, unsaved work, notes waiting
 git log --oneline -15
 git status --short
 ```
@@ -198,7 +204,10 @@ dependencies, scope, journeys, handbook, overview, specs, products (the
 drafts, their typed values against `code/lender-rules/`), docregister
 (the document register and every DR id cited), status (each document's
 status against its kind's lifecycle; `version:` only on outreach),
-versions (the changelogs and the customer template), links, frontmatter
+versions (the changelogs, README.md's and this file's release lines, and
+the customer template), changes (each change note's form; no register ids
+in a note read outside Dibon), words (the guide has a section for every
+word `dibon` knows, and no other), links, frontmatter
 and reviewed (a change of content needs today's `last_reviewed`; a
 change only to status, version or last_reviewed does not). The
 pre-commit hook runs them, then rebuilds the reader. **When a check
@@ -254,6 +263,19 @@ register row.
   products check blocks it.
 - **A protected name can hide in a folder name**: the names check reads
   every committed word, paths in tables included.
+- **A script can match nothing and still print "ok":** a mangled pattern
+  once marked no register rows at all. Check the result (count the rows
+  changed), never the script's own word.
+- **Writing the marker `[decision]` in a row's notes marks the row as a
+  decision**, and the decisions check then wants an entry for it: say "as
+  a decision" in prose.
+- **Every commit subject starts with its register row** ("FS-123: …"), or
+  Merge, Revert or Release: the commit-msg hook refuses others.
+- **Take the next FS id from the real REVIEW.md**, never from a sandbox or
+  a practice copy, whose ids go nowhere.
+- **Windows cannot rename across drives** (Downloads on C:, the
+  repository on E:): copy, check the copy, then remove the source, as
+  `tools/originals.js` does.
 - **Subagents claim more than they did.** Check their work.
 
 ## Waiting on the owner (as at 2026-10-15)
@@ -279,6 +301,9 @@ register row.
   propose one when the notes waiting (the reader's "Unreleased" page) are
   worth telling; then `node tools/cut.js`, commit ("Release <tag>"), an
   annotated tag, and the tag pushed with the commits.
+- **The team cannot share yet:** until the move to GitLab, only the owner
+  pushes to GitHub, so a teammate's `dibon share` stops at "saved on your
+  branch; tell the owner it is ready to merge". The owner merges.
 - **Outside the repository:** the second site's provider before Roan
   Capital's go-live (FS-775); counsel for the LQ register (none engaged);
   the Odoo consultants (paid users; Odoo Enterprise for Dibon, FS-640);
