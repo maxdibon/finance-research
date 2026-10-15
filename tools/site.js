@@ -372,16 +372,21 @@ function related(f, idx, page) {
   return parts.join('');
 }
 
+// FS-844: a contents list where a reader needs one: five sections or
+// more on a page of 600 words or more, or 1,000 words or more in at
+// least two; subsections nested. A short page needs none.
 function contents(body) {
   const hs = [];
   let fenced = false;
   for (const line of body.replace(/<!--[\s\S]*?-->/g, '').split('\n')) {
     if (line.startsWith('```')) fenced = !fenced;
-    const h = !fenced && line.match(/^## (.*)$/);
-    if (h) hs.push(h[1]);
+    const h = !fenced && line.match(/^(##|###) (.*)$/);
+    if (h) hs.push({ level: h[1].length, text: h[2] });
   }
-  if (hs.length < 5) return '';
-  return `<nav class="toc"><b>Contents</b>${hs.map((h) => `<a href="#${anchorOf(h)}">${html(h.replace(/[`*]/g, ''))}</a>`).join('')}</nav>`;
+  const sections = hs.filter((h) => h.level === 2).length;
+  const words = body.split(/\s+/).length;
+  if (words < 600 || (sections < 5 && !(sections >= 2 && words >= 1000))) return '';
+  return `<nav class="toc"><b>Contents</b>${hs.map((h) => `<a${h.level === 3 ? ' class="sub"' : ''} href="#${anchorOf(h.text)}">${html(h.text.replace(/[`*]/g, ''))}</a>`).join('')}</nav>`;
 }
 
 // The file's path, each folder with an index linked to it.
@@ -408,7 +413,7 @@ header b{color:var(--accent)}header a{color:var(--fg);text-decoration:none;font-
 main{max-width:1180px;margin:0 auto;padding:16px}a{color:var(--link)}a.id{text-decoration:none;font-weight:600;white-space:nowrap}a.id:hover{text-decoration:underline}
 a.self{color:var(--accent);text-decoration:none;font-weight:700;white-space:nowrap}a.sec{white-space:nowrap}
 html{scroll-padding-top:64px}td:first-child{min-width:5.5em}
-.meta{color:var(--muted);font-size:13px;margin:0 0 8px}.meta a{color:var(--muted)}.tw{overflow-x:auto;margin:12px 0}
+.toc a.sub{padding-left:14px;font-size:12px}.meta{color:var(--muted);font-size:13px;margin:0 0 8px}.meta a{color:var(--muted)}.tw{overflow-x:auto;margin:12px 0}
 table{border-collapse:collapse;font-size:14px;min-width:100%}th,td{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:left}
 th{background:var(--code)}tr:target{outline:2px solid var(--accent);background:var(--code)}
 pre{background:var(--code);padding:12px;overflow-x:auto;font:13px/1.4 ui-monospace,Consolas,monospace}code{background:var(--code);padding:0 3px;font:13px ui-monospace,Consolas,monospace}
@@ -467,14 +472,17 @@ function reviewBody(body) {
     '',
     `${open.length} open: ${CRITICALITY_ORDER.map((k) => `${byCrit[k] || 0} ${k}`).join(', ')}. Closed: ${Object.entries(byStatus).map(([k, n]) => `${n} ${k.toLowerCase()}`).join(', ')}.`,
     '',
-    '| Criticality | Id | Point |',
-    '|---|---|---|',
-    ...open.map((c) => `| ${c[4]} | ${c[0]} | ${c[2]} |`),
-    '',
+    // FS-844: a subsection per criticality, and the register by the
+    // hundred, so the contents list gives real jump points.
+    ...CRITICALITY_ORDER.filter((k) => byCrit[k]).flatMap((k) => [`### ${k} (${byCrit[k]})`, '', '| Id | Point |', '|---|---|', ...open.filter((c) => c[4] === k).map((c) => `| ${c[0]} | ${c[2]} |`), '']),
     '## The register, in id order',
     '',
   ];
-  return [...lines.slice(0, at), ...summary, ...lines.slice(at)].join('\n');
+  const end = at + 2 + lines.slice(at + 2).findIndex((l) => !/^\| FS-\d{3} \|/.test(l));
+  const table = lines.slice(at + 2, end < at + 2 ? lines.length : end);
+  const hundreds = [...new Set(table.map((l) => Math.floor(+l.slice(5, 8) / 100)))];
+  const grouped = hundreds.flatMap((h) => [`### FS-${String(Math.max(1, h * 100)).padStart(3, '0')} to FS-${String(h * 100 + 99).padStart(3, '0')}`, '', lines[at], lines[at + 1], ...table.filter((l) => Math.floor(+l.slice(5, 8) / 100) === h), '']);
+  return [...lines.slice(0, at), ...summary, ...grouped, ...lines.slice(end < at + 2 ? lines.length : end)].join('\n');
 }
 
 function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {

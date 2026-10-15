@@ -40,7 +40,9 @@ builds them, tools/products/read-back.js reads a returned one, until the
 back office's product form replaces both (lender-rules §2.4). Returned
 documents are client material: kept in clients/, never in git.
 
-**A · Product terms** (published once approved):
+## A · Product terms
+
+Published once approved.
 
 | Id | Term | Value | Source | Ask |
 |---|---|---|---|---|
@@ -70,8 +72,9 @@ documents are client material: kept in clients/, never in git.
 | A24 | Statements | How often, to the borrower and the guarantor (reg 47(2)) | None yet | Decide |
 | A25 | Languages | English; Swahili (the form is in English) | Dibon's proposal; Roan Capital's application form | Choose: English only / English and Swahili |
 
-**B · Eligibility and limits** (Roan Capital's credit policy; thresholds
-internal):
+## B · Eligibility and limits
+
+Roan Capital's credit policy; its thresholds stay internal.
 
 | Id | Rule | Value | Source | Ask |
 |---|---|---|---|---|
@@ -83,7 +86,9 @@ internal):
 | B6 | Bureau | A credit report before lending (open answer 12) | None yet | Choose: On every application / On the first loan only / Not checked |
 | B7 | Cooling-off period | Your credit policy must state a cooling-off period: how many days, and is it a time after signing in which a borrower may withdraw without charge, or a wait before a new loan? (LQ-15) | The regulations (reg 25(2)(f)) | Decide |
 
-**C · How it runs** (linked configuration, never published):
+## C · How it runs
+
+Linked configuration, never published.
 
 | Id | Setting | Value | Source | Ask |
 |---|---|---|---|---|
@@ -94,7 +99,9 @@ internal):
 | C5 | Purposes | The form asks for the purpose in the borrower's own words: a list to choose from, or free text? | Roan Capital's application form; the prototype | Provide |
 | C6 | Bureau reporting | Not in R1 (crb, phase 2) | Dibon's plan | — |
 
-**The product, typed** (FS-823). The tables are the conversation with
+## The product, typed
+
+FS-823. The tables are the conversation with
 Roan Capital; this block is the product as data, one entry per term of
 the vocabulary, keyed by its name. `proposed` is what we have, `options`
 the typed form of a Choose's options in their order, and `value` what Roan
@@ -296,7 +303,9 @@ the schema in the code repository (lender-rules §2.4), not here.
 }
 ```
 
-**From Roan Capital's application form** (FS-831; the blank form in
+## From Roan Capital's application form
+
+FS-831; the blank form in
 clients/, not in git). It confirms the term, daily instalments, the
 rate, default interest and the fees above, and the approval block
 names the prototype's chain. Once the platform issues each loan's
@@ -328,6 +337,8 @@ regulations ask of an agreement:
   in the collateral registry (MF-03).
 - **The witness line** on the chattels mortgage names another
   organisation; the platform's version names Roan Capital's officer.
+
+## Not terms, and before submission
 
 **Not terms, and so not here:** the repayment order (reg 56) and the cap
 on a non-performing loan (reg 29) are the regulations'; any reading not
