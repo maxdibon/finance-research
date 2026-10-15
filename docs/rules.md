@@ -3,7 +3,7 @@ id: rules
 name: Rules — what we hold ourselves, our customers and our partners to
 kind: policy
 status: agreed
-released: 2026.10.15
+released: 2026.10.15.1
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762, FS-769, FS-805, FS-806, FS-834, FS-845]

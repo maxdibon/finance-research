@@ -1,6 +1,6 @@
 # Dibon financial services — session handoff
 
-    release: 2026.10.15 · major
+    release: 2026.10.15.1 · patch
     updated: 2026-10-15
     the release is the documentation's, moved by each release (FS-842);
     this file has no version of its own

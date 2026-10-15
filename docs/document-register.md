@@ -3,7 +3,7 @@ id: document-register
 name: Document register — every document with a party, as received, sent or worked on
 kind: register
 status: living
-released: 2026.10.15
+released: 2026.10.15.1
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-834, FS-835, FS-857]

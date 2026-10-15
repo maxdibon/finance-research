@@ -29,6 +29,16 @@ release), moves README.md's release line, and gives the tag to make,
 `docs-<version>`, annotated. Each document's own status follows its
 kind's lifecycle (the status check).
 
+## 2026.10.15.1 · patch
+
+- The document register has a one-line summary for every document, and each customer's page lists its own documents in a table made from the register: title, summary, kind, status, date and who it came from. Registering a received document or a meeting updates the customer's table by itself. (FS-857; Chief Technology and Innovation Officer)
+- Every document now names the release its content was last released in, at the top of the file and as a badge in the reader, so a copy read anywhere says which release it belongs to, and whether it has changed since. (FS-852; Chief Technology and Innovation Officer; for everyone)
+- Every page in the reader ends with the document's history, from git: each change to its content, newest first, under the release it went into, with the register row that asked for it. `dibon history <file>` says the same outside the reader. (FS-853; Chief Technology and Innovation Officer)
+- In the reader, every path written as plain text is now a link: short names in a list ("docs/regulation.md, compliance.md"), relative paths ("modules/access.md") and folders ("docs/customers/", which opens a page listing what the folder holds). Folders outside the documents, such as tools/, read as code. The checks fail a path that names no document, or a short name two documents share with nothing to say which. (FS-856; Chief Technology and Innovation Officer)
+- Start here now explains every status we use, from a living register to a product version awaiting the Central Bank, in one section, "Statuses you will meet"; the checks fail if it and the rules they enforce ever differ. (FS-855; Chief Technology and Innovation Officer)
+- Start here's statuses are now one table, a row for each kind of thing, with its statuses in order and real examples to open. (FS-858; Chief Technology and Innovation Officer)
+**Status:** Specs: 11 draft. Journeys: 19 draft. Other documents: 20 draft, 2 agreed. Outreach: 1 withdrawn, 7 draft. Living documents: 52 living. Since docs-2026.10.15: no status changed; 0 documents added, 0 removed. Documents changed in it, now saying "released: 2026.10.15.1": 6.
+
 ## 2026.10.15 · major
 
 **The first dated release:** the documentation as it stands when versions
