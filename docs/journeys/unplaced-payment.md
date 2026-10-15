@@ -4,6 +4,7 @@ name: JN-16 · An unplaced payment, from arrival to its account or back to the p
 kind: journey
 release: R1
 status: draft
+released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal

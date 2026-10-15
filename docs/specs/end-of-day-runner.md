@@ -4,6 +4,7 @@ name: End-of-day runner — build specification
 kind: spec
 type: build
 status: draft
+released: 2026.10.15
 release: R1
 implements: [core, recon-observability]
 depends_on: [kapu-core-fineract, lender-rules, observability-grafana, access-keycloak, event-bus-kafka, recon]

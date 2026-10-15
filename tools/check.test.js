@@ -295,6 +295,32 @@ test('reviewed: the same change with today\'s date passes', () => {
   assert.deepStrictEqual(f, []);
 });
 
+test('reviewed: a change to the released line alone asks no review', () => {
+  const f = runInRepo((d) => patch(d, path.join('docs', 'modules', 'crb.md'),
+    (t) => t.replace(/^last_reviewed: .*$/m, 'last_reviewed: 2026-10-01').replace(/^released: .*$/m, 'released: unreleased')));
+  assert.deepStrictEqual(f, []);
+});
+
+// FS-852: what the reader calls "changed since" is content, not the stamp.
+test('release: a diff that moves only the released line is not a change', () => {
+  const { execFileSync } = require('child_process');
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-release-'));
+  const git = (...a) => execFileSync('git', ['-C', d, '-c', 'user.name=test', '-c', 'user.email=test@example.invalid', '-c', 'core.autocrlf=false', ...a], { encoding: 'utf8' });
+  try {
+    git('init', '-q');
+    fs.writeFileSync(path.join(d, 'a.md'), '---\nstatus: draft\nreleased: unreleased\n---\n\n# A\n');
+    fs.writeFileSync(path.join(d, 'b.md'), '---\nstatus: draft\nreleased: unreleased\n---\n\n# B\n');
+    git('add', '-A');
+    git('commit', '-q', '--no-verify', '-m', 'base');
+    patch(d, 'a.md', (t) => t.replace('released: unreleased', 'released: 2026.10.15'));
+    patch(d, 'b.md', (t) => `${t}More.\n`);
+    fs.writeFileSync(path.join(d, 'c.md'), '# C\n');
+    git('add', 'c.md');
+    const changed = require('./release').changedSince((a) => git(...a), 'HEAD');
+    assert.deepStrictEqual([...changed].sort(), ['b.md', 'c.md']);
+  } finally { fs.rmSync(d, { recursive: true, force: true }); }
+});
+
 test('reviewed: a document with no last_reviewed fails', () => {
   const f = runInRepo((d) => patch(d, path.join('docs', 'modules', 'crb.md'), (t) => t.replace(/^last_reviewed: .*\n/m, '')));
   assert.ok(names(f).includes('reviewed'));
@@ -405,6 +431,27 @@ test('status: a status its kind\'s lifecycle does not allow fails', () => {
 
 test('status: a version field on a document that does not go outside fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^status: living$/m, 'status: living\nversion: 0.2.0')));
+  assert.deepStrictEqual(names(f), ['status']);
+});
+
+// FS-852: each document says the release it was last released in.
+test('status: a document with no released line fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^released: .*\n/m, '')));
+  assert.deepStrictEqual(names(f), ['status']);
+});
+
+test('status: a released line naming no release in the changelog fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^released: .*$/m, 'released: 2026.10.14')));
+  assert.deepStrictEqual(names(f), ['status']);
+});
+
+test('status: a document not yet released says so, and passes', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^released: .*$/m, 'released: unreleased')));
+  assert.deepStrictEqual(f, []);
+});
+
+test('status: a template naming a release fails, so a copy never inherits one', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'customers', '_template.md'), (t) => t.replace(/^released: .*$/m, 'released: 2026.10.15')));
   assert.deepStrictEqual(names(f), ['status']);
 });
 
@@ -726,7 +773,7 @@ test('site: a journey links each capability to its module row, with its status',
 
 // ── overview (FS-575) ────────────────────────────────────────────────────
 test('overview: a document the overview does not link fails', () => {
-  const f = runWith((d) => fs.writeFileSync(path.join(d, 'docs', 'orphan.md'), '---\nid: orphan\nkind: register\nstatus: living\nlast_reviewed: 2026-10-06\n---\n\n# Orphan\n'));
+  const f = runWith((d) => fs.writeFileSync(path.join(d, 'docs', 'orphan.md'), '---\nid: orphan\nkind: register\nstatus: living\nreleased: unreleased\nlast_reviewed: 2026-10-06\n---\n\n# Orphan\n'));
   assert.deepStrictEqual(names(f), ['overview']);
 });
 

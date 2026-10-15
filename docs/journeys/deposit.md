@@ -4,6 +4,7 @@ name: JN-10 · A deposit paid to the institution's paybill or till
 kind: journey
 release: R2
 status: draft
+released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal

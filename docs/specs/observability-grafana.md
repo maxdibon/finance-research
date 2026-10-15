@@ -4,6 +4,7 @@ name: Observability on Grafana, with on-call — component specification
 kind: spec
 type: component
 status: draft
+released: 2026.10.15
 release: R1
 implements: [recon-observability]
 depends_on: [access-keycloak, messaging]

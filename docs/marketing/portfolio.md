@@ -3,6 +3,7 @@ id: portfolio
 name: Dibon financial services — portfolio copy
 kind: marketing
 status: agreed
+released: 2026.10.15
 owner: Commercial lead
 classification: Public once approved
 last_reviewed: 2026-10-09

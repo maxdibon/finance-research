@@ -3,6 +3,7 @@ id: platform-security
 name: Platform Security
 kind: shared-service
 status: living
+released: 2026.10.15
 owner: Security lead
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]

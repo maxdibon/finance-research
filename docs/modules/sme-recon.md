@@ -3,6 +3,7 @@ id: sme-recon
 name: SME Recon
 kind: product
 status: living
+released: 2026.10.15
 owner: Product lead, recon
 classification: Internal
 audience: [sme, fintech]

@@ -86,6 +86,10 @@ its money and its records; Dibon holds the platform. Read
   or for a customer; a change that takes no release (wording, tooling,
   housekeeping) needs none. A release, on the owner's word only, is
   `node tools/cut.js docs` (or `<customer-id>`), then an annotated tag.
+  **Each document names its release** in its front matter, `released:
+  2026.10.15`, the release its content last changed in (FS-852): a new
+  document says `released: unreleased`, as the templates do, and the
+  release stamps it. Never type a release into it.
 - **The team's words** (`tools/dibon.js`; the guide is
   `docs/training/working-in-the-repository.md`): when someone asks in plain
   sentences ("update, then mark answer 24 as answered"), use the words,

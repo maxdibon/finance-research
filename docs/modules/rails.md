@@ -3,6 +3,7 @@ id: rails
 name: Rails — payment and bank integrations
 kind: shared-service
 status: living
+released: 2026.10.15
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]

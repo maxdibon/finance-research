@@ -3,6 +3,7 @@ id: incident-management
 name: Incident management — severities, who is told, how and with what
 kind: plan
 status: living
+released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-466, FS-471, FS-633, FS-639, FS-802]

@@ -3,6 +3,7 @@ id: documents
 name: Document catalogue — what an institution keeps, why, and for how long
 kind: register
 status: living
+released: 2026.10.15
 owner: Compliance and risk officer
 classification: Internal
 review_ids: [FS-063, FS-527, FS-532, FS-537, FS-538, FS-591]

@@ -11,8 +11,10 @@
 // docs: CHANGELOG.md gets the entry (every note, internal); notes for
 // everyone also go to docs/marketing/release-notes.md, the external
 // changelog; README.md's release line moves. A customer: its delivery map's
-// §8 gets the entry (its notes, written for it). A note is removed once
-// every place it belongs to has released it: the documentation always, and
+// §8 gets the entry (its notes, written for it). Each document changed in a
+// docs release says so in its front matter, "released: <version>". A note
+// is removed once every place it belongs to has released it: the
+// documentation always, and
 // its customer when it is for one. An entry written by hand under the
 // version's heading, with "**Status:** to stamp", is stamped and kept.
 
@@ -107,6 +109,34 @@ function stampDocs(version) {
   const removed = [...old.keys()].filter((f) => !now.has(f)).length;
   return `${counts}. Since ${prev}: ${moved.length ? moved.join('; ') : 'no status changed'}; ${added} documents added, ${removed} removed.`;
 }
+// FS-852: each document says the release its content was last released in.
+// A document that is new, still "unreleased", or changed since the previous
+// release (a moved stamp alone is no change) takes this one; the rest keep
+// theirs. Templates (_*.md) stay "unreleased", so a copy starts that way.
+function stampReleased(version) {
+  const prev = previousTag('docs', version);
+  const changed = prev ? require('./release').changedSince(git, prev, ['docs']) : new Set();
+  const before = new Set(prev ? git(['ls-tree', '-r', '--name-only', prev, 'docs']).split('\n') : []);
+  const files = git(['ls-files', '--cached', '--others', '--exclude-standard', 'docs']).split('\n').filter((f) => f.endsWith('.md'));
+  let n = 0;
+  for (const f of files) {
+    if (path.basename(f).startsWith('_')) continue;
+    const p = path.join(ROOT, f);
+    const raw = fs.readFileSync(p, 'utf8');
+    const t = norm(raw);
+    const fm = front(t);
+    if (!fm) continue;
+    const had = (field(fm, 'released') || '').trim();
+    if (prev && had && had !== 'unreleased' && before.has(f) && !changed.has(f)) continue;
+    const head = /^released:/m.test(fm)
+      ? fm.replace(/^released:.*$/m, `released: ${version}`)
+      : /^status:.*$/m.test(fm) ? fm.replace(/^(status:.*)$/m, `$1\nreleased: ${version}`) : `${fm}\nreleased: ${version}`;
+    const out = t.replace(`---\n${fm}\n---\n`, `---\n${head}\n---\n`);
+    fs.writeFileSync(p, raw.includes('\r\n') ? out.replace(/\n/g, '\r\n') : out);
+    n++;
+  }
+  return n;
+}
 function registerRows(text, party) {
   return norm(text).split('\n').map((l) => l.split('|').slice(1, -1).map((s) => s.trim()))
     .filter((c) => /^DR-\d{3}$/.test(c[0] || '') && c[1] === party).map((c) => ({ id: c[0], kind: c[3], status: c[5] }));
@@ -180,8 +210,10 @@ function release(series, opts) {
   const done = [];
   let released = kind;
   if (series === 'docs') {
-    released = writeEntry(path.join(ROOT, 'CHANGELOG.md'), '##', version, kind, notes.map((n) => bullet(n, true)), stampDocs(version), firstEntryAt('##'));
-    done.push('CHANGELOG.md');
+    const stamped = stampReleased(version);
+    const summary = `${stampDocs(version)} Documents changed in it, now saying "released: ${version}": ${stamped}.`;
+    released = writeEntry(path.join(ROOT, 'CHANGELOG.md'), '##', version, kind, notes.map((n) => bullet(n, true)), summary, firstEntryAt('##'));
+    done.push('CHANGELOG.md', `${stamped} document${stamped === 1 ? '' : 's'} stamped`);
     const outside = notes.filter((n) => n.for === 'everyone');
     if (outside.length) {
       writeEntry(path.join(ROOT, 'docs', 'marketing', 'release-notes.md'), '##', version, kind, outside.map((n) => bullet(n, false)), null, firstEntryAt('##'));
@@ -225,4 +257,4 @@ if (require.main === module) {
   } catch (e) { console.error(e.message); process.exit(1); }
 }
 
-module.exports = { release, nextVersion, readNotes, byVersion, VERSION };
+module.exports = { release, nextVersion, readNotes, byVersion, VERSION, stampReleased };

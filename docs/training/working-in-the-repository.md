@@ -3,6 +3,7 @@ id: working-in-the-repository
 name: Working in the repository — the team's words, for everyone
 kind: guide
 status: living
+released: 2026.10.15
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-846, FS-847, FS-848, FS-849]

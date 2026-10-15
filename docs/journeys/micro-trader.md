@@ -4,6 +4,7 @@ name: JN-15 · A trader who does not read, paid to his own till
 kind: journey
 release: phase 2
 status: draft
+released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal

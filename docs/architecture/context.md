@@ -3,6 +3,7 @@ id: architecture-context
 name: Architecture context — who and what the platform connects to
 kind: architecture
 status: draft
+released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-649, FS-650]

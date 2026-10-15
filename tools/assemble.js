@@ -130,9 +130,10 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
     return { ...d, fields, body };
   });
 
+  // FS-852: each document's status and the release it was last released in.
   const contents = docs.map((d) => {
     const title = (d.body.match(/^# (.+)$/m) || [, d.rel])[1];
-    return `- ${title} — \`${d.rel.split(path.sep).join('/')}\`, ${d.fields.status || 'no status'}`;
+    return `- ${title} — \`${d.rel.split(path.sep).join('/')}\`, ${d.fields.status || 'no status'}${d.fields.released ? `, ${d.fields.released === 'unreleased' ? 'unreleased' : `released ${d.fields.released}`}` : ''}`;
   });
 
   const out = [
@@ -157,7 +158,7 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
     ...docs.map((d) => [
       '---',
       '',
-      `*Source: \`${d.rel.split(path.sep).join('/')}\`, ${d.fields.status || 'no status'}.*`,
+      `*Source: \`${d.rel.split(path.sep).join('/')}\`, ${d.fields.status || 'no status'}${d.fields.released ? `, ${d.fields.released === 'unreleased' ? 'unreleased' : `released ${d.fields.released}`}` : ''}.*`,
       '',
       demote(relink(d.body.trim(), d.rel, outDir, root)),
       '',

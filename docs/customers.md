@@ -3,6 +3,7 @@ id: customers
 name: Customers — who we deliver to, and what each depends on
 kind: register
 status: living
+released: 2026.10.15
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420, FS-443, FS-612, FS-674, FS-680, FS-720, FS-721, FS-835, FS-837, FS-838]

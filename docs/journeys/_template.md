@@ -4,6 +4,7 @@ name: JN-00 · The journey in a few words
 kind: journey
 release: R1
 status: draft
+released: unreleased
 validated_with: not yet
 owner: Solution architect
 classification: Internal

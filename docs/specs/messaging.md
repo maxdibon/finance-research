@@ -4,6 +4,7 @@ name: Messaging and its templates — build specification
 kind: spec
 type: build
 status: draft
+released: 2026.10.15
 release: R1
 implements: [messaging]
 depends_on: [access-keycloak, event-bus-kafka]

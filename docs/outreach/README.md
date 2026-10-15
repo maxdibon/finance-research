@@ -3,6 +3,7 @@ id: outreach-index
 name: Outreach — drafts for the owner to send
 kind: index
 status: living
+released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-125, FS-376, FS-411, FS-457, FS-586, FS-715, FS-719, FS-725]

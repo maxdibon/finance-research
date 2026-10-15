@@ -1202,11 +1202,24 @@ function statusesFor(kind) {
   if (LIFECYCLES.agreed.includes(kind)) return ['draft', 'agreed', 'superseded'];
   return null;
 }
+// FS-852: each document says the release its content was last released in,
+// "released: 2026.10.15", a release in CHANGELOG.md; a document not yet in
+// one says "unreleased", and so does every template (_*.md), so a copy
+// starts that way. tools/cut.js moves the stamp; nobody types it.
 function checkStatus(root, files) {
   const out = [];
+  const log = fs.existsSync(path.join(root, 'CHANGELOG.md')) ? read(root, 'CHANGELOG.md') : '';
+  const releases = new Set((log.match(/^## \d{4}\.\d{2}\.\d{2}(?:\.\d+)? · /gm) || []).map((h) => h.slice(3, -3)));
   for (const file of files.filter((f) => f.endsWith('.md') && f.split(path.sep)[0] === 'docs')) {
     const fm = read(root, file).match(/^---\n([\s\S]*?)\n---\n/);
     if (!fm) continue;
+    const stamp = (fm[1].match(/^released: *(.*)$/m) || [])[1];
+    if (stamp === undefined) out.push(fail('status', file, 1, 'no "released:" in the front matter: the release its content was last released in, or "unreleased"'));
+    else if (path.basename(file).startsWith('_') ? stamp.trim() !== 'unreleased' : !(stamp.trim() === 'unreleased' || releases.has(stamp.trim()))) {
+      out.push(fail('status', file, 1, path.basename(file).startsWith('_')
+        ? `a template says "released: unreleased", so a copy starts that way; it says "${stamp}"`
+        : `"released: ${stamp}" is not a release in CHANGELOG.md, nor "unreleased"`));
+    }
     const kind = (fm[1].match(/^kind: *([a-z-]+)/m) || [])[1];
     const status = (fm[1].match(/^status: *([a-z-]+)/m) || [])[1];
     const allowed = statusesFor(kind);
@@ -1487,10 +1500,10 @@ function checkReviewed(root, files) {
   try { if (git(root, ['rev-parse', '--show-toplevel']).trim().replace(/\\/g, '/').toLowerCase() !== path.resolve(root).replace(/\\/g, '/').toLowerCase()) return []; } catch { return []; }
   const docs = files.filter((f) => f.split(path.sep)[0] === 'docs' && f.endsWith('.md'));
   // The date of each file's latest change of substance: a change only to
-  // its status, version or last_reviewed line is metadata, not content, and
-  // asks for no review (FS-838).
+  // its status, version, last_reviewed or released line is metadata, not
+  // content, and asks for no review (FS-838, FS-852).
   const changed = new Map();
-  const META = /^[+-](?:status|version|last_reviewed):/;
+  const META = /^[+-](?:status|version|last_reviewed|released):/;
   const scan = (out, dateOf) => {
     let date = null;
     let file = null;

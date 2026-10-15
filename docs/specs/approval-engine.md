@@ -4,6 +4,7 @@ name: Approval engine — build specification
 kind: spec
 type: build
 status: draft
+released: 2026.10.15
 release: R1
 implements: [mandates]
 depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka]

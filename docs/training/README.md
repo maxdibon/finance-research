@@ -3,6 +3,7 @@ id: training
 name: Training — manuals and sessions, by role
 kind: plan
 status: living
+released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-660, FS-771]

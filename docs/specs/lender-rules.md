@@ -4,6 +4,7 @@ name: Lender rules — build specification
 kind: spec
 type: build
 status: draft
+released: 2026.10.15
 release: R1
 implements: [mfi]
 depends_on: [kapu-core-fineract, messaging, event-bus-kafka]

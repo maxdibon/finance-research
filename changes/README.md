@@ -30,4 +30,6 @@ Versions are dated: a release is named by its date, with .1, .2 for a patch.
 The reader lists the notes not yet released on its "Unreleased" page.
 `node tools/cut.js docs` (and `node tools/cut.js <customer-id>`) gathers
 them into a release and removes each once every place it belongs to has
-released it.
+released it. A docs release also stamps each document that changed in it,
+`released: <version>` in its front matter; a new document says
+`released: unreleased` until then.

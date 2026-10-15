@@ -4,6 +4,7 @@ name: JN-20 · One of Dibon's engineers joins, moves and leaves
 kind: journey
 release: R1
 status: draft
+released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal

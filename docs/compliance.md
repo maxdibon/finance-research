@@ -3,6 +3,7 @@ id: compliance
 name: Licences, registrations and certifications
 kind: register
 status: living
+released: 2026.10.15
 owner: Compliance lead
 classification: Internal
 last_reviewed: 2026-10-14

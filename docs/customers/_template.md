@@ -3,6 +3,7 @@ id: customer-template
 name: <Customer> — delivery map
 kind: delivery
 status: living
+released: unreleased
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-837, FS-838, FS-845]

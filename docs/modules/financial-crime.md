@@ -3,6 +3,7 @@ id: financial-crime
 name: Financial Crime and Compliance
 kind: shared-service
 status: living
+released: 2026.10.15
 owner: Compliance lead
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]

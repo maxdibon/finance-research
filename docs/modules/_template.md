@@ -6,6 +6,7 @@ id: example-module            # kebab-case, matches the file name
 name: Example Module          # as it appears in the portfolio
 kind: product                 # product | shared-service | channel
 status: living                # living: a module is a register of its capabilities
+released: unreleased
 owner: Product lead           # a role, never a person's name
 classification: Internal      # Public | Internal | Confidential
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]   # who a pack may include this for

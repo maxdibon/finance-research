@@ -3,6 +3,7 @@ id: overview
 name: Dibon financial services — the portfolio
 kind: overview
 status: living
+released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806]

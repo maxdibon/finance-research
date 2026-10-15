@@ -3,6 +3,7 @@ id: handbook-calendar
 name: Handbook 3 — the calendar of duties
 kind: handbook
 status: draft
+released: 2026.10.15
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-771, FS-772, FS-775, FS-778]

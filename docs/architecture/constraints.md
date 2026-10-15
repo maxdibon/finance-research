@@ -3,6 +3,7 @@ id: architecture-constraints
 name: Architecture — constraints we design within
 kind: architecture
 status: draft
+released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-649]

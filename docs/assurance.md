@@ -3,6 +3,7 @@ id: assurance
 name: Assurance services — testing for institutions we do not supply
 kind: service
 status: living
+released: 2026.10.15
 owner: Compliance lead
 classification: Internal
 review_ids: [FS-438, FS-440]

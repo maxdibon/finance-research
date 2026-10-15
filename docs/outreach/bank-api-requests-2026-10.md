@@ -3,6 +3,7 @@ id: bank-api-requests-2026-10
 name: Bank requests, October 2026 — statements, real-time alerts and balances for Dibon's accounts
 kind: outreach
 status: draft
+released: 2026.10.15
 version: 0.1.0
 owner: Solution architect
 classification: Internal

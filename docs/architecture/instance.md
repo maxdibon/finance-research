@@ -3,6 +3,7 @@ id: architecture-instance
 name: Architecture — one instance, as R1 deploys it
 kind: architecture
 status: draft
+released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704]

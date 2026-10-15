@@ -3,6 +3,7 @@ id: handbook-people
 name: Handbook 2 — people and access
 kind: handbook
 status: draft
+released: 2026.10.15
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-768, FS-769, FS-770, FS-771, FS-772]

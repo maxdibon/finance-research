@@ -3,6 +3,7 @@ id: regulation
 name: Law register — the legislation that applies to us and our customers
 kind: register
 status: living
+released: 2026.10.15
 owner: Compliance lead
 classification: Internal
 review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431, FS-499, FS-538, FS-673, FS-686]

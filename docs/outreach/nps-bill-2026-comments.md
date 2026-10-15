@@ -3,6 +3,7 @@ id: nps-bill-2026-comments
 name: Comments on the draft National Payment System Bill, 2026
 kind: outreach
 status: draft
+released: 2026.10.15
 version: 0.1.0
 owner: Owner
 classification: Internal until submitted

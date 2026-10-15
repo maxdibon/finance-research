@@ -3,6 +3,7 @@ id: competitors
 name: Competitors — who we meet, and what we learn from each
 kind: register
 status: living
+released: 2026.10.15
 owner: Commercial lead
 classification: Internal
 review_ids: [FS-456, FS-464, FS-508, FS-612]

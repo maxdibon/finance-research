@@ -3,6 +3,7 @@ id: core
 name: Kapu Core
 kind: product
 status: living
+released: 2026.10.15
 owner: Product lead, Kapu
 classification: Internal
 audience: [mfi, sacco, bank]

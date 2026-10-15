@@ -4,6 +4,7 @@ name: JN-11 · A transfer out through a larger bank, by EFT or RTGS
 kind: journey
 release: R2
 status: draft
+released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal

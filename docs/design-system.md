@@ -3,6 +3,7 @@ id: design-system
 name: Design system — how Dibon's documents look, so they are one house without being one template
 kind: guide
 status: living
+released: 2026.10.15
 owner: Commercial lead
 classification: Internal
 review_ids: [FS-728, FS-781, FS-816, FS-817]

@@ -4,6 +4,7 @@ name: Reconciliation platform — build specification
 kind: spec
 type: build
 status: draft
+released: 2026.10.15
 release: R1
 implements: [recon-observability]
 depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine]

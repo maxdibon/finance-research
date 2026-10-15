@@ -3,6 +3,7 @@ id: bank-access-request
 name: A customer's request to its own banks — payment instructions, status and statements
 kind: outreach
 status: draft
+released: 2026.10.15
 version: 0.1.0
 owner: Solution architect
 classification: Internal

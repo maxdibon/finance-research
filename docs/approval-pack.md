@@ -3,6 +3,7 @@ id: approval-pack
 name: Outsourcing approval pack — what customers file with their regulator about us
 kind: checklist
 status: living
+released: 2026.10.15
 owner: Compliance lead
 classification: Internal
 review_ids: [FS-368, FS-370, FS-420, FS-437, FS-440, FS-443, FS-444]

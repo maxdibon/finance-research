@@ -37,6 +37,29 @@ function notes(root) {
   });
 }
 
+// FS-852: each document's front matter says the release its content was
+// last released in ("released: 2026.10.15", or "unreleased" before its
+// first). A diff that moves only that line is not a change of content.
+function stampOf(text) {
+  const fm = (norm(text).match(/^---\n([\s\S]*?)\n---\n/) || [])[1] || '';
+  const m = fm.match(/^released: *(.*)$/m);
+  return m ? m[1].trim() : null;
+}
+// The files whose content differs from `ref` in the working tree, from a
+// zero-context diff: a file whose only changed lines are its stamp is left out.
+function changedSince(git, ref, paths = []) {
+  const out = new Set();
+  let file = null;
+  for (const l of git(['diff', '--unified=0', '--no-color', ref, '--', ...paths]).split('\n')) {
+    const d = l.match(/^diff --git a\/.* b\/(.*)$/);
+    if (d) { file = d[1].replace(/^"|"$/g, ''); continue; }
+    if (!file || out.has(file) || /^(\+\+\+|---) /.test(l)) continue;
+    if (/^(new|deleted) file mode/.test(l) || /^Binary files/.test(l)) { out.add(file); continue; }
+    if (/^[+-]/.test(l) && !/^[+-]released:/.test(l)) out.add(file);
+  }
+  return out;
+}
+
 // { version, kind, tag, tagged, ahead, dirty, changed:Set<path>, notes }.
 function info(root) {
   const logged = newestInLog(root);
@@ -49,7 +72,7 @@ function info(root) {
       out.tag = `docs-${v}`;
       out.tagged = out.version === v;
       out.ahead = +git(['rev-list', '--count', `${out.tag}..HEAD`]).trim();
-      for (const f of git(['diff', '--name-only', out.tag]).split('\n').filter(Boolean)) out.changed.add(f);
+      out.changed = changedSince(git, out.tag);
     }
     out.dirty = git(['status', '--porcelain', '--untracked-files=no']).trim() !== '';
   } catch { /* not a git checkout: the changelog alone says the release */ }
@@ -76,4 +99,4 @@ function customerRelease(text) {
   return m ? `${m[1]} · ${m[2]}` : null;
 }
 
-module.exports = { info, line, notes, newestInLog, customerRelease, byVersion };
+module.exports = { info, line, notes, newestInLog, customerRelease, byVersion, stampOf, changedSince, VERSION };

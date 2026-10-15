@@ -3,6 +3,7 @@ id: architecture-runtime
 name: Architecture runtime — how a payment moves
 kind: architecture
 status: draft
+released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-588, FS-649, FS-652]

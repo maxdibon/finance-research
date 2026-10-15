@@ -3,6 +3,7 @@ id: roan-capital
 name: Roan Capital — delivery map
 kind: delivery
 status: living
+released: 2026.10.15
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845]

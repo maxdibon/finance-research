@@ -3,6 +3,7 @@ id: bank-channel-proposal
 name: Bank channel proposal — copy
 kind: marketing
 status: draft
+released: 2026.10.15
 owner: Commercial lead
 classification: Public once approved
 last_reviewed: 2026-10-05

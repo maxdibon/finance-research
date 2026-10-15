@@ -4,6 +4,7 @@ name: Component name — build specification
 kind: spec
 type: build
 status: draft
+released: unreleased
 release: R1
 implements: [module-id]
 depends_on: [spec-id]

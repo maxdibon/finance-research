@@ -532,8 +532,13 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
       .map(([k, v]) => `${k.replace('_', ' ')}: ${inline(v.replace(/^\[|\]$/g, ''), ctx)}`).join(' · ');
     // FS-839: each document's status leads its header, as a badge.
     const st = fields.status ? `<span class="st st-doc-${html(fields.status)}">${html(fields.status)}</span> ` : '';
-    // FS-842: this page differs from the release; a customer's page names its own.
-    const moved = rel.tag && rel.changed.has(f) ? `<span class="st st-doc-draft">changed since ${html(rel.tag.slice(5))}</span> ` : '';
+    // FS-842, FS-852: the release this document's content was last released
+    // in, and whether it has changed since; a customer's page names its own.
+    const stamp = fields.released;
+    const since = rel.tag && rel.changed.has(f);
+    const moved = stamp
+      ? `<span class="st st-doc-${since || stamp === 'unreleased' ? 'draft' : 'agreed'}">${stamp === 'unreleased' ? 'unreleased' : `released ${html(stamp)}${since ? ' · changed since' : ''}`}</span> `
+      : since ? `<span class="st st-doc-draft">changed since ${html(rel.tag.slice(5))}</span> ` : '';
     const delivery = f.startsWith('docs/customers/') && !f.includes('/_') ? release.customerRelease(read(root, f)) : null;
     const own = delivery ? `<span class="st st-doc-agreed">delivery ${html(delivery)}</span> ` : '';
     const head = `<p class="meta">${st}${moved}${own}${crumbs(root, f, page)}${meta ? ` · ${meta}` : ''}</p>`;

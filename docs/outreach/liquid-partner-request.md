@@ -3,6 +3,7 @@ id: liquid-partner-request
 name: Partner enquiry to Liquid
 kind: outreach
 status: draft
+released: 2026.10.15
 version: 0.2.0
 owner: Commercial lead
 classification: Internal

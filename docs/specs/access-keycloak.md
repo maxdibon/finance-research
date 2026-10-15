@@ -4,6 +4,7 @@ name: Access on Keycloak — component specification
 kind: spec
 type: component
 status: draft
+released: 2026.10.15
 release: R1
 implements: [access]
 depends_on: [messaging]

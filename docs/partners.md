@@ -3,6 +3,7 @@ id: partners
 name: Partners — candidates, conversations and selection decisions
 kind: register
 status: living
+released: 2026.10.15
 owner: Commercial lead
 classification: Internal
 last_reviewed: 2026-10-14

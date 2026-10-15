@@ -3,6 +3,7 @@ id: collect
 name: Kapu Collect
 kind: product
 status: living
+released: 2026.10.15
 owner: Product lead, Kapu
 classification: Internal
 audience: [bank, sacco, psp, fintech]

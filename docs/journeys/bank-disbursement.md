@@ -4,6 +4,7 @@ name: JN-13 · A bank disbursement, from release to settlement, return or recall
 kind: journey
 release: R1
 status: draft
+released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal

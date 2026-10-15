@@ -3,6 +3,7 @@ id: identity
 name: Identity verification — who a person or business really is
 kind: shared-service
 status: living
+released: 2026.10.15
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]

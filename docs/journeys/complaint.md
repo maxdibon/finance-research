@@ -4,6 +4,7 @@ name: JN-08 · A complaint, from the moment it is made to its answer, within 30 
 kind: journey
 release: R1
 status: draft
+released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal

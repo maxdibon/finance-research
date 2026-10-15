@@ -4,6 +4,7 @@ name: The event bus on Kafka — component specification
 kind: spec
 type: component
 status: draft
+released: 2026.10.15
 release: R1
 implements: [recon-observability]
 depends_on: [observability-grafana]

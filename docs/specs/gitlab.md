@@ -4,6 +4,7 @@ name: GitLab — code, reviews, planning and pipelines — component specificati
 kind: spec
 type: component
 status: draft
+released: 2026.10.15
 release: R1
 implements: [platform-security]
 depends_on: [access-keycloak]
