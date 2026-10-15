@@ -5,7 +5,7 @@ kind: register
 status: living
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-15
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1268,3 +1268,213 @@ its own entry.
   about 4 vCPU and 8 GiB per 25 devices per institution; honest wording on
   night-time response for the own tier.
 
+## FS-544 · Identity: a manual route only where no check covers a document
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** a manual route for documents no register or vendor checks
+  (refugee IDs likely): the officer sees the original, the scan goes to
+  the vault, a second person approves through mandates, and the record is
+  marked verified manually; never for a mismatch. Written into ID-01, not
+  a new row.
+- **Requires:** ID-01; docs/modules/identity.md "verified manually".
+- **Argued against:** a new capability row, which would have moved the v1
+  cap; leaving such borrowers out.
+- **Costs (inferred):** a slower, staffed path; a record type that audits
+  must be able to find and count.
+
+## FS-555 · A mismatch goes to a restricted compliance team in Odoo Helpdesk
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** a ticket in a restricted compliance team of the institution's
+  Odoo Helpdesk, never visible to the customer portal or the service
+  desk's AI agent, holding a link and never documents, because tipping off
+  is an offence (POCAMLA s.8).
+- **Requires:** BS-01; ID-01; docs/modules/business-suite.md "restricted compliance team".
+- **Argued against:** waiting for case management (FC-08, phase 2), when
+  R1 already has ticketing.
+- **Costs (inferred):** Helpdesk permissions to keep tight per institution;
+  FC-08's alerts, evidence and STRs still phase 2.
+
+## FS-565 · Roan Capital runs on Dibon's own messaging service
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** Roan Capital's SMS and messaging through Dibon's own
+  messaging service, superseding its requirement document's assumption 5
+  (its own gateway); one-time codes go through it too.
+- **Requires:** MS-01; MS-02; MS-03; MS-09.
+- **Argued against:** Roan Capital's own SMS gateway, as its requirement
+  document assumed.
+- **Costs (inferred):** Dibon carries the sender ID's onboarding and the
+  messaging service's availability for Roan Capital.
+
+## FS-606 · Payroll is paid from the employer's own accounts, never through Dibon
+
+*Entry written 2026-10-15, from the register rows (FS-843; check-off,
+FS-608).*
+
+- **Chose:** net pay, statutory and check-off remittances paid from the
+  employer's own accounts as one approved run, each payment an instruction
+  through SME Recon; no new rails; never through Dibon. Phase 2.
+- **Requires:** BS-19; SR-11; BS-14.
+- **Argued against (inferred):** Dibon holding or moving payroll money,
+  which would raise the licence question left open (FS-037, compliance
+  LC-06).
+- **Costs (inferred):** each employer's bank connection must carry the run;
+  statutory remittances only partly covered by the rails today.
+
+## FS-634 · Time: UTC stored, Nairobi business dates, three dates per money record
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** UTC stored; Nairobi business dates; three dates per money
+  record; NTP with a 500 ms alarm; references before time in matching;
+  cut-offs treated as items in transit.
+- **Requires:** docs/architecture/README.md §10; RO-04.
+- **Argued against (inferred):** local time stored, and one date per
+  record, which break at the night's close and across time zones.
+- **Costs (inferred):** every component must carry three dates and agree
+  on the business date; clock drift becomes an alarm to staff.
+
+## FS-636 · Every store listed, and Restricted fields encrypted one by one
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** architecture §2 "Every store": one row per store, what it
+  holds and never holds, its class and its protections beyond a stated
+  baseline. The gap it found filled: Restricted fields encrypted one by
+  one through OpenBao's transit engine, in R1.
+- **Requires:** docs/architecture/README.md "Every store"; SE-27.
+- **Argued against (inferred):** relying on disk and database encryption
+  alone, which a query, a backup or a replica would read through.
+- **Costs (inferred):** a keyed hash for lookups on encrypted fields;
+  OpenBao on every write and read of those fields.
+
+## FS-637 · Nothing needs reading
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** anything a person must confirm or be told is also available
+  by voice or as numbers; the principle in omni-channel §1 and
+  start-here's rules; a micro-trader's journey (JN-15, phase 2) to test it.
+- **Requires:** docs/modules/omni-channel.md "Nothing needs reading".
+- **Argued against (inferred):** text-first channels, which exclude people
+  who cannot read them.
+- **Costs (inferred):** spoken confirmations to build and record;
+  channels that assume reading to rework.
+
+## FS-644 · Odoo Enterprise is required
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** Odoo Enterprise, required, not only assumed: Sign, Helpdesk,
+  Knowledge, Documents, Approvals, full Accounting and Payroll are
+  Enterprise only; the business suite says what an SME on Community goes
+  without.
+- **Requires:** docs/architecture/README.md §8; docs/architecture/README.md "Enterprise".
+- **Argued against:** Odoo Community, which lacks those modules.
+- **Costs (inferred):** a licence per user for every institution, and a
+  question of which read-only staff need a paid user (FS-529).
+
+## FS-771 · Each institution has a handbook
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** a handbook per institution (docs/handbook/): what and when,
+  one procedure per HB id, each drawn from a journey; the manuals that say
+  how wait for the screens.
+- **Requires:** docs/handbook/README.md "One procedure per entry".
+- **Argued against (inferred):** waiting for the role manuals, which need
+  screens that do not exist yet.
+- **Costs (inferred):** an agreed journey cannot be agreed without its
+  procedures (the check); each institution's copy kept in its own Odoo.
+
+## FS-792 · Recon is the verifier, with a scale target proven before it is claimed
+
+*Entry written 2026-10-15, from the register rows (FS-843; FS-788 to
+FS-791).*
+
+- **Chose:** recon as the platform's verifier: three ledgers (the master,
+  a shadow rebuilt from its postings, a companion computing on its own),
+  one way and in a separate security domain; and a scale target of 25
+  million accounts and 10 million transactions a day per instance, with a
+  load test before the claim.
+- **Requires:** RO-08; docs/specs/recon.md "opening position"; docs/architecture/quality.md "25 million".
+- **Argued against:** comparisons of money spread across each module; a
+  target claimed without a test.
+- **Costs (inferred):** a second and third ledger to run and keep in step;
+  a load test to build before R2.
+
+## FS-793 · Four design changes for recon and the ledger
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** the ledger database without a superuser or human login, with
+  pgAudit off the instance; payment references with check digits; events
+  signed with short-lived keys from OpenBao rather than a call per event;
+  the companion independent by construction; one ticket per root cause.
+- **Requires:** SE-18; SE-26; CO-21; RO-02; RO-23; docs/specs/kapu-core-fineract.md §8.
+- **Argued against (inferred):** a database administrator's standing
+  access, and signing each event through OpenBao, which would not scale.
+- **Costs (inferred):** fixes only as approved postings; key rotation to
+  run; check digits on every reference issued.
+
+## FS-794 · One model for recon's actions and deadlines; Odoo first
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** four questions decide a break's action (a system fault: an
+  alert; would it move money: the approval chain, never automatic; can a
+  read settle it: automatic; otherwise a ticket per root cause), with
+  floors an institution cannot lower, and three clocks per channel; each
+  institution's rules set against it at onboarding. Extensions: Odoo
+  first. Database activity monitoring left open.
+- **Requires:** docs/specs/recon.md "The model for actions and deadlines"; docs/specs/recon.md "Odoo first".
+- **Argued against (inferred):** each institution's own rules from scratch,
+  which nothing could check.
+- **Costs (inferred):** the model to explain at every onboarding; the
+  floors to defend when an institution wants them lower.
+
+## FS-798 · Recon can start from a cut-off
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** an opening position at a cut-off, taken from the master and
+  signed by the institution's finance lead and Dibon as the agreed start;
+  what is known to be unreconciled carried as open items; inputs archived
+  from the cut-off; never presented as proven.
+- **Requires:** docs/specs/recon.md "opening position"; docs/onboarding.md "opening position".
+- **Argued against:** replaying from go-live, when the event bus keeps
+  seven days.
+- **Costs (inferred):** reports say "reconciled since" the cut-off, never
+  more; a new cut-off needs the same two signatures.
+
+## FS-799 · Charges the borrower did not cause are waived
+
+*Entry written 2026-10-15, from the register row (FS-843).*
+
+- **Chose:** a payment counts on the day the money arrived, so a late
+  posting re-runs the loan and reverses any charge the gap caused; when a
+  rail was down, a disruption window declared with the incident, approved
+  by two people, and a standing waiver the institution approved once.
+- **Requires:** docs/specs/lender-rules.md "Charges the borrower did not cause".
+- **Argued against (inferred):** handling each case as a complaint, after
+  the borrower has paid.
+- **Costs (inferred):** disruption windows to declare and approve during
+  an incident; refunds through approval for penalties already paid.
+
+## FS-803 · Products published by stage
+
+*Entry written 2026-10-15, from the register rows (FS-843; applied,
+FS-805).*
+
+- **Chose:** a draft, and a version awaiting CBK, private; an active
+  version public, on the institution's pages, in each key information
+  document and calculator; the pricing model kept apart, for CBK only.
+- **Requires:** BS-20; docs/specs/lender-rules.md "version is public, as regs 47(1)(d) and 48 require"; docs/specs/lender-rules.md "pricing model".
+- **Argued against:** publishing a product before it is approved and
+  active.
+- **Costs (inferred):** every version's terms generated from the signed
+  document; the range shown where rates vary by risk class.
