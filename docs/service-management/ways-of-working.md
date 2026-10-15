@@ -184,7 +184,8 @@ How everyone uses git, so that history stays readable and nobody
 overwrites anyone (FS-846). In GitLab, the push rules, approval rules and
 protected main of [gitlab.md](../specs/gitlab.md) §4.2 and §4.3 enforce
 most of it; the rest is habit. People who do not use git directly use the
-team's words (FS-847), which follow these rules for them.
+team's words ([working in the repository](../training/working-in-the-repository.md),
+FS-847), which follow these rules for them.
 
 | Practice | The convention |
 |---|---|

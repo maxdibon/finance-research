@@ -431,6 +431,11 @@ test('versions: a handover describing a release the changelog does not have fail
   assert.deepStrictEqual(names(f), ['versions']);
 });
 
+test('words: a word the tool knows with no section in the guide fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'training', 'working-in-the-repository.md'), (t) => t.replace('### discard\n', '### throw-away\n')));
+  assert.deepStrictEqual(names(f), ['words']);
+});
+
 test('changes: a note read outside Dibon with a register id in its text fails', () => {
   const f = runWith((d) => {
     fs.mkdirSync(path.join(d, 'changes'), { recursive: true });

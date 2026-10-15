@@ -86,6 +86,11 @@ its money and its records; Dibon holds the platform. Read
   or for a customer; a change that takes no release (wording, tooling,
   housekeeping) needs none. A release, on the owner's word only, is
   `node tools/cut.js docs` (or `<customer-id>`), then an annotated tag.
+- **The team's words** (`tools/dibon.js`; the guide is
+  `docs/training/working-in-the-repository.md`): when someone asks in plain
+  sentences ("update, then mark answer 24 as answered"), use the words,
+  say what you understood, and run them with `--yes` only after they have
+  said yes in chat. Developers may use git directly, by ways-of-working §6.
 - **Documents for outside readers** start from `docs/design-system.md`:
   one look, a little whimsy in the margins, never in figures or terms.
 - **Never sign in, or enter a password, on a live site**; downloads need

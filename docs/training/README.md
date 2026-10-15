@@ -6,7 +6,7 @@ status: living
 owner: Solution architect
 classification: Internal
 review_ids: [FS-660, FS-771]
-last_reviewed: 2026-10-13
+last_reviewed: 2026-10-15
 ---
 
 # Training
@@ -22,6 +22,7 @@ no manual (docs/experience.md).
 
 | Who | Manual | Status |
 |---|---|---|
+| Everyone on the team | [working-in-the-repository.md](working-in-the-repository.md): the team's words, from the desktop app or the command line (FS-847) | Written |
 | Recovery key holders | [key-holder.md](key-holder.md): the vault, the unlock, the drills | Written |
 | The institution's approvers | Approving at the console and from email, with step-up | After the console is drawn |
 | Credit officers | Applications, documents, guarantors, restructuring | After the screens are drawn |

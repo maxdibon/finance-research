@@ -109,7 +109,8 @@ clients/             customer and prospect material, one folder each, moving
 tools/               check.js, assemble.js, site.js, and their break tests;
                      products/: product questionnaires built and read back;
                      originals.js: third parties' documents kept as received;
-                     cut.js: stamps a version's status (CHANGELOG.md)
+                     cut.js: releases (CHANGELOG.md); dibon.js: the team's words
+dibon, dibon.cmd     the team's words: dibon help (docs/training/working-in-the-repository.md)
 code/lender-rules/   the vocabulary's schema and rules across terms: the first
                      files of lender rules' code repository, moving there
 .githooks/           pre-commit: runs the checks

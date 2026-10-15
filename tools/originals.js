@@ -37,7 +37,14 @@ function add(dir, file, opts) {
   if (m.some((e) => e.file === name)) throw new Error(`already an original: ${name}`);
   if (fs.existsSync(dest)) throw new Error(`a file of that name is already in originals/: ${name}`);
   fs.mkdirSync(path.dirname(dest), { recursive: true });
-  fs.renameSync(file, dest);
+  // A move across drives (Downloads on C:, the repository on E:) cannot
+  // rename: copy, check the copy, then remove the source.
+  try { fs.renameSync(file, dest); } catch (e) {
+    if (e.code !== 'EXDEV') throw e;
+    fs.copyFileSync(file, dest);
+    if (sha256(dest) !== sha256(file)) { fs.unlinkSync(dest); throw new Error(`the copy of ${name} does not match it; nothing kept`); }
+    fs.unlinkSync(file);
+  }
   fs.chmodSync(dest, 0o444);
   const entry = {
     file: name, sha256: sha256(dest), bytes: fs.statSync(dest).size,

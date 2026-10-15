@@ -3,6 +3,8 @@
 * text=auto eol=lf
 .githooks/* text eol=lf
 *.js text eol=lf
+# Windows batch files keep CRLF, which cmd.exe expects.
+*.cmd text eol=crlf
 
 # Binary: never diffed or converted.
 *.pdf binary

@@ -1318,6 +1318,25 @@ function checkVersions(root) {
   return out;
 }
 
+// ── words ────────────────────────────────────────────────────────────────
+// FS-847 to FS-849: the guide has a section for every word the tool knows,
+// and no word the tool does not, so the two never drift apart.
+const GUIDE = path.join('docs', 'training', 'working-in-the-repository.md');
+function checkWords(root) {
+  const tool = path.join(__dirname, 'dibon.js'); // the words live beside the check
+  if (!fs.existsSync(tool)) return [];
+  if (!fs.existsSync(path.join(root, GUIDE))) return [fail('words', GUIDE, 0, 'missing: the guide to the team\'s words')];
+  const { WORDS } = require(tool);
+  const text = read(root, GUIDE);
+  const section = (text.split(/^## The words$/m)[1] || '').split(/^## /m)[0];
+  const headed = [...section.matchAll(/^### (\S+)$/gm)].map((m) => m[1]);
+  const words = WORDS.map((w) => w[0]);
+  const out = [];
+  for (const w of words.filter((x) => !headed.includes(x))) out.push(fail('words', GUIDE, 0, `the tool knows "${w}", but "The words" has no section for it`));
+  for (const w of headed.filter((x) => !words.includes(x))) out.push(fail('words', GUIDE, 0, `"${w}" has a section, but the tool has no such word`));
+  return out;
+}
+
 // ── document register ────────────────────────────────────────────────────
 // FS-835: every document held with a party, as metadata. Each row has a
 // kind and a status that kind allows, a date, a location outside git, and a
@@ -1554,6 +1573,7 @@ function runAll(root) {
     ...checkStatus(root, files),
     ...checkVersions(root),
     ...checkChanges(root),
+    ...checkWords(root),
     ...checkLinks(root, files),
     ...checkFrontMatter(root, files),
     ...checkReviewed(root, files),
