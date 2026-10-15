@@ -209,13 +209,15 @@ decisions, obligations, customers, regulation, assurance, references,
 dependencies, scope, journeys, handbook, overview, specs, products (the
 drafts, their typed values against `code/lender-rules/`), docregister
 (the document register and every DR id cited), status (each document's
-status against its kind's lifecycle; `version:` only on outreach),
+status against its kind's lifecycle; `version:` only on outreach; a
+`released:` line naming a release in CHANGELOG.md, or `unreleased`, which
+every template says),
 versions (the changelogs, README.md's and this file's release lines, and
 the customer template), changes (each change note's form; no register ids
 in a note read outside Dibon), words (the guide has a section for every
 word `dibon` knows, and no other), links, frontmatter
 and reviewed (a change of content needs today's `last_reviewed`; a
-change only to status, version or last_reviewed does not). The
+change only to status, version, last_reviewed or released does not). The
 pre-commit hook runs them, then rebuilds the reader. **When a check
 fails, fix the document, not the check**; a check changes only with a
 register row.
@@ -282,6 +284,17 @@ register row.
 - **Windows cannot rename across drives** (Downloads on C:, the
   repository on E:): copy, check the copy, then remove the source, as
   `tools/originals.js` does.
+- **Never type a release into a document's `released:` line**: a new
+  document says `unreleased` and the release stamps it. A diff that moves
+  only that line is no change, to the reader's "changed since", to the
+  history and to the reviewed check alike. The rule is written twice, in
+  `tools/release.js` and in the reviewed check: change both together.
+- **A throwaway clone for testing a tool gets no confidential files:**
+  copying `sources/confidential/protected-names.txt` into one was refused,
+  rightly. `tools/cut.js` and the history need none of it.
+- **The browser pane may not draw when it is hidden**, and a click or
+  screenshot then times out: read the page with `find`, `get_page_text` or
+  `javascript_tool` instead.
 - **Subagents claim more than they did.** Check their work.
 
 ## Waiting on the owner (as at 2026-10-15)
@@ -303,10 +316,14 @@ register row.
   outreach statuses were set to "draft" without confirmation:** ask which
   went, and mark those "sent" (FS-839).
 - **Releases:** the first, 2026.10.15, is released and tagged for the
-  documentation and for Roan Capital. The next is the owner's call:
+  documentation and for Roan Capital. Two notes wait for the next, both
+  patches: every document names its release (for everyone, FS-852) and
+  shows its history (for the team, FS-853). The next is the owner's call:
   propose one when the notes waiting (the reader's "Unreleased" page) are
   worth telling; then `node tools/cut.js`, commit ("Release <tag>"), an
-  annotated tag, and the tag pushed with the commits.
+  annotated tag, and the tag pushed with the commits. That release is the
+  first to move the documents' `released:` lines: check that only the
+  documents changed since 2026.10.15 move.
 - **The team cannot share yet:** until the move to GitLab, only the owner
   pushes to GitHub, so a teammate's `dibon share` stops at "saved on your
   branch; tell the owner it is ready to merge". The owner merges.
