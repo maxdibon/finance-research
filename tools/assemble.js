@@ -132,7 +132,7 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
 
   const contents = docs.map((d) => {
     const title = (d.body.match(/^# (.+)$/m) || [, d.rel])[1];
-    return `- ${title} — \`${d.rel.split(path.sep).join('/')}\` v${d.fields.version || '?'}`;
+    return `- ${title} — \`${d.rel.split(path.sep).join('/')}\`, ${d.fields.status || 'no status'}`;
   });
 
   const out = [
@@ -155,7 +155,7 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
     ...docs.map((d) => [
       '---',
       '',
-      `*Source: \`${d.rel.split(path.sep).join('/')}\`, version ${d.fields.version || '?'}.*`,
+      `*Source: \`${d.rel.split(path.sep).join('/')}\`, ${d.fields.status || 'no status'}.*`,
       '',
       demote(relink(d.body.trim(), d.rel, outDir, root)),
       '',
