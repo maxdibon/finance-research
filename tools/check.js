@@ -1184,6 +1184,60 @@ function checkProducts(root) {
   return out;
 }
 
+// ── document register ────────────────────────────────────────────────────
+// FS-835: every document held with a party, as metadata. Each row has a
+// kind and a status that kind allows, a date, a location outside git, and a
+// fingerprint where the document is an original or a record; every DR id
+// cited anywhere in docs/ exists.
+const DOC_REGISTER = path.join('docs', 'document-register.md');
+const DOC_STATUSES = {
+  Original: ['kept', 'to keep'],
+  Record: ['kept', 'to keep'],
+  Working: ['draft', 'shared', 'agreed', 'superseded', 'withdrawn', 'internal'],
+};
+function docRegisterIds(root) {
+  if (!fs.existsSync(path.join(root, DOC_REGISTER))) return null;
+  return new Set(read(root, DOC_REGISTER).split('\n').map((l) => (l.match(/^\| (DR-\d{3}) \|/) || [])[1]).filter(Boolean));
+}
+function checkDocRegister(root, files) {
+  if (!fs.existsSync(path.join(root, DOC_REGISTER))) return [fail('docregister', DOC_REGISTER, 0, 'the document register is missing')];
+  const out = [];
+  const review = new Set(read(root, 'REVIEW.md').split('\n').map((l) => (l.match(/^\| (FS-\d{3}) \|/) || [])[1]).filter(Boolean));
+  let expect = 1;
+  read(root, DOC_REGISTER).split('\n').forEach((line, i) => {
+    const m = line.match(/^\| (DR-(\d{3})) \|/);
+    if (!m) return;
+    const at = (msg) => out.push(fail('docregister', DOC_REGISTER, i + 1, `${m[1]}: ${msg}`));
+    const c = line.split('|').slice(1, -1).map((s) => s.trim());
+    if (c.length !== 11) { at(`${c.length} cells, expected 11`); return; }
+    const [, , title, kind, , status, date, from, where, print, rows] = c;
+    if (+m[2] !== expect) at(`out of sequence; DR-${String(expect).padStart(3, '0')} expected`);
+    expect = +m[2] + 1;
+    if (!title || !from) at('a title and a "from" are required');
+    if (!DOC_STATUSES[kind]) at(`kind "${kind}" is not ${Object.keys(DOC_STATUSES).join(', ')}`);
+    else if (!DOC_STATUSES[kind].includes(status)) at(`status "${status}" is not one a${kind === 'Original' ? 'n' : ''} ${kind} may have (${DOC_STATUSES[kind].join(', ')})`);
+    if (!/^(?:file dated )?\d{4}-\d{2}-\d{2}$/.test(date)) at(`date "${date}" is not YYYY-MM-DD or "file dated YYYY-MM-DD"`);
+    if (!/^`(?:clients|sources\/confidential)\/[^`]*`$/.test(where)) at('its place must be in clients/ or sources/confidential/, outside git');
+    if (status === 'kept' && !/\/originals\/`$/.test(where)) at('kept, but not in a party\'s originals/');
+    if (kind === 'Working' ? print !== '—' : !/^`[0-9a-f]{12}`$/.test(print)) at(kind === 'Working' ? 'a working document has no fingerprint' : 'an original or a record needs its fingerprint, twelve hex characters');
+    const ids = rows.match(/FS-\d{3}/g) || [];
+    if (!ids.length) at('no register row (FS id) behind it');
+    for (const id of ids) if (!review.has(id)) at(`cites ${id}, which REVIEW.md does not have`);
+  });
+  const known = docRegisterIds(root);
+  for (const file of files.filter((f) => f.endsWith('.md') && f.split(path.sep)[0] === 'docs')) {
+    read(root, file).split('\n').forEach((line, i) => {
+      for (const m of line.matchAll(/\bDR-(\d{3})(?: to DR-(\d{3}))?\b/g)) {
+        for (let n = +m[1]; n <= +(m[2] || m[1]); n++) {
+          const id = `DR-${String(n).padStart(3, '0')}`;
+          if (!known.has(id)) out.push(fail('docregister', file, i + 1, `cites ${id}, which the document register does not have`));
+        }
+      }
+    });
+  }
+  return out;
+}
+
 function githubAnchor(heading) {
   return heading.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[`*]/g, '').trim().toLowerCase()
     .replace(/[^\p{L}\p{N}\p{M}\s_-]/gu, '').replace(/ /g, '-');
@@ -1349,6 +1403,7 @@ function runAll(root) {
     ...checkOverview(root, files),
     ...checkSpecs(root),
     ...checkProducts(root),
+    ...checkDocRegister(root, files),
     ...checkLinks(root, files),
     ...checkFrontMatter(root, files),
     ...checkReviewed(root, files),

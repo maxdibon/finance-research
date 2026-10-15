@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835]
 last_reviewed: 2026-10-15
 ---
 
@@ -98,6 +98,9 @@ administrator and an identity check, AC-16); the minimum interest on
 early repayment (LQ-13).
 
 ## 2 · Requirements against capabilities
+
+Each RC id is a requirement from the business requirement document,
+DR-001, by its section (§2.2 and so on, below).
 
 ### KYC and onboarding (§2.2)
 
@@ -240,10 +243,22 @@ Statuses: draft, awaiting approval, awaiting CBK, active, retired.
 
 ## 6 · Where the detail is
 
-- The requirement document and the full review: restricted, in Roan
-  Capital's workspace in Dibon's Odoo Documents (moving from
-  clients/roan-capital/, which is on one machine and outside git;
-  FS-805). Its product drafts are in docs/products/ by exception (FS-806).
+**Its documents,** by DR id in the [document register](../document-register.md)
+(FS-835); held in clients/roan-capital/, outside git, until Roan Capital's
+workspace in Dibon's Odoo Documents exists (FS-805):
+
+- **The engagement:** the NDA as sent and as executed (DR-002, DR-003);
+  the certificate of incorporation (DR-004); the kickoff summary
+  (DR-009).
+- **Requirements:** the business requirement document (DR-001), the
+  source of every RC id in §2; our review of it (DR-008).
+- **Messaging:** the sender ID letter and the signed request (DR-005,
+  DR-006).
+- **Its product:** the 30-day loan questionnaires (DR-012 to DR-014); the
+  product drafts themselves are in docs/products/ by exception (FS-806).
+- **Its application form:** the original (DR-007); our version 0.1 and
+  0.2, and the schedule of changes (DR-017 to DR-019).
+- **Meetings:** 15 October, the agenda and our record (DR-015, DR-016).
 - Capability statuses: the modules named in §2.
 - Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in
   docs/decisions.md and REVIEW.md.

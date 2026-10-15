@@ -66,6 +66,20 @@ function verify(dir) {
       if (!m.some((e) => e.file === f)) problems.push(`${f}: in originals/ but not in the manifest`);
     }
   }
+  // Against the document register (FS-835), for a party in this repository's
+  // clients/: every kept file has its row, and every row its kept file.
+  const repo = path.join(__dirname, '..');
+  const register = path.join(repo, 'docs', 'document-register.md');
+  const rel = path.relative(repo, path.resolve(dir)).split(path.sep).join('/');
+  if (fs.existsSync(register) && rel.startsWith('clients/')) {
+    const rows = fs.readFileSync(register, 'utf8').split(/\r?\n/)
+      .map((l) => l.split('|').slice(1, -1).map((s) => s.trim()))
+      .filter((c) => /^DR-\d{3}$/.test(c[0] || '') && c[8] === `\`${rel}/originals/\``);
+    const printed = new Map(rows.map((c) => [c[9].replace(/`/g, ''), c[0]]));
+    for (const e of m) if (!printed.has(e.sha256.slice(0, 12))) problems.push(`${e.file}: kept, but no document register row has its fingerprint`);
+    const kept = new Set(m.map((e) => e.sha256.slice(0, 12)));
+    for (const [f, id] of printed) if (!kept.has(f)) problems.push(`${id}: in the document register as kept here, but no file in the manifest matches its fingerprint`);
+  }
   return { count: m.length, problems };
 }
 

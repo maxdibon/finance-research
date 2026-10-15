@@ -398,6 +398,18 @@ test('products: every rule across terms behaves as its worked examples say', () 
   }
 });
 
+const DOCREG = path.join('docs', 'document-register.md');
+
+test('docregister: citing a DR id the register does not have fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'customers', 'roan-capital.md'), (t) => t.replace('(DR-004)', '(DR-999)')));
+  assert.deepStrictEqual(names(f), ['docregister']);
+});
+
+test('docregister: a status its kind does not allow fails', () => {
+  const f = runWith((d) => patch(d, DOCREG, (t) => t.replace('| Loan application form | Original | — | kept |', '| Loan application form | Original | — | draft |')));
+  assert.deepStrictEqual(names(f), ['docregister']);
+});
+
 test('originals: a kept file that is changed, made writable, or joined by an unrecorded one fails', () => {
   const { add, verify } = require(path.join(ROOT, 'tools', 'originals.js'));
   const party = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-originals-'));
