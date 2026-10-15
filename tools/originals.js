@@ -1,0 +1,98 @@
+#!/usr/bin/env node
+// Third parties' documents, kept as received (rules, Dibon 11; FS-834).
+// A party's folder in clients/ has originals/: each file there is
+// read-only and recorded in originals/MANIFEST.json with its SHA-256, size,
+// when it arrived and from whom (by role). Work happens on a derived,
+// named, versioned document elsewhere, whose first version cites the
+// original's hash.
+//
+//   node tools/originals.js add <party-folder> <file> --from "<who, by role>" --received <YYYY-MM-DD> [--note "<text>"]
+//   node tools/originals.js verify <party-folder>
+//   node tools/originals.js cite <party-folder> <file-name>
+//
+// add moves the file into originals/ and makes it read-only; verify checks
+// every file against the manifest (present, unchanged, read-only) and
+// that nothing unrecorded sits beside them; cite prints the line a working
+// document quotes. clients/ is never in git: the manifest lives with the
+// files, until Odoo Documents' locked folders take over (rules, Dibon 10).
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+
+const sha256 = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+const isReadOnly = (file) => (fs.statSync(file).mode & 0o200) === 0;
+const manifestPath = (dir) => path.join(dir, 'originals', 'MANIFEST.json');
+const load = (dir) => (fs.existsSync(manifestPath(dir)) ? JSON.parse(fs.readFileSync(manifestPath(dir), 'utf8')) : []);
+const save = (dir, m) => fs.writeFileSync(manifestPath(dir), `${JSON.stringify(m, null, 2)}\n`);
+
+function add(dir, file, opts) {
+  if (!opts.from || !/^\d{4}-\d{2}-\d{2}$/.test(opts.received || '')) throw new Error('add needs --from "<who, by role>" and --received <YYYY-MM-DD>');
+  if (!fs.existsSync(file)) throw new Error(`not found: ${file}`);
+  const name = path.basename(file);
+  const dest = path.join(dir, 'originals', name);
+  const m = load(dir);
+  if (m.some((e) => e.file === name)) throw new Error(`already an original: ${name}`);
+  if (fs.existsSync(dest)) throw new Error(`a file of that name is already in originals/: ${name}`);
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  fs.renameSync(file, dest);
+  fs.chmodSync(dest, 0o444);
+  const entry = {
+    file: name, sha256: sha256(dest), bytes: fs.statSync(dest).size,
+    received: opts.received, from: opts.from, ...(opts.note ? { note: opts.note } : {}),
+    kept: new Date().toISOString().slice(0, 10),
+  };
+  m.push(entry);
+  save(dir, m);
+  return entry;
+}
+
+function verify(dir) {
+  const problems = [];
+  const m = load(dir);
+  const odir = path.join(dir, 'originals');
+  if (!m.length) problems.push('no manifest, or an empty one');
+  for (const e of m) {
+    const f = path.join(odir, e.file);
+    if (!fs.existsSync(f)) { problems.push(`${e.file}: missing`); continue; }
+    if (sha256(f) !== e.sha256) problems.push(`${e.file}: changed since it was kept (its SHA-256 differs)`);
+    if (!isReadOnly(f)) problems.push(`${e.file}: not read-only`);
+  }
+  if (fs.existsSync(odir)) {
+    for (const f of fs.readdirSync(odir)) {
+      if (f === 'MANIFEST.json' || f.startsWith('~$')) continue;
+      if (!m.some((e) => e.file === f)) problems.push(`${f}: in originals/ but not in the manifest`);
+    }
+  }
+  return { count: m.length, problems };
+}
+
+const cite = (dir, name) => {
+  const e = load(dir).find((x) => x.file === name);
+  if (!e) throw new Error(`not an original: ${name}`);
+  return `${e.file}, received ${e.received} from ${e.from}; SHA-256 ${e.sha256}`;
+};
+
+module.exports = { add, verify, cite, sha256 };
+
+if (require.main === module) {
+  const [cmd, dir, ...rest] = process.argv.slice(2);
+  const opt = (k) => { const i = rest.indexOf(k); return i >= 0 ? rest[i + 1] : undefined; };
+  try {
+    if (cmd === 'add') {
+      const e = add(dir, rest[0], { from: opt('--from'), received: opt('--received'), note: opt('--note') });
+      console.log(`kept ${e.file} (${e.bytes} bytes), SHA-256 ${e.sha256}`);
+    } else if (cmd === 'verify') {
+      const { count, problems } = verify(dir);
+      if (problems.length) { for (const p of problems) console.log(`FAIL ${p}`); process.exit(1); }
+      console.log(`${count} originals, all unchanged and read-only`);
+    } else if (cmd === 'cite') {
+      console.log(cite(dir, rest[0]));
+    } else {
+      console.log('usage: node tools/originals.js add|verify|cite <party-folder> ...');
+      process.exit(1);
+    }
+  } catch (e) { console.error(e.message); process.exit(1); }
+}

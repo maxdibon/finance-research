@@ -398,6 +398,24 @@ test('products: every rule across terms behaves as its worked examples say', () 
   }
 });
 
+test('originals: a kept file that is changed, made writable, or joined by an unrecorded one fails', () => {
+  const { add, verify } = require(path.join(ROOT, 'tools', 'originals.js'));
+  const party = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-originals-'));
+  const src = path.join(party, 'form.docx');
+  fs.writeFileSync(src, 'as received');
+  add(party, src, { from: 'A partner', received: '2026-10-15' });
+  assert.deepStrictEqual(verify(party).problems, []);
+  const kept = path.join(party, 'originals', 'form.docx');
+  fs.chmodSync(kept, 0o644);
+  fs.writeFileSync(kept, 'edited');
+  fs.writeFileSync(path.join(party, 'originals', 'stray.pdf'), 'x');
+  const problems = verify(party).problems.join('\n');
+  assert.match(problems, /form\.docx: changed since it was kept/);
+  assert.match(problems, /form\.docx: not read-only/);
+  assert.match(problems, /stray\.pdf: in originals\/ but not in the manifest/);
+  fs.rmSync(party, { recursive: true, force: true });
+});
+
 const REG = path.join('docs', 'regulation.md');
 
 test('regulation: a Deep law that drives nothing fails', () => {

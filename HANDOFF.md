@@ -407,6 +407,12 @@ Each has a register row and, where it changed the design, an entry in
 - **`code/lender-rules/`** holds the first files of lender rules' code
   repository: the vocabulary's schema, the rules across terms and their
   worked examples (FS-825). They move there when it exists.
+- **Third parties' documents are kept as received** (rules, Dibon 11;
+  FS-834): `clients/<party>/originals/`, read-only, hashed in its
+  MANIFEST.json; check with `node tools/originals.js verify
+  clients/<party>`. Work happens on named, versioned documents in
+  `clients/<party>/working/`, version 0.1 a faithful copy, later
+  versions tracked, each change with why and its regulation.
 - **Also kept local, never committed:** `sources/odpc_registration.png`
   (untracked) and `sources/dibon/recon-notes/` (ignored), the owner's
   handwritten recon notes with their transcript.

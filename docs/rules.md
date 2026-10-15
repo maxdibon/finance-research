@@ -5,8 +5,8 @@ kind: policy
 version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762, FS-769, FS-805, FS-806]
-last_reviewed: 2026-10-14
+review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762, FS-769, FS-805, FS-806, FS-834]
+last_reviewed: 2026-10-15
 ---
 
 # Rules
@@ -34,6 +34,7 @@ for minutes and says so ([endpoints](specs/endpoints.md) §2).
 | 8 | **Every change is reviewed by a second person** before it reaches a customer | Service management §2 (merge requests) |
 | 9 | **Security and privacy training every year,** and for key holders before they hold a share | [Training](training/README.md) |
 | 10 | **Client material lives in Dibon's Odoo Documents, in Kenya,** one workspace per customer, read by role, every access logged: requirement documents, agreements, certificates, product drafts. **Never in a repository or on one laptop;** documents link to it, and those without access see only the link. **Exception, until the workspaces exist** (owner, 2026-10-14, FS-806): product version drafts, which hold no personal data, are kept in [products/](products/README.md) | business-suite BS-01; [gitlab](specs/gitlab.md) §2; FS-805, FS-806 |
+| 11 | **A third party's document is kept as received, never edited** (owner, 2026-10-15, FS-834): in the party's `originals/`, read-only, its SHA-256, size, date and sender (by role) in the folder's manifest; what we send outside is kept the same way, as a record. **Once discussion begins, we work on a derived document:** in our format (design system), named `<Party> · <Document> · v<n> (<status>)`; version 0.1 a faithful copy citing the original's hash; every later change tracked, with a comment giving why and any regulation; each version a new file, with a version log; 0.x drafts, 1.0 agreed with the party | `node tools/originals.js verify <party-folder>`; Odoo Documents' locked folders once they exist (rule 10) |
 
 ## 2 · Institutions
 
