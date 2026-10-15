@@ -5,8 +5,8 @@ kind: plan
 status: living
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757]
-last_reviewed: 2026-10-12
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846]
+last_reviewed: 2026-10-15
 ---
 
 # Ways of working
@@ -177,3 +177,33 @@ What lets people work on their own and still in step (FS-749):
 | **Blameless reviews** | After an incident or a failed change: what happened and what we change, never who |
 | **Focus time** | Core hours for meetings; protected blocks without them |
 | **Hand-overs in writing** | On-call hand-over notes; a new joiner starts at start-here.md |
+
+## 6 · Git conventions
+
+How everyone uses git, so that history stays readable and nobody
+overwrites anyone (FS-846). In GitLab, the push rules, approval rules and
+protected main of [gitlab.md](../specs/gitlab.md) §4.2 and §4.3 enforce
+most of it; the rest is habit. People who do not use git directly use the
+team's words (FS-847), which follow these rules for them.
+
+| Practice | The convention |
+|---|---|
+| **One long-lived branch** | `main`, protected. Work happens on short-lived branches, one register row or a tight group of rows each, merged within two or three days |
+| **Branch names** | `<kind>/<FS id>-<a-few-words>`, the kind one of `docs`, `spec`, `code`, `fix`, `tool`, `release`: `docs/FS-845-dated-versions` |
+| **Releases are dated tags on main** | `docs-2026.10.15`, `roan-capital-2026.10.15` (rules, Dibon 12). A release branch, `release/<series>-<date>`, only to fix an old release a customer still runs: the fix lands on main first, then is cherry-picked back |
+| **Commit subject** | `FS-123: what changed`, at most 72 characters; the hook refuses a subject without its register row (Merge, Revert and Release excepted) |
+| **Commit body** | Why, not what; wrapped at 72 columns; trailers last (`Co-Authored-By:`) |
+| **Mechanical changes apart** | A sweep across many files (a status for every document, renumbered ids) is its own commit, never mixed with a change a reviewer must read |
+| **Keep current by rebasing** | `git fetch`, then `git rebase origin/main`; never merge main into a branch. Force-push only your own branch, and only `--force-with-lease`; never main |
+| **Undo with a new commit** | `git revert` on main; history on main is never rewritten |
+| **Squash on merge** | One commit per merge request on main, its description as the message; the branch's own commits may be untidy |
+| **Tags are annotated, and signed once keys exist** | `git tag -a docs-2026.10.15 -m "…"`; a published tag is never moved or deleted |
+| **Line endings** | LF everywhere (`.gitattributes`); a clone sets nothing by hand |
+| **The register** | REVIEW.md merges by union, so two branches' new rows both survive; the register check fails a skipped or repeated FS id. In GitLab an FS id comes from its issue, so two people never take the same one |
+| **Changelogs** | Never edited by hand: each merge request carries a change note, and a release gathers them (rules, Dibon 12) |
+| **Hooks** | `git config core.hooksPath .githooks` once per clone: pre-commit runs the checks, commit-msg holds the subject |
+| **Size** | A merge request a reviewer reads in one sitting, about 400 changed lines for code; the reader's preview shows documents as pages |
+
+**Until the move to GitLab,** the owner is the only one who pushes, to
+GitHub's main, on their word ("push"): the single-owner exception. The
+team works on branches and shares them; the owner merges.

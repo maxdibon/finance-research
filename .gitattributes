@@ -1,2 +1,19 @@
+# Line endings (FS-846): LF in the repository and in every checkout, so
+# no file flips between CRLF and LF, and git stops warning on each commit.
+* text=auto eol=lf
 .githooks/* text eol=lf
 *.js text eol=lf
+
+# Binary: never diffed or converted.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.docx binary
+*.xlsx binary
+*.woff binary
+*.woff2 binary
+
+# The register is append-only: when two branches each add rows, keep both
+# (FS-846). The register check still fails a skipped or repeated FS id.
+REVIEW.md merge=union

@@ -1,0 +1,14 @@
+#!/bin/sh
+# Runs on every commit message (FS-846; ways-of-working §6). The subject
+# starts with the register row it serves, so history leads to its reason:
+#   FS-123: what changed
+#   FS-123, FS-124: what changed
+# Also allowed: Merge, Revert, Release (a dated release, FS-845), and
+# git's own fixup!/squash! for a branch's history before it is squashed.
+subject=$(sed -n '/^[^#]/{p;q;}' "$1")
+case "$subject" in
+  FS-[0-9][0-9][0-9]*|Merge*|Revert*|"Release "*|fixup!*|squash!*) exit 0 ;;
+esac
+echo "commit-msg: start the subject with its register row, as \"FS-123: what changed\"" >&2
+echo "            (or Merge, Revert or Release). See ways-of-working §6." >&2
+exit 1

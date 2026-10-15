@@ -10,8 +10,8 @@ depends_on: [access-keycloak]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750, FS-751, FS-753, FS-757, FS-758, FS-769, FS-805]
-last_reviewed: 2026-10-14
+review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750, FS-751, FS-753, FS-757, FS-758, FS-769, FS-805, FS-846]
+last_reviewed: 2026-10-15
 ---
 
 # GitLab — code, reviews, planning and pipelines — component specification
@@ -177,6 +177,8 @@ path is [flows](../architecture/flows.md) §4.
   the message; the source branch deleted.
 - **Templates** in `.gitlab/merge_request_templates/` (ways-of-working
   §2) and `.gitlab/issue_templates/` (a story, a bug, a register point).
+- **Git conventions** (branches, commits, rebasing, tags, line endings,
+  the register's union merge): ways-of-working §6 (FS-846).
 
 ### 4.3 Push rules
 
