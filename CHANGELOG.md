@@ -41,4 +41,10 @@ conventions, change notes and dated releases; and the checks that hold
 them together. Its history before this is in git and REVIEW.md, FS-001
 onwards; it was first cut as 1.0 the same day, a number this release
 replaces.
-**Status:** to stamp
+- Contents lists where a reader needs them: long pages with few sections now have one, short pages none, and the register's page jumps by criticality and by the hundred. (FS-844; Chief Technology and Innovation Officer)
+- Releases are named by date and marked major, minor or patch; each change carries a change note, and a release gathers the notes into the internal changelog, the external release notes and a customer's changelog. (FS-845; Chief Technology and Innovation Officer)
+- The decisions log gains fifteen entries for settled decisions that were written only in the documents they shaped, each with what it requires, checked. (FS-843; Chief Technology and Innovation Officer)
+- Git conventions agreed: short branches named by their register row, subjects that start with it (a hook holds them), rebase to keep current, squash on merge, dated annotated tags, LF line endings, and the register merged by union. (FS-846; Chief Technology and Innovation Officer)
+- Every page of the reader shows the release it was built from, what has moved since, and which pages changed; the Master and the handover name their release; the Master shows each document's status. (FS-842; Chief Technology and Innovation Officer)
+- The team's words: one small vocabulary for every update, from the desktop app or the command line, with a guide, a cheat sheet and a practice copy. (FS-847, FS-848, FS-849; Chief Technology and Innovation Officer)
+**Status:** Specs: 11 draft. Journeys: 19 draft. Other documents: 20 draft, 2 agreed. Outreach: 1 withdrawn, 7 draft. Living documents: 52 living. The first dated release: nothing earlier to compare.

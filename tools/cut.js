@@ -171,7 +171,11 @@ function release(series, opts) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error('--date is YYYY-MM-DD');
   const version = nextVersion(series, date);
   const notes = readNotes().filter((n) => belongsTo(n).includes(series) && !n.released.includes(series));
-  const kind = opts.kind || notes.map((n) => n.kind).sort((a, b) => KINDS.indexOf(b) - KINDS.indexOf(a))[0];
+  // The kind: given, else an entry's heading written by hand, else the
+  // weightiest note's.
+  const target = series === 'docs' ? path.join(ROOT, 'CHANGELOG.md') : path.join(ROOT, 'docs', 'customers', `${series}.md`);
+  const written = fs.existsSync(target) && (norm(fs.readFileSync(target, 'utf8')).match(new RegExp(`^#{2,3} ${version.replace(/\./g, '\\.')} · (major|minor|patch)$`, 'm')) || [])[1];
+  const kind = opts.kind || written || notes.map((n) => n.kind).sort((a, b) => KINDS.indexOf(b) - KINDS.indexOf(a))[0];
   if (!KINDS.includes(kind)) throw new Error('no change notes to release, and no --kind given');
   const done = [];
   let released = kind;
