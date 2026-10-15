@@ -5,8 +5,8 @@ kind: register
 status: living
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420, FS-443, FS-612, FS-674, FS-680, FS-720, FS-721]
-last_reviewed: 2026-10-13
+review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420, FS-443, FS-612, FS-674, FS-680, FS-720, FS-721, FS-835, FS-837, FS-838]
+last_reviewed: 2026-10-15
 ---
 
 # Customers — who we deliver to, and what each depends on
@@ -30,19 +30,25 @@ delivering to, its stage, and the capabilities its delivery depends on
 
 **A delivery map** (docs/customers/, one per customer in delivery, linked
 from its row) takes the customer's own requirements, row by row, and sets
-each against the capabilities that meet it: the engagement; requirements
-against capabilities, each *Covered*, or *Partial* with its gap stated;
-what is out of scope; the open answers only the customer can settle; and
-where the detail is. **To add one** when a customer reaches "In delivery":
-copy the shape of an existing map, link it from the row, and keep its
-capabilities and the row's "Depends on" the same; the check holds the two
+each against the capabilities that meet it. Every map has the same eight
+sections (docs/customers/_template.md, FS-837): the engagement;
+requirements against capabilities, each *Covered*, or *Partial* with its
+gap stated, citing the document it came from; what is out of scope; the
+open answers, open and answered; its products; its documents, by DR id in
+the [document register](document-register.md); its people and roles; and
+its changelog. **Each delivery has its own version** (rules, Dibon 12):
+1.0 when the customer agrees its requirements and scope, minor versions
+between, cut on the owner's word; the latest is the first entry of its
+§8. **To add one** when a customer reaches "In delivery": copy the
+template, link it from the row, and keep its capabilities and the row's
+"Depends on" the same; the checks hold the template and the two lists
 together.
 
 **Stages:** Proposal, In delivery, Live, Past.
 
 | Id | Customer | Type | Products | Stage | Last event | Next step | Owner | Delivery file | Refs |
 |---|---|---|---|---|---|---|---|---|---|
-| CU-01 | Roan Capital | Microfinance lender | Kapu MFI on Kapu Core | In delivery | 2026-10-03: requirement document (v1.0, 20 Aug 2026) reviewed; prototype back office on Vercel; approval chain and loan products confirmed as configuration | Agree the open answers in the delivery file; remove the prototype's public demo panel | Delivery lead | [customers/roan-capital.md](customers/roan-capital.md) | FS-395, FS-397 to FS-403, FS-414, FS-431, FS-435, FS-453 |
+| CU-01 | Roan Capital | Microfinance lender | Kapu MFI on Kapu Core | In delivery | 2026-10-15: product and operations meeting; delivery 0.5 (the 30-day loan drafted and checked, its application form in versions 0.1 and 0.2, documents registered) | Answers from the meeting into the delivery map and the product draft; the licence, CBK's approval of pricing and consent to processors at a senior management meeting | Delivery lead | [customers/roan-capital.md](customers/roan-capital.md) | FS-395, FS-397 to FS-403, FS-414, FS-431, FS-435, FS-453 |
 | CU-02 | Onit Bank | Bank | Kapu Collect and Kapu Pay Gateway, with W-Harambee as the partner; the bank's core is Craft Silicon's Bankers' Realm (FS-612) | Past | 2026-06: production ended after Feb 2025 to Jun 2026; the bank chose more traditional banking services | None. The production record is named with the owner's permission (FS-391) | Commercial lead | — | FS-384, FS-390, FS-391, FS-392; partners PT-39 |
 | CU-03 | KCB | Bank | Since 2021: MobiReg (Meliora's CRM) and its maintenance; the Tiara SMS gateway (Meliora's), its upgrade and migration; USSD and digital lending (retailer finance, KOPA float, term loans, SAHL) on Dibon's menu platform; the Sopra loan engine; the bank's cores, Temenos T24 and Sopra Banking, worked with (FS-612); an account mandate API (tested, not live). Ongoing in 2026: Tiara enhancements, CVM integration, migration from Sopra to GDP APIs, MobiReg Project X and e-mobility | Live | 2026-10-05: project list read: 20 engagements since 2021, 5 of them active or ongoing (FS-443). KCB moved USSD to a platform of its own; the lending and SMS work continued | Confirm that the contract lets us name KCB (FS-420); owner compiling the details of the supply | Commercial lead | — | FS-416, FS-418, FS-419, FS-420; partners PT-19, PT-20, FS-443 |
 | CU-04 | National Bank of Kenya (NBK) | Bank | Since 2021: an SMS gateway system, supplied, installed and upgraded (with international SMS termination), with support and maintenance; transactional and promotional SMS (SDP and SMPP); SMS and email templates; shortcodes and a USSD code in 2026 | Live | 2026-10-05: project list read: 6 engagements since 2021, 5 of them active or ongoing (FS-443) | Confirm that the contract lets us name NBK (FS-420) | Commercial lead | — | FS-417, FS-419, FS-420; partners PT-20, FS-443 |

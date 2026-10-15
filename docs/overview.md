@@ -138,6 +138,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | If you want | Read |
 |---|---|
 | Where to start, if you are new | [start-here.md](start-here.md) |
+| What changed, version by version, and each document's status | [the changelog](../CHANGELOG.md); in the reader, "Documents by status" |
 | What a product does, and what is built | its module, §3 |
 
 **Design and build**

@@ -36,7 +36,7 @@ function read(root, rel) {
 }
 
 function sources(root) {
-  const out = ['README.md', 'HANDOFF.md', 'REVIEW.md'].filter((f) => fs.existsSync(path.join(root, f)));
+  const out = ['README.md', 'CHANGELOG.md', 'HANDOFF.md', 'REVIEW.md'].filter((f) => fs.existsSync(path.join(root, f)));
   const walk = (rel) => {
     for (const e of fs.readdirSync(path.join(root, rel), { withFileTypes: true })) {
       const r = `${rel}/${e.name}`;
@@ -414,7 +414,7 @@ pre{background:var(--code);padding:12px;overflow-x:auto;font:13px/1.4 ui-monospa
 pre.diagram{background:var(--card);border:1px solid var(--line);border-radius:6px;line-height:1.18;padding:14px 16px;font-family:"Cascadia Mono",Consolas,ui-monospace,monospace}
 pre.diagram .bn{font-weight:700;color:var(--accent)}pre.diagram .tg{color:var(--muted)}pre.diagram .br{color:var(--warn)}pre.diagram a{text-decoration:none}
 .st{font-size:11px;padding:0 5px;border-radius:3px;white-space:nowrap}.st-planned{color:var(--planned);background:var(--planned-bg)}
-.st-designed{color:var(--designed);background:var(--designed-bg)}.st-built{color:var(--built);background:var(--built-bg)}.st-live{color:var(--live);background:var(--live-bg)}
+.st-designed{color:var(--designed);background:var(--designed-bg)}.st-doc-draft{color:var(--planned);background:var(--planned-bg)}.st-doc-agreed,.st-doc-sent,.st-doc-active{color:var(--built);background:var(--built-bg)}.st-doc-living{color:var(--muted);border:1px solid var(--muted)}.st-built{color:var(--built);background:var(--built-bg)}.st-live{color:var(--live);background:var(--live-bg)}
 details{font-size:12px;color:var(--muted);margin-top:4px}details a{font-size:12px}
 nav.rel{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;padding:8px 12px;background:var(--card);border:1px solid var(--line);border-radius:6px;margin:8px 0}
 nav.rel b{color:var(--muted);font-weight:600}details.back{margin:4px 0 8px}
@@ -516,7 +516,9 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
     const title = idx.docs.get(f).title;
     const meta = Object.entries(fields).filter(([k]) => ['kind', 'type', 'release', 'owner', 'version', 'last_reviewed', 'review_ids'].includes(k))
       .map(([k, v]) => `${k.replace('_', ' ')}: ${inline(v.replace(/^\[|\]$/g, ''), ctx)}`).join(' · ');
-    const head = `<p class="meta">${crumbs(root, f, page)}${meta ? ` · ${meta}` : ''}</p>`;
+    // FS-839: each document's status leads its header, as a badge.
+    const st = fields.status ? `<span class="st st-doc-${html(fields.status)}">${html(fields.status)}</span> ` : '';
+    const head = `<p class="meta">${st}${crumbs(root, f, page)}${meta ? ` · ${meta}` : ''}</p>`;
     const content = head + related(f, idx, page) + contents(body) + render(body, ctx);
     pages.push({ f, page, title, content });
   }
@@ -539,13 +541,26 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
     const cap = caps.get(id);
     return { id, t: d.text.replace(/\*\*|`/g, '').slice(0, 160), h: d.page + (d.anchor ? `#${d.anchor}` : ''), s: cap ? cap.status : '' };
   }).concat(pages.map((p) => ({ id: '', t: p.title, h: p.page, s: p.f })));
-  const search = `<h1>Dibon financial services</h1><p class="meta">Generated ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC from ${pages.length} documents and ${defs.size} ids. Type an id (MF-01, FS-548, RC-43, JN-02) or words.</p>
+  const search = `<h1>Dibon financial services</h1><p class="meta">Generated ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC from ${pages.length} documents and ${defs.size} ids. Type an id (MF-01, FS-548, RC-43, JN-02) or words. <a href="status.html">Documents by status</a> · <a href="CHANGELOG.html">Changelog</a>.</p>
 <input id="q" autofocus placeholder="Search ids and titles"><div id="hits"></div>
 <script>const E=${JSON.stringify(entries).replace(/</g, '\\u003c')};const q=document.getElementById('q'),h=document.getElementById('hits');
 function show(){const v=q.value.trim().toLowerCase();if(!v){h.innerHTML='';return}const r=E.filter(e=>(e.id+' '+e.t).toLowerCase().includes(v)).slice(0,60);
 h.innerHTML=r.map(e=>'<div><a href="'+e.h+'">'+(e.id||'page')+'</a> '+(e.s?'<small>'+e.s+'</small> ':'')+e.t.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</div>').join('')||'<div>No match</div>'}
 q.addEventListener('input',show);</script>`;
   fs.writeFileSync(path.join(outDir, 'index.html'), shell('Dibon financial services', 'index.html', search, note));
+  // FS-839: every document that is not living, by status, so a version's
+  // drafts are one page away.
+  const byStatus = new Map();
+  for (const p of pages) {
+    const fields = frontMatter(read(root, p.f)).fields;
+    if (!fields.status || fields.status === 'living' || p.f.includes('/_')) continue;
+    if (!byStatus.has(fields.status)) byStatus.set(fields.status, []);
+    byStatus.get(fields.status).push(`<li><a href="${p.page}">${html(p.title)}</a> <small>${html(fields.kind || '')}</small></li>`);
+  }
+  const order = ['draft', 'awaiting-approval', 'awaiting-cbk', 'sent', 'answered', 'agreed', 'validated', 'building', 'built', 'tested', 'active', 'superseded', 'withdrawn', 'retired'];
+  const sts = [...byStatus.keys()].sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
+  const statusPage = `<h1>Documents by status</h1><p class="meta">Every document that is not a living register or index, by its status (FS-839). Versions are in <a href="CHANGELOG.html">the changelog</a>.</p>${sts.map((s) => `<h2>${html(s)} (${byStatus.get(s).length})</h2><ul>${byStatus.get(s).join('')}</ul>`).join('')}`;
+  fs.writeFileSync(path.join(outDir, 'status.html'), shell('Documents by status', 'status.html', statusPage, note));
   return { outDir, pages: pages.length, ids: defs.size, reader: Boolean(note) };
 }
 

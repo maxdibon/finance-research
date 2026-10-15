@@ -1,14 +1,16 @@
 # Dibon financial services — session handoff
 
-    version: 1.9.0
-    updated: 2026-10-14
-    supersedes: 1.8.0; adds the evening of 14 October (FS-819 to FS-828)
+    version: 2.0.0
+    updated: 2026-10-15
+    supersedes: 1.9.0; a briefing only: the history moved to CHANGELOG.md,
+                the delivery maps' changelogs and the registers (FS-837)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
 
 **Update this file at the end of a session, or when the owner asks.** It
-carries no counts on purpose: see *Current state*.
+holds no history and no counts on purpose: those are in the changelog,
+the registers and the reader.
 
 ---
 
@@ -20,428 +22,147 @@ people by role, never by name, in anything you write here.
 
 ## What this is
 
-**A documentation repository, not a code base.** It holds the portfolio
-(two PDF editions built from Markdown), one module file per product and
-shared service, registers (law, privacy, documents, partners, competitors,
-customers), the delivery plan, build specifications, user journeys, the
-testing approach, and the checks that keep all of them true. The software
-itself is built elsewhere.
+**A documentation repository, not a code base.** The portfolio (PDF
+editions built from Markdown), a module file per product and shared
+service, registers, the delivery plan, the architecture, build
+specifications, user journeys, the handbook, service management, and the
+checks that keep all of them true. The software is built elsewhere; the
+first files of one code repository wait in `code/lender-rules/`.
 
-**The products:** Kapu MFI, Kapu Sacco and Kapu Core (on Apache Fineract),
-Collect and the Pay Gateway (which ran in production at Onit Bank), Escrow,
-SME Recon, and the business suite on Odoo. Under them, shared services:
-access, identity verification (with the document vault), mandates (the
-approval engine), messaging, rails, reconciliation, financial crime,
-decisioning (appraisal, scores and risk classes), insights and platform
-security.
+**The products:** Kapu MFI, Kapu Sacco and Kapu Core (on Apache
+Fineract), Collect and the Pay Gateway (which ran in production at Onit
+Bank), Escrow, SME Recon, and the business suite on Odoo; under them the
+shared services (access, identity and the vault, mandates, messaging,
+rails, reconciliation, financial crime, decisioning, insights, platform
+security). **R1 is Roan Capital's pilot** (customers CU-01).
 
 **One line decides most questions:** the institution holds its licence,
 its money and its records; Dibon holds the platform. Read
 `docs/architecture/README.md` §2 and §3 before you argue with it.
 
-## Settled: do not reopen without the owner
-
-Each has a register row and, where it changed the design, an entry in
-`docs/decisions.md` with what it cost.
-
-- **An isolated instance per institution** (FS-491).
-- **v1 is capped** at the phase-1 count in `docs/delivery-plan.md`
-  (FS-490). The check fails past it; raising it is a decision, and has
-  been raised openly many times. Most new ideas land in phase 2.
-- **Keycloak is the one authority for roles** (FS-498).
-- **Block easily; recover only after re-verification** (FS-503).
-- **Documents and sensitive data travel only on our network**; WhatsApp,
-  SMS, email and push carry notifications and links only (FS-532).
-- **People choose their channels**, with three overrides (FS-533).
-- **Every document carrying personal data lives in the vault** (FS-527).
-- **Retention:** seven years; twelve from default for a secured loan
-  written off or in recovery (FS-537, FS-538).
-- **Identity:** a manual route only where no register or vendor covers a
-  document, never for a mismatch, with a second approval and the record
-  marked verified manually (FS-544); a mismatch goes to a restricted
-  compliance team in the institution's Odoo Helpdesk, because tipping off
-  is an offence (FS-555); **KYC tiers** from the evidence held, limits
-  per tier set by each institution (FS-551); USSD self-sign-up is phase 2.
-- **Roan Capital runs on Dibon's own messaging service**, not its own SMS
-  gateway (FS-565).
-- **Collect takes deposits paid to the institution's own paybill and
-  tills**, never into a partner's own shortcode or a Pochi la Biashara;
-  money that becomes a deposit goes through Collect, money that pays a
-  merchant through the Gateway (FS-552, FS-554).
-- **Transaction rules and a business calendar** (financial-crime FC-16,
-  core KC-15): every money movement meets the institution's rules before
-  a rail; the strictest outcome wins; an allow-list never relaxes a legal
-  limit, a sanctions match or a SIM-swap hold (FS-574).
-- **Decisioning is one shared engine**, rules first, evidence for people
-  in R1, built to take AI later behind one contract; the Data Protection
-  Act s.35 safeguards before anything is automated (FS-582, FS-583).
-- **Every component is replaceable behind a stable contract**
-  (architecture §6, FS-584).
-- **Every payout is one instruction from approval to settlement**, with
-  cancellation, recall, returns and reversals; the Gateway is never on an
-  institution's payout path (FS-586, FS-587).
-- **What is approved is what is sent**, and **no Dibon role, break-glass
-  included, moves an institution's money** (FS-588).
-- **Diagrams are plain text, at most 100 columns** (FS-064, FS-579). In a
-  box: the name in capitals as the components table in
-  `docs/specs/README.md` names it, what it does in lower case, what it
-  runs on in `[snake_case]` (FS-632). No Mermaid: the owner prefers ASCII
-  (FS-628); the reader draws the ASCII with box lines.
-- **Specs come in two kinds** on one template (FS-627): build (a service
-  we write) and component (a product we configure). §1 ends with "Where it
-  sits" and a Related line; relations in front matter, both ways; closing
-  with tests (or "Checks before the build") and open questions.
-- **Kapu Core is Fineract 1.15.x, pinned, never forked; every product
-  progressive with advanced payment allocation; Fineract's maker-checker
-  off; only Kapu MFI's service account may approve, disburse or
-  restructure** (FS-626). The Mifos web app is open.
-- **The night's close** (FS-633): checks at 21:00 and 23:45, blocking or
-  warning by written criteria agreed with the institution; the business
-  date moves at midnight regardless and only the close waits; two people
-  to override; a severity 1 is a phone call. **Time** (FS-634): UTC
-  stored, Nairobi business dates, three dates per money record, NTP with a
-  500 ms alarm, references before time in matching (architecture §10).
-  Items in transit are chased through each source's status query or
-  statement until they clear (RO-07, FS-635).
-- **Who holds what:** architecture §2 "Every store" lists every store,
-  what it holds and never holds, its class and its protections (FS-636).
-  Restricted fields encrypted one by one is SE-27, in R1 (FS-638).
-- **Nothing needs reading** (FS-637): anything a person must confirm or be
-  told is also available by voice or as numbers (omni-channel §1).
-- **Bank payouts: one approval within limits a bank agrees by mandate
-  letter, two above them** or through internet banking (RL-07, FS-594).
-- **Payroll is paid from the employer's own accounts, never through
-  Dibon**: net pay, statutory and check-off remittances in one approved
-  run (business-suite BS-19, phase 2, FS-606, FS-608).
-- **The portfolio's version is what a reader holds.** v1.0 and v1.1
-  (issued 2026-10-09, FS-678) have gone out. The next edit starts v1.2 as
-  a draft: bump the version and set status draft in document.json first,
-  or the build prints an issued v1.1 that differs from what readers hold.
-  The build refuses a named copy of a draft (FS-595).
-- **Every decision from FS-490 names what it requires** in a `Requires:`
-  line, and the check proves each item exists (FS-515).
-- **In an outage, Dibon gets the platform back; the institution keeps its
-  business going with its own portal, bank, form and log; Dibon never
-  touches its money, even if asked** (FS-774). Safe mode (SE-24) is in
-  R1; Roan Capital's contract takes warm standby, so the second site's
-  provider is needed before its go-live (FS-775).
-- **Matching is the platform's job;** the accountant settles only what
-  the rules could not, against a target of 98% matched automatically
-  (FS-766). M-Pesa items in transit are chased automatically in R1
-  (RO-07); NCBA comes in by its statement email forwarded whole, or
-  uploaded, checked before matching (RO-01), until its API (FS-767).
-- **Roles follow the job position:** recording someone in Odoo's
-  Employees app (BS-12, the employee record only, in R1) asks for the
-  position's roles; a second person approves ahead; roles start on the
-  start date (FS-769, FS-770). Dibon's engineers the same way, their group
-  memberships as code approved by the security lead (FS-777).
-- **Each institution has a handbook** (docs/handbook/): what and when,
-  one procedure per HB id, drawn from a journey; manuals say how, later
-  (FS-771). Its copy lives in its own Odoo (FS-772).
-- **The register rates every open row** Critical, High, Medium or Low
-  (FS-779).
-- **Our printed documents share one look,** with a little whimsy in the
-  margins: docs/design-system.md (FS-781).
-- **Recon is the platform's verifier** (FS-788 to FS-794;
-  docs/specs/recon.md): three ledgers that must always agree, the
-  master, a shadow rebuilt from its postings within 5 seconds, and a
-  companion that computes on its own from the source events, written
-  apart from lender rules. It never writes to the master. In R1: the
-  shadow at go-live, the companion for Roan Capital's product within the
-  first 30 days. Comparisons of money elsewhere move into it.
-- **The ledger database has no superuser and no human login,** pgAudit
-  kept off the instance, and fixes only as approved postings (SE-18,
-  SE-26, kapu-core-fineract §8, check F14; FS-789, FS-793).
-- **Every account has a payment reference with check digits** (CO-21,
-  RO-02; FS-785, FS-793).
-- **Events are signed locally** with short-lived keys OpenBao issues, not
-  a call per event (RO-23; FS-793).
-- **A scale target:** 25 million accounts and 10 million transactions a
-  day per instance, proven by a load test before it is claimed
-  (quality.md; FS-791, FS-792).
-- **Recon's actions and deadlines follow one model** (recon §4.7), each
-  institution's rules set against it at onboarding (OB-RO-04, FS-794).
-  Extensions: Odoo first.
-- **The product version document is a product's one authority**
-  (lender-rules §2.4; FS-800 to FS-802): written in the vocabulary, in
-  three groups (A the published terms, B eligibility and limits, C how it
-  runs) plus the never-terms the regulations forbid; approved as a
-  `product.version` request by two people, then CBK's letter where reg 55
-  needs it; applied to Fineract through the API. Lender rules and the
-  companion each read the signed document and never talk to each other;
-  a reading of the law not yet settled goes in one interpretation record
-  both read (recon §3.1.3).
-- **Publication by stage** (FS-803 to FS-805): a draft, and a version
-  awaiting CBK, are private; an active one is public, on its product page
-  and in every key information document (regs 47, 48); the pricing model
-  goes to CBK only.
-- **Client material lives in Dibon's Odoo Documents** (rules, Dibon 10).
-  Product drafts are the exception, in `docs/products/` until the
-  workspaces exist, because they hold no personal data (FS-806).
-- **Recon can start from a cut-off** (recon rule 8; FS-798): where an
-  institution already runs a core, from a signed opening position, all
-  before it taken as reconciled. The companion's inputs are archived from
-  go-live, because the event bus keeps seven days.
-- **Charges the borrower did not cause** (an outage, a partner's outage,
-  planned work, a payment we did not process) are waived through
-  disruption windows and a standing waiver (lender-rules §2.10; FS-799).
-- **Roan Capital's eight roles** come from its prototype, each with what
-  it does and never does (delivery map §7; FS-811), and the prototype's
-  lessons are listed as what we take and what we do not (FS-807, FS-812).
-- **We never ask for answers by email.** A questionnaire is a Word
-  document with a form field per question, read back by script into its
-  source, never retyped (`tools/products/`; FS-816, FS-817).
-- **A product is data as well as words** (FS-823, FS-825): each draft
-  holds a typed block beside its tables, one entry per vocabulary term
-  (proposed, options, the settled value). **The schema is defined in the
-  code repository and applied wherever a value enters**: when we draft,
-  when an answer is read back, when a person encodes it, and later in
-  the form, at approval and at activation. Its first files (the schema,
-  the rules across terms, their worked examples) are in
-  `code/lender-rules/` until that repository exists; then they move.
-  The check validates every value against them, and every option we
-  offer, so we never offer a choice a rule forbids. An answer the
-  institution settles must be encoded in the same change.
-- **Roan Capital's NDA is in force:** signed for both parties, dated 4
-  August 2026, for three years (FS-827). Its text is the one FS-738
-  reviewed; FS-740's corrections belong in the services agreement and
-  the data processing terms, not a new NDA. Our processors need Roan
-  Capital's written consent under it.
-- **Licence questions go to a senior management meeting,** not an
-  operational one (FS-827); so do CBK's approval of pricing and consent
-  to processors. The owner understands Roan Capital has applied for its
-  licence and is not yet licensed.
-
-## What is in flight
-
-- **Roan Capital's 30-day loan** (FS-813 to FS-817): the draft is
-  `docs/products/roan-capital-30-day-loan-v1.md`, filled from the
-  prototype, every item with its source and its ask. Its three
-  questionnaires (A product terms, B eligibility and limits, C how it
-  runs) are built and looked at; with the agenda, they go to Roan
-  Capital for the meeting below. Returned files go in
-  `clients/roan-capital/` and are read back with
-  `tools/products/read-back.js`; the steps are in
-  `docs/products/README.md`. They carry most of Roan's open answers (4,
-  10, 12, 13, 16 to 21, 28, 29). Two questions for counsel came out of
-  the prototype: a minimum of 14 days' interest on early repayment, which
-  reg 56 appears to forbid (LQ-13), and excise duty on fees, which the
-  prototype leaves out (LQ-14).
-- **Roan Capital's product and operations meeting, 15 October 2026**
-  (FS-826), 30 minutes: four product decisions, quick choices, who does
-  what, and owners and dates for the rest. In
-  `clients/roan-capital/meeting-2026-10-15/` (not in git): the agenda
-  for Roan Capital, the three questionnaires, and our record mapping
-  each of the 21 questions to where its answer lands, with **the
-  evening's steps**: read the saved questionnaires back and encode what
-  the read-back lists, copy the other answers into the delivery map's
-  §4, send Roan Capital the decisions in writing, close the rows.
-- **Where source data lives and for how long** (FS-819 to FS-822):
-  recon keeps every rail record seven years, in its own security domain,
-  never in Fineract's database. Proposed, awaiting go: one copy of all
-  source data, read by everyone (FS-820), and storage classes built on
-  our own infrastructure, since Liquid's Azure Stack Hub offers one tier
-  with write-once protection (FS-821). Liquid's answers decide FS-821:
-  ten storage questions (S1 to S10) are in its enquiry, not yet sent.
-- **The Data Commissioner:** Dibon is registered as a data processor
-  (compliance LC-01, its number recorded; the certificate's expiry still
-  to record). The controller registration is still needed (LC-02,
-  FS-367, Critical).
-- **R1, Roan Capital's pilot** (customers CU-01). The delivery map is
-  `docs/customers/roan-capital.md`; Roan's open answers are its §4, and
-  answer 13 (the formulas, weights and thresholds behind appraisal and
-  scoring) blocks decisioning's build. Roan's requirement document is
-  Dibon's own and commits appraisal, a behaviour score and automatic
-  downgrades to the MVP.
-- **User journeys** in `docs/journeys/`: **every indexed journey is
-  drafted**: R1's JN-01 to JN-08, JN-13, JN-14, JN-16 to JN-20, and R2's
-  JN-10 to JN-12 (a deposit, a transfer out and a transfer in through a
-  larger bank); JN-15 is phase 2. All are `draft`. **Agreeing one now needs
-  its handbook procedures**: the check fails an agreed journey with none.
-  JN-18 and JN-19 have theirs (HB-20 to HB-27, HB-70 to HB-78).
-- **Architecture** is a folder (`docs/architecture/`, FS-649): README.md
-  keeps §1 to §10, so "architecture §N" references hold; beside it the
-  views: context, instance, deployment, runtime (sequence diagrams),
-  interfaces, quality goals, constraints, risks.
-- **Availability and recovery** (deployment.md §2 to §5): failover in
-  seconds within a site; cold, warm (default), hot or hot-automatic across
-  sites, chosen per institution; no active-active ledger (FS-655). Backups
-  open through a recovery vault with three of five hardware-key holders,
-  one outside Dibon (FS-657); never TOTP for shares (FS-659). Who carries a
-  hardware key, and which: YubiKey 5C NFC for engineers and holders.
-- **The preferred channel, never the only one** (architecture §3, FS-661):
-  if we stop, the money does not; M-Pesa validation fallback set to
-  complete; queued payouts checked before release; manual acts approved
-  afterwards (manual.act); a fallback runbook per institution (OB-COM-23).
-  Merchants give direct payment details by default (GW-16, FS-662).
-- **Unplaced payments** (CO-21, FS-663): a ticket, the payer asked on the
-  paying number, applied automatically only when the account is the
-  phone's own, escalated at 48 hours, returned at day 7. **Flowza** (Dibon's
-  own engagement platform) is the conversation layer, sending through
-  messaging; its gaps before institutional use: FS-664 to FS-666.
-- **Experience and training** (docs/experience.md, docs/training/):
-  delightful to use is the sixth idea; draw, test with five users per
-  role, measure; manuals by role, the key holder's written first. No
-  designer on the team yet.
-- **Every journey** (FS-668) has a status and validated_with, a target
-  time, the moments that matter, a data line, a Messages column of
-  template ids (checked against the catalogue) and a "stops partway" row.
-  Every R1 journey is now written (above).
-- **R1's scope was swept** (FS-671, FS-674, FS-675): 24 capabilities the
-  specs relied on moved into the delivery plan's "R1 in detail" (with
-  Roan's map and CU-01); MS-05 and MS-06 stay out. The check now fails
-  a spec's "Yes" in R1 that the plan leaves out. RO-24, in R1, anchors
-  the chain in a transparency log, so Trillian or Rekor is needed before
-  R1's build. The Unclaimed Financial Assets Act is LR-38 (FS-673).
-- **Questions for counsel** live in docs/legal-questions.md (LQ ids,
-  FS-744); a document cites the id, never holds the question. No firm is
-  engaged yet (SD-12). **Rules** for Dibon, institutions and partners are
-  docs/rules.md (FS-714); **endpoints** docs/specs/endpoints.md (FS-711).
-- **Technology** (FS-703): every component we run is in
-  docs/architecture/technology.md, by class, with its alternatives and
-  verdict; a spec names nothing that has no row; each row re-checked
-  every quarter. Settled: Envoy Gateway as the default edge (a trial
-  against APISIX open), Coraza as an external processor, OpenBao on
-  PostgreSQL, no Kafka at site B under warm standby, no schema registry,
-  Barman Cloud for database backups, Tempo, Rekor v2 witnessed, GitLab
-  with runners in Kenya and Flux; Warpgate to evaluate. How components
-  interact: docs/architecture/flows.md, one question per flow.
-- **Every spec** (FS-667) carries a status (draft until the owner agrees it),
-  Data, Quality and metrics, and Threats sections, and tests with ids; the
-  check enforces them. **Events** are named only from the catalogue in
-  `event-bus-kafka.md` §5 (CloudEvents, type `ke.dibon.` + name).
-- **Specifications** in `docs/specs/` (index: `README.md`, with the map and
-  the components table): approval engine, lender rules, Kapu Core on
-  Fineract, the end-of-day runner, observability on Grafana, access on
-  Keycloak (four realms per instance: staff, customers, ops, master;
-  step-up as `loa3`; roles granted only by mandate; borrowers and
-  guarantors code-only, FS-643; Odoo by OCA's `auth_oidc`, the one AGPL
-  exception, FS-646). **Odoo is Enterprise, required** (FS-644).
-  **Dibon engineers** (FS-645): one central identity brokered into each
-  instance, no standing access to data, just-in-time grants approved by
-  the institution where it runs operations, an access register compared
-  monthly (SE-26, architecture §9). **Messaging** (`messaging.md`, FS-648):
-  the R1 catalogue of templates (T01 onward; count them there); the institution owns and approves its
-  words; a message never carries the outstanding balance. Next, in order:
-  rails, reconciliation, kapu-mfi, identity, odoo, decisioning; then the sanctions adapter, guarantors and
-  borrower access. **On-call:** Grafana OnCall's open-source edition was
-  archived on 2026-03-24; GoAlert self-hosted with Twilio is proposed, the
-  choice is the owner's (observability-grafana §5).
-- **Incident management** (`docs/service-management/incident-management.md`): severities, the
-  notification plan, what a notice says, the record and its closure.
-  **Service management** (`docs/service-management/README.md`, FS-639): the
-  ITIL 4 practices mapped; change kinds and the change calendar (no
-  deployment during the night's close or at month-end); the configuration
-  record generated from code (SE-23); problems and known errors; proposed
-  service levels; tools on Odoo Helpdesk, Knowledge and the pipeline. Open:
-  Odoo Enterprise for our own use, the GitOps tool, a status page. Its times are proposals until
-  agreed with the rota and each customer.
-- **Vendors for identity:** Smile ID, MetaMap and Prembly read from their
-  API references (partners PT-30, PT-33, PT-53). Prembly sent its
-  reseller agreement and DPA; we reviewed them (FS-762) and prepared our
-  changes letter (sources/confidential/prembly/, out of git), for the
-  commercial lead to send. Bureau and register data resold is LQ-12.
-- **Service management** now says whose record each practice is, Dibon's
-  or the institution's, and the bridge: its staff as portal users of
-  Dibon's Odoo (FS-780). **Ways of working** (roles, merge requests,
-  architecture review, change advisory) and the **GitLab spec** are in
-  service-management/ and specs/gitlab.md (FS-745 to FS-758); monorepo
-  and the mirror server left open (FS-760).
-- **The collateral registry** (Movable Property Security Rights Act and
-  its regulations, law register LR-23, LR-37): MF-03 now searches before
-  lending, records each notice, sends the borrower their copy within ten
-  working days, warns before expiry and cancels at settlement, by hand on
-  BRS's eCitizen portal in R1. No API is documented (partners PT-55).
-- **Roan Capital's map** is nearly all Covered (FS-618); two rows stay
-  Partial, each with a stated gap: RC-02 and RC-36 (RC-01 Covered,
-  FS-681). R1 gained the
-  collection ladder (MF-39), the public request page and calculator
-  (BS-20) and one audit trail across modules (RO-27); the authenticator
-  app is named in R1 (AC-16); the descoped collateral steps are tracked
-  though done by hand (MF-04, FS-619).
-- **The team** has been invited to read this repository and GateKeepr
-  and to bring proposals on how to work together (FS-603). Nobody pushes
-  here; a fresh clone fails the names check until it has the protected
-  names list, which is not in git. They read the site with
-  `node tools/site.js --reader`, which skips only that check and says so
-  (FS-617).
-- **KCB and National Bank of Kenya** are current SMS customers, named
-  internally only until their contracts allow more (FS-420).
-
 ## Do this first
 
-1. Read `README.md` (the map and the rules), then `docs/start-here.md`
-   (reading order by role, and every id prefix).
+1. Read `README.md` (the map), then `docs/start-here.md` (reading order by
+   role, every id prefix).
 2. Run the checks (below). If they fail before you have changed anything,
    say so first.
-3. Read the last fifteen commits: `git log --oneline -15`. The messages
-   carry the reasoning.
-4. Read the newest rows at the bottom of `REVIEW.md`; the open ones there
-   are what the owner is waiting on.
+3. Read the newest entry of `CHANGELOG.md`, and of Roan Capital's
+   delivery map §8: where things stand, version by version.
+4. Read the last fifteen commits (`git log --oneline -15`) and the newest
+   rows at the bottom of `REVIEW.md`; the open ones are what the owner is
+   waiting on.
+
+## How the owner wants you to work
+
+- **Record before answering.** Every point raised gets the next FS row in
+  `REVIEW.md` before you discuss it; the register check fails on a
+  skipped id. **Rate every open row** Critical, High, Medium or Low; a
+  closed row loses its rating.
+- **Recommend, then wait for "go".** A direct instruction is applied at
+  once. When a message is ambiguous, answer every reading and ask which.
+  **"Go" is not "push":** push only when the owner says "push".
+- **Disagree openly**, say when your own earlier claim was wrong, and say
+  what you did not do.
+- **Read the law before citing it**, in its text in `sources/regulation/`;
+  when it has not been read, say "to confirm". Cite the provision.
+- **Compute counts; never type them.** The delivery plan's typed R1
+  counts are recomputed by a script that first reproduces the old ones.
+- **Verify by breaking things.** A new check gets tests that make it fail.
+- **Commit as you go**, explicit paths, the reasoning in the message; run
+  the tests first and stop if any fail.
+- **Roles, never names**, for people. **Customer-safe language**, inside
+  as well as outside: frame what a customer is working towards, never
+  judge its systems.
+- **Status is evidence:** Live, Built, Designed or Planned, for
+  capabilities; each document's own status from its kind's lifecycle.
+- **A third party's document is kept as received** (rules, Dibon 11): in
+  `clients/<party>/originals/`, read-only, hashed; work happens on named,
+  versioned documents, version 0.1 a faithful copy, later versions
+  tracked, each change with why and its regulation.
+- **Versions, not a log of commits** (rules, Dibon 12): the set and each
+  customer's delivery carry major.minor versions, cut on the owner's
+  word by `node tools/cut.js`, then tagged. Propose a cut when one is
+  due; never cut on your own.
+- **Documents for outside readers** start from `docs/design-system.md`:
+  one look, a little whimsy in the margins, never in figures or terms.
+- **Never sign in, or enter a password, on a live site**; downloads need
+  the owner's permission.
+
+## The rules a session must not break
+
+Each is settled, with its register row, and written into the documents
+it shapes (the architecture, the specs, the modules); many have an entry
+in `docs/decisions.md` saying what it cost, and the standing rules are in
+`docs/rules.md`. Do not reopen one without the owner.
+
+- **Architecture:** an isolated instance per institution (FS-491); every
+  component replaceable behind a stable contract (FS-584); Keycloak the
+  one authority for roles, roles following the job position (FS-498,
+  FS-769); no Dibon role, break-glass included, moves an institution's
+  money, and what is approved is what is sent (FS-588).
+- **Scope:** v1 is capped at the phase-1 count in the delivery plan; the
+  scope check fails past it, so scope an existing capability into R1
+  rather than add one (FS-490, FS-769).
+- **Data:** documents with personal data live in the vault and travel
+  only on our network, channels carrying notifications and links
+  (FS-527, FS-532); retention seven years, twelve from default for a
+  secured loan written off (FS-537, FS-538); personal data stays in Kenya.
+- **Money:** every payout one instruction from approval to settlement
+  (FS-586); matching is the platform's job, the accountant settles only
+  what the rules could not (FS-766); recon is the verifier, three ledgers
+  that must agree, never writing to the master (FS-788 to FS-794); the
+  ledger database has no superuser and no human login (FS-789).
+- **Products:** the product version document is a product's one
+  authority (lender-rules §2.4), published only once active; a product is
+  data as well as words, every value checked wherever it enters against
+  the schema and rules in `code/lender-rules/` (FS-823, FS-825); answers
+  come back in form fields, never by email (FS-817).
+- **Kapu Core** is Fineract 1.15.x, pinned, never forked (FS-626).
+- **Outages:** Dibon restores the platform; the institution runs its
+  business by its own fallback, and Dibon never touches its money
+  (FS-774).
+- **Writing:** diagrams in plain text, at most 100 columns, no Mermaid
+  (FS-579, FS-628); specs on the template, closing with tests and open
+  questions (FS-627); questions for counsel live in
+  `docs/legal-questions.md`, cited by LQ id (FS-744).
+- **The portfolio's version is what a reader holds:** v1.0 and v1.1 have
+  gone out; the next edit starts v1.2 as a draft in
+  `design/portfolio-pdf/document.json` (FS-595).
+- **Clients:** client material lives in Dibon's Odoo Documents once it
+  exists, in `clients/` until then (rules, Dibon 10); Roan Capital's NDA
+  is in force (DR-003, FS-827); its licence, CBK's approval of its
+  pricing and consent to processors are for a senior management meeting
+  (FS-827).
 
 ## Where things are
 
-- Repo `E:\Agents\Claude\Financial Services`, private, `origin` is
+- Repo `E:\Agents\Claude\Financial Services`, private, `origin`
   `https://github.com/eric-mokaya/finance`, branch `main`.
-- **`REVIEW.md`** is the intake. **`docs/decisions.md`** says what each
-  decision cost. **`docs/journeys/`** walks what people go through, with
-  the gaps each journey found. **`docs/testing.md`** says how a capability
-  is proven Built: acceptance items here, tagged tests in the code
-  repository, a coverage matrix.
-- **The reader:** `build/site/index.html`, linked HTML of every document,
-  every id a link, rebuilt by the pre-commit hook. Open it in a browser;
-  in the desktop app, start it with `preview_start` name `site`
-  (`.claude/launch.json`, local and git-ignored).
-- **Git-ignored, and holding real material:** `clients/` (Roan Capital's
-  requirement document is there), `sources/confidential/`,
+- **`REVIEW.md`** is the intake; **`CHANGELOG.md`** the versions;
+  **`docs/decisions.md`** what each decision cost; **`docs/rules.md`** the
+  standing rules; **`docs/document-register.md`** every document held
+  with a party, by DR id; **`docs/customers/`** a delivery map per
+  customer, on `_template.md`, its changelog in §8.
+- **The reader:** `build/site/index.html`, every document linked and every
+  id a link, rebuilt by the pre-commit hook; its Review page lists open
+  rows by criticality, its "Documents by status" page every draft. In the
+  desktop app, `preview_start` name `site`.
+- **Tools:** `tools/check.js` and its tests; `tools/site.js`, the reader;
+  `tools/assemble.js`, the Master; `tools/products/`, product
+  questionnaires built and read back (the builder needs the docx package
+  via DOCX_MODULE); `tools/originals.js`, originals kept and verified;
+  `tools/cut.js`, versions stamped.
+- **Git-ignored, holding real material:** `clients/` (per party:
+  `originals/`, `working/`, meeting folders), `sources/confidential/`,
   `sources/gatekeepr/`, `sources/market/`, `sources/regulation/` (the law
   texts) and `build/`. **Never commit them, and never copy names, ID
-  numbers, phone numbers or internal addresses out of them.** Write
-  *about* them.
+  numbers, phone numbers or internal addresses out of them.** Write about
+  them; register them by DR id.
+- **Kept local, never committed:** `sources/odpc_registration.png`,
+  `sources/dibon/recon-notes/`, and `design/card_design.png`, a
+  third-party design image.
 - **Binary files** are refused by the pre-commit hook unless listed in
-  `.githooks/allowed-binaries`.
-- **`docs/products/`** holds product drafts by exception (above);
-  **`tools/products/`** builds questionnaires and reads them back. The
-  read-back needs only Node; the builder needs the docx package from
-  outside the repository (DOCX_MODULE).
-- **`code/lender-rules/`** holds the first files of lender rules' code
-  repository: the vocabulary's schema, the rules across terms and their
-  worked examples (FS-825). They move there when it exists.
-- **Third parties' documents are kept as received** (rules, Dibon 11;
-  FS-834): `clients/<party>/originals/`, read-only, hashed in its
-  MANIFEST.json; check with `node tools/originals.js verify
-  clients/<party>`. Work happens on named, versioned documents in
-  `clients/<party>/working/`, version 0.1 a faithful copy, later
-  versions tracked, each change with why and its regulation.
-- **Also kept local, never committed:** `sources/odpc_registration.png`
-  (untracked) and `sources/dibon/recon-notes/` (ignored), the owner's
-  handwritten recon notes with their transcript.
-- **`design/card_design.png`** is a third-party design image the owner
-  shared as inspiration for page 17. It stays local and untracked; never
-  commit it.
-- **Logos:** the builds use `design/brand/dibon_logo_white.png` until the
-  owner chooses (FS-524, FS-542).
-
-## Fetching documents
-
-- **Kenya Law** refuses scripts. Find the latest version through
-  `/search/api/documents/?search=` or the work's page, then navigate the
-  browser pane to `{AKN expression}/source`. The navigation may report a
-  failure; the file still downloads.
-- **The download is a GUID-named `.tmp` in Downloads, and Windows opens a
-  Save As dialog for it** that Claude cannot see or close. **Copy the
-  `.tmp` at once** (wait for its size to settle, check it ends `%%EOF`),
-  to `sources/regulation/ke/<name>@<as-at>.pdf`; only then tell the owner
-  it is safe to press **Cancel**. Cancelling first deletes the file
-  (FS-576, FS-578). Take only GUID-named files created since the download
-  began; `~WRL….tmp` files are Word's, never touch them.
-- Add the law register row (`docs/regulation.md`, next LR id) before the
-  check will accept the new file.
-- **CBK and SASRA** allow `curl` with a browser user agent.
-- **PDFs** are read with `py` and `pypdf`; a reusable search script is
-  worth writing to the scratchpad. Ligatures break searches.
-- **Downloads need the owner's permission**; reading what the owner asked
-  for counts. **Close the browser pane when done.**
+  `.githooks/allowed-binaries`. **Logos:** `design/brand/` (FS-524).
 
 ## Current state — ask, do not read
 
@@ -449,241 +170,102 @@ Each has a register row and, where it changed the design, an entry in
 node tools/check.js --counts       # every check, the counts, each journey's statuses
 node --test tools/check.test.js    # breaks each check on purpose
 node tools/site.js                 # builds build/site/; the hook does this too
+node tools/originals.js verify clients/roan-capital
 git log --oneline -15
 git status --short
 ```
 
-The most pressing: `grep -E "\| OPEN \| (Critical|High) \|" REVIEW.md`.
-The reader's Review page lists every open row by criticality.
-Proposals awaiting go: `grep "| OPEN |" REVIEW.md | grep "Proposal in chat"`.
-
-## How the owner wants you to work
-
-- **Record before answering.** Every point raised gets a `REVIEW.md` row
-  with the next FS id before you discuss it, in order: the register check
-  fails on a skipped id.
-- **Recommend, then wait for "go".** A direct instruction is applied at
-  once. When a message is ambiguous, answer every reading and ask which.
-- **Disagree openly**, and say when your own earlier claim was wrong.
-- **Read the law before citing it.** When a text has not been read, say
-  "to confirm", and ask to download it.
-- **Compute counts; never type them.** The delivery plan carries typed
-  counts in four places; recompute them with a script after any change to
-  phase 1 or Roan's map, and check the script reproduces the old figures
-  first.
-- **Verify by breaking things.** A new check gets tests that make it
-  fail.
-- **Say what you did not do**, plainly, and report your own mistakes.
-- **Commit as you go**, with explicit paths and the reasoning in the
-  message. **Run the tests before committing, and stop if any fail**: a
-  chained command once committed with a failing test. **Push only when
-  the owner says "push".**
-- **Roles, never names**, for people. **Customer-safe language** inside as
-  well as outside.
-- **Status is evidence:** Live, Built, Designed or Planned.
-- **Rate every new open row** Critical, High, Medium or Low; a row you
-  close loses its rating (the register check holds both).
-- **Documents for outside readers** start from docs/design-system.md: one
-  look, a little whimsy in the margins, never in figures or terms.
-- **Never sign in, or enter a password, on a live site.**
+The most pressing: `grep -E "\| OPEN \| (Critical|High) \|" REVIEW.md`, or
+the reader's Review page. Proposals awaiting go: the open rows whose notes
+say "proposal in chat".
 
 ## The checks
 
 `tools/check.js` runs: names, register and review ids, the module
-template, capability rows, diagrams no wider than 100 columns, partners,
-the public/internal line, copy and claims, decisions, obligations,
-customers, regulation, assurance, references, dependencies, scope,
-**journeys** (template headings, a release, capabilities on every step,
-no typed status, a flow diagram showing every step and failure, anything
-outside the release named in §4 Gaps, every journey indexed),
-**overview** (every document under `docs/` linked from the overview,
-directly or by its folder), **specs** (template front matter and sections,
-relations both ways, §1's diagram and Related line, the index, box names
-from the components table), **links** (every relative link and every
-`docs/…` path resolves; REVIEW.md exempt as history), **handbook** (every
-procedure has a From line naming an existing journey or spec section; HB
-ids cited exist; an agreed journey has procedures), **products** (each
-draft's items have an id, a source and an ask from the fixed list, and
-every item asked about is a term of the vocabulary; its typed block
-names only vocabulary terms and real rows, and every answer settled is
-encoded; every value meets the schema and the rules across terms in
-`code/lender-rules/`) and `reviewed`. The
-**register** check also fails an open row without a criticality, a closed
-one with one, and a heading holding table cells. The pre-commit hook runs them,
-then rebuilds the reader.
+template, capabilities, diagrams, partners, public, copy and claims,
+decisions, obligations, customers, regulation, assurance, references,
+dependencies, scope, journeys, handbook, overview, specs, products (the
+drafts, their typed values against `code/lender-rules/`), docregister
+(the document register and every DR id cited), status (each document's
+status against its kind's lifecycle; `version:` only on outreach),
+versions (the changelogs and the customer template), links, frontmatter
+and reviewed (a change of content needs today's `last_reviewed`; a
+change only to status, version or last_reviewed does not). The
+pre-commit hook runs them, then rebuilds the reader. **When a check
+fails, fix the document, not the check**; a check changes only with a
+register row.
 
-**When a check fails, fix the document, not the check.** A check changes
-only with a register row.
+## Fetching documents
+
+- **Kenya Law** refuses scripts: find the version through
+  `/search/api/documents/?search=` or the work's page, then navigate the
+  browser pane to `{AKN expression}/source`. **The download is a
+  GUID-named `.tmp` in Downloads, with a Save As dialog Claude cannot
+  see:** copy the `.tmp` at once (size settled, ending `%%EOF`) to
+  `sources/regulation/ke/<name>@<as-at>.pdf`; only then tell the owner to
+  press Cancel, which otherwise deletes it (FS-576, FS-578). Never touch
+  Word's `~WRL….tmp` files. Add the law register row before the check
+  accepts the file.
+- **CBK and SASRA** allow `curl` with a browser user agent.
+- **PDFs** are read and rendered with `py` and PyMuPDF; Word through
+  PowerShell COM exports a .docx to PDF (no `python` or `pdftoppm` here).
+- **Close the browser pane when done.**
 
 ## Traps that have cost real time
 
-- **`node -e` in Bash mangles regexes, backticks and `${}`.** Write
-  scripts to the scratchpad and run them. Scripts that edit should count
-  each anchor and stop unless it matches exactly once. **Count a regex's
-  matches with a global regex**: `match` without `g` returns the capture
-  groups too, and once made every anchor look doubled.
-- **A replacement that matches nothing can still write somewhere.** A
-  script on 10 October wrote ten rows' notes into the register's title,
-  which rendered as a huge heading while the rows stayed OPEN (FS-779).
-  Count every anchor and stop unless it matches once; the register check
-  now fails a heading with table cells.
-- **The phase-1 cap is full (249).** A new capability fails the scope
-  check; scope an existing one into R1 instead, as BS-12 was (FS-769).
-- **The delivery plan's R1 counts are typed:** recompute after any change
-  to R1's lists (a script that reads "R1 in detail", checked against the
-  old figures first; FS-781 found 133).
-- **HB ids carry their section in the tens digit** (HB-2x is section 2);
-  REVIEW.md before FS-781 cites the old numbers (HB-01 to HB-17).
-- **Two edits to one file built from the same original** overwrite each
-  other: load a file once per script, apply every edit, write once.
-- **`REVIEW.md` may end without a newline**, and its last row then has no
-  trailing `\n` to anchor on.
-- **Files are a mix of CRLF and LF.** Normalise before matching.
-- **A blank line inside a Markdown table splits it**: the next row becomes
-  a header and loses its anchor in the reader. Two were found in REVIEW.md.
-- **A heredoc with nested quotes can fail in the Bash tool.** Write the
-  script with the file tool instead.
-- **A preview server serving `build/site` locks the folder on Windows**;
-  the reader now empties it rather than deleting it.
-- **Adding a capability row** can trip several checks at once: scope,
-  references, dependencies (both front matter and §4 prose, both ways),
-  customers, obligations. Moving one into R1 means a Roan map row, the
-  CU-01 "Depends on" list and the delivery plan's R1 list together.
-- **A break test can go stale** when the design catches up with it (one
-  used MD-08 as an id Roan did not depend on, until Roan did). Three more
-  went stale in this stretch: after the HB renumbering, after HB-74 began
-  citing JN-08, and after lender-rules gained recon as a user. Run the
-  whole suite after any change to ids or relations.
-- **A new spec touches six others:** each spec it depends on must name it
-  in `used_by` and in its Related line, and the end-of-day runner's
-  `depends_on` too when it consumes it.
-- **Changing a template** changes its `last_reviewed` too.
-- **Subagents claim more than they did.** Check their work.
-- **Look at the portfolio, do not only measure it.** Render changed
-  pages from the printed PDF (PyMuPDF) when the browser pane cannot take
-  a screenshot; the probe has missed a problem once, and layout choices
-  (a half-empty card, a squeezed text column) are not overflow.
-- **The portfolio is public copy:** no register ids in it, not even in
-  its editing notes; the public check fails on one.
-- **A typed list in the copy goes stale.** Page 6's platform line was
-  typed and fell two services behind; it is now read from Platform
-  services. Prefer reading over typing.
-- **The portfolio layout overflows silently**: build with
-  `node design/portfolio-pdf/build.js --html-only`, then
-  `node design/portfolio-pdf/measure.js`, which flags content past the
-  page edge and, since FS-593, content running under the footer. On
-  product and closing pages the last block is pushed to the bottom, so
-  one extra line of copy anywhere above it overflows. **Versions are what a reader
-  holds** (FS-595): v1.0 and v1.1 have gone out. Between issues an edition is
-  `"status": "draft"` in `design/portfolio-pdf/document.json` (now v1.1,
-  issued), printed as a review draft, and the build refuses a named copy of
-  it; the version moves only when an edition is issued.
-- **A PDF open in a viewer** makes the build write a timestamped file.
+- **Heredocs and `node -e` eat backslashes, backticks and quotes**: a lost
+  `\d` once made the check report every problem at line 0. Write any
+  script holding them with the file tool and run it.
+- **Count every anchor and stop unless it matches once**; a replacement
+  that matches nothing can still write somewhere (FS-779). **Load a file
+  once per script**: two edits from the same original overwrite each
+  other. **Normalise CRLF and LF** before matching.
 - **A guard for a table's header can swallow a real row of the same
-  name**: the vocabulary's "Term" row was skipped that way (FS-816).
-  Compare row counts before and after any table edit.
-- **No `python` or `pdftoppm` on this machine.** `py` with PyMuPDF renders
-  a PDF to PNG; Word through PowerShell COM exports a .docx to PDF, and
-  can fill a document's form fields to test a read-back.
-- **The docx package cannot make Word form fields.** The builder writes a
-  marker paragraph and swaps in the content control's XML after packing
-  (`tools/products/questionnaires.js`).
-- **Heredocs ate escapes three more times** (FS-825): a `\d` lost in
-  check.js, so every draft problem reported line 0; a quote in a test;
-  a regex in an edit script. Write any script containing backslashes,
-  backticks or quotes with the file tool, never in a heredoc.
-- **"Go" is not "push".** On 14 October one change was pushed on a go
-  alone; the owner says "push" when they want it pushed.
-- **Nested backticks break the reader:** an inline code span holding a
-  fenced-block marker rendered as empty code. Describe the marker in
-  words.
-- **The check fails a settled answer that is not encoded**, so the
-  pre-commit hook blocks the commit until it is: encode the read-back's
-  list in the same change.
-- **Roan Capital's prototype** 404s on a typed URL: move through it by
-  clicking inside the app. The owner signs in; Claude only reads.
+  name**, and **a blank line inside a Markdown table splits it**: compare
+  row counts before and after.
+- **PowerShell variable names ignore case** (`$w` is `$W`), and
+  PowerShell 5.1 garbles non-ASCII in file names: find them by wildcard.
+- **The phase-1 cap is full**; adding a capability trips scope,
+  references, dependencies, customers and obligations at once.
+- **A break test goes stale** when the design catches up with it: run the
+  whole suite after any change to ids or relations. **A new spec touches
+  six others** (used_by, Related lines, the end-of-day runner).
+- **The portfolio overflows silently:** build with `--html-only` and run
+  `design/portfolio-pdf/measure.js`; look at the printed pages, do not
+  only measure them. It is public copy: no register ids, not even in
+  notes.
+- **Word over COM** can crash on closing: note the WINWORD processes
+  before starting one, and close only your own. A document open in Word
+  is locked: copy beside it, never over it.
+- **The docx package cannot make Word form fields**: the builder swaps
+  marker paragraphs for content controls after packing.
+- **Nested backticks break the reader**: describe a fence marker in words.
+- **A settled answer must be encoded in the same commit**, or the
+  products check blocks it.
+- **A protected name can hide in a folder name**: the names check reads
+  every committed word, paths in tables included.
+- **Subagents claim more than they did.** Check their work.
 
-## Waiting on the owner (as at 2026-10-14)
+## Waiting on the owner (as at 2026-10-15)
 
-- **In the register:** JN-12's targets (FS-784); the rest of the payment
-  reference, shareable payment instructions and JN-12's step 4 (FS-785);
-  "alongside" mode, Kapu Core beside an institution's own core, as a
-  decision with the CBK question for counsel (FS-786, High); database
-  activity monitoring, left open (FS-794).
-- **Two High rows that may be ready to close:** FS-796 (the companion's
-  design, recon §3.1: the interpretation record and who builds the
-  companion); FS-812 (building and testing from product documents: the
-  drafts are now data, checked against the schema and rules in
-  code/lender-rules/; starter templates and synthetic test products in
-  code remain). Ask before closing them.
-- **Storage, awaiting go:** FS-819's gaps, FS-820 (one copy of source
-  data) and FS-821 (storage classes, after Liquid answers).
-
-## Waiting on the owner, outside the repository (as at 2026-10-14)
-
-- **Tomorrow, 15 October:** Roan Capital's meeting (above); the agenda and
-  questionnaires to send beforehand.
-- **A senior management meeting with Roan Capital:** its licence, CBK's
-  approval of its pricing, and consent to our processors (FS-827).
-- **To send:** the Liquid enquiry, now with its storage questions
-  (docs/outreach/liquid-partner-request.md, FS-822); the Prembly changes
-  letter (FS-762); the bank requests to NCBA, KCB and SBM
-  (docs/outreach/bank-api-requests-2026-10.md).
-- **Roan Capital's open answers** (delivery map §4), now 1 to 29 (28 the
-  approval chain, 29 the product's terms and CBK's approval of its
-  pricing); most
-  pressing 7 (roles, which becomes its position-to-roles table), 13
-  (scoring definitions) and 22 to 27 (complaints, interest on a disputed
-  amount, the morning's recipients and its books, Airtel Money, staff
-  access, its fallback runbook).
-- **The Odoo consultants:** which read-only staff need a paid user
-  (handbook README), and Odoo Enterprise for Dibon's own use (FS-640).
-- **The second site's provider,** before Roan Capital's go-live (FS-775).
-- **Counsel** (SD-12) for the LQ register; none engaged.
-
-### Earlier (as at 2026-10-06)
-
-- The NPS Bill comments (`docs/outreach/nps-bill-2026-comments.md`) are
-  **due 9 October**; the Bowmans letter has not been sent.
-- Prembly: the outreach record and its updates (FS-546).
-- The Liquid email and the partner emails; Microsoft Partner Center.
-- Confirm that the KCB and NBK contracts allow naming them.
-- Roan Capital's open answers (delivery map §4), above all 13 (appraisal
-  and scoring definitions), 7 (roles), 10 (templates and policies), 11
-  (the PEP question), 12 (bureau reports), 14 (statement-based entities)
-  and 15 (its manual collateral steps and tracking provider); and Roan sending its banks
-  the access request (`docs/outreach/bank-access-request.md`).
-- The number of Odoo Enterprise users (FS-529).
-- Counsel and the compliance officer, as listed in 1.2.0, plus whether an
-  automatic downgrade "significantly affects" a borrower under s.35, and
-  the two restructuring questions (FS-624).
-- Which logo.
-- Writing to BRS (mpsr@brs.go.ke): system-to-system access to the
-  collateral registry, and organisation accounts (PT-55).
-- Friday 9 October: the team's proposals (FS-603), the same day the NPS
-  Bill comments are due.
-
-## Left half-done, or asked and not yet answered
-
-- **Agree the journeys one by one,** writing each one's handbook
-  procedures first (handbook §4 to §6 are still empty).
-- **Recon, next:** the companion's design is drafted (recon §3.1,
-  FS-796) and waits on the owner; then the load test's plan and the rails
-  spec, still to write, which recon depends on.
-- **Product documents in code:** the schema and rules are started in
-  code/lender-rules/ (FS-825); Dibon's starter templates and synthetic
-  test products, built from lender-rules §2.9's worked examples, remain
-  (FS-812); and the back office's product form, which replaces the
-  questionnaires.
-- **The six Critical rows** (FS-202, FS-205, FS-340, FS-367, FS-735,
-  FS-736) and seventeen High ones.
-- **Rows that block R1:** identity access and vendor choice (FS-202,
-  FS-205, FS-329, FS-340), bank connections (FS-344), and business
-  registry access for business borrowers (FS-564).
-- **To confirm technically:** Odoo Sign link-only completion emails
-  (FS-532); Fineract's thirteen checks on a running 1.15 instance
-  (kapu-core-fineract §12, F1 to F13); Grafana and on-call checks
-  (observability-grafana §11); whether the business registry's API returns
-  beneficial owners (FS-566, FS-568); M-Pesa validation on tills and any
-  Pochi API (CO-21); each bank's signing and certificate requirements.
-- Proposals awaiting go: the OPEN rows whose notes say "Proposal in chat".
+- **In the register:** the Critical and High rows (the command above);
+  decisions for FS-796 (who owns the interpretation record's readings,
+  and who builds the companion); FS-812's remainder (starter templates
+  and synthetic test products in code); storage (FS-819 to FS-821, the
+  last after Liquid answers); provenance of the documents outside Roan
+  Capital's folder (FS-840).
+- **Roan Capital:** the evening's steps after the 15 October meeting
+  (`clients/roan-capital/meeting-2026-10-15/record.md`); a senior
+  management meeting (licence, CBK's approval of pricing, consent to
+  processors, CBK's notice of a new delivery channel); its open answers,
+  delivery map §4.
+- **To send:** the Liquid enquiry with its storage questions, the Prembly
+  changes letter, the bank requests to NCBA, KCB and SBM
+  (`docs/outreach/`; each letter's status says whether it went).
+- **Outside the repository:** the second site's provider before Roan
+  Capital's go-live (FS-775); counsel for the LQ register (none engaged);
+  the Odoo consultants (paid users; Odoo Enterprise for Dibon, FS-640);
+  the Data Commissioner controller registration (FS-367, Critical).
+- **Older asks not yet confirmed done:** the NPS Bill comments and the
+  Bowmans letter; writing to BRS for registry access (PT-55); whether
+  KCB's and NBK's contracts allow naming them (FS-420); which logo.
