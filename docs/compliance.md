@@ -2,7 +2,7 @@
 id: compliance
 name: Licences, registrations and certifications
 kind: register
-version: 0.1.0
+status: living
 owner: Compliance lead
 classification: Internal
 last_reviewed: 2026-10-14

@@ -8,7 +8,6 @@ release: R1
 implements: [messaging]
 depends_on: [access-keycloak, event-bus-kafka]
 used_by: [access-keycloak, lender-rules, observability-grafana]
-version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802]

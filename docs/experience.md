@@ -2,7 +2,7 @@
 id: experience
 name: Experience — how what we build should feel to use
 kind: plan
-version: 0.2.0
+status: living
 owner: Solution architect
 classification: Internal
 review_ids: [FS-237, FS-637, FS-660, FS-668]

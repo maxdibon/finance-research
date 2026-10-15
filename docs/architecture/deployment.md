@@ -2,7 +2,7 @@
 id: architecture-deployment
 name: Architecture deployment — sites, the fleet, and what is central
 kind: architecture
-version: 0.1.0
+status: draft
 owner: Solution architect
 classification: Internal
 review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775]

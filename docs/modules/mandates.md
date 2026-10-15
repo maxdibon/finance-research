@@ -2,7 +2,7 @@
 id: mandates
 name: Mandates — signing and debit
 kind: shared-service
-version: 0.1.0
+status: living
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]

@@ -2,7 +2,7 @@
 id: architecture-technology
 name: Architecture technology — the register of components we run
 kind: architecture
-version: 0.1.0
+status: draft
 owner: Solution architect
 classification: Internal
 review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759, FS-792]

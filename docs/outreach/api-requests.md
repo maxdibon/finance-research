@@ -2,6 +2,7 @@
 id: api-requests
 name: API and statement-feed requests — banks and mobile money
 kind: outreach
+status: withdrawn
 version: 0.1.0
 owner: Solution architect
 classification: Internal

@@ -2,7 +2,7 @@
 id: training-key-holder
 name: Training — the recovery key holder's manual
 kind: manual
-version: 0.1.0
+status: draft
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-656, FS-657, FS-658, FS-659, FS-660]

@@ -2,7 +2,7 @@
 id: escrow
 name: Kapu Escrow
 kind: product
-version: 0.1.0
+status: living
 owner: Product lead, Kapu
 classification: Internal
 audience: [bank, sme, fintech]

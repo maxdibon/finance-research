@@ -2,7 +2,7 @@
 id: architecture-interfaces
 name: Architecture — the rules every interface follows
 kind: architecture
-version: 0.1.0
+status: draft
 owner: Solution architect
 classification: Internal
 review_ids: [FS-584, FS-649]

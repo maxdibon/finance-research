@@ -2,7 +2,7 @@
 id: legal-questions
 name: Legal questions — what we need counsel to answer, and what each answer changes
 kind: register
-version: 0.1.0
+status: living
 owner: Compliance and risk officer
 classification: Internal
 review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830]

@@ -2,7 +2,7 @@
 id: core
 name: Kapu Core
 kind: product
-version: 0.1.0
+status: living
 owner: Product lead, Kapu
 classification: Internal
 audience: [mfi, sacco, bank]

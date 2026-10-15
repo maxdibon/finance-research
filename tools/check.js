@@ -960,7 +960,7 @@ function checkOverview(root, files) {
 // ways; the closing sections its kind needs; a row in the index. Every box
 // in its diagrams is named as the index's components table names it (FS-632).
 const SPECS = path.join('docs', 'specs');
-const SPEC_KEYS = ['id', 'name', 'kind', 'type', 'status', 'release', 'implements', 'depends_on', 'used_by', 'version', 'owner', 'classification', 'review_ids', 'last_reviewed'];
+const SPEC_KEYS = ['id', 'name', 'kind', 'type', 'status', 'release', 'implements', 'depends_on', 'used_by', 'owner', 'classification', 'review_ids', 'last_reviewed'];
 const SPEC_END = { build: 'Acceptance tests', component: 'Checks before the build' };
 // FS-667: a lifecycle, and the sections every spec carries.
 const SPEC_STATUSES = ['draft', 'agreed', 'building', 'built'];
@@ -1184,6 +1184,89 @@ function checkProducts(root) {
   return out;
 }
 
+// ── status ───────────────────────────────────────────────────────────────
+// FS-838, FS-839: every document under docs/ has a status its kind's
+// lifecycle allows. A version of the whole set is a snapshot; a document's
+// status says where it stands in it, so drafts show in every version.
+// `version:` stays only on documents that go outside on their own.
+const LIFECYCLES = {
+  living: ['register', 'index', 'overview', 'plan', 'delivery', 'product', 'shared-service', 'channel', 'checklist', 'guide', 'service'],
+  agreed: ['architecture', 'policy', 'handbook', 'manual', 'partner-model', 'marketing'],
+};
+function statusesFor(kind) {
+  if (kind === 'spec') return SPEC_STATUSES;
+  if (kind === 'journey') return JOURNEY_STATUSES;
+  if (kind === 'outreach') return ['draft', 'sent', 'answered', 'withdrawn'];
+  if (kind === 'product-version') return ['draft', 'awaiting-approval', 'awaiting-cbk', 'active', 'retired'];
+  if (LIFECYCLES.living.includes(kind)) return ['living'];
+  if (LIFECYCLES.agreed.includes(kind)) return ['draft', 'agreed', 'superseded'];
+  return null;
+}
+function checkStatus(root, files) {
+  const out = [];
+  for (const file of files.filter((f) => f.endsWith('.md') && f.split(path.sep)[0] === 'docs')) {
+    const fm = read(root, file).match(/^---\n([\s\S]*?)\n---\n/);
+    if (!fm) continue;
+    const kind = (fm[1].match(/^kind: *([a-z-]+)/m) || [])[1];
+    const status = (fm[1].match(/^status: *([a-z-]+)/m) || [])[1];
+    const allowed = statusesFor(kind);
+    // Specs' and journeys' own checks hold their lifecycles; not twice.
+    if (kind === 'spec' || kind === 'journey') { /* their checks */ } else if (!allowed) out.push(fail('status', file, 1, `kind "${kind || ''}" has no lifecycle`));
+    else if (!allowed.includes(status)) out.push(fail('status', file, 1, `status "${status || ''}" is not one a ${kind} may have (${allowed.join(', ')})`));
+    if (kind !== 'outreach' && /^version:/m.test(fm[1])) out.push(fail('status', file, 1, 'a version: field; only a document that goes outside on its own keeps one (the set\'s version is in CHANGELOG.md)'));
+  }
+  return out;
+}
+
+// ── versions ─────────────────────────────────────────────────────────────
+// FS-837, FS-838: CHANGELOG.md and each customer's §8 hold versions, newest
+// first, each with its status line; only the newest may still read "to
+// stamp" (tools/cut.js stamps it). Each customer page follows
+// docs/customers/_template.md's headings, and splits its open answers into
+// Open and Answered.
+function changelogProblems(text, level, file, from = 0) {
+  const out = [];
+  const lines = text.split('\n');
+  const heads = [];
+  lines.forEach((l, i) => {
+    if (i < from) return;
+    const m = l.match(new RegExp(`^${level} (\\d+)\\.(\\d+) · (\\d{4}-\\d{2}-\\d{2})$`));
+    if (m) heads.push({ i, major: +m[1], minor: +m[2], date: m[3] });
+    else if (l.startsWith(`${level} `) && /^#+ \d/.test(l)) out.push(fail('versions', file, i + 1, `"${l}" is not "${level} <major>.<minor> · YYYY-MM-DD"`));
+  });
+  if (!heads.length) out.push(fail('versions', file, 0, 'no version entries'));
+  heads.forEach((h, k) => {
+    const end = k + 1 < heads.length ? heads[k + 1].i : lines.length;
+    const body = lines.slice(h.i + 1, end).join('\n');
+    if (!/^\*\*Status:\*\* /m.test(body)) out.push(fail('versions', file, h.i + 1, `${h.major}.${h.minor} has no **Status:** line`));
+    if (/^\*\*Status:\*\* to stamp$/m.test(body) && k > 0) out.push(fail('versions', file, h.i + 1, `${h.major}.${h.minor} still reads "to stamp", but a later version exists: cut it (tools/cut.js)`));
+    const prev = heads[k - 1];
+    if (prev && (prev.major < h.major || (prev.major === h.major && prev.minor <= h.minor) || prev.date < h.date)) out.push(fail('versions', file, h.i + 1, `${h.major}.${h.minor} is not older than the entry above it`));
+  });
+  return out;
+}
+function checkVersions(root) {
+  const out = [];
+  if (!fs.existsSync(path.join(root, 'CHANGELOG.md'))) out.push(fail('versions', 'CHANGELOG.md', 0, 'missing'));
+  else out.push(...changelogProblems(read(root, 'CHANGELOG.md'), '##', 'CHANGELOG.md'));
+  const dir = path.join(root, 'docs', 'customers');
+  if (!fs.existsSync(dir)) return out;
+  const template = headings(read(root, path.join('docs', 'customers', '_template.md')));
+  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.md') && !f.startsWith('_'))) {
+    const rel = path.join('docs', 'customers', name);
+    const text = read(root, rel);
+    const got = headings(text);
+    for (let i = 0; i < Math.max(got.length, template.length); i++) {
+      if (!(got[i] || '').startsWith(template[i] || '\0')) { out.push(fail('versions', rel, 0, `heading ${i + 1} is "${got[i] || '(missing)'}"; the customer template has "${template[i] || '(none)'}"`)); break; }
+    }
+    const s4 = text.slice(text.indexOf('\n## 4 · '), text.indexOf('\n## 5 · '));
+    if (!/^### Open$/m.test(s4) || !/^### Answered$/m.test(s4)) out.push(fail('versions', rel, 0, '§4 must split its open answers into "### Open" and "### Answered"'));
+    const s8 = text.indexOf('\n## 8 · ');
+    if (s8 >= 0) out.push(...changelogProblems(text, '###', rel, text.slice(0, s8).split('\n').length));
+  }
+  return out;
+}
+
 // ── document register ────────────────────────────────────────────────────
 // FS-835: every document held with a party, as metadata. Each row has a
 // kind and a status that kind allows, a date, a location outside git, and a
@@ -1327,22 +1410,35 @@ function localDate(d = new Date()) {
 }
 
 function git(root, args) {
-  return require('child_process').execFileSync('git', ['-C', root, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  return require('child_process').execFileSync('git', ['-C', root, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 512 * 1024 * 1024 });
 }
 
 function checkReviewed(root, files) {
   try { if (git(root, ['rev-parse', '--show-toplevel']).trim().replace(/\\/g, '/').toLowerCase() !== path.resolve(root).replace(/\\/g, '/').toLowerCase()) return []; } catch { return []; }
   const docs = files.filter((f) => f.split(path.sep)[0] === 'docs' && f.endsWith('.md'));
+  // The date of each file's latest change of substance: a change only to
+  // its status, version or last_reviewed line is metadata, not content, and
+  // asks for no review (FS-838).
   const changed = new Map();
-  let date = null;
-  for (const line of git(root, ['log', '--format=%x00%cs', '--name-only', '--', 'docs']).split('\n')) {
-    if (line.startsWith('\0')) date = line.slice(1);
-    else if (line && !changed.has(line)) changed.set(line, date);
-  }
+  const META = /^[+-](?:status|version|last_reviewed):/;
+  const scan = (out, dateOf) => {
+    let date = null;
+    let file = null;
+    for (const line of out.split('\n')) {
+      if (line.startsWith('\0')) { date = line.slice(1); continue; }
+      const d = line.match(/^diff --git a\/.* b\/(.*)$/);
+      if (d) { file = d[1].replace(/^"|"$/g, ''); continue; }
+      if (!file || changed.has(file) || /^(\+\+\+|---) /.test(line)) continue;
+      if (/^[+-]/.test(line) && !META.test(line)) changed.set(file, dateOf(date));
+    }
+  };
   const today = localDate();
-  for (const line of git(root, ['status', '--porcelain', '--', 'docs']).split('\n')) {
-    if (line.trim()) changed.set(line.slice(3).split(' -> ').pop().replace(/^"|"$/g, ''), today);
+  // Uncommitted first (they are the latest), then history, newest first.
+  scan(git(root, ['diff', 'HEAD', '--unified=0', '--no-color', '--', 'docs']), () => today);
+  for (const line of git(root, ['status', '--porcelain', '--untracked-files=all', '--', 'docs']).split('\n')) {
+    if (line.startsWith('??')) changed.set(line.slice(3).replace(/^"|"$/g, ''), today);
   }
+  scan(git(root, ['log', '--format=%x00%cs', '-p', '--unified=0', '--no-color', '--', 'docs']), (d) => d);
   const failures = [];
   for (const file of docs) {
     const rel = file.split(path.sep).join('/');
@@ -1404,6 +1500,8 @@ function runAll(root) {
     ...checkSpecs(root),
     ...checkProducts(root),
     ...checkDocRegister(root, files),
+    ...checkStatus(root, files),
+    ...checkVersions(root),
     ...checkLinks(root, files),
     ...checkFrontMatter(root, files),
     ...checkReviewed(root, files),

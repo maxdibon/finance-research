@@ -2,7 +2,7 @@
 id: handbook-outage
 name: Handbook 7 — when things go wrong
 kind: handbook
-version: 0.1.0
+status: draft
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-773, FS-774, FS-775]

@@ -2,7 +2,7 @@
 id: decisioning
 name: Decisioning — appraisal, scores and risk classes, rules first
 kind: shared-service
-version: 0.1.0
+status: living
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, fintech]

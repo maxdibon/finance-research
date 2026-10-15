@@ -2,7 +2,7 @@
 id: architecture-risks
 name: Architecture — risks and technical debt
 kind: architecture
-version: 0.1.0
+status: draft
 owner: Solution architect
 classification: Internal
 review_ids: [FS-649, FS-695, FS-744]

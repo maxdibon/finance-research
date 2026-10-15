@@ -8,7 +8,6 @@ release: R1
 implements: [module-id]
 depends_on: [spec-id]
 used_by: []
-version: 0.1.0
 owner: Role, never a name
 classification: Internal
 review_ids: [FS-627, FS-667]

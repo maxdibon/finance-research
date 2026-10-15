@@ -2,10 +2,10 @@
 id: roan-capital
 name: Roan Capital — delivery map
 kind: delivery
-version: 0.1.0
+status: living
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838]
 last_reviewed: 2026-10-15
 ---
 
@@ -35,53 +35,19 @@ the NTSA and land registry steps done by hand and tracked in the system
   runs on Vercel; real borrower data stays off it (FS-398).
 - **Secrets:** OpenBao, not HashiCorp Vault as the document says (FS-403).
 - **Database:** PostgreSQL, not MySQL as the document says (FS-464).
-- **Confidentiality:** a non-disclosure agreement, dated 4 August 2026,
-  signed by both parties, for three years; Roan Capital returned it
-  signed on 4 August, and Dibon sent the executed copy with the
-  requirement document on 20 August (clients/, not in git; FS-827). It is
-  the text reviewed in FS-738, so those points are its terms: the
-  corrections drafted in FS-740 go into the services agreement and the
-  data processing terms instead, not a new NDA. Among them, processors
-  under it need Roan Capital's written consent (its 8.2(vi), 18.2), and
-  the Data Protection Act's 48 hours apply to a breach notice whatever
-  its 72 say.
+- **Confidentiality:** the NDA, signed by both parties and dated 4 August
+  2026, for three years (DR-003; as sent, DR-002). It is the text FS-738
+  reviewed, so its points are terms in force; the corrections drafted in
+  FS-740 belong in the services agreement and the data processing terms.
+  Processors under it need Roan Capital's written consent (its 8.2(vi),
+  18.2), and the Data Protection Act's 48 hours apply to a breach notice
+  whatever its 72 say (FS-827).
+- **Requirements:** the business requirement document, v1.0, sent on 20
+  August with the executed NDA (DR-001); confirmed by Roan Capital at
+  kickoff on 7 September (DR-008).
 - **Reference:** Roan Capital is to be asked to be named once live
   (FS-401). Until it agrees, its name stays out of the portfolio and
   outreach.
-
-**Fit:** *Covered* means the capabilities listed do what the requirement
-asks. *Partial* means they cover part of it, and the note says what is
-missing. *Gap* means no capability does it yet.
-
-**Its roles, in ITIL's terms** (FS-755): the *sponsor*, who pays for
-the service, a director of Roan Capital; the *customer*, who sets the
-requirements and owns the outcomes, Roan Capital's project lead, who
-confirmed the requirement document; the *users*, its credit officers,
-committees, finance staff and accountant (RC-34). People are named only
-in its own records.
-
-**Its roles** (FS-811): the eight positions in the prototype, agreed by
-the owner, designed against our controls. Every position is a role set in
-its position-to-roles table (handbook HB-10); a function a few people
-also hold is a role added to their position, never a position of its own.
-
-| Position | What it does | What it never does |
-|---|---|---|
-| Loan Officer | Onboards clients, drafts and submits applications, house visits, follow-ups | Approves anything |
-| Credit Manager | Approves a loan's first stage; may originate | Approves an application it originated, or two stages of one (MD-06) |
-| Head Office | Approves the second stage | Releases the payout of a loan it approved (MF-11, MD-06) |
-| Chief Executive Officer | Approves the third stage; flags' override (MD-07); write-offs and payment reversals, each as a request a second person decides | Acts alone on money |
-| Finance / Cashier | Prepares payouts (the maker); matches an unidentified payment to its loan on the rail's record; the morning's sign-off (JN-17) | Records a repayment without a rail record behind it; releases a payout it prepared |
-| Collections Officer | Works the collection ladder: calls, visits, promises to pay, logged | Records repayments; contacts anyone but the borrower and guarantor (reg 30) |
-| Auditor | Reads everything, the audit log included | Changes anything |
-| Super Admin | Creates and disables users; settings that move no money | Approves, grants an approval role, changes a product alone (a product version needs two people, lender-rules §2.4) |
-
-**Functions to assign within the positions** (proposed, to confirm): the
-access approver (HB-11) and the finance lead, the Chief Executive
-Officer; the complaints handler (JN-08) and the compliance officer, the
-Credit Manager, never for a loan it decided. The prototype's "everything"
-for the Super Admin, and its repayments recorded by hand, are not carried
-over (FS-807).
 
 **What we take from the prototype** (FS-807, agreed FS-812): masked
 personal data revealed on request, each reveal logged (RO-19); the
@@ -101,6 +67,10 @@ early repayment (LQ-13).
 
 Each RC id is a requirement from the business requirement document,
 DR-001, by its section (§2.2 and so on, below).
+
+**Fit:** *Covered* means the capabilities listed do what the requirement
+asks. *Partial* means they cover part of it, and the note says what is
+missing. *Gap* means no capability does it yet.
 
 ### KYC and onboarding (§2.2)
 
@@ -191,22 +161,20 @@ choice (MF-04, FS-619).
 
 ## 4 · Open answers
 
+### Open
+
 | # | Question | Raised | Status |
 |---|---|---|---|
 | 1 | Remove the prototype's public demo panel (accounts, a shared password, a fixed 2FA code) before anyone outside the team sees it | FS-395 | Open |
 | 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules. Every non-deposit-taking lender must now be licensed or registered with CBK, applying by about 29 Mar 2027 (NDTCP Regulations 2026, FS-423) | FS-400, FS-423, FS-827 | Open, for a senior management meeting, not an operational one (owner, 2026-10-14). The owner understands Roan Capital has applied and has not yet been licensed: to confirm there |
 | 3 | 1% a day default interest: within the in duplum rule? | FS-400 | Answered for the cap: reg 29 of the lender regulations stops recoverable interest at the principal owing, enforced by MF-21. Whether the rate itself fits the pricing and disclosure rules (RC-37) is open |
 | 4 | The interest rate's unit | FS-395 | Open |
-| 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413, FS-415, FS-581 | Answered: BRS in v1; land titles stored in the MVP, searches manual |
 | 6 | Disbursement banks: NCBA only, or NCBA and Access Bank? (RC-18) | FS-395 | Open |
-| 7 | The role list (RC-34) | FS-395, FS-811 | Answered (2026-10-14): the prototype's eight, agreed by the owner; to confirm with Roan Capital, with the approval chain (answer 28) |
-| 8 | Approval chain and loan products | FS-399, FS-400 | Answered: both are configuration |
 | 9 | Will Roan Capital be named as a reference once live? | FS-401 | Open |
 | 10 | Loan agreement and guarantee templates, how borrowers sign, and the restructuring policy (RC-38, RC-39) | FS-516 | Open: the owner is asking. Partly (2026-10-15, FS-831): Roan Capital's application form holds a loan agreement, a chattels mortgage and a guarantor's charge; the platform issues its own (lender-rules §2.3), so the restructuring policy and how borrowers sign remain |
 | 11 | Until PEP screening (FC-06, phase 2): a question on the application form, whether the borrower holds or held a public office, and the compliance officer's review of any yes. Agree? | FS-562 | Open |
 | 12 | Do you pull credit bureau reports before lending today? If so, the bureau lookup (CR-02) comes into R1 | FS-570 | Open |
 | 13 | The definitions behind the appraisal and scoring (RC-05, RC-11, RC-14, RC-15): the formulas for turnover, the liquidity metric and the retainer ratio; the behaviour score's scale and weights, and how statement scoring is weighted down over time; the risk classes and the downgrade thresholds; and synthetic or anonymised sample statements from each bank | FS-582 | Open |
-| 14 | Borrowers that are "statement-based entities" (RC-01): what are they, and how are they verified? | FS-618 | Answered (2026-10-10, FS-681): not a third kind of borrower; borrowers give a mix of individual KYC, KYB, and bank and mobile-money statements for both the individual and the business where applicable |
 | 15 | The manual collateral steps (RC-10): the list per collateral type, which steps hold approval or disbursement, and the vehicle tracking provider | FS-619 | Open |
 | 16 | Does Roan Capital limit how much one person may guarantee across loans? If so, the limit and how it is counted (RC-41) | FS-622 | Open |
 | 17 | Which borrowers give which set (RC-01): an employed individual, an individual with a business, a sole trader, a company? | FS-681 | Open |
@@ -223,6 +191,15 @@ choice (MF-04, FS-619).
 | 28 | The approval chain: the requirement document has the Credit Officer, then the Business Credit Committee (three of three, unanimous), then the Head Office Committee above a threshold (RC-12); the prototype has the Credit Manager, then Head Office, then the CEO, for every loan. Which is Roan Capital's? Both are configuration | FS-807, FS-811 | Open. The application form's approval block has the Credit Manager, Head Office and the CEO (FS-831); to confirm, with the order and any thresholds |
 | 29 | The product's terms as the prototype sets them (1% a day flat interest, 14- and 30-day terms, daily instalments, default interest on overdue instalments, the fees by amount): are they Roan Capital's, and has CBK approved this pricing (reg 55)? And its "minimum 14 days' interest on prepayment", which the regulations appear to forbid (reg 56(3), (4); LQ-13) | FS-807 | Open. Partly (2026-10-15, FS-831): the application form states 1% a day, two weeks or one month, daily instalments, default interest until arrears clear, and the fees; its note on prepayments within two weeks meets reg 54(4)(h) and LQ-13 (product draft); CBK's approval of the pricing is for senior management (FS-827) |
 | 30 | CBK must be told thirty days before a new delivery channel rolls out (reg 27(1)), with the mobile-money number used for payouts and repayments, any app, and the bank accounts (27(2)). The platform is that channel: who notifies CBK, and by when before go-live? | FS-830 | Open, for senior management (FS-827) |
+
+### Answered
+
+| # | Question | Raised | Status |
+|---|---|---|---|
+| 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413, FS-415, FS-581 | Answered: BRS in v1; land titles stored in the MVP, searches manual |
+| 7 | The role list (RC-34) | FS-395, FS-811 | Answered (2026-10-14): the prototype's eight, agreed by the owner; to confirm with Roan Capital, with the approval chain (answer 28) |
+| 8 | Approval chain and loan products | FS-399, FS-400 | Answered: both are configuration |
+| 14 | Borrowers that are "statement-based entities" (RC-01): what are they, and how are they verified? | FS-618 | Answered (2026-10-10, FS-681): not a third kind of borrower; borrowers give a mix of individual KYC, KYB, and bank and mobile-money statements for both the individual and the business where applicable |
 
 The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text
@@ -241,7 +218,7 @@ its link goes to Roan Capital's own product page.
 
 Statuses: draft, awaiting approval, awaiting CBK, active, retired.
 
-## 6 · Where the detail is
+## 6 · Documents
 
 **Its documents,** by DR id in the [document register](../document-register.md)
 (FS-835); held in clients/roan-capital/, outside git, until Roan Capital's
@@ -249,9 +226,9 @@ workspace in Dibon's Odoo Documents exists (FS-805):
 
 - **The engagement:** the NDA as sent and as executed (DR-002, DR-003);
   the certificate of incorporation (DR-004); the kickoff summary
-  (DR-009).
+  (DR-008).
 - **Requirements:** the business requirement document (DR-001), the
-  source of every RC id in §2; our review of it (DR-008).
+  source of every RC id in §2; our review of it (DR-009).
 - **Messaging:** the sender ID letter and the signed request (DR-005,
   DR-006).
 - **Its product:** the 30-day loan questionnaires (DR-012 to DR-014); the
@@ -262,3 +239,87 @@ workspace in Dibon's Odoo Documents exists (FS-805):
 - Capability statuses: the modules named in §2.
 - Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in
   docs/decisions.md and REVIEW.md.
+
+## 7 · People and roles
+
+**Its roles, in ITIL's terms** (FS-755): the *sponsor*, who pays for
+the service, a director of Roan Capital; the *customer*, who sets the
+requirements and owns the outcomes, Roan Capital's project lead, who
+confirmed the requirement document; the *users*, its credit officers,
+committees, finance staff and accountant (RC-34). People are named only
+in its own records.
+
+**Its roles** (FS-811): the eight positions in the prototype, agreed by
+the owner, designed against our controls. Every position is a role set in
+its position-to-roles table (handbook HB-10); a function a few people
+also hold is a role added to their position, never a position of its own.
+
+| Position | What it does | What it never does |
+|---|---|---|
+| Loan Officer | Onboards clients, drafts and submits applications, house visits, follow-ups | Approves anything |
+| Credit Manager | Approves a loan's first stage; may originate | Approves an application it originated, or two stages of one (MD-06) |
+| Head Office | Approves the second stage | Releases the payout of a loan it approved (MF-11, MD-06) |
+| Chief Executive Officer | Approves the third stage; flags' override (MD-07); write-offs and payment reversals, each as a request a second person decides | Acts alone on money |
+| Finance / Cashier | Prepares payouts (the maker); matches an unidentified payment to its loan on the rail's record; the morning's sign-off (JN-17) | Records a repayment without a rail record behind it; releases a payout it prepared |
+| Collections Officer | Works the collection ladder: calls, visits, promises to pay, logged | Records repayments; contacts anyone but the borrower and guarantor (reg 30) |
+| Auditor | Reads everything, the audit log included | Changes anything |
+| Super Admin | Creates and disables users; settings that move no money | Approves, grants an approval role, changes a product alone (a product version needs two people, lender-rules §2.4) |
+
+**Functions to assign within the positions** (proposed, to confirm): the
+access approver (HB-11) and the finance lead, the Chief Executive
+Officer; the complaints handler (JN-08) and the compliance officer, the
+Credit Manager, never for a loan it decided. The prototype's "everything"
+for the Super Admin, and its repayments recorded by hand, are not carried
+over (FS-807).
+
+## 8 · Changelog
+
+Versions of this delivery, newest first (FS-838): a major version when
+something is agreed or re-agreed (its requirements and scope, the
+contract, a go-live), a minor version for a batch worth telling. 1.0
+comes when Roan Capital agrees the requirements and the scope. Versions
+before 0.5 were set down afterwards, from the documents.
+
+### 0.5 · 2026-10-15
+
+**Decided:** the eight roles to design on (FS-811); the product
+vocabulary, and the 30-day loan drafted, typed and checked against the
+regulations (FS-813 to FS-830); the NDA in force, and the licence
+questions held for a senior management meeting (FS-827).
+**Changed:** this map takes the customer template: open answers split
+into open and answered, documents by DR id, people and roles in §7, this
+changelog; open answers 28 to 30 added, and 10, 21, 28 and 29 partly
+answered from the application form (FS-831).
+**Exchanged:** the signed sender ID request (DR-006); the loan
+application form received (DR-007); for the product and operations
+meeting of 15 October, the questionnaires and the agenda (DR-012 to
+DR-015); our versions 0.1 and 0.2 of the application form, with a
+schedule of the changes (DR-017 to DR-019).
+**Status:** to stamp
+
+### 0.4 · 2026-10-03
+
+**Changed:** this delivery map begun: the requirement document read
+against our capabilities, the MVP's exclusions, and the open answers
+(FS-395 onward; our review, DR-009).
+**Status:** before versions were tracked.
+
+### 0.3 · 2026-09-07
+
+**Decided:** at kickoff, the requirement document confirmed; collateral
+handled by hand at first, with maker-checker approvals; a KYC
+verification provider to choose; weekly reviews.
+**Exchanged:** the kickoff summary and next steps (DR-008).
+**Status:** before versions were tracked.
+
+### 0.2 · 2026-08-20
+
+**Exchanged:** the business requirement document, v1.0, with the
+executed NDA (DR-001).
+**Status:** before versions were tracked.
+
+### 0.1 · 2026-08-04
+
+**Exchanged:** the NDA, sent on 31 July and returned signed on 4 August
+(DR-002, DR-003).
+**Status:** before versions were tracked.

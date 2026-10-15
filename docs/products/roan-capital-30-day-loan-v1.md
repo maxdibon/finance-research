@@ -2,7 +2,7 @@
 id: roan-capital-30-day-loan-v1
 name: Roan Capital — 30-day loan, product version 1 (draft)
 kind: product-version
-version: 0.5.0
+status: draft
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830]

@@ -2,7 +2,7 @@
 id: journeys
 name: User journeys — what a person goes through, step by step
 kind: index
-version: 0.1.0
+status: living
 owner: Solution architect
 classification: Internal
 review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763, FS-765, FS-768, FS-769, FS-773, FS-776, FS-782, FS-783, FS-784]

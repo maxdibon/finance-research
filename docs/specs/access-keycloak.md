@@ -8,7 +8,6 @@ release: R1
 implements: [access]
 depends_on: [messaging]
 used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging, endpoints, gitlab, recon]
-version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792]

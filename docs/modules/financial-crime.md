@@ -2,7 +2,7 @@
 id: financial-crime
 name: Financial Crime and Compliance
 kind: shared-service
-version: 0.1.0
+status: living
 owner: Compliance lead
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]

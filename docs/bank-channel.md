@@ -2,7 +2,7 @@
 id: bank-channel
 name: Bank channel — banks offering SME Recon and the business suite to their SME customers
 kind: partner-model
-version: 0.1.0
+status: draft
 owner: Commercial lead
 classification: Internal
 review_ids: [FS-024, FS-439, FS-441, FS-443]

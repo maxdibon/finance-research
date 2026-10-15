@@ -2,7 +2,7 @@
 id: delivery-plan
 name: Delivery plan — phase 1 in releases, in the order customers need them
 kind: plan
-version: 0.1.0
+status: living
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808]

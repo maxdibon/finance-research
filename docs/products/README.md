@@ -2,7 +2,7 @@
 id: products
 name: Products — product version documents, while drafts have nowhere restricted to live
 kind: index
-version: 0.1.0
+status: living
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823, FS-825]

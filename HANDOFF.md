@@ -186,7 +186,7 @@ Each has a register row and, where it changed the design, an entry in
   planned work, a payment we did not process) are waived through
   disruption windows and a standing waiver (lender-rules §2.10; FS-799).
 - **Roan Capital's eight roles** come from its prototype, each with what
-  it does and never does (delivery map §1; FS-811), and the prototype's
+  it does and never does (delivery map §7; FS-811), and the prototype's
   lessons are listed as what we take and what we do not (FS-807, FS-812).
 - **We never ask for answers by email.** A questionnaire is a Word
   document with a form field per question, read back by script into its

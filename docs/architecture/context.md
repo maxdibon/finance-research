@@ -2,7 +2,7 @@
 id: architecture-context
 name: Architecture context — who and what the platform connects to
 kind: architecture
-version: 0.1.0
+status: draft
 owner: Solution architect
 classification: Internal
 review_ids: [FS-649, FS-650]

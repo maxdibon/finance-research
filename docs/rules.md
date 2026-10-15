@@ -2,7 +2,7 @@
 id: rules
 name: Rules — what we hold ourselves, our customers and our partners to
 kind: policy
-version: 0.1.0
+status: agreed
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762, FS-769, FS-805, FS-806, FS-834]
@@ -35,6 +35,7 @@ for minutes and says so ([endpoints](specs/endpoints.md) §2).
 | 9 | **Security and privacy training every year,** and for key holders before they hold a share | [Training](training/README.md) |
 | 10 | **Client material lives in Dibon's Odoo Documents, in Kenya,** one workspace per customer, read by role, every access logged: requirement documents, agreements, certificates, product drafts. **Never in a repository or on one laptop;** documents link to it, and those without access see only the link. **Exception, until the workspaces exist** (owner, 2026-10-14, FS-806): product version drafts, which hold no personal data, are kept in [products/](products/README.md) | business-suite BS-01; [gitlab](specs/gitlab.md) §2; FS-805, FS-806 |
 | 11 | **A third party's document is kept as received, never edited** (owner, 2026-10-15, FS-834): in the party's `originals/`, read-only, its SHA-256, size, date and sender (by role) in the folder's manifest; what we send outside is kept the same way, as a record. **Once discussion begins, we work on a derived document:** in our format (design system), named `<Party> · <Document> · v<n> (<status>)`; version 0.1 a faithful copy citing the original's hash; every later change tracked, with a comment giving why and any regulation; each version a new file, with a version log; 0.x drafts, 1.0 agreed with the party | `node tools/originals.js verify <party-folder>`; Odoo Documents' locked folders once they exist (rule 10) |
+| 12 | **Versions, not a log of every commit** (owner, 2026-10-15, FS-838, FS-839): the documentation set, and each customer's delivery, carry a major.minor version. **Major** when a reader must re-read or re-agree (a settled principle, a release's scope, a product added or retired, an edition issued; for a customer, its requirements and scope agreed, the contract, a go-live). **Minor** for a batch worth telling (decisions, agreements, documents exchanged, a meeting's outcomes). Wording, tooling and housekeeping take no version. A version is cut on the owner's word, stamped, and tagged. **Every document has a status from its kind's lifecycle**, so a version shows its drafts; `version:` stays only on documents that go outside on their own | CHANGELOG.md; each delivery map's §8; `node tools/cut.js`; the status and versions checks |
 
 ## 2 · Institutions
 

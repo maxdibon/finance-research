@@ -2,7 +2,7 @@
 id: training
 name: Training — manuals and sessions, by role
 kind: plan
-version: 0.1.0
+status: living
 owner: Solution architect
 classification: Internal
 review_ids: [FS-660, FS-771]

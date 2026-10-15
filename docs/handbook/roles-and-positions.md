@@ -2,7 +2,7 @@
 id: handbook-roles
 name: Handbook 1 — roles and positions
 kind: handbook
-version: 0.1.0
+status: draft
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-770, FS-771, FS-772]

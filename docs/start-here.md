@@ -2,7 +2,7 @@
 id: start-here
 name: Start here — a first week in this repository
 kind: guide
-version: 0.1.0
+status: living
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781]

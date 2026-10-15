@@ -2,7 +2,7 @@
 id: partners
 name: Partners — candidates, conversations and selection decisions
 kind: register
-version: 0.1.0
+status: living
 owner: Commercial lead
 classification: Internal
 last_reviewed: 2026-10-14

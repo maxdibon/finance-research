@@ -8,7 +8,6 @@ release: R1
 implements: [recon-observability]
 depends_on: [access-keycloak, messaging]
 used_by: [end-of-day-runner, event-bus-kafka, endpoints, recon]
-version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-101, FS-633, FS-640, FS-642, FS-648, FS-653, FS-667, FS-711, FS-792]

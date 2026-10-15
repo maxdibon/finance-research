@@ -2,7 +2,7 @@
 id: decisions
 name: Decisions — what each cost, and what was argued against it
 kind: register
-version: 0.1.0
+status: living
 owner: Solution architect
 classification: Internal
 last_reviewed: 2026-10-12

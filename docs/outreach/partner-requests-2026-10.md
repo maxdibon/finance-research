@@ -2,6 +2,7 @@
 id: partner-requests-2026-10
 name: Partner requests, October 2026
 kind: outreach
+status: draft
 version: 0.1.0
 owner: Commercial lead
 classification: Internal

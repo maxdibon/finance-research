@@ -13,7 +13,7 @@ const test = require('node:test');
 const { runAll } = require('./check');
 
 const ROOT = path.join(__dirname, '..');
-const COPY = ['README.md', 'REVIEW.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'), path.join('design', 'system'), 'code',
+const COPY = ['README.md', 'REVIEW.md', 'CHANGELOG.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'), path.join('design', 'system'), 'code',
   path.join('sources', 'confidential', 'protected-names.txt')];
 
 // A fresh copy of the checked files, perturbed by `edit`, then checked.
@@ -398,6 +398,26 @@ test('products: every rule across terms behaves as its worked examples say', () 
   }
 });
 
+test('status: a status its kind\'s lifecycle does not allow fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^status: living$/m, 'status: agreed')));
+  assert.deepStrictEqual(names(f), ['status']);
+});
+
+test('status: a version field on a document that does not go outside fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^status: living$/m, 'status: living\nversion: 0.2.0')));
+  assert.deepStrictEqual(names(f), ['status']);
+});
+
+test('versions: a customer page out of the template\'s order fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'customers', 'roan-capital.md'), (t) => t.replace('## 6 · Documents', '## 6 · Where the detail is')));
+  assert.deepStrictEqual(names(f), ['versions']);
+});
+
+test('versions: an older entry still to stamp below a newer one fails', () => {
+  const f = runWith((d) => fs.writeFileSync(path.join(d, 'CHANGELOG.md'), '# Changelog\n\n## 1.1 · 2026-10-20\n\n**Status:** to stamp\n\n## 1.0 · 2026-10-15\n\n**Status:** to stamp\n'));
+  assert.deepStrictEqual(names(f), ['versions']);
+});
+
 const DOCREG = path.join('docs', 'document-register.md');
 
 test('docregister: citing a DR id the register does not have fails', () => {
@@ -672,7 +692,7 @@ test('site: a journey links each capability to its module row, with its status',
 
 // ── overview (FS-575) ────────────────────────────────────────────────────
 test('overview: a document the overview does not link fails', () => {
-  const f = runWith((d) => fs.writeFileSync(path.join(d, 'docs', 'orphan.md'), '---\nid: orphan\nlast_reviewed: 2026-10-06\n---\n\n# Orphan\n'));
+  const f = runWith((d) => fs.writeFileSync(path.join(d, 'docs', 'orphan.md'), '---\nid: orphan\nkind: register\nstatus: living\nlast_reviewed: 2026-10-06\n---\n\n# Orphan\n'));
   assert.deepStrictEqual(names(f), ['overview']);
 });
 

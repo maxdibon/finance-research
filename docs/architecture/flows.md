@@ -2,7 +2,7 @@
 id: architecture-flows
 name: Architecture flows — how the components work together, one question at a time
 kind: architecture
-version: 0.1.0
+status: draft
 owner: Solution architect
 classification: Internal
 review_ids: [FS-695, FS-698, FS-699, FS-704, FS-706, FS-707]

@@ -8,7 +8,6 @@ release: R1
 implements: [recon-observability]
 depends_on: [observability-grafana]
 used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, messaging, recon]
-version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802]

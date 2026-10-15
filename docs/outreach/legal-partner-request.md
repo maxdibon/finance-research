@@ -2,6 +2,7 @@
 id: legal-partner-request
 name: First approach to a legal partner
 kind: outreach
+status: draft
 version: 0.1.0
 owner: Commercial lead
 classification: Internal

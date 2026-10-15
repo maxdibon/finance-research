@@ -2,7 +2,7 @@
 id: omni-channel
 name: Omni-channel — apps, internet banking and USSD
 kind: channel
-version: 0.1.0
+status: living
 owner: Product lead, channels
 classification: Internal
 audience: [bank, sacco, mfi, fintech]

@@ -2,7 +2,7 @@
 id: handbook
 name: Handbook — what an institution does on the platform, who does it, and when
 kind: handbook
-version: 0.1.0
+status: draft
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-771, FS-772, FS-775]

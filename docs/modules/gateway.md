@@ -2,7 +2,7 @@
 id: gateway
 name: Kapu Pay Gateway
 kind: product
-version: 0.1.0
+status: living
 owner: Product lead, Kapu
 classification: Internal
 audience: [sme, fintech, mfi, sacco]

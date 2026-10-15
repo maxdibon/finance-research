@@ -8,7 +8,6 @@ release: R1
 implements: [core]
 depends_on: [access-keycloak, event-bus-kafka]
 used_by: [approval-engine, lender-rules, end-of-day-runner, recon]
-version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802]

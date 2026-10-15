@@ -2,7 +2,7 @@
 id: business-continuity
 name: Business continuity plan — keeping the service, the company and the commitments going
 kind: plan
-version: 0.1.0
+status: living
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-482, FS-485, FS-657, FS-758]

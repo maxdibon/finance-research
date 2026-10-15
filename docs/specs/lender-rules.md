@@ -8,7 +8,6 @@ release: R1
 implements: [mfi]
 depends_on: [kapu-core-fineract, messaging, event-bus-kafka]
 used_by: [end-of-day-runner, recon]
-version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830]

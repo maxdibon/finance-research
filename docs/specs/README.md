@@ -2,7 +2,7 @@
 id: specs
 name: Specifications — how each component is built or run
 kind: index
-version: 0.1.0
+status: living
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792]

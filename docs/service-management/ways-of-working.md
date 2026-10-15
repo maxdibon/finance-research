@@ -2,7 +2,7 @@
 id: ways-of-working
 name: Ways of working — roles, merge requests, architecture review and change advisory
 kind: plan
-version: 0.1.0
+status: living
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757]

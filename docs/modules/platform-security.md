@@ -2,7 +2,7 @@
 id: platform-security
 name: Platform Security
 kind: shared-service
-version: 0.1.0
+status: living
 owner: Security lead
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]

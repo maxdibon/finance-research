@@ -2,7 +2,7 @@
 id: architecture-constraints
 name: Architecture — constraints we design within
 kind: architecture
-version: 0.1.0
+status: draft
 owner: Solution architect
 classification: Internal
 review_ids: [FS-649]

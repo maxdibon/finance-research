@@ -2,7 +2,7 @@
 id: operating-model
 name: Operating model — the people who keep the commitments
 kind: plan
-version: 0.1.0
+status: living
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-467, FS-470, FS-471, FS-472, FS-473, FS-474, FS-475, FS-476, FS-477, FS-505, FS-532, FS-686, FS-711]

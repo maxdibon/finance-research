@@ -8,7 +8,6 @@ release: R1
 implements: [platform-security]
 depends_on: [access-keycloak]
 used_by: []
-version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-699, FS-701, FS-703, FS-745, FS-746, FS-747, FS-750, FS-751, FS-753, FS-757, FS-758, FS-769, FS-805]

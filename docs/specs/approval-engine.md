@@ -8,7 +8,6 @@ release: R1
 implements: [mandates]
 depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka]
 used_by: [recon]
-version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802]

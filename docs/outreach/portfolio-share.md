@@ -2,6 +2,7 @@
 id: portfolio-share
 name: Sharing the portfolio with a contact
 kind: outreach
+status: draft
 version: 0.1.0
 owner: Commercial lead
 classification: Internal

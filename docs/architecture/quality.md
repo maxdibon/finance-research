@@ -2,7 +2,7 @@
 id: architecture-quality
 name: Architecture — quality goals
 kind: architecture
-version: 0.1.0
+status: draft
 owner: Solution architect
 classification: Internal
 review_ids: [FS-466, FS-588, FS-649, FS-653, FS-655, FS-660, FS-792]

@@ -2,7 +2,7 @@
 id: testing
 name: Testing — what must be true, how it is proven, and where the proof is kept
 kind: plan
-version: 0.1.0
+status: living
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-074, FS-548, FS-558, FS-560, FS-627, FS-668, FS-669, FS-701]

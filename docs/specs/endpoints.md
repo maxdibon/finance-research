@@ -8,7 +8,6 @@ release: R1
 implements: [platform-security]
 depends_on: [access-keycloak, observability-grafana]
 used_by: []
-version: 0.1.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777]

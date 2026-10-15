@@ -2,7 +2,7 @@
 id: business-suite
 name: Business Suite, on Odoo and Zoho
 kind: product
-version: 0.1.0
+status: living
 owner: Product lead, business suite
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]

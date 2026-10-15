@@ -2,7 +2,7 @@
 id: sacco
 name: Kapu Sacco
 kind: product
-version: 0.1.0
+status: living
 owner: Product lead, Kapu
 classification: Internal
 audience: [sacco]

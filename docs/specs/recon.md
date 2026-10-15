@@ -8,7 +8,6 @@ release: R1
 implements: [recon-observability]
 depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine]
 used_by: [end-of-day-runner]
-version: 0.3.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809]
