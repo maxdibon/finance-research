@@ -26,6 +26,11 @@ const fs = require('fs');
 const path = require('path');
 const { runAll, boxNames, githubAnchor } = require('./check');
 const release = require('./release');
+const paths = require('./paths');
+
+// FS-856: a folder in docs/ opens at its README, or, with none, at a page
+// listing its documents, built here.
+const folderPage = (ctx, dir) => (ctx.docs.has(`${dir}README.md`) ? pageOf(`${dir}README.md`) : `${dir}index.html`);
 
 const ID = '(?:OB-[A-Z]{2,3}-\\d{2}|[A-Z]{2}-\\d{2,3})';
 const ID_CELL = new RegExp(`^${ID}$`);
@@ -150,6 +155,9 @@ function inline(text, ctx) {
       if (!/^[a-z]+:/i.test(h)) {
         const [file, hash] = h.split('#');
         const target = file ? path.posix.normalize(path.posix.join(path.posix.dirname(ctx.page), file)) : ctx.page;
+        // FS-856: a document the reader has no page for (a template's
+        // placeholder, a README in code/) reads as text, not a dead link.
+        if (file.endsWith('.md') && !ctx.docs.has(target)) return hold(label);
         if (file.endsWith('.md')) h = pageOf(relHref(ctx.page, target.replace(/\.html$/, '.md'))) + (hash ? `#${hash}` : '');
         else if (file.endsWith('/') && fs.existsSync(path.join(ctx.root, path.posix.dirname(ctx.file), file, 'README.md'))) h = `${file}README.html`;
       }
@@ -166,7 +174,28 @@ function inline(text, ctx) {
       const href = sectionHref(ctx, ctx.file, n, m);
       return href ? `${pre}${hold(`<a class="sec" href="${href}">§${n}${m ? `.${m}` : ''}</a>`)}` : all;
     });
-    s = s.replace(/(?<![\w./-])(docs\/[\w./-]*\.md)\b/g, (p0) => (ctx.docs.has(p0) ? hold(`<a href="${html(relHref(ctx.page, pageOf(p0)))}">${p0}</a>`) : p0));
+    // FS-856: every path written as plain text (tools/paths.js): a document
+    // links to its page, a folder in docs/ to its README or listing, a
+    // folder outside docs/ reads as code.
+    if (ctx.pathIdx) {
+      let last = '';
+      let out = '';
+      let pos = 0;
+      for (const m of paths.mentions(s)) {
+        out += s.slice(pos, m.at);
+        pos = m.at + m.text.length;
+        if (m.name) {
+          const f = paths.resolveFile(ctx.pathIdx, ctx.file, m.dir, m.name, last);
+          if (f) { last = paths.folderOf(f); out += hold(`<a href="${html(relHref(ctx.page, pageOf(f)))}">${m.text}</a>`); continue; }
+        } else {
+          const r = paths.resolveFolder(ctx.root, ctx.file, m.folder);
+          if (r && r.docs && ctx.docFolders.has(r.docs)) { last = r.docs; out += hold(`<a href="${html(relHref(ctx.page, folderPage(ctx, r.docs)))}">${m.text}</a>`); continue; }
+          if (r && r.other) { out += hold(`<code>${m.text}</code>`); continue; }
+        }
+        out += m.text;
+      }
+      s = out + s.slice(pos);
+    }
     s = s.replace(ID_TEXT, (id) => {
       const d = ctx.defs.get(id);
       if (!d) return id;
@@ -519,6 +548,12 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
   const rel = release.info(root);
   RELEASE = release.line(rel);
   const hist = release.histories(root);
+  const pathIdx = paths.index(new Set(files));
+  // FS-856: the folders in docs/ that hold documents, each with a page.
+  const docFolders = new Set(files.filter((f) => f.startsWith('docs/')).flatMap((f) => {
+    const parts = f.split('/').slice(0, -1);
+    return parts.map((_, i) => `${parts.slice(0, i + 1).join('/')}/`);
+  }));
   const firstRelease = [...hist.values()].flat().map((c) => c.release).filter(Boolean).sort(release.byVersion)[0];
   const idx = indexIds(root, files);
   const { defs, caps } = idx;
@@ -540,7 +575,7 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
       }
     }
     const ctx = {
-      root, file: f, page, defs, caps, docs: idx.docs, keys: idx.keys, self: null, row: null, badges: f.startsWith('docs/journeys/') || f === 'docs/customers.md' || f.startsWith('docs/customers/'),
+      root, file: f, page, defs, caps, docs: idx.docs, keys: idx.keys, pathIdx, docFolders, self: null, row: null, badges: f.startsWith('docs/journeys/') || f === 'docs/customers.md' || f.startsWith('docs/customers/'),
       journey, rows,
       cite(id) {
         if (this.self === id) return;
@@ -608,6 +643,23 @@ q.addEventListener('input',show);</script>`;
   const sts = [...byStatus.keys()].sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
   const statusPage = `<h1>Documents by status</h1><p class="meta">Every document that is not a living register or index, by its status (FS-839). Versions are in <a href="CHANGELOG.html">the changelog</a>.</p>${sts.map((s) => `<h2>${html(s)} (${byStatus.get(s).length})</h2><ul>${byStatus.get(s).join('')}</ul>`).join('')}`;
   fs.writeFileSync(path.join(outDir, 'status.html'), shell('Documents by status', 'status.html', statusPage, note));
+  // FS-856: a page for each folder in docs/ with no README, listing what it
+  // holds, so a folder named in a document opens somewhere useful.
+  const folders = [...docFolders].filter((d) => !idx.docs.has(`${d}README.md`));
+  for (const dir of folders) {
+    const page = `${dir}index.html`;
+    const inside = files.filter((f) => f.startsWith(dir) && !f.slice(dir.length).includes('/')).sort();
+    const subs = [...new Set(files.filter((f) => f.startsWith(dir) && f.slice(dir.length).includes('/')).map((f) => `${dir}${f.slice(dir.length).split('/')[0]}/`))].sort();
+    const row = (f) => {
+      const { fields } = frontMatter(read(root, f));
+      return `<tr><td><a href="${html(relHref(page, pageOf(f)))}">${html(idx.docs.get(f).title)}</a></td><td>${html(fields.kind || '')}</td><td>${html(fields.status || '')}</td><td>${html(fields.released || '')}</td></tr>`;
+    };
+    const body = `<h1>${html(dir)}</h1><p class="meta">A folder with no README of its own: what it holds, from each document's front matter (FS-856).</p>`
+      + (inside.length ? `<table><thead><tr><th>Document</th><th>Kind</th><th>Status</th><th>Released</th></tr></thead><tbody>${inside.map(row).join('')}</tbody></table>` : '')
+      + (subs.length ? `<h2>Folders</h2><ul>${subs.map((d) => `<li><a href="${html(relHref(page, folderPage({ docs: idx.docs }, d)))}">${html(d)}</a></li>`).join('')}</ul>` : '');
+    fs.mkdirSync(path.join(outDir, dir), { recursive: true });
+    fs.writeFileSync(path.join(outDir, page), shell(dir, page, body, note));
+  }
   // FS-842, FS-845: what has changed since the release, and the change
   // notes waiting for the next one, so the team sees updates as they land.
   const waiting = rel.notes.filter((n) => !n.released.includes('docs'));
@@ -617,7 +669,7 @@ q.addEventListener('input',show);</script>`;
   const unreleased = `<h1>Unreleased</h1><p class="meta">${html(RELEASE)}. Releases are in <a href="CHANGELOG.html">the changelog</a>; how to write a change note is in changes/README.md.</p>`
     + `<h2>Change notes waiting for the next release (${waiting.length})</h2>${waiting.length ? `<ul>${waiting.map(noteRow).join('')}</ul>` : '<p>None.</p>'}`
     + (forCustomer.length ? `<h2>Released in the documentation, waiting for their customer's release (${forCustomer.length})</h2><ul>${forCustomer.map(noteRow).join('')}</ul>` : '')
-    + `<h2>Documents changed since ${html(rel.tag ? rel.tag.slice(5) : 'the release')} (${changedPages.length})</h2>${changedPages.length ? `<ul>${changedPages.map((f) => `<li><a href="${pageOf(f)}">${html(f)}</a></li>`).join('')}</ul>` : '<p>None.</p>'}`;
+    + `<h2>Documents changed since ${html(rel.tag ? rel.tag.slice(5) : 'the release')} (${changedPages.length})</h2>${changedPages.length ? `<ul>${changedPages.map((f) => `<li>${idx.docs.has(f) ? `<a href="${pageOf(f)}">${html(f)}</a>` : html(f)}</li>`).join('')}</ul>` : '<p>None.</p>'}`;
   fs.writeFileSync(path.join(outDir, 'unreleased.html'), shell('Unreleased', 'unreleased.html', unreleased, note));
   return { outDir, pages: pages.length, ids: defs.size, reader: Boolean(note) };
 }

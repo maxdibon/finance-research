@@ -455,6 +455,41 @@ test('status: a version field on a document that does not go outside fails', () 
   assert.deepStrictEqual(names(f), ['status']);
 });
 
+// FS-856: paths written as plain text, as the reader and the links check
+// resolve them.
+test('paths: a short name after a path means the same folder; alone, the nearest', () => {
+  const p = require('./paths');
+  const idx = p.index(new Set(['README.md', 'docs/regulation.md', 'docs/privacy.md', 'docs/customers.md', 'docs/modules/collect.md', 'docs/modules/messaging.md', 'docs/specs/messaging.md', 'docs/specs/lender-rules.md', 'docs/journeys/README.md']));
+  const walk = (file, text) => {
+    let last = '';
+    return p.mentions(text).filter((m) => m.name).map((m) => {
+      const got = p.resolveFile(idx, file, m.dir, m.name, last);
+      if (got) last = p.folderOf(got);
+      return got;
+    });
+  };
+  assert.deepStrictEqual(walk('docs/service-management/ways-of-working.md', 'docs/regulation.md, privacy.md, customers.md'), ['docs/regulation.md', 'docs/privacy.md', 'docs/customers.md']);
+  assert.deepStrictEqual(walk('docs/overview.md', 'docs/modules/collect.md, messaging.md'), ['docs/modules/collect.md', 'docs/modules/messaging.md']);
+  assert.deepStrictEqual(walk('docs/specs/lender-rules.md', 'messaging.md'), ['docs/specs/messaging.md']);
+  assert.deepStrictEqual(walk('docs/overview.md', 'messaging.md'), [null]);
+  assert.deepStrictEqual(walk('docs/start-here.md', 'README.md and journeys/README.md'), ['README.md', 'docs/journeys/README.md']);
+});
+
+test('links: a relative path into docs that names no document fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'overview.md'), (t) => `${t}\nSee modules/colect.md.\n`));
+  assert.deepStrictEqual(names(f), ['links']);
+});
+
+test('links: a short name two documents share, with no folder before it, fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'overview.md'), (t) => `${t}\nSee messaging.md.\n`));
+  assert.deepStrictEqual(names(f), ['links']);
+});
+
+test('links: the same short name after its folder on the line passes', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'overview.md'), (t) => `${t}\nSee docs/specs/lender-rules.md and messaging.md.\n`));
+  assert.ok(!names(f).includes('links'));
+});
+
 // FS-855: Start here explains every status the checks allow, and no other.
 const START = path.join('docs', 'start-here.md');
 test('status: a status the checks allow, missing from Start here, fails', () => {

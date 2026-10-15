@@ -1469,6 +1469,9 @@ function checkLinks(root, files) {
   const failures = [];
   const md = files.filter((f) => f.endsWith('.md') && !path.basename(f).startsWith('_') && (f.split(path.sep)[0] === 'docs' || (!f.includes(path.sep) && f !== 'REVIEW.md')));
   const exists = (rel) => fs.existsSync(path.join(root, ...rel.split('/')));
+  const paths = require('./paths'); // beside the check, as dibon.js is
+  const pathIdx = paths.index(new Set(files.filter((f) => f.endsWith('.md')).map((f) => f.split(path.sep).join('/'))));
+  const docDirs = new Set(fs.existsSync(path.join(root, 'docs')) ? fs.readdirSync(path.join(root, 'docs'), { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name) : []);
   for (const file of md) {
     const dir = path.posix.dirname(file.split(path.sep).join('/'));
     const own = read(root, file);
@@ -1489,6 +1492,26 @@ function checkLinks(root, files) {
       }
       for (const m of line.matchAll(/(?<![\w./-])(docs\/[\w./-]*\.md)\b/g)) {
         if (!exists(m[1])) failures.push(fail('links', file, i + 1, `names ${m[1]}, which does not exist`));
+      }
+    });
+    // FS-856: a path written as plain text resolves as the reader resolves
+    // it (tools/paths.js). A relative path into a folder of docs/ names a
+    // document that exists; a short name shared by several documents has
+    // a folder before it on its line, or is written as a path.
+    let fenced = false;
+    own.split('\n').forEach((raw, i) => {
+      if (/^\s*```/.test(raw)) { fenced = !fenced; return; }
+      if (fenced) return;
+      const line = raw.replace(/`[^`]*`/g, '').replace(/\]\([^)]*\)/g, ']()');
+      let last = '';
+      for (const m of paths.mentions(line)) {
+        if (!m.name) { const r = paths.resolveFolder(root, file.split(path.sep).join('/'), m.folder); if (r && r.docs) last = r.docs; continue; }
+        const got = paths.resolveFile(pathIdx, file.split(path.sep).join('/'), m.dir, m.name, last);
+        if (got) { last = paths.folderOf(got); continue; }
+        if (m.dir && !m.dir.startsWith('docs/') && docDirs.has(m.dir.split('/')[0])) failures.push(fail('links', file, i + 1, `names ${m.text}, which is no document`));
+        else if (!m.dir && paths.ambiguous(pathIdx, file.split(path.sep).join('/'), m.name, last)) {
+          failures.push(fail('links', file, i + 1, `${m.name} could be ${pathIdx.byName.get(m.name).join(' or ')}: write its path, or name its folder earlier on the line`));
+        }
       }
     });
   }
