@@ -56,15 +56,15 @@ function stampDocs(version) {
   const counts = order.filter((g) => groups[g]).map((g) => `${g[0].toUpperCase()}${g.slice(1)}: ${Object.entries(groups[g]).map(([s, n]) => `${n} ${s}`).join(', ')}`).join('. ');
   const prev = previousTag('docs', version);
   let since;
-  if (!prev) since = 'the first version, so nothing earlier to compare';
+  if (!prev) since = null;
   else {
     const old = docStatuses((f) => git(['show', `${prev}:${f}`]), git(['ls-tree', '-r', '--name-only', prev, 'docs']).split('\n').filter((f) => f.endsWith('.md')));
     const moved = [...now].filter(([f, v]) => old.has(f) && old.get(f).status !== v.status).map(([f, v]) => `${f.replace(/^docs\//, '')} ${old.get(f).status} to ${v.status}`);
     const added = [...now.keys()].filter((f) => !old.has(f)).length;
     const removed = [...old.keys()].filter((f) => !now.has(f)).length;
-    since = `since ${prev}: ${moved.length ? moved.join('; ') : 'no status changed'}; ${added} added, ${removed} removed`;
+    since = `Since ${prev}: ${moved.length ? moved.join('; ') : 'no status changed'}; ${added} documents added, ${removed} removed.`;
   }
-  return `${counts}. Status changes ${since}.`;
+  return `${counts}. ${since || 'The first version: nothing earlier to compare.'}`;
 }
 
 function registerRows(text, party) {
@@ -91,16 +91,16 @@ function stampCustomer(id, version, page) {
   const oa = openAnswers(fs.readFileSync(page, 'utf8'));
   const prev = previousTag(id, version);
   let since;
-  if (!prev) since = 'the first version cut, so nothing earlier to compare';
+  if (!prev) since = null;
   else {
     const oldRows = new Map(registerRows(git(['show', `${prev}:docs/document-register.md`]), party).map((r) => [r.id, r]));
     const added = rows.filter((r) => !oldRows.has(r.id)).map((r) => r.id);
     const moved = rows.filter((r) => oldRows.has(r.id) && oldRows.get(r.id).status !== r.status).map((r) => `${r.id} ${oldRows.get(r.id).status} to ${r.status}`);
     const oldOa = openAnswers(git(['show', `${prev}:${rel(page)}`]));
     const answered = oa.answered.filter((n) => !oldOa.answered.includes(n));
-    since = `since ${prev}: documents added ${added.join(', ') || 'none'}; status changes ${moved.join('; ') || 'none'}; newly answered ${answered.join(', ') || 'none'}`;
+    since = `Since ${prev}: documents added ${added.join(', ') || 'none'}; status changes ${moved.join('; ') || 'none'}; newly answered ${answered.join(', ') || 'none'}.`;
   }
-  return `documents ${rows.length} (${docs}); open answers ${oa.open.length} open, ${oa.answered.length} answered. Changes ${since}.`;
+  return `Documents ${rows.length} (${docs}); open answers ${oa.open.length} open, ${oa.answered.length} answered. ${since || 'The first version cut: nothing earlier to compare.'}`;
 }
 
 if (require.main === module) {

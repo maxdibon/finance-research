@@ -295,7 +295,7 @@ application form received (DR-007); for the product and operations
 meeting of 15 October, the questionnaires and the agenda (DR-012 to
 DR-015); our versions 0.1 and 0.2 of the application form, with a
 schedule of the changes (DR-017 to DR-019).
-**Status:** to stamp
+**Status:** Documents 19 (2 record kept, 5 original kept, 1 record to keep, 3 working internal, 1 working withdrawn, 7 working draft); open answers 26 open, 4 answered. The first version cut: nothing earlier to compare.
 
 ### 0.4 · 2026-10-03
 

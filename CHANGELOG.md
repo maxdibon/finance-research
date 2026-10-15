@@ -37,4 +37,4 @@ the registers (law, privacy, documents, partners, competitors,
 customers, legal questions, decisions, rules, and the document
 register); and the checks that hold them together. Its history before
 this is in git and REVIEW.md, FS-001 to FS-840.
-**Status:** to stamp
+**Status:** Specs: 11 draft. Journeys: 19 draft. Other documents: 20 draft, 2 agreed. Outreach: 1 withdrawn, 7 draft. Living documents: 50 living. The first version: nothing earlier to compare.
