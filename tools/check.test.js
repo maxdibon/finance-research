@@ -493,12 +493,12 @@ test('links: the same short name after its folder on the line passes', () => {
 // FS-855: Start here explains every status the checks allow, and no other.
 const START = path.join('docs', 'start-here.md');
 test('status: a status the checks allow, missing from Start here, fails', () => {
-  const f = runWith((d) => patch(d, START, (t) => t.replace(/^\| \*\*superseded\*\* \| Replaced by a later document.*\n/m, '')));
+  const f = runWith((d) => patch(d, START, (t) => t.replace(/ · \*\*superseded\*\* \(replaced by a later document it names[^)]*\)/, '')));
   assert.deepStrictEqual(names(f), ['status']);
 });
 
 test('status: a status Start here explains but the checks do not allow fails', () => {
-  const f = runWith((d) => patch(d, START, (t) => t.replace('| **building** |', '| **paused** | Set aside |\n| **building** |')));
+  const f = runWith((d) => patch(d, START, (t) => t.replace('**building**', '**paused** · **building**')));
   assert.deepStrictEqual(names(f), ['status']);
 });
 
@@ -575,13 +575,46 @@ test('changes: a well-formed note for the team passes', () => {
 const DOCREG = path.join('docs', 'document-register.md');
 
 test('docregister: citing a DR id the register does not have fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'customers', 'roan-capital.md'), (t) => t.replace('(DR-004)', '(DR-999)')));
+  const f = runWith((d) => patch(d, path.join('docs', 'customers', 'roan-capital.md'), (t) => t.replace('- Capability statuses: the modules named in §2.', '- Capability statuses: the modules named in §2 (DR-999).')));
   assert.deepStrictEqual(names(f), ['docregister']);
 });
 
 test('docregister: a status its kind does not allow fails', () => {
-  const f = runWith((d) => patch(d, DOCREG, (t) => t.replace('| Loan application form | Original | — | kept |', '| Loan application form | Original | — | draft |')));
+  // Roan Capital's table follows the register, so it is refreshed too: only
+  // the status rule is left to fail.
+  const f = runWith((d) => {
+    patch(d, DOCREG, (t) => t.replace(/^(\| DR-007 \|.*\| Original \| — \|) kept \|/m, '$1 draft |'));
+    require('./docregister').refresh(d, 'roan-capital');
+  });
   assert.deepStrictEqual(names(f), ['docregister']);
+});
+
+// FS-857: a summary for every document; each customer's table generated.
+test('docregister: a document without a summary fails', () => {
+  const f = runWith((d) => {
+    patch(d, DOCREG, (t) => t.replace(/^(\| DR-004 \| [^|]+ \| [^|]+ \|) [^|]+ \|/m, '$1 — |'));
+    require('./docregister').refresh(d, 'roan-capital');
+  });
+  assert.deepStrictEqual(names(f), ['docregister']);
+});
+
+test('docregister: a customer\'s table edited by hand, not from the register, fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'customers', 'roan-capital.md'), (t) => t.replace('| DR-003 | Non-disclosure agreement, executed', '| DR-003 | The NDA, executed')));
+  assert.deepStrictEqual(names(f), ['docregister']);
+});
+
+test('docregister: refreshing after a register change makes the customer\'s table current again', () => {
+  const f = runWith((d) => {
+    patch(d, DOCREG, (t) => t.replace('| DR-004 | Roan Capital | Certificate of incorporation, certified copy |', '| DR-004 | Roan Capital | Certificate of incorporation (certified copy) |'));
+    require('./docregister').refresh(d, 'roan-capital');
+  });
+  assert.deepStrictEqual(f, []);
+});
+
+test('docregister: an earlier release\'s register, without a summary column, reads by its header', () => {
+  const old = '| Id | Party | Title | Kind | Version | Status | Date | From | Where | Fingerprint | Rows |\n|---|---|---|---|---|---|---|---|---|---|---|\n| DR-001 | Roan Capital | A title | Record | 1.0 | kept | 2026-08-20 | Dibon | `clients/x/originals/` | `1c108b8e1add` | FS-395 |\n';
+  const r = require('./docregister').parse(old).rows[0];
+  assert.deepStrictEqual([r.party, r.kind, r.status, r.print, r.summary], ['Roan Capital', 'Record', 'kept', '`1c108b8e1add`', undefined]);
 });
 
 test('originals: a kept file that is changed, made writable, or joined by an unrecorded one fails', () => {

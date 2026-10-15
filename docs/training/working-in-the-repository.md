@@ -93,8 +93,11 @@ dated, with the answer. Example:
 
 Keeps a document that came from outside as an original: moved into the
 customer's `originals/`, read-only, its fingerprint recorded, and a row
-in the document register. Nothing from it goes into git. Example:
-`dibon received "C:\Users\me\Downloads\Signed agreement.pdf" --from roan-capital`.
+in the document register, with a one-line summary of what it is and why
+we hold it (without `--summary` it says "to confirm": add one later in
+the register). The customer's own table of documents, on its page,
+follows. Nothing from it goes into git. Example:
+`dibon received "C:\Users\me\Downloads\Signed agreement.pdf" --from roan-capital --summary "The services agreement as signed"`.
 **It stops** if the same document is already kept, and names it.
 
 ### check

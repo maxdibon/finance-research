@@ -34,7 +34,7 @@ const WORDS = [
   ['note', 'Write the change note: what changed, for whom.', ['dibon note "Two open answers settled" --for roan-capital', 'dibon note "Checks explain themselves" --for team --kind patch']],
   ['meeting', 'Open a meeting record for a customer, registered as a document.', ['dibon meeting roan-capital 2026-10-22']],
   ['answered', 'Move a customer\'s open answer to Answered, dated, with the answer.', ['dibon answered roan-capital 24 "The accountant and the finance lead receive it"']],
-  ['received', 'Keep a document from outside as an original, and register it.', ['dibon received "C:\\Users\\me\\Downloads\\Signed agreement.pdf" --from roan-capital']],
+  ['received', 'Keep a document from outside as an original, and register it.', ['dibon received "C:\\Users\\me\\Downloads\\Signed agreement.pdf" --from roan-capital --summary "The services agreement as signed"']],
   ['check', 'Run the checks and say, in plain words, what to fix.', ['dibon check']],
   ['save', 'Save my work on my branch, with its register row; the checks run first.', ['dibon save "Open answer 26: two administrators"', 'dibon save docs/customers/roan-capital.md']],
   ['undo', 'Take back my last save (before share: kept as edits; after: a correcting change).', ['dibon undo']],
@@ -116,11 +116,15 @@ function newRow(point) {
 }
 
 // ── the document register: a new row ─────────────────────────────────────
-function registerRow(cells) {
+// By the register's columns (tools/docregister.js, FS-857); the
+// customer's own table of documents, on its delivery map, follows.
+function registerRow(o, customer) {
+  const reg = require('./docregister');
   const t = read('docs/document-register.md');
-  const ids = [...t.matchAll(/^\| DR-(\d{3}) \|/gm)].map((m) => +m[1]);
+  const ids = reg.parse(t).rows.map((r) => +r.id.slice(3));
   const id = `DR-${String(Math.max(...ids) + 1).padStart(3, '0')}`;
-  write('docs/document-register.md', `${t.trimEnd()}\n| ${id} | ${cells.join(' | ')} |\n`);
+  write('docs/document-register.md', `${t.trimEnd()}\n${reg.row({ ...o, id })}\n`);
+  if (customer && fs.existsSync(path.join(ROOT, 'docs', 'customers', `${customer}.md`))) reg.refresh(ROOT, customer);
   return id;
 }
 
@@ -212,7 +216,7 @@ const word = {
     if (!row) stop('Start the work first (dibon start "…"), so the meeting has its register row.');
     fs.mkdirSync(path.join(ROOT, dir), { recursive: true });
     fs.writeFileSync(path.join(ROOT, dir, 'record.md'), `# ${who} · meeting · ${date} · record\n\nInternal (${row}). Not in git: it holds ${who}'s answers. Roles, not names.\n\n| Q | Asked | Where it lands | Answer | Owner | By |\n|---|---|---|---|---|---|\n| 1 | | | | | |\n\n**Afterwards:** each answer with dibon answered; documents with dibon received; a note for ${who} with dibon note.\n`);
-    const dr = registerRow([who, `Meeting record (${date})`, 'Working', '—', 'internal', date, 'Dibon', `\`${dir}/\``, '—', row]);
+    const dr = registerRow({ party: who, title: `Meeting record (${date})`, summary: `What was said and agreed at the meeting of ${date}, kept for us`, kind: 'Working', version: '—', status: 'internal', date, from: 'Dibon', where: `\`${dir}/\``, print: '—', rows: row }, id);
     say(`Meeting record opened: ${dir}/record.md (outside git), registered as ${dr}.`);
   },
 
@@ -258,7 +262,8 @@ const word = {
     const title = flag('--title') || path.basename(file).replace(/\.[^.]+$/, '');
     if (!await ask(`Keep "${path.basename(file)}" from ${who} as an original (moved into clients/${from}/originals/, read-only), and register it?`)) return say('Not kept.');
     const e = add(path.join(ROOT, 'clients', from), file, { from: who, received: flag('--date') || today() });
-    const dr = registerRow([who, title.replace(/\|/g, '/'), 'Original', '—', 'kept', e.received, who, `\`clients/${from}/originals/\``, `\`${e.sha256.slice(0, 12)}\``, row]);
+    const summary = flag('--summary') || 'To confirm: what it is, and why we hold it';
+    const dr = registerRow({ party: who, title, summary, kind: 'Original', version: '—', status: 'kept', date: e.received, from: who, where: `\`clients/${from}/originals/\``, print: `\`${e.sha256.slice(0, 12)}\``, rows: row }, from);
     say(`Kept as an original, read-only (fingerprint ${e.sha256.slice(0, 12)}), registered as ${dr}. Nothing from the file goes into git.`);
   },
 

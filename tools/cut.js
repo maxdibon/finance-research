@@ -137,9 +137,10 @@ function stampReleased(version) {
   }
   return n;
 }
+// By the register's header (FS-857), so an earlier release's register,
+// with other columns, reads the same.
 function registerRows(text, party) {
-  return norm(text).split('\n').map((l) => l.split('|').slice(1, -1).map((s) => s.trim()))
-    .filter((c) => /^DR-\d{3}$/.test(c[0] || '') && c[1] === party).map((c) => ({ id: c[0], kind: c[3], status: c[5] }));
+  return require('./docregister').parse(text).rows.filter((r) => r.party === party).map((r) => ({ id: r.id, kind: r.kind, status: r.status }));
 }
 const openAnswers = (text) => {
   const t = norm(text);

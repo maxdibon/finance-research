@@ -170,7 +170,10 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   via DOCX_MODULE); `tools/originals.js`, originals kept and verified;
   `tools/cut.js`, releases; `tools/release.js`, which release a reader
   is reading; `tools/dibon.js` (with `dibon` and `dibon.cmd` at the
-  root), the team's words.
+  root), the team's words; `tools/paths.js`, what a path written as plain
+  text means, for the reader and the links check (FS-856);
+  `tools/docregister.js`, the one reader of the document register, by its
+  header, and the maker of each customer's table of documents (FS-857).
 - **Git-ignored, holding real material:** `clients/` (per party:
   `originals/`, `working/`, meeting folders), `sources/confidential/`,
   `sources/gatekeepr/`, `sources/market/`, `sources/regulation/` (the law

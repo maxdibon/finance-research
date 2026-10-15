@@ -221,22 +221,34 @@ Statuses: draft, awaiting approval, awaiting CBK, active, retired.
 
 ## 6 · Documents
 
-**Its documents,** by DR id in the [document register](../document-register.md)
-(FS-835); held in clients/roan-capital/, outside git, until Roan Capital's
-workspace in Dibon's Odoo Documents exists (FS-805):
+**Its documents** are held in clients/roan-capital/, outside git, until
+Roan Capital's workspace in Dibon's Odoo Documents exists (FS-805); the
+product drafts themselves are in docs/products/ by exception (FS-806).
 
-- **The engagement:** the NDA as sent and as executed (DR-002, DR-003);
-  the certificate of incorporation (DR-004); the kickoff summary
-  (DR-008).
-- **Requirements:** the business requirement document (DR-001), the
-  source of every RC id in §2; our review of it (DR-009).
-- **Messaging:** the sender ID letter and the signed request (DR-005,
-  DR-006).
-- **Its product:** the 30-day loan questionnaires (DR-012 to DR-014); the
-  product drafts themselves are in docs/products/ by exception (FS-806).
-- **Its application form:** the original (DR-007); our version 0.1 and
-  0.2, and the schedule of changes (DR-017 to DR-019).
-- **Meetings:** 15 October, the agenda and our record (DR-015, DR-016).
+*Generated from the [document register](../document-register.md) by tools/docregister.js: edit the register, never this table.*
+
+| Id | Title | Summary | Kind | Status | Date | From |
+|---|---|---|---|---|---|---|
+| DR-001 | Business requirement document | The requirements for Roan Capital's lending platform, as we sent them with the executed NDA; every RC id on its delivery map comes from it | Record | kept | 2026-08-20 | Dibon, sent with the executed NDA |
+| DR-002 | Non-disclosure agreement, as sent for signature | The mutual NDA as we sent it for signature | Record | kept | 2026-07-31 | Dibon |
+| DR-003 | Non-disclosure agreement, executed (dated 4 August 2026, three years) | The NDA as signed, dated 4 August 2026 for three years: the one in force | Original | kept | 2026-08-04 | Roan Capital, signed |
+| DR-004 | Certificate of incorporation, certified copy | A certified copy of Roan Capital's certificate of incorporation, for our customer records | Original | kept | 2025-11-04 | Roan Capital |
+| DR-005 | Sender ID authorisation letter, template | The letter template Roan Capital supplied for authorising its SMS sender ID | Original | kept | 2026-10-12 | Roan Capital |
+| DR-006 | Sender ID whitelisting request, signed (dated 9 October 2026) | Roan Capital's signed request to whitelist its SMS sender ID, dated 9 October 2026 | Original | kept | 2026-10-12 | Roan Capital, its director |
+| DR-007 | Loan application form | Roan Capital's loan application form, exactly as received; our versions 0.1 and 0.2 start from it | Original | kept | 2026-10-15 | Roan Capital |
+| DR-008 | Kickoff summary and next steps, the email as sent (7 September 2026) | Our email after the kickoff: what was agreed, and the next steps | Record | to keep | 2026-09-07 | Dibon |
+| DR-009 | Review of the requirement document and the back office | Our own reading of the requirement document, and what the back office needs | Working | internal | 2026-10-03 | Dibon |
+| DR-010 | Mutual NDA, corrected draft | A corrected NDA we drafted; withdrawn, as the executed NDA stands | Working | withdrawn | 2026-10-12 | Dibon |
+| DR-011 | NDA changes, internal note | Our note on the changes the NDA would have needed | Working | internal | 2026-10-12 | Dibon |
+| DR-012 | 30-day loan questionnaire A, product terms | Questions for Roan Capital on the 30-day loan's terms: amounts, term, pricing | Working | draft | 2026-10-15 | Dibon |
+| DR-013 | 30-day loan questionnaire B, eligibility and limits | Questions for Roan Capital on who may borrow, and how much | Working | draft | 2026-10-15 | Dibon |
+| DR-014 | 30-day loan questionnaire C, how it runs | Questions for Roan Capital on how the loan runs from day to day | Working | draft | 2026-10-15 | Dibon |
+| DR-015 | Product and operations meeting, agenda (15 October 2026) | The agenda for the product and operations meeting of 15 October | Working | draft | 2026-10-15 | Dibon |
+| DR-016 | Product and operations meeting, our record (15 October 2026) | What was said and agreed at the 15 October meeting, kept for us | Working | internal | 2026-10-15 | Dibon |
+| DR-017 | Loan application form, in our format, from DR-007 | The application form in our format, word for word as received | Working | draft | 2026-10-15 | Dibon |
+| DR-018 | Loan application form, suggested changes tracked, from DR-017 | The form with our 28 suggested changes tracked, each with its reason and the regulation behind it | Working | draft | 2026-10-15 | Dibon |
+| DR-019 | Loan application form, schedule of v0.2's changes | The 28 changes in version 0.2 in one table, for Roan Capital to accept or decline | Working | draft | 2026-10-15 | Dibon |
+
 - Capability statuses: the modules named in §2.
 - Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in
   docs/decisions.md and REVIEW.md.

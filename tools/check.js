@@ -1204,9 +1204,9 @@ function statusesFor(kind) {
 }
 // FS-855: Start here's "Statuses you will meet" explains every status the
 // checks allow, and no other, so the words and the rules never drift apart
-// (as the words check holds the guide to dibon). Each set is a "###"
-// subsection whose table's first cells are its statuses, in bold; the two
-// document lifecycles also list their kinds.
+// (as the words check holds the guide to dibon). Each set is a row of one
+// table, its statuses in bold (FS-858); the two document lifecycles also
+// list their kinds.
 const START_HERE = path.join('docs', 'start-here.md');
 function statusSets() {
   return {
@@ -1233,21 +1233,23 @@ function checkStatusGlossary(root) {
   const rest = text.slice(start);
   const end = rest.slice(3).search(/^## /m);
   const section = end < 0 ? rest : rest.slice(0, end + 3);
-  const subs = new Map(section.split(/^### /m).slice(1).map((part) => {
-    const nl = part.indexOf('\n');
-    return [part.slice(0, nl).trim(), part.slice(nl + 1)];
+  // FS-858: one table, a row per set: what, its statuses in bold, then its
+  // kinds ("Kinds: `a`, `b`.") and examples.
+  const rows = new Map(section.split('\n').filter((l) => /^\| [^|-]/.test(l) && !/^\| What \|/.test(l)).map((l) => {
+    const c = l.split('|').slice(1, -1).map((s) => s.trim());
+    return [c[0], { statuses: c[1] || '', more: c[2] || '' }];
   }));
   const sets = statusSets();
   const out = [];
-  for (const name of Object.keys(sets).filter((n) => !subs.has(n))) out.push(at(`no "### ${name}" under "Statuses you will meet"`));
-  for (const [name, body] of subs) {
+  for (const name of Object.keys(sets).filter((n) => !rows.has(n))) out.push(at(`no row "${name}" in "Statuses you will meet"`));
+  for (const [name, row] of rows) {
     const set = sets[name];
-    if (!set) { out.push(at(`"### ${name}" is not a set of statuses the checks know`)); continue; }
-    const shown = body.split('\n').map((l) => (l.match(/^\| \*\*([^*|]+)\*\* \|/) || [])[1]).filter(Boolean);
+    if (!set) { out.push(at(`the row "${name}" is not a set of statuses the checks know`)); continue; }
+    const shown = [...row.statuses.matchAll(/\*\*([^*]+)\*\*/g)].map((m) => m[1]);
     for (const s of set.statuses.filter((x) => !shown.includes(x))) out.push(at(`${name}: the checks allow "${s}", which is not explained here`));
     for (const s of shown.filter((x) => !set.statuses.includes(x))) out.push(at(`${name}: "${s}" is explained here, but the checks do not allow it`));
     if (!set.kinds) continue;
-    const listed = [...((body.match(/^Kinds: ([\s\S]*?)\n\n/m) || [])[1] || '').matchAll(/`([a-z-]+)`/g)].map((m) => m[1]);
+    const listed = [...((row.more.match(/Kinds: (.*?)\.(?: |$)/) || [])[1] || '').matchAll(/`([a-z-]+)`/g)].map((m) => m[1]);
     for (const k of set.kinds.filter((x) => !listed.includes(x))) out.push(at(`${name}: the kind "${k}" is not listed`));
     for (const k of listed.filter((x) => !set.kinds.includes(x))) out.push(at(`${name}: "${k}" is listed, but is not a kind of this set`));
   }
@@ -1421,17 +1423,22 @@ function checkDocRegister(root, files) {
   if (!fs.existsSync(path.join(root, DOC_REGISTER))) return [fail('docregister', DOC_REGISTER, 0, 'the document register is missing')];
   const out = [];
   const review = new Set(read(root, 'REVIEW.md').split('\n').map((l) => (l.match(/^\| (FS-\d{3}) \|/) || [])[1]).filter(Boolean));
+  // FS-857: read by its header (tools/docregister.js), which must be the
+  // columns the tools know, in their order.
+  const reg = require('./docregister'); // beside the check, as dibon.js is
+  const parsed = reg.parse(read(root, DOC_REGISTER));
+  const names = reg.COLUMNS.map(([, n]) => n);
+  if (parsed.header.join('|') !== names.join('|')) out.push(fail('docregister', DOC_REGISTER, 0, `the table's columns are "${parsed.header.join(', ')}"; the tools expect "${names.join(', ')}"`));
   let expect = 1;
-  read(root, DOC_REGISTER).split('\n').forEach((line, i) => {
-    const m = line.match(/^\| (DR-(\d{3})) \|/);
-    if (!m) return;
-    const at = (msg) => out.push(fail('docregister', DOC_REGISTER, i + 1, `${m[1]}: ${msg}`));
-    const c = line.split('|').slice(1, -1).map((s) => s.trim());
-    if (c.length !== 11) { at(`${c.length} cells, expected 11`); return; }
-    const [, , title, kind, , status, date, from, where, print, rows] = c;
-    if (+m[2] !== expect) at(`out of sequence; DR-${String(expect).padStart(3, '0')} expected`);
-    expect = +m[2] + 1;
+  for (const r of parsed.rows) {
+    const at = (msg) => out.push(fail('docregister', DOC_REGISTER, r.line, `${r.id}: ${msg}`));
+    if (r.cells.length !== names.length) { at(`${r.cells.length} cells, expected ${names.length}`); continue; }
+    const { title, summary, kind, status, date, from, where, print, rows } = r;
+    const n = +r.id.slice(3);
+    if (n !== expect) at(`out of sequence; DR-${String(expect).padStart(3, '0')} expected`);
+    expect = n + 1;
     if (!title || !from) at('a title and a "from" are required');
+    if (!summary || summary === '—') at('a summary is required: what it is, and why we hold it, in one line');
     if (!DOC_STATUSES[kind]) at(`kind "${kind}" is not ${Object.keys(DOC_STATUSES).join(', ')}`);
     else if (!DOC_STATUSES[kind].includes(status)) at(`status "${status}" is not one a${kind === 'Original' ? 'n' : ''} ${kind} may have (${DOC_STATUSES[kind].join(', ')})`);
     if (!/^(?:file dated )?\d{4}-\d{2}-\d{2}$/.test(date)) at(`date "${date}" is not YYYY-MM-DD or "file dated YYYY-MM-DD"`);
@@ -1441,7 +1448,18 @@ function checkDocRegister(root, files) {
     const ids = rows.match(/FS-\d{3}/g) || [];
     if (!ids.length) at('no register row (FS id) behind it');
     for (const id of ids) if (!review.has(id)) at(`cites ${id}, which REVIEW.md does not have`);
-  });
+  }
+  // FS-857: each customer page's §6 holds its documents, generated from the
+  // register; a stale or missing table fails, and says how to refresh it.
+  const custDir = path.join(root, 'docs', 'customers');
+  for (const name of fs.existsSync(custDir) ? fs.readdirSync(custDir).filter((f) => f.endsWith('.md')) : []) {
+    const rel = path.join('docs', 'customers', name);
+    const page = read(root, rel);
+    const b = reg.block(page);
+    if (!b) { out.push(fail('docregister', rel, 0, '§6 has no table of its documents generated from the register; add the line the customer template has there, then run node tools/docregister.js')); continue; }
+    if (name.startsWith('_')) continue;
+    if (b.text !== reg.table(read(root, DOC_REGISTER), reg.partyOf(page))) out.push(fail('docregister', rel, 0, 'its table of documents differs from the document register: run node tools/docregister.js'));
+  }
   const known = docRegisterIds(root);
   for (const file of files.filter((f) => f.endsWith('.md') && f.split(path.sep)[0] === 'docs')) {
     read(root, file).split('\n').forEach((line, i) => {
