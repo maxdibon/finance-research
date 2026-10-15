@@ -211,14 +211,20 @@ template, capabilities, diagrams, partners, public, copy and claims,
 decisions, obligations, customers, regulation, assurance, references,
 dependencies, scope, journeys, handbook, overview, specs, products (the
 drafts, their typed values against `code/lender-rules/`), docregister
-(the document register and every DR id cited), status (each document's
-status against its kind's lifecycle; `version:` only on outreach; a
-`released:` line naming a release in CHANGELOG.md, or `unreleased`, which
-every template says),
+(the document register, read by its header: a summary on every row; every
+DR id cited; each customer's §6 table the same as the register's rows for
+it), status (each document's status against its kind's lifecycle;
+`version:` only on outreach; a `released:` line naming a release in
+CHANGELOG.md, or `unreleased`, which every template says; Start here's
+statuses table naming every status and kind the checks allow, and no
+other),
 versions (the changelogs, README.md's and this file's release lines, and
 the customer template), changes (each change note's form; no register ids
 in a note read outside Dibon), words (the guide has a section for every
-word `dibon` knows, and no other), links, frontmatter
+word `dibon` knows, and no other), links (also a path written as plain
+text: one into docs/ that names no document fails, and so does a short
+name two documents share with no folder before it on its line),
+frontmatter
 and reviewed (a change of content needs today's `last_reviewed`; a
 change only to status, version, last_reviewed or released does not). The
 pre-commit hook runs them, then rebuilds the reader. **When a check
@@ -295,6 +301,13 @@ register row.
 - **A throwaway clone for testing a tool gets no confidential files:**
   copying `sources/confidential/protected-names.txt` into one was refused,
   rightly. `tools/cut.js` and the history need none of it.
+- **A throwaway clone tests what is committed in it, not your edits:**
+  `git diff` leaves out new files (copy them in), and `dibon start`
+  branches from the shared copy, which for a clone is the real
+  repository; remove the clone's `origin` first.
+- **The reader cannot italicise around a code span:** a line in
+  asterisks holding a code span shows its asterisks. Write the path
+  plainly inside emphasis.
 - **The browser pane may not draw when it is hidden**, and a click or
   screenshot then times out: read the page with `find`, `get_page_text` or
   `javascript_tool` instead.
@@ -319,9 +332,14 @@ register row.
   outreach statuses were set to "draft" without confirmation:** ask which
   went, and mark those "sent" (FS-839).
 - **Releases:** the first, 2026.10.15, is released and tagged for the
-  documentation and for Roan Capital. Two notes wait for the next, both
+  documentation and for Roan Capital. Six notes wait for the next, all
   patches: every document names its release (for everyone, FS-852) and
-  shows its history (for the team, FS-853). The next is the owner's call:
+  shows its history (FS-853); statuses explained in Start here (FS-855),
+  then in one table (FS-858); paths link in the reader (FS-856); each
+  customer lists its documents (FS-857); the last five for the team.
+  **The 36 document summaries (FS-857) were written from titles and our
+  work, not from the files:** ask the owner to skim them, and to settle
+  the "to confirm" ones. The next is the owner's call:
   propose one when the notes waiting (the reader's "Unreleased" page) are
   worth telling; then `node tools/cut.js`, commit ("Release <tag>"), an
   annotated tag, and the tag pushed with the commits. That release is the
