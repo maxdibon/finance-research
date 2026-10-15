@@ -2,11 +2,11 @@
 id: roan-capital-30-day-loan-v1
 name: Roan Capital — 30-day loan, product version 1 (draft)
 kind: product-version
-version: 0.4.0
+version: 0.5.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826]
-last_reviewed: 2026-10-14
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831]
+last_reviewed: 2026-10-15
 ---
 
 # Roan Capital · 30-day loan · product version 1 · draft
@@ -45,13 +45,13 @@ documents are client material: kept in clients/, never in git.
 | Id | Term | Value | Source | Ask |
 |---|---|---|---|---|
 | A1 | Amount limits | Minimum KES 3,000; maximum KES 100,000 | The prototype (open answer 29) | Confirm |
-| A2 | Term | 30 days; the prototype also offers 14 days | The requirement document; the 14 days, the prototype | Choose: 30 days only / 30 and 14 days, as two terms of this product / 14 days as a product of its own |
-| A3 | Repayment frequency | Daily, the first instalment the day after disbursement (KES 13,000 over 30 days: KES 434 a day, the last smaller) | The prototype; first assumed once at maturity | Choose: Daily / Weekly / Once at maturity |
+| A2 | Term | 14 or 30 days, chosen for each loan ("two weeks" or "one month") | Roan Capital's application form; the prototype | Confirm |
+| A3 | Repayment frequency | Daily, the first instalment the day after disbursement (KES 13,000 over 30 days: KES 434 a day, the last smaller) | Roan Capital's application form; the prototype | Confirm |
 | A4 | Interest method | Flat, on the principal | The prototype | Confirm |
-| A5 | Interest rate and its unit | 1% a day (KES 3,000 on KES 10,000 over 30 days); CBK's approval of the pricing (reg 55) to record | The prototype (open answer 4) | Confirm |
-| A6 | Fees | Membership, KES 100, once per client; application, KES 500 (KES 3,000 to 19,999) or KES 1,000 (KES 20,000 to 100,000); both paid upfront on the first loan, non-refundable; remittance, KES 120; chattels mortgage, KES 500 (KES 5,001 to 9,999) or KES 1,000 (KES 10,000 to 100,000); deducted at disbursement. Two questions: is the application fee charged on every loan, or only the first? And do loans below KES 5,001 carry no chattels mortgage fee? | The prototype | Confirm |
-| A7 | Insurance | "LIF", KES 200, deducted at disbursement: what it covers, and whether it is a fee or a third party's cost (LQ-03) | The prototype | Provide |
-| A8 | Default interest | 1% a day, on overdue daily instalments | The prototype (open answer 3) | Confirm |
+| A5 | Interest rate and its unit | 1% a day (KES 3,000 on KES 10,000 over 30 days); CBK's approval of the pricing (reg 55) to record | Roan Capital's application form; the prototype (open answer 4) | Confirm |
+| A6 | Fees | Membership, KES 100, once per client, and application, KES 500, on the first loan: both paid upfront, non-refundable. On later loans, application, KES 500 (KES 3,000 to 19,999) or KES 1,000 (KES 20,000 to 100,000), deducted at disbursement. On every loan: remittance, KES 120; chattels mortgage, KES 500 (KES 5,001 to 9,999) or KES 1,000 (KES 10,000 to 100,000); both deducted at disbursement. One question: on a first loan of KES 20,000 or more, is the application fee KES 500 or KES 1,000? | Roan Capital's application form; the prototype | Confirm |
+| A7 | Insurance | "LIF", KES 200 on every loan, deducted at disbursement: what it covers, and whether it is a fee or a third party's cost (LQ-03) | Roan Capital's application form; the prototype | Provide |
+| A8 | Default interest | 1% a day on overdue daily instalments, until the arrears are cleared | Roan Capital's application form; the prototype (open answer 3) | Confirm |
 | A9 | Default period | We suggest 30 days past due, the longest reg 57 allows; shorter only if your agreement says so. Non-performing from day 61 if 30 | The regulations; Dibon's suggestion | Choose: 30 days / Shorter (give the days) |
 | A10 | Collection ladder | Reminder day 25; default run days 30 to 40; final warning days 40 to 47; closure day 47 | The requirement document (RC-27) | Confirm |
 | A11 | Holiday rule | We suggest a due date that falls on a holiday moves to the next working day | Dibon's suggestion | Choose: Moves to the next working day / Stays |
@@ -64,11 +64,11 @@ documents are client material: kept in clients/, never in git.
 | A18 | Who pays the rail's charges | M-Pesa's charges on repayments and payouts | None yet | Choose: The borrower / Roan Capital |
 | A19 | Third-party costs | The chattels mortgage fee | The prototype | Choose: Roan Capital's own fee / The collateral registry's charge, passed on at cost |
 | A20 | Grace | Days after an instalment falls due before default interest starts | None yet | Provide |
-| A21 | Collateral | Chattels, under a chattels mortgage; vehicles by logbook (RC-08): the types, and the loan-to-value | The prototype; the requirement document | Provide |
-| A22 | Guarantors | One per loan: the guarantor's limit (open answer 16) | The prototype | Provide |
+| A21 | Collateral | Chattels: business and household items the borrower charges, each with its quantity and estimated value and where they are kept; vehicles by logbook (RC-08). The loan-to-value, which the form does not state | Roan Capital's application form; the requirement document | Provide |
+| A22 | Guarantors | One, required; the guarantor also charges business stock or items as security, with their value. The guarantor's limit (open answer 16) | Roan Capital's application form; the prototype | Provide |
 | A23 | Restructuring | Whether, and on what terms, a borrower in difficulty can have new terms (open answer 10) | None yet | Decide |
 | A24 | Statements | How often, to the borrower and the guarantor (reg 47(2)) | None yet | Decide |
-| A25 | Languages | English; Swahili | Dibon's proposal | Choose: English only / English and Swahili |
+| A25 | Languages | English; Swahili (the form is in English) | Dibon's proposal; Roan Capital's application form | Choose: English only / English and Swahili |
 
 **B · Eligibility and limits** (Roan Capital's credit policy; thresholds
 internal):
@@ -76,21 +76,21 @@ internal):
 | Id | Rule | Value | Source | Ask |
 |---|---|---|---|---|
 | B1 | Who may borrow | Individuals and businesses, with the documents RC-01 lists | The requirement document (open answers 17 to 19) | Confirm |
-| B2 | Affordability | Assessed from bank and M-Pesa statements (RC-05): the rule | The requirement document (open answer 13) | Decide |
+| B2 | Affordability | The form records six months of M-Pesa and bank cash flows, daily income, stock value and how often stock turns over, and current loans (number and value). The rule that turns these into the largest instalment a borrower can afford | Roan Capital's application form; the requirement document (open answer 13) | Decide |
 | B3 | Limits by KYC tier | The largest loan at each tier (OB-MF-06) | None yet | Decide |
-| B4 | First loan and limit growth | The prototype marks a "first loan": its cap, and how the limit grows | The prototype | Decide |
-| B5 | Exposure | Loans one borrower may hold at once; whether top-ups are allowed | None yet | Decide |
+| B4 | First loan and limit growth | The prototype marks a "first loan", and the form is reused for later loans of the same amount: the first loan's cap, and how the limit grows | Roan Capital's application form; the prototype | Decide |
+| B5 | Exposure | Loans one borrower may hold at once; whether top-ups are allowed. The form asks for current loans, number and value | Roan Capital's application form | Decide |
 | B6 | Bureau | A credit report before lending (open answer 12) | None yet | Choose: On every application / On the first loan only / Not checked |
 
 **C · How it runs** (linked configuration, never published):
 
 | Id | Setting | Value | Source | Ask |
 |---|---|---|---|---|
-| C1 | Approval chain | Credit Manager, Head Office, CEO (the prototype), or the committee chain (RC-12) | The prototype; the requirement document (open answer 28) | Choose: Credit Manager, Head Office, CEO / Credit Officer, the credit committee, the Head Office Committee above a threshold |
-| C2 | Documents | RC-01's checklist | The requirement document (open answers 14, 17 to 21) | Confirm |
+| C1 | Approval chain | Credit Manager, Head Office, CEO: the form's approval block has all three (the prototype has the same chain); the requirement document has the committee chain (RC-12) | Roan Capital's application form; the prototype; the requirement document (open answer 28) | Choose: Credit Manager, Head Office, CEO / Credit Officer, the credit committee, the Head Office Committee above a threshold |
+| C2 | Documents | RC-01's checklist; the form adds the KRA PIN, an email address (required), a bank account, six months of M-Pesa and bank statements, a guarantor, the spouse and two next of kin | Roan Capital's application form; the requirement document (open answers 14, 17 to 21) | Confirm |
 | C3 | Disbursement | M-Pesa, and NCBA by bank transfer (RC-18) | The requirement document (open answer 6) | Confirm |
 | C4 | Cut-off | No payout released 23:00 to 04:00 (RC-21) | The requirement document | Confirm |
-| C5 | Purposes | The list a borrower chooses from (the prototype asks for a purpose) | The prototype | Provide |
+| C5 | Purposes | The form asks for the purpose in the borrower's own words: a list to choose from, or free text? | Roan Capital's application form; the prototype | Provide |
 | C6 | Bureau reporting | Not in R1 (crb, phase 2) | Dibon's plan | — |
 
 **The product, typed** (FS-823). The tables are the conversation with
@@ -105,22 +105,10 @@ the schema in the code repository (lender-rules §2.4), not here.
 ```json product-version
 {
   "amount_limits": {"item": "A1", "proposed": {"min": 3000, "max": 100000, "currency": "KES"}},
-  "term": {
-    "item": "A2",
-    "options": [
-      {"allowed": [30], "unit": "day"},
-      {"allowed": [14, 30], "unit": "day"},
-      {"allowed": [30], "unit": "day"}
-    ]
-  },
+  "term": {"item": "A2", "proposed": {"allowed": [14, 30], "unit": "day"}},
   "repayment_frequency": {
     "item": "A3",
-    "proposed": {"every": "day", "first_due": "day_after_disbursement"},
-    "options": [
-      {"every": "day", "first_due": "day_after_disbursement"},
-      {"every": "week", "first_due": "week_after_disbursement"},
-      {"every": "maturity"}
-    ]
+    "proposed": {"every": "day", "first_due": "day_after_disbursement"}
   },
   "interest_method": {"item": "A4", "proposed": {"method": "flat", "on": "principal"}},
   "interest_rate_and_its_unit": {
@@ -139,11 +127,18 @@ the schema in the code repository (lender-rules §2.4), not here.
         "refundable": false
       },
       {
-        "name": "application",
+        "name": "application_first_loan",
+        "amount": 500,
         "currency": "KES",
         "once_per": "first_loan",
         "taken": "upfront",
-        "refundable": false,
+        "refundable": false
+      },
+      {
+        "name": "application",
+        "currency": "KES",
+        "once_per": "repeat_loan",
+        "taken": "disbursement",
         "tiers": [
           {"from": 3000, "to": 19999, "amount": 500},
           {"from": 20000, "to": 100000, "amount": 1000}
@@ -266,6 +261,13 @@ the schema in the code repository (lender-rules §2.4), not here.
   },
   "approval_chain": {
     "item": "C1",
+    "proposed": {
+      "stages": [
+        {"role": "credit_manager"},
+        {"role": "head_office"},
+        {"role": "chief_executive_officer"}
+      ]
+    },
     "options": [
       {
         "stages": [
@@ -292,6 +294,39 @@ the schema in the code repository (lender-rules §2.4), not here.
   "bureau_reporting": {"item": "C6", "proposed": {"reporting": false}}
 }
 ```
+
+**From Roan Capital's application form** (FS-831; the blank form in
+clients/, not in git). It confirms the term, daily instalments, the
+rate, default interest and the fees above, and the approval block
+names the prototype's chain. Once the platform issues each loan's
+agreement and key information document from this product (lender-rules
+§2.3), the paper form retires, and these documents carry what the
+regulations ask of an agreement:
+
+- **Early repayment without charge** (reg 54(4)(h); reg 56(3), (4)):
+  interest only to the day of repayment. The form's note on
+  prepayments within two weeks becomes this (LQ-13).
+- **Everything reg 54(4) lists:** the charges and when they apply, the
+  total cost of credit and the APR, the default period (reg 57(3)), when
+  a non-performing loan may be reported to a bureau, and how to
+  complain; the form's agreement section has the amount, purpose, rate,
+  instalments and dates.
+- **Excise duty on the fees** (LQ-14), which the form's charges do not
+  show; a charge not disclosed in the contract cannot be recovered
+  (reg 30(2)).
+- **Consent to use personal data** for the loan and its recovery, specific
+  to that purpose (Data Protection Act s.30, s.32); publishing a
+  borrower's information to shame them is forbidden (reg 30(1)(d)), so
+  the form's "publication of whatever nature" is not carried over.
+- **Contact in collections** only with the borrower and the guarantor
+  (reg 30(1)(e)); the spouse and next of kin the form records are
+  references, not people to call about a debt.
+- **Security:** household items may be charged, but essential personal
+  effects may not be taken in recovery (reg 30(1)(k)), and a sale needs
+  thirty days' notice (reg 30(4)). The chattels mortgage is registered
+  in the collateral registry (MF-03).
+- **The witness line** on the chattels mortgage names another
+  organisation; the platform's version names Roan Capital's officer.
 
 **Not terms, and so not here:** the repayment order (reg 56) and the cap
 on a non-performing loan (reg 29) are the regulations'; any reading not

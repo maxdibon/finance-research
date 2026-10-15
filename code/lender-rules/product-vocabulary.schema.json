@@ -113,7 +113,7 @@
           "percent": {"$ref": "#/$defs/percent"},
           "tiers": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/tier"}},
           "currency": {"$ref": "#/$defs/currency"},
-          "once_per": {"enum": ["loan", "first_loan", "client"]},
+          "once_per": {"enum": ["loan", "first_loan", "repeat_loan", "client"]},
           "taken": {"enum": ["disbursement", "schedule", "upfront"]},
           "refundable": {"type": "boolean"}
         }
