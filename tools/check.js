@@ -1293,6 +1293,10 @@ function checkVersions(root) {
     const newest = (log.match(/^## (\d{4}\.\d{2}\.\d{2}(?:\.\d+)?) · (major|minor|patch)$/m) || []).slice(1).join(' · ');
     const said = (read(root, 'README.md').match(/^\*\*Release:\*\* (\S+ · \S+)/m) || [])[1];
     if (said !== newest) out.push(fail('versions', 'README.md', 0, `its release line says "${said || '(none)'}"; CHANGELOG.md's newest is "${newest}"`));
+    if (fs.existsSync(path.join(root, 'HANDOFF.md'))) {
+      const described = (read(root, 'HANDOFF.md').match(/^ {4}release: (\S+ · \S+)$/m) || [])[1];
+      if (described !== newest) out.push(fail('versions', 'HANDOFF.md', 3, `it describes release "${described || '(none)'}"; CHANGELOG.md's newest is "${newest}"`));
+    }
   }
   const notes = path.join(root, 'docs', 'marketing', 'release-notes.md');
   if (fs.existsSync(notes)) out.push(...changelogProblems(read(root, path.join('docs', 'marketing', 'release-notes.md')), '##', path.join('docs', 'marketing', 'release-notes.md'), 0, false));

@@ -13,7 +13,7 @@ const test = require('node:test');
 const { runAll } = require('./check');
 
 const ROOT = path.join(__dirname, '..');
-const COPY = ['README.md', 'REVIEW.md', 'CHANGELOG.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'), path.join('design', 'system'), 'code',
+const COPY = ['README.md', 'REVIEW.md', 'CHANGELOG.md', 'HANDOFF.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'), path.join('design', 'system'), 'code',
   path.join('sources', 'confidential', 'protected-names.txt')];
 
 // A fresh copy of the checked files, perturbed by `edit`, then checked.
@@ -423,6 +423,11 @@ test('versions: an older entry still to stamp below a newer one fails', () => {
 
 test('versions: a README whose release line disagrees with the changelog fails', () => {
   const f = runWith((d) => patch(d, 'README.md', (t) => t.replace(/^\*\*Release:\*\* .*$/m, '**Release:** 2026.10.14 · major')));
+  assert.deepStrictEqual(names(f), ['versions']);
+});
+
+test('versions: a handover describing a release the changelog does not have fails', () => {
+  const f = runWith((d) => patch(d, 'HANDOFF.md', (t) => t.replace(/^ {4}release: .*$/m, '    release: 2026.10.01 · minor')));
   assert.deepStrictEqual(names(f), ['versions']);
 });
 

@@ -138,6 +138,8 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
   const out = [
     '# Dibon financial services — Master',
     '',
+    `> **${require('./release').line(require('./release').info(root))}.**`,
+    '>',
     '> **Generated. Do not edit.** Built by `node tools/assemble.js` from',
     `> commit ${commit(root)}. Edit the sources in docs/ and rebuild. Every`,
     '> check passed when this was built.',

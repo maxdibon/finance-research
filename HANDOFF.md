@@ -1,9 +1,9 @@
 # Dibon financial services — session handoff
 
-    version: 2.1.0
+    release: 2026.10.15 · major
     updated: 2026-10-15
-    supersedes: 2.0.0, the briefing-only handover (FS-837); adds the first
-                versions, cut and tagged: docs 1.0, Roan Capital 0.5 (FS-841)
+    the release is the documentation's, moved by each release (FS-842);
+    this file has no version of its own
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -79,10 +79,13 @@ its money and its records; Dibon holds the platform. Read
   `clients/<party>/originals/`, read-only, hashed; work happens on named,
   versioned documents, version 0.1 a faithful copy, later versions
   tracked, each change with why and its regulation.
-- **Versions, not a log of commits** (rules, Dibon 12): the set and each
-  customer's delivery carry major.minor versions, cut on the owner's
-  word by `node tools/cut.js`, then tagged. Propose a cut when one is
-  due; never cut on your own.
+- **Releases, not a log of commits** (rules, Dibon 12): the set and each
+  customer's delivery are released, named by date (2026.10.15; .1 for a
+  patch), each major, minor or patch. **Every change you make carries a
+  change note** in `changes/` (its README), for the team, for everyone
+  or for a customer; a change that takes no release (wording, tooling,
+  housekeeping) needs none. A release, on the owner's word only, is
+  `node tools/cut.js docs` (or `<customer-id>`), then an annotated tag.
 - **Documents for outside readers** start from `docs/design-system.md`:
   one look, a little whimsy in the margins, never in figures or terms.
 - **Never sign in, or enter a password, on a live site**; downloads need
@@ -151,7 +154,8 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   `tools/assemble.js`, the Master; `tools/products/`, product
   questionnaires built and read back (the builder needs the docx package
   via DOCX_MODULE); `tools/originals.js`, originals kept and verified;
-  `tools/cut.js`, versions stamped.
+  `tools/cut.js`, releases; `tools/release.js`, which release a reader
+  is reading.
 - **Git-ignored, holding real material:** `clients/` (per party:
   `originals/`, `working/`, meeting folders), `sources/confidential/`,
   `sources/gatekeepr/`, `sources/market/`, `sources/regulation/` (the law
@@ -171,7 +175,7 @@ node tools/check.js --counts       # every check, the counts, each journey's sta
 node --test tools/check.test.js    # breaks each check on purpose
 node tools/site.js                 # builds build/site/; the hook does this too
 node tools/originals.js verify clients/roan-capital
-git tag --list                     # the versions cut: docs-<x.y>, <customer>-<x.y>
+git tag --list                     # the releases: docs-<YYYY.MM.DD>, <customer>-<YYYY.MM.DD>
 git log --oneline -15
 git status --short
 ```
@@ -265,10 +269,11 @@ register row.
   (`docs/outreach/`; each letter's status says whether it went). **The
   outreach statuses were set to "draft" without confirmation:** ask which
   went, and mark those "sent" (FS-839).
-- **Versions:** docs 1.0 and Roan Capital 0.5 are cut and tagged. The
-  next cut of either is the owner's call: propose one when a batch is
-  worth telling (CHANGELOG.md's criteria), write the entry, then
-  `node tools/cut.js`, commit, tag, and push the tag with the commits.
+- **Releases:** the first, 2026.10.15, is released and tagged for the
+  documentation and for Roan Capital. The next is the owner's call:
+  propose one when the notes waiting (the reader's "Unreleased" page) are
+  worth telling; then `node tools/cut.js`, commit ("Release <tag>"), an
+  annotated tag, and the tag pushed with the commits.
 - **Outside the repository:** the second site's provider before Roan
   Capital's go-live (FS-775); counsel for the LQ register (none engaged);
   the Odoo consultants (paid users; Odoo Enterprise for Dibon, FS-640);

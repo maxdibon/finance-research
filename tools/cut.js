@@ -189,6 +189,14 @@ function release(series, opts) {
     if (!/^\*\*Release:\*\* .*$/m.test(raw)) throw new Error('README.md has no "**Release:**" line');
     fs.writeFileSync(readme, raw.replace(/^\*\*Release:\*\* .*$/m, line));
     done.push('README.md');
+    // FS-842: the handover says which release it describes.
+    const handoff = path.join(ROOT, 'HANDOFF.md');
+    if (fs.existsSync(handoff)) {
+      const h = fs.readFileSync(handoff, 'utf8');
+      if (!/^ {4}release: .*$/m.test(h)) throw new Error('HANDOFF.md has no "    release:" line');
+      fs.writeFileSync(handoff, h.replace(/^ {4}release: .*$/m, `    release: ${version} · ${released}`));
+      done.push('HANDOFF.md');
+    }
   } else {
     const page = path.join(ROOT, 'docs', 'customers', `${series}.md`);
     if (!fs.existsSync(page)) throw new Error(`no ${rel(page)}`);

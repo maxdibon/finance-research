@@ -25,6 +25,7 @@
 const fs = require('fs');
 const path = require('path');
 const { runAll, boxNames, githubAnchor } = require('./check');
+const release = require('./release');
 
 const ID = '(?:OB-[A-Z]{2,3}-\\d{2}|[A-Z]{2}-\\d{2,3})';
 const ID_CELL = new RegExp(`^${ID}$`);
@@ -402,7 +403,7 @@ const STYLE = `
 --planned:#e8c873;--planned-bg:#3a3020;--designed:#8cc4ef;--designed-bg:#1c2f3e;--built:#92d39a;--built-bg:#1f3322;--live:#7fdcaa;--live-bg:#173426;
 --note:#8cc4ef;--warn:#e8c873;--caution:#f0a0a0}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
-header{position:sticky;top:0;z-index:2;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+header{position:sticky;top:0;z-index:2;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}header .rel{margin-left:auto;font-size:12px;color:var(--muted)}
 header b{color:var(--accent)}header a{color:var(--fg);text-decoration:none;font-size:14px}header a:hover{color:var(--link)}
 main{max-width:1180px;margin:0 auto;padding:16px}a{color:var(--link)}a.id{text-decoration:none;font-weight:600;white-space:nowrap}a.id:hover{text-decoration:underline}
 a.self{color:var(--accent);text-decoration:none;font-weight:700;white-space:nowrap}a.sec{white-space:nowrap}
@@ -432,10 +433,13 @@ const NAV = [['index.html', 'Search'], ['README.html', 'README'], ['docs/start-h
   ['docs/journeys/README.html', 'Journeys'], ['docs/specs/README.html', 'Specs'], ['docs/customers/roan-capital.html', 'Roan Capital'],
   ['docs/delivery-plan.html', 'Delivery plan'], ['REVIEW.html', 'Review'], ['HANDOFF.html', 'Handoff']];
 
+// FS-842: the release every page was built from, set once per build.
+let RELEASE = '';
 function shell(title, page, content, note = '') {
   const links = NAV.map(([p, t]) => `<a href="${relHref(page, p)}">${t}</a>`).join('');
+  const rel = RELEASE ? `<a class="rel" href="${relHref(page, 'unreleased.html')}">${html(RELEASE)}</a>` : '';
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${html(title)}</title><style>${STYLE}</style></head><body><header><b>Dibon FS</b>${links}</header>${note ? `<p class="reader">${note}</p>` : ''}<main>${content}</main></body></html>\n`;
+<title>${html(title)}</title><style>${STYLE}</style></head><body><header><b>Dibon FS</b>${links}${rel}</header>${note ? `<p class="reader">${note}</p>` : ''}<main>${content}</main></body></html>\n`;
 }
 
 // The one failure a reader may skip: the protected-names list, which is never
@@ -484,6 +488,8 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
     throw err;
   }
   const files = sources(root);
+  const rel = release.info(root);
+  RELEASE = release.line(rel);
   const idx = indexIds(root, files);
   const { defs, caps } = idx;
   const cited = new Map();
@@ -518,7 +524,11 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
       .map(([k, v]) => `${k.replace('_', ' ')}: ${inline(v.replace(/^\[|\]$/g, ''), ctx)}`).join(' · ');
     // FS-839: each document's status leads its header, as a badge.
     const st = fields.status ? `<span class="st st-doc-${html(fields.status)}">${html(fields.status)}</span> ` : '';
-    const head = `<p class="meta">${st}${crumbs(root, f, page)}${meta ? ` · ${meta}` : ''}</p>`;
+    // FS-842: this page differs from the release; a customer's page names its own.
+    const moved = rel.tag && rel.changed.has(f) ? `<span class="st st-doc-draft">changed since ${html(rel.tag.slice(5))}</span> ` : '';
+    const delivery = f.startsWith('docs/customers/') && !f.includes('/_') ? release.customerRelease(read(root, f)) : null;
+    const own = delivery ? `<span class="st st-doc-agreed">delivery ${html(delivery)}</span> ` : '';
+    const head = `<p class="meta">${st}${moved}${own}${crumbs(root, f, page)}${meta ? ` · ${meta}` : ''}</p>`;
     const content = head + related(f, idx, page) + contents(body) + render(body, ctx);
     pages.push({ f, page, title, content });
   }
@@ -561,6 +571,17 @@ q.addEventListener('input',show);</script>`;
   const sts = [...byStatus.keys()].sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
   const statusPage = `<h1>Documents by status</h1><p class="meta">Every document that is not a living register or index, by its status (FS-839). Versions are in <a href="CHANGELOG.html">the changelog</a>.</p>${sts.map((s) => `<h2>${html(s)} (${byStatus.get(s).length})</h2><ul>${byStatus.get(s).join('')}</ul>`).join('')}`;
   fs.writeFileSync(path.join(outDir, 'status.html'), shell('Documents by status', 'status.html', statusPage, note));
+  // FS-842, FS-845: what has changed since the release, and the change
+  // notes waiting for the next one, so the team sees updates as they land.
+  const waiting = rel.notes.filter((n) => !n.released.includes('docs'));
+  const forCustomer = rel.notes.filter((n) => n.released.includes('docs'));
+  const noteRow = (n) => `<li><b>${html(n.kind)}</b> · for ${html(n.for)} · ${html(n.by)} · ${html(n.rows)}<br>${html(n.text)}</li>`;
+  const changedPages = [...rel.changed].filter((f) => f.endsWith('.md')).sort();
+  const unreleased = `<h1>Unreleased</h1><p class="meta">${html(RELEASE)}. Releases are in <a href="CHANGELOG.html">the changelog</a>; how to write a change note is in changes/README.md.</p>`
+    + `<h2>Change notes waiting for the next release (${waiting.length})</h2>${waiting.length ? `<ul>${waiting.map(noteRow).join('')}</ul>` : '<p>None.</p>'}`
+    + (forCustomer.length ? `<h2>Released in the documentation, waiting for their customer's release (${forCustomer.length})</h2><ul>${forCustomer.map(noteRow).join('')}</ul>` : '')
+    + `<h2>Documents changed since ${html(rel.tag ? rel.tag.slice(5) : 'the release')} (${changedPages.length})</h2>${changedPages.length ? `<ul>${changedPages.map((f) => `<li><a href="${pageOf(f)}">${html(f)}</a></li>`).join('')}</ul>` : '<p>None.</p>'}`;
+  fs.writeFileSync(path.join(outDir, 'unreleased.html'), shell('Unreleased', 'unreleased.html', unreleased, note));
   return { outDir, pages: pages.length, ids: defs.size, reader: Boolean(note) };
 }
 
