@@ -1,9 +1,9 @@
 # Dibon financial services — session handoff
 
-    version: 2.0.0
+    version: 2.1.0
     updated: 2026-10-15
-    supersedes: 1.9.0; a briefing only: the history moved to CHANGELOG.md,
-                the delivery maps' changelogs and the registers (FS-837)
+    supersedes: 2.0.0, the briefing-only handover (FS-837); adds the first
+                versions, cut and tagged: docs 1.0, Roan Capital 0.5 (FS-841)
     purpose: hand this repository to a session that knows nothing about it
 
 Paste everything below the line into a new session as its first message.
@@ -171,6 +171,7 @@ node tools/check.js --counts       # every check, the counts, each journey's sta
 node --test tools/check.test.js    # breaks each check on purpose
 node tools/site.js                 # builds build/site/; the hook does this too
 node tools/originals.js verify clients/roan-capital
+git tag --list                     # the versions cut: docs-<x.y>, <customer>-<x.y>
 git log --oneline -15
 git status --short
 ```
@@ -261,7 +262,13 @@ register row.
   delivery map §4.
 - **To send:** the Liquid enquiry with its storage questions, the Prembly
   changes letter, the bank requests to NCBA, KCB and SBM
-  (`docs/outreach/`; each letter's status says whether it went).
+  (`docs/outreach/`; each letter's status says whether it went). **The
+  outreach statuses were set to "draft" without confirmation:** ask which
+  went, and mark those "sent" (FS-839).
+- **Versions:** docs 1.0 and Roan Capital 0.5 are cut and tagged. The
+  next cut of either is the owner's call: propose one when a batch is
+  worth telling (CHANGELOG.md's criteria), write the entry, then
+  `node tools/cut.js`, commit, tag, and push the tag with the commits.
 - **Outside the repository:** the second site's provider before Roan
   Capital's go-live (FS-775); counsel for the LQ register (none engaged);
   the Odoo consultants (paid users; Odoo Enterprise for Dibon, FS-640);
