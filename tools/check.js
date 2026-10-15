@@ -1224,31 +1224,78 @@ function checkStatus(root, files) {
 // stamp" (tools/cut.js stamps it). Each customer page follows
 // docs/customers/_template.md's headings, and splits its open answers into
 // Open and Answered.
-function changelogProblems(text, level, file, from = 0) {
+// FS-845: a release is named by its date (2026.10.15, a patch .1) and says
+// its kind. `stamped` false for the external release notes, which carry no
+// internal status line.
+const RELEASE_HEAD = /^(\d{4})\.(\d{2})\.(\d{2})(?:\.(\d+))? · (major|minor|patch)$/;
+const releaseOrder = (a, b) => { for (let i = 0; i < 4; i++) if ((a[i] || 0) !== (b[i] || 0)) return (a[i] || 0) - (b[i] || 0); return 0; };
+function changelogProblems(text, level, file, from = 0, stamped = true) {
   const out = [];
   const lines = text.split('\n');
   const heads = [];
   lines.forEach((l, i) => {
-    if (i < from) return;
-    const m = l.match(new RegExp(`^${level} (\\d+)\\.(\\d+) · (\\d{4}-\\d{2}-\\d{2})$`));
-    if (m) heads.push({ i, major: +m[1], minor: +m[2], date: m[3] });
-    else if (l.startsWith(`${level} `) && /^#+ \d/.test(l)) out.push(fail('versions', file, i + 1, `"${l}" is not "${level} <major>.<minor> · YYYY-MM-DD"`));
+    if (i < from || !l.startsWith(`${level} `)) return;
+    const m = l.slice(level.length + 1).match(RELEASE_HEAD);
+    if (m) heads.push({ i, v: l.slice(level.length + 1).split(' · ')[0], parts: [+m[1], +m[2], +m[3], +(m[4] || 0)] });
+    else if (/^#+ \d/.test(l)) out.push(fail('versions', file, i + 1, `"${l}" is not "${level} YYYY.MM.DD · major|minor|patch"`));
   });
-  if (!heads.length) out.push(fail('versions', file, 0, 'no version entries'));
+  if (!heads.length) out.push(fail('versions', file, 0, 'no releases'));
   heads.forEach((h, k) => {
     const end = k + 1 < heads.length ? heads[k + 1].i : lines.length;
     const body = lines.slice(h.i + 1, end).join('\n');
-    if (!/^\*\*Status:\*\* /m.test(body)) out.push(fail('versions', file, h.i + 1, `${h.major}.${h.minor} has no **Status:** line`));
-    if (/^\*\*Status:\*\* to stamp$/m.test(body) && k > 0) out.push(fail('versions', file, h.i + 1, `${h.major}.${h.minor} still reads "to stamp", but a later version exists: cut it (tools/cut.js)`));
-    const prev = heads[k - 1];
-    if (prev && (prev.major < h.major || (prev.major === h.major && prev.minor <= h.minor) || prev.date < h.date)) out.push(fail('versions', file, h.i + 1, `${h.major}.${h.minor} is not older than the entry above it`));
+    if (stamped && !/^\*\*Status:\*\* /m.test(body)) out.push(fail('versions', file, h.i + 1, `${h.v} has no **Status:** line`));
+    if (stamped && /^\*\*Status:\*\* to stamp$/m.test(body) && k > 0) out.push(fail('versions', file, h.i + 1, `${h.v} still reads "to stamp", but a later release exists: release it (tools/cut.js)`));
+    const [y, mo, d] = h.parts;
+    const day = new Date(Date.UTC(y, mo - 1, d));
+    if (day.getUTCMonth() !== mo - 1 || day.getUTCDate() !== d) out.push(fail('versions', file, h.i + 1, `${h.v} is not a date`));
+    if (k > 0 && releaseOrder(heads[k - 1].parts, h.parts) <= 0) out.push(fail('versions', file, h.i + 1, `${h.v} is not older than the release above it`));
   });
+  return out;
+}
+// FS-845: change notes, one per merge request, in changes/.
+const NOTE_KINDS = ['major', 'minor', 'patch'];
+function checkChanges(root) {
+  const dir = path.join(root, 'changes');
+  if (!fs.existsSync(dir)) return [];
+  const out = [];
+  const review = new Set(read(root, 'REVIEW.md').split('\n').map((l) => (l.match(/^\| (FS-\d{3}) \|/) || [])[1]).filter(Boolean));
+  const customers = fs.existsSync(path.join(root, 'docs', 'customers'))
+    ? fs.readdirSync(path.join(root, 'docs', 'customers')).filter((f) => f.endsWith('.md') && !f.startsWith('_')).map((f) => f.slice(0, -3)) : [];
+  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.md') && f !== 'README.md')) {
+    const rel = path.join('changes', name);
+    const at = (msg) => out.push(fail('changes', rel, 1, msg));
+    const text = read(root, rel);
+    const fm = (text.match(/^---\n([\s\S]*?)\n---\n/) || [])[1];
+    if (!/^\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.md$/.test(name)) at('name it <YYYY-MM-DD>-<a-few-words>.md');
+    if (!fm) { at('no front matter (kind, for, rows, by)'); continue; }
+    const get = (k) => (fm.match(new RegExp(`^${k}: *(.*)$`, 'm')) || [])[1];
+    const kind = get('kind');
+    const forWhom = get('for');
+    const rows = (get('rows') || '').match(/FS-\d{3}/g) || [];
+    const body = text.replace(/^---\n[\s\S]*?\n---\n/, '').trim();
+    if (!NOTE_KINDS.includes(kind)) at(`kind "${kind || ''}" is not ${NOTE_KINDS.join(', ')}`);
+    if (!['team', 'everyone', ...customers].includes(forWhom)) at(`for "${forWhom || ''}" is not team, everyone or a customer's id (${customers.join(', ')})`);
+    if (!rows.length) at('rows: the register rows it serves');
+    for (const r of rows) if (!review.has(r)) at(`rows: ${r} is not in REVIEW.md`);
+    if (!(get('by') || '').trim()) at('by: a role');
+    if (!body) at('no text');
+    if (forWhom !== 'team' && /\b[A-Z]{2,3}-\d{2,3}\b/.test(body)) at('read outside Dibon, so no register ids in its text: they belong in rows');
+  }
   return out;
 }
 function checkVersions(root) {
   const out = [];
   if (!fs.existsSync(path.join(root, 'CHANGELOG.md'))) out.push(fail('versions', 'CHANGELOG.md', 0, 'missing'));
-  else out.push(...changelogProblems(read(root, 'CHANGELOG.md'), '##', 'CHANGELOG.md'));
+  else {
+    const log = read(root, 'CHANGELOG.md');
+    out.push(...changelogProblems(log, '##', 'CHANGELOG.md'));
+    // FS-842: README.md says which release a reader of it is reading.
+    const newest = (log.match(/^## (\d{4}\.\d{2}\.\d{2}(?:\.\d+)?) · (major|minor|patch)$/m) || []).slice(1).join(' · ');
+    const said = (read(root, 'README.md').match(/^\*\*Release:\*\* (\S+ · \S+)/m) || [])[1];
+    if (said !== newest) out.push(fail('versions', 'README.md', 0, `its release line says "${said || '(none)'}"; CHANGELOG.md's newest is "${newest}"`));
+  }
+  const notes = path.join(root, 'docs', 'marketing', 'release-notes.md');
+  if (fs.existsSync(notes)) out.push(...changelogProblems(read(root, path.join('docs', 'marketing', 'release-notes.md')), '##', path.join('docs', 'marketing', 'release-notes.md'), 0, false));
   const dir = path.join(root, 'docs', 'customers');
   if (!fs.existsSync(dir)) return out;
   const template = headings(read(root, path.join('docs', 'customers', '_template.md')));
@@ -1502,6 +1549,7 @@ function runAll(root) {
     ...checkDocRegister(root, files),
     ...checkStatus(root, files),
     ...checkVersions(root),
+    ...checkChanges(root),
     ...checkLinks(root, files),
     ...checkFrontMatter(root, files),
     ...checkReviewed(root, files),

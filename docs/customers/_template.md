@@ -5,7 +5,7 @@ kind: delivery
 status: living
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-837, FS-838]
+review_ids: [FS-837, FS-838, FS-845]
 last_reviewed: 2026-10-15
 ---
 
@@ -60,13 +60,14 @@ by role, never by name.
 
 ## 8 · Changelog
 
-Versions of this delivery, newest first (FS-838): a major version when
-something is agreed or re-agreed (requirements and scope, the contract,
-a go-live), a minor version for a batch worth telling (decisions,
-answers, documents exchanged, a meeting's outcomes), cut on the owner's
-word with `node tools/cut.js <customer-id> <version>`, and tagged.
+Releases of this delivery, newest first, each named by its date
+(FS-845): major when something is agreed or re-agreed (requirements and
+scope, the contract, a go-live), minor for a batch worth telling
+(decisions, answers, documents exchanged, a meeting's outcomes), patch
+for a correction. A release gathers the change notes for this customer,
+on the owner's word: `node tools/cut.js <customer-id>`, then tagged.
 
-### 0.1 · YYYY-MM-DD
+### YYYY.MM.DD · minor
 
 **Decided:** what was decided.
 **Changed:** what changed in this map.

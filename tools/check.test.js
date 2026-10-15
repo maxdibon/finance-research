@@ -414,8 +414,32 @@ test('versions: a customer page out of the template\'s order fails', () => {
 });
 
 test('versions: an older entry still to stamp below a newer one fails', () => {
-  const f = runWith((d) => fs.writeFileSync(path.join(d, 'CHANGELOG.md'), '# Changelog\n\n## 1.1 · 2026-10-20\n\n**Status:** to stamp\n\n## 1.0 · 2026-10-15\n\n**Status:** to stamp\n'));
+  const f = runWith((d) => {
+    fs.writeFileSync(path.join(d, 'CHANGELOG.md'), '# Changelog\n\n## 2026.10.20 · minor\n\n**Status:** to stamp\n\n## 2026.10.15 · major\n\n**Status:** to stamp\n');
+    patch(d, 'README.md', (t) => t.replace(/^\*\*Release:\*\* .*$/m, '**Release:** 2026.10.20 · minor'));
+  });
   assert.deepStrictEqual(names(f), ['versions']);
+});
+
+test('versions: a README whose release line disagrees with the changelog fails', () => {
+  const f = runWith((d) => patch(d, 'README.md', (t) => t.replace(/^\*\*Release:\*\* .*$/m, '**Release:** 2026.10.14 · major')));
+  assert.deepStrictEqual(names(f), ['versions']);
+});
+
+test('changes: a note read outside Dibon with a register id in its text fails', () => {
+  const f = runWith((d) => {
+    fs.mkdirSync(path.join(d, 'changes'), { recursive: true });
+    fs.writeFileSync(path.join(d, 'changes', '2026-10-16-a-note.md'), '---\nkind: minor\nfor: roan-capital\nrows: [FS-845]\nby: Delivery lead\n---\nOpen answer 24 settled (FS-845).\n');
+  });
+  assert.deepStrictEqual(names(f), ['changes']);
+});
+
+test('changes: a well-formed note for the team passes', () => {
+  const f = runWith((d) => {
+    fs.mkdirSync(path.join(d, 'changes'), { recursive: true });
+    fs.writeFileSync(path.join(d, 'changes', '2026-10-16-a-note.md'), '---\nkind: minor\nfor: team\nrows: [FS-845]\nby: Delivery lead\n---\nVersions are dated (FS-845).\n');
+  });
+  assert.deepStrictEqual(names(f), []);
 });
 
 const DOCREG = path.join('docs', 'document-register.md');

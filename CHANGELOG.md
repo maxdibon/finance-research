@@ -1,40 +1,44 @@
 # Changelog
 
-Versions of Dibon's financial-services documentation, newest first. Not
-every commit: git and REVIEW.md hold those. A version is a snapshot of
-the whole set, cut when a batch is worth telling, on the owner's word;
-each document's own status says where it stands in it, drafts included
-(FS-838, FS-839; rules, Dibon 12).
+Releases of Dibon's financial-services documentation, newest first: the
+internal changelog (FS-838, FS-845; rules, Dibon 12). For readers outside
+Dibon, the same releases are in
+[docs/marketing/release-notes.md](docs/marketing/release-notes.md),
+customer-safe. Each customer's delivery has its own releases, in its
+delivery map's §8.
 
-**When a version moves.**
+**A release is named by its date:** `2026.10.15`. A second release the
+same day, or a patch to one, adds `.1`, `.2`. Each release also says its
+kind:
 
-- **Major (x.0): a reader must re-read, or re-agree.** A settled
-  principle changes; a release's scope changes (R1's contents or its
-  cap); a product or module is added or retired; the portfolio issues
-  an edition to readers.
-- **Minor (x.y): a batch worth telling.** Decisions made; a spec,
-  journey or rule agreed or substantially revised; a register extended
-  in substance; documents exchanged.
-- **No version:** wording, formatting, tooling and checks, register
-  housekeeping. They stay in git and REVIEW.md.
+- **major:** a reader must re-read, or re-agree. A settled principle
+  changes; a release's scope changes (R1's contents or its cap); a product
+  or module is added or retired; the portfolio issues an edition.
+- **minor:** a batch worth telling: decisions made; a spec, journey or
+  rule agreed or substantially revised; documents exchanged.
+- **patch:** a correction, nothing new.
+- Wording, formatting, tooling and housekeeping take no release; they
+  stay in git and REVIEW.md.
 
-**How.** The entry is written under its heading (Decided, Changed,
-Exchanged), its status line reading "to stamp"; `node tools/cut.js docs
-<version>` stamps the status (each document's status counted, and what
-changed status since the last version); the commit is tagged
-`docs-<version>`. A customer's delivery keeps its own versions in its
-delivery map's §8, cut the same way (`node tools/cut.js <customer-id>
-<version>`). Each document's status follows its kind's lifecycle (the
-status check).
+**How.** Each merge request carries a change note in `changes/` (its
+README says how to write one); the reader lists those not yet released.
+A release, on the owner's word, is `node tools/cut.js docs` (or
+`<customer-id>`): it gathers the notes into the entry, stamps the status
+(each document's status counted, and what changed status since the last
+release), moves README.md's release line, and gives the tag to make,
+`docs-<version>`, annotated. Each document's own status follows its
+kind's lifecycle (the status check).
 
-## 1.0 · 2026-10-15
+## 2026.10.15 · major
 
-**The baseline:** the documentation as it stands when versions begin.
-The portfolio (v1.1, issued); the modules and their capabilities; R1,
-Roan Capital's pilot, and the delivery plan; the architecture; the
+**The first dated release:** the documentation as it stands when versions
+begin. The portfolio (v1.1, issued); the modules and their capabilities;
+R1, Roan Capital's pilot, and the delivery plan; the architecture; the
 specifications and the user journeys; the handbook; service management;
-the registers (law, privacy, documents, partners, competitors,
-customers, legal questions, decisions, rules, and the document
-register); and the checks that hold them together. Its history before
-this is in git and REVIEW.md, FS-001 to FS-840.
-**Status:** Specs: 11 draft. Journeys: 19 draft. Other documents: 20 draft, 2 agreed. Outreach: 1 withdrawn, 7 draft. Living documents: 50 living. The first version: nothing earlier to compare.
+the registers (law, privacy, documents, partners, competitors, customers,
+legal questions, decisions, rules, and the document register); the git
+conventions, change notes and dated releases; and the checks that hold
+them together. Its history before this is in git and REVIEW.md, FS-001
+onwards; it was first cut as 1.0 the same day, a number this release
+replaces.
+**Status:** to stamp

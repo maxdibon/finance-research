@@ -1,5 +1,7 @@
 # Dibon — financial services portfolio
 
+**Release:** 2026.10.15 · major · see [CHANGELOG.md](CHANGELOG.md)
+
 The consolidated documents for Dibon's financial-services offerings. There
 is one portfolio overview, built from modules, and buyer packs assembled
 from the same modules (FS-001).
