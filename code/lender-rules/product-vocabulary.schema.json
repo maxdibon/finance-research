@@ -277,7 +277,9 @@
       "additionalProperties": false,
       "properties": {
         "max_instalment_percent_of_income": {"$ref": "#/$defs/percent"},
-        "from": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["bank_statement", "mpesa_statement", "payslip"]}}
+        "from": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["bank_statement", "mpesa_statement", "payslip"]}},
+        "months": {"type": "integer", "minimum": 1},
+        "whose_inflows": {"enum": ["person", "business", "combined", "each_then_decide"]}
       }
     },
     "limits_by_kyc_tier": {
@@ -363,6 +365,12 @@
       "required": ["purposes"],
       "additionalProperties": false,
       "properties": {"purposes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}}
+    },
+    "cooling_off_period": {
+      "type": "object",
+      "required": ["days", "meaning"],
+      "additionalProperties": false,
+      "properties": {"days": {"$ref": "#/$defs/days"}, "meaning": {"enum": ["withdrawal_after_signing", "wait_before_new_loan"]}}
     },
     "bureau_reporting": {
       "type": "object",

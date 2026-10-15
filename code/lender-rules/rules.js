@@ -76,10 +76,17 @@ const RULES = [
     },
   },
   {
+    // 30 days for a loan contracted for 30 days or less, 90 for a longer
+    // one; with no term yet, only what no term allows (over 90).
     id: 'default-period-within-reg-57',
-    source: 'CBK lender regulations reg 57',
-    check: ({ default_period: d }) => (d && has(d.days_past_due) && d.days_past_due > 30
-      ? `${d.days_past_due} days past due: reg 57 makes a loan non-performing at 30 at the latest` : null),
+    source: 'CBK NDTCP Regulations 2026 reg 57(1)',
+    check: ({ default_period: d, term: t }) => {
+      if (!d || !has(d.days_past_due)) return null;
+      const longest = t && DAYS[t.unit] && (has(t.allowed) ? Math.max(...t.allowed) : t.max);
+      const limit = !has(longest) ? 90 : longest * DAYS[t.unit] <= 30 ? 30 : 90;
+      return d.days_past_due > limit
+        ? `${d.days_past_due} days past due: reg 57(1) makes a loan ${has(longest) ? `of up to ${longest} ${t.unit}(s)` : 'of any term'} non-performing after ${limit} at the latest` : null;
+    },
   },
   {
     id: 'default-interest-after-grace',

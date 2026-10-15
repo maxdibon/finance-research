@@ -5,8 +5,8 @@ kind: register
 version: 0.1.0
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814]
-last_reviewed: 2026-10-14
+review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830]
+last_reviewed: 2026-10-15
 ---
 
 # Legal questions
@@ -53,3 +53,4 @@ lost.
 | LQ-12 | May an identity vendor supply credit-bureau reports, under its own bureau subscription, to a lender through our platform; and may it resell national-register lookups under its own access agreement? | partners PT-53 (FS-762) | Institutions | CRB Regulations 2020 reg 2 (LR-06); the register's access terms; Data Protection Act s.25 | Open | Bureau reports only through the institution's own subscription (crb CR-01); register lookups through our own connection (PT-29), or a vendor that shows its access agreement (FS-202) | FS-202, FS-447, FS-762 |
 | LQ-13 | May a lender charge a minimum number of days' interest when a loan is repaid early (the prototype's 14 days), given reg 56(3) and (4): early repayment without penalty, and no interest for the remaining term? | FS-807 | Institutions | CBK lender regulations reg 56 (LR-03) | Open | No: the vocabulary cannot express it, and interest is charged only to the repayment date | FS-807 |
 | LQ-14 | Do a non-deposit-taking lender's fees attract excise duty at 20%, as fees of a digital lender or of a financial institution under the Excise Duty Act; and must the duty be shown on top of each fee in the key information document? | lender-rules §2.4 (FS-814) | Institutions | Excise Duty Act, First Schedule, Part II, paragraphs 4 and 6 | Open | Yes: 20% on every fee, never on interest or insurance premiums, shown with each fee and in the total cost of credit | FS-814 |
+| LQ-15 | What is the "cooling off period" a credit policy must state (reg 25(2)(f)): a time after signing in which a borrower may withdraw without charge, a wait before a new loan, or either as the lender defines it; and does the Consumer Protection Act, which reg 25(1) names, set one? | lender-rules §2.4 (FS-830) | Institutions | CBK NDTCP Regulations 2026 reg 25(2)(f) (LR-03); Consumer Protection Act (not yet in the law register) | Open | The lender defines it in its credit policy; we ask each institution which it means and how long | FS-830 |

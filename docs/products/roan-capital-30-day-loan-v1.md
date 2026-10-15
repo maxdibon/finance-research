@@ -5,7 +5,7 @@ kind: product-version
 version: 0.5.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831]
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830]
 last_reviewed: 2026-10-15
 ---
 
@@ -81,6 +81,7 @@ internal):
 | B4 | First loan and limit growth | The prototype marks a "first loan", and the form is reused for later loans of the same amount: the first loan's cap, and how the limit grows | Roan Capital's application form; the prototype | Decide |
 | B5 | Exposure | Loans one borrower may hold at once; whether top-ups are allowed. The form asks for current loans, number and value | Roan Capital's application form | Decide |
 | B6 | Bureau | A credit report before lending (open answer 12) | None yet | Choose: On every application / On the first loan only / Not checked |
+| B7 | Cooling-off period | Your credit policy must state a cooling-off period: how many days, and is it a time after signing in which a borrower may withdraw without charge, or a wait before a new loan? (LQ-15) | The regulations (reg 25(2)(f)) | Decide |
 
 **C · How it runs** (linked configuration, never published):
 

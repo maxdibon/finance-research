@@ -5,7 +5,7 @@ kind: delivery
 version: 0.1.0
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830]
 last_reviewed: 2026-10-15
 ---
 
@@ -219,6 +219,7 @@ choice (MF-04, FS-619).
 | 27 | Its fallback runbook for an outage (JN-19; onboarding OB-COM-23): who decides to enter and leave safe mode; who may pay out by hand, and within what limit; its manual approval form; whom we call first and second; the names and limits in handbook §7 | FS-773, FS-775 | Open. Its availability model is settled: warm standby (owner, 2026-10-12, FS-775) |
 | 28 | The approval chain: the requirement document has the Credit Officer, then the Business Credit Committee (three of three, unanimous), then the Head Office Committee above a threshold (RC-12); the prototype has the Credit Manager, then Head Office, then the CEO, for every loan. Which is Roan Capital's? Both are configuration | FS-807, FS-811 | Open. The application form's approval block has the Credit Manager, Head Office and the CEO (FS-831); to confirm, with the order and any thresholds |
 | 29 | The product's terms as the prototype sets them (1% a day flat interest, 14- and 30-day terms, daily instalments, default interest on overdue instalments, the fees by amount): are they Roan Capital's, and has CBK approved this pricing (reg 55)? And its "minimum 14 days' interest on prepayment", which the regulations appear to forbid (reg 56(3), (4); LQ-13) | FS-807 | Open. Partly (2026-10-15, FS-831): the application form states 1% a day, two weeks or one month, daily instalments, default interest until arrears clear, and the fees; its note on prepayments within two weeks meets reg 54(4)(h) and LQ-13 (product draft); CBK's approval of the pricing is for senior management (FS-827) |
+| 30 | CBK must be told thirty days before a new delivery channel rolls out (reg 27(1)), with the mobile-money number used for payouts and repayments, any app, and the bank accounts (27(2)). The platform is that channel: who notifies CBK, and by when before go-live? | FS-830 | Open, for senior management (FS-827) |
 
 The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text

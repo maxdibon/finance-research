@@ -11,8 +11,8 @@ used_by: [end-of-day-runner, recon]
 version: 0.2.0
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825]
-last_reviewed: 2026-10-14
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830]
+last_reviewed: 2026-10-15
 ---
 
 # Lender rules — build specification
@@ -320,7 +320,7 @@ the form and in the questionnaires (FS-816).
 | Insurance | As a fee, or a third party's premium; credit life, and what happens to the loan on a death (JN-14) | What protects the loan, and what happens to it on a death |
 | Grace | Days after a due date before default interest starts | When default interest starts after a missed instalment |
 | Default interest | Rate, period (a day), base (principal outstanding, or the overdue amount), from which day past due | The charge on a late payment; it counts within the cap (reg 29) |
-| Default period | The days past due at which the agreement makes a loan non-performing, if shorter than reg 57's | When a late loan becomes non-performing, which starts the cap (reg 57) |
+| Default period | The days past due at which a loan becomes non-performing: at most 30 for a loan contracted for 30 days or less, 90 for a longer one (reg 57(1)); stated in the credit policy and the agreement (57(2), (3)) | When a late loan becomes non-performing, which starts the cap (reg 57) |
 | Collateral | Unsecured; or the types accepted (a vehicle, chattels, land, deposits), the loan-to-value, and the steps each needs (MF-03) | What secures the loan, and the steps each type needs |
 | Guarantors | How many; each guarantee's limit; for a Sacco, deposits pledged (reg 42; MF-37) | Who else answers for the loan, and for how much (reg 42) |
 | Restructuring | Allowed or not; how often; any fee, inside the cap (reg 54(7); MF-09) | Whether a borrower in difficulty can have new terms (reg 54(7)) |
@@ -337,7 +337,8 @@ stay internal, as decisioning's risk classes do.
 | Rule | Values | Why it matters |
 |---|---|---|
 | Who may borrow | Individuals, businesses, or both; employed or self-employed; age; for a Sacco, members of at least so many months | Who the product is for; published |
-| Affordability | The limit on instalments against income or turnover, from the statement metrics (reg 38; DE-02) | Stops lending what a borrower cannot repay (reg 38) |
+| Affordability | The limit on instalments against income or turnover, from the statement metrics: what share, over how many months, and whose inflows count (the person's, the business's, or both); stated in the credit policy (reg 25(2)(s); DE-02) | The duty to assess ability to repay and never to lend recklessly (reg 28(1)(b), (c)) |
+| Cooling-off period | Its length in days, and what it is: a time after signing to withdraw without charge, or a wait before a new loan (LQ-15) | The credit policy must state one (reg 25(2)(f)) |
 | Limits by KYC tier | The largest loan for each tier (identity ID-19) | The largest loan for each level of identity checks |
 | First loan and limit growth | The first loan's cap; how the limit grows with repayment history; any wait before borrowing again | How a new borrower starts, and how the limit grows |
 | Exposure | Loans a borrower may hold at once; top-ups; for a Sacco, a multiple of deposits; each guarantor's total exposure (Roan Capital RC-41) | How much one borrower or guarantor may owe at once |
