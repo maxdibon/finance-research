@@ -60,6 +60,44 @@ function changedSince(git, ref, paths = []) {
   return out;
 }
 
+// FS-853: each document's history, from git, never written by hand: the
+// commits that changed its content, newest first, each with the docs
+// release it first went into (null: not released yet). A commit that moved
+// only its status, version, last_reviewed or released line is left out, as
+// the reviewed check leaves it out. One pass over the log for every file.
+const META = /^[+-](?:status|version|last_reviewed|released):/;
+function histories(root, paths = ['docs']) {
+  const git = (args) => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 512 * 1024 * 1024 });
+  const out = new Map();
+  try {
+    // The release a commit first went into: the oldest docs- tag holding it.
+    const tags = git(['tag', '--list', 'docs-*']).split('\n').filter(Boolean).map((t) => t.slice(5)).filter((v) => VERSION.test(v)).sort(byVersion);
+    const firstIn = new Map();
+    for (const v of tags) for (const h of git(['rev-list', `docs-${v}`]).split('\n').filter(Boolean)) if (!firstIn.has(h)) firstIn.set(h, v);
+    let commit = null;
+    let file = null;
+    const add = () => {
+      if (!commit || !file) return;
+      if (!out.has(file)) out.set(file, []);
+      const list = out.get(file);
+      if (list[list.length - 1] !== commit) list.push(commit);
+    };
+    for (const l of git(['log', '--format=%x00%H%x09%cs%x09%s', '-p', '--unified=0', '--no-color', '--', ...paths]).split('\n')) {
+      if (l.startsWith('\0')) {
+        const [hash, date, subject] = l.slice(1).split('\t');
+        commit = { hash: hash.slice(0, 7), date, subject, release: firstIn.get(hash) || null };
+        file = null;
+        continue;
+      }
+      const d = l.match(/^diff --git a\/.* b\/(.*)$/);
+      if (d) { file = d[1].replace(/^"|"$/g, ''); continue; }
+      if (!file || /^(\+\+\+|---) /.test(l)) continue;
+      if (/^new file mode/.test(l) || (/^[+-]/.test(l) && !META.test(l))) add();
+    }
+  } catch { /* not a git checkout: no history to show */ }
+  return out;
+}
+
 // { version, kind, tag, tagged, ahead, dirty, changed:Set<path>, notes }.
 function info(root) {
   const logged = newestInLog(root);
@@ -99,4 +137,4 @@ function customerRelease(text) {
   return m ? `${m[1]} · ${m[2]}` : null;
 }
 
-module.exports = { info, line, notes, newestInLog, customerRelease, byVersion, stampOf, changedSince, VERSION };
+module.exports = { info, line, notes, newestInLog, customerRelease, byVersion, stampOf, changedSince, histories, VERSION };

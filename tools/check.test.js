@@ -321,6 +321,27 @@ test('release: a diff that moves only the released line is not a change', () => 
   } finally { fs.rmSync(d, { recursive: true, force: true }); }
 });
 
+// FS-853: a document's history is its content's commits, by release.
+test('release: a history lists content changes by release, and leaves out a moved stamp', () => {
+  const { execFileSync } = require('child_process');
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-history-'));
+  const git = (...a) => execFileSync('git', ['-C', d, '-c', 'user.name=test', '-c', 'user.email=test@example.invalid', '-c', 'core.autocrlf=false', ...a], { encoding: 'utf8' });
+  try {
+    git('init', '-q');
+    fs.mkdirSync(path.join(d, 'docs'));
+    fs.writeFileSync(path.join(d, 'docs', 'a.md'), '---\nstatus: draft\nreleased: unreleased\n---\n\n# A\n');
+    git('add', '-A');
+    git('commit', '-q', '--no-verify', '-m', 'FS-001: a written');
+    git('tag', '-a', 'docs-2026.10.15', '-m', 'docs 2026.10.15');
+    patch(d, path.join('docs', 'a.md'), (t) => t.replace('released: unreleased', 'released: 2026.10.15'));
+    git('commit', '-q', '--no-verify', '-am', 'FS-002: a stamped');
+    patch(d, path.join('docs', 'a.md'), (t) => `${t}More.\n`);
+    git('commit', '-q', '--no-verify', '-am', 'FS-003: a extended');
+    const list = require('./release').histories(d).get('docs/a.md');
+    assert.deepStrictEqual(list.map((c) => [c.subject, c.release]), [['FS-003: a extended', null], ['FS-001: a written', '2026.10.15']]);
+  } finally { fs.rmSync(d, { recursive: true, force: true }); }
+});
+
 test('reviewed: a document with no last_reviewed fails', () => {
   const f = runInRepo((d) => patch(d, path.join('docs', 'modules', 'crb.md'), (t) => t.replace(/^last_reviewed: .*\n/m, '')));
   assert.ok(names(f).includes('reviewed'));

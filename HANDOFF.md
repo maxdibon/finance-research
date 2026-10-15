@@ -161,7 +161,8 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   id a link, rebuilt by the pre-commit hook; its Review page lists open
   rows by criticality, its "Documents by status" page every draft, its
   "Unreleased" page the notes and documents changed since the release;
-  every page's header names its release. In the desktop app,
+  every page's header names its release, and every document's page ends
+  with its History, from git, by release (FS-853). In the desktop app,
   `preview_start` name `site`.
 - **Tools:** `tools/check.js` and its tests; `tools/site.js`, the reader;
   `tools/assemble.js`, the Master; `tools/products/`, product
@@ -191,6 +192,7 @@ node tools/site.js                 # builds build/site/; the hook does this too
 node tools/originals.js verify clients/roan-capital
 git tag --list                     # the releases: docs-<YYYY.MM.DD>, <customer>-<YYYY.MM.DD>
 node tools/dibon.js status         # the branch, the release, unsaved work, notes waiting
+node tools/dibon.js history <file> # what changed in one document, by release
 git log --oneline -15
 git status --short
 ```

@@ -42,6 +42,7 @@ const WORDS = [
   ['share', 'Send my branch for review (mine to shared); the checks run first.', ['dibon share']],
   ['ready', 'Mark my shared work ready for review.', ['dibon ready']],
   ['status', 'Where am I: my branch, what is unsaved, unshared, and waiting.', ['dibon status']],
+  ['history', 'What changed in one document, newest first, by release.', ['dibon history docs/customers/roan-capital.md']],
   ['help', 'Every word, or one word, with examples.', ['dibon help', 'dibon help save']],
   ['release', 'The owner only: release the documentation, or a customer\'s delivery.', ['dibon release docs', 'dibon release roan-capital']],
   ['practice', 'A private sandbox to try every word without touching the real documents.', ['dibon practice']],
@@ -374,6 +375,22 @@ const word = {
     }
     const waiting = rel.notes(ROOT).filter((n) => !n.released.includes('docs'));
     say(`${waiting.length} change note${waiting.length === 1 ? '' : 's'} waiting for the next release.`);
+  },
+
+  // FS-853: the reader's History section, in a terminal.
+  async history() {
+    const file = (plain[1] || '').replace(/\\/g, '/').replace(/^\.\//, '');
+    if (!file) stop('Say which document: dibon history docs/customers/roan-capital.md.');
+    if (!fs.existsSync(path.join(ROOT, file))) stop(`No document at ${file}.`);
+    const list = require('./release').histories(ROOT, [file]).get(file) || [];
+    if (!list.length) return say(`${file} has no saved changes yet.`);
+    let group;
+    for (const c of list) {
+      const g = c.release ? `Release ${c.release}:` : 'Not yet released:';
+      if (g !== group) { say(g); group = g; }
+      say(`  ${c.date}  ${c.subject}`);
+    }
+    if (unsaved().some((u) => u.file === file)) say('And unsaved edits, not in this list until saved.');
   },
 
   async release() {

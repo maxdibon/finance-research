@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-846, FS-847, FS-848, FS-849]
+review_ids: [FS-846, FS-847, FS-848, FS-849, FS-853]
 last_reviewed: 2026-10-15
 ---
 
@@ -38,6 +38,7 @@ says. Developers may also use git directly, by those conventions.
 | **share** | Send my branch for review (mine to shared); the checks run first |
 | **ready** | Mark my shared work ready for review |
 | **status** | Where am I, and what is waiting |
+| **history** file | What changed in one document, by release |
 | **help** | Every word, with examples |
 | **release** | The owner only: release the documentation or a customer's delivery |
 | **practice** | A private sandbox to try every word safely |
@@ -140,6 +141,14 @@ Says where you are: your branch and its register row, the release,
 anything unsaved or unshared, and the change notes waiting. Example:
 `dibon status`.
 
+### history
+
+Says what changed in one document, newest first, under the release each
+change went into, with the register row that asked for it. A change to
+its status or dates alone is left out. The reader shows the same at the
+foot of every page (click its "released" badge). Example:
+`dibon history docs/customers/roan-capital.md`.
+
 ### help
 
 Lists every word, or one word with its examples. Examples: `dibon help`;
@@ -184,8 +193,10 @@ Example: `dibon role "Project manager"`.
    Each shows what it does before doing it.
 7. **A developer's change to the tools.** `dibon start "…" --kind tool`,
    `dibon save "…"`, `dibon share`: the tests run because tools changed.
-8. **What is waiting.** "Status." Your branch, what is unsaved and
-   unshared, and the notes waiting for the next release.
+8. **What is waiting, and what has changed.** "Status." Your branch,
+   what is unsaved and unshared, and the notes waiting for the next
+   release. "History of Roan Capital's page": every change to it, by
+   release, each with its register row.
 9. **A release (the owner).** "Release the documentation." The notes go
    into the changelogs, the release is stamped, committed and tagged.
 

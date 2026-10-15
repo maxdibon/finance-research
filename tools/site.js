@@ -424,6 +424,7 @@ pre.diagram .bn{font-weight:700;color:var(--accent)}pre.diagram .tg{color:var(--
 details{font-size:12px;color:var(--muted);margin-top:4px}details a{font-size:12px}
 nav.rel{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;padding:8px 12px;background:var(--card);border:1px solid var(--line);border-radius:6px;margin:8px 0}
 nav.rel b{color:var(--muted);font-weight:600}details.back{margin:4px 0 8px}
+a.hist{text-decoration:none}details.history{font-size:13px;margin:6px 0}details.history summary{cursor:pointer;color:var(--text,inherit);font-weight:600}details.history ul{margin:4px 0 8px;padding-left:20px}details.history li{margin:2px 0}details.history a{font-size:13px}
 nav.toc{font-size:13px;margin:8px 0 16px;display:flex;flex-wrap:wrap;gap:4px 14px}nav.toc b{color:var(--muted);font-weight:600;margin-right:4px}nav.toc a{text-decoration:none}
 .alert{border-left:4px solid var(--note);background:var(--card);padding:8px 12px;margin:12px 0;border-radius:0 6px 6px 0}.alert b{color:var(--note)}.alert p{margin:4px 0 0}
 .alert-warning,.alert-important{border-color:var(--warn)}.alert-warning b,.alert-important b{color:var(--warn)}.alert-caution{border-color:var(--caution)}.alert-caution b{color:var(--caution)}
@@ -437,6 +438,25 @@ blockquote{border-left:3px solid var(--line);margin:12px 0;padding:2px 14px}bloc
 const NAV = [['index.html', 'Search'], ['README.html', 'README'], ['docs/start-here.html', 'Start here'], ['docs/overview.html', 'Overview'],
   ['docs/journeys/README.html', 'Journeys'], ['docs/specs/README.html', 'Specs'], ['docs/customers/roan-capital.html', 'Roan Capital'],
   ['docs/delivery-plan.html', 'Delivery plan'], ['REVIEW.html', 'Review'], ['HANDOFF.html', 'Handoff']];
+
+// FS-853: a document's history at its foot, from git and never written by
+// hand: the commits that changed its content, newest first, grouped by the
+// release each went into, the newest group open. The first dated release
+// holds all the work before it.
+function historyHtml(list, page, first) {
+  if (!list || !list.length) return '';
+  const groups = [];
+  for (const c of list) {
+    const k = c.release || '';
+    if (!groups.length || groups[groups.length - 1].k !== k) groups.push({ k, cs: [] });
+    groups[groups.length - 1].cs.push(c);
+  }
+  const review = relHref(page, 'REVIEW.html');
+  const subject = (s) => html(s).replace(/\b[A-Z]{2}-\d{2,3}\b/g, (id) => (id.startsWith('FS-') ? `<a href="${review}#${id}">${id}</a>` : id));
+  const label = (k) => (!k ? 'Not yet released' : k === first ? `${k}, the first dated release, with all the work before it` : `Release ${k}`);
+  const body = groups.map((g, i) => `<details class="history"${i === 0 ? ' open' : ''}><summary>${html(label(g.k))} (${g.cs.length} change${g.cs.length === 1 ? '' : 's'})</summary><ul>${g.cs.map((c) => `<li><code>${c.hash}</code> ${c.date} · ${subject(c.subject)}</li>`).join('')}</ul></details>`).join('');
+  return `<h2 id="doc-history">History</h2><p class="meta">From git: each change to this document's content, newest first, by the release it went into. A change to its status, dates or release line alone is left out. Outside the reader: <code>dibon history ${html(page.replace(/\.html$/, '.md'))}</code>.</p>${body}`;
+}
 
 // FS-842: the release every page was built from, set once per build.
 let RELEASE = '';
@@ -498,6 +518,8 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
   const files = sources(root);
   const rel = release.info(root);
   RELEASE = release.line(rel);
+  const hist = release.histories(root);
+  const firstRelease = [...hist.values()].flat().map((c) => c.release).filter(Boolean).sort(release.byVersion)[0];
   const idx = indexIds(root, files);
   const { defs, caps } = idx;
   const cited = new Map();
@@ -536,13 +558,15 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
     // in, and whether it has changed since; a customer's page names its own.
     const stamp = fields.released;
     const since = rel.tag && rel.changed.has(f);
-    const moved = stamp
-      ? `<span class="st st-doc-${since || stamp === 'unreleased' ? 'draft' : 'agreed'}">${stamp === 'unreleased' ? 'unreleased' : `released ${html(stamp)}${since ? ' · changed since' : ''}`}</span> `
-      : since ? `<span class="st st-doc-draft">changed since ${html(rel.tag.slice(5))}</span> ` : '';
+    const badge = stamp
+      ? `<span class="st st-doc-${since || stamp === 'unreleased' ? 'draft' : 'agreed'}">${stamp === 'unreleased' ? 'unreleased' : `released ${html(stamp)}${since ? ' · changed since' : ''}`}</span>`
+      : since ? `<span class="st st-doc-draft">changed since ${html(rel.tag.slice(5))}</span>` : '';
+    // FS-853: the badge opens the page's history.
+    const moved = badge ? `${hist.has(f) ? `<a class="hist" href="#doc-history" title="This document's history">${badge}</a>` : badge} ` : '';
     const delivery = f.startsWith('docs/customers/') && !f.includes('/_') ? release.customerRelease(read(root, f)) : null;
     const own = delivery ? `<span class="st st-doc-agreed">delivery ${html(delivery)}</span> ` : '';
     const head = `<p class="meta">${st}${moved}${own}${crumbs(root, f, page)}${meta ? ` · ${meta}` : ''}</p>`;
-    const content = head + related(f, idx, page) + contents(body) + render(body, ctx);
+    const content = head + related(f, idx, page) + contents(body) + render(body, ctx) + historyHtml(hist.get(f), page, firstRelease);
     pages.push({ f, page, title, content });
   }
   // Emptied, not removed: a preview server may be serving from it, and
