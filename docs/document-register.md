@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15.1
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-834, FS-835, FS-857]
-last_reviewed: 2026-10-15
+review_ids: [FS-834, FS-835, FS-857, FS-874]
+last_reviewed: 2026-10-16
 ---
 
 # Document register
@@ -51,14 +51,14 @@ checked with the owner (FS-840).
 | DR-009 | Roan Capital | Review of the requirement document and the back office | Our own reading of the requirement document, and what the back office needs | Working | — | internal | 2026-10-03 | Dibon | `clients/roan-capital/` | — | FS-395 |
 | DR-010 | Roan Capital | Mutual NDA, corrected draft | A corrected NDA we drafted; withdrawn, as the executed NDA stands | Working | — | withdrawn | 2026-10-12 | Dibon | `clients/roan-capital/` | — | FS-740, FS-827 |
 | DR-011 | Roan Capital | NDA changes, internal note | Our note on the changes the NDA would have needed | Working | — | internal | 2026-10-12 | Dibon | `clients/roan-capital/` | — | FS-740 |
-| DR-012 | Roan Capital | 30-day loan questionnaire A, product terms | Questions for Roan Capital on the 30-day loan's terms: amounts, term, pricing | Working | — | draft | 2026-10-15 | Dibon | `clients/roan-capital/meeting-2026-10-15/` | — | FS-815, FS-831 |
-| DR-013 | Roan Capital | 30-day loan questionnaire B, eligibility and limits | Questions for Roan Capital on who may borrow, and how much | Working | — | draft | 2026-10-15 | Dibon | `clients/roan-capital/meeting-2026-10-15/` | — | FS-815, FS-830 |
-| DR-014 | Roan Capital | 30-day loan questionnaire C, how it runs | Questions for Roan Capital on how the loan runs from day to day | Working | — | draft | 2026-10-15 | Dibon | `clients/roan-capital/meeting-2026-10-15/` | — | FS-815, FS-831 |
+| DR-012 | Roan Capital | 30-day loan questionnaire A, product terms | Questions for Roan Capital on the 30-day loan's terms: amounts, term, pricing | Working | — | superseded | 2026-10-15 | Dibon | `clients/roan-capital/meeting-2026-10-15/` | — | FS-815, FS-831 |
+| DR-013 | Roan Capital | 30-day loan questionnaire B, eligibility and limits | Questions for Roan Capital on who may borrow, and how much | Working | — | superseded | 2026-10-15 | Dibon | `clients/roan-capital/meeting-2026-10-15/` | — | FS-815, FS-830 |
+| DR-014 | Roan Capital | 30-day loan questionnaire C, how it runs | Questions for Roan Capital on how the loan runs from day to day | Working | — | superseded | 2026-10-15 | Dibon | `clients/roan-capital/meeting-2026-10-15/` | — | FS-815, FS-831 |
 | DR-015 | Roan Capital | Product and operations meeting, agenda (15 October 2026) | The agenda for the product and operations meeting of 15 October | Working | — | draft | 2026-10-15 | Dibon | `clients/roan-capital/meeting-2026-10-15/` | — | FS-826 |
 | DR-016 | Roan Capital | Product and operations meeting, our record (15 October 2026) | What was said and agreed at the 15 October meeting, kept for us | Working | — | internal | 2026-10-15 | Dibon | `clients/roan-capital/meeting-2026-10-15/` | — | FS-826 |
 | DR-017 | Roan Capital | Loan application form, in our format, from DR-007 | The application form in our format, word for word as received | Working | 0.1 | draft | 2026-10-15 | Dibon | `clients/roan-capital/working/` | — | FS-834 |
-| DR-018 | Roan Capital | Loan application form, suggested changes tracked, from DR-017 | The form with our 28 suggested changes tracked, each with its reason and the regulation behind it | Working | 0.2 | draft | 2026-10-15 | Dibon | `clients/roan-capital/working/` | — | FS-833 |
-| DR-019 | Roan Capital | Loan application form, schedule of v0.2's changes | The 28 changes in version 0.2 in one table, for Roan Capital to accept or decline | Working | 0.2 | draft | 2026-10-15 | Dibon | `clients/roan-capital/working/` | — | FS-833 |
+| DR-018 | Roan Capital | Loan application form, suggested changes tracked, from DR-017 | The form with our 28 suggested changes tracked, each with its reason and the regulation behind it | Working | 0.2 | superseded | 2026-10-15 | Dibon | `clients/roan-capital/working/` | — | FS-833 |
+| DR-019 | Roan Capital | Loan application form, schedule of v0.2's changes | The 28 changes in version 0.2 in one table, for Roan Capital to accept or decline | Working | 0.2 | superseded | 2026-10-15 | Dibon | `clients/roan-capital/working/` | — | FS-833 |
 | DR-020 | Prembly | Reseller agreement | Prembly's reseller agreement, as received: the terms on which we would resell its identity checks | Original | — | to keep | 2026-10-12 | Prembly | `sources/confidential/prembly/` | `2d4cc9ba5308` | FS-762 |
 | DR-021 | Prembly | Standard data processing agreement (Kenya) | Prembly's standard data processing agreement for Kenya, as received | Original | — | to keep | 2026-10-12 | Prembly | `sources/confidential/prembly/` | `2426cab18d5e` | FS-762 |
 | DR-022 | Prembly | Our proposed changes, letter (Word and PDF) | Our letter proposing changes to Prembly's agreements | Working | — | draft | 2026-10-12 | Dibon | `sources/confidential/prembly/` | — | FS-762 |
@@ -76,3 +76,8 @@ checked with the owner (FS-840).
 | DR-034 | A partner bank | Kapu Pay technical documentation, prepared for a partner bank | Technical documentation of Kapu Pay, prepared for a partner bank | Record | — | to keep | 2026-10-01 | Dibon | `sources/confidential/` | `796204fb9fd0` | FS-015, FS-071 |
 | DR-035 | Dibon | KapuPay discussion, notes and the role mapping (8 June 2026) | Our notes from the 8 June 2026 Kapu Pay discussion, with the mapping of roles | Working | — | internal | 2026-06-08 | Dibon | `sources/confidential/` | — | FS-079 |
 | DR-036 | Flex Money | Reconciliation dashboard demonstration and its script | A demonstration of the reconciliation dashboard, with the script it follows | Working | — | draft | 2026-08-04 | Dibon | `clients/flexmoney/` | — | FS-835 |
+| DR-037 | Roan Capital | Loan application form, v0.2 with a page of the regulations cited, tracked, from DR-018 | The form with our 28 suggested changes, and a last page listing each regulation cited with what each provision requires; two readings marked as being confirmed | Working | 0.3 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
+| DR-038 | Roan Capital | Loan application form, schedule of v0.3's changes | The 28 changes in one table, for Roan Capital to accept or decline, and the page of regulations cited | Working | 0.3 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
+| DR-039 | Roan Capital | 30-day loan questionnaire A, product terms, with the regulations cited | Questions on the 30-day loan's terms, and a last page listing the regulations they rest on, two readings marked as being confirmed | Working | 0.2 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
+| DR-040 | Roan Capital | 30-day loan questionnaire B, eligibility and limits, with the regulations cited | Questions on who may borrow and how much, and a last page listing the regulations they rest on | Working | 0.2 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
+| DR-041 | Roan Capital | 30-day loan questionnaire C, how it runs, with the regulations cited | Questions on how the loan runs from day to day, and a last page listing the regulation it rests on | Working | 0.2 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |

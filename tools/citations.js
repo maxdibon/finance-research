@@ -85,7 +85,11 @@ function names(root) {
     add(plain.replace(/,?\s+\d{4}$/, ''), id);
   }
   for (const [id, card] of cards(root)) for (const n of (card.fields['Also called'] || '').split(' · ')) if (n) add(n, id);
-  return out.sort((a, b) => b.name.length - a.name.length);
+  out.sort((a, b) => b.name.length - a.name.length);
+  // FS-874: what each instrument's provisions are called, so a "reg" is
+  // never placed with an Act, nor an "s." with a set of Regulations.
+  out.kindOf = new Map([...register(root)].map(([id, r]) => [id, /\b(?:Regulations|Rules)\b/.test(r.instrument) ? 'reg' : 's']));
+  return out;
 }
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -147,9 +151,10 @@ function cites(text, defaultLaw, known = []) {
       // a table cell's edge; "Cap. 411C" and "s. 44A" end nothing.
       const clause = (a, b) => !/[\w)\]]\.\s+[A-Z]|\s\|\s/.test(line.slice(a, b));
       const end = m.index + m[0].length;
-      const own = ids.find((x) => x.at >= end && /^[\s,;(]{1,4}$/.test(line.slice(end, x.at)));
-      const before = ids.filter((x) => x.at < m.index && clause(x.at, m.index)).pop();
-      const after = ids.find((x) => x.at >= end && x.at - end <= 40 && clause(end, x.at));
+      const fits = (x) => !known.kindOf || !known.kindOf.has(x.id) || known.kindOf.get(x.id) === kind;
+      const own = ids.find((x) => fits(x) && x.at >= end && /^[\s,;(]{1,4}$/.test(line.slice(end, x.at)));
+      const before = ids.filter((x) => fits(x) && x.at < m.index && clause(x.at, m.index)).pop();
+      const after = ids.find((x) => fits(x) && x.at >= end && x.at - end <= 40 && clause(end, x.at));
       const law = (own || before || after || {}).id || defaultLaw || null;
       for (const p of list.filter(Boolean)) out.push({ line: lineOf(m.index), text: m[0].trim(), ...p, law });
     }
@@ -167,28 +172,37 @@ const covers = (row, p) => row.kind === p.kind && row.parts.length <= p.parts.le
 
 // The section's body for a document: per instrument, a line of facts and
 // a table of the provisions cited, what each requires, as the card says.
-function section(root, file, opts = {}) {
-  const text = read(root, file);
-  const law = mainLaw(text);
+// FS-874: the section as data, for a document's text from anywhere (a
+// Word document's included): each instrument cited, with its card's facts,
+// the version read, and each provision's row and how it is cited here.
+function sectionData(root, text, law) {
   const all = cards(root);
   const reg = register(root);
   const found = cites(text, law, names(root)).filter((c) => all.has(c.law));
-  const order = [...new Set(found.map((c) => c.law))].sort();
-  const rel = (to) => path.posix.relative(path.posix.dirname(file), to);
-  const parts = order.map((id) => {
+  const byParts = (a, b) => { for (let k = 0; k < Math.max(a.parts.length, b.parts.length); k++) { const x = a.parts[k] || ''; const y = b.parts[k] || ''; if (x !== y) return (parseInt(x, 10) - parseInt(y, 10)) || x.localeCompare(y); } return 0; };
+  return [...new Set(found.map((c) => c.law))].sort().map((id) => {
     const card = all.get(id);
     const r = reg.get(id) || {};
-    const rows = card.provisions.filter((row) => found.some((c) => c.law === id && covers(row, c)));
-    const byParts = (a, b) => { for (let k = 0; k < Math.max(a.parts.length, b.parts.length); k++) { const x = a.parts[k] || ''; const y = b.parts[k] || ''; if (x !== y) return (parseInt(x, 10) - parseInt(y, 10)) || x.localeCompare(y); } return 0; };
-    const citedAs = (row) => [...new Map(found.filter((c) => c.law === id && covers(row, c)).sort(byParts).map((c) => [show(c), c])).keys()].join(', ');
-    const name = opts.external ? card.fields.Citation : `[${id}](${rel(card.file)}) ${card.fields.Citation}`;
-    const version = r.url ? `as at ${r.asAt}, [Kenya Law](${r.url})` : `as at ${r.asAt || '?'}`;
+    const rows = card.provisions.filter((row) => found.some((c) => c.law === id && covers(row, c))).map((row) => ({
+      provision: show(row),
+      citedAs: [...new Map(found.filter((c) => c.law === id && covers(row, c)).sort(byParts).map((c) => [show(c), c])).keys()],
+      requires: row.requires,
+    }));
+    return { id, file: card.file, citation: card.fields.Citation, regulator: card.fields.Regulator, madeUnder: card.fields['Made under'], inForce: card.fields['In force'], asAt: r.asAt || '?', url: r.url || '', rows };
+  });
+}
+function section(root, file, opts = {}) {
+  const text = read(root, file);
+  const rel = (to) => path.posix.relative(path.posix.dirname(file), to);
+  const parts = sectionData(root, text, mainLaw(text)).map((d) => {
+    const name = opts.external ? d.citation : `[${d.id}](${rel(d.file)}) ${d.citation}`;
+    const version = d.url ? `as at ${d.asAt}, [Kenya Law](${d.url})` : `as at ${d.asAt}`;
     return [
-      `**${name}.** Regulator: ${card.fields.Regulator}. Made under: ${card.fields['Made under']}. In force: ${card.fields['In force']}. Version read: ${version}.`,
+      `**${name}.** Regulator: ${d.regulator}. Made under: ${d.madeUnder}. In force: ${d.inForce}. Version read: ${version}.`,
       '',
       '| Provision | Cited here as | What it requires |',
       '|---|---|---|',
-      ...rows.map((row) => `| ${show(row)} | ${citedAs(row)} | ${row.requires} |`),
+      ...d.rows.map((row) => `| ${row.provision} | ${row.citedAs.join(', ')} | ${row.requires} |`),
     ].join('\n');
   });
   return parts.length ? parts.join('\n\n') : 'No provisions cited.';
@@ -233,12 +247,18 @@ function refresh(root, file) {
   return true;
 }
 
-module.exports = { LAW_DIR, HEADING, MARK, cards, register, names, mainLaw, cites, covers, section, block, documents, refresh, show, provision };
+module.exports = { LAW_DIR, HEADING, MARK, cards, register, names, mainLaw, cites, sectionData, covers, section, block, documents, refresh, show, provision };
 
 if (require.main === module) {
   const root = path.join(__dirname, '..');
   const args = process.argv.slice(2);
-  if (args[0] === '--external') {
+  if (args[0] === '--data') {
+    // FS-874: a Word document's text, extracted, in; the section as JSON
+    // out, for setting in the document (no register ids are used there).
+    const law = args.includes('--law') ? args[args.indexOf('--law') + 1] : null;
+    if (!args[1] || !fs.existsSync(args[1])) { console.log('usage: node tools/citations.js --data <text file> [--law LR-03]'); process.exit(1); }
+    console.log(JSON.stringify(sectionData(root, norm(fs.readFileSync(args[1], 'utf8')), law), null, 1));
+  } else if (args[0] === '--external') {
     const file = path.relative(root, path.resolve(args[1] || '')).split(path.sep).join('/');
     if (!args[1] || !fs.existsSync(path.join(root, file))) { console.log('usage: node tools/citations.js --external <file.md>'); process.exit(1); }
     console.log(`${HEADING}\n\n${section(root, file, { external: true })}`);

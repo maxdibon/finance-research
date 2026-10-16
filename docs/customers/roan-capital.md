@@ -243,14 +243,19 @@ product drafts themselves are in docs/products/ by exception (FS-806).
 | DR-009 | Review of the requirement document and the back office | Our own reading of the requirement document, and what the back office needs | Working | internal | 2026-10-03 | Dibon |
 | DR-010 | Mutual NDA, corrected draft | A corrected NDA we drafted; withdrawn, as the executed NDA stands | Working | withdrawn | 2026-10-12 | Dibon |
 | DR-011 | NDA changes, internal note | Our note on the changes the NDA would have needed | Working | internal | 2026-10-12 | Dibon |
-| DR-012 | 30-day loan questionnaire A, product terms | Questions for Roan Capital on the 30-day loan's terms: amounts, term, pricing | Working | draft | 2026-10-15 | Dibon |
-| DR-013 | 30-day loan questionnaire B, eligibility and limits | Questions for Roan Capital on who may borrow, and how much | Working | draft | 2026-10-15 | Dibon |
-| DR-014 | 30-day loan questionnaire C, how it runs | Questions for Roan Capital on how the loan runs from day to day | Working | draft | 2026-10-15 | Dibon |
+| DR-012 | 30-day loan questionnaire A, product terms | Questions for Roan Capital on the 30-day loan's terms: amounts, term, pricing | Working | superseded | 2026-10-15 | Dibon |
+| DR-013 | 30-day loan questionnaire B, eligibility and limits | Questions for Roan Capital on who may borrow, and how much | Working | superseded | 2026-10-15 | Dibon |
+| DR-014 | 30-day loan questionnaire C, how it runs | Questions for Roan Capital on how the loan runs from day to day | Working | superseded | 2026-10-15 | Dibon |
 | DR-015 | Product and operations meeting, agenda (15 October 2026) | The agenda for the product and operations meeting of 15 October | Working | draft | 2026-10-15 | Dibon |
 | DR-016 | Product and operations meeting, our record (15 October 2026) | What was said and agreed at the 15 October meeting, kept for us | Working | internal | 2026-10-15 | Dibon |
 | DR-017 | Loan application form, in our format, from DR-007 | The application form in our format, word for word as received | Working | draft | 2026-10-15 | Dibon |
-| DR-018 | Loan application form, suggested changes tracked, from DR-017 | The form with our 28 suggested changes tracked, each with its reason and the regulation behind it | Working | draft | 2026-10-15 | Dibon |
-| DR-019 | Loan application form, schedule of v0.2's changes | The 28 changes in version 0.2 in one table, for Roan Capital to accept or decline | Working | draft | 2026-10-15 | Dibon |
+| DR-018 | Loan application form, suggested changes tracked, from DR-017 | The form with our 28 suggested changes tracked, each with its reason and the regulation behind it | Working | superseded | 2026-10-15 | Dibon |
+| DR-019 | Loan application form, schedule of v0.2's changes | The 28 changes in version 0.2 in one table, for Roan Capital to accept or decline | Working | superseded | 2026-10-15 | Dibon |
+| DR-037 | Loan application form, v0.2 with a page of the regulations cited, tracked, from DR-018 | The form with our 28 suggested changes, and a last page listing each regulation cited with what each provision requires; two readings marked as being confirmed | Working | draft | 2026-10-16 | Dibon |
+| DR-038 | Loan application form, schedule of v0.3's changes | The 28 changes in one table, for Roan Capital to accept or decline, and the page of regulations cited | Working | draft | 2026-10-16 | Dibon |
+| DR-039 | 30-day loan questionnaire A, product terms, with the regulations cited | Questions on the 30-day loan's terms, and a last page listing the regulations they rest on, two readings marked as being confirmed | Working | draft | 2026-10-16 | Dibon |
+| DR-040 | 30-day loan questionnaire B, eligibility and limits, with the regulations cited | Questions on who may borrow and how much, and a last page listing the regulations they rest on | Working | draft | 2026-10-16 | Dibon |
+| DR-041 | 30-day loan questionnaire C, how it runs, with the regulations cited | Questions on how the loan runs from day to day, and a last page listing the regulation it rests on | Working | draft | 2026-10-16 | Dibon |
 
 - Capability statuses: the modules named in §2.
 - Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in

@@ -189,7 +189,9 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   REVIEW.md and review/, and `tidy`, which files each row by its status
   (FS-866); `tools/citations.js`, each document's "Regulations cited"
   from the instrument cards in docs/law/, and `--external` for a Word or
-  PDF document (FS-868); `tools/paths.js`, what a path written as plain
+  PDF document (FS-868), `--data` for a Word document's text;
+  `tools/regulations-page.py`, which gives a Word document its page of
+  regulations cited, tracked when the document is (FS-874); `tools/paths.js`, what a path written as plain
   text means, for the reader and the links check (FS-856);
   `tools/docregister.js`, the one reader of the document register, by its
   header, and the maker of each customer's table of documents (FS-857).

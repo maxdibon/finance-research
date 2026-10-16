@@ -548,6 +548,15 @@ test('citations: a law named in words places its cites, across lines', () => {
   assert.deepStrictEqual(placed('The Data Protection Act (Cap. 411C), s.2 (profiling) and s.35.', 'LR-03'), ['s. 2 LR-17', 's. 35 LR-17']);
 });
 
+// FS-874: a "reg" is never an Act's, nor an "s." a set of Regulations'.
+test('citations: a cite is placed only with a law of its kind', () => {
+  const { cites, names, show } = require('./citations');
+  const known = names(ROOT);
+  const placed = (text) => cites(text, 'LR-03', known).map((c) => `${show(c)} ${c.law}`);
+  assert.deepStrictEqual(placed('Consent under the Data Protection Act s.30; and no shaming (reg 30(1)(d)).'), ['s. 30 LR-17', 'reg 30(1)(d) LR-03']);
+  assert.deepStrictEqual(placed('Excise Duty Act applies to fees; costs not disclosed are not recovered (reg 30(2)).'), ['reg 30(2) LR-03']);
+});
+
 test('citations: in a document citing many laws, a cite naming none fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'documents.md'), (t) => t.replace(/^(## [^\n]*\n)/m, '$1\nKept as reg 9 requires.\n')));
   assert.ok(names(f).includes('citations'));
