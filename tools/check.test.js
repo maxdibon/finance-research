@@ -102,12 +102,13 @@ test('register: a row reopened in review/ fails, and tidy brings it back', () =>
 
 // FS-882: who has an open row, by a first name from the team.
 test('register: an open row with no one on it fails', () => {
-  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) Eric \|/m, '$1 — |')));
+  // Whoever holds FS-012 today: the test must not depend on who it is.
+  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) [^|]+ \|/m, '$1 — |')));
   assert.deepStrictEqual(names(f), ['register']);
 });
 
 test('register: an open row with someone not on the team fails, and a teammate passes', () => {
-  const give = (who) => (d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) Eric \|/m, `$1 ${who} |`));
+  const give = (who) => (d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) [^|]+ \|/m, `$1 ${who} |`));
   assert.deepStrictEqual(names(runWith(give('Somebody'))), ['register']);
   assert.deepStrictEqual(runWith(give('Betty')), []);
 });
