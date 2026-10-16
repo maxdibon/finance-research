@@ -424,7 +424,9 @@ const word = {
     const r = release(series, { kind: flag('--kind') });
     say(`Released ${series} ${r.version} (${r.kind}): ${r.done.join(', ')}.`);
     if (!await ask(`Commit "Release ${r.tag}" and tag it?`)) return say(`Not committed: commit, then git tag -a ${r.tag}.`);
-    git(['add', '-A']);
+    // FS-877: only what git already tracks, which is all a release changes or
+    // removes; never a file someone keeps in the folder but out of git.
+    git(['add', '-u']);
     git(['commit', '-q', ...message(`Release ${r.tag}`)]);
     git(['tag', '-a', r.tag, '-m', `${series} ${r.version}`]);
     say(`Committed and tagged ${r.tag}. Push the commit and the tag when ready.`);
