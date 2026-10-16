@@ -7,7 +7,7 @@ released: 2026.10.15.1
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781, FS-855]
-last_reviewed: 2026-10-15
+last_reviewed: 2026-10-16
 ---
 
 # Start here
@@ -146,7 +146,7 @@ approves the document.
 
 | What | Statuses, in order | Kinds, and examples |
 |---|---|---|
-| Documents kept current | **living** (kept true as things change; never finished) | Kinds: `register`, `index`, `overview`, `plan`, `delivery`, `product`, `shared-service`, `channel`, `checklist`, `guide`, `service`. E.g. docs/delivery-plan.md, docs/document-register.md, this page |
+| Documents kept current | **living** (kept true as things change; never finished) | Kinds: `register`, `index`, `overview`, `plan`, `delivery`, `product`, `shared-service`, `channel`, `checklist`, `guide`, `service`, `law`. E.g. docs/delivery-plan.md, docs/document-register.md, this page |
 | Documents that are agreed | **draft** (read it, but do not rely on it yet) · **agreed** (the approving role's go, its code owner in ways-of-working.md §2) · **superseded** (replaced by a later document it names; kept for the record) | Kinds: `architecture`, `policy`, `handbook`, `manual`, `partner-model`, `marketing`. E.g. docs/rules.md (agreed), docs/architecture/README.md (draft) |
 | Outreach letters | **draft** · **sent** (it keeps its own version, as it travels alone) · **answered** (the answer recorded where it belongs) · **withdrawn** (not sent after all, or taken back) | E.g. docs/outreach/liquid-partner-request.md (draft), docs/outreach/api-requests.md (withdrawn) |
 | Product versions | **draft** (with the institution; private) · **awaiting-approval** (the institution's own) · **awaiting-cbk** (the Central Bank of Kenya's, where the law asks; still private) · **active** (loans are written on it, and its terms are public: decisions, FS-803) · **retired** (no new loans; the loans made under it keep its terms) | E.g. docs/products/roan-capital-30-day-loan-v1.md (draft) |

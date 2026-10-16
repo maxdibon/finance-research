@@ -528,6 +528,38 @@ test('links: the same short name after its folder on the line passes', () => {
   assert.ok(!names(f).includes('links'));
 });
 
+// FS-868: citations of the law, placed, carded and summarised.
+test('citations: each cite is placed with its instrument', () => {
+  const { cites, show } = require('./citations');
+  const placed = (text, law) => cites(text, law).map((c) => `${show(c)} ${c.law}`);
+  assert.deepStrictEqual(placed('The cap (reg 29(3)); and regs 39(3), 42.', 'LR-03'), ['reg 29(3) LR-03', 'reg 39(3) LR-03', 'reg 42 LR-03']);
+  assert.deepStrictEqual(placed('Seven years (POCAMLA s.46, LR-13; NPS Act s.26, LR-11).', 'LR-17'), ['s. 46 LR-13', 's. 26 LR-11']);
+  assert.deepStrictEqual(placed('law register LR-03 reg 29 and LR-04 s.44A; split', 'LR-17'), ['reg 29 LR-03', 's. 44A LR-04']);
+  assert.deepStrictEqual(placed('A credit policy (reg 28(1)(b), (c)); the regulations 2026.', 'LR-03'), ['reg 28(1)(b) LR-03', 'reg 28(1)(c) LR-03']);
+});
+
+test('citations: a cite with no row on its card fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'specs', 'lender-rules.md'), (t) => t.replace('## 1 · Purpose and scope\n', '## 1 · Purpose and scope\n\nAlso reg 61.\n')));
+  assert.ok(names(f).includes('citations'));
+});
+
+test('citations: a cite of an instrument with no card fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'specs', 'lender-rules.md'), (t) => t.replace('## 1 · Purpose and scope\n', '## 1 · Purpose and scope\n\nAlso s. 12 (LR-14).\n')));
+  assert.ok(names(f).includes('citations'));
+});
+
+test('citations: a card changed without refreshing fails, and refreshing mends it', () => {
+  const change = (d) => patch(d, path.join('docs', 'law', 'LR-18.md'), (t) => t.replace('within seven days, in a common', 'within 7 days, in a common'));
+  assert.deepStrictEqual(names(runWith(change)), ['citations']);
+  const f = runWith((d) => { change(d); require('./citations').refresh(d, 'docs/privacy.md'); });
+  assert.deepStrictEqual(f, []);
+});
+
+test('citations: the section for a reader outside Dibon carries no register ids', () => {
+  const s = require('./citations').section(ROOT, 'docs/privacy.md', { external: true });
+  assert.ok(!/\bLR-\d{2}\b/.test(s) && /Kenya Law/.test(s));
+});
+
 // FS-855: Start here explains every status the checks allow, and no other.
 const START = path.join('docs', 'start-here.md');
 test('status: a status the checks allow, missing from Start here, fails', () => {

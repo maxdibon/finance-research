@@ -7,7 +7,7 @@ released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806]
-last_reviewed: 2026-10-15
+last_reviewed: 2026-10-16
 ---
 
 # Dibon financial services — the portfolio
@@ -182,6 +182,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | If you want | Read |
 |---|---|
 | Which laws apply to us and our customers, and what each drives | [regulation.md](regulation.md) |
+| What each law we cite says, provision by provision: citation, regulator, what it requires | [law/](law/README.md) |
 | Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
 | What personal data we process, why and for how long | [privacy.md](privacy.md) |
 | What we hold ourselves, our customers and our partners to | [rules.md](rules.md) |

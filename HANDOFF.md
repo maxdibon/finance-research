@@ -63,6 +63,10 @@ its money and its records; Dibon holds the platform. Read
   **"Go" is not "push":** push only when the owner says "push".
 - **Disagree openly**, say when your own earlier claim was wrong, and say
   what you did not do.
+- **Cite the law through its card** (FS-868): a provision cited gets a
+  row on its instrument's card in docs/law/, read from the text; a
+  document names its main instrument (`law: LR-03`) and gives other
+  cites their id where made; `node tools/citations.js` writes the section.
 - **Read the law before citing it**, in its text in `sources/regulation/`;
   when it has not been read, say "to confirm". Cite the provision.
 - **Compute counts; never type them.** The delivery plan's typed R1
@@ -179,7 +183,9 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   is reading; `tools/dibon.js` (with `dibon` and `dibon.cmd` at the
   root), the team's words; `tools/register.js`, the review register across
   REVIEW.md and review/, and `tidy`, which files each row by its status
-  (FS-866); `tools/paths.js`, what a path written as plain
+  (FS-866); `tools/citations.js`, each document's "Regulations cited"
+  from the instrument cards in docs/law/, and `--external` for a Word or
+  PDF document (FS-868); `tools/paths.js`, what a path written as plain
   text means, for the reader and the links check (FS-856);
   `tools/docregister.js`, the one reader of the document register, by its
   header, and the maker of each customer's table of documents (FS-857).
@@ -219,8 +225,9 @@ say "proposal in chat".
 every id once, open rows in REVIEW.md, closed rows in their hundred's
 file) and review ids, markup (no Markdown file over 200 KB, which a
 preview may show as raw text; no word in angle brackets outside code),
-the module
-template, capabilities, diagrams, partners, public, copy and claims,
+citations (each card in docs/law/ complete; in a document naming its main
+instrument, every cite placed and on its card, and its "Regulations cited"
+current), the module template, capabilities, diagrams, partners, public, copy and claims,
 decisions, obligations, customers, regulation, assurance, references,
 dependencies, scope, journeys, handbook, overview, specs, products (the
 drafts, their typed values against `code/lender-rules/`), docregister

@@ -88,6 +88,46 @@ function parseRegister(root) {
   return require('./register').rows(root); // beside the check, as dibon.js is
 }
 
+// ── citations ────────────────────────────────────────────────────────────
+// FS-868: each law whose provisions we cite has a card in docs/law/ (its
+// citation, regulator, what it was made under, whether in force, what it
+// is, and what each cited provision requires); a document that names its
+// main instrument (law: LR-03) has every cite placed and on its card, and
+// ends with "Regulations cited", generated from the cards (tools/citations.js).
+function checkCitations(root) {
+  const cit = require('./citations'); // beside the check, as dibon.js is
+  if (!fs.existsSync(path.join(root, cit.LAW_DIR))) return [];
+  const out = [];
+  const lawRegister = cit.register(root);
+  const cards = cit.cards(root);
+  for (const [id, card] of cards) {
+    const at = (m) => out.push(fail('citations', card.file, 0, `${id}: ${m}`));
+    if (!lawRegister.has(id)) at('is not in the law register');
+    for (const k of ['Citation', 'Regulator', 'Made under', 'In force', 'What it is']) if (!card.fields[k]) at(`no "${k}"`);
+    if (!card.provisions.length) at('no provisions cited: a card is for a law whose provisions we cite');
+    const seen = new Set();
+    for (const p of card.provisions) {
+      const s = cit.show(p);
+      if (seen.has(s)) at(`${s} has two rows`);
+      seen.add(s);
+      if (!p.requires) at(`${s} says nothing about what it requires`);
+    }
+  }
+  for (const file of cit.documents(root)) {
+    const text = read(root, file);
+    const law = (text.match(/^law: *(LR-\d{2})/m) || [])[1];
+    if (!cards.has(law)) { out.push(fail('citations', file, 1, `law: ${law} has no card in docs/law/`)); continue; }
+    for (const c of cit.cites(text, law)) {
+      if (!cards.has(c.law)) out.push(fail('citations', file, c.line, `${cit.show(c)} is placed with ${c.law}, which has no card: write docs/law/${c.law}.md, or give the cite its instrument's id`));
+      else if (!cards.get(c.law).provisions.some((r) => cit.covers(r, c))) out.push(fail('citations', file, c.line, `${cit.show(c)} (${c.law}) has no row on its card: add what it requires to docs/law/${c.law}.md`));
+    }
+    const b = cit.block(text);
+    if (!b) out.push(fail('citations', file, 0, 'no "Regulations cited" section at its end: run node tools/citations.js'));
+    else if (b.text !== cit.section(root, file)) out.push(fail('citations', file, 0, 'its "Regulations cited" section differs from the cards: run node tools/citations.js'));
+  }
+  return out;
+}
+
 // ── markup ───────────────────────────────────────────────────────────────
 // FS-866: what a Markdown preview (GitHub, the desktop app) cannot show.
 // A file over 200 KB: one of 414 KB showed as raw text, with no table
@@ -176,7 +216,9 @@ function frontMatterKeys(text) {
 function headings(text) {
   // Headings inside fenced blocks and HTML comments are not headings.
   const body = text.replace(/<!--[\s\S]*?-->/g, '').replace(/```[\s\S]*?```/g, '');
-  return body.split('\n').filter((l) => /^## /.test(l)).map((l) => l.slice(3).trim());
+  // FS-868: the generated "Regulations cited" closes a document after its
+  // own sections; a template's order is compared without it.
+  return body.split('\n').filter((l) => /^## /.test(l)).map((l) => l.slice(3).trim()).filter((h) => h !== 'Regulations cited');
 }
 
 function moduleFiles(root) {
@@ -1214,7 +1256,7 @@ function checkProducts(root) {
 // status says where it stands in it, so drafts show in every version.
 // `version:` stays only on documents that go outside on their own.
 const LIFECYCLES = {
-  living: ['register', 'index', 'overview', 'plan', 'delivery', 'product', 'shared-service', 'channel', 'checklist', 'guide', 'service'],
+  living: ['register', 'index', 'overview', 'plan', 'delivery', 'product', 'shared-service', 'channel', 'checklist', 'guide', 'service', 'law'],
   agreed: ['architecture', 'policy', 'handbook', 'manual', 'partner-model', 'marketing'],
 };
 function statusesFor(kind) {
@@ -1684,6 +1726,7 @@ function runAll(root) {
     ...checkNames(root, files),
     ...checkRegister(root),
     ...checkMarkup(root, files),
+    ...checkCitations(root),
     ...checkReviewIds(root, files),
     ...checkTemplate(root),
     ...checkCapabilities(root),
