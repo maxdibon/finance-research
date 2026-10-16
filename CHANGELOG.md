@@ -37,6 +37,7 @@ kind's lifecycle (the status check).
 - In the reader, every path written as plain text is now a link: short names in a list ("docs/regulation.md, compliance.md"), relative paths ("modules/access.md") and folders ("docs/customers/", which opens a page listing what the folder holds). Folders outside the documents, such as tools/, read as code. The checks fail a path that names no document, or a short name two documents share with nothing to say which. (FS-856; Chief Technology and Innovation Officer)
 - Start here now explains every status we use, from a living register to a product version awaiting the Central Bank, in one section, "Statuses you will meet"; the checks fail if it and the rules they enforce ever differ. (FS-855; Chief Technology and Innovation Officer)
 - Start here's statuses are now one table, a row for each kind of thing, with its statuses in order and real examples to open. (FS-858; Chief Technology and Innovation Officer)
+
 **Status:** Specs: 11 draft. Journeys: 19 draft. Other documents: 20 draft, 2 agreed. Outreach: 1 withdrawn, 7 draft. Living documents: 52 living. Since docs-2026.10.15: no status changed; 0 documents added, 0 removed. Documents changed in it, now saying "released: 2026.10.15.1": 6.
 
 ## 2026.10.15 · major
@@ -57,4 +58,5 @@ replaces.
 - Git conventions agreed: short branches named by their register row, subjects that start with it (a hook holds them), rebase to keep current, squash on merge, dated annotated tags, LF line endings, and the register merged by union. (FS-846; Chief Technology and Innovation Officer)
 - Every page of the reader shows the release it was built from, what has moved since, and which pages changed; the Master and the handover name their release; the Master shows each document's status. (FS-842; Chief Technology and Innovation Officer)
 - The team's words: one small vocabulary for every update, from the desktop app or the command line, with a guide, a cheat sheet and a practice copy. (FS-847, FS-848, FS-849; Chief Technology and Innovation Officer)
+
 **Status:** Specs: 11 draft. Journeys: 19 draft. Other documents: 20 draft, 2 agreed. Outreach: 1 withdrawn, 7 draft. Living documents: 52 living. The first dated release: nothing earlier to compare.

@@ -539,10 +539,22 @@ test('versions: a customer page out of the template\'s order fails', () => {
 });
 
 test('versions: an older entry still to stamp below a newer one fails', () => {
+  // The real changelog, so every release a document names stays in it: a
+  // newer entry above, and the newest real one set back to "to stamp".
   const f = runWith((d) => {
-    fs.writeFileSync(path.join(d, 'CHANGELOG.md'), '# Changelog\n\n## 2026.10.20 · minor\n\n**Status:** to stamp\n\n## 2026.10.15 · major\n\n**Status:** to stamp\n');
+    patch(d, 'CHANGELOG.md', (t) => {
+      const at = t.search(/^## \d{4}\./m);
+      const head = t.slice(at).replace(/^\*\*Status:\*\* .*$/m, '**Status:** to stamp');
+      return `${t.slice(0, at)}## 2026.10.20 · minor\n\n**Status:** to stamp\n\n${head}`;
+    });
     patch(d, 'README.md', (t) => t.replace(/^\*\*Release:\*\* .*$/m, '**Release:** 2026.10.20 · minor'));
+    patch(d, 'HANDOFF.md', (t) => t.replace(/^ {4}release: .*$/m, '    release: 2026.10.20 · minor'));
   });
+  assert.deepStrictEqual(names(f), ['versions']);
+});
+
+test('versions: a status line straight after a release\'s bullets fails (FS-861)', () => {
+  const f = runWith((d) => patch(d, 'CHANGELOG.md', (t) => t.replace(/\n\n(\*\*Status:\*\* )/, '\n$1')));
   assert.deepStrictEqual(names(f), ['versions']);
 });
 

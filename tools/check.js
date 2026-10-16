@@ -1313,6 +1313,11 @@ function changelogProblems(text, level, file, from = 0, stamped = true) {
     const end = k + 1 < heads.length ? heads[k + 1].i : lines.length;
     const body = lines.slice(h.i + 1, end).join('\n');
     if (stamped && !/^\*\*Status:\*\* /m.test(body)) out.push(fail('versions', file, h.i + 1, `${h.v} has no **Status:** line`));
+    // FS-861: a labelled line ("**Status:**", "**Exchanged:**") is a
+    // paragraph of its own; GitHub folds it into a line or list above it.
+    for (let k = h.i + 2; k < end; k++) {
+      if (/^\*\*[A-Z][^*]*:\*\* /.test(lines[k]) && lines[k - 1].trim()) out.push(fail('versions', file, k + 1, `"${lines[k].slice(0, 24)}…" follows a line with no blank line between, so it joins that line or list: add one`));
+    }
     if (stamped && /^\*\*Status:\*\* to stamp$/m.test(body) && k > 0) out.push(fail('versions', file, h.i + 1, `${h.v} still reads "to stamp", but a later release exists: release it (tools/cut.js)`));
     const [y, mo, d] = h.parts;
     const day = new Date(Date.UTC(y, mo - 1, d));

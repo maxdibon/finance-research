@@ -181,11 +181,13 @@ function writeEntry(file, level, version, kind, bullets, stamp, insertAfter) {
     const next = rest.search(new RegExp(`^#{2,${level.length}} `, 'm'));
     const entry = next < 0 ? rest : rest.slice(0, next);
     if (!entry.includes(STAMP)) throw new Error(`${rel(file)}: ${version} is already released`);
-    t = t.slice(0, m.index + m[0].length) + entry.replace(STAMP, stamp === null ? list.trimEnd() : `${list}**Status:** ${stamp}`) + (next < 0 ? '' : rest.slice(next));
+    // FS-861: the status line is a paragraph of its own; straight after a
+    // list or a line of text, GitHub folds it into what is above.
+    t = t.slice(0, m.index + m[0].length) + entry.replace(STAMP, stamp === null ? list.trimEnd() : `${list}${list ? '\n' : ''}**Status:** ${stamp}`) + (next < 0 ? '' : rest.slice(next));
   } else {
     // An external entry (stamp null) carries no internal status line.
     const at = insertAfter(t);
-    t = `${t.slice(0, at)}${level} ${version} · ${kind}\n\n${list}${stamp === null ? '' : `**Status:** ${stamp}\n`}\n${t.slice(at)}`;
+    t = `${t.slice(0, at)}${level} ${version} · ${kind}\n\n${list}${stamp === null ? '' : `${list ? '\n' : ''}**Status:** ${stamp}\n`}\n${t.slice(at)}`;
   }
   fs.writeFileSync(file, crlf ? t.replace(/\n/g, '\r\n') : t);
   return actual;

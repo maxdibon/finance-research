@@ -7,7 +7,7 @@ released: 2026.10.15.1
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845]
-last_reviewed: 2026-10-15
+last_reviewed: 2026-10-16
 ---
 
 # Roan Capital — delivery map
@@ -301,15 +301,18 @@ documents; they were first numbered 0.1 to 0.5.
 vocabulary, and the 30-day loan drafted, typed and checked against the
 regulations (FS-813 to FS-830); the NDA in force, and the licence
 questions held for a senior management meeting (FS-827).
+
 **Changed:** this map takes the customer template: open answers split
 into open and answered, documents by DR id, people and roles in §7, this
 changelog; open answers 28 to 30 added, and 10, 21, 28 and 29 partly
 answered from the application form (FS-831).
+
 **Exchanged:** the signed sender ID request (DR-006); the loan
 application form received (DR-007); for the product and operations
 meeting of 15 October, the questionnaires and the agenda (DR-012 to
 DR-015); our versions 0.1 and 0.2 of the application form, with a
 schedule of the changes (DR-017 to DR-019).
+
 **Status:** Documents 19 (2 record kept, 5 original kept, 1 record to keep, 3 working internal, 1 working withdrawn, 7 working draft); open answers 26 open, 4 answered. The first dated release: nothing earlier to compare.
 
 ### 2026.10.03 · minor
@@ -317,6 +320,7 @@ schedule of the changes (DR-017 to DR-019).
 **Changed:** this delivery map begun: the requirement document read
 against our capabilities, the MVP's exclusions, and the open answers
 (FS-395 onward; our review, DR-009).
+
 **Status:** before versions were tracked.
 
 ### 2026.09.07 · minor
@@ -324,17 +328,21 @@ against our capabilities, the MVP's exclusions, and the open answers
 **Decided:** at kickoff, the requirement document confirmed; collateral
 handled by hand at first, with maker-checker approvals; a KYC
 verification provider to choose; weekly reviews.
+
 **Exchanged:** the kickoff summary and next steps (DR-008).
+
 **Status:** before versions were tracked.
 
 ### 2026.08.20 · minor
 
 **Exchanged:** the business requirement document, v1.0, with the
 executed NDA (DR-001).
+
 **Status:** before versions were tracked.
 
 ### 2026.08.04 · minor
 
 **Exchanged:** the NDA, sent on 31 July and returned signed on 4 August
 (DR-002, DR-003).
+
 **Status:** before versions were tracked.
