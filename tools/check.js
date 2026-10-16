@@ -650,6 +650,8 @@ function knownIds(root) {
   rowIds(path.join('docs', 'onboarding.md'), /^\| (OB-[A-Z]{2,3}-\d{2}) \|/).forEach((id) => ids.add(id));
   rowIds(REGULATION, /^\| (LR-\d{2}) \|/).forEach((id) => ids.add(id));
   rowIds(path.join('docs', 'documents.md'), /^\| (DT-\d{2}) \|/).forEach((id) => ids.add(id)); // FS-538
+  // FS-873: a law may shape a partner decision, as the Advocates Act does SD-12.
+  rowIds(path.join('docs', 'partners.md'), /^\| ((?:SD|PT)-\d{2}) \|/).forEach((id) => ids.add(id));
   return ids;
 }
 

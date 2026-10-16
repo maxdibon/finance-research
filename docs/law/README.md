@@ -59,3 +59,4 @@ document's last section.
 | [LR-36](LR-36.md) | Public Holidays Act (Cap. 110) | The Cabinet Secretary, who may declare further holidays |
 | [LR-38](LR-38.md) | Unclaimed Financial Assets Act (Cap. 494) | The Unclaimed Financial Assets Authority |
 | [LR-39](LR-39.md) | Law of Succession Act (Cap. 160) | None: the courts grant representation and supervise estates |
+| [LR-40](LR-40.md) | Advocates Act (Cap. 16) | The Law Society of Kenya and the Advocates Disciplinary Tribunal; offences go to the courts |
