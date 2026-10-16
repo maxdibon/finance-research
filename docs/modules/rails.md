@@ -3,6 +3,7 @@ id: rails
 name: Rails — payment and bank integrations
 kind: shared-service
 status: living
+law: LR-14
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
@@ -10,7 +11,7 @@ audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability]
 consumed_by: [collect, gateway, mfi, sacco, sme-recon, escrow, mandates, recon-observability, core, omni-channel, financial-crime, identity]
 review_ids: [FS-038, FS-056, FS-088, FS-093, FS-102, FS-124, FS-125, FS-127, FS-179, FS-208, FS-209, FS-210, FS-211, FS-212, FS-384, FS-386, FS-387, FS-390, FS-391, FS-393, FS-403, FS-407, FS-408, FS-448, FS-453, FS-523, FS-585, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661]
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-16
 ---
 
 # Rails — payment and bank integrations
@@ -211,3 +212,13 @@ FS-056, FS-088, FS-127, FS-208, FS-209, FS-210.
   *Derived, not reproduced.*
 - docs/outreach/api-requests.md; docs/partners.md.
 - docs/architecture/README.md §2, §3, §5.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-14](../law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 32 | reg 32 | Every wire transfer carries the originator's name, account or reference and address or ID, and the beneficiary's name and account or reference; intermediary and receiving institutions have risk-based rules for a transfer lacking them, to execute, reject or suspend it (32(6)); no transfer to or from a person designated under the UN Security Council's terrorism resolutions (32(8)) |

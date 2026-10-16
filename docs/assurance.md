@@ -3,11 +3,12 @@ id: assurance
 name: Assurance services — testing for institutions we do not supply
 kind: service
 status: living
+law: LR-20
 released: 2026.10.15
 owner: Compliance lead
 classification: Internal
 review_ids: [FS-438, FS-440]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-16
 ---
 
 # Assurance services — testing for institutions we do not supply
@@ -58,3 +59,20 @@ Declined (conflict), Declined (other).
 
 | Id | Institution | Engagement | Systems in scope | Customer of ours? | Decision | Date | Refs |
 |---|---|---|---|---|---|---|---|
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-14](law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 11 | reg 11(d) | Internal controls against money laundering, terrorism financing and proliferation financing, sized to the business: compliance arrangements with a reporting officer, staff screening and training, an independent audit function to test the system (11(d)), and risk assessment |
+| reg 43 | reg 43 | An independent audit function checks the institution's compliance with the Act and these Regulations |
+
+**[LR-20](law/LR-20.md) The Computer Misuse and Cybercrimes Act (Cap. 79C).** Regulator: The National Computer and Cybercrimes Co-ordination Committee; offences go to the courts. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2018/5/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 14 | s. 14 | Unauthorised access to a computer system, by infringing its security measures, is an offence: a fine of up to five million shillings, three years' imprisonment, or both |

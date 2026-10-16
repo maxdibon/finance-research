@@ -4,6 +4,7 @@ name: Reconciliation platform — build specification
 kind: spec
 type: build
 status: draft
+law: LR-03
 released: 2026.10.15
 release: R1
 implements: [recon-observability]
@@ -12,7 +13,7 @@ used_by: [end-of-day-runner]
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809]
-last_reviewed: 2026-10-14
+last_reviewed: 2026-10-16
 ---
 
 # Reconciliation platform — build specification
@@ -340,7 +341,7 @@ decides:
 *When a person must look first,* even where the rule would complete it
 alone: above the institution's amount threshold; anything touching a
 customer's money; anything with a regulatory side (sanctions, suspicious
-patterns, unclaimed money, a missing reg 32 detail); the first time a
+patterns, unclaimed money, a missing POCAML Regs reg 32 detail); the first time a
 new kind of break is seen; any reversal. The institution may add to this
 list, never remove from it.
 
@@ -531,3 +532,27 @@ source, by its rhythm.
 **For the customer:** its rules against §4.7's model: its amount
 threshold, who is the person in the middle, and any deadline it tightens
 (onboarding OB-RO-04).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 29 | reg 29 | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
+| reg 56 | reg 56 | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
+| reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |
+
+**[LR-13](../law/LR-13.md) The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A).** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2009/9/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 46 | s. 46 | A reporting institution keeps records of every transaction and of the evidence of each customer's identity, in the account holder's correct name, for at least seven years from the transaction or the end of the relationship, or longer where the Centre asks (46(4)) |
+
+**[LR-14](../law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 32 | reg 32 | Every wire transfer carries the originator's name, account or reference and address or ID, and the beneficiary's name and account or reference; intermediary and receiving institutions have risk-based rules for a transfer lacking them, to execute, reject or suspend it (32(6)); no transfer to or from a person designated under the UN Security Council's terrorism resolutions (32(8)) |

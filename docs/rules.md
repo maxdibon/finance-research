@@ -3,11 +3,12 @@ id: rules
 name: Rules — what we hold ourselves, our customers and our partners to
 kind: policy
 status: agreed
+law: LR-17
 released: 2026.10.15.1
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762, FS-769, FS-805, FS-806, FS-834, FS-845]
-last_reviewed: 2026-10-15
+last_reviewed: 2026-10-16
 ---
 
 # Rules
@@ -72,3 +73,14 @@ vendors, Twilio, GitLab and the rest. Checked before selection
 | 7 | **Data returned or deleted when we part,** with a certificate | The contract |
 | 8 | **Its software runs unmodified and separately** where its licence requires | Architecture §6.1 |
 | 9 | **Whatever it needs an institution to accept is known before we sign:** its product terms attached, changed only with notice, and carried into our agreements with institutions; its results usable in the institution's own records and credit models | The contract; partners C17 (FS-762) |
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-17](law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 43 | s. 43 | A breach with a real risk of harm notified to the Data Commissioner within seventy-two hours, and to the person affected; a processor tells the controller within forty-eight hours where practicable (43(3)) |
+| s. 48 | s. 48 | Personal data transferred out of Kenya only with proof of appropriate safeguards given to the Data Commissioner, or where the transfer is necessary on a ground the section lists |

@@ -3,11 +3,12 @@ id: legal-questions
 name: Legal questions — what we need counsel to answer, and what each answer changes
 kind: register
 status: living
+law: LR-03
 released: 2026.10.15
 owner: Compliance and risk officer
 classification: Internal
 review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830]
-last_reviewed: 2026-10-15
+last_reviewed: 2026-10-16
 ---
 
 # Legal questions
@@ -55,3 +56,45 @@ lost.
 | LQ-13 | May a lender charge a minimum number of days' interest when a loan is repaid early (the prototype's 14 days), given reg 56(3) and (4): early repayment without penalty, and no interest for the remaining term? | FS-807 | Institutions | CBK lender regulations reg 56 (LR-03) | Open | No: the vocabulary cannot express it, and interest is charged only to the repayment date | FS-807 |
 | LQ-14 | Do a non-deposit-taking lender's fees attract excise duty at 20%, as fees of a digital lender or of a financial institution under the Excise Duty Act; and must the duty be shown on top of each fee in the key information document? | lender-rules §2.4 (FS-814) | Institutions | Excise Duty Act, First Schedule, Part II, paragraphs 4 and 6 | Open | Yes: 20% on every fee, never on interest or insurance premiums, shown with each fee and in the total cost of credit | FS-814 |
 | LQ-15 | What is the "cooling off period" a credit policy must state (reg 25(2)(f)): a time after signing in which a borrower may withdraw without charge, a wait before a new loan, or either as the lender defines it; and does the Consumer Protection Act, which reg 25(1) names, set one? | lender-rules §2.4 (FS-830) | Institutions | CBK NDTCP Regulations 2026 reg 25(2)(f) (LR-03); Consumer Protection Act (not yet in the law register) | Open | The lender defines it in its credit policy; we ask each institution which it means and how long | FS-830 |
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 25 | reg 25(1), reg 25(2)(f) | A written credit policy, consistent with the law, stating among other things the cooling-off period (25(2)(f)) and how the borrower's ability to repay is determined (25(2)(s)) |
+| reg 29 | reg 29 | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
+| reg 30 | reg 30 | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
+| reg 42 | reg 42 | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
+| reg 54 | reg 54(7) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
+| reg 56 | reg 56, reg 56(3), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
+| reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |
+| reg 59 | reg 59 | A pricing model with clear parameters: its components and costs justified, rates that may vary with the borrower's creditworthiness (59(2)(c)), the criteria for non-performance, credit bureau scores, all-inclusive pricing except third-party costs (59(2)(f)), and the APR disclosed |
+
+**[LR-06](law/LR-06.md) The Banking (Credit Reference Bureau) Regulations, 2020, Legal Notice No. 55 of 2020.** Regulator: Central Bank of Kenya. Made under: The Banking Act (Cap. 488), with the Microfinance Act and the Central Bank of Kenya Act. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2020/55/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 2 | reg 2 | Its definitions; a "subscriber" is an institution licensed under the Banking Act, the Microfinance Act or the Sacco Societies Act that has subscribed to receive customer information from a bureau |
+
+**[LR-11](law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 2 | s. 2 | Its definitions; a "payment service provider" includes whoever provides services for sending, receiving, storing or processing payments electronically, and any person that processes or stores data on behalf of such a provider or its users |
+
+**[LR-17](law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 25 | s. 25 | The principles of data protection: personal data processed lawfully, fairly and transparently, for explicit purposes, limited to what is necessary, accurate, kept no longer than needed, secure, and not transferred out of Kenya without safeguards |
+
+**[LR-38](law/LR-38.md) The Unclaimed Financial Assets Act (Cap. 494; No. 40 of 2011).** Regulator: The Unclaimed Financial Assets Authority. Made under: An Act of Parliament. In force: Yes. Version read: as at 2023-07-01, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/40/eng@2023-07-01).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 13 | s. 13 | Assets held in a fiduciary capacity are presumed abandoned if the owner has shown no interest in them for two years after they became payable |
+| s. 14 | s. 14 | A gift certificate, gift card or credit memo is presumed abandoned after five years unclaimed or unused |

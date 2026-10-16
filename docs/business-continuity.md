@@ -3,11 +3,12 @@ id: business-continuity
 name: Business continuity plan — keeping the service, the company and the commitments going
 kind: plan
 status: living
+law: LR-17
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-482, FS-485, FS-657, FS-758]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-16
 ---
 
 # Business continuity plan
@@ -95,3 +96,13 @@ Templates for each are written before they are needed.
 - Liquid's answers on a second site and exit terms (Liquid list).
 - A second SMS route agreed with KCB and NBK.
 - The finance lead's own deputy and the bank mandates for payroll.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-17](law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 43 | s. 43 | A breach with a real risk of harm notified to the Data Commissioner within seventy-two hours, and to the person affected; a processor tells the controller within forty-eight hours where practicable (43(3)) |

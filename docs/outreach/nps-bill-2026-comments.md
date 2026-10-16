@@ -3,11 +3,12 @@ id: nps-bill-2026-comments
 name: Comments on the draft National Payment System Bill, 2026
 kind: outreach
 status: draft
+law: LR-11
 released: 2026.10.15
 version: 0.1.0
 owner: Owner
 classification: Internal until submitted
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-16
 ---
 
 # Comments on the draft National Payment System Bill, 2026
@@ -245,3 +246,13 @@ access.
   sector and do not depend on our own status. If the legal partner reviews
   them in time (docs/outreach/legal-partner-request.md), take its changes
   before filing.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-11](../law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 2 | s. 2 | Its definitions; a "payment service provider" includes whoever provides services for sending, receiving, storing or processing payments electronically, and any person that processes or stores data on behalf of such a provider or its users |

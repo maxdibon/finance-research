@@ -538,6 +538,21 @@ test('citations: each cite is placed with its instrument', () => {
   assert.deepStrictEqual(placed('A credit policy (reg 28(1)(b), (c)); the regulations 2026.', 'LR-03'), ['reg 28(1)(b) LR-03', 'reg 28(1)(c) LR-03']);
 });
 
+// FS-870: names place cites as ids do, across a paragraph's lines.
+test('citations: a law named in words places its cites, across lines', () => {
+  const { cites, names, show } = require('./citations');
+  const known = names(ROOT);
+  const placed = (text, law) => cites(text, law, known).map((c) => `${show(c)} ${c.law}`);
+  assert.deepStrictEqual(placed('Kept seven years (POCAML Regs reg 42(2); Kenya Information and Communications Act s.83H).', null), ['reg 42(2) LR-14', 's. 83H LR-21']);
+  assert.deepStrictEqual(placed('Every company lodges them (Companies\n  Act s.93A), disclosed on a form (BO Regulations reg 14(1)(c)).', null), ['s. 93A LR-34', 'reg 14(1)(c) LR-35']);
+  assert.deepStrictEqual(placed('The Data Protection Act (Cap. 411C), s.2 (profiling) and s.35.', 'LR-03'), ['s. 2 LR-17', 's. 35 LR-17']);
+});
+
+test('citations: in a document citing many laws, a cite naming none fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'documents.md'), (t) => t.replace(/^(## [^\n]*\n)/m, '$1\nKept as reg 9 requires.\n')));
+  assert.ok(names(f).includes('citations'));
+});
+
 test('citations: a cite with no row on its card fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'specs', 'lender-rules.md'), (t) => t.replace('## 1 · Purpose and scope\n', '## 1 · Purpose and scope\n\nAlso reg 61.\n')));
   assert.ok(names(f).includes('citations'));
@@ -551,7 +566,7 @@ test('citations: a cite of an instrument with no card fails', () => {
 test('citations: a card changed without refreshing fails, and refreshing mends it', () => {
   const change = (d) => patch(d, path.join('docs', 'law', 'LR-18.md'), (t) => t.replace('within seven days, in a common', 'within 7 days, in a common'));
   assert.deepStrictEqual(names(runWith(change)), ['citations']);
-  const f = runWith((d) => { change(d); require('./citations').refresh(d, 'docs/privacy.md'); });
+  const f = runWith((d) => { change(d); const c = require('./citations'); for (const doc of c.documents(d)) c.refresh(d, doc); });
   assert.deepStrictEqual(f, []);
 });
 
@@ -740,7 +755,13 @@ test('regulation: citing a law the register does not have fails', () => {
 });
 
 const ASR = path.join('docs', 'assurance.md');
-const engagement = (who, decision) => (t) => `${t.trimEnd()}\n| AS-01 | ${who} | Penetration test | Internet banking | Yes | ${decision} | 2026-10-05 | FS-440 |\n`;
+// The row goes at the conflict register's end, before the generated
+// "Regulations cited" (FS-870).
+const engagement = (who, decision) => (t) => {
+  const row = `| AS-01 | ${who} | Penetration test | Internet banking | Yes | ${decision} | 2026-10-05 | FS-440 |`;
+  const at = t.indexOf('\n## Regulations cited\n');
+  return at < 0 ? `${t.trimEnd()}\n${row}\n` : `${t.slice(0, at).trimEnd()}\n${row}\n${t.slice(at)}`;
+};
 
 test('assurance: an accepted engagement for a customer fails', () => {
   const f = runWith((d) => patch(d, ASR, engagement('KCB Bank Kenya', 'Accepted')));

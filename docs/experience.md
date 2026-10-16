@@ -3,11 +3,12 @@ id: experience
 name: Experience — how what we build should feel to use
 kind: plan
 status: living
+law: LR-03
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-237, FS-637, FS-660, FS-668]
-last_reviewed: 2026-10-09
+last_reviewed: 2026-10-16
 ---
 
 # Experience
@@ -104,3 +105,13 @@ redesign.
   (omni-channel, the approval console, the customer pages).
 - The design system's base: proposed, a small set of our own components
   for our pages, and Odoo's for the back office.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 30 | reg 30 | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |

@@ -4,6 +4,7 @@ name: Endpoints — devices, their protection, and a lost device
 kind: spec
 type: component
 status: draft
+law: LR-17
 released: 2026.10.15
 release: R1
 implements: [platform-security]
@@ -12,7 +13,7 @@ used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-16
 ---
 
 # Endpoints — devices, their protection, and a lost device
@@ -209,3 +210,13 @@ PR-13).
 6. How the bastion learns that a device is enrolled and compliant: a
    device certificate issued by device management, checked at the
    bastion, is the design to test (E2).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 43 | s. 43 | A breach with a real risk of harm notified to the Data Commissioner within seventy-two hours, and to the person affected; a processor tells the controller within forty-eight hours where practicable (43(3)) |

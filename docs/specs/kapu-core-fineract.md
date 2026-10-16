@@ -4,6 +4,7 @@ name: Kapu Core on Apache Fineract — component specification
 kind: spec
 type: component
 status: draft
+law: LR-03
 released: 2026.10.15
 release: R1
 implements: [core]
@@ -12,7 +13,7 @@ used_by: [approval-engine, lender-rules, end-of-day-runner, recon]
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802]
-last_reviewed: 2026-10-14
+last_reviewed: 2026-10-16
 ---
 
 # Kapu Core on Apache Fineract — component specification
@@ -347,3 +348,15 @@ On a running 1.15 instance, before the build relies on each (FS-625):
 2. Whether a due date on a holiday moves, and to which day.
 3. Which kinds of restructure it offers, and how often per loan (open
    answer 10).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 29 | reg 29, reg 29(3) | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
+| reg 56 | reg 56, reg 56(1) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
+| reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |

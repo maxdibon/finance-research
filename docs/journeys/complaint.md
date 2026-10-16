@@ -4,12 +4,13 @@ name: JN-08 · A complaint, from the moment it is made to its answer, within 30 
 kind: journey
 release: R1
 status: draft
+law: LR-03
 released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
 review_ids: [FS-548, FS-668, FS-688, FS-763, FS-764]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-16
 ---
 
 # JN-08 · A complaint, from the moment it is made to its answer, within 30 days
@@ -152,3 +153,16 @@ customer for it.
   from desk events (lender-rules §2.8).
 - **For CBK, through Roan Capital:** the form and frequency of the
   complaints report (reg 40(7)).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 30 | reg 30 | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
+| reg 37 | reg 37 | Branches, websites, apps and digital platforms accessible to people with physical, visual, auditory and cognitive impairments, and staff trained to serve them |
+| reg 40 | reg 40, reg 40(2), reg 40(3), reg 40(4), reg 40(5), reg 40(6), reg 40(7) | A complaints mechanism made known to customers; acknowledgement within seven days where a complaint cannot be dealt with promptly; an oral complaint unresolved after forty-eight hours confirmed in writing; resolution within thirty days |
+| reg 42 | reg 42(2) | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |

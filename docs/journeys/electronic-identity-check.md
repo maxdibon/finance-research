@@ -4,12 +4,13 @@ name: JN-01 · An individual borrower, verified electronically
 kind: journey
 release: R1
 status: draft
+law: LR-13
 released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
 review_ids: [FS-202, FS-340, FS-548, FS-551, FS-555, FS-556, FS-562, FS-668]
-last_reviewed: 2026-10-09
+last_reviewed: 2026-10-16
 ---
 
 # JN-01 · An individual borrower, verified electronically
@@ -117,3 +118,13 @@ electronic check covers the document.
   own answer is to confirm.
 - Which tier this evidence reaches, and its limits: Roan Capital sets
   them (RC-43).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-13](../law/LR-13.md) The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A).** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2009/9/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 8 | s. 8 | Tipping off is an offence: telling anyone that a suspicious transaction report is being prepared or has been made |

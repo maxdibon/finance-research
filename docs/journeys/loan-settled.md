@@ -4,12 +4,13 @@ name: JN-14 · A loan settled, its guarantors and collateral released
 kind: journey
 release: R1
 status: draft
+law: LR-39
 released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
 review_ids: [FS-519, FS-548, FS-602, FS-619, FS-668, FS-684, FS-687, FS-685, FS-686]
-last_reviewed: 2026-10-10
+last_reviewed: 2026-10-16
 ---
 
 # JN-14 · A loan settled, its guarantors and collateral released
@@ -45,7 +46,7 @@ evidence (mfi MF-04, FS-619).
   is held, with the reason the borrower has been told.
 - **Target:** "settled" sent within minutes of the last payment; every
   release step lodged, and the originals ready, within ten working days
-  (proposed; the law's ten days for the registry, s.33).
+  (proposed; the law's ten days for the registry, MPSR Act s.33).
 - **Moments that matter:** the last payment, confirmed at once as
   "settled", with nothing that can follow it as a surprise charge; the
   logbook or title back, with a date and what to bring; for a guarantor,
@@ -94,7 +95,7 @@ evidence (mfi MF-04, FS-619).
 |---|---|---|---|---|
 | 1 | The borrower asks for the amount to settle, on their page or through the officer; it is calculated to a date, with no interest after the day it is paid and no penalty for paying early, and sent valid to that date | Borrower; platform | T37 | MF-22, MF-38, KC-04 |
 | 2 | The payment lands on Roan Capital's paybill or bank account, is matched to the loan, and applied in the regulated order | Platform | T06 | MF-10, MF-22, RO-02 |
-| 3 | At zero, Kapu Core closes the loan. The borrower is told it is settled, what happens to the collateral and when, and that they may stop marketing messages from Roan Capital (reg 27(3)); the settlement letter is on their page | Platform | T14 | KC-04, MF-38, MS-11 |
+| 3 | At zero, Kapu Core closes the loan. The borrower is told it is settled, what happens to the collateral and when, and that they may stop marketing messages from Roan Capital (lender regulations reg 27(3)); the settlement letter is on their page | Platform | T14 | KC-04, MF-38, MS-11 |
 | 4 | Each guarantor's guarantee is released and the guarantor told; a guarantor who also guarantees another live loan stays bound to that one only | Platform | T21 | MF-37 |
 | 5 | The release checklist opens for the collateral type, each step with an owner and a due date: the registry's cancellation notice registered on its portal and its number recorded, with the borrower's copy; NTSA's joint registration removed; the insurer and the tracking provider told that Roan Capital's interest has ended. Each step's evidence is filed in the vault | Credit Officer; platform | — | MF-03, MF-04, ID-15 |
 | 6 | Once the final payment is reconciled and a short hold has passed (proposed: three business days, against a reversal of the payment), a second person approves releasing the originals from custody | Approver | T38 | MF-03, MD-06, RO-02 |
@@ -136,3 +137,32 @@ evidence (mfi MF-04, FS-619).
   the wording of the authority to collect (3g).
 - **Decided** (FS-687): "settled" is sent at once, since the loan is paid;
   only the originals wait for the hold.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 27 | reg 27(3) | Thirty days' notice to the Central Bank before a new delivery channel rolls out, with the mobile money account, apps and bank accounts to be used; a way to opt out of marketing messages; channels that are available, safe, protected from fraud, easy to use and affordable |
+| reg 56 | reg 56(3), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
+
+**[LR-23](../law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 33 | s. 33 | The secured creditor registers an amendment or cancellation notice where a notice exceeds what the grantor authorised, collateral is released, or the security right is extinguished; free of charge, and within ten working days of the grantor's request, or the grantor may go to the Registrar |
+
+**[LR-39](../law/LR-39.md) The Law of Succession Act (Cap. 160).** Regulator: None: the courts grant representation and supervise estates. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1972/14/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 3 | s. 3 | Its definitions: a personal representative is the executor or administrator of a deceased person; the estate is their free property; a child includes one conceived but not yet born |
+| s. 45 | s. 45 | No one may take possession of, dispose of, or otherwise intermeddle with a deceased person's free property except as the Act, another law or a grant of representation allows: an offence, and answerable to the rightful representative |
+| s. 54 | s. 54 | The court may limit a grant of representation, in the forms the Fifth Schedule lists |
+| s. 55 | s. 55 | No grant, limited or not, allows capital assets to be distributed until it is confirmed under s. 71 |
+| s. 71 | s. 71 | After six months, or less if the court directs, the holder of a grant applies to the court to confirm it, so the capital can be distributed |
+| s. 79 | s. 79 | The executor or administrator granted representation is the deceased's personal representative, and the estate's property vests in them, subject to any limit on the grant |
+| s. 92 | s. 92 | A person who pays or transfers in good faith under a grant of representation is protected, even if the grant is later found defective or revoked |

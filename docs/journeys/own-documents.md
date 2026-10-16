@@ -4,12 +4,13 @@ name: JN-07 · A borrower viewing and sharing their own documents
 kind: journey
 release: R1
 status: draft
+law: LR-03
 released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
 review_ids: [FS-531, FS-532, FS-548, FS-668, FS-689, FS-690]
-last_reviewed: 2026-10-10
+last_reviewed: 2026-10-16
 ---
 
 # JN-07 · A borrower viewing and sharing their own documents
@@ -96,8 +97,8 @@ they have it, it is theirs to keep or share (identity ID-17, FS-532).
 | b | 3 | **The borrower's phone or number has changed.** No link or code goes to a new number until the borrower is verified again (recovery by staff, with their ID); a SIM change on the bound number holds sharing as it holds money (T24) | AC-15, ID-13 |
 | c | 5 | **Someone else asks for the borrower's documents:** a spouse, an employer, another lender. Not given: the borrower shares their own copy if they choose. A court order or an investigator's lawful demand goes to the compliance officer, under the institution's procedure | ID-17, BS-01 |
 | d | 4 | **A figure on the statement looks wrong.** The borrower says so from the page or to the officer; it is logged as a complaint with its clock (T16). An error is put right promptly by a correcting entry, never by editing the record, and a new statement issued (reg 39(2)); the borrower told the outcome (T17) | MF-28, KC-04 |
-| e | any | **The borrower asks for everything held about them.** A data request, logged with a seven-day clock, free. The institution compiles it with our help and gives it in a common electronic form through the page, including copies of their ID and photos, which go no other way. A refusal, in part, is in writing with reasons. A request to move their data to another provider is answered within thirty days (reg 11) | BS-01, ID-17 |
-| f | any | **The borrower asks to correct their details:** a misspelt name, a new address. Contact details are updated and logged (DT-06); a change to identity data is checked against the register again. Done within fourteen days, or refused in writing with reasons within seven (reg 10) | ID-03, BS-01 |
+| e | any | **The borrower asks for everything held about them.** A data request, logged with a seven-day clock, free. The institution compiles it with our help and gives it in a common electronic form through the page, including copies of their ID and photos, which go no other way. A refusal, in part, is in writing with reasons. A request to move their data to another provider is answered within thirty days (reg 11, LR-18) | BS-01, ID-17 |
+| f | any | **The borrower asks to correct their details:** a misspelt name, a new address. Contact details are updated and logged (DT-06); a change to identity data is checked against the register again. Done within fourteen days, or refused in writing with reasons within seven (reg 10, LR-18) | ID-03, BS-01 |
 | g | 3 | **A business borrower.** Only the person authorised to act for the business opens its page, on their own bound phone; another director is added only by the business's authority | ID-02, AC-03 |
 | h | 1 | **The borrower has no smartphone, or does not read easily.** The officer reads them their balance and last payment over the phone after confirming who they are, and prints the statement free at the office | MF-38 |
 | i | 3, 4 | **The platform is down.** The page is unavailable; the borrower's M-Pesa messages still show what they paid; the statement follows from the office once it is back | MF-38 |
@@ -121,3 +122,27 @@ they have it, it is theirs to keep or share (identity ID-17, FS-532).
   handles a data request, and its form (Form DPG 2).
 - **For the owner:** whether the verification reference on shared
   documents is worth a capability.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 39 | reg 39(1), reg 39(1)(b), reg 39(1)(d), reg 39(2) | A receipt for every transaction, a free loan statement on request and a way to see it at any time (39(1)); errors corrected promptly (39(2)); a guarantor kept informed through periodic statements (39(3)) |
+
+**[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 26 | s. 26 | A data subject's rights: to be told how their data is used, to see it, to object to its processing, and to have false or misleading data corrected or deleted |
+
+**[LR-18](../law/LR-18.md) The Data Protection (General) Regulations, 2021, Legal Notice No. 263 of 2021.** Regulator: Office of the Data Protection Commissioner. Made under: The Data Protection Act (Cap. 411C). In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2021/263/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 9 | reg 9 | A data subject may ask whether their data is processed and see it, with its purposes, recipients, retention and source; access given within seven days, in a common electronic form where asked electronically |
+| reg 10 | reg 10 | Untrue, inaccurate, outdated, incomplete or misleading data corrected within fourteen days, free of charge; a refusal given in writing, with reasons, within seven days |
+| reg 11 | reg 11 | A data subject's data moved, on request, to another holder of their choosing within thirty days, for a reasonable fee no more than the cost; a refusal given in writing, with reasons, within seven days |

@@ -3,6 +3,7 @@ id: financial-crime
 name: Financial Crime and Compliance
 kind: shared-service
 status: living
+law: mixed
 released: 2026.10.15
 owner: Compliance lead
 classification: Internal
@@ -10,7 +11,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [identity, recon-observability, rails, mandates, messaging, access, core]
 consumed_by: [collect, gateway, mfi, sacco, core, omni-channel, identity]
 review_ids: [FS-098, FS-418, FS-422, FS-428, FS-431, FS-433, FS-435, FS-448, FS-453, FS-574, FS-577, FS-580, FS-588]
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-16
 ---
 
 # Financial Crime and Compliance
@@ -205,3 +206,34 @@ None open in the register.
   only; its regulatory claims are unverified, FS-422).
 - Dibon's M-Pesa reversal technical proposal for KCB, Dec 2022
   (clients/kcb/, *derived, not reproduced*).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 31 | reg 31(1)(d), reg 31(3) | Material services may be outsourced, but never the final decision to lend, management and control, the board's decisions, determining compliance with the law (31(1)(d)), or managing the loan book; the lender stays liable for its provider; the Central Bank told thirty days before, with the provider's background, owners and directors (31(3)); the contract gives the Central Bank oversight of, and access to, the provider's premises, books, records, systems and staff (31(5)) |
+| reg 64 | reg 64 | Compliance with the Proceeds of Crime and Anti-Money Laundering Act and the Prevention of Terrorism Act, on pain of the Central Bank's penalties |
+
+**[LR-11](../law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 26 | s. 26 | The Central Bank, settlement system participants and the operators of payment systems keep every record from operating a payment system or issuing a payment instrument for seven years from the record's date; electronic records suffice |
+
+**[LR-13](../law/LR-13.md) The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A).** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2009/9/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 44 | s. 44 | Complex, unusual, suspicious or large transactions monitored and suspicions reported to the Centre; the findings kept for at least seven years and made available to the Centre, the supervisor and auditors (44(5)); cash transactions above the prescribed amount reported in all cases |
+| s. 46 | s. 46 | A reporting institution keeps records of every transaction and of the evidence of each customer's identity, in the account holder's correct name, for at least seven years from the transaction or the end of the relationship, or longer where the Centre asks (46(4)) |
+
+**[LR-14](../law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 12 | reg 12 | A Money Laundering Reporting Officer of management level, competent, with authority and independence, whose appointment or removal is notified to the Centre and the supervisor within fourteen days; not the internal auditor or the chief executive |
+| reg 26 | reg 26 | For politically exposed persons: a system to find them, senior management approval for the relationship, the source of wealth and funds established, and enhanced ongoing monitoring |

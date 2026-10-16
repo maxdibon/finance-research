@@ -3,6 +3,7 @@ id: products
 name: Products — product version documents, while drafts have nowhere restricted to live
 kind: index
 status: living
+law: LR-03
 released: 2026.10.15
 owner: Delivery lead
 classification: Internal
@@ -64,3 +65,13 @@ the answers, never later.
 | Institution | Product | Version | Status | Document |
 |---|---|---|---|---|
 | Roan Capital | 30-day loan | 1 | Draft | [roan-capital-30-day-loan-v1.md](roan-capital-30-day-loan-v1.md) |
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |

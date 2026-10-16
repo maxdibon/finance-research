@@ -4,12 +4,13 @@ name: JN-12 · A transfer in through a larger bank, identified and applied or re
 kind: journey
 release: R2
 status: draft
+law: LR-14
 released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
 review_ids: [FS-548, FS-585, FS-668, FS-784]
-last_reviewed: 2026-10-13
+last_reviewed: 2026-10-16
 ---
 
 # JN-12 · A transfer in through a larger bank, identified and applied or returned
@@ -138,3 +139,13 @@ through the larger bank, and through its own customer.
   reports credits, by 10:00 the next morning where only the statement
   does; an unidentified credit returned within five business days,
   subject to the larger bank's window).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-14](../law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 32 | reg 32, reg 32(6), reg 32(8) | Every wire transfer carries the originator's name, account or reference and address or ID, and the beneficiary's name and account or reference; intermediary and receiving institutions have risk-based rules for a transfer lacking them, to execute, reject or suspend it (32(6)); no transfer to or from a person designated under the UN Security Council's terrorism resolutions (32(8)) |

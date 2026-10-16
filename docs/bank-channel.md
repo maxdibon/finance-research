@@ -3,11 +3,12 @@ id: bank-channel
 name: Bank channel — banks offering SME Recon and the business suite to their SME customers
 kind: partner-model
 status: draft
+law: LR-03
 released: 2026.10.15
 owner: Commercial lead
 classification: Internal
 review_ids: [FS-024, FS-439, FS-441, FS-443]
-last_reviewed: 2026-10-05
+last_reviewed: 2026-10-16
 ---
 
 # Bank channel
@@ -124,3 +125,19 @@ product up. Move a bank to **bundle** once take-up is shown.
    the regulator question (SD-12).
 2. Choose the first bank and propose the pilot.
 3. Pricing for both models, when commercials are taken up (FS-024).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 58 | reg 58 | Personal data processed lawfully, fairly and transparently; consent express, specific, separately obtained on its own form, withdrawable and recorded; a privacy notice is not consent |
+
+**[LR-04](law/LR-04.md) The Banking Act (Cap. 488).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-12-27, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1989/9/eng@2024-12-27).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 12 | s. 12(a) | An institution may not trade, wholesale or retail, import or export, except in recovering debts owed to it (12(a)), and is restricted in the shares and property it may hold |

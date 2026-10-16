@@ -3,10 +3,11 @@ id: compliance
 name: Licences, registrations and certifications
 kind: register
 status: living
+law: LR-12
 released: 2026.10.15
 owner: Compliance lead
 classification: Internal
-last_reviewed: 2026-10-14
+last_reviewed: 2026-10-16
 ---
 
 # Licences, registrations and certifications
@@ -52,3 +53,19 @@ our customers' obligations, are in the law register, docs/regulation.md
   processing fees charged by a PSP carry 16% VAT, and customers withhold
   tax on software fees (Finance Act 2026; law register LR-25). With the
   finance lead (FS-434).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-11](law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 2 | s. 2 | Its definitions; a "payment service provider" includes whoever provides services for sending, receiving, storing or processing payments electronically, and any person that processes or stores data on behalf of such a provider or its users |
+
+**[LR-12](law/LR-12.md) The National Payment System Regulations, 2014, Legal Notice No. 109 of 2014.** Regulator: Central Bank of Kenya. Made under: The National Payment System Act (Cap. 491A). In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2014/109/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 4 | reg 4 | A person, other than a bank or other institution, applies to the Central Bank for authorisation before acting as a payment service provider, on Form 1, with its registration documents, the services and programme of operations, the public interest served and a business plan |

@@ -3,11 +3,12 @@ id: handbook-calendar
 name: Handbook 3 — the calendar of duties
 kind: handbook
 status: draft
+law: LR-03
 released: 2026.10.15
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-771, FS-772, FS-775, FS-778]
-last_reviewed: 2026-10-13
+last_reviewed: 2026-10-16
 ---
 
 # 3 · The calendar
@@ -56,3 +57,13 @@ queues of their own.
 | Twice a year | A training session with Dibon | Operations lead | Training |
 | Twice a year | The fallback runbook rehearsed with Dibon, in its tabletop: names, limits and forms checked | Operations lead | JN-19; HB-70 to HB-78; business continuity |
 | With each release | The handbook and manuals reviewed for the tasks that changed | Operations lead, with Dibon | Handbook rule 4 |
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 40 | reg 40(6), reg 40(7) | A complaints mechanism made known to customers; acknowledgement within seven days where a complaint cannot be dealt with promptly; an oral complaint unresolved after forty-eight hours confirmed in writing; resolution within thirty days |

@@ -3,6 +3,7 @@ id: decisioning
 name: Decisioning — appraisal, scores and risk classes, rules first
 kind: shared-service
 status: living
+law: LR-03
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
@@ -10,7 +11,7 @@ audience: [bank, sacco, mfi, fintech]
 depends_on: [core, recon-observability, identity, mandates, access]
 consumed_by: [mfi, sacco]
 review_ids: [FS-522, FS-581, FS-582, FS-583, FS-584]
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-16
 ---
 
 # Decisioning
@@ -158,7 +159,7 @@ model. The product cannot tell which, and does not need to.
   Restricted. Held in the institution's instance.
 - **Open legal checks:** whether a downgrade applied automatically
   (DE-04) is a decision that "significantly affects" the borrower under
-  s.35, while a person still decides each loan (FS-582).
+  the Data Protection Act s.35, while a person still decides each loan (FS-582).
 
 ## 8 · Controls
 
@@ -200,3 +201,21 @@ FS-584.
 - Data Protection Act (Cap. 411C), s.2 (profiling) and s.35, read
   2026-10-06.
 - REVIEW.md FS-522, FS-581 to FS-583.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 55 | reg 55 | Pricing parameters and credit terms change only with the Central Bank's prior written approval, after thirty days' notice to the customer and the customer's acceptance |
+| reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |
+
+**[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 2 | s. 2 | Its definitions; "profiling" is any automated processing of personal data to evaluate or predict a person's personal aspects |
+| s. 35 | s. 35 | A person may refuse a decision based solely on automated processing, profiling included, that has legal effects on them or significantly affects them, unless it is needed for a contract, authorised by law with safeguards, or consented to; then they are told, and may ask for a person to reconsider it |

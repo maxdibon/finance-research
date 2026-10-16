@@ -4,6 +4,7 @@ name: Messaging and its templates — build specification
 kind: spec
 type: build
 status: draft
+law: LR-03
 released: 2026.10.15
 release: R1
 implements: [messaging]
@@ -12,7 +13,7 @@ used_by: [access-keycloak, lender-rules, observability-grafana]
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802]
-last_reviewed: 2026-10-14
+last_reviewed: 2026-10-16
 ---
 
 # Messaging and its templates — build specification
@@ -370,3 +371,21 @@ refused it), `.opted_out`.
 paybill or till and the reference in their text (gateway GW-16, FS-662).
 
 **Before use:** a native speaker reviews every Swahili template.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 30 | reg 30 | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
+| reg 39 | reg 39(1) | A receipt for every transaction, a free loan statement on request and a way to see it at any time (39(1)); errors corrected promptly (39(2)); a guarantor kept informed through periodic statements (39(3)) |
+| reg 40 | reg 40, reg 40(4) | A complaints mechanism made known to customers; acknowledgement within seven days where a complaint cannot be dealt with promptly; an oral complaint unresolved after forty-eight hours confirmed in writing; resolution within thirty days |
+| reg 42 | reg 42(1), reg 42(3), reg 42(4) | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
+| reg 43 | reg 43 | Recovery expenses only those absolutely necessary, each itemised and justified to the borrower; a sale of a customer's or guarantor's property done transparently |
+| reg 47 | reg 47(2) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
+| reg 54 | reg 54(7) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
+| reg 55 | reg 55 | Pricing parameters and credit terms change only with the Central Bank's prior written approval, after thirty days' notice to the customer and the customer's acceptance |
+| reg 56 | reg 56(3), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |

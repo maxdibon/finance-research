@@ -3,11 +3,12 @@ id: approval-pack
 name: Outsourcing approval pack — what customers file with their regulator about us
 kind: checklist
 status: living
+law: LR-03
 released: 2026.10.15
 owner: Compliance lead
 classification: Internal
 review_ids: [FS-368, FS-370, FS-420, FS-437, FS-440, FS-443, FS-444]
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-16
 ---
 
 # Outsourcing approval pack
@@ -58,3 +59,13 @@ Nothing here is sent as a commitment until it is Ready.
   and SASRA/GG/1/2023 itself; until then items marked "draft" may move.
 - Items 15 and 16 are commitments for the owner; 9 and 10 were agreed on
   2026-10-05 (FS-466).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 31 | reg 31, reg 31(3)(b), reg 31(5) | Material services may be outsourced, but never the final decision to lend, management and control, the board's decisions, determining compliance with the law (31(1)(d)), or managing the loan book; the lender stays liable for its provider; the Central Bank told thirty days before, with the provider's background, owners and directors (31(3)); the contract gives the Central Bank oversight of, and access to, the provider's premises, books, records, systems and staff (31(5)) |

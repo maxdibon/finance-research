@@ -3,6 +3,7 @@ id: insights
 name: Insights — governed metrics and natural-language questions
 kind: shared-service
 status: living
+law: LR-03
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
@@ -10,7 +11,7 @@ audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, recon-observability, collect, gateway, escrow, mfi, sacco, sme-recon, omni-channel, business-suite, core, mandates]
 consumed_by: [business-suite]
 review_ids: [FS-006, FS-033, FS-043, FS-048, FS-151, FS-156, FS-157, FS-159, FS-220, FS-223, FS-224, FS-225, FS-226, FS-227, FS-228, FS-229, FS-446, FS-497, FS-532]
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-16
 ---
 
 # Insights — governed metrics and natural-language questions
@@ -206,3 +207,13 @@ FS-048, FS-225, FS-227, FS-228, FS-229.
 - docs/architecture/README.md §2, §6, §6.1, §7.
 - GateKeepr building-a-master.md §4 (verify a check by breaking it);
   STANDARDS.md §6 — principles carried over.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |

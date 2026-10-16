@@ -4,6 +4,7 @@ name: End-of-day runner — build specification
 kind: spec
 type: build
 status: draft
+law: LR-03
 released: 2026.10.15
 release: R1
 implements: [core, recon-observability]
@@ -12,7 +13,7 @@ used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667, FS-674, FS-765, FS-778, FS-792, FS-793]
-last_reviewed: 2026-10-13
+last_reviewed: 2026-10-16
 ---
 
 # End-of-day runner — build specification
@@ -289,3 +290,13 @@ the detail is behind sign-in, in the back office (owner, FS-778).
 1. Each check's class, against the criteria in §4.
 2. The tolerance for unapplied money (C5).
 3. Who receives each notice: its accountant, its finance lead, others.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 56 | reg 56(1) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |

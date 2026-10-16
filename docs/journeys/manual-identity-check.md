@@ -4,12 +4,13 @@ name: JN-02 · A borrower verified by hand
 kind: journey
 release: R1
 status: draft
+law: LR-14
 released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
 review_ids: [FS-329, FS-544, FS-547, FS-548, FS-551, FS-555, FS-556, FS-557, FS-558, FS-559, FS-561, FS-668]
-last_reviewed: 2026-10-09
+last_reviewed: 2026-10-16
 ---
 
 # JN-02 · A borrower verified by hand
@@ -128,3 +129,20 @@ document, and it never clears a check that failed.
   check of the original fits that definition. The conditions are Roan
   Capital's risk-based policy (reg 21); its compliance officer to
   confirm.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-13](../law/LR-13.md) The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A).** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2009/9/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 8 | s. 8 | Tipping off is an offence: telling anyone that a suspicious transaction report is being prepared or has been made |
+
+**[LR-14](../law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 2 | reg 2 | Its definitions; "official documents" are the originals or certified copies of documents, or the official records the Act lists |
+| reg 21 | reg 21 | Simplified customer due diligence only where lower risk has been identified by an adequate risk analysis, and never where money laundering or financing of terrorism is suspected, or in a higher-risk scenario |

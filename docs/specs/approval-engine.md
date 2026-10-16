@@ -4,6 +4,7 @@ name: Approval engine — build specification
 kind: spec
 type: build
 status: draft
+law: LR-17
 released: 2026.10.15
 release: R1
 implements: [mandates]
@@ -12,7 +13,7 @@ used_by: [recon]
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802]
-last_reviewed: 2026-10-14
+last_reviewed: 2026-10-16
 ---
 
 # Approval engine — build specification
@@ -469,3 +470,13 @@ STRIDE for security, LINDDUN for privacy (platform-security SE-16):
 8. **Fineract:** the approve, reject, withdraw and disburse commands,
    their permission codes, where an external reference can go, and how
    its own maker-checker is turned off per command.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 48 | s. 48 | Personal data transferred out of Kenya only with proof of appropriate safeguards given to the Data Commissioner, or where the transfer is necessary on a ground the section lists |

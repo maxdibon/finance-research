@@ -3,11 +3,12 @@ id: onboarding
 name: Customer onboarding checklists
 kind: checklist
 status: living
+law: LR-03
 released: 2026.10.15
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794, FS-802, FS-808]
-last_reviewed: 2026-10-14
+last_reviewed: 2026-10-16
 ---
 
 # Customer onboarding checklists
@@ -172,3 +173,14 @@ Module: [business-suite](modules/business-suite.md)
 | OB-BS-02 | Odoo or Zoho, and the subscription | Commercial lead | business-suite BS-13 |
 | OB-BS-03 | Chart of accounts, and the core's daily totals if it has a core | Finance lead | business-suite §4 |
 | OB-BS-04 | Data for migration | Finance lead | business-suite BS-10 |
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 29 | reg 29 | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
+| reg 55 | reg 55 | Pricing parameters and credit terms change only with the Central Bank's prior written approval, after thirty days' notice to the customer and the customer's acceptance |

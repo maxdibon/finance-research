@@ -328,7 +328,7 @@ regulations ask of an agreement:
   (reg 30(2)).
 - **Consent to use personal data** for the loan and its recovery, specific
   to that purpose (Data Protection Act s.30, s.32; LR-17); publishing a
-  borrower's information to shame them is forbidden (reg 30(1)(d)), so
+  borrower's information to shame them is forbidden (lender regulations reg 30(1)(d)), so
   the form's "publication of whatever nature" is not carried over.
 - **Contact in collections** only with the borrower and the guarantor
   (reg 30(1)(e)); the spouse and next of kin the form records are

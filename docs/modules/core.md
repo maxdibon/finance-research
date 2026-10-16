@@ -3,6 +3,7 @@ id: core
 name: Kapu Core
 kind: product
 status: living
+law: LR-36
 released: 2026.10.15
 owner: Product lead, Kapu
 classification: Internal
@@ -10,7 +11,7 @@ audience: [mfi, sacco, bank]
 depends_on: [access, identity, mandates, messaging, rails, recon-observability, financial-crime]
 consumed_by: [mfi, sacco, collect, omni-channel, insights, financial-crime, decisioning]
 review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431, FS-450, FS-453, FS-574, FS-578, FS-626, FS-633]
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-16
 ---
 
 # Kapu Core
@@ -182,3 +183,15 @@ FS-066, FS-185.
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — FR-7, FR-13, §6.
 - docs/architecture/README.md §2, §4.
 - Musoni System public site, read 2026-10-02, as a benchmark only.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-36](../law/LR-36.md) The Public Holidays Act (Cap. 110).** Regulator: The Cabinet Secretary, who may declare further holidays. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-04-26, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1912/21/eng@2024-04-26).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 2 | s. 2(4), s. 2(5) | The public holidays in the Schedule, with Islamic and Hindu holidays for those faiths; and the day of a general election (2(4)) and the day a President-elect is sworn in (2(5)) |
+| s. 3 | s. 3 | The Cabinet Secretary may declare a further or substitute public holiday by notice in the Gazette, for all of Kenya or part of it |
+| s. 4 | s. 4 | A public holiday in Part I of the Schedule falling on a Sunday moves to the next day that is not a holiday |

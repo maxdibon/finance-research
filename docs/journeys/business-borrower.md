@@ -4,12 +4,13 @@ name: JN-03 · A business borrower, its people and its owners
 kind: journey
 release: R1
 status: draft
+law: LR-14
 released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
 review_ids: [FS-090, FS-205, FS-415, FS-536, FS-548, FS-551, FS-562, FS-564, FS-566, FS-568, FS-668, FS-681]
-last_reviewed: 2026-10-10
+last_reviewed: 2026-10-16
 ---
 
 # JN-03 · A business borrower, its people and its owners
@@ -121,7 +122,31 @@ be authorised and verified (reg 23).
 - Whether the registry's API returns beneficial owners, or only
   shareholders. Every company lodges them with the Registrar (Companies
   Act s.93A), and the Registrar discloses them to a financial institution
-  on Form BOF6 and a fee (reg 14(1)(c)), a paper route; each vendor's
+  on Form BOF6 and a fee (BO Regulations reg 14(1)(c)), a paper route; each vendor's
   documentation names only shareholders and directors (partners PT-30,
   PT-53). If the API returns them, step 4 compares the declaration with
   the Registrar's record instead of with the shareholders.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-14](../law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 22 | reg 22 | The natural persons behind a company or other legal arrangement identified and verified, with its business, ownership and control understood, from its registration details, directors, shareholders and senior managers |
+| reg 23 | reg 23 | Someone acting for a customer is verified as authorised, and identified and verified themselves |
+
+**[LR-34](../law/LR-34.md) The Companies Act (Cap. 486).** Regulator: The Registrar of Companies. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-12-27, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2015/17/eng@2024-12-27).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 93A | s. 93A | Every company keeps a register of its beneficial owners, with the details the regulations prescribe, and lodges a copy with the Registrar |
+
+**[LR-35](../law/LR-35.md) The Companies (Beneficial Ownership Information) Regulations, Legal Notice No. 12 of 2020.** Regulator: The Registrar of Companies. Made under: The Companies Act (Cap. 486). In force: Yes. Version read: as at 2023-10-19, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2020/12/eng@2023-10-19).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 3 | reg 3(2) | Every company has a beneficial owner: a natural person who, alone or jointly, directly or indirectly, holds at least ten per cent of the shares or votes, can appoint or remove most of the board, or exercises significant influence or control (3(2)) |
+| reg 14 | reg 14(1)(c) | The Registrar may disclose beneficial ownership information to authorities and regulators; and, on Form BOF6 and the fee, to financial institutions, without protected personal information (14(1)(c)) |

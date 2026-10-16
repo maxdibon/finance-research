@@ -3,6 +3,7 @@ id: identity
 name: Identity verification — who a person or business really is
 kind: shared-service
 status: living
+law: mixed
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
@@ -10,7 +11,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite, decisioning]
 review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591]
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-16
 ---
 
 # Identity verification — who a person or business really is
@@ -201,3 +202,33 @@ FS-088, FS-090, FS-109, FS-202, FS-203, FS-204, FS-205.
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — FR-1.4, FR-2, §2.
 - Kapu Pay strategy discussion, 8 Jun 2026 (anonymised) — the national register dependency (NPDM, formerly IPRS).
 - docs/architecture/README.md §2, §6.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 63 | reg 63(2), reg 63(3) | Customer due diligence, identity verified from independent source documents; for a transaction not face to face, the identity document is that of the person actually transacting (63(2)); a guard against impersonation (63(3)) |
+
+**[LR-14](../law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 21 | reg 21 | Simplified customer due diligence only where lower risk has been identified by an adequate risk analysis, and never where money laundering or financing of terrorism is suspected, or in a higher-risk scenario |
+| reg 33 | reg 33 | Elements of due diligence may be relied on from a third party, under a written agreement, but the institution stays responsible for them |
+
+**[LR-34](../law/LR-34.md) The Companies Act (Cap. 486).** Regulator: The Registrar of Companies. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-12-27, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2015/17/eng@2024-12-27).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 93A | s. 93A | Every company keeps a register of its beneficial owners, with the details the regulations prescribe, and lodges a copy with the Registrar |
+
+**[LR-35](../law/LR-35.md) The Companies (Beneficial Ownership Information) Regulations, Legal Notice No. 12 of 2020.** Regulator: The Registrar of Companies. Made under: The Companies Act (Cap. 486). In force: Yes. Version read: as at 2023-10-19, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2020/12/eng@2023-10-19).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 3 | reg 3(2) | Every company has a beneficial owner: a natural person who, alone or jointly, directly or indirectly, holds at least ten per cent of the shares or votes, can appoint or remove most of the board, or exercises significant influence or control (3(2)) |
+| reg 14 | reg 14(1)(c) | The Registrar may disclose beneficial ownership information to authorities and regulators; and, on Form BOF6 and the fee, to financial institutions, without protected personal information (14(1)(c)) |

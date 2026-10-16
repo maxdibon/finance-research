@@ -3,6 +3,7 @@ id: business-suite
 name: Business Suite, on Odoo and Zoho
 kind: product
 status: living
+law: LR-03
 released: 2026.10.15
 owner: Product lead, business suite
 classification: Internal
@@ -10,7 +11,7 @@ audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, messaging, sme-recon, mandates, insights, sacco, mfi, identity]
 consumed_by: [insights, mfi]
 review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518, FS-521, FS-527, FS-532, FS-606, FS-608, FS-618, FS-644, FS-769, FS-770, FS-772, FS-777, FS-805]
-last_reviewed: 2026-10-14
+last_reviewed: 2026-10-16
 ---
 
 # Business Suite, on Odoo and Zoho
@@ -75,7 +76,7 @@ hosting on OLP, is **Built** (FS-293).
 | BS-14 | Check-off in payroll: each Sacco's or lender's schedule becomes deduction lines in payroll (BS-12), only with the employee's written request; total deductions held to two-thirds of wages; each remittance file produced and paid within 7 days through SME Recon (SR-11), in the payroll payment run (BS-19); files go by API, the portal or SFTP, never by email (FS-532) | Planned | Owner, 2026-10-06 (FS-499). Employment Act s.19(1)(g), s.19(3) to (5) (LR-30); Co-operative Societies Act s.35 (LR-26) | 2 |
 | BS-15 | Check-off exchange: where the Sacco or lender is on Kapu Sacco or Kapu MFI, schedules arrive by API and remittances return matched, so neither side keys a spreadsheet. Every repayment is tracked: one made directly by M-Pesa, Airtel Money, T-Kash or bank amends the next schedule sent to the employer before the payroll cut-off; one arriving after the cut-off is credited to the next instalment or refunded, never collected twice (early repayment without penalty, reg 56(3)) | Planned | Owner, 2026-10-06 (FS-499, FS-518); sacco SC-04 | 2 |
 | BS-16 | Reactivation campaigns: dormant or lapsed customers re-engaged through Odoo campaigns and Dibon's messaging, only with consent; the opt-out after full repayment honoured (CBK lender regulations reg 27(3)); suitability first (reg 38), so credit is never offered to someone the affordability check would refuse | Planned | Owner, 2026-10-06 (FS-522); BS-05 | 2 |
-| BS-17 | Employee loans from the employer's Odoo: an employee applies for a term loan or a pay-day limit (mfi MF-36) in the employee portal; the employer confirms employment and that the deduction fits within two-thirds of wages (Employment Act s.19(3)); with the employee's consent the application goes by API to the lender's Kapu MFI, whose own approval chain decides and gives reasons for a refusal (reg 28(2)); status and notifications return to Odoo and the employee's phone; the loan is booked once, in the lender's core, and shown in both Odoos | Planned | Owner, 2026-10-06 (FS-518); BS-15 | 2 |
+| BS-17 | Employee loans from the employer's Odoo: an employee applies for a term loan or a pay-day limit (mfi MF-36) in the employee portal; the employer confirms employment and that the deduction fits within two-thirds of wages (Employment Act s.19(3)); with the employee's consent the application goes by API to the lender's Kapu MFI, whose own approval chain decides and gives reasons for a refusal (lender regulations reg 28(2)); status and notifications return to Odoo and the employee's phone; the loan is booked once, in the lender's core, and shown in both Odoos | Planned | Owner, 2026-10-06 (FS-518); BS-15 | 2 |
 | BS-18 | SME documents and company records: documents in Odoo Documents, by role; board resolutions and minutes from templates, signed by the directors through Odoo Sign (BS-02); the registers of directors and shareholders checked against the business registry (identity verification ID-07); what the SME shares with a lender travels through the SME-to-lender exchange (FS-528) | Planned | Owner, 2026-10-06 (FS-521). Odoo Documents is an Enterprise app | 2 |
 | BS-19 | Payroll payment: the month's payroll paid from the employer's own accounts, never through Dibon. Net pay to each employee by bank (a bulk file or the bank's API) or by M-Pesa, Airtel Money or T-Kash, each payee's name confirmed first (rails RL-21, RL-29); statutory remittances (PAYE, NSSF, SHIF, the housing levy) and the check-off remittances to each Sacco and lender (BS-14) in the same run. The run is approved once, as one request (mandates, subject payroll.run); each payment is then an instruction from approval to settlement (rails RL-01), executed through SME Recon (SR-11); a failure is queued and retried, never paid twice; outcomes are written back to Odoo payroll, and each employee is told when they are paid | Planned | Owner, 2026-10-07 (FS-606, FS-608). Whether initiating payments from an employer's account needs authorisation is open: FS-037, compliance LC-06 | 2 |
 | BS-20 | The institution's public pages on its Odoo website: a "Request a loan" form that creates the lead in the CRM (BS-01), with consent recorded, and a loan calculator priced from the same product version as live loans through Kapu MFI (mfi MF-23), so a quote matches the loan; a credit officer converts a lead into a draft application (mfi MF-01), never automatically; and, for each active product version, its terms and key information document, published from the signed document and kept current, as the lender regulations require (regs 47(1)(d), 48; lender-rules §2.4; FS-805) | Planned | Owner, 2026-10-08 (FS-618); Roan Capital RC-28, RC-29 | 1 |
@@ -199,3 +200,36 @@ FS-036, FS-290, FS-291, FS-292.
 - docs/architecture/README.md §2, §8.
 - docs/modules/sme-recon.md, messaging.md, access.md, insights.md.
 - Odoo 20.0 documentation — AI MCP server.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 27 | reg 27(3) | Thirty days' notice to the Central Bank before a new delivery channel rolls out, with the mobile money account, apps and bank accounts to be used; a way to opt out of marketing messages; channels that are available, safe, protected from fraud, easy to use and affordable |
+| reg 28 | reg 28(2) | Applications considered under the credit policy, ability to repay assessed and no reckless lending (28(1)); a refusal given at once, with reasons (28(2)); a loan may be restructured on the borrower's request or with prior notice (28(3)) |
+| reg 38 | reg 38 | Before contracting, the customer is told they are free not to enter a contract that seems onerous or unsuitable, and of any difficulty their financial position may cause in performing it |
+| reg 47 | reg 47(1)(d) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
+| reg 48 | reg 48 | A key information document for each product: its benefits, risks, terms and conditions, in summary |
+| reg 56 | reg 56(3) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
+
+**[LR-13](../law/LR-13.md) The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A).** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2009/9/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 8 | s. 8 | Tipping off is an offence: telling anyone that a suspicious transaction report is being prepared or has been made |
+
+**[LR-26](../law/LR-26.md) The Co-operative Societies Act (Cap. 490).** Regulator: The Commissioner for Co-operative Development. Made under: An Act of Parliament. In force: Yes. Version read: as at 2023-12-11, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1997/12/eng@2023-12-11).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 35 | s. 35 | An employer that deducts a member's contribution for a co-operative society must remit it within seven days, or pay it with compound interest of at least five per cent a month; the Commissioner may sue for it |
+
+**[LR-30](../law/LR-30.md) The Employment Act (Cap. 226).** Regulator: The Ministry responsible for labour; disputes go to the Employment and Labour Relations Court. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-04-26, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2007/11/eng@2024-04-26).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 19 | s. 19(1)(g), s. 19(3), s. 19(5) | Deductions from wages only those the section allows, among them one the employee asks for in writing (19(1)(g)); all deductions together no more than two-thirds of wages (19(3)); a deduction paid over as the law or agreement requires, failing which an offence (19(5)) |

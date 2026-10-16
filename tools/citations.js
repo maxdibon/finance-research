@@ -72,19 +72,61 @@ function register(root) {
   return out;
 }
 
+// The names a document may call an instrument by, longest first: each
+// register title, without its chapter, notice or year (so "Data
+// Protection Act" places a cite as LR-17 does), and each card's "Also
+// called" (short forms such as "CBK lender regulations"), " · " between.
+function names(root) {
+  const out = [];
+  const add = (name, id) => { const n = name.trim(); if (n.length >= 3 && !out.some((x) => x.name.toLowerCase() === n.toLowerCase())) out.push({ name: n, id }); };
+  for (const [id, r] of register(root)) {
+    const plain = r.instrument.replace(/\s*\((?:Cap\.|LN|No\.|Legal Notice)[^)]*\)/g, '').trim();
+    add(plain, id);
+    add(plain.replace(/,?\s+\d{4}$/, ''), id);
+  }
+  for (const [id, card] of cards(root)) for (const n of (card.fields['Also called'] || '').split(' · ')) if (n) add(n, id);
+  return out.sort((a, b) => b.name.length - a.name.length);
+}
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 // Every cite in a document's text, outside code and the generated section,
-// each placed with its instrument: the nearest id before it in the same
-// clause, else one just after it in the same clause, else the default.
+// each placed with its instrument: an id or name written just after it
+// ("s.26, LR-11"), else the nearest id or name before it in the same
+// clause, else one a little after it, else the document's main instrument.
 const CITE = /\b(regs?|regulations?|ss?\.)\s*(\d+[A-Z]?(?:\([0-9a-z]+\))*)((?:\s*(?:,|and|to)\s*(?:\d+[A-Z]?(?:\([0-9a-z]+\))*|(?:\([0-9a-z]+\))+))*)/gi;
-function cites(text, defaultLaw) {
+function cites(text, defaultLaw, known = []) {
   const out = [];
   const body = text.split(`\n${HEADING}\n`)[0];
+  // Read by span, not by line: a paragraph, a list item or a table row, so
+  // a name at the end of one line places a cite at the start of the next.
+  const spans = [];
   let fenced = false;
+  let cur = null;
+  const close = () => { if (cur) spans.push(cur); cur = null; };
   body.split('\n').forEach((raw, i) => {
-    if (/^\s*```/.test(raw)) { fenced = !fenced; return; }
-    if (fenced || /^---$/.test(raw)) return;
-    const line = raw.replace(/`[^`]*`/g, (s) => ' '.repeat(s.length));
+    if (/^\s*```/.test(raw)) { fenced = !fenced; close(); return; }
+    if (fenced || /^---$/.test(raw) || !raw.trim()) { close(); return; }
+    const starts = /^\s*\|/.test(raw) || /^#/.test(raw) || /^\s*(?:[-*]|\d+\.)\s/.test(raw);
+    if (starts || !cur || cur.table) close();
+    if (!cur) cur = { text: '', lines: [], table: /^\s*\|/.test(raw) };
+    cur.lines.push({ at: cur.text.length ? cur.text.length + 1 : 0, n: i + 1 });
+    cur.text += cur.text.length ? ` ${raw.replace(/^\s+/, '')}` : raw;
+    if (cur.table) close();
+  });
+  close();
+  for (const span of spans) {
+    const lineOf = (at) => span.lines.filter((l) => l.at <= at).pop().n;
+    const line = span.text.replace(/`[^`]*`/g, (s) => ' '.repeat(s.length));
     const ids = [...line.matchAll(/\bLR-\d{2}\b/g)].map((m) => ({ id: m[0], at: m.index }));
+    // Names, longest first, each span used once.
+    let masked = line;
+    for (const n of known) {
+      for (const m of masked.matchAll(new RegExp(`\\b${escapeRe(n.name).replace(/ /g, '\\s+')}\\b`, 'gi'))) {
+        ids.push({ id: n.id, at: m.index + m[0].length - 1 });
+        masked = masked.slice(0, m.index) + ' '.repeat(m[0].length) + masked.slice(m.index + m[0].length);
+      }
+    }
+    ids.sort((a, b) => a.at - b.at);
     for (const m of line.matchAll(CITE)) {
       if (+m[2].match(/^\d+/)[0] >= 1000) continue; // "regulations 2026": a year
       const kind = /^s/i.test(m[1]) ? 's' : 'reg';
@@ -101,17 +143,23 @@ function cites(text, defaultLaw) {
       }
       // An id written right after the cite ("s.26, LR-11") is its own;
       // then the nearest before it in the clause; then one a little after.
-      const clause = (a, b) => !/\.\s|\s\|\s/.test(line.slice(a, b));
+      // A clause ends at a sentence's end (a full stop, then a capital) or
+      // a table cell's edge; "Cap. 411C" and "s. 44A" end nothing.
+      const clause = (a, b) => !/[\w)\]]\.\s+[A-Z]|\s\|\s/.test(line.slice(a, b));
       const end = m.index + m[0].length;
       const own = ids.find((x) => x.at >= end && /^[\s,;(]{1,4}$/.test(line.slice(end, x.at)));
       const before = ids.filter((x) => x.at < m.index && clause(x.at, m.index)).pop();
       const after = ids.find((x) => x.at >= end && x.at - end <= 40 && clause(end, x.at));
       const law = (own || before || after || {}).id || defaultLaw || null;
-      for (const p of list.filter(Boolean)) out.push({ line: i + 1, text: m[0].trim(), ...p, law });
+      for (const p of list.filter(Boolean)) out.push({ line: lineOf(m.index), text: m[0].trim(), ...p, law });
     }
-  });
+  }
   return out;
 }
+
+// A document's main instrument (law: LR-03), or none (law: mixed): then
+// every cite names its instrument, by id or by name.
+const mainLaw = (text) => (front(text).match(/^law: *(LR-\d{2})\s*$/m) || [])[1] || null;
 
 // The card row covering a cite: the row whose provision is the cite or a
 // whole of which it is a part.
@@ -121,10 +169,10 @@ const covers = (row, p) => row.kind === p.kind && row.parts.length <= p.parts.le
 // a table of the provisions cited, what each requires, as the card says.
 function section(root, file, opts = {}) {
   const text = read(root, file);
-  const law = (front(text).match(/^law: *(LR-\d{2})/m) || [])[1];
+  const law = mainLaw(text);
   const all = cards(root);
   const reg = register(root);
-  const found = cites(text, law).filter((c) => all.has(c.law));
+  const found = cites(text, law, names(root)).filter((c) => all.has(c.law));
   const order = [...new Set(found.map((c) => c.law))].sort();
   const rel = (to) => path.posix.relative(path.posix.dirname(file), to);
   const parts = order.map((id) => {
@@ -146,12 +194,19 @@ function section(root, file, opts = {}) {
   return parts.length ? parts.join('\n\n') : 'No provisions cited.';
 }
 
-// A document's generated block: everything after the mark line.
+// A document's generated block: from the mark line, as far as its own
+// lines go (an instrument's line in bold, its table, blank lines), so
+// anything written after it is the document's, kept by a refresh.
 function block(text) {
   const at = text.indexOf(`\n${HEADING}\n\n${MARK}\n\n`);
   if (at < 0) return null;
   const from = at + HEADING.length + MARK.length + 5;
-  return { from, text: text.slice(from).replace(/\n+$/, '') };
+  const lines = text.slice(from).split('\n');
+  let n = 0;
+  while (n < lines.length && (lines[n] === '' || /^\*\*.*\*\*/.test(lines[n]) || /^\|.*\|$/.test(lines[n]) || lines[n] === 'No provisions cited.')) n++;
+  while (n > 0 && lines[n - 1] === '') n--;
+  const own = lines.slice(0, n).join('\n');
+  return { from, to: from + own.length, text: own };
 }
 // Documents in docs/ that name a main instrument.
 const documents = (root) => {
@@ -159,7 +214,7 @@ const documents = (root) => {
   const walk = (rel) => {
     for (const e of fs.readdirSync(path.join(root, rel), { withFileTypes: true })) {
       const r = `${rel}/${e.name}`;
-      if (e.isDirectory()) { if (r !== LAW_DIR) walk(r); } else if (e.name.endsWith('.md') && /^law: *LR-\d{2}/m.test(front(read(root, r)))) out.push(r);
+      if (e.isDirectory()) { if (r !== LAW_DIR) walk(r); } else if (e.name.endsWith('.md') && /^law: *(?:LR-\d{2}|mixed)\s*$/m.test(front(read(root, r)))) out.push(r);
     }
   };
   walk('docs');
@@ -172,13 +227,13 @@ function refresh(root, file) {
   const want = section(root, file);
   const b = block(t);
   let out;
-  if (b) { if (b.text === want) return false; out = `${t.slice(0, b.from)}${want}\n`; }
+  if (b) { if (b.text === want) return false; out = `${t.slice(0, b.from)}${want}${t.slice(b.to) || '\n'}`; }
   else out = `${t.replace(/\n+$/, '')}\n\n${HEADING}\n\n${MARK}\n\n${want}\n`;
   fs.writeFileSync(path.join(root, file), raw.includes('\r\n') ? out.replace(/\n/g, '\r\n') : out);
   return true;
 }
 
-module.exports = { LAW_DIR, HEADING, MARK, cards, register, cites, covers, section, block, documents, refresh, show, provision };
+module.exports = { LAW_DIR, HEADING, MARK, cards, register, names, mainLaw, cites, covers, section, block, documents, refresh, show, provision };
 
 if (require.main === module) {
   const root = path.join(__dirname, '..');

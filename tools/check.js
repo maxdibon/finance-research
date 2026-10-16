@@ -100,6 +100,7 @@ function checkCitations(root) {
   const out = [];
   const lawRegister = cit.register(root);
   const cards = cit.cards(root);
+  const known = cit.names(root);
   for (const [id, card] of cards) {
     const at = (m) => out.push(fail('citations', card.file, 0, `${id}: ${m}`));
     if (!lawRegister.has(id)) at('is not in the law register');
@@ -115,10 +116,11 @@ function checkCitations(root) {
   }
   for (const file of cit.documents(root)) {
     const text = read(root, file);
-    const law = (text.match(/^law: *(LR-\d{2})/m) || [])[1];
-    if (!cards.has(law)) { out.push(fail('citations', file, 1, `law: ${law} has no card in docs/law/`)); continue; }
-    for (const c of cit.cites(text, law)) {
-      if (!cards.has(c.law)) out.push(fail('citations', file, c.line, `${cit.show(c)} is placed with ${c.law}, which has no card: write docs/law/${c.law}.md, or give the cite its instrument's id`));
+    const law = cit.mainLaw(text);
+    if (law && !cards.has(law)) { out.push(fail('citations', file, 1, `law: ${law} has no card in docs/law/`)); continue; }
+    for (const c of cit.cites(text, law, known)) {
+      if (!c.law) out.push(fail('citations', file, c.line, `${cit.show(c)} names no instrument, and the document has no main one (law: mixed): name it, or give its id`));
+      else if (!cards.has(c.law)) out.push(fail('citations', file, c.line, `${cit.show(c)} is placed with ${c.law}, which has no card: write docs/law/${c.law}.md, or give the cite its instrument's id`));
       else if (!cards.get(c.law).provisions.some((r) => cit.covers(r, c))) out.push(fail('citations', file, c.line, `${cit.show(c)} (${c.law}) has no row on its card: add what it requires to docs/law/${c.law}.md`));
     }
     const b = cit.block(text);

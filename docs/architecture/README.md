@@ -3,11 +3,12 @@ id: architecture
 name: Platform architecture — who holds what
 kind: architecture
 status: draft
+law: LR-03
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
 review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793]
-last_reviewed: 2026-10-13
+last_reviewed: 2026-10-16
 ---
 
 # Platform architecture — who holds what
@@ -641,3 +642,19 @@ the audit trail and matches in reconciliation agree (FS-634).
   of October 2026, FS-584 to FS-649.
 - ISO/IEC/IEEE 42010, arc42 and the C4 model, for the views beside this
   file (FS-649).
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 30 | reg 30 | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
+
+**[LR-11](../law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 2 | s. 2 | Its definitions; a "payment service provider" includes whoever provides services for sending, receiving, storing or processing payments electronically, and any person that processes or stores data on behalf of such a provider or its users |

@@ -4,12 +4,13 @@ name: JN-16 · An unplaced payment, from arrival to its account or back to the p
 kind: journey
 release: R1
 status: draft
+law: LR-38
 released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
 review_ids: [FS-548, FS-661, FS-663, FS-668, FS-670, FS-672, FS-673, FS-674, FS-744]
-last_reviewed: 2026-10-12
+last_reviewed: 2026-10-16
 ---
 
 # JN-16 · An unplaced payment, from arrival to its account or back to the payer
@@ -128,3 +129,19 @@ returned at day 7 (collect CO-21, FS-663).
 - **For the owner:** whether a till payment, which carries no reference,
   should prompt the payer for the account automatically, rather than
   waiting for the accountant.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-38](../law/LR-38.md) The Unclaimed Financial Assets Act (Cap. 494; No. 40 of 2011).** Regulator: The Unclaimed Financial Assets Authority. Made under: An Act of Parliament. In force: Yes. Version read: as at 2023-07-01, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/40/eng@2023-07-01).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 13 | s. 13 | Assets held in a fiduciary capacity are presumed abandoned if the owner has shown no interest in them for two years after they became payable |
+| s. 14 | s. 14 | A gift certificate, gift card or credit memo is presumed abandoned after five years unclaimed or unused |
+| s. 19 | s. 19 | A holder makes all reasonable efforts to find and notify the owner, and notifies them between sixty days and a year before reporting the assets |
+| s. 20 | s. 20 | A certified report of assets presumed abandoned, to the Authority, by 1 November each year for the year to 30 June |
+| s. 22 | s. 22 | The assets reported paid or delivered to the Authority when the report is filed |
+| s. 23 | s. 23 | The Authority takes custody; a holder that pays over in good faith is relieved of liability for the assets |
+| s. 32 | s. 32 | A holder keeps the owner's name and last known address for ten years after the assets became reportable |

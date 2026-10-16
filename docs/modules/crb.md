@@ -3,6 +3,7 @@ id: crb
 name: CRB — credit bureau connections
 kind: shared-service
 status: living
+law: LR-06
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
@@ -10,7 +11,7 @@ audience: [bank, sacco, mfi, fintech, sme]
 depends_on: [mandates, messaging, recon-observability, identity, access]
 consumed_by: [mfi, sacco, sme-recon]
 review_ids: [FS-004, FS-005, FS-019, FS-020, FS-022, FS-137, FS-186, FS-187, FS-188, FS-189, FS-190, FS-191, FS-447]
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-16
 ---
 
 # CRB — credit bureau connections
@@ -200,3 +201,19 @@ FS-004, FS-187, FS-188, FS-189, FS-191.
 - docs/modules/mfi.md MF-19, docs/modules/sacco.md SC-18.
 - GateKeepr STANDARDS.md §6.1 (the reason exists before the lookup) —
   principle carried over.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 33 | reg 33 | Customers' credit information shared with licensed credit reference bureaus, timely, complete and accurate; no negative listing for an amount of one thousand shillings or less (33(3)) |
+
+**[LR-06](../law/LR-06.md) The Banking (Credit Reference Bureau) Regulations, 2020, Legal Notice No. 55 of 2020.** Regulator: Central Bank of Kenya. Made under: The Banking Act (Cap. 488), with the Microfinance Act and the Central Bank of Kenya Act. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2020/55/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 2 | reg 2 | Its definitions; a "subscriber" is an institution licensed under the Banking Act, the Microfinance Act or the Sacco Societies Act that has subscribed to receive customer information from a bureau |

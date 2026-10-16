@@ -4,12 +4,13 @@ name: JN-05 · A guarantor, from consent to release
 kind: journey
 release: R1
 status: draft
+law: LR-03
 released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
 review_ids: [FS-531, FS-533, FS-548, FS-621, FS-622, FS-668, FS-674]
-last_reviewed: 2026-10-09
+last_reviewed: 2026-10-16
 ---
 
 # JN-05 · A guarantor, from consent to release
@@ -111,3 +112,16 @@ default (reg 42(4)); recovery expenses only as necessary, itemised
   individuals for personal loans too?
 - How long the guarantor has to consent before the request lapses.
 - How often statements go to guarantors: monthly, or at each change.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 39 | reg 39(3) | A receipt for every transaction, a free loan statement on request and a way to see it at any time (39(1)); errors corrected promptly (39(2)); a guarantor kept informed through periodic statements (39(3)) |
+| reg 42 | reg 42(1), reg 42(2), reg 42(3), reg 42(4) | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
+| reg 43 | reg 43 | Recovery expenses only those absolutely necessary, each itemised and justified to the borrower; a sale of a customer's or guarantor's property done transparently |
+| reg 47 | reg 47(2) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |

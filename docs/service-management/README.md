@@ -3,11 +3,12 @@ id: service-management
 name: Service management — the ITIL 4 practices we adopt, at our size
 kind: plan
 status: living
+law: LR-03
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757, FS-780]
-last_reviewed: 2026-10-13
+last_reviewed: 2026-10-16
 ---
 
 # Service management
@@ -245,3 +246,14 @@ as part of the operating system ([architecture](../architecture/README.md)
 | Service-level targets | Proposed defaults ([§5](#5--service-levels)) | Agree in Roan Capital's contract |
 | The bastion that records engineers' sessions where Dibon runs the instance | Warpgate to evaluate; Teleport's community edition is no longer open source ([technology](../architecture/technology.md)) | Evaluate before R1 go-live (FS-645, FS-695) |
 | An ISO/IEC 20000-1 certification body | No KENAS-accredited body found; SGS advertises it ([compliance](../compliance.md) LC-10) | Stay "in line with" until a route is confirmed |
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 31 | reg 31 | Material services may be outsourced, but never the final decision to lend, management and control, the board's decisions, determining compliance with the law (31(1)(d)), or managing the loan book; the lender stays liable for its provider; the Central Bank told thirty days before, with the provider's background, owners and directors (31(3)); the contract gives the Central Bank oversight of, and access to, the provider's premises, books, records, systems and staff (31(5)) |
+| reg 40 | reg 40 | A complaints mechanism made known to customers; acknowledgement within seven days where a complaint cannot be dealt with promptly; an oral complaint unresolved after forty-eight hours confirmed in writing; resolution within thirty days |

@@ -3,6 +3,7 @@ id: platform-security
 name: Platform Security
 kind: shared-service
 status: living
+law: LR-17
 released: 2026.10.15
 owner: Security lead
 classification: Internal
@@ -10,7 +11,7 @@ audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
 review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661, FS-698, FS-699, FS-701, FS-711, FS-712, FS-775, FS-777, FS-793]
-last_reviewed: 2026-10-13
+last_reviewed: 2026-10-16
 ---
 
 # Platform Security
@@ -255,3 +256,13 @@ None open in the register.
 - REVIEW.md FS-458 to FS-464; research of 2026-10-05 (Azure Stack Hub
   service availability, standards and tool licences).
 - docs/architecture/README.md §3, §6, §6.1, §7; docs/approval-pack.md.
+
+## Regulations cited
+
+*Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
+
+**[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 43 | s. 43(3) | A breach with a real risk of harm notified to the Data Commissioner within seventy-two hours, and to the person affected; a processor tells the controller within forty-eight hours where practicable (43(3)) |

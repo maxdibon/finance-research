@@ -65,8 +65,12 @@ its money and its records; Dibon holds the platform. Read
   what you did not do.
 - **Cite the law through its card** (FS-868): a provision cited gets a
   row on its instrument's card in docs/law/, read from the text; a
-  document names its main instrument (`law: LR-03`) and gives other
-  cites their id where made; `node tools/citations.js` writes the section.
+  document names its main instrument (`law: LR-03`, or `law: mixed`
+  when it cites many) and names any other law where a cite is made, in
+  words ("Banking Act s.44A") or by id; a card's "Also called" lists the
+  short names it answers to. `node tools/citations.js` writes the
+  section. A test that adds text at a document's end must put it before
+  the generated section, which now closes 48 documents (FS-870).
 - **Read the law before citing it**, in its text in `sources/regulation/`;
   when it has not been read, say "to confirm". Cite the provision.
 - **Compute counts; never type them.** The delivery plan's typed R1
