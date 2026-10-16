@@ -17,6 +17,7 @@
 const fs = require('fs');
 const path = require('path');
 
+const dirs = new Map();
 const PATH = /(?<![\w./:-])((?:[\w-]+\/)+)?([\w-][\w.-]*\.md)\b|(?<![\w./:-])((?:[\w-]+\/)+)(?![\w.])/g;
 
 // Every path written in `text`: { at, text, dir, name } for a file,
@@ -61,7 +62,12 @@ function ambiguous(idx, file, name, last) {
 // A folder mention: { docs: 'docs/x/' } inside docs/, { other: 'tools/' }
 // outside it, or null.
 function resolveFolder(root, file, folder) {
-  const isDir = (p) => { try { return fs.statSync(path.join(root, ...p.split('/'))).isDirectory(); } catch { return false; } };
+  const isDir = (p) => {
+    // FS-877: a folder's existence asked once a run, not once a mention.
+    const abs = path.join(root, ...p.split('/'));
+    if (!dirs.has(abs)) { let d = false; try { d = fs.statSync(abs).isDirectory(); } catch { /* none */ } dirs.set(abs, d); }
+    return dirs.get(abs);
+  };
   const here = path.posix.dirname(file);
   const inDocs = [path.posix.normalize(path.posix.join(here, folder)), folder.startsWith('docs/') ? folder : `docs/${folder}`]
     .map((p) => p.replace(/\/?$/, '/')).find((p) => p.startsWith('docs/') && isDir(p));

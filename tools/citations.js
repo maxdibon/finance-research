@@ -35,7 +35,7 @@ function provision(text) {
 const show = (p) => `${p.kind === 'reg' ? 'reg' : 's.'} ${p.parts[0]}${p.parts.slice(1).map((x) => `(${x})`).join('')}`;
 
 // Every card: id → { file, fields, provisions: [{ kind, parts, requires }] }.
-function cards(root) {
+function cardsRaw(root) {
   const out = new Map();
   const dir = path.join(root, LAW_DIR);
   if (!fs.existsSync(dir)) return out;
@@ -61,7 +61,7 @@ function cards(root) {
 }
 
 // The law register's rows: id → { instrument, asAt, url }.
-function register(root) {
+function registerRaw(root) {
   const out = new Map();
   for (const l of read(root, 'docs/regulation.md').split('\n')) {
     const c = cells(l);
@@ -76,9 +76,11 @@ function register(root) {
 // register title, without its chapter, notice or year (so "Data
 // Protection Act" places a cite as LR-17 does), and each card's "Also
 // called" (short forms such as "CBK lender regulations"), " · " between.
-function names(root) {
+function namesRaw(root) {
   const out = [];
-  const add = (name, id) => { const n = name.trim(); if (n.length >= 3 && !out.some((x) => x.name.toLowerCase() === n.toLowerCase())) out.push({ name: n, id }); };
+  // Each name with its pattern, compiled once, and its first word, so a
+  // span without that word is never tried (FS-877: the checks ran 10x slower).
+  const add = (name, id) => { const n = name.trim(); if (n.length >= 3 && !out.some((x) => x.name.toLowerCase() === n.toLowerCase())) out.push({ name: n, id, re: new RegExp(`\\b${escapeRe(n).replace(/ /g, '\\s+')}\\b`, 'gi'), first: n.split(/\s+/)[0].toLowerCase() }); };
   for (const [id, r] of register(root)) {
     const plain = r.instrument.replace(/\s*\((?:Cap\.|LN|No\.|Legal Notice)[^)]*\)/g, '').trim();
     add(plain, id);
@@ -92,6 +94,30 @@ function names(root) {
   return out;
 }
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// FS-877: cards, the register and the names, read once a run and again
+// only when a card or the register changes on disk (a test, or a tool
+// writing a card, sees its own change).
+const memo = new Map();
+function stampOf(root) {
+  const dir = path.join(root, LAW_DIR);
+  const files = [...(fs.existsSync(dir) ? fs.readdirSync(dir).map((f) => path.join(dir, f)) : []), path.join(root, 'docs', 'regulation.md')];
+  return files.map((f) => { try { const s = fs.statSync(f); return `${s.mtimeMs}:${s.size}`; } catch { return '-'; } }).join(',');
+}
+// The three together, the files' timestamps read once.
+function context(root) {
+  const stamp = stampOf(root);
+  const k = `${path.resolve(root)}|context`;
+  const hit = memo.get(k);
+  if (hit && hit.stamp === stamp) return hit.value;
+  const value = { cards: cardsRaw(root), register: registerRaw(root) };
+  memo.set(k, { stamp, value });
+  value.names = namesRaw(root);
+  return value;
+}
+const cards = (root) => context(root).cards;
+const register = (root) => context(root).register;
+const names = (root) => context(root).names;
 
 // Every cite in a document's text, outside code and the generated section,
 // each placed with its instrument: an id or name written just after it
@@ -124,8 +150,10 @@ function cites(text, defaultLaw, known = []) {
     const ids = [...line.matchAll(/\bLR-\d{2}\b/g)].map((m) => ({ id: m[0], at: m.index }));
     // Names, longest first, each span used once.
     let masked = line;
+    const lower = line.toLowerCase();
     for (const n of known) {
-      for (const m of masked.matchAll(new RegExp(`\\b${escapeRe(n.name).replace(/ /g, '\\s+')}\\b`, 'gi'))) {
+      if (n.first && !lower.includes(n.first)) continue;
+      for (const m of masked.matchAll(n.re || new RegExp(`\\b${escapeRe(n.name).replace(/ /g, '\\s+')}\\b`, 'gi'))) {
         ids.push({ id: n.id, at: m.index + m[0].length - 1 });
         masked = masked.slice(0, m.index) + ' '.repeat(m[0].length) + masked.slice(m.index + m[0].length);
       }
@@ -176,9 +204,10 @@ const covers = (row, p) => row.kind === p.kind && row.parts.length <= p.parts.le
 // Word document's included): each instrument cited, with its card's facts,
 // the version read, and each provision's row and how it is cited here.
 function sectionData(root, text, law) {
-  const all = cards(root);
-  const reg = register(root);
-  const found = cites(text, law, names(root)).filter((c) => all.has(c.law));
+  const ctx = context(root);
+  const all = ctx.cards;
+  const reg = ctx.register;
+  const found = cites(text, law, ctx.names).filter((c) => all.has(c.law));
   const byParts = (a, b) => { for (let k = 0; k < Math.max(a.parts.length, b.parts.length); k++) { const x = a.parts[k] || ''; const y = b.parts[k] || ''; if (x !== y) return (parseInt(x, 10) - parseInt(y, 10)) || x.localeCompare(y); } return 0; };
   return [...new Set(found.map((c) => c.law))].sort().map((id) => {
     const card = all.get(id);
