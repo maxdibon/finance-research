@@ -206,7 +206,7 @@ team's words (§7 to §10, FS-847), which follow these rules for them.
 | **Squash on merge** | One commit per merge request on main, its description as the message; the branch's own commits may be untidy |
 | **Tags are annotated, and signed once keys exist** | `git tag -a docs-2026.10.15 -m "…"`; a published tag is never moved or deleted |
 | **Line endings** | LF everywhere (`.gitattributes`); a clone sets nothing by hand |
-| **The register** | REVIEW.md merges by union, so two branches' new rows both survive; the register check fails a skipped or repeated FS id. In GitLab an FS id comes from its issue, so two people never take the same one |
+| **The register** | REVIEW.md, its open rows, and review/, its closed rows by the hundred (FS-866), merge by union, so two branches' new rows both survive; the register check fails a skipped or repeated FS id. In GitLab an FS id comes from its issue, so two people never take the same one |
 | **Changelogs** | Never edited by hand: each merge request carries a change note, and a release gathers them (rules, Dibon 12) |
 | **Hooks** | `git config core.hooksPath .githooks` once per clone: pre-commit runs the checks, commit-msg holds the subject |
 | **Size** | A merge request a reviewer reads in one sitting, about 400 changed lines for code; the reader's preview shows documents as pages |

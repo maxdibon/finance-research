@@ -13,7 +13,7 @@ const test = require('node:test');
 const { runAll } = require('./check');
 
 const ROOT = path.join(__dirname, '..');
-const COPY = ['README.md', 'REVIEW.md', 'CHANGELOG.md', 'HANDOFF.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'), path.join('design', 'system'), 'code',
+const COPY = ['README.md', 'REVIEW.md', 'review', 'CHANGELOG.md', 'HANDOFF.md', 'docs', path.join('sources', 'kapu'), path.join('design', 'portfolio-pdf'), path.join('design', 'system'), 'code',
   path.join('sources', 'confidential', 'protected-names.txt')];
 
 // A fresh copy of the checked files, perturbed by `edit`, then checked.
@@ -61,18 +61,18 @@ test('names: a missing list fails rather than passing silently', () => {
 });
 
 test('register: a row out of sequence fails', () => {
-  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace('| FS-002 |', '| FS-003 |')));
+  const f = runWith((d) => patch(d, path.join('review', 'FS-001-099.md'), (t) => t.replace('| FS-002 |', '| FS-003 |')));
   assert.ok(names(f).includes('register'));
 });
 
 test('register: a row with an extra cell fails', () => {
-  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-001 \|.*)$/m, '$1 extra |')));
+  const f = runWith((d) => patch(d, path.join('review', 'FS-001-099.md'), (t) => t.replace(/^(\| FS-001 \|.*)$/m, '$1 extra |')));
   assert.deepStrictEqual(names(f), ['register']);
 });
 
 test('register: an unknown status fails', () => {
   // FS-002 has no decisions entry, so only the register check is involved.
-  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-002 \|[^|]*\|[^|]*\|) DECIDED \|/m, '$1 DONE |')));
+  const f = runWith((d) => patch(d, path.join('review', 'FS-001-099.md'), (t) => t.replace(/^(\| FS-002 \|[^|]*\|[^|]*\|) DECIDED \|/m, '$1 DONE |')));
   assert.deepStrictEqual(names(f), ['register']);
 });
 
@@ -81,8 +81,41 @@ test('register: an open row without a criticality fails', () => {
   assert.deepStrictEqual(names(f), ['register']);
 });
 
+// FS-866: open rows in REVIEW.md, closed rows in review/, by the hundred.
+test('register: a row closed but left in REVIEW.md fails, and tidy files it', () => {
+  const close = (d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\|) OPEN \| Low \|/m, '$1 DECIDED | — |'));
+  assert.deepStrictEqual(names(runWith(close)), ['register']);
+  const f = runWith((d) => {
+    close(d);
+    const moved = require('./register').tidy(d);
+    assert.deepStrictEqual(moved, ['FS-012 to review/FS-001-099.md']);
+  });
+  assert.deepStrictEqual(f, []);
+});
+
+test('register: a row reopened in review/ fails, and tidy brings it back', () => {
+  const reopen = (d) => patch(d, path.join('review', 'FS-001-099.md'), (t) => t.replace(/^(\| FS-002 \|[^|]*\|[^|]*\|) DECIDED \| — \|/m, '$1 OPEN | Low |'));
+  assert.deepStrictEqual(names(runWith(reopen)), ['register']);
+  const f = runWith((d) => { reopen(d); require('./register').tidy(d); });
+  assert.deepStrictEqual(f, []);
+});
+
+test('register: an id missing from every file fails', () => {
+  const f = runWith((d) => patch(d, path.join('review', 'FS-100-199.md'), (t) => t.replace(/^\| FS-150 \|.*\n/m, '')));
+  assert.ok(names(f).includes('register'));
+});
+
+test('markup: a file over 200 KB, or a word in angle brackets, fails', () => {
+  const big = runWith((d) => fs.appendFileSync(path.join(d, 'docs', 'testing.md'), `\n${'A long line of filler text for size. '.repeat(6000)}\n`));
+  assert.deepStrictEqual(names(big), ['markup']);
+  const tag = runWith((d) => patch(d, path.join('docs', 'testing.md'), (t) => `${t}\nCopy it to clients/<customer>/ first.\n`));
+  assert.deepStrictEqual(names(tag), ['markup']);
+  const coded = runWith((d) => patch(d, path.join('docs', 'testing.md'), (t) => `${t}\nCopy it to \`clients/<customer>/\` first.\n`));
+  assert.deepStrictEqual(coded, []);
+});
+
 test('register: a closed row still rated fails', () => {
-  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-001 \|[^|]*\|[^|]*\|) DECIDED \| — \|/m, '$1 DECIDED | High |')));
+  const f = runWith((d) => patch(d, path.join('review', 'FS-001-099.md'), (t) => t.replace(/^(\| FS-001 \|[^|]*\|[^|]*\|) DECIDED \| — \|/m, '$1 DECIDED | High |')));
   assert.deepStrictEqual(names(f), ['register']);
 });
 
@@ -261,7 +294,7 @@ test('decisions: a row marked [decision] with no entry fails', () => {
 });
 
 test('decisions: an entry whose row is not marked fails', () => {
-  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-230 \|.*?) \[decision\] \|$/m, '$1 |')));
+  const f = runWith((d) => patch(d, path.join('review', 'FS-200-299.md'), (t) => t.replace(/^(\| FS-230 \|.*?) \[decision\] \|$/m, '$1 |')));
   assert.deepStrictEqual(names(f), ['decisions']);
 });
 

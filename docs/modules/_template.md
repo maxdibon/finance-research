@@ -13,13 +13,13 @@ audience: [bank, sacco, mfi, psp, imt, sme, fintech]   # who a pack may include 
 depends_on: []                # module ids this needs (shared services, rails)
 consumed_by: []               # module ids that use this
 review_ids: []                # REVIEW.md ids that bear on this module
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-16
 ---
 
 <!--
 HOW TO USE THIS TEMPLATE
 
-Copy to docs/modules/<id>.md. Keep every heading, in this order. A section
+Copy to `docs/modules/<id>.md`. Keep every heading, in this order. A section
 with nothing to say yet says so in one line ("None known.") rather than
 being deleted — a missing heading reads as an oversight, a stated "none"
 reads as a decision.

@@ -82,7 +82,7 @@ function countsSection(c) {
     '|---|---|---|---|---|',
     ...rows,
     '',
-    `**Register (REVIEW.md):** ${c.register.rows} rows — ${line(c.register.byStatus)}.`,
+    `**Register (REVIEW.md, open; review/, closed):** ${c.register.rows} rows — ${line(c.register.byStatus)}.`,
     '',
     `**Partners:** ${c.partners.candidates} candidates — ${line(c.partners.byStage)}. ` +
       `Selection decisions — ${line(c.partners.decisions)}.`,

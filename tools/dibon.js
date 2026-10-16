@@ -105,10 +105,11 @@ function explain(failures) {
 }
 
 // ── the register: a new row on start ─────────────────────────────────────
+// The next id is the next across REVIEW.md and review/ (FS-866); a new row
+// is open, so it goes in REVIEW.md.
 function newRow(point) {
   const t = read('REVIEW.md');
-  const ids = [...t.matchAll(/^\| FS-(\d{3}) \|/gm)].map((m) => +m[1]);
-  const id = `FS-${String(Math.max(...ids) + 1).padStart(3, '0')}`;
+  const id = require('./register').nextId(ROOT);
   const who = git(['config', '--get', 'user.name'], { ok: true }).split(' ')[0] || role();
   const row = `| ${id} | ${who} | ${point.replace(/\|/g, '/')} | OPEN | Medium | **${today()}:** started (dibon) |`;
   write('REVIEW.md', `${t.trimEnd()}\n${row}\n`);
@@ -284,7 +285,12 @@ const word = {
       if (fs.existsSync(abs) && !inRepo) stop(`"${arg}" is a document from outside, not a change to the documentation. Did you mean: dibon received "${arg}" --from <customer>?`);
       if (fs.existsSync(abs) && inRepo) { only = path.relative(ROOT, abs).split(path.sep).join('/'); arg = plain[2]; }
     }
-    const changed = unsaved().filter((u) => !only || u.file === only);
+    // FS-866: a row closed or reopened moves to its file first, and the
+    // register's files are saved together, so no row is ever left behind.
+    const moved = require('./register').tidy(ROOT);
+    if (moved.length) say(`The register tidied: ${moved.length} row${moved.length === 1 ? '' : 's'} moved (${moved.join('; ')}).`);
+    const reg = (f) => f === 'REVIEW.md' || /^review\//.test(f);
+    const changed = unsaved().filter((u) => !only || u.file === only || (reg(only) && reg(u.file)));
     if (!changed.length) stop(only ? `${only} has no unsaved changes.` : 'Nothing to save: no changes since your last save.');
     say('To save:');
     for (const u of changed) say(`  ${u.code.includes('?') || u.code.includes('A') ? 'new     ' : u.code.includes('D') ? 'removed ' : 'changed '} ${u.file}`);
@@ -295,7 +301,7 @@ const word = {
     const subject = /^FS-\d{3}/.test(arg) ? arg : `${row || 'FS-???'}: ${arg}`;
     if (!/^FS-\d{3}/.test(subject)) stop('Which register row? Your branch has none: start with dibon start, or begin the description with FS-123.');
     if (!await ask(`Save ${changed.length} file${changed.length === 1 ? '' : 's'} as "${subject}"?`)) return say('Not saved.');
-    if (only) git(['add', '--', only]); else git(['add', '-A']);
+    if (only) git(['add', '--', ...changed.map((u) => u.file)]); else git(['add', '-A']);
     const r = git(['commit', '-q', '-m', subject], { ok: true, full: true });
     if (r.status !== 0) stop(`Not saved: ${(r.stderr || r.stdout).trim()}`);
     say(`Saved on ${branch()}: "${subject}". When the work is done: dibon share.`);

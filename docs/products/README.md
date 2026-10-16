@@ -7,7 +7,7 @@ released: 2026.10.15
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823, FS-825]
-last_reviewed: 2026-10-14
+last_reviewed: 2026-10-16
 ---
 
 # Products
@@ -46,8 +46,8 @@ the answers would break.
 |---|---|---|
 | Build the questionnaires | `node tools/products/questionnaires.js docs/products/<draft>.md` | Needs the docx package (`npm install docx` anywhere; DOCX_MODULE points at it). Writes build/products/, one Word document per group, a form field per item still to answer. Render one and look at every page before sending |
 | Send them | To the institution's product owner, credit lead and operations lead | The file itself comes back, not an email of answers |
-| Keep what comes back | In clients/<institution>/ | Client material: never in git |
-| Read one back | `node tools/products/read-back.js clients/<institution>/<file>.docx` | Reports what was answered, what changed a value we had, what needs a person, and what is still open by kind. Add `--write` to merge the answers into the draft, each with the source "<institution>, <date>" |
+| Keep what comes back | In `clients/<institution>/` | Client material: never in git |
+| Read one back | `node tools/products/read-back.js clients/<institution>/<file>.docx` | Reports what was answered, what changed a value we had, what needs a person, and what is still open by kind. Add `--write` to merge the answers into the draft, each with the source `<institution>, <date>` |
 
 The read-back never overwrites: an answer with a comment, a "not right"
 with no correction, an option that wants detail and has none, or a new

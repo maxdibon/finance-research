@@ -1,16 +1,16 @@
 ---
 id: customer-template
-name: <Customer> — delivery map
+name: Customer name — delivery map
 kind: delivery
 status: living
 released: unreleased
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-837, FS-838, FS-845]
-last_reviewed: 2026-10-15
+last_reviewed: 2026-10-16
 ---
 
-# <Customer> · delivery map
+# Customer name · delivery map
 
 What we are delivering to one customer, against what it asked for, and
 where it stands. Every customer page has these eight sections, in this

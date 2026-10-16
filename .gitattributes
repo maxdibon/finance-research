@@ -19,3 +19,5 @@
 # The register is append-only: when two branches each add rows, keep both
 # (FS-846). The register check still fails a skipped or repeated FS id.
 REVIEW.md merge=union
+# FS-866: the closed rows, a file per hundred ids, merge the same way.
+review/*.md merge=union

@@ -82,48 +82,70 @@ function checkNames(root, files) {
 }
 
 // ── register ─────────────────────────────────────────────────────────────
+// FS-866: the register is REVIEW.md and review/ (tools/register.js), read
+// as one; each row knows its file.
 function parseRegister(root) {
-  const rows = [];
-  read(root, 'REVIEW.md').split('\n').forEach((text, i) => {
-    if (!/^\| FS-\d{3} \|/.test(text)) return;
-    const cells = text.split('|').slice(1, -1).map((c) => c.trim());
-    rows.push({ line: i + 1, id: cells[0], raisedBy: cells[1], point: cells[2],
-      status: cells[3], criticality: cells[4], notes: cells[5], cellCount: cells.length });
-  });
-  return rows;
+  return require('./register').rows(root); // beside the check, as dibon.js is
+}
+
+// ── markup ───────────────────────────────────────────────────────────────
+// FS-866: what a Markdown preview (GitHub, the desktop app) cannot show.
+// A file over 200 KB: one of 414 KB showed as raw text, with no table
+// (the limit lies between 256 and 360 KB). A word in angle brackets
+// outside code (<file>): read as an HTML tag, it vanishes; write it in
+// backticks.
+const MARKUP_LIMIT = 200 * 1024;
+function checkMarkup(root, files) {
+  const out = [];
+  for (const file of files.filter((f) => f.endsWith('.md'))) {
+    const raw = fs.readFileSync(path.join(root, file), 'utf8');
+    if (Buffer.byteLength(raw) > MARKUP_LIMIT) out.push(fail('markup', file, 0, `${Math.round(Buffer.byteLength(raw) / 1024)} KB: over ${MARKUP_LIMIT / 1024} KB, a preview may show it as raw text; split it`));
+    let fenced = false;
+    raw.replace(/\r\n/g, '\n').split('\n').forEach((line, i) => {
+      if (/^\s*```/.test(line)) { fenced = !fenced; return; }
+      if (fenced || /^ {4}/.test(line)) return;
+      const m = line.replace(/`[^`]*`/g, '').match(/<([A-Za-z][A-Za-z0-9 _-]*)>/);
+      if (m && !/^(br|b|i|em|strong|sub|sup|code|kbd|details|summary|p|div|span)$/i.test(m[1])) out.push(fail('markup', file, i + 1, `"<${m[1]}>" is read as an HTML tag and vanishes: write it in backticks`));
+    });
+  }
+  return out;
 }
 
 function checkRegister(root) {
   const failures = [];
+  const reg = require('./register');
   const rows = parseRegister(root);
   // A heading holding a table's cells is a script's slip (FS-779): it
   // renders as a huge title and hides the rows it should have changed.
   // FS-866: so is a heading holding any pipe or a row's marker, which a
-  // marking script once wrote into the title ("review [decision] |register").
-  read(root, 'REVIEW.md').split('\n').forEach((line, i) => {
-    if (/^#/.test(line) && (/\|/.test(line) || /\[decision\]/.test(line))) failures.push(fail('register', 'REVIEW.md', i + 1, 'a heading holds a pipe or a row\'s marker: a script wrote into it'));
-  });
+  // marking script once wrote into the title. In every register file.
+  for (const file of reg.files(root)) {
+    read(root, file).split('\n').forEach((line, i) => {
+      if (/^#/.test(line) && (/\|/.test(line) || /\[decision\]/.test(line))) failures.push(fail('register', file, i + 1, 'a heading holds a pipe or a row\'s marker: a script wrote into it'));
+    });
+  }
+  // Every id once, none skipped, across the files; each file in id order.
+  const seen = new Map();
+  for (const r of rows) seen.set(r.n, (seen.get(r.n) || 0) + 1);
+  const top = Math.max(0, ...rows.map((r) => r.n));
+  for (let n = 1; n <= top; n++) {
+    const id = `FS-${String(n).padStart(3, '0')}`;
+    if (!seen.has(n)) failures.push(fail('register', reg.MAIN, 0, `${id} is missing: ids are never skipped`));
+    else if (seen.get(n) > 1) failures.push(fail('register', reg.MAIN, 0, `${id} appears ${seen.get(n)} times`));
+  }
   rows.forEach((row, i) => {
-    const expected = `FS-${String(i + 1).padStart(3, '0')}`;
-    if (row.id !== expected) {
-      failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} out of sequence; expected ${expected}`));
-    }
-    if (row.cellCount !== 6) {
-      failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} has ${row.cellCount} cells; expected 6`));
-    }
-    if (!REVIEW_STATUSES.includes(row.status)) {
-      failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} status "${row.status}" not in ${REVIEW_STATUSES.join('/')}`));
-    }
-    if (row.status === 'OPEN' && !CRITICALITIES.includes(row.criticality)) {
-      failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} is open with criticality "${row.criticality}"; one of ${CRITICALITIES.join('/')}`));
-    }
-    if (row.status !== 'OPEN' && row.criticality !== '—') {
-      failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} is ${row.status} but still rated "${row.criticality}"; a closed row has —`));
-    }
-    if (!row.raisedBy) failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} has no raiser`));
-    if (row.status === 'DECLINED' && !row.notes) {
-      failures.push(fail('register', 'REVIEW.md', row.line, `${row.id} declined with no reason`));
-    }
+    const at = (msg) => failures.push(fail('register', row.file, row.line, msg));
+    const prev = rows[i - 1];
+    if (prev && prev.file === row.file && prev.n >= row.n) at(`${row.id} out of sequence after ${prev.id}`);
+    // FS-866: open rows in REVIEW.md, closed rows in their hundred's file.
+    const want = row.status === 'OPEN' ? reg.MAIN : reg.fileFor(row.n);
+    if (REVIEW_STATUSES.includes(row.status) && row.file !== want) at(`${row.id} is ${row.status} and belongs in ${want}: run node tools/register.js tidy`);
+    if (row.cellCount !== 6) at(`${row.id} has ${row.cellCount} cells; expected 6`);
+    if (!REVIEW_STATUSES.includes(row.status)) at(`${row.id} status "${row.status}" not in ${REVIEW_STATUSES.join('/')}`);
+    if (row.status === 'OPEN' && !CRITICALITIES.includes(row.criticality)) at(`${row.id} is open with criticality "${row.criticality}"; one of ${CRITICALITIES.join('/')}`);
+    if (row.status !== 'OPEN' && row.criticality !== '—') at(`${row.id} is ${row.status} but still rated "${row.criticality}"; a closed row has —`);
+    if (!row.raisedBy) at(`${row.id} has no raiser`);
+    if (row.status === 'DECLINED' && !row.notes) at(`${row.id} declined with no reason`);
   });
   return failures;
 }
@@ -136,7 +158,7 @@ function checkReviewIds(root, files) {
   for (const file of files) {
     read(root, file).split('\n').forEach((text, i) => {
       for (const m of text.matchAll(/\bFS-\d{3}\b/g)) {
-        if (!known.has(m[0])) failures.push(fail('review-ids', file, i + 1, `${m[0]} is not in REVIEW.md`));
+        if (!known.has(m[0])) failures.push(fail('review-ids', file, i + 1, `${m[0]} is not in the register (REVIEW.md, review/)`));
       }
     });
   }
@@ -424,7 +446,7 @@ function checkDecisions(root) {
   });
   for (const r of rows) {
     if (r.notes.includes('[decision]') && !entries.has(r.id)) {
-      failures.push(fail('decisions', 'REVIEW.md', r.line, `${r.id} is marked [decision] but has no entry in docs/decisions.md`));
+      failures.push(fail('decisions', r.file, r.line, `${r.id} is marked [decision] but has no entry in docs/decisions.md`));
     }
   }
   for (const [id, line] of entries) {
@@ -1332,7 +1354,7 @@ function checkChanges(root) {
   const dir = path.join(root, 'changes');
   if (!fs.existsSync(dir)) return [];
   const out = [];
-  const review = new Set(read(root, 'REVIEW.md').split('\n').map((l) => (l.match(/^\| (FS-\d{3}) \|/) || [])[1]).filter(Boolean));
+  const review = new Set(parseRegister(root).map((r) => r.id)); // FS-866: every register file
   const customers = fs.existsSync(path.join(root, 'docs', 'customers'))
     ? fs.readdirSync(path.join(root, 'docs', 'customers')).filter((f) => f.endsWith('.md') && !f.startsWith('_')).map((f) => f.slice(0, -3)) : [];
   for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.md') && f !== 'README.md')) {
@@ -1430,7 +1452,7 @@ function docRegisterIds(root) {
 function checkDocRegister(root, files) {
   if (!fs.existsSync(path.join(root, DOC_REGISTER))) return [fail('docregister', DOC_REGISTER, 0, 'the document register is missing')];
   const out = [];
-  const review = new Set(read(root, 'REVIEW.md').split('\n').map((l) => (l.match(/^\| (FS-\d{3}) \|/) || [])[1]).filter(Boolean));
+  const review = new Set(parseRegister(root).map((r) => r.id)); // FS-866: every register file
   // FS-857: read by its header (tools/docregister.js), which must be the
   // columns the tools know, in their order.
   const reg = require('./docregister'); // beside the check, as dibon.js is
@@ -1661,6 +1683,7 @@ function runAll(root) {
   return [
     ...checkNames(root, files),
     ...checkRegister(root),
+    ...checkMarkup(root, files),
     ...checkReviewIds(root, files),
     ...checkTemplate(root),
     ...checkCapabilities(root),

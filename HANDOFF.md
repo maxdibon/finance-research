@@ -150,7 +150,8 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
 
 - Repo `E:\Agents\Claude\Financial Services`, private, `origin`
   `https://github.com/eric-mokaya/finance`, branch `main`.
-- **`REVIEW.md`** is the intake; **`CHANGELOG.md`** the releases, and
+- **`REVIEW.md`** is the intake, its open rows; the closed ones are in
+  **`review/`**, a file per hundred ids (FS-866); **`CHANGELOG.md`** the releases, and
   `docs/marketing/release-notes.md` the same for readers outside Dibon;
   **`changes/`** the change notes waiting for the next release;
   **`docs/decisions.md`** what each decision cost; **`docs/rules.md`** the
@@ -170,7 +171,9 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   via DOCX_MODULE); `tools/originals.js`, originals kept and verified;
   `tools/cut.js`, releases; `tools/release.js`, which release a reader
   is reading; `tools/dibon.js` (with `dibon` and `dibon.cmd` at the
-  root), the team's words; `tools/paths.js`, what a path written as plain
+  root), the team's words; `tools/register.js`, the review register across
+  REVIEW.md and review/, and `tidy`, which files each row by its status
+  (FS-866); `tools/paths.js`, what a path written as plain
   text means, for the reader and the links check (FS-856);
   `tools/docregister.js`, the one reader of the document register, by its
   header, and the maker of each customer's table of documents (FS-857).
@@ -206,7 +209,11 @@ say "proposal in chat".
 
 ## The checks
 
-`tools/check.js` runs: names, register and review ids, the module
+`tools/check.js` runs: names, register (across REVIEW.md and review/:
+every id once, open rows in REVIEW.md, closed rows in their hundred's
+file) and review ids, markup (no Markdown file over 200 KB, which a
+preview may show as raw text; no word in angle brackets outside code),
+the module
 template, capabilities, diagrams, partners, public, copy and claims,
 decisions, obligations, customers, regulation, assurance, references,
 dependencies, scope, journeys, handbook, overview, specs, products (the
@@ -288,8 +295,13 @@ register row.
   a decision" in prose.
 - **Every commit subject starts with its register row** ("FS-123: …"), or
   Merge, Revert or Release: the commit-msg hook refuses others.
-- **Take the next FS id from the real REVIEW.md**, never from a sandbox or
-  a practice copy, whose ids go nowhere.
+- **Take the next FS id from the real register**,
+  `node -e "console.log(require('./tools/register').nextId('.'))"`: the
+  newest row may already be closed and in review/. Never from a sandbox
+  or a practice copy, whose ids go nowhere.
+- **After closing or reopening a row, run `node tools/register.js tidy`**,
+  or the register check fails: closed rows live in review/, open rows in
+  REVIEW.md. A closed row's later edits are in its review/ file.
 - **Windows cannot rename across drives** (Downloads on C:, the
   repository on E:): copy, check the copy, then remove the source, as
   `tools/originals.js` does.
@@ -344,7 +356,7 @@ register row.
   work, not from the files:** ask the owner to skim them, and to settle
   the "to confirm" ones. The next is the owner's call:
   propose one when the notes waiting (the reader's "Unreleased" page) are
-  worth telling; then `node tools/cut.js`, commit ("Release <tag>"), an
+  worth telling; then `node tools/cut.js`, commit (`Release <tag>`), an
   annotated tag, and the tag pushed with the commits. That release is the
   first to move the documents' `released:` lines: check that only the
   documents changed since 2026.10.15 move.

@@ -37,8 +37,17 @@ const ID_CELL = new RegExp(`^${ID}$`);
 const ID_TEXT = new RegExp(`\\b${ID}\\b`, 'g');
 const STATUSES = ['Live', 'Built', 'Designed', 'Planned'];
 
+// FS-866: REVIEW.md holds the open rows and review/ the closed; the reader
+// reads the register as one, every row in id order, so each FS id has its
+// anchor on the Review page and links from anywhere resolve.
 function read(root, rel) {
-  return fs.readFileSync(path.join(root, rel), 'utf8').replace(/\r\n/g, '\n');
+  const text = fs.readFileSync(path.join(root, rel), 'utf8').replace(/\r\n/g, '\n');
+  if (rel !== 'REVIEW.md') return text;
+  const lines = text.split('\n');
+  const at = lines.findIndex((l) => /^\| FS-\d{3} \|/.test(l));
+  if (at < 0) return text;
+  const rows = require('./register').rows(root).sort((a, b) => a.n - b.n).map((r) => r.text);
+  return [...lines.slice(0, at), ...rows, ...lines.slice(at).filter((l) => !/^\| FS-\d{3} \|/.test(l))].join('\n');
 }
 
 function sources(root) {
