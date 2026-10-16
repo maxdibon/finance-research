@@ -95,6 +95,12 @@ its money and its records; Dibon holds the platform. Read
   sentences ("update, then mark answer 24 as answered"), use the words,
   say what you understood, and run them with `--yes` only after they have
   said yes in chat. Developers may use git directly, by ways-of-working §6.
+  **Claude uses the words too, where a request matches one** (release,
+  note, answered, received, meeting, history, status, check), with
+  `--body-file` for the commit's body and the co-author line; and git
+  on main for building tools and documents, under the single-owner
+  exception, since save and share refuse main (FS-862, owner, 2026-10-16).
+  At GitLab, the words for everything, on branches.
 - **Documents for outside readers** start from `docs/design-system.md`:
   one look, a little whimsy in the margins, never in figures or terms.
 - **Never sign in, or enter a password, on a live site**; downloads need

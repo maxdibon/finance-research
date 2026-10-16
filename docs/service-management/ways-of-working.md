@@ -166,9 +166,10 @@ say who decides: ITIL's *change authority*.
    be balanced against each other, or normal changes outgrow a meeting's
    slot.
 
-## 5 · Working together (proposed)
+## 5 · Working together
 
-What lets people work on their own and still in step (FS-749):
+What lets people work on their own and still in step (FS-749; adopted
+by the owner on 2026-10-16, FS-867):
 
 | Practice | What it means here |
 |---|---|
@@ -319,7 +320,8 @@ row. Never on main. Examples: `dibon save "Open answer 26: two administrators"`;
 `dibon save docs/customers/roan-capital.md` (that file only; it then asks
 what you changed). **It stops** when you give no description, when the
 checks fail, and when you give it a document from outside: that is
-`received`.
+`received`. `--body-file` adds a body to the saved change from a file:
+why it changed, and any trailer such as Co-Authored-By (FS-862).
 
 ### undo
 
@@ -368,7 +370,8 @@ Lists every word, or one word with its examples. Examples: `dibon help`;
 
 The owner only, on main: releases the documentation or a customer's
 delivery (rules, Dibon 12), commits it and tags it. Examples:
-`dibon release docs`; `dibon release roan-capital`.
+`dibon release docs`; `dibon release roan-capital`. `--body-file` gives the
+release's commit a body, as for save.
 
 ### practice
 

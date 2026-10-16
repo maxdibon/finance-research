@@ -129,6 +129,17 @@ function registerRow(o, customer) {
   return id;
 }
 
+// FS-862: a fuller commit message for save and release: the subject the
+// word builds, then a body from --body-file (the why, and any trailer such
+// as Co-Authored-By), as the conventions ask (ways-of-working §6).
+function message(subject) {
+  const f = flag('--body-file');
+  if (!f) return ['-m', subject];
+  if (!fs.existsSync(f)) stop(`No file at ${f}: --body-file names the message's body.`);
+  const body = fs.readFileSync(f, 'utf8').replace(/\r\n/g, '\n').trim();
+  return body ? ['-m', subject, '-m', body] : ['-m', subject];
+}
+
 // ── the words ─────────────────────────────────────────────────────────────
 const word = {
   async help() {
@@ -302,7 +313,7 @@ const word = {
     if (!/^FS-\d{3}/.test(subject)) stop('Which register row? Your branch has none: start with dibon start, or begin the description with FS-123.');
     if (!await ask(`Save ${changed.length} file${changed.length === 1 ? '' : 's'} as "${subject}"?`)) return say('Not saved.');
     if (only) git(['add', '--', ...changed.map((u) => u.file)]); else git(['add', '-A']);
-    const r = git(['commit', '-q', '-m', subject], { ok: true, full: true });
+    const r = git(['commit', '-q', ...message(subject)], { ok: true, full: true });
     if (r.status !== 0) stop(`Not saved: ${(r.stderr || r.stdout).trim()}`);
     say(`Saved on ${branch()}: "${subject}". When the work is done: dibon share.`);
   },
@@ -414,7 +425,7 @@ const word = {
     say(`Released ${series} ${r.version} (${r.kind}): ${r.done.join(', ')}.`);
     if (!await ask(`Commit "Release ${r.tag}" and tag it?`)) return say(`Not committed: commit, then git tag -a ${r.tag}.`);
     git(['add', '-A']);
-    git(['commit', '-q', '-m', `Release ${r.tag}`]);
+    git(['commit', '-q', ...message(`Release ${r.tag}`)]);
     git(['tag', '-a', r.tag, '-m', `${series} ${r.version}`]);
     say(`Committed and tagged ${r.tag}. Push the commit and the tag when ready.`);
   },
