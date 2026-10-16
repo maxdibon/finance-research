@@ -109,10 +109,12 @@ its money and its records; Dibon holds the platform. Read
   on main for building tools and documents, under the single-owner
   exception, since save and upload refuse main (FS-862, owner, 2026-10-16).
   At GitLab, the words for everything, on branches. **The words are said
-  from the speaker's side** (FS-879): download (the repository to me),
-  upload (my copy to the repository). **When someone says "update" or
-  "share", ask whether they mean download or upload**: never pick one.
-  The owner's "push" stays what it has been: upload main to GitHub.
+  from the speaker's side** (FS-879 to FS-881): download (the repository
+  to me); and outwards, save (my copy), upload (my own branch in the
+  repository, still mine), share (before the team, for review), release
+  (the owner's, to the public). **When someone says "update", ask whether
+  they mean download or upload**: never pick one. The owner's "push"
+  stays what it has been: main to GitHub.
 - **Documents for outside readers** start from `docs/design-system.md`:
   one look, a little whimsy in the margins, never in figures or terms.
 - **Never sign in, or enter a password, on a live site**; downloads need

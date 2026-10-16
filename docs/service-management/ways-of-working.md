@@ -227,12 +227,21 @@ same thing happens underneath: the git, the checks and the records, done
 the way §6 says. Developers may also use git directly, by those
 conventions.
 
-**The words are said from your side** (FS-879). There is your copy, on
-your computer, and the repository ("the repo" when speaking), which
-everyone shares: on GitHub now, on GitLab later (FS-880). You **download** from the repository, to bring
-its latest into yours; you **upload** to it, to send your saved work for
-review. "Update" and "share" are not words: each could mean either way,
-so the tool, and Claude in the desktop app, ask which you mean.
+**The words are said from your side** (FS-879 to FS-881). There is your
+copy, on your computer, and the repository ("the repo" when speaking),
+which everyone shares: on GitHub now, on GitLab later. Your work moves
+outwards in four steps, each reaching further:
+
+| Word | Your work goes | Who sees it |
+|---|---|---|
+| **save** | into your copy, on your branch | you |
+| **upload** | onto your own branch in the repository | you, kept safe; not yet for review |
+| **share** | before the team, as a review | the team |
+| **release** | out to the public: the documents' readers, or a customer | everyone it is for (the owner's word) |
+
+And one inwards: you **download** the repository's latest into your
+copy. "Update" is not a word: it could mean download or upload, so the
+tool, and Claude in the desktop app, ask which you mean.
 
 ### The cheat sheet
 
@@ -248,12 +257,12 @@ so the tool, and Claude in the desktop app, ask which you mean.
 | **save** "…" | Save my work on my branch; the checks run first |
 | **undo** | Take back my last save |
 | **discard** file | Throw away unsaved changes to one file, after showing them |
-| **upload** | Send my saved work to the repository, for review (my copy to the repository); the checks run first |
-| **ready** | Mark my shared work ready for review |
+| **upload** | Put my saved work on my own branch in the repository: still mine, not yet for review |
+| **share** | Put my uploaded work before the team, for review; the checks run first |
 | **status** | Where am I, and what is waiting |
 | **history** file | What changed in one document, by release |
 | **help** | Every word, with examples |
-| **release** | The owner only: release the documentation or a customer's delivery |
+| **release** | The owner only: release to the public, the documentation or a customer's delivery |
 | **practice** | A private sandbox to try every word safely |
 | **role** "…" | Tell the words your role, once |
 
@@ -343,17 +352,19 @@ be lost. Example: `dibon discard docs/customers/roan-capital.md`.
 
 ### upload
 
-Sends your saved work, on its branch, to the repository for review, as
-a draft: from you to the repository. The checks run first, and the
-tests too when tools or code changed. Example: `dibon upload`. **Until
-the move to GitLab**, only the owner uploads to GitHub: if the team's
-copy refuses, your work is saved on your branch; tell the owner it is
-ready to merge.
+Puts your saved work on your own branch in the repository: safe off
+your computer, still yours, not yet in front of the team. Upload as
+often as you like. Example: `dibon upload`. **Until the move to
+GitLab**, only the owner uploads to GitHub: if the repository refuses,
+your work is saved on your branch; tell the owner it is ready.
 
-### ready
+### share
 
-Marks your shared work ready for review, so the reviewers are asked.
-Example: `dibon ready`.
+Puts your uploaded work before the team, for review: the checks run
+first, and the tests too when tools or code changed; anything not yet
+uploaded is uploaded; then a review is opened, or yours marked ready, and
+the reviewers are asked. Example: `dibon share`. ("Ready", the old word,
+points here.)
 
 ### status
 
@@ -376,8 +387,8 @@ Lists every word, or one word with its examples. Examples: `dibon help`;
 
 ### release
 
-The owner only, on main: releases the documentation or a customer's
-delivery (rules, Dibon 12), commits it and tags it. Examples:
+The owner only, on main: releases to the public, the documentation or
+a customer's delivery (rules, Dibon 12), commits it and tags it. Examples:
 `dibon release docs`; `dibon release roan-capital`. `--body-file` gives the
 release's commit a body, as for save.
 
@@ -399,7 +410,7 @@ Example: `dibon role "Project manager"`.
    for help.
 2. **After a meeting with a customer.** "Start: Roan Capital's 22 October
    meeting. Mark answers 24 and 25 as answered. Note for Roan Capital:
-   two open answers settled. Save. Upload." Each answer moves, dated; the
+   two open answers settled. Save. Upload. Share." Each answer moves, dated; the
    note waits for the customer's next release.
 3. **A signed document arrives.** "Received: the signed services
    agreement from Roan Capital, in my Downloads." It is kept, read-only,
@@ -413,7 +424,7 @@ Example: `dibon role "Project manager"`.
 6. **Oops.** "Undo my last save", or "discard my changes to the agenda".
    Each shows what it does before doing it.
 7. **A developer's change to the tools.** `dibon start "…" --kind tool`,
-   `dibon save "…"`, `dibon upload`: the tests run because tools changed.
+   `dibon save "…"`, `dibon upload`, `dibon share`: the tests run, at share, because tools changed.
 8. **What is waiting, and what has changed.** "Status." Your branch,
    what is unsaved and unshared, and the notes waiting for the next
    release. "History of Roan Capital's page": every change to it, by
