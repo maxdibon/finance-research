@@ -320,9 +320,13 @@ function render(body, ctx) {
       out.push(alert ? `<div class="alert alert-${alert[1].toLowerCase()}"><b>${alert[1][0]}${alert[1].slice(1).toLowerCase()}</b>${inner}</div>` : `<blockquote>${inner}</blockquote>`);
       continue;
     }
-    if (line.startsWith('|')) {
+    // FS-863: a table indented under a list item ("- **Roles:**", a blank
+    // line, then "  | … |") is a table too, as on GitHub, when its second
+    // line is the separator row; it was read as one paragraph of pipes.
+    const indentedTable = /^\s+\|/.test(line) && /^\s*\|[\s:|-]+\|\s*$/.test(lines[i + 1] || '');
+    if (line.startsWith('|') || indentedTable) {
       const rows = [];
-      for (; i < lines.length && lines[i].startsWith('|'); i++) rows.push(lines[i]);
+      for (; i < lines.length && /^\s*\|/.test(lines[i]) && (line.startsWith('|') ? lines[i].startsWith('|') : true); i++) rows.push(lines[i].trim());
       const head = cells(rows[0]);
       const body2 = rows.slice(rows[1] && /^\|[\s:|-]+\|$/.test(rows[1]) ? 2 : 1);
       const journeyRows = ctx.journey && /^3 · /.test(section);
