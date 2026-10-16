@@ -100,15 +100,19 @@ its money and its records; Dibon holds the platform. Read
   release stamps it. Never type a release into it.
 - **The team's words** (`tools/dibon.js`; the guide is ways-of-working
   §7 to §10, FS-865): when someone asks in plain
-  sentences ("update, then mark answer 24 as answered"), use the words,
+  sentences ("download, then mark answer 24 as answered"), use the words,
   say what you understood, and run them with `--yes` only after they have
   said yes in chat. Developers may use git directly, by ways-of-working §6.
   **Claude uses the words too, where a request matches one** (release,
   note, answered, received, meeting, history, status, check), with
   `--body-file` for the commit's body and the co-author line; and git
   on main for building tools and documents, under the single-owner
-  exception, since save and share refuse main (FS-862, owner, 2026-10-16).
-  At GitLab, the words for everything, on branches.
+  exception, since save and upload refuse main (FS-862, owner, 2026-10-16).
+  At GitLab, the words for everything, on branches. **The words are said
+  from the speaker's side** (FS-879): download (the team's copy to me),
+  upload (me to the team's copy). **When someone says "update" or
+  "share", ask whether they mean download or upload**: never pick one.
+  The owner's "push" stays what it has been: upload main to GitHub.
 - **Documents for outside readers** start from `docs/design-system.md`:
   one look, a little whimsy in the margins, never in figures or terms.
 - **Never sign in, or enter a password, on a live site**; downloads need
@@ -337,7 +341,7 @@ register row.
   as the documents then named a release the fixture lacked (FS-861).
 - **A throwaway clone tests what is committed in it, not your edits:**
   `git diff` leaves out new files (copy them in), and `dibon start`
-  branches from the shared copy, which for a clone is the real
+  branches from the team's copy, which for a clone is the real
   repository; remove the clone's `origin` first.
 - **The reader cannot italicise around a code span:** a line in
   asterisks holding a code span shows its asterisks. Write the path
@@ -380,7 +384,7 @@ register row.
   first to move the documents' `released:` lines: check that only the
   documents changed since 2026.10.15 move.
 - **The team cannot share yet:** until the move to GitLab, only the owner
-  pushes to GitHub, so a teammate's `dibon share` stops at "saved on your
+  uploads to GitHub, so a teammate's `dibon upload` stops at "saved on your
   branch; tell the owner it is ready to merge". The owner merges.
 - **Outside the repository:** the second site's provider before Roan
   Capital's go-live (FS-775); counsel for the LQ register (none engaged);
