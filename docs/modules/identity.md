@@ -4,7 +4,7 @@ name: Identity verification — who a person or business really is
 kind: shared-service
 status: living
 law: mixed
-released: 2026.10.15
+released: 2026.10.16
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]

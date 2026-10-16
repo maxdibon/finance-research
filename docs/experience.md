@@ -4,7 +4,7 @@ name: Experience — how what we build should feel to use
 kind: plan
 status: living
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 owner: Solution architect
 classification: Internal
 review_ids: [FS-237, FS-637, FS-660, FS-668]

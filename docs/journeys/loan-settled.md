@@ -5,7 +5,7 @@ kind: journey
 release: R1
 status: draft
 law: LR-39
-released: 2026.10.15
+released: 2026.10.16
 validated_with: not yet
 owner: Solution architect
 classification: Internal

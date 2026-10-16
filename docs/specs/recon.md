@@ -5,7 +5,7 @@ kind: spec
 type: build
 status: draft
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 release: R1
 implements: [recon-observability]
 depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine]

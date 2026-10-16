@@ -5,7 +5,7 @@ kind: spec
 type: build
 status: draft
 law: LR-17
-released: 2026.10.15
+released: 2026.10.16
 release: R1
 implements: [mandates]
 depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka]

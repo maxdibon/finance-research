@@ -4,7 +4,7 @@ name: Privacy register — what personal data we process, why, and for how long
 kind: register
 status: living
 law: LR-17
-released: 2026.10.15
+released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
 review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532, FS-582, FS-591, FS-620, FS-689, FS-763, FS-768, FS-769]

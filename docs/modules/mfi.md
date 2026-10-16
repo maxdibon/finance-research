@@ -4,7 +4,7 @@ name: Kapu MFI
 kind: product
 status: living
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 owner: Product lead, Kapu
 classification: Internal
 audience: [mfi]

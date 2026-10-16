@@ -3,7 +3,7 @@ id: law
 name: Instrument cards — what each law we cite says, once
 kind: index
 status: living
-released: unreleased
+released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
 review_ids: [FS-868, FS-870]

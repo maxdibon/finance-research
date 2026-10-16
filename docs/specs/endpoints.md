@@ -5,7 +5,7 @@ kind: spec
 type: component
 status: draft
 law: LR-17
-released: 2026.10.15
+released: 2026.10.16
 release: R1
 implements: [platform-security]
 depends_on: [access-keycloak, observability-grafana]

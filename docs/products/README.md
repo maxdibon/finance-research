@@ -4,7 +4,7 @@ name: Products — product version documents, while drafts have nowhere restrict
 kind: index
 status: living
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823, FS-825]

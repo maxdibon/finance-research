@@ -4,7 +4,7 @@ name: Platform Security
 kind: shared-service
 status: living
 law: LR-17
-released: 2026.10.15
+released: 2026.10.16
 owner: Security lead
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]

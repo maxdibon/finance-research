@@ -4,7 +4,7 @@ name: Business Suite, on Odoo and Zoho
 kind: product
 status: living
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 owner: Product lead, business suite
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]

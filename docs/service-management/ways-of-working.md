@@ -3,7 +3,7 @@ id: ways-of-working
 name: Ways of working — roles, merge requests, reviews, git, and the team's words
 kind: plan
 status: living
-released: 2026.10.15
+released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865]

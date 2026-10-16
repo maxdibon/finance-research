@@ -4,7 +4,7 @@ name: Roan Capital — 30-day loan, product version 1 (draft)
 kind: product-version
 status: draft
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830]

@@ -29,6 +29,19 @@ release), moves README.md's release line, and gives the tag to make,
 `docs-<version>`, annotated. Each document's own status follows its
 kind's lifecycle (the status check).
 
+## 2026.10.16 · minor
+
+- The Advocates Act joins the law register, read for what our legal partnerships rest on: an advocate shares no profits with a non-advocate, and paid referrals of legal work are touting. The partners register now ends with its "Regulations cited". (FS-873; Chief Technology and Innovation Officer)
+- The review register had grown past what a Markdown preview will show (it appeared as raw text in the desktop app). REVIEW.md now holds the open rows; closed rows move to review/, a file for each hundred ids, and the reader's Review page still shows them all. dibon save keeps the files in order by itself. (FS-866; Chief Technology and Innovation Officer)
+- Every document that cites the law now ends with "Regulations cited": 48 in all, from the lending journeys to the records schedule. Cites are placed by the law's name as well as its id, so the text reads as it always did; twenty-two instrument cards say what each cited provision requires. (FS-870; Chief Technology and Innovation Officer)
+- Every law whose provisions we cite has a card in docs/law/: its citation, regulator, what it was made under, whether it is in force, and what each cited provision requires, read from the law's text. Documents that cite provisions end with a "Regulations cited" section made from the cards, and can print the same for a Word or PDF document read outside Dibon. The lender rules, Roan Capital's product, the microfinance module and the privacy register carry it first. (FS-868; Chief Technology and Innovation Officer)
+- The loan application form (now version 0.3), its schedule of changes and the three 30-day loan questionnaires each end with a page listing every regulation they cite: who oversees it, the version read, and what each provision requires. Two readings still being confirmed are marked as such. (FS-874; Chief Technology and Innovation Officer; for roan-capital)
+- Two readings of the lender regulations are being confirmed, and we have said so openly: whether a restructure a borrower asks for must wait the thirty days' notice for a change to a loan agreement, and which regulation sets how often guarantors receive statements. Nothing is built on either until both are confirmed; your counsel's view is welcome. (FS-876, FS-869; Chief Technology and Innovation Officer; for roan-capital)
+- The guide to the team's words is now part of ways of working, as its sections 7 to 10, so how we work and the words that do it are in one place. A note at the top says who reads which sections. The earlier sections keep their numbers. (FS-865; Chief Technology and Innovation Officer)
+- The practices in ways of working's "Working together" are adopted, no longer proposed: write it down first, async by default, small changes, reviews within a working day, a definition of done, a weekly rhythm, and the rest. (FS-867; Chief Technology and Innovation Officer)
+
+**Status:** Specs: 11 draft. Journeys: 19 draft. Other documents: 20 draft, 2 agreed. Outreach: 1 withdrawn, 7 draft. Living documents: 75 living. Since docs-2026.10.15.1: no status changed; 24 documents added, 1 removed. Documents changed in it, now saying "released: 2026.10.16": 80.
+
 ## 2026.10.15.1 · patch
 
 - The document register has a one-line summary for every document, and each customer's page lists its own documents in a table made from the register: title, summary, kind, status, date and who it came from. Registering a received document or a meeting updates the customer's table by itself. (FS-857; Chief Technology and Innovation Officer)

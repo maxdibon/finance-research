@@ -5,7 +5,7 @@ kind: spec
 type: component
 status: draft
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 release: R1
 implements: [core]
 depends_on: [access-keycloak, event-bus-kafka]

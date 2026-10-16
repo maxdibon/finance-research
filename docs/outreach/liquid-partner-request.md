@@ -4,7 +4,7 @@ name: Partner enquiry to Liquid
 kind: outreach
 status: draft
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 version: 0.2.0
 owner: Commercial lead
 classification: Internal

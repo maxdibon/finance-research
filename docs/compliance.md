@@ -4,7 +4,7 @@ name: Licences, registrations and certifications
 kind: register
 status: living
 law: LR-12
-released: 2026.10.15
+released: 2026.10.16
 owner: Compliance lead
 classification: Internal
 last_reviewed: 2026-10-16

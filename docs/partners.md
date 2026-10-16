@@ -4,7 +4,7 @@ name: Partners — candidates, conversations and selection decisions
 kind: register
 status: living
 law: LR-40
-released: 2026.10.15
+released: 2026.10.16
 owner: Commercial lead
 classification: Internal
 last_reviewed: 2026-10-16

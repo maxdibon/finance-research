@@ -3,6 +3,7 @@ kind: patch
 for: roan-capital
 rows: [FS-876, FS-869]
 by: Chief Technology and Innovation Officer
+released: [docs]
 ---
 
 Two readings of the lender regulations are being confirmed, and we have

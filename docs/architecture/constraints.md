@@ -4,7 +4,7 @@ name: Architecture — constraints we design within
 kind: architecture
 status: draft
 law: LR-11
-released: 2026.10.15
+released: 2026.10.16
 owner: Solution architect
 classification: Internal
 review_ids: [FS-649]

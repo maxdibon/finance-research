@@ -4,7 +4,7 @@ name: Assurance services — testing for institutions we do not supply
 kind: service
 status: living
 law: LR-20
-released: 2026.10.15
+released: 2026.10.16
 owner: Compliance lead
 classification: Internal
 review_ids: [FS-438, FS-440]

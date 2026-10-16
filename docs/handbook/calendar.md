@@ -4,7 +4,7 @@ name: Handbook 3 — the calendar of duties
 kind: handbook
 status: draft
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-771, FS-772, FS-775, FS-778]

@@ -4,7 +4,7 @@ name: Insights — governed metrics and natural-language questions
 kind: shared-service
 status: living
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]

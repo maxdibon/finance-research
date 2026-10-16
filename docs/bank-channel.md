@@ -4,7 +4,7 @@ name: Bank channel — banks offering SME Recon and the business suite to their 
 kind: partner-model
 status: draft
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 owner: Commercial lead
 classification: Internal
 review_ids: [FS-024, FS-439, FS-441, FS-443]

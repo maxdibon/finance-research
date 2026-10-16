@@ -4,7 +4,7 @@ name: Outsourcing approval pack — what customers file with their regulator abo
 kind: checklist
 status: living
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 owner: Compliance lead
 classification: Internal
 review_ids: [FS-368, FS-370, FS-420, FS-437, FS-440, FS-443, FS-444]

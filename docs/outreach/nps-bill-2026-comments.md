@@ -4,7 +4,7 @@ name: Comments on the draft National Payment System Bill, 2026
 kind: outreach
 status: draft
 law: LR-11
-released: 2026.10.15
+released: 2026.10.16
 version: 0.1.0
 owner: Owner
 classification: Internal until submitted

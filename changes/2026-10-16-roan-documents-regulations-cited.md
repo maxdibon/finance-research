@@ -3,6 +3,7 @@ kind: patch
 for: roan-capital
 rows: [FS-874]
 by: Chief Technology and Innovation Officer
+released: [docs]
 ---
 
 The loan application form (now version 0.3), its schedule of changes and

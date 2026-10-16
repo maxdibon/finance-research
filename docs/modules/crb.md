@@ -4,7 +4,7 @@ name: CRB — credit bureau connections
 kind: shared-service
 status: living
 law: LR-06
-released: 2026.10.15
+released: 2026.10.16
 owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, fintech, sme]

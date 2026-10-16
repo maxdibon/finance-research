@@ -4,7 +4,7 @@ name: Business continuity plan — keeping the service, the company and the comm
 kind: plan
 status: living
 law: LR-17
-released: 2026.10.15
+released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-482, FS-485, FS-657, FS-758]

@@ -4,7 +4,7 @@ name: Customer onboarding checklists
 kind: checklist
 status: living
 law: LR-03
-released: 2026.10.15
+released: 2026.10.16
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794, FS-802, FS-808]
