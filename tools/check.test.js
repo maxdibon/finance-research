@@ -91,6 +91,11 @@ test('register: a heading holding table cells fails', () => {
   assert.deepStrictEqual(names(f), ['register']);
 });
 
+test('register: a row\'s marker written into the title fails (FS-866)', () => {
+  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace('# Financial Services — review register', '# Financial Services — review [decision] |register')));
+  assert.deepStrictEqual(names(f), ['register']);
+});
+
 test('review-ids: citing an id the register does not have fails', () => {
   // Assembled at run time so this file does not itself cite a missing id.
   const missing = ['FS', '999'].join('-');
