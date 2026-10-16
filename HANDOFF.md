@@ -109,8 +109,8 @@ its money and its records; Dibon holds the platform. Read
   on main for building tools and documents, under the single-owner
   exception, since save and upload refuse main (FS-862, owner, 2026-10-16).
   At GitLab, the words for everything, on branches. **The words are said
-  from the speaker's side** (FS-879): download (the team's copy to me),
-  upload (me to the team's copy). **When someone says "update" or
+  from the speaker's side** (FS-879): download (the repository to me),
+  upload (my copy to the repository). **When someone says "update" or
   "share", ask whether they mean download or upload**: never pick one.
   The owner's "push" stays what it has been: upload main to GitHub.
 - **Documents for outside readers** start from `docs/design-system.md`:
@@ -341,7 +341,7 @@ register row.
   as the documents then named a release the fixture lacked (FS-861).
 - **A throwaway clone tests what is committed in it, not your edits:**
   `git diff` leaves out new files (copy them in), and `dibon start`
-  branches from the team's copy, which for a clone is the real
+  branches from the repository, which for a clone is the real
   repository; remove the clone's `origin` first.
 - **The reader cannot italicise around a code span:** a line in
   asterisks holding a code span shows its asterisks. Write the path

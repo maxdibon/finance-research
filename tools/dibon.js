@@ -7,7 +7,7 @@
 //   dibon help [word]      every word, with examples
 //
 // Rules the words keep, seen from my side (FS-879): download brings the
-// team's copy to me, upload sends my saved work to it; the checks run
+// repository to me, upload sends my saved work to it; the checks run
 // before save and upload; "update" and "share" are asked about, since each
 // could mean either way; an
 // argument is never guessed at; anything that cannot be undone asks first
@@ -31,7 +31,7 @@ const norm = (s) => s.replace(/\r\n/g, '\n');
 
 // ── words: the one source of the help, the guide's headings and the tests ─
 const WORDS = [
-  ['download', 'Bring the team\'s latest into my copy (the team\'s copy to me).', ['dibon download']],
+  ['download', 'Bring the latest from the repository into my copy (the repository to me).', ['dibon download']],
   ['start', 'Begin a piece of work on its own branch, with its register row.', ['dibon start "Roan Capital meeting, 22 October"', 'dibon start "Fix the agenda" --row FS-826']],
   ['note', 'Write the change note: what changed, for whom.', ['dibon note "Two open answers settled" --for roan-capital', 'dibon note "Checks explain themselves" --for team --kind patch']],
   ['meeting', 'Open a meeting record for a customer, registered as a document.', ['dibon meeting roan-capital 2026-10-22']],
@@ -41,7 +41,7 @@ const WORDS = [
   ['save', 'Save my work on my branch, with its register row; the checks run first.', ['dibon save "Open answer 26: two administrators"', 'dibon save docs/customers/roan-capital.md']],
   ['undo', 'Take back my last save (before upload: kept as edits; after: a correcting change).', ['dibon undo']],
   ['discard', 'Throw away unsaved changes to one file, after showing what is lost.', ['dibon discard docs/customers/roan-capital.md']],
-  ['upload', 'Send my saved work to the team\'s copy, for review (me to the team\'s copy); the checks run first.', ['dibon upload']],
+  ['upload', 'Send my saved work to the repository, for review (my copy to the repository); the checks run first.', ['dibon upload']],
   ['ready', 'Mark my uploaded work ready for review.', ['dibon ready']],
   ['status', 'Where am I: my branch, what is unsaved, not uploaded, and waiting.', ['dibon status']],
   ['history', 'What changed in one document, newest first, by release.', ['dibon history docs/customers/roan-capital.md']],
@@ -168,7 +168,7 @@ const word = {
   async download() {
     const dirty = unsaved().filter((u) => u.code !== '??');
     if (dirty.length) stop(`You have unsaved edits (${dirty.map((u) => u.file).join(', ')}). Save them (dibon save) or discard them (dibon discard <file>) first.`);
-    if (!hasRemote()) stop('There is no team\'s copy to download from.');
+    if (!hasRemote()) stop('There is no repository to download from.');
     git(['fetch', '--quiet', 'origin']);
     const behind = +git(['rev-list', '--count', 'HEAD..origin/main']);
     if (!behind) { say('Your copy is up to date: nothing new from the team.'); return; }
@@ -194,7 +194,7 @@ const word = {
     const row = flag('--row');
     if (row && !/^FS-\d{3}$/.test(row)) stop('--row is an FS id: --row FS-826.');
     const name = `${kind}/${row || 'FS-NEW'}-${slug(topic)}`;
-    if (!await ask(`Start "${topic}" on a new branch from the team's copy${row ? `, for ${row}` : ', with a new register row'}?`)) return say('Not started.');
+    if (!await ask(`Start "${topic}" on a new branch from the repository${row ? `, for ${row}` : ', with a new register row'}?`)) return say('Not started.');
     git(['switch', '-c', name, base]);
     let id = row;
     if (!id) {
@@ -370,21 +370,21 @@ const word = {
       if (t.status !== 0 || failed) stop(`Not uploaded: ${failed} test${failed === 1 ? '' : 's'} failing. Run node --test tools/check.test.js to see them.`);
       say(`  ${pass} tests pass.`);
     }
-    if (!hasRemote()) stop('There is no team\'s copy to upload to.');
+    if (!hasRemote()) stop('There is no repository to upload to.');
     if (!await ask(`Send ${branch()} for review?`)) return say('Not uploaded.');
     // Your own branch, so with lease: a download may have rebased it since it
     // was last uploaded (ways-of-working §6); never main.
     const r = git(['push', '--force-with-lease', '-u', 'origin', branch()], { ok: true, full: true });
-    if (r.status !== 0) stop(`Saved on your branch, but not uploaded: the team's copy refused it (${(r.stderr || '').split('\n')[0]}). Until the move to GitLab, only the owner pushes: tell the owner your branch, ${branch()}, is ready to merge.`);
+    if (r.status !== 0) stop(`Saved on your branch, but not uploaded: the repository refused it (${(r.stderr || '').split('\n')[0]}). Until the move to GitLab, only the owner pushes: tell the owner your branch, ${branch()}, is ready to merge.`);
     const gh = spawnSync('gh', ['pr', 'create', '--draft', '--fill', '--base', 'main'], { cwd: ROOT, encoding: 'utf8' });
     if (gh.status === 0) say(`Sent, as a draft for review: ${gh.stdout.trim()}. When it is finished: dibon ready.`);
-    else say(`Sent: ${branch()} is on the team's copy. Open its review there (no review tool here, or one was open already).`);
+    else say(`Sent: ${branch()} is on the repository. Open its review there (no review tool here, or one was open already).`);
   },
 
   async ready() {
     const gh = spawnSync('gh', ['pr', 'ready'], { cwd: ROOT, encoding: 'utf8' });
     if (gh.status === 0) say('Marked ready: the reviewers are asked.');
-    else stop('Could not mark it ready here. Open your review on the team\'s copy and mark it ready there, or tell the owner it is done.');
+    else stop('Could not mark it ready here. Open your review on the repository and mark it ready there, or tell the owner it is done.');
   },
 
   async status() {
@@ -442,7 +442,7 @@ const word = {
     run(['clone', '--quiet', path.join(where, 'shared.git'), path.join(where, 'work')], where);
     const me = git(['config', '--get', 'dibon.role'], { ok: true }) || 'Project manager';
     run(['config', 'dibon.role', me], path.join(where, 'work'));
-    say(`A practice copy, with its own pretend team's copy: ${path.join(where, 'work')}`);
+    say(`A practice copy, with its own pretend repository: ${path.join(where, 'work')}`);
     say('Nothing you do there reaches the real documents. Go there and try, in order:');
     for (const s of ['dibon status', 'dibon download', 'dibon start "Practice: a meeting"', 'dibon answered roan-capital 25 "No Airtel Money"', 'dibon note "Practice note" --for team', 'dibon save "Practice: answer 25"', 'dibon undo', 'dibon save "Practice: answer 25, again"', 'dibon upload', 'dibon help']) say(`  ${s}`);
     say('Delete the folder when you are done.');
@@ -452,10 +452,10 @@ const word = {
 // FS-879: the old words could each mean either way, so they are asked
 // about: never mapped to one silently.
 const ASK = {
-  update: 'Do you mean download (bring the team\'s latest into your copy) or upload (send your saved work to the team\'s copy)? Say dibon download or dibon upload.',
-  share: 'Do you mean upload (send your saved work to the team\'s copy, for review) or download (bring the team\'s latest into your copy)? Say dibon upload or dibon download.',
-  pull: 'We say download: dibon download brings the team\'s latest into your copy.',
-  push: 'We say upload: dibon upload sends your saved work to the team\'s copy, for review.',
+  update: 'Do you mean download (bring the latest from the repository into your copy) or upload (send your saved work to the repository)? Say dibon download or dibon upload.',
+  share: 'Do you mean upload (send your saved work to the repository, for review) or download (bring the latest from the repository into your copy)? Say dibon upload or dibon download.',
+  pull: 'We say download: dibon download brings the latest from the repository into your copy.',
+  push: 'We say upload: dibon upload sends your saved work to the repository, for review.',
 };
 
 async function main() {

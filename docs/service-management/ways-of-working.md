@@ -228,8 +228,8 @@ the way §6 says. Developers may also use git directly, by those
 conventions.
 
 **The words are said from your side** (FS-879). There is your copy, on
-your computer, and the team's copy, which everyone shares (on GitHub
-now, on GitLab later). You **download** from the team's copy, to bring
+your computer, and the repository ("the repo" when speaking), which
+everyone shares: on GitHub now, on GitLab later (FS-880). You **download** from the repository, to bring
 its latest into yours; you **upload** to it, to send your saved work for
 review. "Update" and "share" are not words: each could mean either way,
 so the tool, and Claude in the desktop app, ask which you mean.
@@ -238,7 +238,7 @@ so the tool, and Claude in the desktop app, ask which you mean.
 
 | Say | What it does |
 |---|---|
-| **download** | Bring the team's latest into my copy (the team's copy to me) |
+| **download** | Bring the latest from the repository into my copy (the repository to me) |
 | **start** "…" | Begin a piece of work on its own branch, with its register row |
 | **note** "…" | Write the change note: what changed, and for whom |
 | **meeting** customer date | Open a meeting record, registered as a document |
@@ -248,7 +248,7 @@ so the tool, and Claude in the desktop app, ask which you mean.
 | **save** "…" | Save my work on my branch; the checks run first |
 | **undo** | Take back my last save |
 | **discard** file | Throw away unsaved changes to one file, after showing them |
-| **upload** | Send my saved work to the team's copy, for review (me to the team's copy); the checks run first |
+| **upload** | Send my saved work to the repository, for review (my copy to the repository); the checks run first |
 | **ready** | Mark my shared work ready for review |
 | **status** | Where am I, and what is waiting |
 | **history** file | What changed in one document, by release |
@@ -272,7 +272,7 @@ repository's folder (`dibon.cmd`); elsewhere `./dibon`.
 
 ### download
 
-Brings the team's latest into your copy: from the team's copy to you,
+Brings the latest from the repository into your copy: from the repository to you,
 never the other way. Example: `dibon download`. **If it stops** because you have unsaved
 edits: save or discard them first. **If it stops** because your change
 and a teammate's touch the same lines: nothing is lost; ask Claude or an
@@ -343,8 +343,8 @@ be lost. Example: `dibon discard docs/customers/roan-capital.md`.
 
 ### upload
 
-Sends your saved work, on its branch, to the team's copy for review, as
-a draft: from you to the team's copy. The checks run first, and the
+Sends your saved work, on its branch, to the repository for review, as
+a draft: from you to the repository. The checks run first, and the
 tests too when tools or code changed. Example: `dibon upload`. **Until
 the move to GitLab**, only the owner uploads to GitHub: if the team's
 copy refuses, your work is saved on your branch; tell the owner it is
@@ -383,7 +383,7 @@ release's commit a body, as for save.
 
 ### practice
 
-Makes a private practice copy, with its own pretend team's copy, and
+Makes a private practice copy, with its own pretend repository, and
 lists the exercises. Nothing done there reaches the real documents.
 Example: `dibon practice`.
 
@@ -426,6 +426,6 @@ Example: `dibon role "Project manager"`.
 `dibon practice` (or "start practice" to Claude) makes the sandbox and
 lists the exercises to try in order. A failing check and a conflict are
 worth meeting there first: break a table row and save (situation 4), or
-clone the practice copy's pretend team's copy a second time and change the same
+clone the practice copy's pretend repository a second time and change the same
 line in both (situation 1). A 30-minute walkthrough for the team: each
 person runs situations 1 to 4 and 6 in their own practice copy.
