@@ -2,7 +2,7 @@
 kind: minor
 for: team
 rows: [FS-882]
-by: Chief Technology and Innovation Officer
+by: Claude (Assistant), on Eric's word
 ---
 
 Every open point in the review register now says who has it, by name, and

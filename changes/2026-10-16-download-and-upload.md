@@ -2,7 +2,7 @@
 kind: minor
 for: team
 rows: [FS-879, FS-880, FS-881]
-by: Chief Technology and Innovation Officer
+by: Claude (Assistant), on Eric's word
 ---
 
 The team's words are said from your side. Download brings the

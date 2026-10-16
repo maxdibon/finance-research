@@ -104,7 +104,8 @@ function team(root) {
   for (const l of t.slice(at).split('\n').slice(1)) {
     if (/^\*\*/.test(l)) break;
     const c = l.split('|').slice(1, -1).map((s) => s.trim());
-    if (c.length === 3 && c[0] !== 'Name' && !/^-+$/.test(c[0])) out.set(c[0], { role: c[1], holds: c[2] });
+    // FS-885: Confirmed, the fourth, says whether the person has confirmed it.
+    if (c.length >= 3 && c[0] !== 'Name' && !/^-+$/.test(c[0])) out.set(c[0], { role: c[1], holds: c[2], confirmed: /^yes/i.test(c[3] || '') });
   }
   return out;
 }

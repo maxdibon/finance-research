@@ -1530,3 +1530,27 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** the team table kept current as people join and
   leave; every open row handed to someone; names in a register that
   outlives the people in it, so a closed row may keep "—".
+
+## FS-886 · Each person's work under their own name, Claude's included
+
+*Entry written 2026-10-17 by Claude (Assistant), from the owner's words in chat.*
+
+- **Chose:** every commit authored by whoever wrote it, under their own
+  name: Claude's as `Claude <noreply@anthropic.com>`, on Claude's own
+  branch, `claude/<FS id>-<a-few-words>`. Main changes by the owner's
+  merge, a merge commit that keeps each author and records who took the
+  work in; a squash only within one person's own branch. Releases are
+  the owner's act. Change notes are signed by name and role. Claude's
+  work is a conversation: just us, private (the default) or public, with
+  the team, the last only on the owner's word.
+- **Requires:** docs/service-management/ways-of-working.md "Who did what"; docs/service-management/ways-of-working.md "Claude's work is a conversation".
+- **Argued (owner):** "my work is my work, my branch is my branch, my
+  contribution is my contribution", and Claude's are Claude's; and that
+  Claude may hold a private or a public conversation with the team.
+- **Argued against:** Claude committing on main under the owner's name
+  with a co-author line (FS-862's way), which made Claude's drafts read
+  as the owner's work; squashing between people, which erases who wrote
+  what.
+- **Costs (inferred):** a merge for every piece of Claude's work before
+  it reaches main; a history with merge commits in it. The history
+  before FS-886 stays the owner's, with Claude as co-author.

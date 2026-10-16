@@ -102,12 +102,13 @@ test('register: a row reopened in review/ fails, and tidy brings it back', () =>
 
 // FS-882: who has an open row, by a first name from the team.
 test('register: an open row with no one on it fails', () => {
-  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) Eric \|/m, '$1 — |')));
+  // Whoever holds FS-012 today: the test must not depend on who it is.
+  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) [^|]+ \|/m, '$1 — |')));
   assert.deepStrictEqual(names(f), ['register']);
 });
 
 test('register: an open row with someone not on the team fails, and a teammate passes', () => {
-  const give = (who) => (d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) Eric \|/m, `$1 ${who} |`));
+  const give = (who) => (d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) [^|]+ \|/m, `$1 ${who} |`));
   assert.deepStrictEqual(names(runWith(give('Somebody'))), ['register']);
   assert.deepStrictEqual(runWith(give('Betty')), []);
 });
@@ -677,7 +678,7 @@ test('words: a word the tool knows with no section in the guide fails', () => {
 test('changes: a note read outside Dibon with a register id in its text fails', () => {
   const f = runWith((d) => {
     fs.mkdirSync(path.join(d, 'changes'), { recursive: true });
-    fs.writeFileSync(path.join(d, 'changes', '2026-10-16-a-note.md'), '---\nkind: minor\nfor: roan-capital\nrows: [FS-845]\nby: Delivery lead\n---\nOpen answer 24 settled (FS-845).\n');
+    fs.writeFileSync(path.join(d, 'changes', '2026-10-16-a-note.md'), '---\nkind: minor\nfor: roan-capital\nrows: [FS-845]\nby: Betty (Project manager)\n---\nOpen answer 24 settled (FS-845).\n');
   });
   assert.deepStrictEqual(names(f), ['changes']);
 });
@@ -685,7 +686,7 @@ test('changes: a note read outside Dibon with a register id in its text fails', 
 test('changes: a well-formed note for the team passes', () => {
   const f = runWith((d) => {
     fs.mkdirSync(path.join(d, 'changes'), { recursive: true });
-    fs.writeFileSync(path.join(d, 'changes', '2026-10-16-a-note.md'), '---\nkind: minor\nfor: team\nrows: [FS-845]\nby: Delivery lead\n---\nVersions are dated (FS-845).\n');
+    fs.writeFileSync(path.join(d, 'changes', '2026-10-16-a-note.md'), '---\nkind: minor\nfor: team\nrows: [FS-845]\nby: Betty (Project manager)\n---\nVersions are dated (FS-845).\n');
   });
   assert.deepStrictEqual(names(f), []);
 });

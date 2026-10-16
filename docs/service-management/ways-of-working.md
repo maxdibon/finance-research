@@ -52,12 +52,17 @@ goes by name as well as by role: each open row of the review register
 says who has it, by first name (its *With*), and the reader adds the
 role. Approvals still go to roles, and the documents still name roles.
 Names are our own team's only: never a customer's or a partner's people.
+Each person confirms their own row; until then it says "To confirm",
+and the owner marks it as they do (FS-885). More context is to come.
 
-| Name | Role | Holds today |
-|---|---|---|
-| Eric | CTIO | Team lead, solution architect, security lead, engineering lead, product owner for Kapu MFI; compliance and risk officer until one is hired |
-| Betty | Project manager | Delivery lead |
-| Claude | Assistant | Drafts, builds and checks on Eric's word; holds no role and approves nothing |
+| Name | Role | Holds today | Confirmed |
+|---|---|---|---|
+| Eric | CTIO | Team lead, solution architect, security lead, engineering lead, product owner for Kapu MFI; compliance and risk officer until Cage joins | Yes, 2026-10-17 |
+| Jimmy | Partner and CEO | To confirm | To confirm |
+| Betty | Project manager | Delivery lead | To confirm |
+| Carol | Admin | To confirm | To confirm |
+| Cage | Legal and compliance (joining soon) | Compliance and risk officer, once joined | To confirm |
+| Claude | Assistant | Drafts, builds and checks on Eric's word; holds no role and approves nothing | Yes, by Eric |
 
 **Deputies:** each role names one in GitLab, never the role holder;
 until there are more people, a second engineer deputises for the
@@ -209,14 +214,15 @@ team's words (§7 to §10, FS-847), which follow these rules for them.
 | Practice | The convention |
 |---|---|
 | **One long-lived branch** | `main`, protected. Work happens on short-lived branches, one register row or a tight group of rows each, merged within two or three days |
-| **Branch names** | `<kind>/<FS id>-<a-few-words>`, the kind one of `docs`, `spec`, `code`, `fix`, `tool`, `release`: `docs/FS-845-dated-versions` |
+| **Branch names** | `<kind>/<FS id>-<a-few-words>`, the kind one of `docs`, `spec`, `code`, `fix`, `tool`, `release`: `docs/FS-845-dated-versions`. Claude's own branches are `claude/<FS id>-<a-few-words>` (FS-886) |
+| **Who did what** | Each commit is authored by whoever wrote it, under their own name: Claude's as `Claude <noreply@anthropic.com>`, never under a person's identity. A merge and a release are the act of the person who takes the work in, under their own name (FS-886) |
 | **Releases are dated tags on main** | `docs-2026.10.15`, `roan-capital-2026.10.15` (rules, Dibon 12). A release branch, `release/<series>-<date>`, only to fix an old release a customer still runs: the fix lands on main first, then is cherry-picked back |
 | **Commit subject** | `FS-123: what changed`, at most 72 characters; the hook refuses a subject without its register row (Merge, Revert and Release excepted) |
 | **Commit body** | Why, not what; wrapped at 72 columns; trailers last (`Co-Authored-By:`) |
 | **Mechanical changes apart** | A sweep across many files (a status for every document, renumbered ids) is its own commit, never mixed with a change a reviewer must read |
 | **Keep current by rebasing** | `git fetch`, then `git rebase origin/main`; never merge main into a branch. Force-push only your own branch, and only `--force-with-lease`; never main |
 | **Undo with a new commit** | `git revert` on main; history on main is never rewritten |
-| **Squash on merge** | One commit per merge request on main, its description as the message; the branch's own commits may be untidy |
+| **Merge, keeping who did what** | Squash only within one person's own branch; between people, a merge commit, so each commit keeps its author and the merge records who took it in. One person's merge request may still be squashed to one commit under their name (FS-886) |
 | **Tags are annotated, and signed once keys exist** | `git tag -a docs-2026.10.15 -m "…"`; a published tag is never moved or deleted |
 | **Line endings** | LF everywhere (`.gitattributes`); a clone sets nothing by hand |
 | **The register** | REVIEW.md, its open rows, and review/, its closed rows by the hundred (FS-866), merge by union, so two branches' new rows both survive; the register check fails a skipped or repeated FS id. In GitLab an FS id comes from its issue, so two people never take the same one |
@@ -227,6 +233,22 @@ team's words (§7 to §10, FS-847), which follow these rules for them.
 **Until the move to GitLab,** the owner is the only one who pushes, to
 GitHub's main, on their word ("push"): the single-owner exception. The
 team works on branches and shares them; the owner merges.
+
+**Claude's work is a conversation, private until the owner says
+otherwise** (FS-886). Claude works only on its own branch, its commits
+under its own name, and the owner's merge is the owner's:
+
+| Conversation | Claude's work | Who can see it |
+|---|---|---|
+| **Just us** | On Claude's branch on the owner's computer, not uploaded | The owner and Claude |
+| **Private** | Uploaded to Claude's own branch, not shared | Anyone who looks; addressed to no one but the owner |
+| **Public, with the team** | Shared: a review opened, the team asked | The team, asked to respond |
+
+Private is the default. Work becomes public only on the owner's word
+("share"), or where the owner has said a piece of work is for the team;
+anything sensitive and undecided, a draft decision about a customer or a
+reading of the law, stays "just us" until the owner chooses. Replies in
+a shared review are each under their writer's name.
 
 ## 7 · The team's words
 
