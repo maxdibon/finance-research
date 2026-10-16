@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-15
+last_reviewed: 2026-10-16
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1479,3 +1479,35 @@ FS-805).*
   active.
 - **Costs (inferred):** every version's terms generated from the signed
   document; the range shown where rates vary by risk class.
+
+## FS-864 · GitLab.com, not a GitLab we run ourselves
+
+*Entry written 2026-10-16. The choice was made on 2026-10-10 under FS-701
+(the owner's go, FS-703), where running GitLab ourselves was argued
+against without reasons of its own; this entry gives them.*
+
+- **Chose:** GitLab.com, Premium, one top-level group; our own runners in
+  Kenya, at Dibon central, and GitLab's agent pulling into each cluster.
+  GitLab upgrades, patches and backs up the service; we run only the
+  runners and the agents.
+- **Requires:** docs/specs/gitlab.md §2; docs/specs/gitlab.md "hosted runners never run a job that holds a secret".
+- **Argued (FS-701):** repositories, issues and comments hold no personal
+  data, no client material and no secrets (rules §1; rules, Dibon 10), so
+  nothing on GitLab.com needs to stay in Kenya; the work that does,
+  secrets and test data, runs on our runners in Kenya. Self-managed only
+  if code itself must stay in Kenya, at the cost of running it.
+- **Argued against:** GitLab self-managed, which we would install,
+  upgrade monthly, patch, back up and keep available, a critical system
+  for a small team whose roles one person mostly holds; GitLab Dedicated,
+  the hosted single-tenant option, which is Ultimate only and has no
+  African region.
+- **Costs (inferred):** code and documents live outside Kenya, at GitLab's
+  availability (when it is down, work goes on in local clones and deploys
+  pause); Premium seats for everyone who approves. The seat price is
+  thought to be the same hosted or self-managed, so the saving is our
+  time, not the licence: to confirm with GitLab.
+- **Revisit when:** a customer's or a regulator's due diligence asks for
+  source code held in Kenya, or in escrow; CBK's outsourcing expectations
+  are read to cover our code hosting; GitLab.com offers an African region;
+  or the team grows to where running GitLab costs little. Any of these
+  moves us to self-managed, with the same runners and agents.
