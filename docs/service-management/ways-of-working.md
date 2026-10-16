@@ -52,12 +52,17 @@ goes by name as well as by role: each open row of the review register
 says who has it, by first name (its *With*), and the reader adds the
 role. Approvals still go to roles, and the documents still name roles.
 Names are our own team's only: never a customer's or a partner's people.
+Each person confirms their own row; until then it says "To confirm",
+and the owner marks it as they do (FS-885). More context is to come.
 
-| Name | Role | Holds today |
-|---|---|---|
-| Eric | CTIO | Team lead, solution architect, security lead, engineering lead, product owner for Kapu MFI; compliance and risk officer until one is hired |
-| Betty | Project manager | Delivery lead |
-| Claude | Assistant | Drafts, builds and checks on Eric's word; holds no role and approves nothing |
+| Name | Role | Holds today | Confirmed |
+|---|---|---|---|
+| Eric | CTIO | Team lead, solution architect, security lead, engineering lead, product owner for Kapu MFI; compliance and risk officer until Cage joins | Yes, 2026-10-17 |
+| Jimmy | Partner and CEO | To confirm | To confirm |
+| Betty | Project manager | Delivery lead | To confirm |
+| Carol | Admin | To confirm | To confirm |
+| Cage | Legal and compliance (joining soon) | Compliance and risk officer, once joined | To confirm |
+| Claude | Assistant | Drafts, builds and checks on Eric's word; holds no role and approves nothing | Yes, by Eric |
 
 **Deputies:** each role names one in GitLab, never the role holder;
 until there are more people, a second engineer deputises for the
