@@ -1,7 +1,7 @@
 # Dibon financial services — session handoff
 
     release: 2026.10.16 · minor
-    updated: 2026-10-15
+    updated: 2026-10-17
     the release is the documentation's, moved by each release (FS-842);
     this file has no version of its own
     purpose: hand this repository to a session that knows nothing about it
@@ -16,9 +16,10 @@ the registers and the reader.
 
 You are picking up **Dibon's financial-services portfolio**: the documents
 behind the products Dibon Consulting builds and runs for Kenyan financial
-institutions. You are working with the **owner**, Dibon's Chief Technology
-and Innovation Officer, who also leads security and the build. Refer to
-people by role, never by name, in anything you write here.
+institutions. You are working with the **owner**, Eric, Dibon's Chief Technology and
+Innovation Officer, who also leads security and the build. Our own team
+is named with their role (ways-of-working §1); a customer's or partner's
+people never are.
 
 ## What this is
 
@@ -76,8 +77,9 @@ its money and its records; Dibon holds the platform. Read
 - **Compute counts; never type them.** The delivery plan's typed R1
   counts are recomputed by a script that first reproduces the old ones.
 - **Verify by breaking things.** A new check gets tests that make it fail.
-- **Commit as you go**, explicit paths, the reasoning in the message; run
-  the tests first and stop if any fail.
+- **Commit as you go**, on Claude's own branch and under Claude's name
+  (below), explicit paths, the reasoning in the message; run the tests
+  first and stop if any fail.
 - **Roles, never names**, for people, except our own team: named, with
   their role, for who is doing what (the register's With; the team is
   listed in ways-of-working §1; FS-882). Never a customer's or partner's
@@ -109,8 +111,7 @@ its money and its records; Dibon holds the platform. Read
   **Claude uses the words too, where a request matches one** (release,
   note, answered, received, meeting, history, status, check), with
   `--body-file` for the commit's body and the co-author line; and git
-  on main for building tools and documents, under the single-owner
-  exception, since save and upload refuse main (FS-862, owner, 2026-10-16).
+  for building tools and documents, on Claude's own branch (below).
   At GitLab, the words for everything, on branches. **The words are said
   from the speaker's side** (FS-879 to FS-881): download (the repository
   to me); and outwards, save (my copy), upload (my own branch in the
@@ -118,6 +119,20 @@ its money and its records; Dibon holds the platform. Read
   (the owner's, to the public). **When someone says "update", ask whether
   they mean download or upload**: never pick one. The owner's "push"
   stays what it has been: main to GitHub.
+- **Attribution: each person's work is their own** (FS-886, the owner,
+  2026-10-17). Claude works only on its own branch,
+  `claude/<FS id>-<a-few-words>`, never on main, and commits under its
+  own name: `git -c user.name=Claude -c user.email=noreply@anthropic.com
+  commit …`, the message still ending with the co-author line. Main
+  changes only by the owner's merge, a merge commit under the owner's
+  name ("merge"), never a squash of Claude's commits into the owner's;
+  releases are the owner's too. Change notes are signed by name and role
+  (`by: Claude (Assistant), on Eric's word`), as are rows' Raised by and
+  With. **Claude's work is a conversation** (ways-of-working §6): just us
+  (on the owner's computer), private (uploaded to Claude's own branch:
+  the default), or public, with the team (shared, on the owner's word
+  only). Anything sensitive and undecided stays just us. The history
+  before FS-886 is the owner's, with Claude as co-author: leave it.
 - **Documents for outside readers** start from `docs/design-system.md`:
   one look, a little whimsy in the margins, never in figures or terms.
 - **Never sign in, or enter a password, on a live site**; downloads need

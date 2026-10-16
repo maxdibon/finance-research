@@ -78,10 +78,18 @@ const hasRemote = () => git(['remote'], { ok: true }).split('\n').includes('orig
 const unsaved = () => git(['status', '--porcelain'], { full: true }).stdout.split('\n').filter((l) => l.trim()).map((l) => ({ code: l.slice(0, 2), file: l.slice(3).replace(/^"|"$/g, '') }));
 function role() {
   const r = git(['config', '--get', 'dibon.role'], { ok: true });
-  if (!r) stop('Tell me your role once: dibon role "Project manager" (a role, never a name).');
+  if (!r) stop('Tell me your role once: dibon role "Project manager" (used with your name where the team table has none).');
   return r;
 }
-const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').split('-').slice(0, 6).join('-');
+// FS-886: who signs a note, by name and role: "Betty (Project manager)".
+// The role is the team's (ways-of-working §1) when the name is in it.
+function signer() {
+  const name = git(['config', '--get', 'user.name'], { ok: true }).split(' ')[0];
+  if (!name) stop('Tell git your name once: git config user.name "Betty".');
+  const member = require('./register').team(ROOT).get(name);
+  return `${name} (${member ? member.role : role()})`;
+}
+const slug =(s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').split('-').slice(0, 6).join('-');
 const read = (rel) => norm(fs.readFileSync(path.join(ROOT, rel), 'utf8'));
 function write(rel, text) {
   const p = path.join(ROOT, rel);
@@ -218,7 +226,7 @@ const word = {
     if (forWhom !== 'team' && /\b[A-Z]{2,3}-\d{2,3}\b/.test(text)) stop('This note is read outside Dibon, so it carries no register ids. Say it in plain words; the ids go in --rows.');
     let file = `changes/${today()}-${slug(text)}.md`;
     for (let n = 2; fs.existsSync(path.join(ROOT, file)); n++) file = `changes/${today()}-${slug(text)}-${n}.md`;
-    write(file, `---\nkind: ${kind}\nfor: ${forWhom}\nrows: [${rows}]\nby: ${role()}\n---\n${text}\n`);
+    write(file, `---\nkind: ${kind}\nfor: ${forWhom}\nrows: [${rows}]\nby: ${signer()}\n---\n${text}\n`);
     say(`Noted for ${forWhom}, ${kind} (${file}). It goes out with the next release; dibon save keeps it with your work.`);
   },
 

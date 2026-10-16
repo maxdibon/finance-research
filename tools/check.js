@@ -1424,7 +1424,7 @@ function checkChanges(root) {
     if (!['team', 'everyone', ...customers].includes(forWhom)) at(`for "${forWhom || ''}" is not team, everyone or a customer's id (${customers.join(', ')})`);
     if (!rows.length) at('rows: the register rows it serves');
     for (const r of rows) if (!review.has(r)) at(`rows: ${r} is not in REVIEW.md`);
-    if (!(get('by') || '').trim()) at('by: a role');
+    if (!(get('by') || '').trim()) at('by: who made the change, by name and role');
     if (!body) at('no text');
     if (forWhom !== 'team' && /\b[A-Z]{2,3}-\d{2,3}\b/.test(body)) at('read outside Dibon, so no register ids in its text: they belong in rows');
   }

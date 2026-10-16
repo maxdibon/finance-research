@@ -2,7 +2,7 @@
 kind: patch
 for: roan-capital
 rows: [FS-874]
-by: Chief Technology and Innovation Officer
+by: Claude (Assistant), on Eric's word
 released: [docs]
 ---
 

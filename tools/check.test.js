@@ -678,7 +678,7 @@ test('words: a word the tool knows with no section in the guide fails', () => {
 test('changes: a note read outside Dibon with a register id in its text fails', () => {
   const f = runWith((d) => {
     fs.mkdirSync(path.join(d, 'changes'), { recursive: true });
-    fs.writeFileSync(path.join(d, 'changes', '2026-10-16-a-note.md'), '---\nkind: minor\nfor: roan-capital\nrows: [FS-845]\nby: Delivery lead\n---\nOpen answer 24 settled (FS-845).\n');
+    fs.writeFileSync(path.join(d, 'changes', '2026-10-16-a-note.md'), '---\nkind: minor\nfor: roan-capital\nrows: [FS-845]\nby: Betty (Project manager)\n---\nOpen answer 24 settled (FS-845).\n');
   });
   assert.deepStrictEqual(names(f), ['changes']);
 });
@@ -686,7 +686,7 @@ test('changes: a note read outside Dibon with a register id in its text fails', 
 test('changes: a well-formed note for the team passes', () => {
   const f = runWith((d) => {
     fs.mkdirSync(path.join(d, 'changes'), { recursive: true });
-    fs.writeFileSync(path.join(d, 'changes', '2026-10-16-a-note.md'), '---\nkind: minor\nfor: team\nrows: [FS-845]\nby: Delivery lead\n---\nVersions are dated (FS-845).\n');
+    fs.writeFileSync(path.join(d, 'changes', '2026-10-16-a-note.md'), '---\nkind: minor\nfor: team\nrows: [FS-845]\nby: Betty (Project manager)\n---\nVersions are dated (FS-845).\n');
   });
   assert.deepStrictEqual(names(f), []);
 });

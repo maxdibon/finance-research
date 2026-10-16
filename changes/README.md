@@ -11,7 +11,7 @@ A note is a file here, named `<YYYY-MM-DD>-<a-few-words>.md`:
 kind: minor
 for: team
 rows: [FS-845]
-by: Delivery lead
+by: Betty (Project manager)
 ---
 Versions are dated: a release is named by its date, with .1, .2 for a patch.
 ```
@@ -22,7 +22,9 @@ Versions are dated: a release is named by its date, with .1, .2 for a patch.
 - **for:** `team` (internal only), `everyone` (also in the external
   release notes, docs/marketing/release-notes.md), or a customer's id
   (`roan-capital`: also in its delivery map's changelog, §8).
-- **rows:** the register rows it serves. **by:** a role, never a name.
+- **rows:** the register rows it serves. **by:** who made the change, by name and role (FS-886):
+  "Betty (Project manager)", or "Claude (Assistant), on Eric's word"; a
+  customer's or partner's people are never named.
 - **The text:** one or two sentences. A note for everyone or for a
   customer is read outside Dibon: customer-safe, with no register ids in
   its text (the check holds both).
