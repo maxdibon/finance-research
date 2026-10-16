@@ -149,7 +149,9 @@ fresh clone needs the list before it can commit.
    portfolio copy is the exception (FS-263); its claims are listed in
    `design/portfolio-pdf/claims.json`.
 4. **No figure without a source.** Pricing appears nowhere in the modules.
-5. **Roles, never names, for people.** Customers the owner has released
+5. **Roles, never names, for people,** except our own team, named with
+   their role for who is doing what (the review register's With, FS-882).
+   Customers the owner has released
    are named in internal documents (Onit Bank, Roan Capital, KCB, National
    Bank of Kenya; FS-414, FS-420). Onit Bank is also named in the
    portfolio (FS-391). Roan Capital stays out of the portfolio, its design

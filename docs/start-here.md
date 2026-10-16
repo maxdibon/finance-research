@@ -7,7 +7,7 @@ released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781, FS-855]
-last_reviewed: 2026-10-16
+last_reviewed: 2026-10-17
 ---
 
 # Start here
@@ -66,8 +66,9 @@ decisions follow from it.
   Planned. Say "built" only when it is.
 - **Facts live once.** Link to the document that holds a fact; never copy
   it.
-- **Roles, not names, for people.** Customers are named in internal
-  documents only when released (README, rule 5).
+- **Roles, not names, for people,** except our own team, named with
+  their role for who is doing what (FS-882). Customers are named in
+  internal documents only when released (README, rule 5).
 - **Client material stays out of git.** It lives in `clients/` and
   `sources/confidential/`; we write about it, never copy it.
 - **Counts are computed.** `node tools/check.js --counts`; never type a

@@ -78,7 +78,10 @@ its money and its records; Dibon holds the platform. Read
 - **Verify by breaking things.** A new check gets tests that make it fail.
 - **Commit as you go**, explicit paths, the reasoning in the message; run
   the tests first and stop if any fail.
-- **Roles, never names**, for people. **Customer-safe language**, inside
+- **Roles, never names**, for people, except our own team: named, with
+  their role, for who is doing what (the register's With; the team is
+  listed in ways-of-working §1; FS-882). Never a customer's or partner's
+  people. **Customer-safe language**, inside
   as well as outside: frame what a customer is working towards, never
   judge its systems.
 - **Status is evidence:** Live, Built, Designed or Planned, for
@@ -320,6 +323,10 @@ register row.
   a decision" in prose.
 - **Every commit subject starts with its register row** ("FS-123: …"), or
   Merge, Revert or Release: the commit-msg hook refuses others.
+- **A register row has seven cells** (FS-882): Id, Raised by, Point,
+  Status, Criticality, With (a first name from the team in
+  ways-of-working §1, or "—" once closed), Notes. A script that adds or
+  closes rows writes all seven.
 - **Take the next FS id from the real register**,
   `node -e "console.log(require('./tools/register').nextId('.'))"`: the
   newest row may already be closed and in review/. Never from a sandbox

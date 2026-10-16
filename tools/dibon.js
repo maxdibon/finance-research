@@ -115,7 +115,7 @@ function newRow(point) {
   const t = read('REVIEW.md');
   const id = require('./register').nextId(ROOT);
   const who = git(['config', '--get', 'user.name'], { ok: true }).split(' ')[0] || role();
-  const row = `| ${id} | ${who} | ${point.replace(/\|/g, '/')} | OPEN | Medium | **${today()}:** started (dibon) |`;
+  const row = `| ${id} | ${who} | ${point.replace(/\|/g, '/')} | OPEN | Medium | ${who} | **${today()}:** started (dibon) |`;
   write('REVIEW.md', `${t.trimEnd()}\n${row}\n`);
   return id;
 }

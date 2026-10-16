@@ -519,9 +519,11 @@ const READER_NOTE = 'Built for reading, without the protected-names check: this 
 // leads with the open rows by criticality, then the register (FS-779).
 const CRITICALITY_ORDER = ['Critical', 'High', 'Medium', 'Low'];
 
-function reviewBody(body) {
+function reviewBody(body, team = new Map()) {
   const lines = body.split('\n');
-  const at = lines.findIndex((l) => /^\| Id \| Raised by \| Point \| Status \| Criticality \| Notes \|$/.test(l));
+  const at = lines.findIndex((l) => /^\| Id \| Raised by \| Point \| Status \| Criticality \| With \| Notes \|$/.test(l));
+  // FS-882: who has a row, by name and role ("Betty (Project manager)").
+  const who = (n) => (team.has(n) ? `${n} (${team.get(n).role})` : n);
   if (at < 0) return body;
   const rows = lines.filter((l) => /^\| FS-\d{3} \|/.test(l)).map((l) => l.split('|').slice(1, -1).map((s) => s.trim()));
   const open = rows.filter((c) => c[3] === 'OPEN')
@@ -534,9 +536,11 @@ function reviewBody(body) {
     '',
     `${open.length} open: ${CRITICALITY_ORDER.map((k) => `${byCrit[k] || 0} ${k}`).join(', ')}. Closed: ${Object.entries(byStatus).map(([k, n]) => `${n} ${k.toLowerCase()}`).join(', ')}.`,
     '',
+    `With: ${Object.entries(tally(open, 5)).sort((a, b) => b[1] - a[1]).map(([n, k]) => `${who(n)} ${k}`).join(', ')}.`,
+    '',
     // FS-844: a subsection per criticality, and the register by the
     // hundred, so the contents list gives real jump points.
-    ...CRITICALITY_ORDER.filter((k) => byCrit[k]).flatMap((k) => [`### ${k} (${byCrit[k]})`, '', '| Id | Point |', '|---|---|', ...open.filter((c) => c[4] === k).map((c) => `| ${c[0]} | ${c[2]} |`), '']),
+    ...CRITICALITY_ORDER.filter((k) => byCrit[k]).flatMap((k) => [`### ${k} (${byCrit[k]})`, '', '| Id | Point | With |', '|---|---|---|', ...open.filter((c) => c[4] === k).map((c) => `| ${c[0]} | ${c[2]} | ${who(c[5])} |`), '']),
     '## The register, in id order',
     '',
   ];
@@ -575,7 +579,7 @@ function build(root, outDir = path.join(root, 'build', 'site'), opts = {}) {
   for (const f of files) {
     const fm = frontMatter(read(root, f));
     const { fields } = fm;
-    const body = f === 'REVIEW.md' ? reviewBody(fm.body) : fm.body;
+    const body = f === 'REVIEW.md' ? reviewBody(fm.body, require('./register').team(root)) : fm.body;
     const page = pageOf(f);
     const journey =f.startsWith('docs/journeys/') && !f.endsWith('README.md');
     const rows = new Set();

@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-16
+last_reviewed: 2026-10-17
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1511,3 +1511,22 @@ against without reasons of its own; this entry gives them.*
   are read to cover our code hosting; GitLab.com offers an African region;
   or the team grows to where running GitLab costs little. Any of these
   moves us to self-managed, with the same runners and agents.
+
+## FS-882 · Our own team named, with their roles, for who is doing what
+
+*Entry written 2026-10-17, from the owner's answer in chat.*
+
+- **Chose:** names and roles both, while the team is small: each open
+  row of the review register says who has it, by first name, from the
+  team listed in ways-of-working §1, and the reader adds the role
+  ("Betty (Project manager)"). Roles stay for approvals, for the owner of
+  each document, and in what the documents describe.
+- **Requires:** docs/service-management/ways-of-working.md "The team today"; docs/start-here.md "except our own team".
+- **Argued (owner):** "We're a small team at the moment"; a role alone
+  cannot say who is doing a thing when one person holds most roles.
+- **Argued against:** roles only, which left 141 open rows with no one
+  on them; a customer's or a partner's people named, which stays
+  forbidden.
+- **Costs (inferred):** the team table kept current as people join and
+  leave; every open row handed to someone; names in a register that
+  outlives the people in it, so a closed row may keep "—".

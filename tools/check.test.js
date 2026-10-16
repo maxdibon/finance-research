@@ -94,10 +94,22 @@ test('register: a row closed but left in REVIEW.md fails, and tidy files it', ()
 });
 
 test('register: a row reopened in review/ fails, and tidy brings it back', () => {
-  const reopen = (d) => patch(d, path.join('review', 'FS-001-099.md'), (t) => t.replace(/^(\| FS-002 \|[^|]*\|[^|]*\|) DECIDED \| — \|/m, '$1 OPEN | Low |'));
+  const reopen = (d) => patch(d, path.join('review', 'FS-001-099.md'), (t) => t.replace(/^(\| FS-002 \|[^|]*\|[^|]*\|) DECIDED \| — \| — \|/m, '$1 OPEN | Low | Eric |'));
   assert.deepStrictEqual(names(runWith(reopen)), ['register']);
   const f = runWith((d) => { reopen(d); require('./register').tidy(d); });
   assert.deepStrictEqual(f, []);
+});
+
+// FS-882: who has an open row, by a first name from the team.
+test('register: an open row with no one on it fails', () => {
+  const f = runWith((d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) Eric \|/m, '$1 — |')));
+  assert.deepStrictEqual(names(f), ['register']);
+});
+
+test('register: an open row with someone not on the team fails, and a teammate passes', () => {
+  const give = (who) => (d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) Eric \|/m, `$1 ${who} |`));
+  assert.deepStrictEqual(names(runWith(give('Somebody'))), ['register']);
+  assert.deepStrictEqual(runWith(give('Betty')), []);
 });
 
 test('register: an id missing from every file fails', () => {

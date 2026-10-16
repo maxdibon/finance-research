@@ -18,8 +18,9 @@ const path = require('path');
 
 const MAIN = 'REVIEW.md';
 const DIR = 'review';
-const HEADER = '| Id | Raised by | Point | Status | Criticality | Notes |';
-const RULE = '|---|---|---|---|---|---|';
+// FS-882: With, who has the row, by first name (the team: ways-of-working §1).
+const HEADER = '| Id | Raised by | Point | Status | Criticality | With | Notes |';
+const RULE = '|---|---|---|---|---|---|---|';
 const ROW = /^\| FS-(\d{3}) \|/;
 const norm = (s) => s.replace(/\r\n/g, '\n');
 const pad = (n) => String(n).padStart(3, '0');
@@ -45,7 +46,7 @@ function rows(root) {
       const m = text.match(ROW);
       if (!m) return;
       const c = text.split('|').slice(1, -1).map((s) => s.trim());
-      out.push({ file, line: i + 1, text, id: c[0], n: +m[1], raisedBy: c[1], point: c[2], status: c[3], criticality: c[4], notes: c[5], cellCount: c.length });
+      out.push({ file, line: i + 1, text, id: c[0], n: +m[1], raisedBy: c[1], point: c[2], status: c[3], criticality: c[4], with: c[5], notes: c[6], cellCount: c.length });
     });
   }
   return out;
@@ -92,7 +93,23 @@ function tidy(root) {
   return moving.map((r) => `${r.id} to ${want(r)}`);
 }
 
-module.exports = { MAIN, DIR, HEADER, files, rows, nextId, fileFor, tidy };
+// The team, from ways-of-working §1's "The team today": name → { role, holds }.
+function team(root) {
+  const p = path.join(root, 'docs', 'service-management', 'ways-of-working.md');
+  const out = new Map();
+  if (!fs.existsSync(p)) return out;
+  const t = norm(fs.readFileSync(p, 'utf8'));
+  const at = t.indexOf('**The team today**');
+  if (at < 0) return out;
+  for (const l of t.slice(at).split('\n').slice(1)) {
+    if (/^\*\*/.test(l)) break;
+    const c = l.split('|').slice(1, -1).map((s) => s.trim());
+    if (c.length === 3 && c[0] !== 'Name' && !/^-+$/.test(c[0])) out.set(c[0], { role: c[1], holds: c[2] });
+  }
+  return out;
+}
+
+module.exports = { MAIN, DIR, HEADER, files, rows, nextId, fileFor, tidy, team };
 
 if (require.main === module) {
   const root = path.join(__dirname, '..');

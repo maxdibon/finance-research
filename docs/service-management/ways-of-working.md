@@ -7,7 +7,7 @@ released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865]
-last_reviewed: 2026-10-16
+last_reviewed: 2026-10-17
 ---
 
 # Ways of working
@@ -46,6 +46,18 @@ holder of a role, the role's deputy approves.
 | **Engineering lead** | How code is built and tested | The code repository; docs/testing.md; each build spec's tests | The CTIO |
 | **Operations lead** | Running the platform; the change authority for normal changes | docs/service-management/, operating-model.md, deployment and runbooks; normal changes (§4) | A DevSecOps engineer, to name |
 | **Commercial lead** | What we sell, and to whom | docs/marketing/, partners.md, competitors.md | To name |
+
+**The team today** (FS-882). We are a small team, so who is doing what
+goes by name as well as by role: each open row of the review register
+says who has it, by first name (its *With*), and the reader adds the
+role. Approvals still go to roles, and the documents still name roles.
+Names are our own team's only: never a customer's or a partner's people.
+
+| Name | Role | Holds today |
+|---|---|---|
+| Eric | CTIO | Team lead, solution architect, security lead, engineering lead, product owner for Kapu MFI; compliance and risk officer until one is hired |
+| Betty | Project manager | Delivery lead |
+| Claude | Assistant | Drafts, builds and checks on Eric's word; holds no role and approves nothing |
 
 **Deputies:** each role names one in GitLab, never the role holder;
 until there are more people, a second engineer deputises for the

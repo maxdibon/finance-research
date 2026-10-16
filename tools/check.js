@@ -157,6 +157,7 @@ function checkRegister(root) {
   const failures = [];
   const reg = require('./register');
   const rows = parseRegister(root);
+  const team = reg.team(root);
   // A heading holding a table's cells is a script's slip (FS-779): it
   // renders as a huge title and hides the rows it should have changed.
   // FS-866: so is a heading holding any pipe or a row's marker, which a
@@ -182,7 +183,11 @@ function checkRegister(root) {
     // FS-866: open rows in REVIEW.md, closed rows in their hundred's file.
     const want = row.status === 'OPEN' ? reg.MAIN : reg.fileFor(row.n);
     if (REVIEW_STATUSES.includes(row.status) && row.file !== want) at(`${row.id} is ${row.status} and belongs in ${want}: run node tools/register.js tidy`);
-    if (row.cellCount !== 6) at(`${row.id} has ${row.cellCount} cells; expected 6`);
+    if (row.cellCount !== 7) at(`${row.id} has ${row.cellCount} cells; expected 7`);
+    // FS-882: who has an open row, by first name, from the team in
+    // ways-of-working §1; a closed row says who did it, or "—".
+    else if (row.status === 'OPEN' && !team.has(row.with)) at(`${row.id} is open, with "${row.with}": say who has it, by a first name from the team in ways-of-working §1 (${[...team.keys()].join(', ')})`);
+    else if (row.status !== 'OPEN' && row.with !== '—' && !team.has(row.with)) at(`${row.id} is ${row.status}, with "${row.with}": "—", or a first name from the team`);
     if (!REVIEW_STATUSES.includes(row.status)) at(`${row.id} status "${row.status}" not in ${REVIEW_STATUSES.join('/')}`);
     if (row.status === 'OPEN' && !CRITICALITIES.includes(row.criticality)) at(`${row.id} is open with criticality "${row.criticality}"; one of ${CRITICALITIES.join('/')}`);
     if (row.status !== 'OPEN' && row.criticality !== '—') at(`${row.id} is ${row.status} but still rated "${row.criticality}"; a closed row has —`);
