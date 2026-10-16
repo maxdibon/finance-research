@@ -1395,14 +1395,15 @@ function checkVersions(root) {
 // ── words ────────────────────────────────────────────────────────────────
 // FS-847 to FS-849: the guide has a section for every word the tool knows,
 // and no word the tool does not, so the two never drift apart.
-const GUIDE = path.join('docs', 'training', 'working-in-the-repository.md');
+// FS-865: the guide is ways-of-working's §7 to §10; the words are §8.
+const GUIDE = path.join('docs', 'service-management', 'ways-of-working.md');
 function checkWords(root) {
   const tool = path.join(__dirname, 'dibon.js'); // the words live beside the check
   if (!fs.existsSync(tool)) return [];
   if (!fs.existsSync(path.join(root, GUIDE))) return [fail('words', GUIDE, 0, 'missing: the guide to the team\'s words')];
   const { WORDS } = require(tool);
   const text = read(root, GUIDE);
-  const section = (text.split(/^## The words$/m)[1] || '').split(/^## /m)[0];
+  const section = (text.split(/^## (?:\d+ · )?The words$/m)[1] || '').split(/^## /m)[0];
   const headed = [...section.matchAll(/^### (\S+)$/gm)].map((m) => m[1]);
   const words = WORDS.map((w) => w[0]);
   const out = [];

@@ -569,7 +569,7 @@ test('versions: a handover describing a release the changelog does not have fail
 });
 
 test('words: a word the tool knows with no section in the guide fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'training', 'working-in-the-repository.md'), (t) => t.replace('### discard\n', '### throw-away\n')));
+  const f = runWith((d) => patch(d, path.join('docs', 'service-management', 'ways-of-working.md'), (t) => t.replace('### discard\n', '### throw-away\n')));
   assert.deepStrictEqual(names(f), ['words']);
 });
 

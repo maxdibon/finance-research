@@ -90,8 +90,8 @@ its money and its records; Dibon holds the platform. Read
   2026.10.15`, the release its content last changed in (FS-852): a new
   document says `released: unreleased`, as the templates do, and the
   release stamps it. Never type a release into it.
-- **The team's words** (`tools/dibon.js`; the guide is
-  `docs/training/working-in-the-repository.md`): when someone asks in plain
+- **The team's words** (`tools/dibon.js`; the guide is ways-of-working
+  §7 to §10, FS-865): when someone asks in plain
   sentences ("update, then mark answer 24 as answered"), use the words,
   say what you understood, and run them with `--yes` only after they have
   said yes in chat. Developers may use git directly, by ways-of-working §6.
@@ -301,6 +301,9 @@ register row.
 - **A throwaway clone for testing a tool gets no confidential files:**
   copying `sources/confidential/protected-names.txt` into one was refused,
   rightly. `tools/cut.js` and the history need none of it.
+- **Run the full tests after a release,** not only the checks: a test
+  that rebuilt the changelog from scratch failed from the release on,
+  as the documents then named a release the fixture lacked (FS-861).
 - **A throwaway clone tests what is committed in it, not your edits:**
   `git diff` leaves out new files (copy them in), and `dibon start`
   branches from the shared copy, which for a clone is the real

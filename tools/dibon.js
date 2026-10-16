@@ -139,7 +139,7 @@ const word = {
       for (const e of d[2]) say(`  ${e}`);
       return;
     }
-    say('The team\'s words (docs/training/working-in-the-repository.md):');
+    say('The team\'s words (docs/service-management/ways-of-working.md, §7 to §10):');
     for (const [w2, what] of WORDS) say(`  ${w2.padEnd(9)} ${what}`);
     say('Three rules: update first; a stop protects you; nothing is guessed, so say what you mean.');
   },
