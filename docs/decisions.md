@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-17
+last_reviewed: 2026-10-19
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1554,3 +1554,19 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** a merge for every piece of Claude's work before
   it reaches main; a history with merge commits in it. The history
   before FS-886 stays the owner's, with Claude as co-author.
+
+## FS-887 · A version is its date, and nothing more, for now
+
+*Entry written 2026-10-19 by Claude (Assistant), from the owner's words in chat.*
+
+- **Chose:** versions stay all date, `2026.10.16`, with `.1` for a patch
+  or a second release that day: no letters in the version, and for now
+  no release name beside it either.
+- **Requires:** docs/rules.md "named by date".
+- **Argued (owner):** "let's stick with the date for now".
+- **Argued against:** letters in the version (`2026.10.16b`, `-rc`),
+  which would add a second scheme, sit ambiguously beside `.1`, and
+  break every tool, check and tag that reads the date; a release name in
+  the heading, beside the version, left for later.
+- **Costs (inferred):** a version says when, not what; what a release
+  holds is read from its notes.
