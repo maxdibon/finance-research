@@ -23,7 +23,7 @@ Versions are dated: a release is named by its date, with .1, .2 for a patch.
   release notes, docs/marketing/release-notes.md), or a customer's id
   (`roan-capital`: also in its delivery map's changelog, §8).
 - **rows:** the register rows it serves. **by:** who made the change, by name and role (FS-886):
-  "Betty (Project manager)", or "Claude (Assistant), on Eric's word"; a
+  "Betty (Project manager)", or "Claude for Eric (Assistant)" (FS-905); a
   customer's or partner's people are never named.
 - **The text:** one or two sentences. A note for everyone or for a
   customer is read outside Dibon: customer-safe, with no register ids in

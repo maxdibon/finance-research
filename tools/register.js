@@ -93,19 +93,37 @@ function tidy(root) {
   return moving.map((r) => `${r.id} to ${want(r)}`);
 }
 
-// The team, from ways-of-working §1's "The team today": name → { role, holds }.
+// The team, from ways-of-working §1's "The team today": name → { role,
+// holds, confirmed, handle, team }. Read by the table's header (FS-905),
+// so a column added does not move the others. A name or handle twice is
+// kept in out.repeated, for the register check to refuse: a name must
+// mean one person (an initial where first names collide), and a handle,
+// the work email's local part, names Claude's identity for that person.
 function team(root) {
   const p = path.join(root, 'docs', 'service-management', 'ways-of-working.md');
   const out = new Map();
+  out.repeated = [];
   if (!fs.existsSync(p)) return out;
   const t = norm(fs.readFileSync(p, 'utf8'));
   const at = t.indexOf('**The team today**');
   if (at < 0) return out;
+  let head = null;
+  const handles = new Set();
   for (const l of t.slice(at).split('\n').slice(1)) {
     if (/^\*\*/.test(l)) break;
+    if (!l.startsWith('|')) continue;
     const c = l.split('|').slice(1, -1).map((s) => s.trim());
-    // FS-885: Confirmed, the fourth, says whether the person has confirmed it.
-    if (c.length >= 3 && c[0] !== 'Name' && !/^-+$/.test(c[0])) out.set(c[0], { role: c[1], holds: c[2], confirmed: /^yes/i.test(c[3] || '') });
+    if (!head) { head = c.map((h) => h.toLowerCase()); continue; }
+    if (c.every((x) => /^-+$/.test(x))) continue;
+    const get = (name) => (head.indexOf(name) >= 0 ? c[head.indexOf(name)] || '' : '');
+    const name = get('name');
+    if (!name) continue;
+    // FS-885: Confirmed says whether the person has confirmed their row.
+    const row = { role: get('role'), holds: get('holds today'), confirmed: /^yes/i.test(get('confirmed')), handle: get('handle'), team: get('team') };
+    if (out.has(name)) out.repeated.push(`name "${name}"`);
+    if (row.handle && handles.has(row.handle)) out.repeated.push(`handle "${row.handle}"`);
+    if (row.handle) handles.add(row.handle);
+    out.set(name, row);
   }
   return out;
 }

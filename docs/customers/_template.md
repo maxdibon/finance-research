@@ -7,7 +7,7 @@ released: unreleased
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-837, FS-838, FS-845]
-last_reviewed: 2026-10-16
+last_reviewed: 2026-10-21
 ---
 
 # Customer name · delivery map
@@ -61,8 +61,10 @@ No documents registered yet.
 
 ## 7 · People and roles
 
-Its roles in ITIL's terms (sponsor, customer, users) and its positions,
-by role, never by name.
+Who is on it at Dibon, by name and role (FS-903): the delivery lead
+first. Then its roles in ITIL's terms (sponsor, customer, users) and its
+positions, by role, never by name: its people's names and contacts are
+in Dibon's Odoo, open to the project's team.
 
 ## 8 · Changelog
 

@@ -122,13 +122,19 @@ its money and its records; Dibon holds the platform. Read
 - **Attribution: each person's work is their own** (FS-886, the owner,
   2026-10-17). Claude works only on its own branch,
   `claude/<FS id>-<a-few-words>`, never on main, and commits under its
-  own name: `git -c user.name=Claude -c user.email=noreply@anthropic.com
-  commit …`, the message still ending with the co-author line. Main
+  own name, **whose Claude it is** (FS-905): read `git config --get
+  dibon.claude` (set once by `dibon claude` and a handle; today "Claude for
+  Eric <claude-eric@noreply.dibon.co.ke>") and commit with `git -c
+  user.name="Claude for Eric" -c user.email=claude-eric@noreply.dibon.co.ke
+  commit …`, the message still ending with the co-author line; if it is
+  not set, stop and ask, never fall back to one identity for everyone.
+  Branches are `claude/<handle>/<FS id>-<words>`. Main
   changes only by the owner's merge, a merge commit under the owner's
   name ("merge"), never a squash of Claude's commits into the owner's;
   releases are the owner's too. Change notes are signed by name and role
-  (`by: Claude (Assistant), on Eric's word`), as are rows' Raised by and
-  With. **Claude's work is a conversation** (ways-of-working §6): just us
+  (`by: Claude for Eric (Assistant)`), as are rows' Raised by and With
+  ("Claude for Eric"; a name is one person, an initial where first names
+  collide, and each person has a handle: ways-of-working §1). **Claude's work is a conversation** (ways-of-working §6): just us
   (on the owner's computer), private (uploaded to Claude's own branch:
   the default), or public, with the team (shared, on the owner's word
   only). Anything sensitive and undecided stays just us. The history
