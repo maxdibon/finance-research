@@ -113,6 +113,22 @@ test('register: an open row with someone not on the team fails, and a teammate p
   assert.deepStrictEqual(runWith(give('Betty')), []);
 });
 
+// FS-905: a name means one person, and so does a handle.
+test('register: a name or a handle on the team twice fails', () => {
+  const WOW = path.join('docs', 'service-management', 'ways-of-working.md');
+  const add = (row) => (d) => patch(d, WOW, (t) => t.replace(/^(\| Cliff \|.*\|)$/m, `$1\n${row}`));
+  assert.deepStrictEqual(names(runWith(add('| Cliff | cliff.k | DevOps | Engineer | — | To confirm |'))), ['register']);
+  assert.deepStrictEqual(names(runWith(add('| Cliff K. | cliff | DevOps | Engineer | — | To confirm |'))), ['register']);
+  assert.deepStrictEqual(runWith(add('| Cliff K. | cliff.k | DevOps | Engineer | — | To confirm |')), []);
+});
+
+test('register: the team is read by its header, so a column added moves nothing', () => {
+  const team = require('./register').team(ROOT);
+  assert.strictEqual(team.get('Betty').role, 'Project manager');
+  assert.strictEqual(team.get('Betty').handle, 'betty');
+  assert.strictEqual(team.get('Claude for Eric').team, 'Assistant');
+});
+
 test('register: an id missing from every file fails', () => {
   const f = runWith((d) => patch(d, path.join('review', 'FS-100-199.md'), (t) => t.replace(/^\| FS-150 \|.*\n/m, '')));
   assert.ok(names(f).includes('register'));

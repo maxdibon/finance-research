@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865]
-last_reviewed: 2026-10-17
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905]
+last_reviewed: 2026-10-21
 ---
 
 # Ways of working
@@ -35,48 +35,87 @@ ITIL service owner of its product (FS-751, FS-755 to FS-757). Approvals go to ro
 change. **No one approves their own work:** where the author is the only
 holder of a role, the role's deputy approves.
 
-| Role | Accountable for | Approves | Held today by |
-|---|---|---|---|
-| **Team lead** | Direction, money, what we promise customers; chairs the weekly meeting | Decisions that cost something (docs/decisions.md); scope and releases (docs/delivery-plan.md) | The CTIO |
-| **Solution architect** | How the platform fits together | docs/architecture/, docs/specs/, the technology register, interfaces | The CTIO |
-| **Security lead** | Security controls, keys, access, the edge | docs/modules/platform-security.md, the endpoints and access specs; every spec's Threats section; any change to a security control | The CTIO |
-| **Compliance and risk officer** | The law, privacy, our duties to regulators; data protection officer if the Act requires one | docs/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Vacant: the CTIO until hired |
-| **Product owner**, one per product | What a product does, and in which phase; as ITIL's service owner, that it meets what was agreed | Its module in docs/modules/, its journeys | Kapu MFI: the CTIO until named |
-| **Delivery lead** | Each customer's delivery | docs/customers/, customers.md, onboarding.md, the delivery plan's dates, training | The project manager |
-| **Engineering lead** | How code is built and tested | The code repository; docs/testing.md; each build spec's tests | The CTIO |
-| **Operations lead** | Running the platform; the change authority for normal changes | docs/service-management/, operating-model.md, deployment and runbooks; normal changes (§4) | A DevSecOps engineer, to name |
-| **Commercial lead** | What we sell, and to whom | docs/marketing/, partners.md, competitors.md | To name |
+| Role | Accountable for | Approves | Held today by | Deputy |
+|---|---|---|---|---|
+| **Team lead** | Direction, money, what we promise customers; chairs the weekly meeting | Decisions that cost something (docs/decisions.md); scope and releases (docs/delivery-plan.md) | The CTIO | The CEO |
+| **Solution architect** | How the platform fits together | docs/architecture/, docs/specs/, the technology register, interfaces | The CTIO | The dev lead |
+| **Security lead** | Security controls, keys, access, the edge | docs/modules/platform-security.md, the endpoints and access specs; every spec's Threats section; any change to a security control | The CTIO | The ops lead |
+| **Compliance and risk officer** | The law, privacy, our duties to regulators; data protection officer if the Act requires one | docs/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Vacant: the CTIO until Cage joins | The CEO while the CTIO holds it; then the CTIO |
+| **Product owner**, one per product | What a product does, and in which phase; as ITIL's service owner, that it meets what was agreed | Its module in docs/modules/, its journeys | Kapu MFI: the CTIO until named | To name |
+| **Delivery lead** | Each customer's delivery | docs/customers/, customers.md, onboarding.md, the delivery plan's dates, training | The project manager | The admin |
+| **Engineering lead** | How code is built and tested | The code repository; docs/testing.md; each build spec's tests | The dev lead | An engineer (Gasine) |
+| **Operations lead** | Running the platform; the change authority for normal changes | docs/service-management/, operating-model.md, deployment and runbooks; normal changes (§4) | The ops lead | The CI/CD engineer |
+| **Odoo lead** | The Odoo platform and its set-up, for Dibon and for each customer (FS-902) | docs/modules/business-suite.md; each customer's Odoo configuration and its data migration | The Odoo lead | An Odoo engineer (Daniel) |
+| **Commercial lead** | What we sell, and to whom | docs/marketing/, partners.md, competitors.md | The CEO | The CTIO |
 
 **The team today** (FS-882). We are a small team, so who is doing what
 goes by name as well as by role: each open row of the review register
-says who has it, by first name (its *With*), and the reader adds the
+says who has it, by name (its *With*), and the reader adds the
 role. Approvals still go to roles, and the documents still name roles.
 Names are our own team's only: never a customer's or a partner's people.
 Each person confirms their own row; until then it says "To confirm",
 and the owner marks it as they do (FS-885). More context is to come.
 
-| Name | Role | Holds today | Confirmed |
-|---|---|---|---|
-| Eric | CTIO | Team lead, solution architect, security lead, engineering lead, product owner for Kapu MFI; compliance and risk officer until Cage joins | Yes, 2026-10-17 |
-| Jimmy | Partner and CEO | To confirm | To confirm |
-| Betty | Project manager | Delivery lead | To confirm |
-| Carol | Admin | To confirm | To confirm |
-| Cage | Legal and compliance (joining soon) | Compliance and risk officer, once joined | To confirm |
-| Claude | Assistant | Drafts, builds and checks on Eric's word; holds no role and approves nothing | Yes, by Eric |
+| Name | Handle | Team | Role | Holds today | Confirmed |
+|---|---|---|---|---|---|
+| Eric | eric | Leadership | CTIO | Team lead, solution architect, security lead, product owner for Kapu MFI; compliance and risk officer until Cage joins | Yes, 2026-10-17 |
+| Jimmy | jimmy | Leadership | Partner and CEO | Commercial lead; the team lead's deputy, and compliance's until Cage joins | To confirm |
+| Cage | cage | Leadership | Legal and compliance (joining soon) | Compliance and risk officer, once joined | To confirm |
+| Lillian | lillian | DevOps | Dev lead | Engineering lead; the architect's deputy | To confirm |
+| Allan | allan | DevOps | Ops lead | Operations lead, chairing the change advisory board (§4); the security lead's deputy | To confirm |
+| Gasine | gasine | DevOps | Engineer | The engineering lead's deputy | To confirm |
+| Cliff | cliff | DevOps | Mobile engineer | — | To confirm |
+| Max | max | DevOps | CI/CD engineer | The operations lead's deputy | To confirm |
+| Abel | abel | DevOps | Intern | Approves nothing; mentored by the dev lead | To confirm |
+| Gibeon | gibeon | Odoo | Odoo lead | Odoo lead (FS-902): one of the two Odoo consultants FS-640 planned for | To confirm |
+| Daniel | daniel | Odoo | Odoo engineer | The Odoo lead's deputy | To confirm |
+| Betty | betty | PM | Project manager | Delivery lead | To confirm |
+| Carol | carol | Admin | Admin | The delivery lead's deputy | To confirm |
+| Chan | chan | Social media | Social media | Marketing, with the commercial lead | To confirm |
+| Claude for Eric | claude-eric | Assistant | Assistant to Eric | Drafts, builds and checks on Eric's word; holds no role and approves nothing | Yes, by Eric |
 
-**Deputies:** each role names one in GitLab, never the role holder;
-until there are more people, a second engineer deputises for the
-architect, the security lead and the engineering lead, and the team lead
-for the compliance and risk officer.
+**A name is one person, and so is a handle** (FS-905). Where two people
+share a first name, each takes an initial ("Eric M.", "Eric K."); the
+check refuses a name or a handle listed twice. The handle is the local
+part of the person's work email, to confirm as each confirms their row;
+it never changes when a display name does.
 
-**In GitLab,** each role is a group (`@dibon/architects`,
-`@dibon/security`, …), filled from Keycloak by single sign-on, and a
-person joins every group whose role they hold. Code owners name groups,
-so the approval follows the role. **GitLab only lets a Developer or
-above approve as a code owner,** so every role holder who approves needs
-that role, and a seat, the compliance and risk officer and the
-commercial lead included; the delivery lead plans as a Planner. The
-settings are in [the GitLab spec](../specs/gitlab.md) §4.
+**Each person's Claude is its own** (FS-905): listed as "Claude for" that
+person, acting only on that person's word, committing as
+`Claude for <name> <claude-<handle>@noreply.dibon.co.ke>` (dibon claude,
+§8) on its own branches, `claude/<handle>/…`; never under one identity
+for everyone's Claude, nor under the person's own.
+
+**Outside the team:** HR is outsourced to iManage, a supplier: its people
+are never named here, and since it holds staff records it works under a
+data processing agreement (FS-906).
+
+**Who sees what about a project** (FS-903). Our own people are open to
+the whole team; a customer's people are named only where their project's
+team can see them:
+
+| What | Who sees it | Where it lives |
+|---|---|---|
+| Who on our team works on what, who leads it, who has joined | The whole team | This repository: the register's With, each customer's §7 |
+| That a customer has a tech lead, a marketing lead, a finance lead, and what each decides | The whole team | This repository, by role only ("Roan Capital's tech lead approves the test plan") |
+| A customer contact's name, work email and work phone | That customer's project team; the delivery lead, the commercial lead and the team lead | Dibon's Odoo: Contacts and CRM, linked to the customer's Project; joining a project makes you a follower and opens them, leaving closes them |
+| Anything more about a person (identity numbers, home address, personal phone) | No one beyond what the work needs | Never kept, or in the vault; never here |
+
+Business contacts are personal data (LR-17): held to deliver the
+engagement, no more than name, role and work contacts, archived when the
+engagement ends, and the contacts told so in the engagement letter or its
+privacy notice.
+
+**Deputies** are named in the roles table (FS-898, FS-902), never the role
+holder. A deputy approves under their own name while the holder is away,
+or where the holder wrote what is to be approved.
+
+**On GitHub** (FS-896), each role is a team (`@dibon/architects`,
+`@dibon/security`, …) and a person joins every team whose role they hold;
+code owners name teams, so the approval follows the role, and a code owner
+needs Write on the repository to approve. Until single sign-on (GitHub
+Enterprise Cloud) fills the teams from Keycloak, the security lead keeps
+them by hand, against this table, each month.
 
 ## 2 · A merge request, step by step
 
@@ -153,36 +192,74 @@ a person approves; never with a secret or a client's material.
 ## 4 · Change advisory: the rules
 
 The kinds of change, what the customer is told, and the change calendar
-are in [service management](README.md) §2. These rules
-say who decides: ITIL's *change authority*.
+are in [service management](README.md) §2. These rules say who decides,
+ITIL's *change authority*, and how the change advisory board advises on
+releases (FS-904).
 
 1. **Standard changes** run without approval each time. The operations lead
    keeps their list; a change joins it only after it has run as a normal
    change without incident at least three times.
-2. **A normal change** is approved in its merge request by the operations
+2. **A normal change** is approved in its pull request by the operations
    lead, after a peer's review; also by the security lead when it
    changes a security control, and by the product owner when customers
-   will see it. Its deployment to production then waits for the operations
-   lead's approval in GitLab (protected environments with deployment
-   approvals), so what was approved is what is deployed.
+   will see it. Its deployment to production is a pull request to the
+   deploy repository, which Flux applies once the operations lead has
+   approved it, so what was approved is what is deployed (FS-896).
 3. **An emergency change** is made by the on-call engineer with the
    operations lead, or the security lead when it closes a security hole,
-   and is reviewed in a merge request within two working days.
-4. **GitLab's deploy freezes hold the change calendar's blackouts:**
-   the deploy job refuses inside them unless the change is labelled
-   `kind::emergency`, its approval recorded.
+   and is reviewed in a pull request within two working days.
+4. **The change calendar's blackouts hold deploys:** Flux pauses within
+   them, and a check refuses a deploy pull request inside one unless it
+   is labelled `emergency`, its approval recorded.
 5. **The weekly meeting reviews** the coming week's normal changes, last
    week's emergencies, and any change that failed; and watches four
    measures: how often we deploy, how long a change takes to reach
-   production, how many changes fail, and how fast we recover. Our own
-   job computes them from GitLab's deployment records, since GitLab's
-   dashboards for them are Ultimate (gitlab spec §15).
+   production, how many changes fail, and how fast we recover, computed
+   from the deploy repository's merges and Flux's records.
 6. **Where a customer runs its own change board,** we attend it, and its
    approval is added to ours.
-7. **A board meets weekly** once more than one customer's windows have to
-   be balanced against each other, or normal changes outgrow a meeting's
-   slot.
 
+**The change advisory board** (FS-904) advises on every release; the
+change authority above still decides. The operations lead chairs it, in a
+weekly slot of the weekly meeting.
+
+| Release | The board | How |
+|---|---|---|
+| A documentation patch | No | The team lead releases it |
+| A documentation minor | In writing | The chair and one other member approve the release pull request |
+| A documentation major; a customer's delivery; a platform release to production; an Odoo release for a customer; a go-live | In the weekly slot | Its quorum, and the seats its areas touch |
+| An emergency | The operations lead and the security lead, within hours | Reviewed in the next slot |
+
+| Seat | Held by | Looks at |
+|---|---|---|
+| Chair | The operations lead | The change calendar, the rollback plan, deployment readiness |
+| Architecture and security | The solution architect and security lead | Design fit, security controls, threats |
+| Engineering | The engineering lead | Tests passed, acceptance met |
+| Odoo | The Odoo lead, for an Odoo release | Configuration and data migration |
+| Delivery | The delivery lead | The customer ready: notices, training, support |
+| Compliance | The compliance and risk officer | Regulatory notice and approval: a price change's (LR-03 reg 55), a new channel's (LR-03 reg 27) |
+| Commercial | The commercial lead, for a major release or a go-live | What we have promised customers |
+| Secretary, no vote | Claude | Prepares the release pack; records the decision |
+
+**Quorum:** the chair, engineering and delivery; security and compliance
+whenever their area is touched. No one approves their own release: their
+deputy takes the seat.
+
+**The release pack,** two working days before the slot: the notes
+waiting and the documents changed; the checks and tests; the risks and
+the rollback; what each customer sees, and the notice it is owed; the
+change calendar's windows; the criteria for go or no-go. The board
+decides **approve, approve with conditions, defer or reject**; the
+approvals stand on the release pull request, and the decision gets a line
+in the decisions log. The team lead, or their deputy, then cuts the
+release and its tag (FS-886). The next slot looks back at it.
+
+**On GitHub:** a `cab` team owns, in `CODEOWNERS`, CHANGELOG.md, the
+external release notes and each customer's §8, so a release pull request
+needs the board; it needs two approvals, a code owner's among them, reset
+by new commits. A tag ruleset lets only the team lead and their deputy
+create release tags. A "Release" view in the planning board is the slot's
+agenda.
 ## 5 · Working together
 
 What lets people work on their own and still in step (FS-749; adopted
@@ -214,8 +291,8 @@ team's words (§7 to §10, FS-847), which follow these rules for them.
 | Practice | The convention |
 |---|---|
 | **One long-lived branch** | `main`, protected. Work happens on short-lived branches, one register row or a tight group of rows each, merged within two or three days |
-| **Branch names** | `<kind>/<FS id>-<a-few-words>`, the kind one of `docs`, `spec`, `code`, `fix`, `tool`, `release`: `docs/FS-845-dated-versions`. Claude's own branches are `claude/<FS id>-<a-few-words>` (FS-886) |
-| **Who did what** | Each commit is authored by whoever wrote it, under their own name: Claude's as `Claude <noreply@anthropic.com>`, never under a person's identity. A merge and a release are the act of the person who takes the work in, under their own name (FS-886) |
+| **Branch names** | `<kind>/<FS id>-<a-few-words>`, the kind one of `docs`, `spec`, `code`, `fix`, `tool`, `release`: `docs/FS-845-dated-versions`. Claude's branches are `claude/<handle>/<FS id>-<a-few-words>`, the handle the person's whose Claude it is (FS-886, FS-905) |
+| **Who did what** | Each commit is authored by whoever wrote it, under their own name: Claude's as `Claude for <name> <claude-<handle>@noreply.dibon.co.ke>`, whose Claude it is (FS-905), never under a person's identity nor one shared by everyone's Claude. A merge and a release are the act of the person who takes the work in, under their own name (FS-886) |
 | **Releases are dated tags on main** | `docs-2026.10.15`, `roan-capital-2026.10.15` (rules, Dibon 12). A release branch, `release/<series>-<date>`, only to fix an old release a customer still runs: the fix lands on main first, then is cherry-picked back |
 | **Commit subject** | `FS-123: what changed`, at most 72 characters; the hook refuses a subject without its register row (Merge, Revert and Release excepted) |
 | **Commit body** | Why, not what; wrapped at 72 columns; trailers last (`Co-Authored-By:`) |
@@ -434,8 +511,16 @@ Example: `dibon practice`.
 
 ### role
 
-Records your role once, for your notes and records: never your name.
+Records your role once, for your notes and records, beside your name
+where the team table has none for you.
 Example: `dibon role "Project manager"`.
+
+### claude
+
+Sets, once, the identity your Claude commits under: "Claude for" you,
+from your handle in the team table (§1), so the history shows whose
+Claude did what. With no handle, says what it is now.
+Example: `dibon claude eric`.
 
 ## 9 · Nine situations
 

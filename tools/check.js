@@ -158,6 +158,8 @@ function checkRegister(root) {
   const reg = require('./register');
   const rows = parseRegister(root);
   const team = reg.team(root);
+  // FS-905: a name is one person, and so is a handle.
+  for (const r of team.repeated) failures.push(fail('register', 'docs/service-management/ways-of-working.md', 0, `the team lists ${r} twice: a name must mean one person (add an initial), a handle too`));
   // A heading holding a table's cells is a script's slip (FS-779): it
   // renders as a huge title and hides the rows it should have changed.
   // FS-866: so is a heading holding any pipe or a row's marker, which a
@@ -186,8 +188,8 @@ function checkRegister(root) {
     if (row.cellCount !== 7) at(`${row.id} has ${row.cellCount} cells; expected 7`);
     // FS-882: who has an open row, by first name, from the team in
     // ways-of-working §1; a closed row says who did it, or "—".
-    else if (row.status === 'OPEN' && !team.has(row.with)) at(`${row.id} is open, with "${row.with}": say who has it, by a first name from the team in ways-of-working §1 (${[...team.keys()].join(', ')})`);
-    else if (row.status !== 'OPEN' && row.with !== '—' && !team.has(row.with)) at(`${row.id} is ${row.status}, with "${row.with}": "—", or a first name from the team`);
+    else if (row.status === 'OPEN' && !team.has(row.with)) at(`${row.id} is open, with "${row.with}": say who has it, by a name from the team in ways-of-working §1 (${[...team.keys()].join(', ')})`);
+    else if (row.status !== 'OPEN' && row.with !== '—' && !team.has(row.with)) at(`${row.id} is ${row.status}, with "${row.with}": "—", or a name from the team`);
     if (!REVIEW_STATUSES.includes(row.status)) at(`${row.id} status "${row.status}" not in ${REVIEW_STATUSES.join('/')}`);
     if (row.status === 'OPEN' && !CRITICALITIES.includes(row.criticality)) at(`${row.id} is open with criticality "${row.criticality}"; one of ${CRITICALITIES.join('/')}`);
     if (row.status !== 'OPEN' && row.criticality !== '—') at(`${row.id} is ${row.status} but still rated "${row.criticality}"; a closed row has —`);

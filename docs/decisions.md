@@ -1592,3 +1592,78 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** every new lender rule written in three parts;
   "r." added to the citation tool, upper-case "R." left to other
   frameworks (a FATF Recommendation).
+
+## FS-902 · The team by group, its roles held, and a deputy for each
+
+*Entry written 2026-10-21 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** the team table by group (leadership, DevOps, Odoo, PM,
+  admin, social media), each person with a handle. The dev lead holds the
+  engineering lead's role and the ops lead the operations lead's, both
+  taken from the CTIO or vacancy; a new Odoo lead role, held by the Odoo
+  lead, the two Odoo consultants being our own; the CEO the commercial
+  lead. Every role names a deputy. HR is outsourced, its supplier unnamed
+  here beyond its company.
+- **Requires:** docs/service-management/ways-of-working.md "The Odoo platform and its set-up"; docs/service-management/ways-of-working.md "| Role | Accountable for | Approves | Held today by | Deputy |".
+- **Argued (owner):** the team's structure as given; "gibeon and daniel
+  are the two odoo consultants"; Jimmy as commercial lead.
+- **Argued against:** the CTIO holding engineering and operations, which
+  left nothing approvable while he was away (FS-898).
+- **Costs (inferred):** each person to confirm their row and handle;
+  rows handed out from the CTIO's 141 to the leads, on his approval.
+
+## FS-903 · Our people open to the team; a customer's people by role, named only to its project
+
+*Entry written 2026-10-21 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** who on our team works on what is open to the whole team; a
+  customer's roles are written here, by role only; its people's names and
+  work contacts live in Dibon's Odoo, opened to a project's team by
+  joining it, and closed by leaving; nothing more about a person is kept.
+- **Requires:** docs/service-management/ways-of-working.md "Who sees what about a project"; docs/customers/roan-capital.md "Who is on it at Dibon".
+- **Argued (owner):** the team should see who else is on a project and
+  who the client's marketing or tech lead is, by role and with privacy in
+  mind.
+- **Argued against:** naming a customer's people in the repository,
+  which every teammate and every clone would hold; hiding the roles too,
+  which leaves people not knowing whom to ask.
+- **Costs (inferred):** Odoo's record rules set per project; followers
+  kept in step with who has joined; a line in the engagement letter.
+
+## FS-904 · A change advisory board for releases, chaired by the operations lead
+
+*Entry written 2026-10-21 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** a board that advises on releases, not on every change; the
+  change authority still decides. Chaired by the operations lead in a
+  weekly slot; seats for architecture and security, engineering, Odoo,
+  delivery, compliance and commercial, with a quorum; a release pack two
+  working days before; on GitHub, a cab team as code owner of the release
+  files and a tag ruleset.
+- **Requires:** docs/service-management/ways-of-working.md "The change advisory board"; docs/service-management/ways-of-working.md "The release pack,".
+- **Argued (owner):** a board for releases once on GitHub's Team plan;
+  "allan chairs, weekly slot".
+- **Argued against:** a board for every change, too slow for a team this
+  size; a board only when a release needs one, which never forms a habit.
+- **Costs (inferred):** half an hour a week; a pack prepared for every
+  release beyond a patch.
+
+## FS-905 · Each person's Claude commits as its own
+
+*Entry written 2026-10-21 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** each person's Claude commits as "Claude for" that person,
+  at `claude-eric@noreply.dibon.co.ke` for Eric, set once with dibon claude, on
+  branches `claude/<handle>/…`; a name means one person (an initial where
+  first names collide) and so does a handle, the work email's local part,
+  and the check refuses either twice. The commits so far authored as
+  plain "Claude" were all made in the owner's sessions, on his word.
+- **Requires:** docs/service-management/ways-of-working.md "A name is one person, and so is a handle"; docs/service-management/ways-of-working.md "Each person's Claude is its own".
+- **Argued (owner):** one identity for everyone's Claude "doesn't provide
+  the requisite attribution"; and "what happens if we onboard another
+  eric?"
+- **Argued against:** Anthropic's shared address, everyone's Claude in
+  the world; the person's own identity, which credits them with Claude's
+  work (FS-886); first names as keys.
+- **Costs (inferred):** a setting per clone; handles confirmed with each
+  person; signing, when it comes, decided then.

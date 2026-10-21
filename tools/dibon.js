@@ -51,6 +51,7 @@ const WORDS = [
   ['release', 'The owner only: release to the public, the documentation or a customer\'s delivery.', ['dibon release docs', 'dibon release roan-capital']],
   ['practice', 'A private sandbox to try every word without touching the real documents.', ['dibon practice']],
   ['role', 'Tell the words your role, once (used in notes and records).', ['dibon role "Project manager"']],
+  ['claude', 'Set, once, the identity your Claude commits under: "Claude for" you, from your handle in the team table.', ['dibon claude eric', 'dibon claude']],
 ];
 
 // ── plumbing ──────────────────────────────────────────────────────────────
@@ -172,7 +173,26 @@ const word = {
     const r = plain[1];
     if (!r) stop('Say your role: dibon role "Project manager".');
     git(['config', 'dibon.role', r]);
-    say(`Your role is "${r}". It goes in your notes and records, never your name.`);
+    say(`Your role is "${r}". It goes beside your name in your notes and records, where the team table has none for you.`);
+  },
+
+  // FS-905: whose Claude made a commit. Each person's Claude commits as
+  // "Claude for <name> <claude-<handle>@noreply.dibon.co.ke>", from the
+  // person's handle in the team table: never one identity for everyone's
+  // Claude, nor the person's own. Claude reads it from dibon.claude.
+  async claude() {
+    const handle = plain[1];
+    const now = git(['config', '--get', 'dibon.claude'], { ok: true });
+    if (!handle) {
+      if (now) return say(`Your Claude commits as: ${now}.`);
+      stop('Tell me your handle once, as the team table in ways-of-working §1 lists it: dibon claude eric.');
+    }
+    const found = [...require('./register').team(ROOT)].find(([, m]) => m.handle === handle);
+    if (!found) stop(`No one on the team has the handle "${handle}": the team table in ways-of-working §1 lists each person's.`);
+    const id = `Claude for ${found[0]} <claude-${handle}@noreply.dibon.co.ke>`;
+    if (!await ask(`Your Claude will commit as ${id}. Set it?`)) return say('Not set.');
+    git(['config', 'dibon.claude', id]);
+    say(`Set: your Claude commits as ${id}. Its branches are claude/${handle}/…`);
   },
 
   async download() {
