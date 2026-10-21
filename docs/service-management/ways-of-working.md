@@ -41,7 +41,7 @@ holder of a role, the role's deputy approves.
 | **Solution architect** | How the platform fits together | docs/architecture/, docs/specs/, the technology register, interfaces | The CTIO | The dev lead |
 | **Security lead** | Security controls, keys, access, the edge | docs/modules/platform-security.md, the endpoints and access specs; every spec's Threats section; any change to a security control | The CTIO | The ops lead |
 | **Compliance and risk officer** | The law, privacy, our duties to regulators; data protection officer if the Act requires one | docs/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Vacant: the CTIO until Cage joins | The CEO while the CTIO holds it; then the CTIO |
-| **Product owner**, one per product | What a product does, and in which phase; as ITIL's service owner, that it meets what was agreed | Its module in docs/modules/, its journeys | Kapu MFI: the CTIO until named | To name |
+| **Product owner**, one per product | What a product does, and in which phase; as ITIL's service owner, that it meets what was agreed | Its module in docs/modules/, its journeys | Kapu MFI: the CTIO until named | The dev lead |
 | **Delivery lead** | Each customer's delivery | docs/customers/, customers.md, onboarding.md, the delivery plan's dates, training | The project manager | The admin |
 | **Engineering lead** | How code is built and tested | The code repository; docs/testing.md; each build spec's tests | The dev lead | An engineer (Gasine) |
 | **Operations lead** | Running the platform; the change authority for normal changes | docs/service-management/, operating-model.md, deployment and runbooks; normal changes (§4) | The ops lead | The CI/CD engineer |
@@ -61,7 +61,7 @@ and the owner marks it as they do (FS-885). More context is to come.
 | Eric | eric | Leadership | CTIO | Team lead, solution architect, security lead, product owner for Kapu MFI; compliance and risk officer until Cage joins | Yes, 2026-10-17 |
 | Jimmy | jimmy | Leadership | Partner and CEO | Commercial lead; the team lead's deputy, and compliance's until Cage joins | To confirm |
 | Cage | cage | Leadership | Legal and compliance (joining soon) | Compliance and risk officer, once joined | To confirm |
-| Lillian | lillian | DevOps | Dev lead | Engineering lead; the architect's deputy | To confirm |
+| Lillian | lillian | DevOps | Dev lead | Engineering lead; the architect's deputy, and the product owner's for Kapu MFI | To confirm |
 | Allan | allan | DevOps | Ops lead | Operations lead, chairing the change advisory board (§4); the security lead's deputy | To confirm |
 | Gasine | gasine | DevOps | Engineer | The engineering lead's deputy | To confirm |
 | Cliff | cliff | DevOps | Mobile engineer | — | To confirm |

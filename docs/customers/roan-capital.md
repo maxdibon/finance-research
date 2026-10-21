@@ -265,9 +265,9 @@ product drafts themselves are in docs/products/ by exception (FS-806).
 
 **Who is on it at Dibon** (FS-903): the delivery lead, Betty (Project
 manager), whom Roan Capital's people reach first; Eric (CTIO) for the
-architecture, security and the product. Engineering, operations and Odoo
-are named as each joins its rows, from Lillian's, Allan's and Gibeon's
-teams. Roan Capital's own people are named here by role only; their names
+architecture, security and the product; Lillian (Dev lead) for
+engineering, and the product owner's deputy. Operations and Odoo are
+named as each joins its rows, from Allan's and Gibeon's teams. Roan Capital's own people are named here by role only; their names
 and work contacts are in Dibon's Odoo, open to this project's team.
 
 **Its roles, in ITIL's terms** (FS-755): the *sponsor*, who pays for
