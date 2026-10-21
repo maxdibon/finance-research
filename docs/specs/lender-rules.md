@@ -543,7 +543,16 @@ the reasonable cost of enforcement (MPSR Act s.69). Proceeds go to those
 costs, then the debt; the borrower stays liable for a shortfall (MPSR Act
 s.74). Collection conduct holds throughout: no violence or intimidation,
 no essential personal effects, the Auctioneers Act's procedures (30(1)(j)
-to (l)), through a licensed auctioneer (Auctioneers Act s.9, s.23). A
+to (l)), through a licensed auctioneer (Auctioneers Act s.9, s.23). The
+Auctioneers Rules apply to a repossession under a letter of instruction
+(Auctioneers Rules reg 5): seven days' notice to redeem before removal
+(Auctioneers Rules reg 12(1)(c), (d)); an advertisement in a newspaper
+within seven days of removal, and the sale seven to fourteen days after
+it (Auctioneers Rules reg 12(1)(f), reg 16(2)), between 10.00 and 18.00
+at a public venue (Auctioneers Rules reg 17(1)); before the sale, the
+borrower may ask a court for an independent valuation (Auctioneers Rules
+reg 10); proceeds less charges reach the lender within fifteen days
+(Auctioneers Rules reg 18(4)). A
 vehicle on hire purchase follows the Hire-Purchase Act instead (MPSR Act
 s.65(4)): two-thirds paid, possession only by a court (Hire-Purchase Act
 s.15).
@@ -560,21 +569,32 @@ each with its evidence in the collateral record (MF-03, MF-04):
 1. **Default notice:** from the agreement, with the amount, the cure
    date (the product's cure period; 14 days proposed) and what MPSR Act
    s.67(2) requires; its delivery recorded.
-2. **Possession:** only after the cure date passes unpaid; who, where,
-   the basis (the agreement's consent, or no objection) and the licensed
+2. **Sale notice and instruction:** after the cure date passes unpaid,
+   the sale notice to the borrower, the debtor and every secured creditor
+   the registry search shows, and the letter of instruction to a licensed
+   auctioneer. The sale date is set first: no earlier than 30 days after
+   the notice's delivery (LQ-17, LQ-18).
+3. **Proclamation and possession:** the auctioneer's inventory and the
+   seven-day notice to redeem; removal only after it expires; who, where,
+   the basis (the agreement's consent, or no objection) and the
    auctioneer recorded. A hire-purchase product with two-thirds paid
    needs a recorded court order.
-3. **Sale notice:** to the borrower, the debtor and every secured
-   creditor the registry search shows; the sale date no earlier than 30
-   days after delivery (LQ-17).
-4. **Sale:** refused before that date. Payment in full with the recorded
-   enforcement costs closes the case and releases the vehicle instead.
+4. **Advertisement and sale:** the advertisement within seven days of
+   removal and seven to fourteen days before the sale date; the auction
+   between 10.00 and 18.00. The service schedules back from the sale
+   date and refuses a step out of order or out of its window. Payment in
+   full with the recorded enforcement costs, at any point before the
+   sale, closes the case and releases the vehicle instead.
 5. **Proceeds:** applied in MPSR Act s.74's order and within the cap
    (§2.1); the registry notice cancelled within ten working days of
    settlement (MPSR Act s.33).
 
-For a 30-day loan due on day 30 with a 14-day cure: in default on day 31,
-possession from day 45, and a sale on day 75 at the earliest.
+For a 30-day loan due on day 30 with a 14-day cure: in default on day 31;
+the sale notice and the proclamation on day 45; the redemption notice
+runs to day 52; the advertisement between day 61 and day 68; removal no
+more than seven days before it, so from day 54; the sale on day 75 at the
+earliest. The auctioneer's charges are recovery costs, within the
+cap (§2.1).
 
 **Where enforced.** The lender-rules service holds the case and its
 dates; the collateral record keeps the evidence; messaging sends the
@@ -699,11 +719,14 @@ exception to the accountant's queue (MF-12).
 | A25 | A version with a minimum interest period, or any charge, on early repayment | Submitted | Refused as a never-term, naming it | §2.4; 56(3), (4) |
 | A26 | A version with a KES 500 fee | Its key information document is generated | The fee shown with its excise duty of KES 100, inside the total cost of credit; no excise on interest or insurance premiums | §2.4; MF-23 |
 | A27 | A version with rates by risk class | Published | The page shows the range; each borrower's key information document shows their own rate | §2.4; 59(2)(c) |
-| A28 | A 30-day loan due day 30; a 14-day cure | Possession recorded on day 40 | Refused: the cure date, day 45, has not passed | §2.11; MPSR Act s.67(3) |
+| A28 | A 30-day loan due day 30; a 14-day cure | Proclamation recorded on day 40 | Refused: the cure date, day 45, has not passed | §2.11; MPSR Act s.67(3) |
 | A29 | Sale notice delivered on day 45 | Sale on day 70 | Refused; allowed from day 75 | §2.11; 30(4) |
 | A30 | A second secured creditor in the registry search | Sale notice | Sent to them too; the sale waits for its delivery | §2.11; MPSR Act s.73(1) |
 | A31 | Payment in full with enforcement costs on day 74 | Sale | Case closed; vehicle released; no sale | §2.11; MPSR Act s.69 |
 | A32 | A hire-purchase product, two-thirds paid | Possession, no court order | Refused | §2.11; Hire-Purchase Act s.15 |
+| A33 | Proclamation on day 45 | Removal on day 50 | Refused: the redemption notice runs to day 52 | §2.11; Auctioneers Rules reg 12(1)(c) |
+| A34 | Sale date day 75 | Removal scheduled for day 52 | Refused: the advertisement must fall within seven days of removal and 7 to 14 days before the sale (day 61 to 68), so removal from day 54 | §2.11; Auctioneers Rules reg 12(1)(f) |
+| A35 | An auction set for 19:00 | Scheduled | Refused: auctions run 10.00 to 18.00 | §2.11; Auctioneers Rules reg 17(1) |
 
 ## 9 · Open questions
 
@@ -732,8 +755,8 @@ meanwhile):
 
 10. For counsel: reg 30(4)'s thirty days, how counted and against the
     Act's notices: LQ-17.
-11. For counsel: the Auctioneers Rules' periods, and whether a licensed
-    auctioneer is required: LQ-18.
+11. For counsel: whether the Auctioneers Rules apply to a repossession
+    under the MPSR Act, and how their windows sit with reg 30(4) (LR-03): LQ-18.
 12. For counsel: whether a logbook loan is hire purchase: LQ-19.
 13. For Roan Capital: the cure period its default notice gives; whether
     its agreements consent to repossession; and whether any vehicle loan
@@ -796,3 +819,14 @@ meanwhile):
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 15 | s. 15 | Once two-thirds of the hire-purchase price is paid, the owner may recover the goods only by suit (15(1)); taking them otherwise ends the agreement, releases the hirer and lets the hirer and any guarantor recover all they paid (15(2)) |
+
+**[LR-43](../law/LR-43.md) The Auctioneers Rules, Legal Notice No. 120 of 1997.** Regulator: The Auctioneers Licensing Board; a court where it directs otherwise. Made under: The Auctioneers Act (Cap. 526), s. 30. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/1997/120/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 5 | reg 5 | Part III, on attaching and selling property, applies to repossession under a third party's letter of instruction, unless another written law provides otherwise or a court directs (5(1)); the letter is in Sale Form 1 (5(2)) |
+| reg 10 | reg 10 | Before the sale, the debtor may ask a court for an independent valuation |
+| reg 12 | reg 12(1)(c), reg 12(1)(d), reg 12(1)(f) | For movables other than perishables and livestock: the instruction recorded (12(1)(a)); a proclamation listing each item's value and condition, signed by the owner or an adult at the premises (12(1)(b)); seven days' written notice in Sale Form 3 to redeem by paying the amount (12(1)(c)); only then removal to safe premises (12(1)(d), (g)); an advertisement within seven days of removal, and the sale at least seven and at most fourteen days after the first newspaper advertisement (12(1)(f)) |
+| reg 16 | reg 16(2) | The advertisement gives the date, time and place, the conditions of sale, when to view, a description of the goods and whether there is a reserve price (16(1)); in a newspaper, unless a court orders otherwise (16(2)) |
+| reg 17 | reg 17(1) | Goods repossessed under a contract or law are auctioned between 10.00 a.m. and 6.00 p.m. (17(1)(a)), at a venue open to the public (17(1)(c)); the highest bidder buys, on the conditions of sale (17(4)) |
+| reg 18 | reg 18(4) | The auctioneer pays the proceeds, less charges, to the instructing party with an itemised account within fifteen days of selling movables (18(4)) |

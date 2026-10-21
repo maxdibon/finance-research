@@ -62,3 +62,4 @@ document's last section.
 | [LR-40](LR-40.md) | Advocates Act (Cap. 16) | The Law Society of Kenya and the Advocates Disciplinary Tribunal; offences go to the courts |
 | [LR-41](LR-41.md) | Auctioneers Act (Cap. 526) | The Auctioneers Licensing Board, which licenses auctioneers and hears complaints against them |
 | [LR-42](LR-42.md) | Hire-Purchase Act (Cap. 507) | None: the courts apply it |
+| [LR-43](LR-43.md) | Auctioneers Rules (LN 120 of 1997) | The Auctioneers Licensing Board; a court where it directs otherwise |
