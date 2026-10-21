@@ -180,5 +180,6 @@ fresh clone needs the list before it can commit.
 git-ignored. They hold customers' and prospects' real material, documents
 prepared for specific banks, and snapshots of another project's briefs
 that name a real estate. Their authoritative copies are not here.
-`sources/regulation/` is git-ignored for size: the texts are public, and
-are fetched again from the links in docs/regulation.md.
+`sources/regulation/` holds the law texts from Kenya Law, in git since
+FS-901 (public, and the exact versions the cards were read from); only
+its `ke/reports/` is git-ignored, for size.

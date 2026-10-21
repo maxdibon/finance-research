@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-868, FS-870]
-last_reviewed: 2026-10-16
+review_ids: [FS-868, FS-870, FS-899, FS-900]
+last_reviewed: 2026-10-21
 ---
 
 # Instrument cards
@@ -23,7 +23,10 @@ and the Kenya Law link, the card what a reader needs.
 once, in its front matter (`law: LR-03`); a cite of any other instrument
 carries its name or id where it is made ("Banking Act s.44A", "s. 44A
 (LR-04)"): a card's "Also called" lists the short names it answers to,
-besides the register's own title. A document citing many laws says
+besides the register's own title. Each provision is cited as its law names it: "s." for
+a section of an Act, "reg" for a regulation, "r." for a rule of a set of
+Rules (Auctioneers Rules r.12). The word "rule" alone is ours: our
+application of the law, which cites the provision it applies (FS-900). A document citing many laws says
 `law: mixed`, and then every cite names its law. The check fails a cite
 it cannot place, and a provision with no row on its card.
 
@@ -32,8 +35,10 @@ from the cards by `node tools/citations.js`: each instrument, its
 regulator, the version read, and each provision cited with what it
 requires. For a document read outside Dibon,
 `node tools/citations.js --external <file>` prints the same table
-without register ids, linking to Kenya Law, for a Word or PDF
-document's last section.
+without register ids, linking to Kenya Law, and each provision spelled
+out (section 73, regulation 30(4), rule 12), for a Word or PDF
+document's last section (FS-900). Write them out in the text of such a
+document too.
 
 | Card | Instrument | Regulator |
 |---|---|---|
@@ -60,3 +65,6 @@ document's last section.
 | [LR-38](LR-38.md) | Unclaimed Financial Assets Act (Cap. 494) | The Unclaimed Financial Assets Authority |
 | [LR-39](LR-39.md) | Law of Succession Act (Cap. 160) | None: the courts grant representation and supervise estates |
 | [LR-40](LR-40.md) | Advocates Act (Cap. 16) | The Law Society of Kenya and the Advocates Disciplinary Tribunal; offences go to the courts |
+| [LR-41](LR-41.md) | Auctioneers Act (Cap. 526) | The Auctioneers Licensing Board, which licenses auctioneers and hears complaints against them |
+| [LR-42](LR-42.md) | Hire-Purchase Act (Cap. 507) | None: the courts apply it |
+| [LR-43](LR-43.md) | Auctioneers Rules (LN 120 of 1997) | The Auctioneers Licensing Board; a court where it directs otherwise |

@@ -12,8 +12,8 @@ depends_on: [kapu-core-fineract, messaging, event-bus-kafka]
 used_by: [end-of-day-runner, recon]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830]
-last_reviewed: 2026-10-16
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899]
+last_reviewed: 2026-10-21
 ---
 
 # Lender rules — build specification
@@ -85,6 +85,12 @@ used by [end-of-day-runner](end-of-day-runner.md) and [recon](recon.md), whose c
 
 ## 2 · The rules
 
+Each rule says what the law requires (**Regulation**), then **Our rule**:
+what we do, our application and our reading of it, citing the provision
+it applies and naming the legal question where our reading is not yet
+settled (FS-900). "Rule" on its own is always ours; a law's own rules are
+cited as "r." (Auctioneers Rules r.12). Then how the platform does it.
+
 ### 2.1 Arrears cap — reg 29, MF-21
 
 **Regulation.** On a non-performing loan the lender recovers at most the
@@ -92,6 +98,12 @@ principal owing when it became non-performing, plus contractual interest
 not exceeding that principal, plus reasonable recovery expenses (29(2));
 if the loan performs and falls back, the limit is set from the last time
 it became non-performing (29(3)).
+
+**Our rule.** Once a loan is non-performing, what it accrues beyond the
+principal it then owed (interest, fees and penalties together) stops at
+that principal; recovery costs with receipts are the only addition (reg
+29(2), (3)). Counting fees inside the cap, on that principal, is our
+reading (LQ-01), and so is a rollover or restructure keeping it (LQ-02).
 
 **Behaviour.**
 
@@ -144,6 +156,11 @@ borrower may repay early, in whole or part, without notice or penalty,
 and on full early repayment owes no interest for the rest of the term
 (56(3), (4)).
 
+**Our rule.** Money counts from the moment it was paid, goes to principal
+first, then fees, then interest, and repaying early never costs more than
+what has accrued to that day (reg 56(1) to (4)). No minimum interest
+period on early repayment, whatever a product says (LQ-13).
+
 **Behaviour.**
 
 - Fineract's transaction date is the date the money was paid (M-Pesa or
@@ -176,6 +193,12 @@ except third-party costs, and full disclosure of the APR (59); a key
 information document summarising each product's benefits, risks and
 terms (48). Advertising and the agreement also carry the APR and total
 cost of credit (51, 54(4)).
+
+**Our rule.** Every product shows one APR, the effective annual rate on
+what the borrower actually receives, and one key information document
+generated from its terms and accepted before the money moves (regs 48,
+59). The method, and third-party costs left out of the APR, are our
+reading (LQ-03).
 
 **APR method.** The regulations neither define APR nor prescribe a
 method. Proposed: the effective annual rate `i` solving
@@ -215,6 +238,12 @@ recorded on the loan.
 **Regulation.** No change to pricing parameters or credit terms without
 CBK's prior written approval, then at least 30 days' notice to the
 customer, who has accepted (55; also 54(7)).
+
+**Our rule.** A price or term changes only as a new product version,
+after CBK's written approval, and for new loans; a live loan changes only
+after 30 days' notice and the borrower's recorded acceptance (reg 55; reg
+54(7), (8)). Whether a restructure the borrower asks for still waits the
+30 days is LQ-06.
 
 **Behaviour.**
 
@@ -371,6 +400,11 @@ contracted for 30 days or less; after 90 days for a longer loan; or when
 a payment is unpaid for the period the agreement specifies (57(1)), a
 period the credit policy and agreement must state (57(2), (3)).
 
+**Our rule.** A loan is non-performing from the first day it is more than
+30 days past due (a loan of 30 days or less) or 90 days (a longer one),
+or sooner where its agreement says so (reg 57(1)). We count from the due
+date (LQ-04).
+
 **Behaviour.** Daily, per loan: days past due of the oldest unpaid
 principal or interest. Non-performing from the first day that exceeds
 the threshold: the shorter of the statutory period (30 or 90 days, by
@@ -390,6 +424,11 @@ clears after a re-age, so the service keeps its own (kapu-core-fineract §6).
 phone book, no shaming or obscene language, no threats, no calls outside
 working hours (30(1)); no undisclosed charges (30(2)); 30 days' notice
 before selling movable security (30(4)).
+
+**Our rule.** Collection speaks only to the borrower, only from 08:00 to
+18:00, Monday to Saturday, only in approved words, and charges only what
+the contract disclosed (reg 30(1), (2)). Those hours are our reading of
+"working hours" (LQ-05).
 
 **Behaviour.**
 
@@ -422,6 +461,9 @@ outstanding (33(3)); notice at least 30 days before listing, or a shorter
 contractual period, not under seven days for loans repaid at intervals of
 less than 30 days (33(6)); notice within 30 days after listing (33(7)).
 
+**Our rule.** No negative listing of KES 1,000 or less, and no listing
+before its notice has run, with proof of delivery (reg 33(3), (6), (7)).
+
 **Design for R5.** Submission (crb CR-03, CR-06) drops negative records
 at or below KES 1,000 and holds each until its notice period has run with
 proof of delivery. R1 records the non-performing dates and notice
@@ -433,6 +475,10 @@ evidence now.
 acknowledged within seven days (40(3)); an oral complaint unresolved
 after 48 hours is confirmed in writing (40(4)); resolved within 30 days
 (40(5)); a record kept (40(6)) and reported to CBK (40(7)).
+
+**Our rule.** Every complaint is acknowledged when it is logged and
+resolved within 14 days, well inside the 30 the regulations allow; their
+48 hours, 7 days and 30 days stay as the backstop (reg 40(3) to (5)).
 
 **Behaviour.** Each complaint carries received-at, channel (oral or
 written) and three clocks: 48 hours, 7 days, 30 days, counted in calendar
@@ -454,6 +500,11 @@ confirm with the Odoo engineer).
 Roan Capital's 30-day product charges 1% a day default interest after day
 30, with a ladder: reminder day 25, default run days 30 to 40, final
 warning days 40 to 47, hard closure day 47 (days from disbursement).
+
+**Our rule.** A lender's own collection ladder runs alongside the law,
+never instead of it: the cap, the non-performing date and the notices
+(§2.1, §2.5, §2.11) hold whatever day the ladder has reached (reg 29,
+reg 57, reg 30(4)).
 
 **The ladder** is a collection state the service moves by day, separate
 from non-performing status. The day-25 reminder obeys working hours.
@@ -502,6 +553,12 @@ the new episode's cap is 60,000.
 **Regulation.** A repayment is credited on the date it is paid (56(1));
 fairness forbids charging a customer for the lender's own failure (41).
 
+**Our rule.** A borrower never pays for a delay they did not cause: a
+payment counts from when the money moved, and a charge our outage or a
+rail's caused is waived, without changing the days past due (reg 56(1)).
+Charging for our own failure would be an unfair practice: our reading of
+reg 41(1)(a).
+
 **Behaviour** (FS-799, FS-802):
 
 1. **Paid, but processed late** (our outage, a callback lost, a payment
@@ -526,6 +583,88 @@ fairness forbids charging a customer for the lender's own failure (41).
    missed is a break.
 6. **When the cause was Dibon's,** the institution's lost income is
    settled under the service agreement's service credits (FS-748).
+
+### 2.11 Recovery of movable collateral — reg 30(4), MF-03
+
+**Regulation.** On default, the secured creditor serves a written notice
+stating the default, the amount, the time by which to pay, what follows,
+and the right to apply to court (MPSR Act s.67(1), (2)); unpaid by then,
+it may take possession or sell (MPSR Act s.67(3)). Possession needs no
+court where the security agreement consents, or where whoever holds the
+vehicle does not object (MPSR Act s.71(1)). A notice of the sale goes to
+the grantor, the debtor and every other secured creditor with a
+registered notice (MPSR Act s.73(1)): five working days ahead under the
+Act (MPSR Act s.73(2)), thirty days for a lender under these regulations
+(30(4)). Until the sale, the borrower may redeem by paying in full with
+the reasonable cost of enforcement (MPSR Act s.69). Proceeds go to those
+costs, then the debt; the borrower stays liable for a shortfall (MPSR Act
+s.74). Collection conduct holds throughout: no violence or intimidation,
+no essential personal effects, the Auctioneers Act's procedures (30(1)(j)
+to (l)), through a licensed auctioneer (Auctioneers Act s.9, s.23). The
+Auctioneers Rules apply to a repossession under a letter of instruction
+(Auctioneers Rules r.5): seven days' notice to redeem before removal
+(Auctioneers Rules r.12(1)(c), (d)); an advertisement in a newspaper
+within seven days of removal, and the sale seven to fourteen days after
+it (Auctioneers Rules r.12(1)(f), r.16(2)), between 10.00 and 18.00
+at a public venue (Auctioneers Rules r.17(1)); before the sale, the
+borrower may ask a court for an independent valuation (Auctioneers Rules
+r.10); proceeds less charges reach the lender within fifteen days
+(Auctioneers Rules r.18(4)). A
+vehicle on hire purchase follows the Hire-Purchase Act instead (MPSR Act
+s.65(4)): two-thirds paid, possession only by a court (Hire-Purchase Act
+s.15).
+
+**Our rule.** A vehicle is sold no sooner than every notice allows, the
+latest deciding: the default notice's time to pay, 30 days after the
+sale notice, and the auctioneer's own steps; repossessed only through a
+licensed auctioneer, on consent or no objection, and never, on hire
+purchase past two-thirds, without a court (reg 30(4); MPSR Act s.67,
+s.71; Auctioneers Rules r.12; Hire-Purchase Act s.15). We count calendar
+days from delivery, and schedule the Rules' steps back from the sale
+date (LQ-17, LQ-18).
+
+**No minimum or maximum wait.** The right to recover arises on default
+(MPSR Act s.65(1)), not on non-performing classification (§2.5). What
+limits waiting is the registry notice's period (MPSR Act s.30), the
+arrears cap (§2.1), and twelve years to recover a secured principal
+(Limitation of Actions Act s.19).
+
+**Behaviour.** A recovery case per secured loan, its steps in order,
+each with its evidence in the collateral record (MF-03, MF-04):
+
+1. **Default notice:** from the agreement, with the amount, the cure
+   date (the product's cure period; 14 days proposed) and what MPSR Act
+   s.67(2) requires; its delivery recorded.
+2. **Sale notice and instruction:** after the cure date passes unpaid,
+   the sale notice to the borrower, the debtor and every secured creditor
+   the registry search shows, and the letter of instruction to a licensed
+   auctioneer. The sale date is set first: no earlier than 30 days after
+   the notice's delivery (LQ-17, LQ-18).
+3. **Proclamation and possession:** the auctioneer's inventory and the
+   seven-day notice to redeem; removal only after it expires; who, where,
+   the basis (the agreement's consent, or no objection) and the
+   auctioneer recorded. A hire-purchase product with two-thirds paid
+   needs a recorded court order.
+4. **Advertisement and sale:** the advertisement within seven days of
+   removal and seven to fourteen days before the sale date; the auction
+   between 10.00 and 18.00. The service schedules back from the sale
+   date and refuses a step out of order or out of its window. Payment in
+   full with the recorded enforcement costs, at any point before the
+   sale, closes the case and releases the vehicle instead.
+5. **Proceeds:** applied in MPSR Act s.74's order and within the cap
+   (§2.1); the registry notice cancelled within ten working days of
+   settlement (MPSR Act s.33).
+
+For a 30-day loan due on day 30 with a 14-day cure: in default on day 31;
+the sale notice and the proclamation on day 45; the redemption notice
+runs to day 52; the advertisement between day 61 and day 68; removal no
+more than seven days before it, so from day 54; the sale on day 75 at the
+earliest. The auctioneer's charges are recovery costs, within the
+cap (§2.1).
+
+**Where enforced.** The lender-rules service holds the case and its
+dates; the collateral record keeps the evidence; messaging sends the
+notices under §2.6's checks.
 
 ## 3 · Interfaces
 
@@ -646,6 +785,14 @@ exception to the accountant's queue (MF-12).
 | A25 | A version with a minimum interest period, or any charge, on early repayment | Submitted | Refused as a never-term, naming it | §2.4; 56(3), (4) |
 | A26 | A version with a KES 500 fee | Its key information document is generated | The fee shown with its excise duty of KES 100, inside the total cost of credit; no excise on interest or insurance premiums | §2.4; MF-23 |
 | A27 | A version with rates by risk class | Published | The page shows the range; each borrower's key information document shows their own rate | §2.4; 59(2)(c) |
+| A28 | A 30-day loan due day 30; a 14-day cure | Proclamation recorded on day 40 | Refused: the cure date, day 45, has not passed | §2.11; MPSR Act s.67(3) |
+| A29 | Sale notice delivered on day 45 | Sale on day 70 | Refused; allowed from day 75 | §2.11; 30(4) |
+| A30 | A second secured creditor in the registry search | Sale notice | Sent to them too; the sale waits for its delivery | §2.11; MPSR Act s.73(1) |
+| A31 | Payment in full with enforcement costs on day 74 | Sale | Case closed; vehicle released; no sale | §2.11; MPSR Act s.69 |
+| A32 | A hire-purchase product, two-thirds paid | Possession, no court order | Refused | §2.11; Hire-Purchase Act s.15 |
+| A33 | Proclamation on day 45 | Removal on day 50 | Refused: the redemption notice runs to day 52 | §2.11; Auctioneers Rules r.12(1)(c) |
+| A34 | Sale date day 75 | Removal scheduled for day 52 | Refused: the advertisement must fall within seven days of removal and 7 to 14 days before the sale (day 61 to 68), so removal from day 54 | §2.11; Auctioneers Rules r.12(1)(f) |
+| A35 | An auction set for 19:00 | Scheduled | Refused: auctions run 10.00 to 18.00 | §2.11; Auctioneers Rules r.17(1) |
 
 ## 9 · Open questions
 
@@ -670,6 +817,17 @@ meanwhile):
 9. The recovery expenses it charges, and where its contract discloses
    them.
 
+**Recovering collateral (§2.11, FS-899):**
+
+10. For counsel: reg 30(4)'s thirty days, how counted and against the
+    Act's notices: LQ-17.
+11. For counsel: whether the Auctioneers Rules apply to a repossession
+    under the MPSR Act, and how their windows sit with reg 30(4) (LR-03): LQ-18.
+12. For counsel: whether a logbook loan is hire purchase: LQ-19.
+13. For Roan Capital: the cure period its default notice gives; whether
+    its agreements consent to repossession; and whether any vehicle loan
+    is hire purchase.
+
 ## Regulations cited
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
@@ -680,18 +838,62 @@ meanwhile):
 |---|---|---|
 | reg 25 | reg 25(2)(f), reg 25(2)(s) | A written credit policy, consistent with the law, stating among other things the cooling-off period (25(2)(f)) and how the borrower's ability to repay is determined (25(2)(s)) |
 | reg 28 | reg 28(1)(b), reg 28(1)(c) | Applications considered under the credit policy, ability to repay assessed and no reckless lending (28(1)); a refusal given at once, with reasons (28(2)); a loan may be restructured on the borrower's request or with prior notice (28(3)) |
-| reg 29 | reg 29, reg 29(4) | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
-| reg 30 | reg 30, reg 30(2), reg 30(3) | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
-| reg 33 | reg 33 | Customers' credit information shared with licensed credit reference bureaus, timely, complete and accurate; no negative listing for an amount of one thousand shillings or less (33(3)) |
+| reg 29 | reg 29, reg 29(2), reg 29(3), reg 29(4) | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
+| reg 30 | reg 30, reg 30(1), reg 30(2), reg 30(3), reg 30(4) | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
+| reg 33 | reg 33, reg 33(3), reg 33(6), reg 33(7) | Customers' credit information shared with licensed credit reference bureaus, timely, complete and accurate; no negative listing for an amount of one thousand shillings or less (33(3)) |
 | reg 39 | reg 39(1), reg 39(3) | A receipt for every transaction, a free loan statement on request and a way to see it at any time (39(1)); errors corrected promptly (39(2)); a guarantor kept informed through periodic statements (39(3)) |
-| reg 40 | reg 40 | A complaints mechanism made known to customers; acknowledgement within seven days where a complaint cannot be dealt with promptly; an oral complaint unresolved after forty-eight hours confirmed in writing; resolution within thirty days |
+| reg 40 | reg 40, reg 40(3), reg 40(5) | A complaints mechanism made known to customers; acknowledgement within seven days where a complaint cannot be dealt with promptly; an oral complaint unresolved after forty-eight hours confirmed in writing; resolution within thirty days |
+| reg 41 | reg 41(1)(a) | No unfair, deceptive, oppressive or aggressive practices, among them threatening, intimidating, abusing, ignoring or humiliating a customer (41(1)(a)); no bribes (41(1)(b)); no recruiting other borrowers to earn a benefit (41(1)(c)); no discrimination (41(1)(d)); no misleading or misadvising (41(1)(e)); no reckless or negligent lending (41(1)(f)); no product a customer must buy to get the one they want (41(2)) |
 | reg 42 | reg 42 | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
 | reg 47 | reg 47(1)(d), reg 47(2) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
 | reg 48 | reg 48 | A key information document for each product: its benefits, risks, terms and conditions, in summary |
 | reg 49 | reg 49 | A business or trade name used in place of the company name is accompanied, conspicuously, by the company name |
-| reg 54 | reg 54(7) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
+| reg 54 | reg 54(7), reg 54(8) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
 | reg 55 | reg 55 | Pricing parameters and credit terms change only with the Central Bank's prior written approval, after thirty days' notice to the customer and the customer's acceptance |
-| reg 56 | reg 56, reg 56(3), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
+| reg 56 | reg 56, reg 56(1), reg 56(3), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
 | reg 57 | reg 57, reg 57(1), reg 57(3) | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |
 | reg 59 | reg 59, reg 59(2)(a), reg 59(2)(c), reg 59(2)(e), reg 59(2)(f) | A pricing model with clear parameters: its components and costs justified, rates that may vary with the borrower's creditworthiness (59(2)(c)), the criteria for non-performance, credit bureau scores, all-inclusive pricing except third-party costs (59(2)(f)), and the APR disclosed |
 | reg 60 | reg 60 | Where artificial intelligence makes lending decisions: decisions explained, customers told they are dealing with a machine, human oversight kept, bias assessed, models robust and explainable, data protected |
+
+**[LR-23](../law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 30 | s. 30 | A registered notice is effective for the period the registrant states, at most ten years; it can be extended only within the six months before it expires, by an amendment notice |
+| s. 33 | s. 33 | The secured creditor registers an amendment or cancellation notice where a notice exceeds what the grantor authorised, collateral is released, or the security right is extinguished; free of charge, and within ten working days of the grantor's request, or the grantor may go to the Registrar |
+| s. 65 | s. 65(1), s. 65(4) | After the debtor fails to pay or perform, the secured creditor may use the rights in this Part, the security agreement or any other law (65(1)); the grantor's rights in this Part cannot be waived or varied before default (65(3)); under a hire-purchase agreement, only as the Hire-Purchase Act allows (65(4)) |
+| s. 67 | s. 67, s. 67(1), s. 67(2), s. 67(3) | On default, a written notice to the grantor to pay or perform, stating the default, the amount and the time by which to pay, what follows if not, and the right to apply to court (67(1), (2)); if not met in that time, the secured creditor may sue, appoint a receiver, lease, take possession or sell (67(3)) |
+| s. 69 | s. 69 | Anyone affected may redeem the collateral by paying the secured obligation in full with the reasonable cost of enforcement, until it is sold or otherwise disposed of |
+| s. 71 | s. 71, s. 71(1) | Possession without a court where the security agreement consents to it, or where whoever holds the collateral does not object when it is taken (71(1)); the collateral may be made unusable and sold where it is (71(2)) |
+| s. 73 | s. 73(1), s. 73(2) | A notice of the intended disposition to the grantor, the debtor and any other secured creditor with a registered notice (73(1)), at least five working days before the sale, describing the collateral, the amount owing with an estimate of enforcement costs, the manner and the date (73(2)); not needed where the collateral may perish within ten working days (73(5)) |
+| s. 74 | s. 74 | Proceeds go first to the reasonable cost of repossessing, holding, preparing and selling, then to the secured obligation, then to a subordinate right that has asked (74(1)); the debtor remains liable for any shortfall (74(4)) |
+
+**[LR-32](../law/LR-32.md) The Limitation of Actions Act (Cap. 22).** Regulator: None: the courts apply it. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1968/21/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 19 | s. 19 | A claim for a principal sum secured by a mortgage of land or movable property, or for the proceeds of selling land, brought within twelve years of the right accruing (19(1)) |
+
+**[LR-41](../law/LR-41.md) The Auctioneers Act (Cap. 526).** Regulator: The Auctioneers Licensing Board, which licenses auctioneers and hears complaints against them. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1996/5/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 9 | s. 9 | No one carries on business as an auctioneer in Kenya without a licence from the Board (9(1)); doing so is an offence (9(2)) |
+| s. 23 | s. 23 | An auctioneer acts as an officer of the court (23(a)) and under the prescribed rules when repossessing, attaching, storing or selling property under any law or contract (23(b)) |
+
+**[LR-42](../law/LR-42.md) The Hire-Purchase Act (Cap. 507).** Regulator: None: the courts apply it. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1968/42/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 15 | s. 15 | Once two-thirds of the hire-purchase price is paid, the owner may recover the goods only by suit (15(1)); taking them otherwise ends the agreement, releases the hirer and lets the hirer and any guarantor recover all they paid (15(2)) |
+
+**[LR-43](../law/LR-43.md) The Auctioneers Rules, Legal Notice No. 120 of 1997.** Regulator: The Auctioneers Licensing Board; a court where it directs otherwise. Made under: The Auctioneers Act (Cap. 526), s. 30. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/1997/120/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| r. 5 | r. 5 | Part III, on attaching and selling property, applies to repossession under a third party's letter of instruction, unless another written law provides otherwise or a court directs (5(1)); the letter is in Sale Form 1 (5(2)) |
+| r. 10 | r. 10 | Before the sale, the debtor may ask a court for an independent valuation |
+| r. 12 | r. 12, r. 12(1)(c), r. 12(1)(d), r. 12(1)(f) | For movables other than perishables and livestock: the instruction recorded (12(1)(a)); a proclamation listing each item's value and condition, signed by the owner or an adult at the premises (12(1)(b)); seven days' written notice in Sale Form 3 to redeem by paying the amount (12(1)(c)); only then removal to safe premises (12(1)(d), (g)); an advertisement within seven days of removal, and the sale at least seven and at most fourteen days after the first newspaper advertisement (12(1)(f)) |
+| r. 16 | r. 16(2) | The advertisement gives the date, time and place, the conditions of sale, when to view, a description of the goods and whether there is a reserve price (16(1)); in a newspaper, unless a court orders otherwise (16(2)) |
+| r. 17 | r. 17(1) | Goods repossessed under a contract or law are auctioned between 10.00 a.m. and 6.00 p.m. (17(1)(a)), at a venue open to the public (17(1)(c)); the highest bidder buys, on the conditions of sale (17(4)) |
+| r. 18 | r. 18(4) | The auctioneer pays the proceeds, less charges, to the instructing party with an itemised account within fifteen days of selling movables (18(4)) |

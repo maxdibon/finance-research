@@ -116,8 +116,10 @@ for d in data:
     out.append(para([run(facts, 19), link("Kenya Law", d["url"], 19), run(".", 19)], after=80))
     rows = [row([cell([run(h, 17, True, PLUM)], w, head=True) for h, w in (("Provision", w1), ("Cited here as", w2), ("What it requires", w3))], head=True)]
     for r in d["rows"]:
-        marks = [c + (", reading being confirmed" if c in UNSETTLED else "") for c in r["citedAs"]]
-        rows.append(row([cell([run(r["provision"], 17)], w1), cell([run("; ".join(marks), 17)], w2), cell([run(r["requires"], 17)], w3)]))
+        # FS-900: spelled out for a reader outside Dibon ("regulation 30(4)", "section 73", "rule 12").
+        long = r.get("citedAsLong", r["citedAs"])
+        marks = [l + (", reading being confirmed" if c in UNSETTLED else "") for c, l in zip(r["citedAs"], long)]
+        rows.append(row([cell([run(r.get("provisionLong", r["provision"]), 17)], w1), cell([run("; ".join(marks), 17)], w2), cell([run(r["requires"], 17)], w3)]))
     borders = "".join(f'<w:{s} w:val="single" w:color="auto" w:sz="4"/>' for s in ("top", "left", "bottom", "right", "insideH", "insideV"))
     out.append(f'<w:tbl><w:tblPr><w:tblW w:type="dxa" w:w="{width}"/><w:tblBorders>{borders}</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr>'
                f'<w:tblGrid><w:gridCol w:w="{w1}"/><w:gridCol w:w="{w2}"/><w:gridCol w:w="{w3}"/></w:tblGrid>{"".join(rows)}</w:tbl>')

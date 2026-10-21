@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-17
+last_reviewed: 2026-10-21
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1554,3 +1554,41 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** a merge for every piece of Claude's work before
   it reaches main; a history with merge commits in it. The history
   before FS-886 stays the owner's, with Claude as co-author.
+
+## FS-887 · A version is its date, and nothing more, for now
+
+*Entry written 2026-10-19 by Claude (Assistant), from the owner's words in chat.*
+
+- **Chose:** versions stay all date, `2026.10.16`, with `.1` for a patch
+  or a second release that day: no letters in the version, and for now
+  no release name beside it either.
+- **Requires:** docs/rules.md "named by date".
+- **Argued (owner):** "let's stick with the date for now".
+- **Argued against:** letters in the version (`2026.10.16b`, `-rc`),
+  which would add a second scheme, sit ambiguously beside `.1`, and
+  break every tool, check and tag that reads the date; a release name in
+  the heading, beside the version, left for later.
+- **Costs (inferred):** a version says when, not what; what a release
+  holds is read from its notes.
+
+## FS-900 · A rule is ours, and cites the law it applies
+
+*Entry written 2026-10-21 by Claude (Assistant), from the owner's words in chat.*
+
+- **Chose:** "rule" means our application or reading of the law; each of
+  our rules says so and cites the provision it applies, naming the legal
+  question where the reading is unsettled. Each lender rule carries an
+  "Our rule" line between what the law requires and what the platform
+  does. A law's own provisions are cited as the law names them: "s." for
+  an Act's sections, "reg" for regulations, "r." for a set of Rules; and
+  spelled out (section, regulation, rule) for readers outside Dibon.
+- **Requires:** docs/specs/lender-rules.md "Our rule"; docs/law/README.md "alone is ours: our".
+- **Argued (owner):** "rule, as it's our application/understanding of
+  the regs, and then we cite the actual reg"; and the short forms spelled
+  out for external documents.
+- **Argued against:** citing the Auctioneers Rules as "rule 12", which
+  would blur our rules with the law's; leaving our readings inside the
+  behaviour, where counsel cannot tell them from the law.
+- **Costs (inferred):** every new lender rule written in three parts;
+  "r." added to the citation tool, upper-case "R." left to other
+  frameworks (a FATF Recommendation).
