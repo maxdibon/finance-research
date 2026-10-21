@@ -8,6 +8,9 @@ allowed=".githooks/allowed-binaries"
 bad=0
 git diff --cached --name-only --diff-filter=AM -z | while IFS= read -r -d '' f; do
   case "$f" in
+    # FS-901: the law texts from Kenya Law, public; never the reports.
+    sources/regulation/ke/reports/*) echo "pre-commit: the reports stay out of git (FS-901): $f"; exit 1 ;;
+    sources/regulation/ke/*.pdf) ;;
     *.pdf|*.PDF|*.png|*.jpg|*.jpeg|*.gif|*.docx|*.xlsx|*.pptx|*.zip|*.txt.gz)
       if ! grep -Fxq -- "$f" "$allowed"; then
         echo "pre-commit: binary file not on $allowed: $f"

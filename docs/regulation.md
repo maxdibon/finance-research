@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Compliance lead
 classification: Internal
-review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431, FS-499, FS-538, FS-673, FS-686, FS-899]
+review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431, FS-499, FS-538, FS-673, FS-686, FS-899, FS-901]
 last_reviewed: 2026-10-21
 ---
 
@@ -43,9 +43,9 @@ for us yet; *Unread* for a law found but not yet read. A Deep or Targeted
 row must drive at least one id, or it does not belong here.
 
 **The texts:** sources/regulation/ke/, named `<name>@<as at date>.pdf`,
-fetched from Kenya Law. They are kept out of git (anyone can fetch them
-again from the links below); the check matches local copies to this
-register when the folder exists. Superseded copies are in `superseded/`.
+fetched from Kenya Law, and kept in git since FS-901, so everyone reads
+the text each card was read from; the reports below stay out (they are
+background, and large). The check matches the copies to this register. Superseded copies are in `superseded/`.
 
 ## The register
 

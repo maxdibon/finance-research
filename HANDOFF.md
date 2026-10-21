@@ -221,8 +221,9 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   header, and the maker of each customer's table of documents (FS-857).
 - **Git-ignored, holding real material:** `clients/` (per party:
   `originals/`, `working/`, meeting folders), `sources/confidential/`,
-  `sources/gatekeepr/`, `sources/market/`, `sources/regulation/` (the law
-  texts) and `build/`. **Never commit them, and never copy names, ID
+  `sources/gatekeepr/`, `sources/market/`, `sources/regulation/ke/reports/`
+  and `build/`. The law texts themselves are in git (FS-901): add each
+  new one with its register row. **Never commit them, and never copy names, ID
   numbers, phone numbers or internal addresses out of them.** Write about
   them; register them by DR id.
 - **Kept local, never committed:** `sources/odpc_registration.png`,
@@ -285,7 +286,8 @@ register row.
 
 - **Kenya Law** refuses scripts: find the version through
   `/search/api/documents/?search=` or the work's page, then navigate the
-  browser pane to `{AKN expression}/source`. **The download is a
+  browser pane to `{AKN expression}/source` (a plain download of that
+  address also works, FS-899). **The download is a
   GUID-named `.tmp` in Downloads, with a Save As dialog Claude cannot
   see:** copy the `.tmp` at once (size settled, ending `%%EOF`) to
   `sources/regulation/ke/<name>@<as-at>.pdf`; only then tell the owner to

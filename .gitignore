@@ -19,9 +19,11 @@ sources/market/
 # recon redesign, transcribed in its README.md beside them. Kept, not committed.
 sources/dibon/recon-notes/
 
-# Kenyan legislation fetched from Kenya Law (FS-429). Public, and fetched
-# again from the links in docs/regulation.md; kept out of git for size.
-sources/regulation/
+# Kenyan legislation fetched from Kenya Law (FS-429) is kept in git since
+# FS-901: the texts every instrument card was read from, with the
+# guidelines and superseded versions. The reports are background, not
+# law, and large: they stay out.
+sources/regulation/ke/reports/
 
 # Tooling state.
 .superpowers/
