@@ -570,6 +570,23 @@ test('citations: a cite is placed only with a law of its kind', () => {
   assert.deepStrictEqual(placed('Excise Duty Act applies to fees; costs not disclosed are not recovered (reg 30(2)).'), ['reg 30(2) LR-03']);
 });
 
+// FS-900: a law's rules are cited "r.", the word "rule" alone being ours;
+// spelled out for a reader outside Dibon.
+test('citations: a statutory rule is cited as r., and spelled out', () => {
+  const { cites, names, show, spell } = require('./citations');
+  const known = names(ROOT);
+  const placed = (text) => cites(text, 'LR-03', known).map((c) => `${show(c)} ${c.law} ${spell(c)}`);
+  assert.deepStrictEqual(placed('Sold after notice (Auctioneers Rules r.12(1)(c), (f)); and reg 30(4).'),
+    ['r. 12(1)(c) LR-43 rule 12(1)(c)', 'r. 12(1)(f) LR-43 rule 12(1)(f)', 'reg 30(4) LR-03 regulation 30(4)']);
+  assert.deepStrictEqual(placed('The MPSR Act s.73(2) applies.'), ['s. 73(2) LR-23 section 73(2)']);
+  assert.deepStrictEqual(placed('As FATF R.14 says; and handbook rule 4.'), []);
+});
+
+test('citations: a statutory rule cited as a reg fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'specs', 'lender-rules.md'), (t) => t.replace('Auctioneers Rules r.12(1)(c), (d)', 'Auctioneers Rules reg 12(1)(c), (d)')));
+  assert.ok(names(f).includes('citations'));
+});
+
 test('citations: in a document citing many laws, a cite naming none fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'documents.md'), (t) => t.replace(/^(## [^\n]*\n)/m, '$1\nKept as reg 9 requires.\n')));
   assert.ok(names(f).includes('citations'));
@@ -595,6 +612,9 @@ test('citations: a card changed without refreshing fails, and refreshing mends i
 test('citations: the section for a reader outside Dibon carries no register ids', () => {
   const s = require('./citations').section(ROOT, 'docs/privacy.md', { external: true });
   assert.ok(!/\bLR-\d{2}\b/.test(s) && /Kenya Law/.test(s));
+  // FS-900: and spells each provision out.
+  const rows = s.split('\n').filter((l) => /^\| (?:section|regulation|rule) \d/.test(l));
+  assert.ok(rows.length > 0 && !s.split('\n').some((l) => /^\| (?:s\.|reg|r\.) \d/.test(l)));
 });
 
 // FS-855: Start here explains every status the checks allow, and no other.

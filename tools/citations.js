@@ -26,13 +26,20 @@ const read = (root, f) => norm(fs.readFileSync(path.join(root, f), 'utf8'));
 const cells = (l) => l.split('|').slice(1, -1).map((s) => s.trim());
 const front = (t) => (t.match(/^---\n([\s\S]*?)\n---\n/) || [])[1] || '';
 
-// "reg 28(1)(b)" → { kind: 'reg', parts: ['28', '1', 'b'] }; "s. 44A" → s.
+// "reg 28(1)(b)" → { kind: 'reg', parts: ['28', '1', 'b'] }; "s. 44A" → s.;
+// "r. 12" → r., a statutory rule (FS-900): the word "rule" alone is ours,
+// our application of the law, so a law's rules are cited only as "r.".
+const KIND = { reg: 'reg', 's.': 's', 'r.': 'r' };
+const SHORT = { reg: 'reg', s: 's.', r: 'r.' };
+// FS-900: spelled out, for a reader outside Dibon.
+const LONG = { reg: 'regulation', s: 'section', r: 'rule' };
 function provision(text) {
-  const m = text.trim().match(/^(reg|s\.)\s*(\d+[A-Z]?)((?:\([0-9a-z]+\))*)$/);
+  const m = text.trim().match(/^(reg|s\.|r\.)\s*(\d+[A-Z]?)((?:\([0-9a-z]+\))*)$/);
   if (!m) return null;
-  return { kind: m[1] === 'reg' ? 'reg' : 's', parts: [m[2], ...[...m[3].matchAll(/\(([0-9a-z]+)\)/g)].map((x) => x[1])] };
+  return { kind: KIND[m[1]], parts: [m[2], ...[...m[3].matchAll(/\(([0-9a-z]+)\)/g)].map((x) => x[1])] };
 }
-const show = (p) => `${p.kind === 'reg' ? 'reg' : 's.'} ${p.parts[0]}${p.parts.slice(1).map((x) => `(${x})`).join('')}`;
+const show = (p, words = SHORT) => `${words[p.kind]} ${p.parts[0]}${p.parts.slice(1).map((x) => `(${x})`).join('')}`;
+const spell = (p) => show(p, LONG);
 
 // Every card: id → { file, fields, provisions: [{ kind, parts, requires }] }.
 function cardsRaw(root) {
@@ -90,7 +97,7 @@ function namesRaw(root) {
   out.sort((a, b) => b.name.length - a.name.length);
   // FS-874: what each instrument's provisions are called, so a "reg" is
   // never placed with an Act, nor an "s." with a set of Regulations.
-  out.kindOf = new Map([...register(root)].map(([id, r]) => [id, /\b(?:Regulations|Rules)\b/.test(r.instrument) ? 'reg' : 's']));
+  out.kindOf = new Map([...register(root)].map(([id, r]) => [id, /\bRules\b/.test(r.instrument) ? 'r' : /\bRegulations\b/.test(r.instrument) ? 'reg' : 's']));
   return out;
 }
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -123,7 +130,7 @@ const names = (root) => context(root).names;
 // each placed with its instrument: an id or name written just after it
 // ("s.26, LR-11"), else the nearest id or name before it in the same
 // clause, else one a little after it, else the document's main instrument.
-const CITE = /\b(regs?|regulations?|ss?\.)\s*(\d+[A-Z]?(?:\([0-9a-z]+\))*)((?:\s*(?:,|and|to)\s*(?:\d+[A-Z]?(?:\([0-9a-z]+\))*|(?:\([0-9a-z]+\))+))*)/gi;
+const CITE = /\b(regs?|regulations?|ss?\.|rr?\.)\s*(\d+[A-Z]?(?:\([0-9a-z]+\))*)((?:\s*(?:,|and|to)\s*(?:\d+[A-Z]?(?:\([0-9a-z]+\))*|(?:\([0-9a-z]+\))+))*)/gi;
 function cites(text, defaultLaw, known = []) {
   const out = [];
   const body = text.split(`\n${HEADING}\n`)[0];
@@ -161,13 +168,15 @@ function cites(text, defaultLaw, known = []) {
     ids.sort((a, b) => a.at - b.at);
     for (const m of line.matchAll(CITE)) {
       if (+m[2].match(/^\d+/)[0] >= 1000) continue; // "regulations 2026": a year
-      const kind = /^s/i.test(m[1]) ? 's' : 'reg';
-      const first = provision(`${kind === 'reg' ? 'reg' : 's.'} ${m[2]}`);
+      // A rule is "r." in lower case: "R.14" is a FATF Recommendation.
+      if (/^rr?\./i.test(m[1]) && !/^rr?\./.test(m[1])) continue;
+      const kind = /^rr?\./.test(m[1]) ? 'r' : /^s/i.test(m[1]) ? 's' : 'reg';
+      const first = provision(`${SHORT[kind]} ${m[2]}`);
       if (!first) continue;
       const list = [first];
       for (const t of (m[3] || '').matchAll(/(?:,|and|to)\s*(\d+[A-Z]?(?:\([0-9a-z]+\))*|(?:\([0-9a-z]+\))+)/g)) {
         const prev = list[list.length - 1];
-        if (/^\d/.test(t[1])) list.push(provision(`${kind === 'reg' ? 'reg' : 's.'} ${t[1]}`));
+        if (/^\d/.test(t[1])) list.push(provision(`${SHORT[kind]} ${t[1]}`));
         else {
           const sub = [...t[1].matchAll(/\(([0-9a-z]+)\)/g)].map((x) => x[1]);
           list.push({ kind, parts: [...prev.parts.slice(0, Math.max(1, prev.parts.length - sub.length)), ...sub] });
@@ -212,11 +221,11 @@ function sectionData(root, text, law) {
   return [...new Set(found.map((c) => c.law))].sort().map((id) => {
     const card = all.get(id);
     const r = reg.get(id) || {};
-    const rows = card.provisions.filter((row) => found.some((c) => c.law === id && covers(row, c))).map((row) => ({
-      provision: show(row),
-      citedAs: [...new Map(found.filter((c) => c.law === id && covers(row, c)).sort(byParts).map((c) => [show(c), c])).keys()],
-      requires: row.requires,
-    }));
+    const rows = card.provisions.filter((row) => found.some((c) => c.law === id && covers(row, c))).map((row) => {
+      const mine = [...new Map(found.filter((c) => c.law === id && covers(row, c)).sort(byParts).map((c) => [show(c), c])).values()];
+      // FS-900: each also spelled out, for a reader outside Dibon.
+      return { provision: show(row), provisionLong: spell(row), citedAs: mine.map((c) => show(c)), citedAsLong: mine.map((c) => spell(c)), requires: row.requires };
+    });
     return { id, file: card.file, citation: card.fields.Citation, regulator: card.fields.Regulator, madeUnder: card.fields['Made under'], inForce: card.fields['In force'], asAt: r.asAt || '?', url: r.url || '', rows };
   });
 }
@@ -231,7 +240,9 @@ function section(root, file, opts = {}) {
       '',
       '| Provision | Cited here as | What it requires |',
       '|---|---|---|',
-      ...d.rows.map((row) => `| ${row.provision} | ${row.citedAs.join(', ')} | ${row.requires} |`),
+      ...d.rows.map((row) => (opts.external
+        ? `| ${row.provisionLong} | ${row.citedAsLong.join(', ')} | ${row.requires} |`
+        : `| ${row.provision} | ${row.citedAs.join(', ')} | ${row.requires} |`)),
     ].join('\n');
   });
   return parts.length ? parts.join('\n\n') : 'No provisions cited.';
@@ -276,7 +287,7 @@ function refresh(root, file) {
   return true;
 }
 
-module.exports = { LAW_DIR, HEADING, MARK, cards, register, names, mainLaw, cites, sectionData, covers, section, block, documents, refresh, show, provision };
+module.exports = { LAW_DIR, HEADING, MARK, cards, register, names, mainLaw, cites, sectionData, covers, section, block, documents, refresh, show, spell, provision };
 
 if (require.main === module) {
   const root = path.join(__dirname, '..');
