@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-868, FS-870]
-last_reviewed: 2026-10-16
+review_ids: [FS-868, FS-870, FS-899]
+last_reviewed: 2026-10-21
 ---
 
 # Instrument cards
@@ -60,3 +60,5 @@ document's last section.
 | [LR-38](LR-38.md) | Unclaimed Financial Assets Act (Cap. 494) | The Unclaimed Financial Assets Authority |
 | [LR-39](LR-39.md) | Law of Succession Act (Cap. 160) | None: the courts grant representation and supervise estates |
 | [LR-40](LR-40.md) | Advocates Act (Cap. 16) | The Law Society of Kenya and the Advocates Disciplinary Tribunal; offences go to the courts |
+| [LR-41](LR-41.md) | Auctioneers Act (Cap. 526) | The Auctioneers Licensing Board, which licenses auctioneers and hears complaints against them |
+| [LR-42](LR-42.md) | Hire-Purchase Act (Cap. 507) | None: the courts apply it |

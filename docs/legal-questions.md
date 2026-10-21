@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830]
-last_reviewed: 2026-10-16
+review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899]
+last_reviewed: 2026-10-21
 ---
 
 # Legal questions
@@ -57,6 +57,9 @@ lost.
 | LQ-14 | Do a non-deposit-taking lender's fees attract excise duty at 20%, as fees of a digital lender or of a financial institution under the Excise Duty Act; and must the duty be shown on top of each fee in the key information document? | lender-rules §2.4 (FS-814) | Institutions | Excise Duty Act, First Schedule, Part II, paragraphs 4 and 6 | Open | Yes: 20% on every fee, never on interest or insurance premiums, shown with each fee and in the total cost of credit | FS-814 |
 | LQ-15 | What is the "cooling off period" a credit policy must state (reg 25(2)(f)): a time after signing in which a borrower may withdraw without charge, a wait before a new loan, or either as the lender defines it; and does the Consumer Protection Act, which reg 25(1) names, set one? | lender-rules §2.4 (FS-830) | Institutions | CBK NDTCP Regulations 2026 reg 25(2)(f) (LR-03); Consumer Protection Act (not yet in the law register) | Open | The lender defines it in its credit policy; we ask each institution which it means and how long | FS-830 |
 | LQ-16 | Which regulation sets how often a guarantor receives statements: reg 47(2), as Roan Capital's product document cites, when reg 47 has no paragraph (2); or reg 39(3), which requires a guarantor to be kept informed through periodic statements, without saying how often? | Roan Capital's product (FS-869) | Institutions | Regs 39(3), 47 (LR-03) | Open | Periodic statements to each guarantor, at the frequency the product states; Roan Capital told the reading is being confirmed, its counsel's view invited (FS-876) | FS-869, FS-876 |
+| LQ-17 | Reg 30(4)'s "notice of thirty days" before selling movable security: calendar or working days, counted from the notice's delivery; and does it replace the Act's five working days (MPSR Act s.73) or come on top of the default notice's time to pay (MPSR Act s.67)? | lender-rules §2.11 | Institutions | Reg 30(4) (LR-03); MPSR Act s.67, s.73 (LR-23) | Open | Thirty calendar days from delivery of the sale notice, given only after the default notice's time to pay has run | FS-899 |
+| LQ-18 | Must a lender repossess and sell a vehicle through a licensed auctioneer, and which periods of the Auctioneers Rules (LN 120 of 1997) apply besides reg 30(4): notice to the borrower before removal, holding before sale, advertising the sale? | lender-rules §2.11 | Institutions | Reg 30(1)(l) (LR-03); Auctioneers Act s.9, s.21, s.23 (LR-41) | Open | A licensed auctioneer repossesses and sells; nothing sold sooner than reg 30(4) allows; the Rules' periods added once read | FS-899 |
+| LQ-19 | Is a logbook loan, the vehicle jointly registered with the lender, a security right under the MPSR Act, or a hire-purchase agreement; and if hire purchase, may the lender repossess without a court once two-thirds is paid? | lender-rules §2.11; Roan Capital RC-08 | Institutions | MPSR Act s.65(4) (LR-23); Hire-Purchase Act s.15 (LR-42) | Open | A security right; a product marked hire purchase refuses repossession without a recorded court order once two-thirds of its price is paid | FS-899 |
 
 ## Regulations cited
 
@@ -69,7 +72,7 @@ lost.
 | reg 25 | reg 25(1), reg 25(2)(f) | A written credit policy, consistent with the law, stating among other things the cooling-off period (25(2)(f)) and how the borrower's ability to repay is determined (25(2)(s)) |
 | reg 28 | reg 28(3) | Applications considered under the credit policy, ability to repay assessed and no reckless lending (28(1)); a refusal given at once, with reasons (28(2)); a loan may be restructured on the borrower's request or with prior notice (28(3)) |
 | reg 29 | reg 29 | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
-| reg 30 | reg 30 | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
+| reg 30 | reg 30, reg 30(1)(l), reg 30(4) | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
 | reg 39 | reg 39(3) | A receipt for every transaction, a free loan statement on request and a way to see it at any time (39(1)); errors corrected promptly (39(2)); a guarantor kept informed through periodic statements (39(3)) |
 | reg 42 | reg 42 | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
 | reg 47 | reg 47, reg 47(2) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
@@ -96,9 +99,31 @@ lost.
 |---|---|---|
 | s. 25 | s. 25 | The principles of data protection: personal data processed lawfully, fairly and transparently, for explicit purposes, limited to what is necessary, accurate, kept no longer than needed, secure, and not transferred out of Kenya without safeguards |
 
+**[LR-23](law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 65 | s. 65(4) | After the debtor fails to pay or perform, the secured creditor may use the rights in this Part, the security agreement or any other law (65(1)); the grantor's rights in this Part cannot be waived or varied before default (65(3)); under a hire-purchase agreement, only as the Hire-Purchase Act allows (65(4)) |
+| s. 67 | s. 67 | On default, a written notice to the grantor to pay or perform, stating the default, the amount and the time by which to pay, what follows if not, and the right to apply to court (67(1), (2)); if not met in that time, the secured creditor may sue, appoint a receiver, lease, take possession or sell (67(3)) |
+| s. 73 | s. 73 | A notice of the intended disposition to the grantor, the debtor and any other secured creditor with a registered notice (73(1)), at least five working days before the sale, describing the collateral, the amount owing with an estimate of enforcement costs, the manner and the date (73(2)); not needed where the collateral may perish within ten working days (73(5)) |
+
 **[LR-38](law/LR-38.md) The Unclaimed Financial Assets Act (Cap. 494; No. 40 of 2011).** Regulator: The Unclaimed Financial Assets Authority. Made under: An Act of Parliament. In force: Yes. Version read: as at 2023-07-01, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/40/eng@2023-07-01).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 13 | s. 13 | Assets held in a fiduciary capacity are presumed abandoned if the owner has shown no interest in them for two years after they became payable |
 | s. 14 | s. 14 | A gift certificate, gift card or credit memo is presumed abandoned after five years unclaimed or unused |
+
+**[LR-41](law/LR-41.md) The Auctioneers Act (Cap. 526).** Regulator: The Auctioneers Licensing Board, which licenses auctioneers and hears complaints against them. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1996/5/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 9 | s. 9 | No one carries on business as an auctioneer in Kenya without a licence from the Board (9(1)); doing so is an offence (9(2)) |
+| s. 21 | s. 21 | A sale by auction is advertised in the prescribed manner, and held on the date, at the time and place advertised (21(1)); whether it has a reserve price is stated (21(3)) |
+| s. 23 | s. 23 | An auctioneer acts as an officer of the court (23(a)) and under the prescribed rules when repossessing, attaching, storing or selling property under any law or contract (23(b)) |
+
+**[LR-42](law/LR-42.md) The Hire-Purchase Act (Cap. 507).** Regulator: None: the courts apply it. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1968/42/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 15 | s. 15 | Once two-thirds of the hire-purchase price is paid, the owner may recover the goods only by suit (15(1)); taking them otherwise ends the agreement, releases the hirer and lets the hirer and any guarantor recover all they paid (15(2)) |
