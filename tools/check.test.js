@@ -1271,3 +1271,73 @@ test('words: new and resume, in a pretend repository', () => {
     fs.rmSync(where, { recursive: true, force: true });
   }
 });
+
+// FS-890: two people at once. Betty and Allan each start a row (the same
+// id, unseen by each other) and both add to an existing row's notes;
+// Allan's work reaches main; Betty's save warns that Allan's uploaded
+// branch changes her file too, and that she rewrapped a paragraph; her
+// download renumbers her row and keeps both notes, and the checks pass.
+test('words: download brings two people\'s register rows together', () => {
+  const { spawnSync } = require('child_process');
+  const where = fs.mkdtempSync(path.join(os.tmpdir(), 'dibon-two-'));
+  const shared = path.join(where, 'shared.git');
+  const at = (who) => path.join(where, who);
+  const run = (cwd, cmd, a) => { const r = spawnSync(cmd, a, { cwd, encoding: 'utf8' }); return `${r.stdout}${r.stderr}`; };
+  const read = (who, f) => fs.readFileSync(path.join(at(who), f), 'utf8');
+  try {
+    run(where, 'git', ['clone', '--quiet', '--bare', ROOT, shared]);
+    run(where, 'git', ['clone', '--quiet', shared, at('setup')]);
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/citations.js', 'tools/docregister.js']) fs.copyFileSync(path.join(ROOT, f), path.join(at('setup'), f));
+    run(at('setup'), 'git', ['-c', 'user.name=Setup', '-c', 'user.email=s@example.test', '-c', 'core.hooksPath=/dev/null', 'commit', '-qam', 'FS-890: the tools under test']);
+    run(at('setup'), 'git', ['push', '-q', 'origin', 'HEAD:main']);
+    const people = { betty: 'Betty', allan: 'Allan' };
+    for (const [who, name] of Object.entries(people)) {
+      run(where, 'git', ['clone', '--quiet', shared, at(who)]);
+      for (const [k, v] of [['user.name', `${name} Test`], ['user.email', `${who}@example.test`], ['core.hooksPath', '/dev/null']]) run(at(who), 'git', ['config', k, v]);
+      fs.mkdirSync(path.join(at(who), 'sources', 'confidential'), { recursive: true });
+      fs.writeFileSync(path.join(at(who), 'sources', 'confidential', 'protected-names.txt'), '# test list\nZzqx Nobody\n');
+    }
+    const d = (who, ...a) => run(at(who), 'node', ['tools/dibon.js', ...a, '--yes']);
+    const open = require('./register').rows(at('allan')).filter((r) => r.status === 'OPEN').pop();
+    const note = (who, text) => { const f = path.join(at(who), 'REVIEW.md'); const t = fs.readFileSync(f, 'utf8'); fs.writeFileSync(f, t.replace(open.text, open.text.replace(/ \|$/, ` ${text} |`))); };
+    // Allan: a new row, a note on the open row, a line at the end of start-here; uploaded.
+    d('allan', 'new', 'Allan works on it');
+    note('allan', '**Allan:** a note.');
+    fs.appendFileSync(path.join(at('allan'), 'docs', 'start-here.md'), '\nA line from Allan.\n');
+    assert.match(d('allan', 'save', 'Allan\'s work'), /Saved on/);
+    run(at('allan'), 'git', ['push', '-q', '-u', 'origin', 'HEAD']);
+    // Betty: her own new row, a note on the same row, and a paragraph of start-here rewrapped for one word.
+    d('betty', 'new', 'Betty works on it');
+    note('betty', '**Betty:** another note.');
+    const sh = path.join(at('betty'), 'docs', 'start-here.md');
+    const lines = fs.readFileSync(sh, 'utf8').split('\n');
+    let s = lines.findIndex((l, i) => i > 12 && /^[A-Za-z]/.test(l) && lines.slice(i, i + 5).every((x) => /^[A-Za-z*]/.test(x)));
+    let e = s; while (lines[e] && lines[e].trim() && !/^[|#-]/.test(lines[e])) e++;
+    const words = lines.slice(s, e).join(' ').split(/\s+/); words[1] = `${words[1]}x`;
+    const wrapped = []; let cur = '';
+    for (const w of words) { if ((cur + w).length > 50) { wrapped.push(cur.trim()); cur = ''; } cur += `${w} `; }
+    wrapped.push(cur.trim());
+    lines.splice(s, e - s, ...wrapped);
+    fs.writeFileSync(sh, lines.join('\n'));
+    run(at('betty'), 'git', ['fetch', '-q']);
+    const saved = d('betty', 'save', 'Betty\'s work');
+    assert.match(saved, /also being changed on .*Allan Test/);
+    assert.match(saved, /a paragraph rewrapped\?/);
+    assert.match(saved, /Saved on/);
+    // Allan's work reaches main; Betty downloads.
+    run(at('allan'), 'git', ['push', '-q', 'origin', 'HEAD:main']);
+    const allanId = (run(at('allan'), 'git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3}/) || [])[0];
+    const got = d('betty', 'download');
+    assert.match(got, new RegExp(`${allanId} was taken on main meanwhile: your row is now FS-[0-9]{3}`));
+    const reg = require('./register').rows(at('betty'));
+    assert.strictEqual(reg.filter((r) => r.id === allanId).length, 1);
+    assert.ok(reg.some((r) => /Betty works on it/.test(r.point) && r.id !== allanId));
+    const merged = reg.filter((r) => r.id === open.id);
+    assert.strictEqual(merged.length, 1);
+    assert.match(merged[0].notes, /\*\*Allan:\*\* a note\..*\*\*Betty:\*\* another note\./);
+    assert.doesNotMatch(run(at('betty'), 'git', ['rev-parse', '--abbrev-ref', 'HEAD']), new RegExp(allanId));
+    assert.match(run(at('betty'), 'node', ['tools/check.js']), /all checks pass/);
+  } finally {
+    fs.rmSync(where, { recursive: true, force: true });
+  }
+});

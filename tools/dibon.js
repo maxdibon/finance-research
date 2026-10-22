@@ -123,17 +123,119 @@ function explain(failures) {
 // ── the register: a new row on start ─────────────────────────────────────
 // The next id is the next across REVIEW.md and review/ (FS-866); a new row
 // is open, so it goes in REVIEW.md.
-function newRow(point) {
-  const t = read('REVIEW.md');
-  // FS-889: an id is not reused by work parked or saved on another of my
-  // branches, whose rows this copy's register cannot see.
+// FS-889: the next id no one has: not in this copy's register, nor in my
+// parked edits or on my other branches, nor on the repository's main.
+function nextFree() {
   const pad = (n) => `FS-${String(n).padStart(3, '0')}`;
   let top = +require('./register').nextId(ROOT).slice(3) - 1;
   const seen = (text) => { for (const m of (text || '').matchAll(/^\| FS-(\d{3}) \|/gm)) top = Math.max(top, +m[1]); };
   const refs = [...git(['for-each-ref', 'refs/heads', '--format=%(refname:short)'], { ok: true }).split('\n'),
     ...git(['stash', 'list', '--format=%gd'], { ok: true }).split('\n')].filter(Boolean);
+  if (hasRemote()) refs.push('origin/main');
   for (const r of refs) seen(git(['show', `${r}:REVIEW.md`], { ok: true }));
-  const id = pad(top + 1);
+  return pad(top + 1);
+}
+
+// ── after a download (FS-890) ─────────────────────────────────────────────
+// The register merges by union, so a row two people touched comes back
+// twice. Brought together here, so no one does it by hand:
+//   - a row new on both sides (the same id taken twice): mine renumbered
+//     to the next free id, everywhere my branch cites it;
+//   - a row both edited: merged cell by cell against the row as it was;
+//     notes added on both sides both kept; a cell both changed keeps the
+//     repository's, and says so.
+const rowAt = (ref, id) => git(['grep', '-h', '-e', `^| ${id} |`, ref, '--', 'REVIEW.md', 'review/'], { ok: true }).split('\n').find(Boolean) || null;
+const cellsOf = (l) => l.split('|').slice(1, -1).map((s) => s.trim());
+const COLS = ['Id', 'Raised by', 'Point', 'Status', 'Criticality', 'With', 'Notes'];
+function mergeRow(b, m, t) {
+  const [B, M, T] = [b, m, t].map(cellsOf);
+  const said = [];
+  const out = T.map((tc, i) => {
+    const bc = B[i] || ''; const mc = M[i] || '';
+    if (mc === bc || mc === tc) return tc;
+    if (tc === bc) return mc;
+    if (i === 6) return mc.startsWith(bc) && tc.startsWith(bc) ? tc + mc.slice(bc.length) : `${tc} ${mc}`;
+    said.push(`${COLS[i]} kept as the repository has it ("${tc}"; yours said "${mc}")`);
+    return tc;
+  });
+  return { text: `| ${out.join(' | ')} |`, said };
+}
+function bringTogether(base, mine) {
+  const reg = require('./register');
+  const groups = new Map();
+  for (const r of reg.rows(ROOT)) groups.set(r.id, [...(groups.get(r.id) || []), r]);
+  const renamed = [];
+  const said = [];
+  for (const [id, copies] of groups) {
+    if (copies.length < 2) continue;
+    const b = rowAt(base, id);
+    const m = rowAt(mine, id);
+    const t = rowAt('origin/main', id);
+    const edit = (file, from, to) => { const x = read(file); write(file, x.replace(from, to)); };
+    if (!b && m && t) {
+      const fresh = nextFree();
+      const mineCopy = copies.find((c) => c.text === m) || copies[copies.length - 1];
+      edit(mineCopy.file, `${mineCopy.text}\n`, `${mineCopy.text.replace(`| ${id} |`, `| ${fresh} |`)}\n`);
+      renamed.push([id, fresh]);
+    } else if (b && m && t) {
+      const r = mergeRow(b, m, t);
+      copies.forEach((c, i) => edit(c.file, `${c.text}\n`, i === 0 ? `${r.text}\n` : ''));
+      for (const s of r.said) said.push(`${id}: ${s}`);
+    }
+  }
+  if (renamed.length) {
+    // Everywhere my branch cites a renumbered id: its documents, notes and name.
+    const mineFiles = git(['diff', '--name-only', `origin/main...${mine}`], { ok: true }).split('\n').filter((f) => f && !/^(REVIEW\.md|review\/)/.test(f) && fs.existsSync(path.join(ROOT, f)) && /\.(md|js)$/.test(f));
+    for (const f of mineFiles) {
+      let x = read(f);
+      for (const [a, z] of renamed) x = x.replace(new RegExp(`\\b${a}\\b`, 'g'), z);
+      write(f, x);
+    }
+    for (const [a, z] of renamed) if (branch().includes(a)) git(['branch', '-m', branch().replace(a, z)]);
+  }
+  reg.tidy(ROOT);
+  return { renamed, said };
+}
+// Generated sections are made again, never merged by hand (FS-890).
+function regenerate() {
+  const c = require('./citations');
+  const d = require('./docregister');
+  let n = 0;
+  for (const f of c.documents(ROOT)) if (c.refresh(ROOT, f)) n++;
+  for (const id of d.customers(ROOT)) if (d.refresh(ROOT, id)) n++;
+  return n;
+}
+
+// ── warnings on save (FS-890) ─────────────────────────────────────────────
+// A file I change that someone else's uploaded branch changes too; and a
+// paragraph rewrapped for a word, which makes every line of it collide.
+function alsoElsewhere(files) {
+  if (!hasRemote()) return [];
+  const mine = new Set(files.filter((f) => !/^(REVIEW\.md|review\/|changes\/)/.test(f)));
+  const out = [];
+  for (const ref of git(['for-each-ref', 'refs/remotes/origin', '--format=%(refname:short)'], { ok: true }).split('\n').filter(Boolean)) {
+    if (['origin/main', 'origin/HEAD', 'origin', `origin/${branch()}`].includes(ref)) continue;
+    const theirs = git(['diff', '--name-only', `origin/main...${ref}`], { ok: true }).split('\n').filter((f) => mine.has(f));
+    if (theirs.length) out.push({ ref: ref.replace(/^origin\//, ''), who: git(['log', '-1', '--format=%an', ref], { ok: true }), files: theirs });
+  }
+  return out;
+}
+function rewrapped(files) {
+  const out = [];
+  for (const f of files.filter((x) => x.endsWith('.md'))) {
+    const lines = git(['diff', '--numstat', 'HEAD', '--', f], { ok: true }).split('\t');
+    const removed = +lines[1] || 0;
+    if (removed < 4) continue;
+    const words = git(['diff', '--word-diff=porcelain', 'HEAD', '--', f], { ok: true }).split('\n')
+      .filter((l) => /^[-+]/.test(l) && !/^(\+\+\+|---)/.test(l)).reduce((n, l) => n + l.slice(1).trim().split(/\s+/).filter(Boolean).length, 0);
+    if (words * 2 <= removed) out.push({ file: f, removed, words });
+  }
+  return out;
+}
+
+function newRow(point) {
+  const t = read('REVIEW.md');
+  const id = nextFree();
   const who = git(['config', '--get', 'user.name'], { ok: true }).split(' ')[0] || role();
   const row = `| ${id} | ${who} | ${point.replace(/\|/g, '/')} | OPEN | Medium | ${who} | **${today()}:** started (dibon) |`;
   write('REVIEW.md', `${t.trimEnd()}\n${row}\n`);
@@ -382,6 +484,8 @@ const word = {
     const behind = +git(['rev-list', '--count', 'HEAD..origin/main']);
     if (!behind) { say('Your copy is up to date: nothing new from the team.'); return; }
     const files = git(['diff', '--name-only', 'HEAD...origin/main']).split('\n').filter(Boolean);
+    const base = git(['merge-base', 'HEAD', 'origin/main']);
+    const mine = git(['rev-parse', 'HEAD']);
     const r = git(['rebase', 'origin/main'], { ok: true, full: true });
     if (r.status !== 0) {
       git(['rebase', '--abort'], { ok: true });
@@ -389,6 +493,19 @@ const word = {
     }
     say(`Your copy is up to date: ${behind} change${behind === 1 ? '' : 's'} from the team, in ${files.length} file${files.length === 1 ? '' : 's'}:`);
     for (const f of files.slice(0, 10)) say(`  ${f}`);
+    // FS-890: the register's rows brought together, generated sections
+    // made again, and saved as one change of mine.
+    if (onMain()) return;
+    const { renamed, said } = bringTogether(base, mine);
+    const regen = regenerate();
+    for (const [a, z] of renamed) say(`${a} was taken on main meanwhile: your row is now ${z}, and your branch says so.`);
+    for (const s of said) say(`Brought together: ${s}.`);
+    if (regen) say(`Generated sections made again in ${regen} document${regen === 1 ? '' : 's'}.`);
+    if (renamed.length || said.length || regen) {
+      git(['add', '-u']);
+      const c = git(['commit', '-q', '-m', `${rowOfBranch() || renamed[0][1]}: brought together after download`], { ok: true, full: true });
+      say(c.status === 0 ? `Saved on ${branch()}.` : `Left unsaved, for you to look at: ${(c.stderr || c.stdout).trim().split('\n')[0]}. dibon check says what is wrong; dibon save when it passes.`);
+    }
   },
 
   // FS-888: start and new are one word. Naming a kind (spec, journey,
@@ -546,6 +663,11 @@ const word = {
     say('To save:');
     for (const u of changed) say(`  ${u.code.includes('?') || u.code.includes('A') ? 'new     ' : u.code.includes('D') ? 'removed ' : 'changed '} ${u.file}`);
     if (!arg) stop('What did you change? Say it: dibon save "Open answer 26: two administrators".');
+    // FS-890: warnings, never a stop: someone else changing the same file,
+    // and a paragraph rewrapped for a word.
+    const touched = [...new Set([...changed.map((u) => u.file), ...(hasRemote() ? git(['diff', '--name-only', 'origin/main...HEAD'], { ok: true }).split('\n').filter(Boolean) : [])])];
+    for (const o of alsoElsewhere(touched)) say(`Note: ${o.files.join(', ')} ${o.files.length === 1 ? 'is' : 'are'} also being changed on ${o.ref} (${o.who}). Talk before you both change the same lines.`);
+    for (const w of rewrapped(changed.map((u) => u.file))) say(`Note: in ${w.file}, ${w.removed} lines changed for ${w.words} word${w.words === 1 ? '' : 's'}: a paragraph rewrapped? Rewrap only the lines you change (ways-of-working §6).`);
     const failures = checks();
     if (failures.length) { explain(failures); process.exitCode = 1; return; }
     const row = rowOfBranch();
@@ -647,6 +769,12 @@ const word = {
     if (list.length > 1) say(`Started: ${list.map((s) => `${s.id || s.branch}${s.here ? ' (here)' : ''}`).join(', ')}. dibon resume goes back to one.`);
     const theirs = started('claude');
     if (theirs.length) say(`Your Claude has ${theirs.length} waiting for you: ${theirs.map((s) => s.id || s.branch).join(', ')}.`);
+    // FS-890: a copy that has not heard from the repository for a day.
+    const fetched = path.join(ROOT, '.git', 'FETCH_HEAD');
+    if (hasRemote() && fs.existsSync(fetched)) {
+      const days = Math.floor((Date.now() - fs.statSync(fetched).mtimeMs) / 86400000);
+      if (days >= 1) say(`Last downloaded ${days} day${days === 1 ? '' : 's'} ago: dibon download first, so your work starts from the team's latest.`);
+    }
   },
 
   // FS-853: the reader's History section, in a terminal.

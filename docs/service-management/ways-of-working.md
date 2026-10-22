@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889]
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890]
 last_reviewed: 2026-10-22
 ---
 
@@ -297,12 +297,16 @@ team's words (§7 to §10, FS-847), which follow these rules for them.
 | **Commit subject** | `FS-123: what changed`, at most 72 characters; the hook refuses a subject without its register row (Merge, Revert and Release excepted) |
 | **Commit body** | Why, not what; wrapped at 72 columns; trailers last (`Co-Authored-By:`) |
 | **Mechanical changes apart** | A sweep across many files (a status for every document, renumbered ids) is its own commit, never mixed with a change a reviewer must read |
+| **Who settles a conflict** | Its author, by downloading: the repository's latest under their own work, settled on their own branch. The person who merges takes in only what is already clean, so a merge never rewrites anyone's lines (FS-886, FS-890) |
+| **Generated sections are made again** | "Regulations cited", each customer's documents table: never merged by hand; `dibon download` makes them again after the team's changes arrive (FS-890) |
+| **Rewrap only what you change** | A word changed is one line changed: rewrapping a whole paragraph for it makes every line of it collide with anyone else's change there. `dibon save` notes a paragraph rewrapped for a word (FS-890) |
+| **Say when you share a file** | `dibon save` notes a file you changed that someone's uploaded branch changes too, naming the branch and its author: talk before you both change the same lines (FS-890) |
 | **Keep current by rebasing** | `git fetch`, then `git rebase origin/main`; never merge main into a branch. Force-push only your own branch, and only `--force-with-lease`; never main |
 | **Undo with a new commit** | `git revert` on main; history on main is never rewritten |
 | **Merge, keeping who did what** | Squash only within one person's own branch; between people, a merge commit, so each commit keeps its author and the merge records who took it in. One person's pull request may still be squashed to one commit under their name (FS-886) |
 | **Tags are annotated, and signed once keys exist** | `git tag -a docs-2026.10.15 -m "…"`; a published tag is never moved or deleted |
 | **Line endings** | LF everywhere (`.gitattributes`); a clone sets nothing by hand |
-| **The register** | REVIEW.md, its open rows, and review/, its closed rows by the hundred (FS-866), merge by union, so two branches' new rows both survive; the register check fails a skipped or repeated FS id. Two branches that take the same id fail the check, and the later renumbers its row |
+| **The register** | REVIEW.md, its open rows, and review/, its closed rows by the hundred (FS-866), merge by union, so two branches' new rows both survive; the register check fails a skipped or repeated FS id. Rows two people touched come back twice; `dibon download` brings them together (FS-890): a row new on both sides keeps the repository's id and mine is renumbered, everywhere my branch cites it; a row both edited is merged cell by cell, notes from both kept, and a cell both changed keeps the repository's, said aloud |
 | **Changelogs** | Never edited by hand: each pull request carries a change note, and a release gathers them (rules, Dibon 12) |
 | **Hooks** | `git config core.hooksPath .githooks` once per clone: pre-commit runs the checks, commit-msg holds the subject |
 | **Size** | A pull request a reviewer reads in one sitting, about 400 changed lines for code; the reader's preview shows documents as pages |
@@ -397,7 +401,12 @@ repository's folder (`dibon.cmd`); elsewhere `./dibon`.
 ### download
 
 Brings the latest from the repository into your copy: from the repository to you,
-never the other way. Example: `dibon download`. **If it stops** because you have unsaved
+never the other way. Example: `dibon download`. Daily, at least:
+`dibon status` reminds you after a day. **Afterwards** it brings the
+register's rows together (a row of yours whose id the team took meanwhile
+is renumbered, and says so; a row you both edited is merged, both notes
+kept), makes the generated sections again, and saves that as one change
+of yours (FS-890). **If it stops** because you have unsaved
 edits: save or discard them first. **If it stops** because your change
 and a teammate's touch the same lines: nothing is lost; ask Claude or an
 engineer to bring the two together. Never edit conflict markers by hand.
@@ -484,7 +493,9 @@ row. Never on main. Examples: `dibon save "Open answer 26: two administrators"`;
 `dibon save docs/customers/roan-capital.md` (that file only; it then asks
 what you changed). **It stops** when you give no description, when the
 checks fail, and when you give it a document from outside: that is
-`received`. `--body-file` adds a body to the saved change from a file:
+`received`. **It notes, without stopping,** a file you changed that
+someone's uploaded branch changes too, and a paragraph rewrapped for a
+word (FS-890). `--body-file` adds a body to the saved change from a file:
 why it changed, and any trailer such as Co-Authored-By (FS-862).
 
 ### undo
