@@ -28,7 +28,9 @@ const args = process.argv.slice(2);
 const YES = args.includes('--yes');
 const flag = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
 const plain = args.filter((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1].startsWith('--') && args[i - 1] !== '--yes'));
-const today = () => new Date().toISOString().slice(0, 10);
+// The local date, as the reviewed check counts it: in Nairobi the UTC date
+// is still yesterday's until 03:00 (FS-937, found by the tests at night).
+const today = () => { const d = new Date(); const p = (n) => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; };
 const norm = (s) => s.replace(/\r\n/g, '\n');
 
 // ── words: the one source of the help, the guide's headings and the tests ─
@@ -45,7 +47,7 @@ const WORDS = [
   ['answered', 'Move a customer\'s open answer to Answered, dated, with the answer.', ['dibon answered roan-capital 24 "The accountant and the finance lead receive it"']],
   ['received', 'Keep a document from outside as an original, and register it.', ['dibon received "C:\\Users\\me\\Downloads\\Signed agreement.pdf" --from roan-capital --summary "The services agreement as signed"']],
   ['check', 'Run the checks and say, in plain words, what to fix.', ['dibon check']],
-  ['save', 'Save my work on my branch, with its register row; the checks run first.', ['dibon save "Open answer 26: two administrators"', 'dibon save docs/customers/roan-capital.md']],
+  ['save', 'Save my work on my branch, with its register row: front matter and generated sections kept current, the checks first, the reader rebuilt.', ['dibon save "Open answer 26: two administrators"', 'dibon save docs/customers/roan-capital.md']],
   ['undo', 'Take back my last save (before upload: kept as edits; after: a correcting change).', ['dibon undo']],
   ['discard', 'Throw away unsaved changes to one file, after showing what is lost.', ['dibon discard docs/customers/roan-capital.md']],
   ['upload', 'Put my saved work on my own branch in the repository: still mine, not yet for review.', ['dibon upload']],
@@ -54,6 +56,7 @@ const WORDS = [
   ['history', 'What changed in one document, newest first, by release.', ['dibon history docs/customers/roan-capital.md']],
   ['help', 'Every word, or one word, with examples.', ['dibon help', 'dibon help save']],
   ['release', 'The owner only: release to the public, the documentation or a customer\'s delivery.', ['dibon release docs', 'dibon release roan-capital']],
+  ['session', 'Begin or end a working session: start downloads and gives you the team\'s handover and your own; end brings your own up to date.', ['dibon session start', 'dibon session end']],
   ['practice', 'A private sandbox to try every word without touching the real documents.', ['dibon practice']],
   ['role', 'Tell the words your role, once (used in notes and records).', ['dibon role "Project manager"']],
   ['claude', 'Set, once, the identity your Claude commits under: "Claude for" you, from your handle in the team table.', ['dibon claude eric', 'dibon claude']],
@@ -206,6 +209,92 @@ function regenerate() {
   for (const f of c.documents(ROOT)) if (c.refresh(ROOT, f)) n++;
   for (const id of d.customers(ROOT)) if (d.refresh(ROOT, id)) n++;
   return n;
+}
+
+// ── each person's handover (FS-931) ───────────────────────────────────────
+// handoffs/<handle>.md: my preferences and where I left off, written by my
+// Claude; then a part generated from the register and the branches, made
+// fresh at each session's start and end, never edited by hand.
+const GENERATED = '## Generated';
+function personalHandover(me, handle) {
+  const file = `handoffs/${handle}.md`;
+  const role = (require('./register').team(ROOT).get(me) || {}).role || '';
+  let text = fs.existsSync(path.join(ROOT, file)) ? read(file) : `# ${me} · personal handover
+
+${me}${role ? ` (${role})` : ''}. Read after the team's handover, HANDOFF.md, by
+${me}'s Claude; written by it at the end of each session (FS-931). What
+another person's Claude would need belongs in the team's handover, not
+here.
+
+## Preferences
+
+How ${me} likes to work with Claude: to be written.
+
+## Where I left off
+
+To be written at the end of the first session.
+
+`;
+  const mine = require('./register').rows(ROOT).filter((r) => r.status === 'OPEN' && (r.with || '').split(/\s*,\s*/).includes(me));
+  const order = ['Critical', 'High', 'Medium', 'Low'];
+  mine.sort((a, b) => order.indexOf(a.criticality) - order.indexOf(b.criticality) || a.n - b.n);
+  const cell = (s) => s.replace(/\|/g, '/').replace(/\*\*/g, '').slice(0, 110);
+  const work = started();
+  const claudes = started('claude');
+  const gen = [
+    GENERATED,
+    '',
+    '*Made by dibon session start and end, from the register and the branches: never edit it by hand.*',
+    '',
+    `### Rows with ${me} (${mine.length})`,
+    '',
+    ...(mine.length ? ['| Row | Point | Criticality |', '|---|---|---|', ...mine.map((r) => `| ${r.id} | ${cell(r.point)} | ${r.criticality} |`)] : ['None.']),
+    '',
+    '### Work started',
+    '',
+    ...(work.length ? work.map((s) => `- \`${s.branch}\`: ${s.state}`) : ['None.']),
+    '',
+    `### ${me}'s Claude's work waiting`,
+    '',
+    ...(claudes.length ? claudes.map((s) => `- \`${s.branch}\`: ${s.state}`) : ['None.']),
+    '',
+  ].join('\n');
+  const at = text.indexOf(`\n${GENERATED}\n`);
+  text = `${(at < 0 ? text : text.slice(0, at + 1)).trimEnd()}\n\n${gen}`;
+  fs.mkdirSync(path.join(ROOT, 'handoffs'), { recursive: true });
+  write(file, text);
+  return file;
+}
+
+// ── what save does for you (FS-922) ───────────────────────────────────────
+// Each document under docs/ whose content (not only its front matter)
+// changed gets today's last_reviewed, and the branch's row in its
+// review_ids where it keeps them: the two things the reviewed check most
+// often stopped a save for.
+const bodyOf = (t) => (t || '').replace(/\r\n/g, '\n').replace(/^---\n[\s\S]*?\n---\n/, '');
+function frontMatterFor(files, row) {
+  const out = [];
+  for (const f of files.filter((x) => /^docs\/.*\.md$/.test(x) && fs.existsSync(path.join(ROOT, x)))) {
+    const now = read(f);
+    if (!/^---\n/.test(now)) continue;
+    const before = git(['show', `HEAD:${f}`], { ok: true });
+    if (before && bodyOf(before) === bodyOf(now)) continue;
+    let t = now.replace(/^last_reviewed: .*$/m, `last_reviewed: ${today()}`);
+    if (row) t = t.replace(/^review_ids: \[(.*)\]$/m, (m, ids) => (ids.split(/,\s*/).includes(row) ? m : `review_ids: [${ids ? `${ids}, ` : ''}${row}]`));
+    if (t !== now) { write(f, t); out.push(f); }
+  }
+  return out;
+}
+// Everything this branch changes, saved or not.
+function branchTouched() {
+  const base = hasRemote() ? 'origin/main' : 'main';
+  return [...new Set([...git(['diff', '--name-only', `${base}...HEAD`], { ok: true }).split('\n'), ...unsaved().map((u) => u.file)].filter(Boolean))];
+}
+// A change note naming the row, saved or waiting.
+function hasNote(row) {
+  const dir = path.join(ROOT, 'changes');
+  if (!fs.existsSync(dir)) return false;
+  return fs.readdirSync(dir).filter((f) => f.endsWith('.md') && f !== 'README.md').some((f) => new RegExp(`^rows: \\[[^\\]]*\\b${row}\\b`, 'm').test(read(`changes/${f}`)));
 }
 
 // ── warnings on save (FS-890) ─────────────────────────────────────────────
@@ -741,9 +830,16 @@ const word = {
     const touched = [...new Set([...changed.map((u) => u.file), ...(hasRemote() ? git(['diff', '--name-only', 'origin/main...HEAD'], { ok: true }).split('\n').filter(Boolean) : [])])];
     for (const o of alsoElsewhere(touched)) say(`Note: ${o.files.join(', ')} ${o.files.length === 1 ? 'is' : 'are'} also being changed on ${o.ref} (${o.who}). Talk before you both change the same lines.`);
     for (const w of rewrapped(changed.map((u) => u.file))) say(`Note: in ${w.file}, ${w.removed} lines changed for ${w.words} word${w.words === 1 ? '' : 's'}: a paragraph rewrapped? Rewrap only the lines you change (ways-of-working §6).`);
+    // FS-922: what save does for you before the checks: the routine front
+    // matter of each document whose content you changed, and the
+    // generated sections made again.
+    const row = rowOfBranch();
+    const stamped = frontMatterFor(changed.map((u) => u.file), row);
+    if (stamped.length) say(`Front matter kept current (today's date${row ? `, and ${row}` : ''}) in: ${stamped.join(', ')}.`);
+    const regen = regenerate();
+    if (regen) say(`Generated sections made again in ${regen} document${regen === 1 ? '' : 's'}.`);
     const failures = checks();
     if (failures.length) { explain(failures); process.exitCode = 1; return; }
-    const row = rowOfBranch();
     const subject = /^FS-\d{3}/.test(arg) ? arg : `${row || 'FS-???'}: ${arg}`;
     if (!/^FS-\d{3}/.test(subject)) stop('Which register row? Your branch has none: start with dibon start, or begin the description with FS-123.');
     if (!await ask(`Save ${changed.length} file${changed.length === 1 ? '' : 's'} as "${subject}"?`)) return say('Not saved.');
@@ -751,6 +847,14 @@ const word = {
     const r = git(['commit', '-q', ...message(subject)], { ok: true, full: true });
     if (r.status !== 0) stop(`Not saved: ${(r.stderr || r.stdout).trim()}`);
     say(`Saved on ${branch()}: "${subject}". When the work is done: dibon upload.`);
+    if (only && unsaved().some((u) => u.code !== '??')) say('Other files still have unsaved changes, the generated sections among them perhaps: save them too when they are ready.');
+    // FS-922: the reader rebuilt, here when the commit hook is not on.
+    if (git(['config', '--get', 'core.hooksPath'], { ok: true }) !== '.githooks') {
+      const s = spawnSync(process.execPath, [path.join(ROOT, 'tools', 'site.js'), '--reader'], { cwd: ROOT, encoding: 'utf8' });
+      say(s.status === 0 ? 'The reader is rebuilt (build/site/).' : 'The reader could not be rebuilt: node tools/site.js says why.');
+    }
+    // FS-922: a reminder, never a note written for you.
+    if (row && !hasNote(row) && branchTouched().some((f) => /^docs\/.*\.md$/.test(f))) say(`No change note for ${row} yet. If it is worth telling: dibon note "…" --for team (or everyone, or a customer).`);
   },
 
   async undo() {
@@ -825,6 +929,37 @@ const word = {
     const ready = spawnSync('gh', ['pr', 'ready'], { cwd: ROOT, encoding: 'utf8' });
     if (ready.status === 0) return say('Shared: your review is marked ready, and the team is asked.');
     say(`Uploaded, but no review could be opened from here. Open one for ${branch()} on the repository, or tell the owner it is ready to merge.`);
+  },
+
+  // FS-931: a session's two ends. Start: download, then the team's
+  // handover and mine, my generated part made fresh, in one file to paste
+  // into a new session or for my Claude to read. End: my generated part
+  // made fresh, and what is left unsaved or not uploaded; my Claude then
+  // writes where I left off, and my preferences, before I save.
+  async session() {
+    const step = plain[1];
+    if (!['start', 'end'].includes(step)) stop('Say which end: dibon session start, or dibon session end.');
+    const me = myName();
+    const handle = handleOf(me);
+    const file = `handoffs/${handle}.md`;
+    if (step === 'start' && !onMain() && unsaved().filter((u) => u.code !== '??').length) say('Not downloading: you have unsaved edits. Save them, then dibon download.');
+    else if (step === 'start' && hasRemote()) await word.download();
+    personalHandover(me, handle);
+    if (step === 'start') {
+      const team = read('HANDOFF.md');
+      const below = team.split('\n---\n').slice(1).join('\n---\n') || team;
+      const out = path.join(ROOT, 'build', 'session', `${handle}.md`);
+      fs.mkdirSync(path.dirname(out), { recursive: true });
+      fs.writeFileSync(out, `${below.trim()}\n\n---\n\n${read(file).trim()}\n`);
+      say(`Your session, ${me}: the team's handover, then yours (${file}), together in build/session/${handle}.md.`);
+      say('Paste it into a new session, or tell your Claude: read HANDOFF.md, then ' + file + '.');
+      return word.status();
+    }
+    const u = unsaved().filter((x) => x.code !== '??' && x.file !== file);
+    say(`Your handover is current where it is generated (${file}).`);
+    say(`Now your Claude writes "Where I left off", and any new preferences, in it; then: dibon save "Session end".`);
+    if (u.length) say(`Unsaved besides it: ${u.map((x) => x.file).join(', ')}.`);
+    if (hasRemote() && !onMain() && !git(['branch', '-r', '--list', `origin/${branch()}`], { ok: true })) say('Not uploaded yet: dibon upload, when you want it off this computer.');
   },
 
   async status() {
@@ -913,6 +1048,7 @@ const ASK = {
   update: 'Do you mean download (bring the latest from the repository into your copy) or upload (put your saved work on your branch in the repository)? Say dibon download or dibon upload.',
   pull: 'We say download: dibon download brings the latest from the repository into your copy.',
   push: 'We say upload (your branch to the repository, still yours) or share (before the team, for review): dibon upload or dibon share.',
+  handoff: 'We say session: dibon session start gives you the team\'s handover and your own; dibon session end brings yours up to date.',
   ready: 'We say share: dibon share puts your uploaded work before the team, for review.',
   switch: 'We say resume: dibon resume lists what you have started and takes you back to one; your unsaved edits are parked, and come back when you return.',
   checkout: 'We say resume: dibon resume lists what you have started and takes you back to one; your unsaved edits are parked, and come back when you return.',

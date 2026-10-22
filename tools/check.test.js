@@ -125,7 +125,7 @@ test('register: a name or a handle on the team twice fails', () => {
 test('register: the team is read by its header, so a column added moves nothing', () => {
   const team = require('./register').team(ROOT);
   assert.strictEqual(team.get('Betty').role, 'Project manager');
-  assert.strictEqual(team.get('Betty').handle, 'betty');
+  assert.strictEqual(team.get('Betty').handle, 'bflorah');
   assert.strictEqual(team.get('Claude for Eric').team, 'Assistant');
 });
 
@@ -1360,9 +1360,9 @@ test('words: join, leave and the board, in a pretend repository', () => {
   try {
     run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
     run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'tools/check.js']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'tools/check.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
     for (const [k, v] of [['user.name', 'Lillian Test'], ['user.email', 'lillian@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
-    run('git', ['add', '-A', 'tools']);
+    run('git', ['add', '-A', 'tools', 'docs']);
     run('git', ['commit', '-qm', 'FS-891: the tools under test']);
     run('git', ['push', '-q', 'origin', 'HEAD:main']);
     const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
@@ -1371,7 +1371,7 @@ test('words: join, leave and the board, in a pretend repository', () => {
     assert.match(d('join', row.id), new RegExp(`Joined ${row.id}: Eric leads`));
     assert.strictEqual(reg().find((r) => r.id === row.id).with, 'Eric, Lillian');
     const here = run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).trim();
-    assert.match(here, new RegExp(`^docs/${row.id}-lillian-`));
+    assert.match(here, new RegExp(`^docs/${row.id}-lillian\.kiambo-`));
     const b = require('./board');
     assert.ok(b.board(work).doing.some((c) => c.id === row.id));
     fs.writeFileSync(path.join(work, '.git', 'dibon-reviews.json'), JSON.stringify([{ headRefName: here, isDraft: false, createdAt: new Date().toISOString() }]));
@@ -1383,6 +1383,82 @@ test('words: join, leave and the board, in a pretend repository', () => {
     run('git', ['config', 'user.name', 'Eric Test']);
     assert.match(d('leave', alone.id), /You are the only one/);
     assert.match(d('leave', alone.id, '--to', 'Betty'), /Betty has it/);
+  } finally {
+    fs.rmSync(where, { recursive: true, force: true });
+  }
+});
+
+// FS-922: save keeps a changed document's front matter current, makes the
+// generated sections again, rebuilds the reader where the hook does not,
+// and reminds when the branch has no change note.
+test('words: save does the routine for you, in a pretend repository', () => {
+  const { spawnSync } = require('child_process');
+  const where = fs.mkdtempSync(path.join(os.tmpdir(), 'dibon-save-'));
+  const work = path.join(where, 'work');
+  const run = (cmd, a) => { const r = spawnSync(cmd, a, { cwd: fs.existsSync(work) ? work : where, encoding: 'utf8' }); return `${r.stdout}${r.stderr}`; };
+  try {
+    run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
+    run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/board.js', 'tools/citations.js', 'tools/docregister.js', 'tools/site.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const [k, v] of [['user.name', 'Betty Test'], ['user.email', 'betty@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
+    run('git', ['add', '-A', 'tools', 'docs']);
+    run('git', ['commit', '-qm', 'FS-922: the tools under test']);
+    run('git', ['push', '-q', 'origin', 'HEAD:main']);
+    fs.mkdirSync(path.join(work, 'sources', 'confidential'), { recursive: true });
+    fs.writeFileSync(path.join(work, 'sources', 'confidential', 'protected-names.txt'), '# test list\nZzqx Nobody\n');
+    const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
+    d('new', 'A clearer testing note');
+    const id = (run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3}/) || [])[0];
+    const f = path.join(work, 'docs', 'testing.md');
+    const t = fs.readFileSync(f, 'utf8');
+    fs.writeFileSync(f, t.replace(/\n## /, '\nA sentence added to the testing strategy.\n\n## '));
+    const saved = d('save', 'A sentence added');
+    assert.match(saved, /Front matter kept current/);
+    assert.match(saved, /Saved on/);
+    assert.match(saved, /The reader is rebuilt/);
+    assert.match(saved, new RegExp(`No change note for ${id} yet`));
+    const after = fs.readFileSync(f, 'utf8');
+    const now = new Date(); const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    assert.match(after, new RegExp(`^last_reviewed: ${today}$`, 'm'));
+    assert.ok(after.split('\n').find((l) => l.startsWith('review_ids:')).includes(id));
+    assert.ok(fs.existsSync(path.join(work, 'build', 'site', 'board.html')));
+  } finally {
+    fs.rmSync(where, { recursive: true, force: true });
+  }
+});
+
+// FS-931: session end makes a person's handover, its generated part
+// listing the rows with them; session start puts the team's and theirs
+// together for a new session.
+test('words: session start and end keep a personal handover, in a pretend repository', () => {
+  const { spawnSync } = require('child_process');
+  const where = fs.mkdtempSync(path.join(os.tmpdir(), 'dibon-session-'));
+  const work = path.join(where, 'work');
+  const run = (cmd, a) => { const r = spawnSync(cmd, a, { cwd: fs.existsSync(work) ? work : where, encoding: 'utf8' }); return `${r.stdout}${r.stderr}`; };
+  try {
+    run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
+    run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'HANDOFF.md', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const [k, v] of [['user.name', 'Betty Test'], ['user.email', 'betty@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
+    run('git', ['add', '-A', 'tools', 'docs', 'HANDOFF.md']);
+    run('git', ['commit', '-qm', 'FS-931: the tools under test']);
+    run('git', ['push', '-q', 'origin', 'HEAD:main']);
+    const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
+    d('new', 'Betty has a thing to do');
+    const id = (run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3}/) || [])[0];
+    assert.match(d('session', 'end'), /Your handover is current/);
+    const mine = fs.readFileSync(path.join(work, 'handoffs', 'bflorah.md'), 'utf8');
+    assert.match(mine, /^# Betty · personal handover/m);
+    assert.match(mine, /^## Preferences$/m);
+    assert.ok(mine.includes(`| ${id} | Betty has a thing to do |`));
+    fs.writeFileSync(path.join(work, 'handoffs', 'bflorah.md'), mine.replace('To be written at the end of the first session.', 'Halfway through the thing.'));
+    run('git', ['add', '-A']);
+    run('git', ['commit', '-qm', `${id}: the thing, halfway`]);
+    assert.match(d('session', 'start'), /Your session, Betty/);
+    const both = fs.readFileSync(path.join(work, 'build', 'session', 'bflorah.md'), 'utf8');
+    assert.ok(both.includes('Halfway through the thing.'));
+    assert.ok(both.includes('## How we work'));
+    assert.match(d('handoff'), /We say session/);
   } finally {
     fs.rmSync(where, { recursive: true, force: true });
   }

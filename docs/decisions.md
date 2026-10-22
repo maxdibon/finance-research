@@ -1695,3 +1695,23 @@ against without reasons of its own; this entry gives them.*
 - **Revisit when:** a customer's or regulator's due diligence needs what
   only GitLab gives, or code must stay in Kenya (then GitLab
   self-managed, as FS-864 said).
+
+## FS-932 · OpenTofu for infrastructure as code
+
+*Entry written 2026-10-22 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** OpenTofu, with cloud-init on the machines, for every piece
+  of infrastructure: first the sandbox on public Azure for the MVP day,
+  then the MVP's network and cluster, then production on Azure Stack.
+  Its state lives in Azure storage, signed into with Entra and
+  versioned; never in git. What runs inside the clusters stays Flux's.
+- **Requires:** docs/architecture/technology.md "OpenTofu, with cloud-init".
+- **Argued (owner):** "go ahead with opentofu and the setup", after asking
+  whether the script would be Terraform.
+- **Argued against:** Terraform, now under the Business Source License,
+  as Vault is, which we declined for OpenBao; Bicep, which speaks only
+  Azure; Pulumi, heavier to learn for a team starting in an afternoon; a
+  plain command-line script, which leaves nothing to tear down by.
+- **Costs (inferred):** a state store to keep and guard; OpenTofu on each
+  machine that runs it; HashiCorp's documentation read with care where
+  the two tools have drifted apart.

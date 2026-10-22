@@ -200,7 +200,7 @@ const firstEntryAt = (level) => (t) => {
 const bullet = (n, withIds) => `- ${n.body}${withIds ? ` (${n.rows.join(', ')}; ${n.by}${n.for !== 'team' ? `; for ${n.for}` : ''})` : ''}`;
 
 function release(series, opts) {
-  const date = opts.date || new Date().toISOString().slice(0, 10);
+  const date = opts.date || (() => { const d = new Date(); const p = (n) => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; })();
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error('--date is YYYY-MM-DD');
   const version = nextVersion(series, date);
   const notes = readNotes().filter((n) => belongsTo(n).includes(series) && !n.released.includes(series));

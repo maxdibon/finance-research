@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892]
-last_reviewed: 2026-10-22
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892, FS-922, FS-931]
+last_reviewed: 2026-10-23
 ---
 
 # Ways of working
@@ -58,27 +58,27 @@ and the owner marks it as they do (FS-885). More context is to come.
 
 | Name | Handle | Team | Role | Holds today | Confirmed |
 |---|---|---|---|---|---|
-| Eric | eric | Leadership | CTIO | Team lead, solution architect, security lead, product owner for Kapu MFI; compliance and risk officer until Cage joins | Yes, 2026-10-17 |
-| Jimmy | jimmy | Leadership | Partner and CEO | Commercial lead; the team lead's deputy, and compliance's until Cage joins | To confirm |
+| Eric | emokaya | Leadership | CTIO | Team lead, solution architect, security lead, product owner for Kapu MFI; compliance and risk officer until Cage joins | Yes, 2026-10-17 |
+| Jimmy | jbett | Leadership | Partner and CEO | Commercial lead; the team lead's deputy, and compliance's until Cage joins | To confirm |
 | Cage | cage | Leadership | Legal and compliance (joining soon) | Compliance and risk officer, once joined | To confirm |
-| Lillian | lillian | DevOps | Dev lead | Engineering lead; the architect's deputy, and the product owner's for Kapu MFI | To confirm |
+| Lillian | lillian.kiambo | DevOps | Dev lead | Engineering lead; the architect's deputy, and the product owner's for Kapu MFI | To confirm |
 | Allan | allan | DevOps | Ops lead | Operations lead, chairing the change advisory board (§4); the security lead's deputy | To confirm |
-| Gasine | gasine | DevOps | Engineer | The engineering lead's deputy | To confirm |
+| Gasine | dmwangi | DevOps | Engineer | The engineering lead's deputy | To confirm |
 | Cliff | cliff | DevOps | Mobile engineer | — | To confirm |
-| Max | max | DevOps | CI/CD engineer | The operations lead's deputy | To confirm |
-| Abel | abel | DevOps | Intern | Approves nothing; mentored by the dev lead | To confirm |
+| Max | maxwell.musau | DevOps | CI/CD engineer | The operations lead's deputy | To confirm |
+| Abel | abel.ryan | DevOps | Intern | Approves nothing; mentored by the dev lead | To confirm |
 | Gibeon | gibeon | Odoo | Odoo lead | Odoo lead (FS-902): one of the two Odoo consultants FS-640 planned for | To confirm |
 | Daniel | daniel | Odoo | Odoo engineer | The Odoo lead's deputy | To confirm |
-| Betty | betty | PM | Project manager | Delivery lead | To confirm |
-| Carol | carol | Admin | Admin | The delivery lead's deputy | To confirm |
+| Betty | bflorah | PM | Project manager | Delivery lead | To confirm |
+| Carol | cwanjiru | Admin | Admin | The delivery lead's deputy | To confirm |
 | Chan | chan | Social media | Social media | Marketing, with the commercial lead | To confirm |
-| Claude for Eric | claude-eric | Assistant | Assistant to Eric | Drafts, builds and checks on Eric's word; holds no role and approves nothing | Yes, by Eric |
+| Claude for Eric | claude-emokaya | Assistant | Assistant to Eric | Drafts, builds and checks on Eric's word; holds no role and approves nothing | Yes, by Eric |
 
 **A name is one person, and so is a handle** (FS-905). Where two people
 share a first name, each takes an initial ("Eric M.", "Eric K."); the
 check refuses a name or a handle listed twice. The handle is the local
 part of the person's work email, to confirm as each confirms their row;
-it never changes when a display name does.
+it never changes when a display name does. Confirmed from work emails on 22 October for those whose address we hold (FS-937); the rest are to confirm. A role mailbox is not a handle: the project manager's is an alias, bflorah.
 
 **Each person's Claude is its own** (FS-905): listed as "Claude for" that
 person, acting only on that person's word, committing as
@@ -388,6 +388,36 @@ tool, and Claude in the desktop app, ask which you mean.
 | **practice** | A private sandbox to try every word safely |
 | **role** "…" | Tell the words your role, once |
 | **claude** handle | Set, once, the name my Claude commits under |
+| **session start**, **session end** | Begin my day with the team's handover and mine; end it with mine brought up to date |
+
+### What each word does for you
+
+Each word does its git and its records the same way every time, so you
+need not remember them (FS-922). What happens on its own, beyond what
+you asked:
+
+| Word | What it does for you, on its own | When it stops (nothing is lost) |
+|---|---|---|
+| **download** | Fetches the team's latest and puts it under your work; brings the register's rows together (a row of yours whose id the team took meanwhile is renumbered, everywhere your branch cites it; a row you both edited is merged, both notes kept); makes the generated sections again; saves that as one change of yours; notes which reviews are open, for the Board | You have unsaved edits; your change and a teammate's touch the same lines |
+| **start**, **new** | Fetches; parks your unsaved edits with the work you were on; makes your branch from the team's latest, named by its kind, row and words; opens the register row, with you as its raiser and its holder; with a kind, makes the document from its template, a spec or journey listed in its index; offers to take you back to a title you started already; notes when you have three things started | Unsaved edits on main |
+| **resume**, **continue** | Lists your work not yet merged, and your Claude's; parks the edits you leave and brings back the ones parked where you arrive | The name matches nothing, or more than one; it is your Claude's work |
+| **join**, **leave** | Join: your name on the row after its lead, your own branch for it, your edits parked. Leave: your name off, the next name leading | The row is closed; you are the last one on it (say who takes it) |
+| **note** | Writes the change note, signed by your name and role, its rows from your branch | A note read outside Dibon that carries a register id |
+| **save** | Files the register's rows by their status; notes a file someone's uploaded branch changes too, and a paragraph rewrapped for a word; keeps the front matter of each document whose content you changed current (today's `last_reviewed`, your row in its `review_ids`); makes the generated sections again; runs the checks; saves with your row in the subject; rebuilds the reader where the commit hook does not; reminds you if your branch has no change note | No description; the checks fail (each said in plain words); a document from outside |
+| **upload** | Puts your branch on the repository, safely over an earlier upload of it | The repository refuses (until the team is in the organisation, only the owner uploads) |
+| **share** | Runs the checks, and the tests when tools or code changed; uploads; opens your review, or marks it ready; notes it for the Board | Unsaved edits; a check or test failing |
+| **undo** | Takes back your last save: kept as edits before upload, a correcting change after | Nothing of yours to undo on main |
+| **discard** | Shows what would be lost, then throws away one file's unsaved changes | — |
+| **status** | Your branch, the release, what is unsaved and uploaded, the notes waiting, what you started, what your Claude has waiting, and how long since you downloaded | — |
+| **meeting**, **answered**, **received** | Each writes its record and registers it: a meeting record and its document row; an answer moved and dated; an original kept read-only, fingerprinted, and registered | The customer or file is not one we know |
+| **release** | The owner's: gathers the change notes into the changelogs, stamps each changed document's `released:` line, then the tag | Not the owner; nothing waiting |
+| **session** | Start: downloads, then puts the team's handover and yours together for a new session, your generated part fresh, and shows your status. End: your generated part fresh (your rows, your work, your Claude's), and what is unsaved or not uploaded; your Claude then writes where you left off and your preferences | Start does not download over unsaved edits |
+| **check**, **history**, **help**, **practice**, **role**, **claude** | Read or set only: the checks explained, a document's history, the words, a practice copy, your role, your Claude's name | — |
+
+**What no word does for you:** write a handover's words (your Claude
+writes yours at the end of a session; the team's changes by pull
+request); upload, share, merge or
+release unless you say so; close a register row or write a decision.
 
 ### Three rules, and once before the first time
 
@@ -516,7 +546,11 @@ what you changed). **It stops** when you give no description, when the
 checks fail, and when you give it a document from outside: that is
 `received`. **It notes, without stopping,** a file you changed that
 someone's uploaded branch changes too, and a paragraph rewrapped for a
-word (FS-890). `--body-file` adds a body to the saved change from a file:
+word (FS-890). **Before the checks, it keeps current** the front matter
+of each document whose content you changed (today's `last_reviewed`,
+your row in its `review_ids`) and the generated sections; **after
+saving,** it rebuilds the reader where the commit hook does not, and
+reminds you if your branch has no change note (FS-922). `--body-file` adds a body to the saved change from a file:
 why it changed, and any trailer such as Co-Authored-By (FS-862).
 
 ### undo
@@ -583,6 +617,18 @@ Example: `dibon practice`.
 Records your role once, for your notes and records, beside your name
 where the team table has none for you.
 Example: `dibon role "Project manager"`.
+
+### session
+
+Begins and ends a working session (FS-931). `dibon session start`
+downloads, then puts the team's handover (HANDOFF.md) and yours
+(handoffs/ and your handle) together in build/session/, for a new
+session to read, and shows your status. `dibon session end` brings the
+generated part of yours up to date (the rows with you, your work
+started, your Claude's work waiting) and says what is unsaved or not
+uploaded; your Claude then writes where you left off and any
+preferences, and you save. Examples: `dibon session start`;
+`dibon session end`.
 
 ### claude
 

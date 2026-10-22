@@ -1,25 +1,35 @@
 # Dibon financial services — session handoff
 
     release: 2026.10.16 · minor
-    updated: 2026-10-17
+    updated: 2026-10-22
     the release is the documentation's, moved by each release (FS-842);
     this file has no version of its own
-    purpose: hand this repository to a session that knows nothing about it
+    purpose: hand this repository to a session that knows nothing about it;
+    each person's own thread is in handoffs/, their handle's file (FS-931)
 
-Paste everything below the line into a new session as its first message.
+`dibon session start` gives a new session everything below the line,
+followed by the personal handover of the person whose Claude it is
+(handoffs/, by handle); paste it, or tell Claude to read both.
 
-**Update this file at the end of a session, or when the owner asks.** It
-holds no history and no counts on purpose: those are in the changelog,
-the registers and the reader.
+**This is the team's handover:** what every person's Claude needs. Update
+it by pull request when how we work changes; its owner is the team lead.
+What only one person needs (their preferences, where they left off)
+goes in their own, handoffs/ and their handle, which their Claude
+writes at the end of each session (`dibon session end`). It holds no
+history and no counts on purpose: those are in the changelog, the
+registers and the reader.
 
 ---
 
 You are picking up **Dibon's financial-services portfolio**: the documents
 behind the products Dibon Consulting builds and runs for Kenyan financial
-institutions. You are working with the **owner**, Eric, Dibon's Chief Technology and
-Innovation Officer, who also leads security and the build. Our own team
-is named with their role (ways-of-working §1); a customer's or partner's
-people never are.
+institutions. You are **the Claude of one person on Dibon's team**: `git config --get
+dibon.claude` names whose ("Claude for Lillian"), and their own handover,
+handoffs/ and their handle, says how they like to work and where they
+left off. Act only on their word. The **owner** is Eric, Dibon's Chief
+Technology and Innovation Officer, who also leads security and the
+build; merges and releases are his. Our own team is named with their
+role (ways-of-working §1); a customer's or partner's people never are.
 
 ## What this is
 
@@ -35,7 +45,10 @@ Fineract), Collect and the Pay Gateway (which ran in production at Onit
 Bank), Escrow, SME Recon, and the business suite on Odoo; under them the
 shared services (access, identity and the vault, mandates, messaging,
 rails, reconciliation, financial crime, decisioning, insights, platform
-security). **R1 is Roan Capital's pilot** (customers CU-01).
+security). **R1 is Roan Capital's pilot** (customers CU-01). **Lofty
+Corban** (CU-05), a fund manager regulated by the CMA, RBA and IRA, is
+the first customer outside CBK's rules: reconciliation first. **SBM Bank**
+(partners PT-56) is in discussion: the bank channel, Collect and escrow.
 
 **One line decides most questions:** the institution holds its licence,
 its money and its records; Dibon holds the platform. Read
@@ -43,8 +56,9 @@ its money and its records; Dibon holds the platform. Read
 
 ## Do this first
 
-1. Read `README.md` (the map), then `docs/start-here.md` (reading order by
-   role, every id prefix).
+1. `dibon session start` (it downloads first), then read your person's
+   handover; `README.md` (the map) and `docs/start-here.md` (reading
+   order by role, every id prefix) if you are new.
 2. Run the checks (below). If they fail before you have changed anything,
    say so first.
 3. Read the newest entry of `CHANGELOG.md`, and of Roan Capital's
@@ -53,17 +67,17 @@ its money and its records; Dibon holds the platform. Read
    rows at the bottom of `REVIEW.md`; the open ones are what the owner is
    waiting on.
 
-## How the owner wants you to work
+## How we work
 
 - **Record before answering.** Every point raised gets the next FS row in
   `REVIEW.md` before you discuss it; the register check fails on a
   skipped id. **Rate every open row** Critical, High, Medium or Low; a
   closed row loses its rating.
-- **Recommend, then wait for "go".** A direct instruction is applied at
-  once. When a message is ambiguous, answer every reading and ask which.
-  **"Go" is not "push":** push only when the owner says "push".
-- **Disagree openly**, say when your own earlier claim was wrong, and say
-  what you did not do.
+- **Your person's preferences come first** where they say more than this
+  (their handover's "Preferences"). For everyone: **recommend, then wait
+  for their word**; a direct instruction is done at once; **disagree
+  openly**, say when your own earlier claim was wrong, and what you did
+  not do. **Main changes only by the owner's merge.**
 - **Cite the law through its card** (FS-868): a provision cited gets a
   row on its instrument's card in docs/law/, read from the text; a
   document names its main instrument (`law: LR-03`, or `law: mixed`
@@ -108,8 +122,9 @@ its money and its records; Dibon holds the platform. Read
   sentences ("download, then mark answer 24 as answered"), use the words,
   say what you understood, and run them with `--yes` only after they have
   said yes in chat. Developers may use git directly, by ways-of-working §6.
-  **Claude uses the words too, where a request matches one** (release,
-  note, answered, received, meeting, history, status, check), with
+  **Claude uses the words too, where a request matches one** (download,
+  new or start, resume or continue, join, leave, save, upload, note,
+  answered, received, meeting, history, status, check), with
   `--body-file` for the commit's body and the co-author line; and git
   for building tools and documents, on Claude's own branch (below).
   Once the team is in Dibon's GitHub organisation (FS-896), the words
@@ -118,15 +133,18 @@ its money and its records; Dibon holds the platform. Read
   to me); and outwards, save (my copy), upload (my own branch in the
   repository, still mine), share (before the team, for review), release
   (the owner's, to the public). **When someone says "update", ask whether
-  they mean download or upload**: never pick one. The owner's "push"
+  they mean download or upload**: never pick one. **What each word does on its
+  own** is in ways-of-working §7, "What each word does for you" (FS-922):
+  save keeps front matter and generated sections current, rebuilds the
+  reader and reminds about a change note; no word updates this handover. The owner's "push"
   stays what it has been: main to GitHub.
 - **Attribution: each person's work is their own** (FS-886, the owner,
   2026-10-17). Claude works only on its own branch,
-  `claude/<FS id>-<a-few-words>`, never on main, and commits under its
+  `claude/<handle>/<FS id>-<a-few-words>`, never on main, and commits under its
   own name, **whose Claude it is** (FS-905): read `git config --get
   dibon.claude` (set once by `dibon claude` and a handle; today "Claude for
-  Eric <claude-eric@noreply.dibon.co.ke>") and commit with `git -c
-  user.name="Claude for Eric" -c user.email=claude-eric@noreply.dibon.co.ke
+  Eric <claude-emokaya@noreply.dibon.co.ke>") and commit with `git -c
+  user.name="Claude for Eric" -c user.email=claude-emokaya@noreply.dibon.co.ke
   commit …`, the message still ending with the co-author line; if it is
   not set, stop and ask, never fall back to one identity for everyone.
   Branches are `claude/<handle>/<FS id>-<words>`. Main
@@ -140,6 +158,17 @@ its money and its records; Dibon holds the platform. Read
   the default), or public, with the team (shared, on the owner's word
   only). Anything sensitive and undecided stays just us. The history
   before FS-886 is the owner's, with Claude as co-author: leave it.
+- **A rule is ours; the law is cited as the law names it** (FS-900):
+  each lender rule has an "Our rule" line, our application or reading,
+  citing the provision and naming the legal question where unsettled;
+  "s." for an Act's section, "reg" for a regulation, "r." for a set of
+  Rules (Auctioneers Rules r.12); spelled out (section, regulation,
+  rule) for readers outside Dibon. A superseded decision entry says
+  "Superseded by: FS-…" and keeps its text (FS-896).
+- **Work is seen on the Board, and joined, not claimed** (FS-891, FS-892):
+  the reader's Board shows every open row as a card, from the register
+  and the branches; a row's With may name several, the lead first;
+  `dibon join` and `dibon leave`. Claude joins only on its person's word.
 - **Documents for outside readers** start from `docs/design-system.md`:
   one look, a little whimsy in the margins, never in figures or terms.
 - **Never sign in, or enter a password, on a live site**; downloads need
@@ -186,6 +215,15 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   (22 October, FS-909) have gone out; the next edit starts v1.3 as a draft
   in `design/portfolio-pdf/document.json` (FS-595). The drafts of early
   October once built as v1.2 to v1.5 are v1.1.1 to v1.1.4 in build/.
+- **Platform:** GitHub, the Team plan now, Enterprise Cloud when single
+  sign-on is needed (FS-896; docs/specs/github.md, its §5 the set-up
+  checklist); "pull request", not "merge request". Releases go through
+  the change advisory board, the operations lead chairing a weekly slot
+  (FS-904; ways-of-working §4).
+- **The team:** ways-of-working §1, by group, each person with a handle
+  and each role with a deputy (FS-902); who sees what about a project
+  (FS-903): our people open to the team, a customer's by role here and
+  by name only in Dibon's Odoo.
 - **Clients:** client material lives in Dibon's Odoo Documents once it
   exists, in `clients/` until then (rules, Dibon 10); Roan Capital's NDA
   is in force (DR-003, FS-827); its licence, CBK's approval of its
@@ -209,7 +247,8 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   rows by criticality, its "Documents by status" page every draft, its
   "Unreleased" page the notes and documents changed since the release;
   every page's header names its release, and every document's page ends
-  with its History, from git, by release (FS-853). In the desktop app,
+  with its History, from git, by release (FS-853); its Board shows the
+  open rows as cards by column (FS-891). In the desktop app,
   `preview_start` name `site`.
 - **Tools:** `tools/check.js` and its tests; `tools/site.js`, the reader;
   `tools/assemble.js`, the Master; `tools/products/`, product
@@ -226,7 +265,9 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   regulations cited, tracked when the document is (FS-874); `tools/paths.js`, what a path written as plain
   text means, for the reader and the links check (FS-856);
   `tools/docregister.js`, the one reader of the document register, by its
-  header, and the maker of each customer's table of documents (FS-857).
+  header, and the maker of each customer's table of documents (FS-857);
+  `tools/board.js`, the Board, from the register and the branches, and
+  what GitHub last said is in review (FS-891).
 - **Git-ignored, holding real material:** `clients/` (per party:
   `originals/`, `working/`, meeting folders), `sources/confidential/`,
   `sources/gatekeepr/`, `sources/market/`, `sources/regulation/ke/reports/`
@@ -292,8 +333,10 @@ register row.
 
 ## Fetching documents
 
-- **Kenya Law** refuses scripts: find the version through
-  `/search/api/documents/?search=` or the work's page, then navigate the
+- **Kenya Law:** find the version on the work's page,
+  `https://new.kenyalaw.org/akn/ke/act/<year>/<number>` (its search API
+  returned nothing on 22 October; guess the number and read the page's
+  title), then navigate the
   browser pane to `{AKN expression}/source` (a plain download of that
   address also works, FS-899). **The download is a
   GUID-named `.tmp` in Downloads, with a Save As dialog Claude cannot
@@ -384,46 +427,23 @@ register row.
   screenshot then times out: read the page with `find`, `get_page_text` or
   `javascript_tool` instead.
 - **Subagents claim more than they did.** Check their work.
+- **Headless Chrome will not overwrite a PDF,** nor one that is open: print
+  to a fresh name, then move it into place (the portfolio's build and the
+  SBM deck's print both do).
+- **A pretend repository tests what is committed in it:** copy the guide
+  and any new tool in, and `git add -A` them before the commit, or the
+  words check or a missing module fails the test.
+- **The register's ids are checked in tools/ too:** a test that invents
+  an FS id fails review-ids; use a real one.
+- **Angle brackets in a register row** are read as HTML: a branch
+  pattern goes in backticks.
+- **The SBM deck is an artifact on claude.ai,** not a file here; its PDF
+  is rebuilt locally into build/proposals/.
 
-## Waiting on the owner (as at 2026-10-15)
+## What each person is waiting on
 
-- **In the register:** the Critical and High rows (the command above);
-  decisions for FS-796 (who owns the interpretation record's readings,
-  and who builds the companion); FS-812's remainder (starter templates
-  and synthetic test products in code); storage (FS-819 to FS-821, the
-  last after Liquid answers); provenance of the documents outside Roan
-  Capital's folder (FS-840).
-- **Roan Capital:** the evening's steps after the 15 October meeting
-  (`clients/roan-capital/meeting-2026-10-15/record.md`); a senior
-  management meeting (licence, CBK's approval of pricing, consent to
-  processors, CBK's notice of a new delivery channel); its open answers,
-  delivery map §4.
-- **To send:** the Liquid enquiry with its storage questions, the Prembly
-  changes letter, the bank requests to NCBA, KCB and SBM
-  (`docs/outreach/`; each letter's status says whether it went). **The
-  outreach statuses were set to "draft" without confirmation:** ask which
-  went, and mark those "sent" (FS-839).
-- **Releases:** the first, 2026.10.15, is released and tagged for the
-  documentation and for Roan Capital. Six notes wait for the next, all
-  patches: every document names its release (for everyone, FS-852) and
-  shows its history (FS-853); statuses explained in Start here (FS-855),
-  then in one table (FS-858); paths link in the reader (FS-856); each
-  customer lists its documents (FS-857); the last five for the team.
-  **The 36 document summaries (FS-857) were written from titles and our
-  work, not from the files:** ask the owner to skim them, and to settle
-  the "to confirm" ones. The next is the owner's call:
-  propose one when the notes waiting (the reader's "Unreleased" page) are
-  worth telling; then `node tools/cut.js`, commit (`Release <tag>`), an
-  annotated tag, and the tag pushed with the commits. That release is the
-  first to move the documents' `released:` lines: check that only the
-  documents changed since 2026.10.15 move.
-- **The team cannot share yet:** until the team is in Dibon's GitHub
-  organisation (github spec §5), only the owner uploads, so a teammate's `dibon upload` stops at "saved on your
-  branch; tell the owner it is ready to merge". The owner merges.
-- **Outside the repository:** the second site's provider before Roan
-  Capital's go-live (FS-775); counsel for the LQ register (none engaged);
-  the Odoo consultants (paid users; Odoo Enterprise for Dibon, FS-640);
-  the Data Commissioner controller registration (FS-367, Critical).
-- **Older asks not yet confirmed done:** the NPS Bill comments and the
-  Bowmans letter; writing to BRS for registry access (PT-55); whether
-  KCB's and NBK's contracts allow naming them (FS-420); which logo.
+In their own handover, handoffs/ and their handle (FS-931): where they
+left off, and a part generated from the register (the rows with them,
+their work started, their Claude's work waiting). The owner's is
+handoffs/emokaya.md. The team's most pressing: the Critical and High rows
+(the command above), and GitHub's board for the MVP (FS-930).

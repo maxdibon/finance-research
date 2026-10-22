@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Compliance lead
 classification: Internal
-review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431, FS-499, FS-538, FS-673, FS-686, FS-899, FS-901]
-last_reviewed: 2026-10-21
+review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431, FS-499, FS-538, FS-673, FS-686, FS-899, FS-901, FS-916]
+last_reviewed: 2026-10-22
 ---
 
 # Law register — the legislation that applies to us and our customers
@@ -94,6 +94,9 @@ background, and large). The check matches the copies to this register. Supersede
 | LR-41 | Auctioneers Act (Cap. 526) | [auctioneers-act@2022-12-31](https://new.kenyalaw.org/akn/ke/act/1996/5/eng@2022-12-31) | 2022-12-31 | Obligation | Lenders repossessing and selling collateral, through licensed auctioneers | MF-03 | Targeted | 2026-10-21 | Read ss.9, 21 to 23 (FS-899): only a licensed auctioneer; sales advertised as prescribed; proceeds to the seller within fifteen days; repossession, storage and sale under the Auctioneers Rules (LR-43). LR-03 reg 30(1)(l) binds lenders to the Act's procedures |
 | LR-42 | Hire-Purchase Act (Cap. 507) | [hire-purchase-act@2022-12-31](https://new.kenyalaw.org/akn/ke/act/1968/42/eng@2022-12-31) | 2022-12-31 | Obligation | Lenders whose vehicle loans are hire purchase | MF-03 | Targeted | 2026-10-21 | Read ss.13 to 16 (FS-899): two-thirds paid, the goods only by suit (s.15); the hirer may still complete within twenty-eight days of repossession (s.13). Whether a logbook loan is hire purchase is LQ-19 |
 | LR-43 | Auctioneers Rules (LN 120 of 1997) | [auctioneers-rules@2022-12-31](https://new.kenyalaw.org/akn/ke/act/ln/1997/120/eng@2022-12-31) | 2022-12-31 | Obligation | Lenders repossessing and selling collateral, through licensed auctioneers | MF-03 | Targeted | 2026-10-21 | Read rr.5 to 18 (FS-899): a repossession under a letter of instruction follows Part III unless another law provides otherwise (r.5); seven days' notice to redeem, then removal (r.12(1)(c), (d)); advertised within seven days of removal, sold seven to fourteen days after the first newspaper advertisement (r.12(1)(f)); auctions 10.00 to 18.00 (r.17); proceeds within fifteen days (r.18). How these sit with reg 30(4)'s thirty days and the MPSR Act is LQ-18 |
+| LR-44 | Capital Markets Act (Cap. 485A) | [capital-markets-act@2025-12-11](https://new.kenyalaw.org/akn/ke/act/1989/17/eng@2025-12-11) | 2025-12-11 | Institution | Fund managers and collective investment schemes, licensed by the CMA: Lofty Corban (CU-05) | — | Unread | 2026-10-22 | Held for Lofty Corban (FS-916). Its regulations on collective investment schemes, which bear most on a fund manager's collections and investor accounts, are not found on Kenya Law by search: to locate, with the CMA |
+| LR-45 | Retirement Benefits Act (Cap. 197) | [retirement-benefits-act@2025-06-20](https://new.kenyalaw.org/akn/ke/act/1997/3/eng@2025-06-20) | 2025-06-20 | Institution | Retirement benefit schemes, their trustees, administrators and fund managers, regulated by the RBA: Lofty Corban (CU-05) | — | Unread | 2026-10-22 | Held for Lofty Corban (FS-916); which of its roles Lofty Corban holds is its open answer 7 |
+| LR-46 | Insurance Act (Cap. 487) | [insurance-act@2023-12-11](https://new.kenyalaw.org/akn/ke/act/1985/1/eng@2023-12-11) | 2023-12-11 | Institution | Insurers and intermediaries, regulated by the IRA: Lofty Corban's new line (CU-05) | — | Unread | 2026-10-22 | Held for Lofty Corban (FS-916) |
 
 ## Reports and strategies
 
