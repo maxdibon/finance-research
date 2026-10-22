@@ -112,7 +112,8 @@ its money and its records; Dibon holds the platform. Read
   note, answered, received, meeting, history, status, check), with
   `--body-file` for the commit's body and the co-author line; and git
   for building tools and documents, on Claude's own branch (below).
-  At GitLab, the words for everything, on branches. **The words are said
+  Once the team is in Dibon's GitHub organisation (FS-896), the words
+  for everything, on branches. **The words are said
   from the speaker's side** (FS-879 to FS-881): download (the repository
   to me); and outwards, save (my copy), upload (my own branch in the
   repository, still mine), share (before the team, for review), release
@@ -415,8 +416,8 @@ register row.
   annotated tag, and the tag pushed with the commits. That release is the
   first to move the documents' `released:` lines: check that only the
   documents changed since 2026.10.15 move.
-- **The team cannot share yet:** until the move to GitLab, only the owner
-  uploads to GitHub, so a teammate's `dibon upload` stops at "saved on your
+- **The team cannot share yet:** until the team is in Dibon's GitHub
+  organisation (github spec §5), only the owner uploads, so a teammate's `dibon upload` stops at "saved on your
   branch; tell the owner it is ready to merge". The owner merges.
 - **Outside the repository:** the second site's provider before Roan
   Capital's go-live (FS-775); counsel for the LQ register (none engaged);

@@ -1,6 +1,6 @@
 # Change notes
 
-One short note per merge request, written by its author, so the team sees
+One short note per pull request, written by its author, so the team sees
 what changed as soon as it merges and every release gathers its own notes
 (FS-845; rules, Dibon 12). Nobody edits a changelog by hand.
 

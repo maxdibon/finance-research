@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-695, FS-698, FS-699, FS-704, FS-706, FS-707]
-last_reviewed: 2026-10-10
+review_ids: [FS-695, FS-698, FS-699, FS-704, FS-706, FS-707, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Flows: how the components work together
@@ -213,10 +213,10 @@ How code becomes a running, signed version, and how it is undone
 
 ```
   +--------------------------+      +--------------------------+      +--------------------------+
-  | GITLAB                   |      | RUNNER                   |      | HARBOR                   |
-  | the merge request,       |--1-> | builds, tests, scans,    |--2-> | the image, by digest     |
+  | GITHUB                   |      | RUNNER                   |      | HARBOR                   |
+  | the pull request,       |--1-> | builds, tests, scans,    |--2-> | the image, by digest     |
   | reviewed and approved    |      | signs                    |      | [harbor]                 |
-  | [gitlab]                 |      | [gitlab_runner]          |      |                          |
+  | [github]                 |      | [actions_runner]         |      |                          |
   |                          |      |                          |      | a copy at each site      |
   | approval by the          |      | in Kenya; every step     |      |                          |
   | change's kind            |      | pinned to a digest       |      |                          |
@@ -235,7 +235,7 @@ How code becomes a running, signed version, and how it is undone
   +--------------------------+      +--------------------------+      +--------------------------+
 ```
 
-1. A merge request, reviewed and approved as its kind of change requires,
+1. A pull request, reviewed and approved as its kind of change requires,
    starts the pipeline on our runners in Kenya.
 2. The runner builds, tests and scans, signs the image and records the
    signature in Rekor; the image goes to Harbor, by digest.

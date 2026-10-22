@@ -12,8 +12,8 @@ depends_on: [kapu-core-fineract, messaging, event-bus-kafka]
 used_by: [end-of-day-runner, recon]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899]
-last_reviewed: 2026-10-21
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Lender rules — build specification
@@ -266,7 +266,7 @@ this service, the key information document, the calculator and recon's
 companion all take the terms from it, and none keeps terms of its own.
 
 - **Written in a vocabulary,** not free text (below). The schema is code,
-  in the code repository, changed only by merge request; adding a term
+  in the code repository, changed only by pull request; adding a term
   means this service, the Fineract mapping and the companion support it
   together.
 - **Drafted in the back office** by the institution's product owner, on a

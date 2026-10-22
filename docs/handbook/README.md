@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-771, FS-772, FS-775]
-last_reviewed: 2026-10-13
+review_ids: [FS-771, FS-772, FS-775, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # The institution's handbook
@@ -40,10 +40,10 @@ links to the procedure it serves. Dibon's own runbooks stay in
 
 ## Where it lives
 
-**In GitLab, for Dibon:** the template, in this folder, changed by merge
+**On GitHub, for Dibon:** the template, in this folder, changed by pull
 request with the delivery lead as its code owner; Dibon's own runbooks;
-and the reader on GitLab Pages for Dibon's staff. Institutions have no
-GitLab access (specs/gitlab.md §11).
+and the reader for Dibon's staff, served behind sign-in. Institutions
+have no GitHub access (specs/github.md §11).
 
 **In each institution's Odoo, in R1** (FS-772):
 

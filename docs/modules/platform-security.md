@@ -10,8 +10,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661, FS-698, FS-699, FS-701, FS-711, FS-712, FS-775, FS-777, FS-793]
-last_reviewed: 2026-10-16
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661, FS-698, FS-699, FS-701, FS-711, FS-712, FS-775, FS-777, FS-793, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Platform Security
@@ -67,7 +67,7 @@ not go live on less.
 | SE-09 | TLS everywhere, with certificates issued and renewed automatically (cert-manager, OpenBao PKI) | Planned | FS-464 | 1 |
 | SE-10 | Backups of clusters, databases and the document vault (Velero for the clusters; CloudNativePG's Barman Cloud plugin for the databases, FS-699; identity ID-15) to object storage in Kenya and to a second Kenyan site, with an immutable copy; restores tested every quarter against recovery objectives per service | Planned | FS-464. The portfolio promises recovery tests twice a year; quarterly exceeds it | 1 |
 | SE-11 | Vulnerability management: images and dependencies scanned (Trivy, pinned by digest and mirrored in Harbor; OSV-Scanner; FS-699), a software bill of materials per release, fixes prioritised by CISA's known-exploited list, EPSS and CVSS v4 within set times | Planned | FS-462, FS-464 | 1 |
-| SE-12 | A pipeline that refuses unsafe builds: secrets scanning (Gitleaks), static and dynamic testing (Opengrep, ZAP), signed images with build provenance (cosign, SLSA, recorded in Rekor), a private registry (Harbor); on GitLab, with runners in Kenya (FS-701); every step pinned to a commit or digest, never a tag, and images only from a project's own builds or ours, never Bitnami's (FS-699) | Planned | FS-462, FS-464 | 1 |
+| SE-12 | A pipeline that refuses unsafe builds: secrets scanning (Gitleaks), static and dynamic testing (Opengrep, ZAP), signed images with build provenance (cosign, SLSA, recorded in Rekor), a private registry (Harbor); on GitHub, with runners in Kenya (FS-896); every step pinned to a commit or digest, never a tag, and images only from a project's own builds or ours, never Bitnami's (FS-699) | Planned | FS-462, FS-464 | 1 |
 | SE-13 | Round-the-clock detection and response: managed detection and response from a security operations centre (Sophos MDR through Liquid), fed by our logs and endpoint agents | Planned | FS-458, FS-464. To confirm terms with Liquid. R2: our rota watches until then (owner, 2026-10-12, FS-777) | 1 |
 | SE-14 | Endpoints: staff laptops and our servers with endpoint protection, disk encryption and device management (through Liquid: Sophos endpoint, Microsoft Intune; or our own tier where a client chooses it: Wazuh, Microsoft Defender Antivirus, Fleet; FS-712; docs/specs/endpoints.md); field devices enrolled with Android Enterprise (omni-channel OC-19) | Planned | FS-459, FS-464. R1 for Dibon's own devices; institutions' in R2 (owner, 2026-10-12, FS-777) | 1 |
 | SE-15 | Mobile apps built and tested to OWASP MASVS level 2 (MobSF in the pipeline), with Play Integrity and App Attest | Planned | FS-462, FS-464. The field-officer app (OC-17) and member apps (OC-01) | 1 |

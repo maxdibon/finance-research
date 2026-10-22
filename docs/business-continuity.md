@@ -7,8 +7,8 @@ law: LR-17
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-482, FS-485, FS-657, FS-758]
-last_reviewed: 2026-10-16
+review_ids: [FS-482, FS-485, FS-657, FS-758, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Business continuity plan
@@ -57,7 +57,7 @@ remembered, and anyone in the rota can follow them.
 | Safaricom Daraja and other rails | Payments on that rail | Safe mode: collections keep landing in institutions' own paybills; payouts queue; reconciliation catches up from the rail's records (rails RL-20) |
 | Managed detection (Sophos through Liquid) | Round-the-clock watch | Our rota watches alerts directly; endpoint protection keeps running without the service |
 | Meliora (SMS for KCB and NBK) | Those banks' SMS | Meliora's own redundancy; a second route agreed with each bank |
-| Microsoft (Intune), GitLab or other tooling | Device management, code hosting | Code mirrored to a git server of ours in Kenya, issues and merge requests exported nightly (docs/specs/gitlab.md §5); devices keep their last policy |
+| Microsoft (Intune), GitHub or other tooling | Device management, code hosting | Code mirrored to a git server of ours in Kenya, issues and pull requests exported nightly (docs/specs/github.md §5); devices keep their last policy |
 | The legal partner | Advice | The second firm on the shortlist (partners SD-12) |
 
 ## Telling people

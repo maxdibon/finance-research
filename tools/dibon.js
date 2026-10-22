@@ -488,7 +488,7 @@ const word = {
 // since it was last uploaded (ways-of-working §6); never main.
 function pushBranch() {
   const r = git(['push', '--force-with-lease', '-u', 'origin', branch()], { ok: true, full: true });
-  if (r.status !== 0) stop(`Saved on your branch, but not uploaded: the repository refused it (${(r.stderr || '').split('\n')[0]}). Until the move to GitLab, only the owner uploads to GitHub: tell the owner your branch, ${branch()}, is ready to merge.`);
+  if (r.status !== 0) stop(`Saved on your branch, but not uploaded: the repository refused it (${(r.stderr || '').split('\n')[0]}). Until the team is in Dibon's GitHub organisation, only the owner uploads: tell the owner your branch, ${branch()}, is ready to merge.`);
 }
 
 // FS-879, FS-881: a word that could mean either way is asked about, never

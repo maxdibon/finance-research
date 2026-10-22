@@ -532,6 +532,10 @@ function checkObligations(root) {
       if (cur) entries.push(cur);
       return;
     }
+    // FS-896: an entry a later decision replaced keeps its text and stops
+    // requiring what it once did; the later entry must exist.
+    const s = t.match(/^- \*\*Superseded by:\*\* (FS-\d{3})\b/);
+    if (s && cur) cur.supersededBy = { id: s[1], line: i + 1 };
     const r = t.match(/^- \*\*Requires:\*\* (.*)$/);
     if (r && cur) {
       let text = r[1];
@@ -539,7 +543,12 @@ function checkObligations(root) {
       cur.req = { text, line: i + 1 };
     }
   });
+  const entryIds = new Set(entries.map((e) => e.id));
   for (const e of entries) {
+    if (e.supersededBy) {
+      if (!entryIds.has(e.supersededBy.id)) failures.push(fail('obligations', DECISIONS, e.supersededBy.line, `${e.id} is superseded by ${e.supersededBy.id}, which has no entry`));
+      continue;
+    }
     if (!e.req) {
       if (e.n >= OBLIGATIONS_FROM) failures.push(fail('obligations', DECISIONS, e.line, `${e.id} has no "Requires:" line; name what the decision requires to exist, or "nothing"`));
       continue;
@@ -1401,7 +1410,7 @@ function changelogProblems(text, level, file, from = 0, stamped = true) {
   });
   return out;
 }
-// FS-845: change notes, one per merge request, in changes/.
+// FS-845: change notes, one per pull request, in changes/.
 const NOTE_KINDS = ['major', 'minor', 'patch'];
 function checkChanges(root) {
   const dir = path.join(root, 'changes');

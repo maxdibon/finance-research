@@ -7,8 +7,8 @@ law: LR-17
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762, FS-769, FS-805, FS-806, FS-834, FS-845]
-last_reviewed: 2026-10-16
+review_ids: [FS-645, FS-710, FS-711, FS-713, FS-714, FS-762, FS-769, FS-805, FS-806, FS-834, FS-845, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Rules
@@ -33,11 +33,11 @@ for minutes and says so ([endpoints](specs/endpoints.md) §2).
 | 5 | **A leaver loses every access the same day;** access is reviewed every quarter | Access, one switch for Dibon's engineers (architecture §9); JN-18 for institutions' staff, JN-20 for ours |
 | 6 | **A new tool that touches personal data needs a technology register row and a processing agreement first** | [Technology](architecture/technology.md) rule 1; [privacy](privacy.md) |
 | 7 | **Report a suspected incident or a lost device within the hour,** without blame | [Incident management](service-management/incident-management.md); [endpoints](specs/endpoints.md) §5 |
-| 8 | **Every change is reviewed by a second person** before it reaches a customer | Service management §2 (merge requests) |
+| 8 | **Every change is reviewed by a second person** before it reaches a customer | Service management §2 (pull requests) |
 | 9 | **Security and privacy training every year,** and for key holders before they hold a share | [Training](training/README.md) |
-| 10 | **Client material lives in Dibon's Odoo Documents, in Kenya,** one workspace per customer, read by role, every access logged: requirement documents, agreements, certificates, product drafts. **Never in a repository or on one laptop;** documents link to it, and those without access see only the link. **Exception, until the workspaces exist** (owner, 2026-10-14, FS-806): product version drafts, which hold no personal data, are kept in [products/](products/README.md) | business-suite BS-01; [gitlab](specs/gitlab.md) §2; FS-805, FS-806 |
+| 10 | **Client material lives in Dibon's Odoo Documents, in Kenya,** one workspace per customer, read by role, every access logged: requirement documents, agreements, certificates, product drafts. **Never in a repository or on one laptop;** documents link to it, and those without access see only the link. **Exception, until the workspaces exist** (owner, 2026-10-14, FS-806): product version drafts, which hold no personal data, are kept in [products/](products/README.md) | business-suite BS-01; [github](specs/github.md) §2; FS-805, FS-806 |
 | 11 | **A third party's document is kept as received, never edited** (owner, 2026-10-15, FS-834): in the party's `originals/`, read-only, its SHA-256, size, date and sender (by role) in the folder's manifest; what we send outside is kept the same way, as a record. **Once discussion begins, we work on a derived document:** in our format (design system), named `<Party> · <Document> · v<n> (<status>)`; version 0.1 a faithful copy citing the original's hash; every later change tracked, with a comment giving why and any regulation; each version a new file, with a version log; 0.x drafts, 1.0 agreed with the party | `node tools/originals.js verify <party-folder>`; Odoo Documents' locked folders once they exist (rule 10) |
-| 12 | **Releases, not a log of every commit** (owner, 2026-10-15, FS-838, FS-839, FS-845, FS-852): the documentation set, and each customer's delivery, are released and named by date (`2026.10.15`; a patch or a second release that day adds `.1`), each release marked **major** (a reader must re-read or re-agree: a settled principle, a release's scope, a product added or retired, an edition issued; for a customer, its requirements and scope agreed, the contract, a go-live), **minor** (a batch worth telling) or **patch** (a correction). **Every merge request carries a change note** (changes/), for the team, for everyone or for a customer; a release, on the owner's word, gathers them into the internal changelog, the external release notes and the customer's §8, stamped and tagged. Wording, tooling and housekeeping take no release and no note. **Every document has a status from its kind's lifecycle**, so a release shows its drafts (every status, with what it means, is in [Start here](start-here.md), "Statuses you will meet"); `version:` stays only on documents that go outside on their own. **Every document says the release its content was last released in** (`released: 2026.10.15` in its front matter; `unreleased` before its first release, and in every template), so a copy read anywhere names its release: a release moves it on the documents that changed in it, never by hand, and the reader adds "changed since" when a document was edited after | CHANGELOG.md; docs/marketing/release-notes.md; each delivery map's §8; changes/; `node tools/cut.js`; the status, versions and changes checks |
+| 12 | **Releases, not a log of every commit** (owner, 2026-10-15, FS-838, FS-839, FS-845, FS-852): the documentation set, and each customer's delivery, are released and named by date (`2026.10.15`; a patch or a second release that day adds `.1`), each release marked **major** (a reader must re-read or re-agree: a settled principle, a release's scope, a product added or retired, an edition issued; for a customer, its requirements and scope agreed, the contract, a go-live), **minor** (a batch worth telling) or **patch** (a correction). **Every pull request carries a change note** (changes/), for the team, for everyone or for a customer; a release, on the owner's word, gathers them into the internal changelog, the external release notes and the customer's §8, stamped and tagged. Wording, tooling and housekeeping take no release and no note. **Every document has a status from its kind's lifecycle**, so a release shows its drafts (every status, with what it means, is in [Start here](start-here.md), "Statuses you will meet"); `version:` stays only on documents that go outside on their own. **Every document says the release its content was last released in** (`released: 2026.10.15` in its front matter; `unreleased` before its first release, and in every template), so a copy read anywhere names its release: a release moves it on the documents that changed in it, never by hand, and the reader adds "changed since" when a document was edited after | CHANGELOG.md; docs/marketing/release-notes.md; each delivery map's §8; changes/; `node tools/cut.js`; the status, versions and changes checks |
 
 ## 2 · Institutions
 
@@ -59,7 +59,7 @@ contract.
 ## 3 · Partners
 
 Vendors, providers and integrators: Liquid, Safaricom, banks, identity
-vendors, Twilio, GitLab and the rest. Checked before selection
+vendors, Twilio, GitHub and the rest. Checked before selection
 ([partners](partners.md) C17) and written into the contract.
 
 | # | Rule | Enforced by |
