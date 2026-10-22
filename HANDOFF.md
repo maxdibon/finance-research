@@ -182,9 +182,10 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   (FS-579, FS-628); specs on the template, closing with tests and open
   questions (FS-627); questions for counsel live in
   `docs/legal-questions.md`, cited by LQ id (FS-744).
-- **The portfolio's version is what a reader holds:** v1.0 and v1.1 have
-  gone out; the next edit starts v1.2 as a draft in
-  `design/portfolio-pdf/document.json` (FS-595).
+- **The portfolio's version is what a reader holds:** v1.0, v1.1 and v1.2
+  (22 October, FS-909) have gone out; the next edit starts v1.3 as a draft
+  in `design/portfolio-pdf/document.json` (FS-595). The drafts of early
+  October once built as v1.2 to v1.5 are v1.1.1 to v1.1.4 in build/.
 - **Clients:** client material lives in Dibon's Odoo Documents once it
   exists, in `clients/` until then (rules, Dibon 10); Roan Capital's NDA
   is in force (DR-003, FS-827); its licence, CBK's approval of its
