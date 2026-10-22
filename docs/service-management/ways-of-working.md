@@ -58,27 +58,27 @@ and the owner marks it as they do (FS-885). More context is to come.
 
 | Name | Handle | Team | Role | Holds today | Confirmed |
 |---|---|---|---|---|---|
-| Eric | eric | Leadership | CTIO | Team lead, solution architect, security lead, product owner for Kapu MFI; compliance and risk officer until Cage joins | Yes, 2026-10-17 |
-| Jimmy | jimmy | Leadership | Partner and CEO | Commercial lead; the team lead's deputy, and compliance's until Cage joins | To confirm |
+| Eric | emokaya | Leadership | CTIO | Team lead, solution architect, security lead, product owner for Kapu MFI; compliance and risk officer until Cage joins | Yes, 2026-10-17 |
+| Jimmy | jbett | Leadership | Partner and CEO | Commercial lead; the team lead's deputy, and compliance's until Cage joins | To confirm |
 | Cage | cage | Leadership | Legal and compliance (joining soon) | Compliance and risk officer, once joined | To confirm |
 | Lillian | lillian | DevOps | Dev lead | Engineering lead; the architect's deputy, and the product owner's for Kapu MFI | To confirm |
 | Allan | allan | DevOps | Ops lead | Operations lead, chairing the change advisory board (§4); the security lead's deputy | To confirm |
-| Gasine | gasine | DevOps | Engineer | The engineering lead's deputy | To confirm |
+| Gasine | dmwangi | DevOps | Engineer | The engineering lead's deputy | To confirm |
 | Cliff | cliff | DevOps | Mobile engineer | — | To confirm |
 | Max | max | DevOps | CI/CD engineer | The operations lead's deputy | To confirm |
-| Abel | abel | DevOps | Intern | Approves nothing; mentored by the dev lead | To confirm |
+| Abel | abel.ryan | DevOps | Intern | Approves nothing; mentored by the dev lead | To confirm |
 | Gibeon | gibeon | Odoo | Odoo lead | Odoo lead (FS-902): one of the two Odoo consultants FS-640 planned for | To confirm |
 | Daniel | daniel | Odoo | Odoo engineer | The Odoo lead's deputy | To confirm |
-| Betty | betty | PM | Project manager | Delivery lead | To confirm |
-| Carol | carol | Admin | Admin | The delivery lead's deputy | To confirm |
+| Betty | bflorah | PM | Project manager | Delivery lead | To confirm |
+| Carol | cwanjiru | Admin | Admin | The delivery lead's deputy | To confirm |
 | Chan | chan | Social media | Social media | Marketing, with the commercial lead | To confirm |
-| Claude for Eric | claude-eric | Assistant | Assistant to Eric | Drafts, builds and checks on Eric's word; holds no role and approves nothing | Yes, by Eric |
+| Claude for Eric | claude-emokaya | Assistant | Assistant to Eric | Drafts, builds and checks on Eric's word; holds no role and approves nothing | Yes, by Eric |
 
 **A name is one person, and so is a handle** (FS-905). Where two people
 share a first name, each takes an initial ("Eric M.", "Eric K."); the
 check refuses a name or a handle listed twice. The handle is the local
 part of the person's work email, to confirm as each confirms their row;
-it never changes when a display name does.
+it never changes when a display name does. Confirmed from work emails on 22 October for those whose address we hold (FS-937); the rest are to confirm. Lillian's and Max's wait, their surnames being on the protected-names list. A role mailbox is not a handle: the project manager's is an alias, bflorah.
 
 **Each person's Claude is its own** (FS-905): listed as "Claude for" that
 person, acting only on that person's word, committing as

@@ -61,7 +61,7 @@ As at 22 October 2026, the eve of the MVP day.
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric (159)
+### Rows with Eric (160)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -71,6 +71,7 @@ As at 22 October 2026, the eve of the MVP day.
 | FS-367 | Dibon should also register with the ODPC as a data controller, for its own staff and customer data. Registrati | Critical |
 | FS-735 | Roan Capital's contracted phase 1 is narrower than our R1: origination, KYC capture and digital onboarding, ap | Critical |
 | FS-736 | The emails speak of a platform shell and foundational setup under way, and the 3 Oct review found a prototype  | Critical |
+| FS-935 | Roan Capital's vehicle recovery ladder (a reminder on day 25, recovery or sale between days 31 and 47) against | Critical |
 | FS-016 | Compliance one-pager pricing: "Kshs 500,000 / USD 386.97" is off by 10×. At the rate the same sheet uses for O | High |
 | FS-049 | Odoo Sign is a simple electronic signature. Confirm which financial documents Kenyan law requires an advanced  | High |
 | FS-127 | Ask Safaricom whether a third party may operate on a client's shortcode with the client's consent (delegated a | High |
@@ -99,7 +100,7 @@ As at 22 October 2026, the eve of the MVP day.
 | FS-928 | Coordinating the MVP day and after: dependencies, the critical path, everyone with their own Claude and GitHub | High |
 | FS-929 | Work in the cloud, for visibility: each person deploys their components on Azure to test and check configurati | High |
 | FS-930 | Use GitHub's board (Projects) as part of the set-up, for the MVP day and after | High |
-| FS-931 | Everyone's handover continues for them, each person's Claude its own: how that sits beside the team's handover | High |
+| FS-934 | Roan Capital's three products, as locked on 21 October: Biashara (unsecured, KES 3,000 to 100,000, 14 or 30 da | High |
 | FS-036 | Check the Odoo Enterprise Agreement for limits on serving internal work through portal users or API accounts | Medium |
 | FS-161 | WhatsApp route: Meta's Cloud API directly, or through a business solution provider. Either way Meta approves t | Medium |
 | FS-162 | Quiet hours and rate limits per recipient: what the Communications Authority requires, and what we set as poli | Medium |
@@ -231,6 +232,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/eric/FS-915-lofty-corban`: 3 saves, last 6 hours ago, not uploaded
-- `claude/eric/FS-922-save`: 5 saves, last 5 hours ago, not uploaded
-- `claude/eric/FS-929-mvp-setup`: 6 saves, last 82 seconds ago, not uploaded; here now, 1 file unsaved
+None.

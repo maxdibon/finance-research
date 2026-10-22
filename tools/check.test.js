@@ -125,7 +125,7 @@ test('register: a name or a handle on the team twice fails', () => {
 test('register: the team is read by its header, so a column added moves nothing', () => {
   const team = require('./register').team(ROOT);
   assert.strictEqual(team.get('Betty').role, 'Project manager');
-  assert.strictEqual(team.get('Betty').handle, 'betty');
+  assert.strictEqual(team.get('Betty').handle, 'bflorah');
   assert.strictEqual(team.get('Claude for Eric').team, 'Assistant');
 });
 
@@ -1447,15 +1447,15 @@ test('words: session start and end keep a personal handover, in a pretend reposi
     d('new', 'Betty has a thing to do');
     const id = (run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3}/) || [])[0];
     assert.match(d('session', 'end'), /Your handover is current/);
-    const mine = fs.readFileSync(path.join(work, 'handoffs', 'betty.md'), 'utf8');
+    const mine = fs.readFileSync(path.join(work, 'handoffs', 'bflorah.md'), 'utf8');
     assert.match(mine, /^# Betty · personal handover/m);
     assert.match(mine, /^## Preferences$/m);
     assert.ok(mine.includes(`| ${id} | Betty has a thing to do |`));
-    fs.writeFileSync(path.join(work, 'handoffs', 'betty.md'), mine.replace('To be written at the end of the first session.', 'Halfway through the thing.'));
+    fs.writeFileSync(path.join(work, 'handoffs', 'bflorah.md'), mine.replace('To be written at the end of the first session.', 'Halfway through the thing.'));
     run('git', ['add', '-A']);
     run('git', ['commit', '-qm', `${id}: the thing, halfway`]);
     assert.match(d('session', 'start'), /Your session, Betty/);
-    const both = fs.readFileSync(path.join(work, 'build', 'session', 'betty.md'), 'utf8');
+    const both = fs.readFileSync(path.join(work, 'build', 'session', 'bflorah.md'), 'utf8');
     assert.ok(both.includes('Halfway through the thing.'));
     assert.ok(both.includes('## How we work'));
     assert.match(d('handoff'), /We say session/);

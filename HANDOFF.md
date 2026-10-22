@@ -143,8 +143,8 @@ its money and its records; Dibon holds the platform. Read
   `claude/<handle>/<FS id>-<a-few-words>`, never on main, and commits under its
   own name, **whose Claude it is** (FS-905): read `git config --get
   dibon.claude` (set once by `dibon claude` and a handle; today "Claude for
-  Eric <claude-eric@noreply.dibon.co.ke>") and commit with `git -c
-  user.name="Claude for Eric" -c user.email=claude-eric@noreply.dibon.co.ke
+  Eric <claude-emokaya@noreply.dibon.co.ke>") and commit with `git -c
+  user.name="Claude for Eric" -c user.email=claude-emokaya@noreply.dibon.co.ke
   commit …`, the message still ending with the co-author line; if it is
   not set, stop and ask, never fall back to one identity for everyone.
   Branches are `claude/<handle>/<FS id>-<words>`. Main
@@ -445,5 +445,5 @@ register row.
 In their own handover, handoffs/ and their handle (FS-931): where they
 left off, and a part generated from the register (the rows with them,
 their work started, their Claude's work waiting). The owner's is
-handoffs/eric.md. The team's most pressing: the Critical and High rows
+handoffs/emokaya.md. The team's most pressing: the Critical and High rows
 (the command above), and GitHub's board for the MVP (FS-930).
