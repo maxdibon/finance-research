@@ -1,0 +1,19 @@
+# Copy to sandbox.auto.tfvars (git ignores it: it holds sign-in ids and
+# emails) and fill in. Handles are the team table's (ways-of-working §1).
+# Object ids: az ad user show --id <their sign-in> --query id -o tsv
+
+subscription_id = "00000000-0000-0000-0000-000000000000"
+owner_email     = "team-lead@example.com"
+
+people = {
+  allan   = { object_id = "00000000-0000-0000-0000-000000000001", workstream = "platform",    email = "allan@example.com" }
+  max     = { object_id = "00000000-0000-0000-0000-000000000002", workstream = "platform",    email = "max@example.com" }
+  lillian = { object_id = "00000000-0000-0000-0000-000000000003", workstream = "core",        email = "lillian@example.com" }
+  gasine  = { object_id = "00000000-0000-0000-0000-000000000004", workstream = "core",        email = "gasine@example.com" }
+  abel    = { object_id = "00000000-0000-0000-0000-000000000005", workstream = "core",        email = "abel@example.com" }
+  cliff   = { object_id = "00000000-0000-0000-0000-000000000006", workstream = "money",       email = "cliff@example.com" }
+  gibeon  = { object_id = "00000000-0000-0000-0000-000000000007", workstream = "back-office", email = "gibeon@example.com" }
+  daniel  = { object_id = "00000000-0000-0000-0000-000000000008", workstream = "back-office", email = "daniel@example.com" }
+  betty   = { object_id = "00000000-0000-0000-0000-000000000009", workstream = "delivery",    email = "betty@example.com" }
+  eric    = { object_id = "00000000-0000-0000-0000-000000000010", workstream = "platform",    email = "eric@example.com" }
+}

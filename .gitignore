@@ -31,3 +31,11 @@ sources/regulation/ke/reports/
 
 # Local tool configuration (paths are machine-specific).
 .claude/
+
+# OpenTofu (FS-932): state, provider caches and the values filled in for a
+# run (sign-in ids, emails) never go in git; the .example beside them does.
+.terraform/
+*.tfstate
+*.tfstate.*
+*.auto.tfvars
+.terraform.lock.hcl.bak
