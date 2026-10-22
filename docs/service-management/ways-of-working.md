@@ -7,7 +7,7 @@ released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892, FS-922, FS-931]
-last_reviewed: 2026-10-22
+last_reviewed: 2026-10-23
 ---
 
 # Ways of working
@@ -61,11 +61,11 @@ and the owner marks it as they do (FS-885). More context is to come.
 | Eric | emokaya | Leadership | CTIO | Team lead, solution architect, security lead, product owner for Kapu MFI; compliance and risk officer until Cage joins | Yes, 2026-10-17 |
 | Jimmy | jbett | Leadership | Partner and CEO | Commercial lead; the team lead's deputy, and compliance's until Cage joins | To confirm |
 | Cage | cage | Leadership | Legal and compliance (joining soon) | Compliance and risk officer, once joined | To confirm |
-| Lillian | lillian | DevOps | Dev lead | Engineering lead; the architect's deputy, and the product owner's for Kapu MFI | To confirm |
+| Lillian | lillian.kiambo | DevOps | Dev lead | Engineering lead; the architect's deputy, and the product owner's for Kapu MFI | To confirm |
 | Allan | allan | DevOps | Ops lead | Operations lead, chairing the change advisory board (§4); the security lead's deputy | To confirm |
 | Gasine | dmwangi | DevOps | Engineer | The engineering lead's deputy | To confirm |
 | Cliff | cliff | DevOps | Mobile engineer | — | To confirm |
-| Max | max | DevOps | CI/CD engineer | The operations lead's deputy | To confirm |
+| Max | maxwell.musau | DevOps | CI/CD engineer | The operations lead's deputy | To confirm |
 | Abel | abel.ryan | DevOps | Intern | Approves nothing; mentored by the dev lead | To confirm |
 | Gibeon | gibeon | Odoo | Odoo lead | Odoo lead (FS-902): one of the two Odoo consultants FS-640 planned for | To confirm |
 | Daniel | daniel | Odoo | Odoo engineer | The Odoo lead's deputy | To confirm |
@@ -78,7 +78,7 @@ and the owner marks it as they do (FS-885). More context is to come.
 share a first name, each takes an initial ("Eric M.", "Eric K."); the
 check refuses a name or a handle listed twice. The handle is the local
 part of the person's work email, to confirm as each confirms their row;
-it never changes when a display name does. Confirmed from work emails on 22 October for those whose address we hold (FS-937); the rest are to confirm. Lillian's and Max's wait, their surnames being on the protected-names list. A role mailbox is not a handle: the project manager's is an alias, bflorah.
+it never changes when a display name does. Confirmed from work emails on 22 October for those whose address we hold (FS-937); the rest are to confirm. A role mailbox is not a handle: the project manager's is an alias, bflorah.
 
 **Each person's Claude is its own** (FS-905): listed as "Claude for" that
 person, acting only on that person's word, committing as

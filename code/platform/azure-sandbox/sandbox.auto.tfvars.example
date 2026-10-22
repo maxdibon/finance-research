@@ -8,8 +8,8 @@ owner_email     = "team-lead@example.com"
 
 people = {
   allan   = { object_id = "00000000-0000-0000-0000-000000000001", workstream = "platform",    email = "allan@example.com" }
-  max     = { object_id = "00000000-0000-0000-0000-000000000002", workstream = "platform",    email = "max@example.com" }
-  lillian = { object_id = "00000000-0000-0000-0000-000000000003", workstream = "core",        email = "lillian@example.com" }
+  "maxwell.musau" = { object_id = "00000000-0000-0000-0000-000000000002", workstream = "platform",    email = "max@example.com" }
+  "lillian.kiambo" = { object_id = "00000000-0000-0000-0000-000000000003", workstream = "core",        email = "lillian@example.com" }
   dmwangi = { object_id = "00000000-0000-0000-0000-000000000004", workstream = "core",        email = "gasine@example.com" }
   "abel.ryan" = { object_id = "00000000-0000-0000-0000-000000000005", workstream = "core",        email = "abel@example.com" }
   cliff   = { object_id = "00000000-0000-0000-0000-000000000006", workstream = "money",       email = "cliff@example.com" }

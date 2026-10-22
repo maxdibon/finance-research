@@ -49,7 +49,7 @@ function add(dir, file, opts) {
   const entry = {
     file: name, sha256: sha256(dest), bytes: fs.statSync(dest).size,
     received: opts.received, from: opts.from, ...(opts.note ? { note: opts.note } : {}),
-    kept: new Date().toISOString().slice(0, 10),
+    kept: (() => { const d = new Date(); const p = (n) => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; })(),
   };
   m.push(entry);
   save(dir, m);

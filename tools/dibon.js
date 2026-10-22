@@ -28,7 +28,9 @@ const args = process.argv.slice(2);
 const YES = args.includes('--yes');
 const flag = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
 const plain = args.filter((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1].startsWith('--') && args[i - 1] !== '--yes'));
-const today = () => new Date().toISOString().slice(0, 10);
+// The local date, as the reviewed check counts it: in Nairobi the UTC date
+// is still yesterday's until 03:00 (FS-937, found by the tests at night).
+const today = () => { const d = new Date(); const p = (n) => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; };
 const norm = (s) => s.replace(/\r\n/g, '\n');
 
 // ── words: the one source of the help, the guide's headings and the tests ─

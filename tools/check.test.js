@@ -1360,9 +1360,9 @@ test('words: join, leave and the board, in a pretend repository', () => {
   try {
     run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
     run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'tools/check.js']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'tools/check.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
     for (const [k, v] of [['user.name', 'Lillian Test'], ['user.email', 'lillian@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
-    run('git', ['add', '-A', 'tools']);
+    run('git', ['add', '-A', 'tools', 'docs']);
     run('git', ['commit', '-qm', 'FS-891: the tools under test']);
     run('git', ['push', '-q', 'origin', 'HEAD:main']);
     const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
@@ -1371,7 +1371,7 @@ test('words: join, leave and the board, in a pretend repository', () => {
     assert.match(d('join', row.id), new RegExp(`Joined ${row.id}: Eric leads`));
     assert.strictEqual(reg().find((r) => r.id === row.id).with, 'Eric, Lillian');
     const here = run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).trim();
-    assert.match(here, new RegExp(`^docs/${row.id}-lillian-`));
+    assert.match(here, new RegExp(`^docs/${row.id}-lillian\.kiambo-`));
     const b = require('./board');
     assert.ok(b.board(work).doing.some((c) => c.id === row.id));
     fs.writeFileSync(path.join(work, '.git', 'dibon-reviews.json'), JSON.stringify([{ headRefName: here, isDraft: false, createdAt: new Date().toISOString() }]));
@@ -1418,7 +1418,7 @@ test('words: save does the routine for you, in a pretend repository', () => {
     assert.match(saved, /The reader is rebuilt/);
     assert.match(saved, new RegExp(`No change note for ${id} yet`));
     const after = fs.readFileSync(f, 'utf8');
-    const today = new Date().toISOString().slice(0, 10);
+    const now = new Date(); const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     assert.match(after, new RegExp(`^last_reviewed: ${today}$`, 'm'));
     assert.ok(after.split('\n').find((l) => l.startsWith('review_ids:')).includes(id));
     assert.ok(fs.existsSync(path.join(work, 'build', 'site', 'board.html')));
