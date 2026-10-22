@@ -2,47 +2,167 @@
   "day": "2026-10-23",
   "project": "MVP",
   "goals": [
-    { "row": "FS-938", "who": "Jimmy", "workstream": "delivery", "critical": true, "checkpoint": "before",
+    {
+      "row": "FS-938",
+      "who": "Jimmy",
+      "workstream": "delivery",
+      "critical": true,
+      "checkpoint": "before",
       "title": "Azure subscription and budget, ready before noon",
-      "done": "The sandbox subscription exists, its spend approved, Eric or Allan signed in as an owner of it", "needs": [] },
-    { "row": "FS-939", "who": "Allan", "workstream": "platform", "critical": true, "checkpoint": "13:10",
+      "done": "The sandbox subscription exists, its spend approved, Eric or Allan signed in as an owner of it",
+      "needs": []
+    },
+    {
+      "row": "FS-939",
+      "who": "Allan",
+      "workstream": "platform",
+      "critical": true,
+      "checkpoint": "13:10",
       "title": "The sandbox and the MVP cluster, in OpenTofu",
-      "done": "code/platform/azure-sandbox applied (validate, plan read, apply); in rg-mvp, the network and an RKE2 cluster by OpenTofu and cloud-init; torn down and built again once", "needs": ["FS-938"] },
-    { "row": "FS-940", "who": "Max", "workstream": "platform", "critical": true, "checkpoint": "14:45",
+      "done": "code/platform/azure-sandbox applied (validate, plan read, apply); in rg-mvp, the network and an RKE2 cluster by OpenTofu and cloud-init; torn down and built again once",
+      "needs": [
+        "FS-938"
+      ]
+    },
+    {
+      "row": "FS-940",
+      "who": "Max",
+      "workstream": "platform",
+      "critical": true,
+      "checkpoint": "14:45",
       "title": "GitOps: Flux follows the platform repository; the checks run on every pull request",
-      "done": "A change merged to platform reaches the cluster untouched; the workflow runs every check but names", "needs": ["FS-939"] },
-    { "row": "FS-941", "who": "Lillian", "workstream": "core", "critical": true, "checkpoint": "14:45",
+      "done": "A change merged to platform reaches the cluster untouched; the workflow runs every check but names",
+      "needs": [
+        "FS-939"
+      ]
+    },
+    {
+      "row": "FS-941",
+      "who": "Lillian",
+      "workstream": "core",
+      "critical": true,
+      "checkpoint": "14:45",
       "title": "Kapu Core: Fineract with PostgreSQL, Roan Capital's Biashara loan configured from its product document",
-      "done": "In her sandbox first, then through Flux into rg-mvp; a test Biashara loan created, approved, disbursed and repaid through Fineract's API", "needs": ["FS-940", "FS-934"] },
-    { "row": "FS-942", "who": "Gasine", "workstream": "core", "critical": true, "checkpoint": "14:45",
+      "done": "In her sandbox first, then through Flux into rg-mvp; a test Biashara loan created, approved, disbursed and repaid through Fineract's API",
+      "needs": [
+        "FS-940",
+        "FS-934"
+      ]
+    },
+    {
+      "row": "FS-942",
+      "who": "Gasine",
+      "workstream": "core",
+      "critical": true,
+      "checkpoint": "14:45",
       "title": "Keycloak: the staff realm, Roan Capital's eight positions as roles, two-factor sign-in",
-      "done": "A Loan Officer and a Credit Manager sign in, each seeing only their role's actions; the realm exported to the platform repository", "needs": ["FS-940"] },
-    { "row": "FS-943", "who": "Cliff", "workstream": "money", "critical": true, "checkpoint": "15:20",
+      "done": "A Loan Officer and a Credit Manager sign in, each seeing only their role's actions; the realm exported to the platform repository",
+      "needs": [
+        "FS-940"
+      ]
+    },
+    {
+      "row": "FS-943",
+      "who": "Cliff",
+      "workstream": "money",
+      "critical": true,
+      "checkpoint": "15:20",
       "title": "Money: the payout by bank (Roan Capital pays by bank only), the repayment by M-Pesa's sandbox",
-      "done": "An approved loan's bank payout instruction made; a Daraja sandbox repayment posted to the loan, dated the day it was paid", "needs": ["FS-941"] },
-    { "row": "FS-944", "who": "Abel", "workstream": "core", "critical": false, "checkpoint": "15:20",
+      "done": "An approved loan's bank payout instruction made; a Daraja sandbox repayment posted to the loan, dated the day it was paid",
+      "needs": [
+        "FS-941"
+      ]
+    },
+    {
+      "row": "FS-944",
+      "who": "Abel",
+      "workstream": "core",
+      "critical": false,
+      "checkpoint": "15:20",
       "title": "Made-up test data, and the day's runbook",
-      "done": "Synthetic borrowers and loans loadable; a runbook anyone can follow tomorrow to the same result", "needs": [] },
-    { "row": "FS-945", "who": "Gibeon", "workstream": "back-office", "critical": false, "checkpoint": "15:20",
-      "title": "Roan Capital's Odoo, as a recipe repeatable per client",
-      "done": "CRM, Sign, Helpdesk and HR as the business suite says; a Documents workspace; contacts open only to the project's team (FS-903); the recipe written as a checklist", "needs": [] },
-    { "row": "FS-946", "who": "Daniel", "workstream": "back-office", "critical": false, "checkpoint": "15:20",
-      "title": "Odoo's side of the money for Roan Capital",
-      "done": "Its chart of accounts and journals; a test statement reconciled; the 30-day complaints deadline shown in Helpdesk", "needs": ["FS-945"] },
-    { "row": "FS-947", "who": "Betty", "workstream": "delivery", "critical": false, "checkpoint": "15:20",
+      "done": "Synthetic borrowers and loans loadable; a runbook anyone can follow tomorrow to the same result",
+      "needs": []
+    },
+    {
+      "row": "FS-945",
+      "who": "Gibeon",
+      "workstream": "back-office",
+      "critical": true,
+      "checkpoint": "15:20",
+      "title": "Roan Capital's Odoo in the walk-through: sign-in, CRM, Documents; as a recipe repeatable per client",
+      "done": "Odoo Enterprise in rg-mvp through Flux; staff sign in through Keycloak (OCA's auth_oidc, FS-646); a lead entered in CRM (BS-01) and keyed into Kapu Core as the borrower; Roan Capital's Documents workspace, open only to the project's team (FS-903); the recipe written as a checklist",
+      "needs": [
+        "FS-940",
+        "FS-942"
+      ]
+    },
+    {
+      "row": "FS-946",
+      "who": "Daniel",
+      "workstream": "back-office",
+      "critical": true,
+      "checkpoint": "15:20",
+      "title": "Odoo's Sign, Helpdesk and Employees for Roan Capital",
+      "done": "The Biashara agreement and its key facts signed in Sign by a made-up borrower and guarantor (BS-02, JN-05; codes by email today); a complaint in Helpdesk with its 30-day clock; the eight positions in Employees (BS-12). The books (BS-08) stay phase 2",
+      "needs": [
+        "FS-945"
+      ]
+    },
+    {
+      "row": "FS-947",
+      "who": "Betty",
+      "workstream": "delivery",
+      "critical": false,
+      "checkpoint": "15:20",
       "title": "Delivery templates: meeting summary, agenda, Product Understanding Document, follow-up email",
-      "done": "Each in the design system's look; the Product Understanding Document trialled on Biashara", "needs": [] },
-    { "row": "FS-948", "who": "Carol", "workstream": "delivery", "critical": false, "checkpoint": "12:20",
+      "done": "Each in the design system's look; the Product Understanding Document trialled on Biashara",
+      "needs": []
+    },
+    {
+      "row": "FS-948",
+      "who": "Carol",
+      "workstream": "delivery",
+      "critical": false,
+      "checkpoint": "12:20",
       "title": "Admin templates, and everyone set up",
-      "done": "NDA intake, a proposal cover letter, the engagement letter's line on contacts' data; every person's handle and GitHub account confirmed by 12:20", "needs": [] },
-    { "row": "FS-949", "who": "Chan", "workstream": "delivery", "critical": false, "checkpoint": "15:20",
+      "done": "NDA intake, a proposal cover letter, the engagement letter's line on contacts' data; every person's handle and GitHub account confirmed by 12:20",
+      "needs": []
+    },
+    {
+      "row": "FS-949",
+      "who": "Chan",
+      "workstream": "delivery",
+      "critical": false,
+      "checkpoint": "15:20",
       "title": "Marketing material: product one-pagers and post templates",
-      "done": "One-pagers for Collect, SME Recon, Reconciliation and Kapu MFI from the portfolio's copy; three post templates; a case-study template", "needs": [] },
-    { "row": "FS-950", "who": "Eric", "workstream": "platform", "critical": true, "checkpoint": "15:35",
+      "done": "One-pagers for Collect, SME Recon, Reconciliation and Kapu MFI from the portfolio's copy; three post templates; a case-study template",
+      "needs": []
+    },
+    {
+      "row": "FS-950",
+      "who": "Eric",
+      "workstream": "platform",
+      "critical": true,
+      "checkpoint": "15:35",
       "title": "The day's authority: decisions, reviews, merges, and a mock change advisory board",
-      "done": "Every merge reviewed; every decision a register row; the board run with Allan on the day's merges", "needs": [] },
-    { "row": "FS-951", "who": "Lillian", "workstream": "core", "critical": true, "checkpoint": "15:20",
-      "title": "The walk-through: sign in, a borrower, a Biashara loan, approved by another, paid out by bank, repaid by M-Pesa",
-      "done": "Run end to end in rg-mvp with made-up data, at 15:20, then shown at 15:35", "needs": ["FS-941", "FS-942", "FS-943"] }
+      "done": "Every merge reviewed; every decision a register row; the board run with Allan on the day's merges",
+      "needs": []
+    },
+    {
+      "row": "FS-951",
+      "who": "Lillian",
+      "workstream": "core",
+      "critical": true,
+      "checkpoint": "15:20",
+      "title": "The walk-through: sign in, a lead, a borrower, a Biashara loan, approved by another, signed, paid out by bank, repaid by M-Pesa, a complaint",
+      "done": "Run end to end in rg-mvp with made-up data, at 15:20, then shown at 15:35",
+      "needs": [
+        "FS-941",
+        "FS-942",
+        "FS-943",
+        "FS-945",
+        "FS-946"
+      ]
+    }
   ]
 }
