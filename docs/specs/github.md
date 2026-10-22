@@ -191,8 +191,10 @@ files over 50 MB refused; branch names `<kind>/<FS id>-<words>` or
 ### 4.4 Workflows and runners
 
 - **This repository's workflow,** on GitHub's hosted runners, on every
-  pull request: `node tools/check.js`; the tests when `tools/` changed;
-  Gitleaks. The reader built as an artifact, kept 30 days.
+  pull request: `node tools/check.js`, every check but names; the tests
+  when `tools/` changed; Gitleaks. The names check needs the
+  protected-names list, which never leaves our own computers: each
+  person's commit hook runs it instead (FS-896). The reader built as an artifact, kept 30 days.
 - **Runners in Kenya:** ours, ephemeral, for jobs that hold a secret,
   sign or deploy; they take jobs only from protected branches;
   containers unprivileged.
@@ -451,8 +453,3 @@ our evidence (§14):
    lead's call before the first code moves (§6).
 7. Signed commits, and who signs Claude's (FS-905).
 8. Where the reader is served, behind sign-in (§6).
-9. The names check needs the protected-names list, which is never in git:
-   the workflow either reads it from an encrypted Actions secret, or runs
-   every check but that one and leaves it to each person's commit hook
-   (§4.4). Until decided, `CODEOWNERS` and the workflow wait for step 9
-   of §5.
