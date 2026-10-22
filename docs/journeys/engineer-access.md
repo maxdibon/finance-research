@@ -8,8 +8,8 @@ released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-503, FS-548, FS-645, FS-668, FS-769, FS-776, FS-777]
-last_reviewed: 2026-10-12
+review_ids: [FS-503, FS-548, FS-645, FS-668, FS-769, FS-776, FS-777, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # JN-20 · One of Dibon's engineers joins, moves and leaves
@@ -34,7 +34,7 @@ An institution's own staff follow JN-18.
   lead, for the on-call rota; for an institution that runs its own
   operations, its named approver for each grant.
 - **Channel:** Dibon's Odoo for the employee record; Dibon's central
-  Keycloak; GitLab; the bastion; the on-call tool; the security lead in
+  Keycloak; GitHub; the bastion; the on-call tool; the security lead in
   person for keys and devices.
 - **Starts when:** the team lead records a joiner, a move or an exit in
   Dibon's Odoo.
@@ -96,12 +96,12 @@ An institution's own staff follow JN-18.
 | 1 | The team lead records the joiner in Dibon's Odoo: role, manager, start date. Before any access: the contract with its confidentiality clause, and the checks Dibon's staff security policy sets | Team lead | — | BS-12 |
 | 2 | From that record, the joiner's identity is created in Dibon's central Keycloak with no access. In person, the security lead registers two hardware security keys, one carried and one kept apart as the backup | Security lead | — | SE-26 |
 | 3 | Their laptop is enrolled before first use: disk encryption, endpoint protection, device management. No institution's data ever lives on it (endpoints §2) | Security lead | — | SE-14 |
-| 4 | The engineering lead asks for the groups their role needs (GitLab by role, the `ops` realms' tooling, OpenBao's policies) by a merge request to Dibon's group memberships, kept as code; the security lead approves it as code owner, never the person asking; the pipeline applies it. Security and privacy training, and the ways of working, are done before any production access. The engineer is told by email what changed | Engineering lead; security lead | T42 | SE-26, AC-11 |
+| 4 | The engineering lead asks for the groups their role needs (GitHub teams by role, the `ops` realms' tooling, OpenBao's policies) by a pull request to Dibon's group memberships, kept as code; the security lead approves it as code owner, never the person asking; the pipeline applies it. Security and privacy training, and the ways of working, are done before any production access. The engineer is told by email what changed | Engineering lead; security lead | T42 | SE-26, AC-11 |
 | 5 | Their first access to an institution's data or production is just in time: a ticket, a named scope (read-only logs, one maintenance action), 4 hours by default, through the bastion, the session recorded. They never see Restricted data, and never hold a product role | Engineer; operations lead | — | SE-26, SE-18, SE-27 |
 | 6 | **A move** (into the on-call rota after shadowing, or into the security lead's role): the new groups approved as in step 4, the old removed by the same approval on the day, never accumulated | Engineering lead; security lead | T42 | SE-26 |
 | 7 | **Becoming a recovery key holder:** the setup ceremony, with the CTIO and two witnesses; the share encrypted to their keys; then the quarterly drills (the key holder's manual) | Security lead; CTIO | — | SE-21 |
-| 8 | **An exit:** the team lead records it in Dibon's Odoo the day it happens, or ahead with its date. From that record the central identity is disabled and signed out everywhere, which ends their access to every instance, GitLab, the on-call tool and OpenBao at once | Team lead; security lead | T42 | SE-26, AC-10 |
-| 9 | Their hardware keys are revoked and returned; any personal access token and SSH key removed; their open merge requests reassigned; any secret they could read in production rotated | Security lead; engineering lead | — | SE-26, SE-12 |
+| 8 | **An exit:** the team lead records it in Dibon's Odoo the day it happens, or ahead with its date. From that record the central identity is disabled and signed out everywhere, which ends their access to every instance, the on-call tool and OpenBao at once; GitHub, until single sign-on, by the security lead removing them from the organisation the same day | Team lead; security lead | T42 | SE-26, AC-10 |
+| 9 | Their hardware keys are revoked and returned; any personal access token and SSH key removed; their open pull requests reassigned; any secret they could read in production rotated | Security lead; engineering lead | — | SE-26, SE-12 |
 | 10 | If they held a recovery key share or half of a break-glass account, a new holder is chosen and the share re-split in a new ceremony; the old share becomes useless | Security lead; CTIO | — | SE-21, SE-26 |
 | 11 | Their laptop and any phone with work access are wiped and returned, as the lost-laptop runbook's last two steps (endpoints §5) | Security lead | — | SE-14 |
 | 12 | Every grant and exit is in Dibon's access register; each month it is compared with every institution's own records, and the leaver shows no access anywhere | Security lead | — | SE-26, AC-11 |

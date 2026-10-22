@@ -868,6 +868,16 @@ test('obligations: a decision from FS-490 on without a Requires line fails', () 
   assert.deepStrictEqual(names(f), ['obligations']);
 });
 
+// FS-896: a superseded entry keeps its text and requires nothing more,
+// but the entry that superseded it must exist.
+test('obligations: a superseded entry requires nothing, and its successor must exist', () => {
+  const D = path.join('docs', 'decisions.md');
+  const gone = (d) => patch(d, D, (t) => t.replace('- **Superseded by:** FS-896:', '- **Superseded by:** FS-897:'));
+  assert.deepStrictEqual(names(runWith(gone)), ['obligations']);
+  const unmarked = (d) => patch(d, D, (t) => t.replace(/^- \*\*Superseded by:\*\* FS-896:.*\n/m, '- **Requires:** docs/specs/gitlab-was-here.md.\n'));
+  assert.ok(names(runWith(unmarked)).includes('obligations'));
+});
+
 test('obligations: a required file that does not exist fails', () => {
   const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace('docs/operating-model.md "Runbooks to write first"', 'docs/specs/recovery.md')));
   // The missing path also trips the links check (FS-627).

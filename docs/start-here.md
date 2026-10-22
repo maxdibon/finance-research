@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781, FS-855]
-last_reviewed: 2026-10-17
+review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781, FS-855, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Start here
@@ -56,7 +56,7 @@ decisions follow from it.
 
 ## The rules that matter most
 
-- **Every change is a merge request,** approved by the roles that own
+- **Every change is a pull request,** approved by the roles that own
   what it touches ([ways of working](service-management/ways-of-working.md)).
 
 - **Record before answering.** Every point raised gets a row in
@@ -142,7 +142,7 @@ Everything that changes has a status, and each kind of thing has its own
 set (FS-855). This is the one place they are explained. The checks
 enforce them, and the status check holds this table to what they
 enforce: a status they allow that is not here, or one here they do not
-allow, fails. A status changes in a merge request, by the role that
+allow, fails. A status changes in a pull request, by the role that
 approves the document.
 
 | What | Statuses, in order | Kinds, and examples |

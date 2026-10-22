@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-21
+last_reviewed: 2026-10-22
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1490,7 +1490,8 @@ against without reasons of its own; this entry gives them.*
   Kenya, at Dibon central, and GitLab's agent pulling into each cluster.
   GitLab upgrades, patches and backs up the service; we run only the
   runners and the agents.
-- **Requires:** docs/specs/gitlab.md §2; docs/specs/gitlab.md "hosted runners never run a job that holds a secret".
+- **Superseded by:** FS-896: GitHub's Team plan, not GitLab. What follows is as decided.
+- **Requires:** (as decided) the GitLab specification's §2, and its "hosted runners never run a job that holds a secret"; that specification is in git history since FS-896, and the GitHub specification keeps both.
 - **Argued (FS-701):** repositories, issues and comments hold no personal
   data, no client material and no secrets (rules §1; rules, Dibon 10), so
   nothing on GitLab.com needs to stay in Kenya; the work that does,
@@ -1667,3 +1668,30 @@ against without reasons of its own; this entry gives them.*
   work (FS-886); first names as keys.
 - **Costs (inferred):** a setting per clone; handles confirmed with each
   person; signing, when it comes, decided then.
+
+## FS-896 · GitHub's Team plan, not GitLab Premium
+
+*Entry written 2026-10-22 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** stay on GitHub: the Team plan now, Enterprise Cloud when
+  single sign-on is needed. A GitHub specification replaces the GitLab
+  one, with the setup checklist as its §5: the organisation, its two
+  owners, a team per role, rulesets on main and on tags, push rulesets,
+  a workflow of checks, deploys by pull request to the deploy
+  repository, which Flux applies. The documents say pull request, as
+  GitHub does. FS-701 and FS-864 are superseded.
+- **Requires:** docs/specs/github.md §5; docs/architecture/technology.md "GitHub, Team plan".
+- **Argued (owner):** GitHub appears cheaper; "stay on github, team now,
+  go with the checklist".
+- **Argued against:** GitLab Premium, 9 a seat against , whose
+  planning features GitHub's Projects match; its real lead is in
+  governance (a private reader with previews, deploy approvals and
+  freezes, approval by section), built here with our own checks and the
+  deploy repository instead. FS-701 chose GitLab as a preference, never
+  weighed against GitHub.
+- **Costs (inferred):** leavers removed by hand until single sign-on;
+  the reader served by our own server; a check for a pull request
+  waiting on another; the move to an organisation.
+- **Revisit when:** a customer's or regulator's due diligence needs what
+  only GitLab gives, or code must stay in Kenya (then GitLab
+  self-managed, as FS-864 said).

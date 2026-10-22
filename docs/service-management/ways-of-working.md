@@ -1,22 +1,22 @@
 ---
 id: ways-of-working
-name: Ways of working — roles, merge requests, reviews, git, and the team's words
+name: Ways of working — roles, pull requests, reviews, git, and the team's words
 kind: plan
 status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905]
-last_reviewed: 2026-10-21
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Ways of working
 
 How the team changes what we design and what we run: who approves what,
-how a merge request goes, and the rules that stand in for an architecture
+how a pull request goes, and the rules that stand in for an architecture
 review board and a change advisory board at our size (FS-743 to FS-749).
 It applies to this repository and to the code repository alike, both on
-GitLab (FS-701). And how everyone, technical or not, makes their updates
+GitHub (FS-896). And how everyone, technical or not, makes their updates
 in the repository and stays in step: the team's words (FS-847 to FS-849,
 joined here by FS-865).
 
@@ -117,9 +117,9 @@ needs Write on the repository to approve. Until single sign-on (GitHub
 Enterprise Cloud) fills the teams from Keycloak, the security lead keeps
 them by hand, against this table, each month.
 
-## 2 · A merge request, step by step
+## 2 · A pull request, step by step
 
-Every change, to a document or to code, is a merge request into a
+Every change, to a document or to code, is a pull request into a
 protected main branch. Nobody pushes to main.
 
 1. **Open it early, as a draft,** on a short-lived branch: others see the
@@ -135,13 +135,13 @@ protected main branch. Nobody pushes to main.
    preview of the change, so a reviewer sees the page, not the diff.
 5. **Approval:** one peer, and a code owner for each section touched.
    The author cannot approve; a new commit resets approvals; approval
-   rules cannot be edited inside a merge request.
+   rules cannot be edited inside a pull request.
 6. **Merge checks:** the pipeline passes, every thread is resolved, and
    the branch is current with main. Then it merges itself (auto-merge),
-   squashed, with the merge request's description as the commit message,
+   squashed, with the pull request's description as the commit message,
    so the reasoning stays in history.
 7. **A change that needs another first** names it as a dependency: code
-   that implements a spec waits for the spec's merge request.
+   that implements a spec waits for the spec's pull request.
 
 **Code owners**, by section:
 
@@ -151,15 +151,15 @@ protected main branch. Nobody pushes to main.
 | Security | docs/modules/platform-security.md, docs/specs/endpoints.md, docs/specs/access-keycloak.md | Security lead |
 | Compliance | docs/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Compliance and risk officer |
 | Products | docs/modules/, docs/journeys/ | Product owner |
-| Delivery | docs/customers/, customers.md, onboarding.md, delivery-plan.md, docs/training/; this file, with the operations lead, for §7 to §10 (GitLab names owners by file, so the delivery lead approves any change to it) | Delivery lead |
+| Delivery | docs/customers/, customers.md, onboarding.md, delivery-plan.md, docs/training/; this file, with the operations lead, for §7 to §10 (GitHub names owners by file, so the delivery lead approves any change to it) | Delivery lead |
 | Operations | docs/service-management/, operating-model.md, business-continuity.md | Operations lead |
 | Commercial | docs/marketing/, partners.md, competitors.md | Commercial lead |
 | Tools | tools/, design/ | Engineering lead |
 
-**Labels** say what a merge request is: `kind::standard`, `kind::normal`,
+**Labels** say what a pull request is: `kind::standard`, `kind::normal`,
 `kind::emergency`; `release::R1a`, `release::R1b`; `architecture` (§3).
 
-**Claude works the same way:** on a branch, opening merge requests that
+**Claude works the same way:** on a branch, opening pull requests that
 a person approves; never with a secret or a client's material.
 
 ## 3 · Architecture review: the rules
@@ -168,7 +168,7 @@ a person approves; never with a secret or a client's material.
    one (a technology register row); a change to a spec's interfaces,
    data or security; a flow across modules; where things run and how
    they fail over; a licence decision; anything costly to undo.
-2. **It is made in a merge request labelled `architecture`,** carrying a
+2. **It is made in a pull request labelled `architecture`,** carrying a
    register row (FS id), an entry in docs/decisions.md (what was chosen,
    what it requires, what was argued against, what it costs) and, for a
    component, its technology register row.
@@ -268,8 +268,8 @@ by the owner on 2026-10-16, FS-867):
 | Practice | What it means here |
 |---|---|
 | **Write it down first** | A point raised is a register row; a decision is a decision entry; a question for counsel is an LQ row. Nobody has to have been in the meeting |
-| **Async by default** | Merge requests, threads and issues before meetings; a meeting is for what writing could not settle |
-| **Small, short-lived changes** | Branches live a day or two; a merge request a reviewer can read in twenty minutes |
+| **Async by default** | Pull requests, threads and issues before meetings; a meeting is for what writing could not settle |
+| **Small, short-lived changes** | Branches live a day or two; a pull request a reviewer can read in twenty minutes |
 | **Reviews within a working day** | Reviewers answer within one working day; a suggested change can be applied in one click |
 | **Ownership is visible** | The code owners table answers "whom do I ask?" |
 | **Specs before code** | A capability is built from its spec and journey; a story cites both (testing.md) |
@@ -283,8 +283,8 @@ by the owner on 2026-10-16, FS-867):
 ## 6 · Git conventions
 
 How everyone uses git, so that history stays readable and nobody
-overwrites anyone (FS-846). In GitLab, the push rules, approval rules and
-protected main of [gitlab.md](../specs/gitlab.md) §4.2 and §4.3 enforce
+overwrites anyone (FS-846). On GitHub, the rulesets and code owners of
+[github.md](../specs/github.md) §4.2 and §4.3 enforce
 most of it; the rest is habit. People who do not use git directly use the
 team's words (§7 to §10, FS-847), which follow these rules for them.
 
@@ -299,16 +299,17 @@ team's words (§7 to §10, FS-847), which follow these rules for them.
 | **Mechanical changes apart** | A sweep across many files (a status for every document, renumbered ids) is its own commit, never mixed with a change a reviewer must read |
 | **Keep current by rebasing** | `git fetch`, then `git rebase origin/main`; never merge main into a branch. Force-push only your own branch, and only `--force-with-lease`; never main |
 | **Undo with a new commit** | `git revert` on main; history on main is never rewritten |
-| **Merge, keeping who did what** | Squash only within one person's own branch; between people, a merge commit, so each commit keeps its author and the merge records who took it in. One person's merge request may still be squashed to one commit under their name (FS-886) |
+| **Merge, keeping who did what** | Squash only within one person's own branch; between people, a merge commit, so each commit keeps its author and the merge records who took it in. One person's pull request may still be squashed to one commit under their name (FS-886) |
 | **Tags are annotated, and signed once keys exist** | `git tag -a docs-2026.10.15 -m "…"`; a published tag is never moved or deleted |
 | **Line endings** | LF everywhere (`.gitattributes`); a clone sets nothing by hand |
-| **The register** | REVIEW.md, its open rows, and review/, its closed rows by the hundred (FS-866), merge by union, so two branches' new rows both survive; the register check fails a skipped or repeated FS id. In GitLab an FS id comes from its issue, so two people never take the same one |
-| **Changelogs** | Never edited by hand: each merge request carries a change note, and a release gathers them (rules, Dibon 12) |
+| **The register** | REVIEW.md, its open rows, and review/, its closed rows by the hundred (FS-866), merge by union, so two branches' new rows both survive; the register check fails a skipped or repeated FS id. Two branches that take the same id fail the check, and the later renumbers its row |
+| **Changelogs** | Never edited by hand: each pull request carries a change note, and a release gathers them (rules, Dibon 12) |
 | **Hooks** | `git config core.hooksPath .githooks` once per clone: pre-commit runs the checks, commit-msg holds the subject |
-| **Size** | A merge request a reviewer reads in one sitting, about 400 changed lines for code; the reader's preview shows documents as pages |
+| **Size** | A pull request a reviewer reads in one sitting, about 400 changed lines for code; the reader's preview shows documents as pages |
 
-**Until the move to GitLab,** the owner is the only one who pushes, to
-GitHub's main, on their word ("push"): the single-owner exception. The
+**Until the team is in Dibon's GitHub organisation** (github spec §5),
+the owner is the only one who pushes to main, on their word ("push"):
+the single-owner exception. The
 team works on branches and shares them; the owner merges.
 
 **Claude's work is a conversation, private until the owner says
@@ -340,7 +341,7 @@ conventions.
 
 **The words are said from your side** (FS-879 to FS-881). There is your
 copy, on your computer, and the repository ("the repo" when speaking),
-which everyone shares: on GitHub now, on GitLab later. Your work moves
+which everyone shares, on GitHub. Your work moves
 outwards in four steps, each reaching further:
 
 | Word | Your work goes | Who sees it |
@@ -465,8 +466,8 @@ be lost. Example: `dibon discard docs/customers/roan-capital.md`.
 
 Puts your saved work on your own branch in the repository: safe off
 your computer, still yours, not yet in front of the team. Upload as
-often as you like. Example: `dibon upload`. **Until the move to
-GitLab**, only the owner uploads to GitHub: if the repository refuses,
+often as you like. Example: `dibon upload`. **Until the team is in
+Dibon's GitHub organisation**, only the owner uploads: if the repository refuses,
 your work is saved on your branch; tell the owner it is ready.
 
 ### share

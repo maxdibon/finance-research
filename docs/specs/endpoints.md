@@ -12,8 +12,8 @@ depends_on: [access-keycloak, observability-grafana]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777]
-last_reviewed: 2026-10-16
+review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Endpoints — devices, their protection, and a lost device
@@ -136,7 +136,7 @@ someone already watching.
 1. **Reported within the hour,** to the service desk or on-call, without
    blame.
 2. **Cut off:** the person signed out everywhere (AC-10); the device
-   revoked in device management, locked and wiped; its GitLab tokens
+   revoked in device management, locked and wiped; its GitHub tokens
    revoked; if its hardware key went with it, the key revoked and its
    registered backup used (SE-26).
 3. **Assessed:** device management shows whether it was encrypted and
@@ -193,7 +193,7 @@ PR-13).
 | E2 | A device without encryption tries the bastion | Refused |
 | E3 | With Liquid: Sophos isolates a test machine and calls us | Within the time agreed |
 | E4 | Own tier: a Wazuh rule fires on a test attack | On-call paged at severity 1 |
-| E5 | A replacement laptop restores a person's work | From GitLab and the private folders' backup, within a day |
+| E5 | A replacement laptop restores a person's work | From GitHub and the private folders' backup, within a day |
 | E6 | The monitoring notice is shown to staff | In the staff handbook, acknowledged |
 
 ## 10 · Open questions

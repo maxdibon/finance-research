@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792]
-last_reviewed: 2026-10-13
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Specifications
@@ -45,7 +45,7 @@ as the components table below names it.
 | [event-bus-kafka](event-bus-kafka.md) | Component | Kafka as the event bus: the CloudEvents envelope, signing and the audit chain, one catalogue of event names, delivery rules | recon-observability | R1 |
 | [access-keycloak](access-keycloak.md) | Component | Keycloak as access: four realms, levels of authentication and step-up, roles granted by mandate, sign-in for every service | access | R1 |
 | [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
-| [gitlab](gitlab.md) | Component | GitLab: groups and roles, protected main, approvals and code owners, push rules, runners in Kenya, secrets from OpenBao, protected environments and deploy freezes, planning; tiers checked | platform-security | R1 |
+| [github](github.md) | Component | GitHub: the organisation, teams and roles, rulesets on main, code owners, push rulesets, Actions with runners in Kenya, secrets from OpenBao, deploys by pull request and the change calendar, planning in Projects; plans checked | platform-security | R1 |
 | [recon](recon.md) | Build | The reconciliation platform: every movement accounted for by count and amount, tracing, auto-correction, and three ledgers that must agree (the master, a shadow, an independent companion) | recon-observability | R1 |
 
 **To write, in the order R1 needs them:** odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
@@ -132,7 +132,7 @@ Every box in a spec's diagram is named as this table names it (FS-632).
 | ENDPOINT PROTECTION | Blocks malware and reports what happens on a device | `[sophos_or_wazuh]` | [endpoints](endpoints.md) |
 | MANAGED DETECTION | Watches devices and servers, isolates a threat | `[sophos_mdr_or_wazuh]` | [endpoints](endpoints.md) |
 | BASTION | People's only way in to servers and databases, sessions recorded | `[warpgate]` | [endpoints](endpoints.md) |
-| GITLAB | Code, documents, reviews, planning and pipelines | `[gitlab]` | [gitlab](gitlab.md) |
-| RUNNER | Runs pipeline jobs, in Kenya | `[gitlab_runner]` | [gitlab](gitlab.md) |
-| HARBOR | Keeps signed images, a copy at each site | `[harbor]` | [gitlab](gitlab.md) |
-| FLUX | Applies the manifests to each cluster | `[flux]` | [gitlab](gitlab.md) |
+| GITHUB | Code, documents, reviews, planning and pipelines | `[github]` | [github](github.md) |
+| RUNNER | Runs workflow jobs that hold a secret, in Kenya | `[actions_runner]` | [github](github.md) |
+| HARBOR | Keeps signed images, a copy at each site | `[harbor]` | [github](github.md) |
+| FLUX | Applies the manifests to each cluster | `[flux]` | [github](github.md) |

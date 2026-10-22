@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757, FS-780]
-last_reviewed: 2026-10-16
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757, FS-780, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Service management
@@ -42,7 +42,7 @@ answerable for how well the practice works (FS-756).
 | Practice | Where | Practice owner |
 |---|---|---|
 | Incident management | [incident-management.md](incident-management.md): severities, the notification plan, what a notice says, the record and its closure | Operations lead |
-| Roles, merge requests, architecture review and change authority | [ways-of-working.md](ways-of-working.md): who approves what, how a change is made, the rules that stand in for review boards | Team lead |
+| Roles, pull requests, architecture review and change authority | [ways-of-working.md](ways-of-working.md): who approves what, how a change is made, the rules that stand in for review boards | Team lead |
 | Problem management | [§4 Problems and known errors](#4--problems-and-known-errors) | Operations lead |
 | Change enablement | [§2 Change enablement](#2--change-enablement) | Operations lead, the change authority |
 | Release management | Folded into [§2 Change enablement](#2--change-enablement) | Engineering lead |
@@ -87,13 +87,13 @@ SE-14), service financial management, organisational change management.
 | Kind | What | Who approves | The customer |
 |---|---|---|---|
 | Standard | Pre-approved, low risk, done before: a routine patch, a setting within tested bounds, a certificate renewed | No one each time; the kind itself is approved, and listed | Not told, unless they can see it |
-| Normal | Everything else: a reviewed merge request | The operations lead, after a peer's review; with the security lead for a security control (ways-of-working §4) | Told before it reaches them, when they can see its effect: these are the release notes the support offer promises |
+| Normal | Everything else: a reviewed pull request | The operations lead, after a peer's review; with the security lead for a security control (ways-of-working §4) | Told before it reaches them, when they can see its effect: these are the release notes the support offer promises |
 | Emergency | Restoring service, or closing a security hole | The on-call engineer with the operations lead, or the security lead for a security hole (ways-of-working §4) | Told with the incident; the change reviewed within two working days |
 
-**The change record is the merge request** in GitLab (FS-701), with a template: what changes,
+**The change record is the pull request** on GitHub (FS-896), with a template: what changes,
 why, the risk, how it was tested, how it is undone, which institutions
 it reaches, and a label for its kind. Release notes are generated from
-the merged merge requests.
+the merged pull requests.
 
 **When no change runs** (the change calendar):
 
@@ -103,8 +103,8 @@ the merged merge requests.
 - in the freeze before a customer's go-live;
 - outside the windows agreed with each customer.
 
-GitLab's deploy freezes refuse a deployment in those windows unless the
-change is labelled emergency (docs/specs/gitlab.md §4.5); Odoo Calendar shows the windows to people.
+Flux pauses in those windows, and a check refuses a deploy pull request
+inside one unless it is labelled emergency (docs/specs/github.md §4.5); Odoo Calendar shows the windows to people.
 
 **An institution's own changes** follow the same idea already: a product
 version, an approval chain, a transaction rule or a check's class is
@@ -195,9 +195,9 @@ Act it is the controller and we its processor. What we give it:
 | Known errors, the desk's knowledge base | Odoo Knowledge |
 | Paging and escalation | GoAlert, proposed ([observability-grafana](../specs/observability-grafana.md) §5) |
 | Monitoring, availability, SLOs | Grafana and its stack |
-| Code, change records, release notes, stories | GitLab Premium on GitLab.com, runners in Kenya: merge requests with a template and labels, issues (FS-701) |
+| Code, change records, release notes, stories | GitHub Team, runners in Kenya: pull requests with a template and labels, issues and Projects (FS-896) |
 | The change calendar | The pipeline's deployment rule; Odoo Calendar for people |
-| The configuration record | Generated from GitOps (Flux, through GitLab's agent); a Grafana dashboard and a reader page |
+| The configuration record | Generated from GitOps (Flux, pulling from GitHub); a Grafana dashboard and a reader page |
 | Notices to customers | Odoo email templates |
 | A status page for customers (optional) | Gatus (Apache-2.0) or Uptime Kuma (MIT), self-hosted |
 
@@ -212,9 +212,9 @@ other's reference.
 |---|---|---|---|
 | Incidents | Dibon's Odoo Helpdesk, one ticket per incident ([incident management](incident-management.md)); paging in GoAlert; Grafana | Its outage log and fallback runbook (handbook HB-70 to HB-78) | Our notices by phone and email; the incident's reference on both sides |
 | Requests and questions | Dibon's Helpdesk, a ticket type each (§6) | Its own Helpdesk for its customers; the morning's ticket (JN-17) | Its staff raise a ticket to us, carrying its own ticket's reference, never its customers' data (rules for institutions 4) |
-| Problems and known errors | A problem ticket in Dibon's Helpdesk (§4); the fix a GitLab issue and merge request, each naming the other; known errors in Dibon's Odoo Knowledge | — | Release notes name the problems fixed; the service review goes through them |
-| Changes and releases | GitLab: merge requests, approvals, protected environments, deploy freezes, release notes (§2) | Its own changes (positions, approval chains, products) through the approval engine, by maker-checker | Release notes to each institution; its handbook reviewed with each release (handbook rule 4) |
-| Knowledge | Design: this repository and its reader. Engineering runbooks: GitLab, beside the code. The desk: Dibon's Odoo Knowledge | Its handbook, in its Knowledge or the reader (FS-772); training | One source each, published, never copied by hand |
+| Problems and known errors | A problem ticket in Dibon's Helpdesk (§4); the fix a GitHub issue and pull request, each naming the other; known errors in Dibon's Odoo Knowledge | — | Release notes name the problems fixed; the service review goes through them |
+| Changes and releases | GitHub: pull requests, approvals, the deploy repository, the change calendar's check, release notes (§2) | Its own changes (positions, approval chains, products) through the approval engine, by maker-checker | Release notes to each institution; its handbook reviewed with each release (handbook rule 4) |
+| Knowledge | Design: this repository and its reader. Engineering runbooks: GitHub, beside the code. The desk: Dibon's Odoo Knowledge | Its handbook, in its Knowledge or the reader (FS-772); training | One source each, published, never copied by hand |
 | Configuration | Generated from GitOps (§3) | Its settings, with their history in the approval engine | The configuration record lists both |
 | Access | Dibon's access register; the central Keycloak as code (FS-777) | Its Keycloak realm, Odoo's Employees app, the quarterly review (HB-27) | Compared each month (SE-26) |
 | Complaints | None: we never decide one | Its complaints register (JN-08) | One about how the platform behaved becomes a ticket to us (§6) |
@@ -240,7 +240,7 @@ as part of the operating system ([architecture](../architecture/README.md)
 | Odoo Enterprise for Dibon's own use: does the agreement cover Helpdesk, Knowledge and Calendar for us, not only customers' instances? | Assumed ([architecture](../architecture/README.md) §8) | Confirm with Odoo (FS-640) |
 | The on-call tool | GoAlert proposed | The owner's choice ([observability-grafana](../specs/observability-grafana.md) §12) |
 | A status page | None; customers learn of an incident from our notices | Optional; offered first to the Complete tier |
-| The merge-request template and the pipeline's change-window rule | Not built | Build with SE-23 |
+| The pull-request template and the pipeline's change-window rule | Not built | Build with SE-23 |
 | Helpdesk ticket types, SLA policies, request types | Not configured | Configure before R1 go-live |
 | The bridge from an institution's Helpdesk to ours | Portal and email in R1 (§7) | Its staff's portal accounts set up at onboarding; an API connection later (FS-780) |
 | Service-level targets | Proposed defaults ([§5](#5--service-levels)) | Agree in Roan Capital's contract |

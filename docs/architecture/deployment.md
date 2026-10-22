@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775]
-last_reviewed: 2026-10-12
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896]
+last_reviewed: 2026-10-22
 ---
 
 # Deployment: sites, the fleet, and what is central
@@ -40,12 +40,12 @@ in [the README](README.md) §9; recovery objectives in platform-security
   |                                          |      |                                          |
   | engineers' Keycloak (hardware keys)      |      | one backup copy offline (SE-20)          |
   | fleet Grafana . GoAlert                  |      | backup keys split among five             |
-  | GitLab runners . Flux . Harbor . Rekor   |      | holders, three to open (SE-21)           |
+  | GitHub runners . Flux . Harbor . Rekor   |      | holders, three to open (SE-21)           |
   +------------------------------------------+      +------------------------------------------+
 
   out of the country only by name: detection telemetry to the managed security service
   (SE-13); WhatsApp, Twilio and email platforms carry notifications and links only (§7)
-  GitLab.com holds our code and pipeline definitions, never customer data; runners stay in Kenya
+  GitHub holds our code and workflow definitions, never customer data; runners stay in Kenya
 
   on an institution's premises: the same layout in its data centre, with its own second site
 ```
@@ -59,7 +59,7 @@ in [the README](README.md) §9; recovery objectives in platform-security
   (SE-10, SE-22, SE-23). Losing site A loses at most 5 minutes of tier-1
   data and takes up to 4 hours to recover (platform-security §3).
 - **Dibon central** runs the fleet, never a ledger: engineers' Keycloak,
-  the fleet's Grafana and on-call, GitLab's runners in Kenya, Flux,
+  the fleet's Grafana and on-call, our GitHub runners in Kenya, Flux,
   Harbor, and the transparency log (FS-700, FS-701). It holds no institution's data; its loss stops changes
   and fleet views, not any institution's service.
 - **Offline:** one backup copy offline, its keys opened only by three of
