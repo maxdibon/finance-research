@@ -1218,3 +1218,41 @@ test('journeys: a journey with no "stops partway" row fails', () => {
   const f = runWith((d) => patch(d, JN('micro-trader'), (t) => t.replace('**He stops partway through enrolment.**', '**He changes his mind.**')));
   assert.deepStrictEqual(names(f), ['journeys']);
 });
+
+// FS-888, FS-889: new makes the document and its row; three things
+// started each keep their own id; resume parks one's edits and brings
+// another's back; a title started twice is resumed, not started again.
+test('words: new and resume, in a pretend repository', () => {
+  const { spawnSync } = require('child_process');
+  const where = fs.mkdtempSync(path.join(os.tmpdir(), 'dibon-new-'));
+  const work = path.join(where, 'work');
+  const run = (cmd, a) => { const r = spawnSync(cmd, a, { cwd: fs.existsSync(work) ? work : where, encoding: 'utf8' }); return `${r.stdout}${r.stderr}`; };
+  try {
+    run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
+    run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
+    for (const f of ['tools/dibon.js', 'tools/register.js']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const [k, v] of [['user.name', 'Betty Test'], ['user.email', 'betty@example.test'], ['dibon.role', 'Project manager'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
+    run('git', ['commit', '-qam', 'FS-888: the tool under test']);
+    run('git', ['push', '-q', 'origin', 'HEAD:main']);
+    const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
+    const read = (f) => fs.readFileSync(path.join(work, f), 'utf8');
+    const next = +require('./register').nextId(ROOT).slice(3);
+    const id = (k) => `FS-${String(next + k).padStart(3, '0')}`;
+    assert.match(d('new', 'spec', 'Loan top-up'), new RegExp(`spec/${id(0)}-loan-top-up`));
+    assert.match(read('docs/specs/loan-top-up.md'), /^name: Loan top-up — build specification$/m);
+    assert.match(read('docs/specs/README.md'), /^\| \[loan-top-up\]\(loan-top-up\.md\) \| Build \|/m);
+    assert.match(d('new', 'journey', 'A borrower tops up a loan'), new RegExp(`${id(1)}.*listed in docs/journeys/README.md`));
+    assert.match(d('new', 'Fix the agenda'), new RegExp(`docs/${id(2)}-fix-the-agenda`));
+    fs.appendFileSync(path.join(work, 'docs/testing.md'), '\nAn edit on the agenda work.\n');
+    const list = d('resume');
+    assert.match(list, /3 things started/);
+    d('resume', 'top-up');
+    assert.ok(fs.existsSync(path.join(work, 'docs/specs/loan-top-up.md')));
+    assert.ok(!read('docs/testing.md').includes('An edit on the agenda work.'));
+    d('resume', id(2));
+    assert.ok(read('docs/testing.md').includes('An edit on the agenda work.'));
+    assert.match(d('new', 'spec', 'Loan top-up'), /You started that already/);
+  } finally {
+    fs.rmSync(where, { recursive: true, force: true });
+  }
+});

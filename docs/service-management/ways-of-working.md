@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896]
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889]
 last_reviewed: 2026-10-22
 ---
 
@@ -360,7 +360,8 @@ tool, and Claude in the desktop app, ask which you mean.
 | Say | What it does |
 |---|---|
 | **download** | Bring the latest from the repository into my copy (the repository to me) |
-| **start** "…" | Begin a piece of work on its own branch, with its register row |
+| **start** "…", or **new** | Begin a piece of work on its own branch, with its register row; **new spec** "…" (or journey, module, customer) makes the document too |
+| **resume** | Go back to something I started; my unsaved edits are parked, not lost |
 | **note** "…" | Write the change note: what changed, and for whom |
 | **meeting** customer date | Open a meeting record, registered as a document |
 | **answered** customer number "…" | Move a customer's open answer to Answered, dated |
@@ -377,6 +378,7 @@ tool, and Claude in the desktop app, ask which you mean.
 | **release** | The owner only: release to the public, the documentation or a customer's delivery |
 | **practice** | A private sandbox to try every word safely |
 | **role** "…" | Tell the words your role, once |
+| **claude** handle | Set, once, the name my Claude commits under |
 
 ### Three rules, and once before the first time
 
@@ -385,7 +387,8 @@ lost, and the message says what to do. Nothing is guessed: say what you
 mean, and a word that cannot tell asks.
 
 **Once, before the first time:** `dibon role "Project manager"` (your
-role, never your name), and, for developers,
+role, beside your name), `dibon claude` and your handle if you work with
+Claude (§1), and, for developers,
 `git config core.hooksPath .githooks`. On Windows, `dibon` runs from the
 repository's folder (`dibon.cmd`); elsewhere `./dibon`.
 
@@ -402,9 +405,35 @@ engineer to bring the two together. Never edit conflict markers by hand.
 ### start
 
 Begins a piece of work on its own branch, named after its register row;
-without `--row`, it opens a new row. Examples:
+without `--row`, it opens a new row. Given only a title, it asks once
+what you are starting: changes to documents we have, or a new spec,
+journey, module or customer. Started that title already? It offers to
+take you back to it instead. Unsaved edits on what you were doing are
+parked with it (see resume). Examples:
 `dibon start "Roan Capital meeting, 22 October"`;
 `dibon start "Fix the agenda" --row FS-826`.
+
+### new
+
+The same word as start (FS-888). Name a kind and it makes the document
+too, from its template, its front matter filled in: `spec` (with
+`--type component` for a product we configure), `journey` (the next JN
+number), `module` or `customer`. A spec and a journey are listed in their
+index at once; it says what is still yours to write, and the checks say
+what is missing until you save. `dibon new meeting` is the meeting word.
+Examples: `dibon new spec "Loan top-up"`;
+`dibon new journey "A borrower tops up a loan"`.
+
+### resume
+
+Back to something you started (FS-889). Alone, it lists your work not yet
+merged, numbered, with what each has saved, whether it is uploaded, and
+where you are now. Say which by its number, its row or a word from its
+title, and it takes you there: your unsaved edits are parked with the
+work you leave, and come back when you return to it. Only your own work
+is listed: Claude's and a teammate's branches are theirs. Examples:
+`dibon resume`; `dibon resume 2`; `dibon resume FS-890`;
+`dibon resume top-up`.
 
 ### note
 
