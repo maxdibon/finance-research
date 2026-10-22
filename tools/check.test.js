@@ -1249,7 +1249,7 @@ test('words: new and resume, in a pretend repository', () => {
     d('resume', 'top-up');
     assert.ok(fs.existsSync(path.join(work, 'docs/specs/loan-top-up.md')));
     assert.ok(!read('docs/testing.md').includes('An edit on the agenda work.'));
-    d('resume', id(2));
+    d('continue', id(2));
     assert.ok(read('docs/testing.md').includes('An edit on the agenda work.'));
     assert.match(d('new', 'spec', 'Loan top-up'), /You started that already/);
   } finally {

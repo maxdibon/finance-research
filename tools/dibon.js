@@ -37,6 +37,7 @@ const WORDS = [
   ['start', 'Begin a piece of work on its own branch, with its register row; the same as new.', ['dibon start "Roan Capital meeting, 22 October"', 'dibon start "Fix the agenda" --row FS-826']],
   ['new', 'The same as start; name a kind (spec, journey, module, customer, meeting) to make the document too.', ['dibon new spec "Loan top-up"', 'dibon new journey "A borrower tops up a loan"', 'dibon new "Fix the agenda"']],
   ['resume', 'Go back to something you started: lists them, or takes you to one by number, row or a word; your unsaved edits are parked, not lost.', ['dibon resume', 'dibon resume 2', 'dibon resume FS-890', 'dibon resume top-up']],
+  ['continue', 'The same as resume.', ['dibon continue', 'dibon continue top-up']],
   ['note', 'Write the change note: what changed, for whom.', ['dibon note "Two open answers settled" --for roan-capital', 'dibon note "Checks explain themselves" --for team --kind patch']],
   ['meeting', 'Open a meeting record for a customer, registered as a document.', ['dibon meeting roan-capital 2026-10-22']],
   ['answered', 'Move a customer\'s open answer to Answered, dated, with the answer.', ['dibon answered roan-capital 24 "The accountant and the finance lead receive it"']],
@@ -393,6 +394,9 @@ const word = {
   // FS-889: back to something started. Alone, lists them; with a number,
   // a row or a word, goes there, parking this branch's unsaved edits and
   // bringing back that branch's.
+  // The same word as resume, at the owner's asking.
+  async continue() { return word.resume(); },
+
   async resume() {
     const list = started();
     const pick = plain.slice(1).join(' ');

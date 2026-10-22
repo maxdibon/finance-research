@@ -361,7 +361,7 @@ tool, and Claude in the desktop app, ask which you mean.
 |---|---|
 | **download** | Bring the latest from the repository into my copy (the repository to me) |
 | **start** "…", or **new** | Begin a piece of work on its own branch, with its register row; **new spec** "…" (or journey, module, customer) makes the document too |
-| **resume** | Go back to something I started; my unsaved edits are parked, not lost |
+| **resume**, or **continue** | Go back to something I started; my unsaved edits are parked, not lost |
 | **note** "…" | Write the change note: what changed, and for whom |
 | **meeting** customer date | Open a meeting record, registered as a document |
 | **answered** customer number "…" | Move a customer's open answer to Answered, dated |
@@ -434,6 +434,11 @@ work you leave, and come back when you return to it. Only your own work
 is listed: Claude's and a teammate's branches are theirs. Examples:
 `dibon resume`; `dibon resume 2`; `dibon resume FS-890`;
 `dibon resume top-up`.
+
+### continue
+
+The same word as resume. Examples: `dibon continue`;
+`dibon continue top-up`.
 
 ### note
 
