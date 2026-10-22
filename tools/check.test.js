@@ -1387,3 +1387,42 @@ test('words: join, leave and the board, in a pretend repository', () => {
     fs.rmSync(where, { recursive: true, force: true });
   }
 });
+
+// FS-922: save keeps a changed document's front matter current, makes the
+// generated sections again, rebuilds the reader where the hook does not,
+// and reminds when the branch has no change note.
+test('words: save does the routine for you, in a pretend repository', () => {
+  const { spawnSync } = require('child_process');
+  const where = fs.mkdtempSync(path.join(os.tmpdir(), 'dibon-save-'));
+  const work = path.join(where, 'work');
+  const run = (cmd, a) => { const r = spawnSync(cmd, a, { cwd: fs.existsSync(work) ? work : where, encoding: 'utf8' }); return `${r.stdout}${r.stderr}`; };
+  try {
+    run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
+    run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/board.js', 'tools/citations.js', 'tools/docregister.js', 'tools/site.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const [k, v] of [['user.name', 'Betty Test'], ['user.email', 'betty@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
+    run('git', ['add', '-A', 'tools', 'docs']);
+    run('git', ['commit', '-qm', 'FS-922: the tools under test']);
+    run('git', ['push', '-q', 'origin', 'HEAD:main']);
+    fs.mkdirSync(path.join(work, 'sources', 'confidential'), { recursive: true });
+    fs.writeFileSync(path.join(work, 'sources', 'confidential', 'protected-names.txt'), '# test list\nZzqx Nobody\n');
+    const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
+    d('new', 'A clearer testing note');
+    const id = (run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3}/) || [])[0];
+    const f = path.join(work, 'docs', 'testing.md');
+    const t = fs.readFileSync(f, 'utf8');
+    fs.writeFileSync(f, t.replace(/\n## /, '\nA sentence added to the testing strategy.\n\n## '));
+    const saved = d('save', 'A sentence added');
+    assert.match(saved, /Front matter kept current/);
+    assert.match(saved, /Saved on/);
+    assert.match(saved, /The reader is rebuilt/);
+    assert.match(saved, new RegExp(`No change note for ${id} yet`));
+    const after = fs.readFileSync(f, 'utf8');
+    const today = new Date().toISOString().slice(0, 10);
+    assert.match(after, new RegExp(`^last_reviewed: ${today}$`, 'm'));
+    assert.ok(after.split('\n').find((l) => l.startsWith('review_ids:')).includes(id));
+    assert.ok(fs.existsSync(path.join(work, 'build', 'site', 'board.html')));
+  } finally {
+    fs.rmSync(where, { recursive: true, force: true });
+  }
+});

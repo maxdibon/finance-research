@@ -122,7 +122,10 @@ its money and its records; Dibon holds the platform. Read
   to me); and outwards, save (my copy), upload (my own branch in the
   repository, still mine), share (before the team, for review), release
   (the owner's, to the public). **When someone says "update", ask whether
-  they mean download or upload**: never pick one. The owner's "push"
+  they mean download or upload**: never pick one. **What each word does on its
+  own** is in ways-of-working §7, "What each word does for you" (FS-922):
+  save keeps front matter and generated sections current, rebuilds the
+  reader and reminds about a change note; no word updates this handover. The owner's "push"
   stays what it has been: main to GitHub.
 - **Attribution: each person's work is their own** (FS-886, the owner,
   2026-10-17). Claude works only on its own branch,

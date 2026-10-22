@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892]
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892, FS-922]
 last_reviewed: 2026-10-22
 ---
 
@@ -389,6 +389,33 @@ tool, and Claude in the desktop app, ask which you mean.
 | **role** "…" | Tell the words your role, once |
 | **claude** handle | Set, once, the name my Claude commits under |
 
+### What each word does for you
+
+Each word does its git and its records the same way every time, so you
+need not remember them (FS-922). What happens on its own, beyond what
+you asked:
+
+| Word | What it does for you, on its own | When it stops (nothing is lost) |
+|---|---|---|
+| **download** | Fetches the team's latest and puts it under your work; brings the register's rows together (a row of yours whose id the team took meanwhile is renumbered, everywhere your branch cites it; a row you both edited is merged, both notes kept); makes the generated sections again; saves that as one change of yours; notes which reviews are open, for the Board | You have unsaved edits; your change and a teammate's touch the same lines |
+| **start**, **new** | Fetches; parks your unsaved edits with the work you were on; makes your branch from the team's latest, named by its kind, row and words; opens the register row, with you as its raiser and its holder; with a kind, makes the document from its template, a spec or journey listed in its index; offers to take you back to a title you started already; notes when you have three things started | Unsaved edits on main |
+| **resume**, **continue** | Lists your work not yet merged, and your Claude's; parks the edits you leave and brings back the ones parked where you arrive | The name matches nothing, or more than one; it is your Claude's work |
+| **join**, **leave** | Join: your name on the row after its lead, your own branch for it, your edits parked. Leave: your name off, the next name leading | The row is closed; you are the last one on it (say who takes it) |
+| **note** | Writes the change note, signed by your name and role, its rows from your branch | A note read outside Dibon that carries a register id |
+| **save** | Files the register's rows by their status; notes a file someone's uploaded branch changes too, and a paragraph rewrapped for a word; keeps the front matter of each document whose content you changed current (today's `last_reviewed`, your row in its `review_ids`); makes the generated sections again; runs the checks; saves with your row in the subject; rebuilds the reader where the commit hook does not; reminds you if your branch has no change note | No description; the checks fail (each said in plain words); a document from outside |
+| **upload** | Puts your branch on the repository, safely over an earlier upload of it | The repository refuses (until the team is in the organisation, only the owner uploads) |
+| **share** | Runs the checks, and the tests when tools or code changed; uploads; opens your review, or marks it ready; notes it for the Board | Unsaved edits; a check or test failing |
+| **undo** | Takes back your last save: kept as edits before upload, a correcting change after | Nothing of yours to undo on main |
+| **discard** | Shows what would be lost, then throws away one file's unsaved changes | — |
+| **status** | Your branch, the release, what is unsaved and uploaded, the notes waiting, what you started, what your Claude has waiting, and how long since you downloaded | — |
+| **meeting**, **answered**, **received** | Each writes its record and registers it: a meeting record and its document row; an answer moved and dated; an original kept read-only, fingerprinted, and registered | The customer or file is not one we know |
+| **release** | The owner's: gathers the change notes into the changelogs, stamps each changed document's `released:` line, then the tag | Not the owner; nothing waiting |
+| **check**, **history**, **help**, **practice**, **role**, **claude** | Read or set only: the checks explained, a document's history, the words, a practice copy, your role, your Claude's name | — |
+
+**What no word does for you:** update the handover (Claude writes it at
+the end of a session, or when the owner asks); upload, share, merge or
+release unless you say so; close a register row or write a decision.
+
 ### Three rules, and once before the first time
 
 **Three rules.** Download first, every day. A stop protects you: nothing is
@@ -516,7 +543,11 @@ what you changed). **It stops** when you give no description, when the
 checks fail, and when you give it a document from outside: that is
 `received`. **It notes, without stopping,** a file you changed that
 someone's uploaded branch changes too, and a paragraph rewrapped for a
-word (FS-890). `--body-file` adds a body to the saved change from a file:
+word (FS-890). **Before the checks, it keeps current** the front matter
+of each document whose content you changed (today's `last_reviewed`,
+your row in its `review_ids`) and the generated sections; **after
+saving,** it rebuilds the reader where the commit hook does not, and
+reminds you if your branch has no change note (FS-922). `--body-file` adds a body to the saved change from a file:
 why it changed, and any trailer such as Co-Authored-By (FS-862).
 
 ### undo

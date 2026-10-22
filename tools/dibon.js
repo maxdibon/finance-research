@@ -45,7 +45,7 @@ const WORDS = [
   ['answered', 'Move a customer\'s open answer to Answered, dated, with the answer.', ['dibon answered roan-capital 24 "The accountant and the finance lead receive it"']],
   ['received', 'Keep a document from outside as an original, and register it.', ['dibon received "C:\\Users\\me\\Downloads\\Signed agreement.pdf" --from roan-capital --summary "The services agreement as signed"']],
   ['check', 'Run the checks and say, in plain words, what to fix.', ['dibon check']],
-  ['save', 'Save my work on my branch, with its register row; the checks run first.', ['dibon save "Open answer 26: two administrators"', 'dibon save docs/customers/roan-capital.md']],
+  ['save', 'Save my work on my branch, with its register row: front matter and generated sections kept current, the checks first, the reader rebuilt.', ['dibon save "Open answer 26: two administrators"', 'dibon save docs/customers/roan-capital.md']],
   ['undo', 'Take back my last save (before upload: kept as edits; after: a correcting change).', ['dibon undo']],
   ['discard', 'Throw away unsaved changes to one file, after showing what is lost.', ['dibon discard docs/customers/roan-capital.md']],
   ['upload', 'Put my saved work on my own branch in the repository: still mine, not yet for review.', ['dibon upload']],
@@ -206,6 +206,37 @@ function regenerate() {
   for (const f of c.documents(ROOT)) if (c.refresh(ROOT, f)) n++;
   for (const id of d.customers(ROOT)) if (d.refresh(ROOT, id)) n++;
   return n;
+}
+
+// ── what save does for you (FS-922) ───────────────────────────────────────
+// Each document under docs/ whose content (not only its front matter)
+// changed gets today's last_reviewed, and the branch's row in its
+// review_ids where it keeps them: the two things the reviewed check most
+// often stopped a save for.
+const bodyOf = (t) => (t || '').replace(/\r\n/g, '\n').replace(/^---\n[\s\S]*?\n---\n/, '');
+function frontMatterFor(files, row) {
+  const out = [];
+  for (const f of files.filter((x) => /^docs\/.*\.md$/.test(x) && fs.existsSync(path.join(ROOT, x)))) {
+    const now = read(f);
+    if (!/^---\n/.test(now)) continue;
+    const before = git(['show', `HEAD:${f}`], { ok: true });
+    if (before && bodyOf(before) === bodyOf(now)) continue;
+    let t = now.replace(/^last_reviewed: .*$/m, `last_reviewed: ${today()}`);
+    if (row) t = t.replace(/^review_ids: \[(.*)\]$/m, (m, ids) => (ids.split(/,\s*/).includes(row) ? m : `review_ids: [${ids ? `${ids}, ` : ''}${row}]`));
+    if (t !== now) { write(f, t); out.push(f); }
+  }
+  return out;
+}
+// Everything this branch changes, saved or not.
+function branchTouched() {
+  const base = hasRemote() ? 'origin/main' : 'main';
+  return [...new Set([...git(['diff', '--name-only', `${base}...HEAD`], { ok: true }).split('\n'), ...unsaved().map((u) => u.file)].filter(Boolean))];
+}
+// A change note naming the row, saved or waiting.
+function hasNote(row) {
+  const dir = path.join(ROOT, 'changes');
+  if (!fs.existsSync(dir)) return false;
+  return fs.readdirSync(dir).filter((f) => f.endsWith('.md') && f !== 'README.md').some((f) => new RegExp(`^rows: \\[[^\\]]*\\b${row}\\b`, 'm').test(read(`changes/${f}`)));
 }
 
 // ── warnings on save (FS-890) ─────────────────────────────────────────────
@@ -741,9 +772,16 @@ const word = {
     const touched = [...new Set([...changed.map((u) => u.file), ...(hasRemote() ? git(['diff', '--name-only', 'origin/main...HEAD'], { ok: true }).split('\n').filter(Boolean) : [])])];
     for (const o of alsoElsewhere(touched)) say(`Note: ${o.files.join(', ')} ${o.files.length === 1 ? 'is' : 'are'} also being changed on ${o.ref} (${o.who}). Talk before you both change the same lines.`);
     for (const w of rewrapped(changed.map((u) => u.file))) say(`Note: in ${w.file}, ${w.removed} lines changed for ${w.words} word${w.words === 1 ? '' : 's'}: a paragraph rewrapped? Rewrap only the lines you change (ways-of-working §6).`);
+    // FS-922: what save does for you before the checks: the routine front
+    // matter of each document whose content you changed, and the
+    // generated sections made again.
+    const row = rowOfBranch();
+    const stamped = frontMatterFor(changed.map((u) => u.file), row);
+    if (stamped.length) say(`Front matter kept current (today's date${row ? `, and ${row}` : ''}) in: ${stamped.join(', ')}.`);
+    const regen = regenerate();
+    if (regen) say(`Generated sections made again in ${regen} document${regen === 1 ? '' : 's'}.`);
     const failures = checks();
     if (failures.length) { explain(failures); process.exitCode = 1; return; }
-    const row = rowOfBranch();
     const subject = /^FS-\d{3}/.test(arg) ? arg : `${row || 'FS-???'}: ${arg}`;
     if (!/^FS-\d{3}/.test(subject)) stop('Which register row? Your branch has none: start with dibon start, or begin the description with FS-123.');
     if (!await ask(`Save ${changed.length} file${changed.length === 1 ? '' : 's'} as "${subject}"?`)) return say('Not saved.');
@@ -751,6 +789,14 @@ const word = {
     const r = git(['commit', '-q', ...message(subject)], { ok: true, full: true });
     if (r.status !== 0) stop(`Not saved: ${(r.stderr || r.stdout).trim()}`);
     say(`Saved on ${branch()}: "${subject}". When the work is done: dibon upload.`);
+    if (only && unsaved().some((u) => u.code !== '??')) say('Other files still have unsaved changes, the generated sections among them perhaps: save them too when they are ready.');
+    // FS-922: the reader rebuilt, here when the commit hook is not on.
+    if (git(['config', '--get', 'core.hooksPath'], { ok: true }) !== '.githooks') {
+      const s = spawnSync(process.execPath, [path.join(ROOT, 'tools', 'site.js'), '--reader'], { cwd: ROOT, encoding: 'utf8' });
+      say(s.status === 0 ? 'The reader is rebuilt (build/site/).' : 'The reader could not be rebuilt: node tools/site.js says why.');
+    }
+    // FS-922: a reminder, never a note written for you.
+    if (row && !hasNote(row) && branchTouched().some((f) => /^docs\/.*\.md$/.test(f))) say(`No change note for ${row} yet. If it is worth telling: dibon note "…" --for team (or everyone, or a customer).`);
   },
 
   async undo() {
