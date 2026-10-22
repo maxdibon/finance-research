@@ -430,8 +430,10 @@ Back to something you started (FS-889). Alone, it lists your work not yet
 merged, numbered, with what each has saved, whether it is uploaded, and
 where you are now. Say which by its number, its row or a word from its
 title, and it takes you there: your unsaved edits are parked with the
-work you leave, and come back when you return to it. Only your own work
-is listed: Claude's and a teammate's branches are theirs. Examples:
+work you leave, and come back when you return to it. Your own Claude's
+work waiting for you is listed under yours (FS-907), to see, not to
+resume: ask Claude to go on with it. A teammate's branches, and their
+Claude's, are theirs and not listed. Examples:
 `dibon resume`; `dibon resume 2`; `dibon resume FS-890`;
 `dibon resume top-up`.
 

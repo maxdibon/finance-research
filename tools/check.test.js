@@ -1236,7 +1236,7 @@ test('words: new and resume, in a pretend repository', () => {
     run('git', ['push', '-q', 'origin', 'HEAD:main']);
     const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
     const read = (f) => fs.readFileSync(path.join(work, f), 'utf8');
-    const next = +require('./register').nextId(ROOT).slice(3);
+    const next = +require('./register').nextId(work).slice(3);
     const id = (k) => `FS-${String(next + k).padStart(3, '0')}`;
     assert.match(d('new', 'spec', 'Loan top-up'), new RegExp(`spec/${id(0)}-loan-top-up`));
     assert.match(read('docs/specs/loan-top-up.md'), /^name: Loan top-up — build specification$/m);
@@ -1252,6 +1252,21 @@ test('words: new and resume, in a pretend repository', () => {
     d('continue', id(2));
     assert.ok(read('docs/testing.md').includes('An edit on the agenda work.'));
     assert.match(d('new', 'spec', 'Loan top-up'), /You started that already/);
+    // FS-907: my Claude's work is listed apart, and is not mine to resume;
+    // another person's Claude's is not listed at all.
+    run('git', ['config', 'dibon.claude', 'Claude for Betty <claude-betty@noreply.dibon.co.ke>']);
+    run('git', ['stash', 'push', '-q', '-m', 'test: aside']);
+    for (const who of ['betty', 'eric']) {
+      run('git', ['switch', '-q', '-c', `claude/${who}/FS-907-drafted-for-${who}`, 'origin/main']);
+      fs.appendFileSync(path.join(work, 'docs/testing.md'), `\nDrafted for ${who}.\n`);
+      run('git', ['commit', '-qam', `FS-907: drafted for ${who}`]);
+    }
+    run('git', ['switch', '-q', `spec/${id(0)}-loan-top-up`]);
+    const both = d('resume');
+    assert.match(both, /Your Claude's, waiting for you \(1\)/);
+    assert.match(both, /Drafted for betty/);
+    assert.doesNotMatch(both, /Drafted for eric/);
+    assert.match(d('resume', 'drafted for betty'), /your Claude's work/);
   } finally {
     fs.rmSync(where, { recursive: true, force: true });
   }

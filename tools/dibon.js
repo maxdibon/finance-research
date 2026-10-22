@@ -256,22 +256,28 @@ function parkedOf(b) {
   const hit = lines.find((l) => l.endsWith(PARK(b)));
   return hit ? hit.split(' ')[0] : null;
 }
-function started() {
+// FS-907: started('claude') is my own Claude's work instead: its branches
+// claude/<my handle>/…, and those from before handles (claude/FS-…), shown
+// to me but not resumed by me, since they are its work (FS-886).
+const myClaude = () => (git(['config', '--get', 'dibon.claude'], { ok: true }).match(/<claude-([^@>]+)@/) || [])[1] || null;
+function started(of = 'me') {
   const base = hasRemote() ? 'origin/main' : 'main';
   const here = branch();
   const refs = git(['for-each-ref', 'refs/heads', '--format=%(refname:short)|%(committerdate:relative)'], { ok: true }).split('\n').filter(Boolean);
-  const rows = require('./register').rows(ROOT);
+  const handle = myClaude();
   const out = [];
   for (const r of refs) {
     const [b, when] = r.split('|');
-    if (['main', 'master'].includes(b) || b.startsWith('claude/')) continue;
+    if (['main', 'master'].includes(b)) continue;
+    const claudes = handle && (b.startsWith(`claude/${handle}/`) || /^claude\/FS-\d{3}/.test(b));
+    if (of === 'me' ? b.startsWith('claude/') : !claudes) continue;
     const ahead = +git(['rev-list', '--count', `${base}..${b}`], { ok: true }) || 0;
     const parked = parkedOf(b);
     if (!ahead && b !== here && !parked) continue;
     const id = (b.match(/FS-\d{3}/) || [])[0] || null;
     // The words the person typed, from the branch: a row may be unsaved,
     // or parked, and so not in this copy's register.
-    const words = b.split('/').pop().replace(/^FS-\d{3}-/, '').replace(/-/g, ' ');
+    const words = b.split('/').pop().replace(/^FS-\d{3}(?:-\d{3})?-/, '').replace(/-/g, ' ');
     const title = words.charAt(0).toUpperCase() + words.slice(1);
     const remote = git(['rev-parse', '--verify', '--quiet', `refs/remotes/origin/${b}`], { ok: true });
     const tip = git(['rev-parse', b], { ok: true });
@@ -399,12 +405,27 @@ const word = {
 
   async resume() {
     const list = started();
+    const theirs = started('claude');
     const pick = plain.slice(1).join(' ');
+    const line = (s, n) => `${s.here ? '*' : ' '} ${n}  ${s.id || '      '}  ${s.title.padEnd(34).slice(0, 34)}  ${s.state}`;
     if (!pick) {
-      if (!list.length) return say('Nothing started that is not yet merged. dibon new "…" begins something.');
-      say(`You have ${list.length} thing${list.length === 1 ? '' : 's'} started:`);
-      list.forEach((s, i) => say(`${s.here ? '*' : ' '} ${i + 1}  ${s.id || '      '}  ${s.title.padEnd(34).slice(0, 34)}  ${s.state}`));
-      return say('Say: dibon resume 1, or its row (dibon resume FS-890), or a word from it.');
+      if (!list.length) say('Nothing of yours started that is not yet merged. dibon new "…" begins something.');
+      else {
+        say(`You have ${list.length} thing${list.length === 1 ? '' : 's'} started:`);
+        list.forEach((s, i) => say(line(s, i + 1)));
+        say('Say: dibon resume 1, or its row (dibon resume FS-890), or a word from it.');
+      }
+      // FS-907: my Claude's work, to see, not to resume: it is Claude's.
+      if (theirs.length) {
+        say(`Your Claude's, waiting for you (${theirs.length}):`);
+        theirs.forEach((s) => say(line(s, '-')));
+        say('It is Claude\'s work: ask Claude to go on with it, or to upload, merge and push it.');
+      }
+      return;
+    }
+    const claudes = theirs.filter((s) => s.branch === pick || s.id === pick.toUpperCase() || s.branch.includes(slug(pick)));
+    if (claudes.length && !list.some((s) => s.branch === pick || s.id === pick.toUpperCase() || s.branch.includes(slug(pick)))) {
+      stop(`That is your Claude's work (${claudes.map((s) => s.branch).join(', ')}): ask Claude to go on with it. It is not yours to resume.`);
     }
     let found = list.filter((s) => s.branch === pick); // a branch named in full
     if (found.length) { /* that one */ } else if (/^\d+$/.test(pick)) found = list[+pick - 1] ? [list[+pick - 1]] : [];
@@ -624,6 +645,8 @@ const word = {
     // FS-889: what else I have started, one line.
     const list = started();
     if (list.length > 1) say(`Started: ${list.map((s) => `${s.id || s.branch}${s.here ? ' (here)' : ''}`).join(', ')}. dibon resume goes back to one.`);
+    const theirs = started('claude');
+    if (theirs.length) say(`Your Claude has ${theirs.length} waiting for you: ${theirs.map((s) => s.id || s.branch).join(', ')}.`);
   },
 
   // FS-853: the reader's History section, in a terminal.
