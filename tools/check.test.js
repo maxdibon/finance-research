@@ -1287,8 +1287,9 @@ test('words: download brings two people\'s register rows together', () => {
   try {
     run(where, 'git', ['clone', '--quiet', '--bare', ROOT, shared]);
     run(where, 'git', ['clone', '--quiet', shared, at('setup')]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/citations.js', 'tools/docregister.js']) fs.copyFileSync(path.join(ROOT, f), path.join(at('setup'), f));
-    run(at('setup'), 'git', ['-c', 'user.name=Setup', '-c', 'user.email=s@example.test', '-c', 'core.hooksPath=/dev/null', 'commit', '-qam', 'FS-890: the tools under test']);
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/citations.js', 'tools/docregister.js', 'tools/board.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(at('setup'), f));
+    run(at('setup'), 'git', ['add', '-A', 'tools', 'docs']);
+    run(at('setup'), 'git', ['-c', 'user.name=Setup', '-c', 'user.email=s@example.test', '-c', 'core.hooksPath=/dev/null', 'commit', '-qm', 'FS-890: the tools under test']);
     run(at('setup'), 'git', ['push', '-q', 'origin', 'HEAD:main']);
     const people = { betty: 'Betty', allan: 'Allan' };
     for (const [who, name] of Object.entries(people)) {
@@ -1337,6 +1338,51 @@ test('words: download brings two people\'s register rows together', () => {
     assert.match(merged[0].notes, /\*\*Allan:\*\* a note\..*\*\*Betty:\*\* another note\./);
     assert.doesNotMatch(run(at('betty'), 'git', ['rev-parse', '--abbrev-ref', 'HEAD']), new RegExp(allanId));
     assert.match(run(at('betty'), 'node', ['tools/check.js']), /all checks pass/);
+  } finally {
+    fs.rmSync(where, { recursive: true, force: true });
+  }
+});
+
+// FS-892: a row may name several, the lead first, each on the team.
+test('register: a row with several people passes, and one not on the team fails', () => {
+  const give = (who) => (d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) [^|]+ \|/m, `$1 ${who} |`));
+  assert.deepStrictEqual(runWith(give('Betty, Lillian')), []);
+  assert.deepStrictEqual(names(runWith(give('Betty, Somebody'))), ['register']);
+});
+
+// FS-891, FS-892: join puts me on a row after its lead, on my own branch;
+// the board shows it being done, then in review; leave hands it back.
+test('words: join, leave and the board, in a pretend repository', () => {
+  const { spawnSync } = require('child_process');
+  const where = fs.mkdtempSync(path.join(os.tmpdir(), 'dibon-join-'));
+  const work = path.join(where, 'work');
+  const run = (cmd, a) => { const r = spawnSync(cmd, a, { cwd: fs.existsSync(work) ? work : where, encoding: 'utf8' }); return `${r.stdout}${r.stderr}`; };
+  try {
+    run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
+    run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'tools/check.js']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const [k, v] of [['user.name', 'Lillian Test'], ['user.email', 'lillian@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
+    run('git', ['add', '-A', 'tools']);
+    run('git', ['commit', '-qm', 'FS-891: the tools under test']);
+    run('git', ['push', '-q', 'origin', 'HEAD:main']);
+    const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
+    const reg = () => require('./register').rows(work);
+    const row = reg().find((r) => r.status === 'OPEN' && r.with === 'Eric');
+    assert.match(d('join', row.id), new RegExp(`Joined ${row.id}: Eric leads`));
+    assert.strictEqual(reg().find((r) => r.id === row.id).with, 'Eric, Lillian');
+    const here = run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).trim();
+    assert.match(here, new RegExp(`^docs/${row.id}-lillian-`));
+    const b = require('./board');
+    assert.ok(b.board(work).doing.some((c) => c.id === row.id));
+    fs.writeFileSync(path.join(work, '.git', 'dibon-reviews.json'), JSON.stringify([{ headRefName: here, isDraft: false, createdAt: new Date().toISOString() }]));
+    assert.ok(b.board(work).review.some((c) => c.id === row.id));
+    assert.match(d('join', row.id), /You are on .* already/);
+    assert.match(d('leave', row.id), /Eric has it/);
+    assert.strictEqual(reg().find((r) => r.id === row.id).with, 'Eric');
+    const alone = reg().find((r) => r.status === 'OPEN' && r.with === 'Eric' && r.id !== row.id);
+    run('git', ['config', 'user.name', 'Eric Test']);
+    assert.match(d('leave', alone.id), /You are the only one/);
+    assert.match(d('leave', alone.id, '--to', 'Betty'), /Betty has it/);
   } finally {
     fs.rmSync(where, { recursive: true, force: true });
   }

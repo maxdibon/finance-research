@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890]
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892]
 last_reviewed: 2026-10-22
 ---
 
@@ -272,6 +272,9 @@ by the owner on 2026-10-16, FS-867):
 | **Small, short-lived changes** | Branches live a day or two; a pull request a reviewer can read in twenty minutes |
 | **Reviews within a working day** | Reviewers answer within one working day; a suggested change can be applied in one click |
 | **Ownership is visible** | The code owners table answers "whom do I ask?" |
+| **One board, from the register** | The reader's Board (FS-891): every open row as a card, to pick up, being done, in review, done in the last fortnight, each with who is on it and since when; built from the register and the branches, so there is no second list to keep. Until the team is in Dibon's GitHub organisation, a card moves only once its save is merged |
+| **Join, don't claim** | Anyone joins a row with `dibon join` (FS-892): their name goes on it after its lead, and they work on their own branch. The first name leads: answers for the row and says when it is done. `dibon leave` steps off; the next name leads, and the last one hands it to someone. Claude joins only on its person's word |
+| **About three at once** | More than three things started at once and nothing finishes: `dibon new` and `dibon join` note it, and `dibon resume` lists them (FS-891) |
 | **Specs before code** | A capability is built from its spec and journey; a story cites both (testing.md) |
 | **Released by a switch, not a deploy** | New behaviour ships off, behind a flag, and is turned on when ready |
 | **Definition of done** | Merged with its tests, its documents and its runbook current; the register row closed |
@@ -366,6 +369,8 @@ tool, and Claude in the desktop app, ask which you mean.
 | **download** | Bring the latest from the repository into my copy (the repository to me) |
 | **start** "…", or **new** | Begin a piece of work on its own branch, with its register row; **new spec** "…" (or journey, module, customer) makes the document too |
 | **resume**, or **continue** | Go back to something I started; my unsaved edits are parked, not lost |
+| **join** row | Take part in a row someone has: my name after its lead, my own branch for it |
+| **leave** row | Step off a row; the next name leads |
 | **note** "…" | Write the change note: what changed, and for whom |
 | **meeting** customer date | Open a meeting record, registered as a document |
 | **answered** customer number "…" | Move a customer's open answer to Answered, dated |
@@ -445,6 +450,22 @@ resume: ask Claude to go on with it. A teammate's branches, and their
 Claude's, are theirs and not listed. Examples:
 `dibon resume`; `dibon resume 2`; `dibon resume FS-890`;
 `dibon resume top-up`.
+
+### join
+
+Takes part in a row someone already has (FS-892): your name goes in its
+With, after its lead's, and a branch of your own starts for it,
+`docs/<row>-<your handle>-<words>`, so your work stays yours. No one's
+leave is needed; the people on it see you on the board once your save is
+merged. With three things already started, it notes it. Example:
+`dibon join FS-826`.
+
+### leave
+
+Steps off a row: your name comes out of its With, and the next name
+leads. The last one on it hands it to someone: `--to` and their name.
+Your branch stays yours, to finish or discard. Examples:
+`dibon leave FS-826`; `dibon leave FS-826 --to Betty`.
 
 ### continue
 

@@ -38,6 +38,8 @@ const WORDS = [
   ['new', 'The same as start; name a kind (spec, journey, module, customer, meeting) to make the document too.', ['dibon new spec "Loan top-up"', 'dibon new journey "A borrower tops up a loan"', 'dibon new "Fix the agenda"']],
   ['resume', 'Go back to something you started: lists them, or takes you to one by number, row or a word; your unsaved edits are parked, not lost.', ['dibon resume', 'dibon resume 2', 'dibon resume FS-890', 'dibon resume top-up']],
   ['continue', 'The same as resume.', ['dibon continue', 'dibon continue top-up']],
+  ['join', 'Take part in a row someone has: your name on it, after its lead, and your own branch for it.', ['dibon join FS-826']],
+  ['leave', 'Step off a row: the next name leads; the last one on it hands it to someone.', ['dibon leave FS-826', 'dibon leave FS-826 --to Betty']],
   ['note', 'Write the change note: what changed, for whom.', ['dibon note "Two open answers settled" --for roan-capital', 'dibon note "Checks explain themselves" --for team --kind patch']],
   ['meeting', 'Open a meeting record for a customer, registered as a document.', ['dibon meeting roan-capital 2026-10-22']],
   ['answered', 'Move a customer\'s open answer to Answered, dated, with the answer.', ['dibon answered roan-capital 24 "The accountant and the finance lead receive it"']],
@@ -292,6 +294,7 @@ async function begin() {
   const name = `${b}/${row || 'FS-NEW'}-${slug(topic)}`;
   const what = KINDS[kind] ? `a new ${kind}, "${topic}"` : `"${topic}"`;
   if (!await ask(`Start ${what} on a new branch from the repository${row ? `, for ${row}` : ', with a new register row'}?`)) return say('Not started.');
+  tooMany();
   const from = branch();
   if (!onMain() && park(from)) say(`Your unsaved edits on ${from} are parked; they come back when you resume it.`);
   git(['switch', '-c', name, base]);
@@ -410,6 +413,29 @@ function unpark(b) {
   return true;
 }
 
+// ── join and leave (FS-892) ───────────────────────────────────────────────
+// Me, by the name the team table knows (my git name's first word); my
+// handle, for my branches' names.
+function myName() {
+  const n = git(['config', '--get', 'user.name'], { ok: true }).split(' ')[0];
+  if (!n || !require('./register').team(ROOT).has(n)) stop(`Your name${n ? `, "${n}",` : ''} is not on the team table in ways-of-working §1: ask for your row there, or set git's user.name to the name it gives you.`);
+  return n;
+}
+const handleOf = (name) => (require('./register').team(ROOT).get(name) || {}).handle || slug(name);
+// A row's With set, in whichever register file holds it.
+function setWith(id, names) {
+  const row = require('./register').rows(ROOT).find((r) => r.id === id);
+  const c = row.text.split('|').slice(1, -1).map((s) => s.trim());
+  c[5] = names.join(', ');
+  write(row.file, read(row.file).replace(row.text, `| ${c.join(' | ')} |`));
+}
+// FS-891: a note, never a stop, at three things started at once.
+const WIP = 3;
+function tooMany() {
+  const n = started().length;
+  if (n >= WIP) say(`Note: you have ${n} things started already. Finishing one first keeps work moving (ways-of-working §5): dibon resume lists them.`);
+}
+
 // ── the document register: a new row ─────────────────────────────────────
 // By the register's columns (tools/docregister.js, FS-857); the
 // customer's own table of documents, on its delivery map, follows.
@@ -481,6 +507,7 @@ const word = {
     if (dirty.length) stop(`You have unsaved edits (${dirty.map((u) => u.file).join(', ')}). Save them (dibon save) or discard them (dibon discard <file>) first.`);
     if (!hasRemote()) stop('There is no repository to download from.');
     git(['fetch', '--quiet', 'origin']);
+    require('./board').remember(ROOT); // FS-891: the board's In review
     const behind = +git(['rev-list', '--count', 'HEAD..origin/main']);
     if (!behind) { say('Your copy is up to date: nothing new from the team.'); return; }
     const files = git(['diff', '--name-only', 'HEAD...origin/main']).split('\n').filter(Boolean);
@@ -519,6 +546,52 @@ const word = {
   // bringing back that branch's.
   // The same word as resume, at the owner's asking.
   async continue() { return word.resume(); },
+
+  // FS-892: take part in a row, rather than take it. Adds my name to its
+  // With (the lead stays first) and starts my own branch for it.
+  async join() {
+    const id = (plain[1] || '').toUpperCase();
+    if (!/^FS-\d{3}$/.test(id)) stop('Say which row: dibon join FS-826.');
+    const row = require('./register').rows(ROOT).find((r) => r.id === id);
+    if (!row) stop(`${id} is not in your copy's register: dibon download first.`);
+    if (row.status !== 'OPEN') stop(`${id} is ${row.status.toLowerCase()}: reopen it before joining.`);
+    const me = myName();
+    const on = row.with.split(/\s*,\s*/);
+    if (on.includes(me)) {
+      const mine = started().find((s) => s.id === id);
+      return say(`You are on ${id} already${mine ? `: dibon resume ${id} takes you to your branch` : ''}.`);
+    }
+    if (!await ask(`Join ${id}, "${row.point.slice(0, 80)}", led by ${on[0]}? It starts your own branch for it.`)) return say('Not joined.');
+    tooMany();
+    const from = branch();
+    if (!onMain() && park(from)) say(`Your unsaved edits on ${from} are parked; they come back when you resume it.`);
+    let base = 'main';
+    if (hasRemote()) { git(['fetch', '--quiet', 'origin']); base = 'origin/main'; }
+    const name = `docs/${id}-${handleOf(me)}-${slug(row.point).split('-').slice(0, 4).join('-')}`;
+    git(['switch', '-c', name, base]);
+    setWith(id, [...on, me]);
+    say(`Joined ${id}: ${on[0]} leads, and you are on it too. Your branch: ${name}. Save and upload as usual; the board shows you on it once your save is merged.`);
+  },
+
+  // FS-892: step off a row. The next name leads; the last one hands it on.
+  async leave() {
+    const id = (plain[1] || '').toUpperCase();
+    if (!/^FS-\d{3}$/.test(id)) stop('Say which row: dibon leave FS-826.');
+    if (onMain()) stop(`Leave from your work on ${id}: dibon resume ${id}, then dibon leave ${id}.`);
+    const row = require('./register').rows(ROOT).find((r) => r.id === id);
+    if (!row) stop(`${id} is not in your copy's register.`);
+    const me = myName();
+    const on = row.with.split(/\s*,\s*/);
+    if (!on.includes(me)) stop(`You are not on ${id}: it is with ${row.with}.`);
+    const rest = on.filter((n) => n !== me);
+    const to = flag('--to');
+    if (!rest.length && !to) stop(`You are the only one on ${id}: say who takes it, dibon leave ${id} --to Betty.`);
+    if (to && !require('./register').team(ROOT).has(to)) stop(`${to} is not on the team table (ways-of-working §1).`);
+    const next = rest.length ? rest : [to];
+    if (!await ask(`Leave ${id}? ${next[0]} ${on[0] === me ? 'leads it from now' : 'still leads it'}.`)) return say('Still on it.');
+    setWith(id, next);
+    say(`Left ${id}: ${next.join(', ')} ${next.length === 1 ? 'has' : 'have'} it, ${next[0]} leading. Save it: dibon save "Left ${id}". Your branch stays yours.`);
+  },
 
   async resume() {
     const list = started();
@@ -746,6 +819,8 @@ const word = {
     pushBranch();
     // A review opened for the team, or an open one marked ready.
     const open = spawnSync('gh', ['pr', 'create', '--fill', '--base', 'main'], { cwd: ROOT, encoding: 'utf8' });
+    // FS-891: the board's In review, as GitHub has it now.
+    require('./board').remember(ROOT);
     if (open.status === 0) return say(`Shared: the team is asked to review ${open.stdout.trim()}.`);
     const ready = spawnSync('gh', ['pr', 'ready'], { cwd: ROOT, encoding: 'utf8' });
     if (ready.status === 0) return say('Shared: your review is marked ready, and the team is asked.');

@@ -479,7 +479,26 @@ blockquote{border-left:3px solid var(--line);margin:12px 0;padding:2px 14px}bloc
 
 const NAV = [['index.html', 'Search'], ['README.html', 'README'], ['docs/start-here.html', 'Start here'], ['docs/overview.html', 'Overview'],
   ['docs/journeys/README.html', 'Journeys'], ['docs/specs/README.html', 'Specs'], ['docs/customers/roan-capital.html', 'Roan Capital'],
-  ['docs/delivery-plan.html', 'Delivery plan'], ['REVIEW.html', 'Review'], ['HANDOFF.html', 'Handoff']];
+  ['docs/delivery-plan.html', 'Delivery plan'], ['REVIEW.html', 'Review'], ['board.html', 'Board'], ['HANDOFF.html', 'Handoff']];
+
+// FS-891: the board, from the register and the branches (tools/board.js):
+// a card per row, in four columns, filtered by person on the page.
+function boardPage(root, team) {
+  const b = require('./board');
+  const cols = b.board(root);
+  const who = (n) => (team.has(n) ? `${n} (${team.get(n).role})` : n);
+  const ago = (ms) => { if (!ms) return ''; const d = Math.max(0, Math.floor((Date.now() - ms) / 86400000)); return d === 0 ? 'today' : d === 1 ? '1 day' : `${d} days`; };
+  const plain = (s) => s.replace(/\*\*|`/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  const card = (c) => `<div class="card" data-with="${html(c.with.join('|'))}"><a href="REVIEW.html#${c.id}">${c.id}</a> <small>${html(c.criticality === '—' ? c.status.toLowerCase() : c.criticality)}${c.since ? ` · ${ago(c.since)}` : ''}</small><br>${html(plain(c.point).slice(0, 140))}${plain(c.point).length > 140 ? '…' : ''}<br><small>${c.with.map((n, i) => `${i === 0 && c.with.length > 1 ? 'Leads: ' : ''}${html(who(n))}`).join(' · ') || '—'}${c.branches ? ` · <code>${html(c.branches.join(', '))}</code>` : ''}</small></div>`;
+  const SHOW_DONE = 40;
+  const col = (title, list, cap) => `<section class="col"><h2>${title} (${list.length})</h2>${list.slice(0, cap || list.length).map(card).join('')}${cap && list.length > cap ? `<p class="meta">And ${list.length - cap} more in <a href="REVIEW.html">the register</a>.</p>` : ''}</section>`;
+  const names = [...team.keys()];
+  return `<h1>Board</h1><p class="meta">The register's rows as cards (FS-891): to pick up, being done, in review, and done in the last ${b.DONE_DAYS} days. Built from the register and the branches, so there is no second list: <code>dibon join</code> puts you on a row, <code>dibon share</code> puts it in review. A row leads with its first name (FS-892).</p>
+<label>Show <select id="who"><option value="">everyone</option>${names.map((n) => `<option>${html(n)}</option>`).join('')}</select></label>
+<style>.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin-top:1rem}.col h2{font-size:1rem;margin:.2rem 0 .6rem}.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:.5rem .6rem;margin-bottom:.5rem;font-size:.9rem}.card.hide{display:none}</style>
+<div class="cols">${col('To pick up', cols.pick)}${col('Doing', cols.doing)}${col('In review', cols.review)}${col(`Done, last ${b.DONE_DAYS} days`, cols.done, SHOW_DONE)}</div>
+<script>const s=document.getElementById('who');s.addEventListener('change',()=>{const v=s.value;document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',!!v&&!c.dataset.with.split('|').includes(v)))});</script>`;
+}
 
 // FS-853: a document's history at its foot, from git and never written by
 // hand: the commits that changed its content, newest first, grouped by the
@@ -523,7 +542,9 @@ function reviewBody(body, team = new Map()) {
   const lines = body.split('\n');
   const at = lines.findIndex((l) => /^\| Id \| Raised by \| Point \| Status \| Criticality \| With \| Notes \|$/.test(l));
   // FS-882: who has a row, by name and role ("Betty (Project manager)").
-  const who = (n) => (team.has(n) ? `${n} (${team.get(n).role})` : n);
+  // FS-892: a row may have several, the lead first.
+  const one = (n) => (team.has(n) ? `${n} (${team.get(n).role})` : n);
+  const who = (w) => w.split(/\s*,\s*/).map(one).join(', ');
   if (at < 0) return body;
   const rows = lines.filter((l) => /^\| FS-\d{3} \|/.test(l)).map((l) => l.split('|').slice(1, -1).map((s) => s.trim()));
   const open = rows.filter((c) => c[3] === 'OPEN')
@@ -536,7 +557,7 @@ function reviewBody(body, team = new Map()) {
     '',
     `${open.length} open: ${CRITICALITY_ORDER.map((k) => `${byCrit[k] || 0} ${k}`).join(', ')}. Closed: ${Object.entries(byStatus).map(([k, n]) => `${n} ${k.toLowerCase()}`).join(', ')}.`,
     '',
-    `With: ${Object.entries(tally(open, 5)).sort((a, b) => b[1] - a[1]).map(([n, k]) => `${who(n)} ${k}`).join(', ')}.`,
+    `With: ${Object.entries(open.flatMap((c) => c[5].split(/\s*,\s*/)).reduce((m, n) => { m[n] = (m[n] || 0) + 1; return m; }, {})).sort((a, b) => b[1] - a[1]).map(([n, k]) => `${one(n)} ${k}`).join(', ')}.`,
     '',
     // FS-844: a subsection per criticality, and the register by the
     // hundred, so the contents list gives real jump points.
@@ -688,6 +709,7 @@ q.addEventListener('input',show);</script>`;
     + (forCustomer.length ? `<h2>Released in the documentation, waiting for their customer's release (${forCustomer.length})</h2><ul>${forCustomer.map(noteRow).join('')}</ul>` : '')
     + `<h2>Documents changed since ${html(rel.tag ? rel.tag.slice(5) : 'the release')} (${changedPages.length})</h2>${changedPages.length ? `<ul>${changedPages.map((f) => `<li>${idx.docs.has(f) ? `<a href="${pageOf(f)}">${html(f)}</a>` : html(f)}</li>`).join('')}</ul>` : '<p>None.</p>'}`;
   fs.writeFileSync(path.join(outDir, 'unreleased.html'), shell('Unreleased', 'unreleased.html', unreleased, note));
+  fs.writeFileSync(path.join(outDir, 'board.html'), shell('Board', 'board.html', boardPage(root, require('./register').team(root)), note));
   return { outDir, pages: pages.length, ids: defs.size, reader: Boolean(note) };
 }
 
