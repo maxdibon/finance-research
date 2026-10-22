@@ -37,3 +37,7 @@ account is in the repository.
 
 The script lists the links to set by hand, in the issue's Relationships
 panel.
+
+The organisation is `dibon-consulting` (FS-953): run it with
+`--repo dibon-consulting/finance --owner dibon-consulting`, once the
+repository is moved in and the Project made there.

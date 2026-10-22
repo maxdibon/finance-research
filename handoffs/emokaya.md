@@ -33,27 +33,41 @@ here.
 
 ## Where I left off
 
-As at 22 October 2026, the eve of the MVP day.
+As at 23 October 2026, the morning of the MVP day (12:00 to 16:00).
 
-- **The MVP day, 23 October, 12:00 to 16:00** (FS-925, FS-928 to FS-931):
-  the goal is the MVP set up, one walk-through on public Azure with
-  made-up data (sign in, borrow, approve, pay out, repay). Before it: the
-  Azure subscription, then he or Allan runs code/platform/azure-sandbox
-  (tofu validate and read the plan first; not yet run); the GitHub
-  Project, its issues prepared as a script for him to run (still to
-  write); the one-page brief; a row per person's goal.
-- **SBM Bank** (PT-56): its NDA expected 23 October (FS-911), kept as
-  received and reviewed; then the pack for the meeting in person
-  (FS-912, FS-913, FS-920): note Rumango, the incumbent with iCust and a
-  reconciliation product (FS-924); the Kapu trademark (FS-921).
+- **GitHub first** (FS-952 to FS-954): before noon, he and Jimmy alone
+  create the organisation `dibon-consulting` on Team (he is first
+  owner, Jimmy second), require two-factor, set member privileges, move
+  this repository in, set the rules on main, and make the GitHub Project
+  there; then run code/platform/github-project/create-issues.js with
+  `--repo dibon-consulting/finance --owner dibon-consulting`, a dry run
+  first. At 12:00, with everyone: accounts and two-factor for those
+  without, invitations, teams, `git remote set-url`, `dibon claude`.
+  The words still assume one owner who uploads for all (spec §8 step
+  11): change them once the organisation exists.
+- **Odoo is in the delivery** (FS-955, a decision): sign-in through
+  Keycloak, a lead in CRM, the agreement in Sign, a complaint in
+  Helpdesk, the eight positions in Employees (Gibeon FS-945, Daniel
+  FS-946); the books stay phase 2. The Enterprise modules come through
+  the partner account before noon.
+- **On the sandbox** (FS-956): the components only; GitHub, M-Pesa's
+  sandbox, the bank stand-in and text messages are not on Azure. The
+  Azure run (code/platform/azure-sandbox) is still his or Allan's, after
+  Jimmy's subscription (FS-938).
+- **The brief** is republished with all this:
+  https://claude.ai/artifact/HL6TiL9R3oQNVLr2hRf9MR; not yet shared.
+- **SBM Bank** (PT-56): its NDA due today (FS-911), kept as received and
+  reviewed; then the pack (FS-912, FS-913, FS-920); Rumango is the
+  incumbent (FS-924); the Kapu trademark (FS-921).
+- **Roan Capital:** the Motor Vehicle and Title Deed product documents
+  (FS-934); the sale window against the law for the 29 October meeting
+  (FS-935).
 - **Lofty Corban** (CU-05): the follow-up draft to send
-  (clients/lofty-corban/working); its NDA (FS-918); its open answers.
-- **Waiting on his decision:** who sees and does what (FS-893),
-  delegation while someone is away (FS-898), the GitHub connector
-  (FS-897), the competitors to add (FS-924), credit limits and duplicate
-  retries as builds (FS-926, FS-927).
-- **Releases:** the change notes waiting, on the reader's "Unreleased"
-  page; the next release is his call.
+  (clients/lofty-corban/working); its NDA (FS-918).
+- **Waiting on his decision:** FS-893 (who sees and does what), FS-898
+  (delegation), FS-897 (the GitHub connector), FS-924 (competitors),
+  FS-926 and FS-927 (credit limits, duplicate retries), FS-928 (the
+  Board's team filter); FS-906 (iManage's data processing agreement).
 - **Older:** the Data Commissioner registration (FS-367, Critical); which
   outreach letters went (FS-839); whether KCB and NBK may be named (FS-420).
 
@@ -61,7 +75,7 @@ As at 22 October 2026, the eve of the MVP day.
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric (160)
+### Rows with Eric (161)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -101,6 +115,7 @@ As at 22 October 2026, the eve of the MVP day.
 | FS-929 | Work in the cloud, for visibility: each person deploys their components on Azure to test and check configurati | High |
 | FS-930 | Use GitHub's board (Projects) as part of the set-up, for the MVP day and after | High |
 | FS-934 | Roan Capital's three products, as locked on 21 October: Biashara (unsecured, KES 3,000 to 100,000, 14 or 30 da | High |
+| FS-950 | MVP day (23 October), Eric: The day's authority: decisions, reviews, merges, and a mock change advisory board | High |
 | FS-036 | Check the Odoo Enterprise Agreement for limits on serving internal work through portal users or API accounts | Medium |
 | FS-161 | WhatsApp route: Meta's Cloud API directly, or through a business solution provider. Either way Meta approves t | Medium |
 | FS-162 | Quiet hours and rate limits per recipient: what the Communications Authority requires, and what we set as poli | Medium |
@@ -232,4 +247,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-None.
+- `claude/emokaya/FS-952-mvp-start`: nothing saved yet; here now, 7 files unsaved

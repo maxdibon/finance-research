@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-22
+last_reviewed: 2026-10-23
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1715,3 +1715,22 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** a state store to keep and guard; OpenTofu on each
   machine that runs it; HashiCorp's documentation read with care where
   the two tools have drifted apart.
+
+## FS-955 · Odoo in the MVP's delivery, not a stretch
+
+*Entry written 2026-10-23 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** Odoo joins the MVP walk-through and its critical path, as
+  R1 plans it: staff sign in through Keycloak; a lead in CRM (BS-01)
+  starts the walk-through; the agreement is signed in Sign by borrower
+  and guarantor (BS-02); the signed record in Roan Capital's Documents
+  workspace; a complaint in Helpdesk with its 30-day clock; the eight
+  positions in Employees (BS-12).
+- **Requires:** BS-01, BS-02, BS-12.
+- **Argued (owner):** "let's have odoo as part of the delivery, not
+  stretch".
+- **Argued against:** Odoo's books (BS-08) today: phase 2, and Roan
+  Capital has yet to say where its books are kept.
+- **Costs (inferred):** two more people on the critical path; the
+  Enterprise modules fetched through the partner account before noon;
+  Odoo's sign-in waits on the staff realm (FS-942).

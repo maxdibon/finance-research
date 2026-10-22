@@ -11,8 +11,8 @@ depends_on: [access-keycloak]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-750, FS-805, FS-846, FS-886, FS-894, FS-895, FS-896, FS-897, FS-901, FS-902, FS-904, FS-905]
-last_reviewed: 2026-10-22
+review_ids: [FS-750, FS-805, FS-846, FS-886, FS-894, FS-895, FS-896, FS-897, FS-901, FS-902, FS-904, FS-905, FS-953, FS-954]
+last_reviewed: 2026-10-23
 ---
 
 # GitHub — code, reviews, planning and pipelines — component specification
@@ -145,7 +145,7 @@ path is [flows](../architecture/flows.md) §4.
 
 ### 4.1 Organisation, teams and roles
 
-- **One organisation,** `dibon` if the name is free, holding `finance`
+- **One organisation,** `dibon-consulting` (`dibon` was taken; FS-953), holding `finance`
   (this repository), the code repositories, and `platform` (manifests).
 - **A team per role** (ways-of-working §1): `team-lead`, `architects`,
   `security`, `compliance`, `product`, `delivery`, `engineering`,
@@ -241,7 +241,10 @@ the code.
    email and turns on two-factor authentication, by security key where
    they have one. They do it themselves.
 2. **The team lead creates the organisation** on the Team plan and is
-   its first owner; the CEO is the second.
+   its first owner; the CEO is the second. Steps 2 to 5 and 7 are theirs
+   alone, before anyone else is invited (FS-954); the rest is done with
+   everyone together. The GitHub Project is made in the organisation,
+   not under a person's own account.
 3. **Two-factor authentication required** for every member; members
    invited only once it is on, since GitHub removes members without it.
 4. **Member privileges:** base permission none; members cannot create
@@ -257,7 +260,7 @@ the code.
 9. **`CODEOWNERS`, the pull request and issue templates, and the
    workflow** (§4.4) added, by pull request.
 10. **Each clone's address** changed to the organisation's:
-    `git remote set-url origin https://github.com/dibon/finance.git`.
+    `git remote set-url origin https://github.com/dibon-consulting/finance.git`.
 11. **The words updated** (tools/dibon.js): the single-owner exception
     ends, and each person uploads and shares their own branches.
 12. **Each person's Claude** set once with `dibon claude` (FS-905).
