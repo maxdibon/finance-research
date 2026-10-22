@@ -1426,3 +1426,40 @@ test('words: save does the routine for you, in a pretend repository', () => {
     fs.rmSync(where, { recursive: true, force: true });
   }
 });
+
+// FS-931: session end makes a person's handover, its generated part
+// listing the rows with them; session start puts the team's and theirs
+// together for a new session.
+test('words: session start and end keep a personal handover, in a pretend repository', () => {
+  const { spawnSync } = require('child_process');
+  const where = fs.mkdtempSync(path.join(os.tmpdir(), 'dibon-session-'));
+  const work = path.join(where, 'work');
+  const run = (cmd, a) => { const r = spawnSync(cmd, a, { cwd: fs.existsSync(work) ? work : where, encoding: 'utf8' }); return `${r.stdout}${r.stderr}`; };
+  try {
+    run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
+    run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'HANDOFF.md', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const [k, v] of [['user.name', 'Betty Test'], ['user.email', 'betty@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
+    run('git', ['add', '-A', 'tools', 'docs', 'HANDOFF.md']);
+    run('git', ['commit', '-qm', 'FS-931: the tools under test']);
+    run('git', ['push', '-q', 'origin', 'HEAD:main']);
+    const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
+    d('new', 'Betty has a thing to do');
+    const id = (run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3}/) || [])[0];
+    assert.match(d('session', 'end'), /Your handover is current/);
+    const mine = fs.readFileSync(path.join(work, 'handoffs', 'betty.md'), 'utf8');
+    assert.match(mine, /^# Betty · personal handover/m);
+    assert.match(mine, /^## Preferences$/m);
+    assert.ok(mine.includes(`| ${id} | Betty has a thing to do |`));
+    fs.writeFileSync(path.join(work, 'handoffs', 'betty.md'), mine.replace('To be written at the end of the first session.', 'Halfway through the thing.'));
+    run('git', ['add', '-A']);
+    run('git', ['commit', '-qm', `${id}: the thing, halfway`]);
+    assert.match(d('session', 'start'), /Your session, Betty/);
+    const both = fs.readFileSync(path.join(work, 'build', 'session', 'betty.md'), 'utf8');
+    assert.ok(both.includes('Halfway through the thing.'));
+    assert.ok(both.includes('## How we work'));
+    assert.match(d('handoff'), /We say session/);
+  } finally {
+    fs.rmSync(where, { recursive: true, force: true });
+  }
+});

@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892, FS-922]
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892, FS-922, FS-931]
 last_reviewed: 2026-10-22
 ---
 
@@ -388,6 +388,7 @@ tool, and Claude in the desktop app, ask which you mean.
 | **practice** | A private sandbox to try every word safely |
 | **role** "…" | Tell the words your role, once |
 | **claude** handle | Set, once, the name my Claude commits under |
+| **session start**, **session end** | Begin my day with the team's handover and mine; end it with mine brought up to date |
 
 ### What each word does for you
 
@@ -410,10 +411,12 @@ you asked:
 | **status** | Your branch, the release, what is unsaved and uploaded, the notes waiting, what you started, what your Claude has waiting, and how long since you downloaded | — |
 | **meeting**, **answered**, **received** | Each writes its record and registers it: a meeting record and its document row; an answer moved and dated; an original kept read-only, fingerprinted, and registered | The customer or file is not one we know |
 | **release** | The owner's: gathers the change notes into the changelogs, stamps each changed document's `released:` line, then the tag | Not the owner; nothing waiting |
+| **session** | Start: downloads, then puts the team's handover and yours together for a new session, your generated part fresh, and shows your status. End: your generated part fresh (your rows, your work, your Claude's), and what is unsaved or not uploaded; your Claude then writes where you left off and your preferences | Start does not download over unsaved edits |
 | **check**, **history**, **help**, **practice**, **role**, **claude** | Read or set only: the checks explained, a document's history, the words, a practice copy, your role, your Claude's name | — |
 
-**What no word does for you:** update the handover (Claude writes it at
-the end of a session, or when the owner asks); upload, share, merge or
+**What no word does for you:** write a handover's words (your Claude
+writes yours at the end of a session; the team's changes by pull
+request); upload, share, merge or
 release unless you say so; close a register row or write a decision.
 
 ### Three rules, and once before the first time
@@ -614,6 +617,18 @@ Example: `dibon practice`.
 Records your role once, for your notes and records, beside your name
 where the team table has none for you.
 Example: `dibon role "Project manager"`.
+
+### session
+
+Begins and ends a working session (FS-931). `dibon session start`
+downloads, then puts the team's handover (HANDOFF.md) and yours
+(handoffs/ and your handle) together in build/session/, for a new
+session to read, and shows your status. `dibon session end` brings the
+generated part of yours up to date (the rows with you, your work
+started, your Claude's work waiting) and says what is unsaved or not
+uploaded; your Claude then writes where you left off and any
+preferences, and you save. Examples: `dibon session start`;
+`dibon session end`.
 
 ### claude
 

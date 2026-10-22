@@ -54,6 +54,7 @@ const WORDS = [
   ['history', 'What changed in one document, newest first, by release.', ['dibon history docs/customers/roan-capital.md']],
   ['help', 'Every word, or one word, with examples.', ['dibon help', 'dibon help save']],
   ['release', 'The owner only: release to the public, the documentation or a customer\'s delivery.', ['dibon release docs', 'dibon release roan-capital']],
+  ['session', 'Begin or end a working session: start downloads and gives you the team\'s handover and your own; end brings your own up to date.', ['dibon session start', 'dibon session end']],
   ['practice', 'A private sandbox to try every word without touching the real documents.', ['dibon practice']],
   ['role', 'Tell the words your role, once (used in notes and records).', ['dibon role "Project manager"']],
   ['claude', 'Set, once, the identity your Claude commits under: "Claude for" you, from your handle in the team table.', ['dibon claude eric', 'dibon claude']],
@@ -206,6 +207,61 @@ function regenerate() {
   for (const f of c.documents(ROOT)) if (c.refresh(ROOT, f)) n++;
   for (const id of d.customers(ROOT)) if (d.refresh(ROOT, id)) n++;
   return n;
+}
+
+// ── each person's handover (FS-931) ───────────────────────────────────────
+// handoffs/<handle>.md: my preferences and where I left off, written by my
+// Claude; then a part generated from the register and the branches, made
+// fresh at each session's start and end, never edited by hand.
+const GENERATED = '## Generated';
+function personalHandover(me, handle) {
+  const file = `handoffs/${handle}.md`;
+  const role = (require('./register').team(ROOT).get(me) || {}).role || '';
+  let text = fs.existsSync(path.join(ROOT, file)) ? read(file) : `# ${me} · personal handover
+
+${me}${role ? ` (${role})` : ''}. Read after the team's handover, HANDOFF.md, by
+${me}'s Claude; written by it at the end of each session (FS-931). What
+another person's Claude would need belongs in the team's handover, not
+here.
+
+## Preferences
+
+How ${me} likes to work with Claude: to be written.
+
+## Where I left off
+
+To be written at the end of the first session.
+
+`;
+  const mine = require('./register').rows(ROOT).filter((r) => r.status === 'OPEN' && (r.with || '').split(/\s*,\s*/).includes(me));
+  const order = ['Critical', 'High', 'Medium', 'Low'];
+  mine.sort((a, b) => order.indexOf(a.criticality) - order.indexOf(b.criticality) || a.n - b.n);
+  const cell = (s) => s.replace(/\|/g, '/').replace(/\*\*/g, '').slice(0, 110);
+  const work = started();
+  const claudes = started('claude');
+  const gen = [
+    GENERATED,
+    '',
+    '*Made by dibon session start and end, from the register and the branches: never edit it by hand.*',
+    '',
+    `### Rows with ${me} (${mine.length})`,
+    '',
+    ...(mine.length ? ['| Row | Point | Criticality |', '|---|---|---|', ...mine.map((r) => `| ${r.id} | ${cell(r.point)} | ${r.criticality} |`)] : ['None.']),
+    '',
+    '### Work started',
+    '',
+    ...(work.length ? work.map((s) => `- \`${s.branch}\`: ${s.state}`) : ['None.']),
+    '',
+    `### ${me}'s Claude's work waiting`,
+    '',
+    ...(claudes.length ? claudes.map((s) => `- \`${s.branch}\`: ${s.state}`) : ['None.']),
+    '',
+  ].join('\n');
+  const at = text.indexOf(`\n${GENERATED}\n`);
+  text = `${(at < 0 ? text : text.slice(0, at + 1)).trimEnd()}\n\n${gen}`;
+  fs.mkdirSync(path.join(ROOT, 'handoffs'), { recursive: true });
+  write(file, text);
+  return file;
 }
 
 // ── what save does for you (FS-922) ───────────────────────────────────────
@@ -873,6 +929,37 @@ const word = {
     say(`Uploaded, but no review could be opened from here. Open one for ${branch()} on the repository, or tell the owner it is ready to merge.`);
   },
 
+  // FS-931: a session's two ends. Start: download, then the team's
+  // handover and mine, my generated part made fresh, in one file to paste
+  // into a new session or for my Claude to read. End: my generated part
+  // made fresh, and what is left unsaved or not uploaded; my Claude then
+  // writes where I left off, and my preferences, before I save.
+  async session() {
+    const step = plain[1];
+    if (!['start', 'end'].includes(step)) stop('Say which end: dibon session start, or dibon session end.');
+    const me = myName();
+    const handle = handleOf(me);
+    const file = `handoffs/${handle}.md`;
+    if (step === 'start' && !onMain() && unsaved().filter((u) => u.code !== '??').length) say('Not downloading: you have unsaved edits. Save them, then dibon download.');
+    else if (step === 'start' && hasRemote()) await word.download();
+    personalHandover(me, handle);
+    if (step === 'start') {
+      const team = read('HANDOFF.md');
+      const below = team.split('\n---\n').slice(1).join('\n---\n') || team;
+      const out = path.join(ROOT, 'build', 'session', `${handle}.md`);
+      fs.mkdirSync(path.dirname(out), { recursive: true });
+      fs.writeFileSync(out, `${below.trim()}\n\n---\n\n${read(file).trim()}\n`);
+      say(`Your session, ${me}: the team's handover, then yours (${file}), together in build/session/${handle}.md.`);
+      say('Paste it into a new session, or tell your Claude: read HANDOFF.md, then ' + file + '.');
+      return word.status();
+    }
+    const u = unsaved().filter((x) => x.code !== '??' && x.file !== file);
+    say(`Your handover is current where it is generated (${file}).`);
+    say(`Now your Claude writes "Where I left off", and any new preferences, in it; then: dibon save "Session end".`);
+    if (u.length) say(`Unsaved besides it: ${u.map((x) => x.file).join(', ')}.`);
+    if (hasRemote() && !onMain() && !git(['branch', '-r', '--list', `origin/${branch()}`], { ok: true })) say('Not uploaded yet: dibon upload, when you want it off this computer.');
+  },
+
   async status() {
     const rel = require('./release');
     say(`On ${branch()}${rowOfBranch() ? `, for ${rowOfBranch()}` : ''}. ${rel.line(rel.info(ROOT))}.`);
@@ -959,6 +1046,7 @@ const ASK = {
   update: 'Do you mean download (bring the latest from the repository into your copy) or upload (put your saved work on your branch in the repository)? Say dibon download or dibon upload.',
   pull: 'We say download: dibon download brings the latest from the repository into your copy.',
   push: 'We say upload (your branch to the repository, still yours) or share (before the team, for review): dibon upload or dibon share.',
+  handoff: 'We say session: dibon session start gives you the team\'s handover and your own; dibon session end brings yours up to date.',
   ready: 'We say share: dibon share puts your uploaded work before the team, for review.',
   switch: 'We say resume: dibon resume lists what you have started and takes you back to one; your unsaved edits are parked, and come back when you return.',
   checkout: 'We say resume: dibon resume lists what you have started and takes you back to one; your unsaved edits are parked, and come back when you return.',
