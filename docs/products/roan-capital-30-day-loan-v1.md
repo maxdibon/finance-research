@@ -1,24 +1,39 @@
 ---
 id: roan-capital-30-day-loan-v1
-name: Roan Capital — 30-day loan, product version 1 (draft)
+name: Roan Capital — Biashara, the 30-day loan, product version 1 (draft)
 kind: product-version
 status: draft
 law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830]
-last_reviewed: 2026-10-16
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830, FS-934]
+last_reviewed: 2026-10-23
 ---
 
-# Roan Capital · 30-day loan · product version 1 · draft
+# Roan Capital · Biashara, the 30-day loan · product version 1 · draft
 
-    product:   30-day loan
+    product:   Biashara (unsecured), the 30-day loan
     version:   1 (draft, not submitted)
     drafted:   2026-10-14, by Dibon, for Roan Capital's product owner
     status:    draft: every Ask below answered before it can be submitted
     source:    Roan Capital's requirement document; delivery map RC-26,
                RC-27, RC-30; lender-rules §2.4 (the vocabulary), §2.9
+
+**Agreed on 21 October 2026, to fold into the items below** (FS-934;
+Roan Capital's weekly update). This product is the one Roan Capital calls
+**Biashara**: KES 3,000 to 100,000, 14 or 30 days, daily, 1% a day flat,
+chattels held by the client and guarantors, with the Life Income Fund fee
+(A1 to A5, A7, A21, A22, as here). Agreed besides: no grace, default the
+day after a missed payment (A20); a due date on a holiday moves to the
+next working day (A11); every amount to two decimal places (A12, where we
+had instalments rounded up to the shilling); payouts by bank only, with a
+cut-off from 23:00 to 04:00 (A18 becomes the bank's charges); restructuring
+at 365 days, earlier by exception (A23). Two answers want a second look
+before they are encoded: early repayment that "shortens the term at the
+same rate" (A13), against reg 56(3) and (4); and the 1% a day, open to
+change after CBK's declination (A5; reg 55). Its two siblings, Motor
+Vehicle and Title Deed, get documents of their own.
 
 In git and the reader by exception, until Roan Capital's workspace in
 Dibon's Odoo Documents exists (rules, Dibon 10; FS-806): it holds no
