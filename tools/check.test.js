@@ -1218,3 +1218,172 @@ test('journeys: a journey with no "stops partway" row fails', () => {
   const f = runWith((d) => patch(d, JN('micro-trader'), (t) => t.replace('**He stops partway through enrolment.**', '**He changes his mind.**')));
   assert.deepStrictEqual(names(f), ['journeys']);
 });
+
+// FS-888, FS-889: new makes the document and its row; three things
+// started each keep their own id; resume parks one's edits and brings
+// another's back; a title started twice is resumed, not started again.
+test('words: new and resume, in a pretend repository', () => {
+  const { spawnSync } = require('child_process');
+  const where = fs.mkdtempSync(path.join(os.tmpdir(), 'dibon-new-'));
+  const work = path.join(where, 'work');
+  const run = (cmd, a) => { const r = spawnSync(cmd, a, { cwd: fs.existsSync(work) ? work : where, encoding: 'utf8' }); return `${r.stdout}${r.stderr}`; };
+  try {
+    run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
+    run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
+    for (const f of ['tools/dibon.js', 'tools/register.js']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const [k, v] of [['user.name', 'Betty Test'], ['user.email', 'betty@example.test'], ['dibon.role', 'Project manager'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
+    run('git', ['commit', '-qam', 'FS-888: the tool under test']);
+    run('git', ['push', '-q', 'origin', 'HEAD:main']);
+    const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
+    const read = (f) => fs.readFileSync(path.join(work, f), 'utf8');
+    const next = +require('./register').nextId(work).slice(3);
+    const id = (k) => `FS-${String(next + k).padStart(3, '0')}`;
+    assert.match(d('new', 'spec', 'Loan top-up'), new RegExp(`spec/${id(0)}-loan-top-up`));
+    assert.match(read('docs/specs/loan-top-up.md'), /^name: Loan top-up — build specification$/m);
+    assert.match(read('docs/specs/README.md'), /^\| \[loan-top-up\]\(loan-top-up\.md\) \| Build \|/m);
+    assert.match(d('new', 'journey', 'A borrower tops up a loan'), new RegExp(`${id(1)}.*listed in docs/journeys/README.md`));
+    assert.match(d('new', 'Fix the agenda'), new RegExp(`docs/${id(2)}-fix-the-agenda`));
+    fs.appendFileSync(path.join(work, 'docs/testing.md'), '\nAn edit on the agenda work.\n');
+    const list = d('resume');
+    assert.match(list, /3 things started/);
+    d('resume', 'top-up');
+    assert.ok(fs.existsSync(path.join(work, 'docs/specs/loan-top-up.md')));
+    assert.ok(!read('docs/testing.md').includes('An edit on the agenda work.'));
+    d('continue', id(2));
+    assert.ok(read('docs/testing.md').includes('An edit on the agenda work.'));
+    assert.match(d('new', 'spec', 'Loan top-up'), /You started that already/);
+    // FS-907: my Claude's work is listed apart, and is not mine to resume;
+    // another person's Claude's is not listed at all.
+    run('git', ['config', 'dibon.claude', 'Claude for Betty <claude-betty@noreply.dibon.co.ke>']);
+    run('git', ['stash', 'push', '-q', '-m', 'test: aside']);
+    for (const who of ['betty', 'eric']) {
+      run('git', ['switch', '-q', '-c', `claude/${who}/FS-907-drafted-for-${who}`, 'origin/main']);
+      fs.appendFileSync(path.join(work, 'docs/testing.md'), `\nDrafted for ${who}.\n`);
+      run('git', ['commit', '-qam', `FS-907: drafted for ${who}`]);
+    }
+    run('git', ['switch', '-q', `spec/${id(0)}-loan-top-up`]);
+    const both = d('resume');
+    assert.match(both, /Your Claude's, waiting for you \(1\)/);
+    assert.match(both, /Drafted for betty/);
+    assert.doesNotMatch(both, /Drafted for eric/);
+    assert.match(d('resume', 'drafted for betty'), /your Claude's work/);
+  } finally {
+    fs.rmSync(where, { recursive: true, force: true });
+  }
+});
+
+// FS-890: two people at once. Betty and Allan each start a row (the same
+// id, unseen by each other) and both add to an existing row's notes;
+// Allan's work reaches main; Betty's save warns that Allan's uploaded
+// branch changes her file too, and that she rewrapped a paragraph; her
+// download renumbers her row and keeps both notes, and the checks pass.
+test('words: download brings two people\'s register rows together', () => {
+  const { spawnSync } = require('child_process');
+  const where = fs.mkdtempSync(path.join(os.tmpdir(), 'dibon-two-'));
+  const shared = path.join(where, 'shared.git');
+  const at = (who) => path.join(where, who);
+  const run = (cwd, cmd, a) => { const r = spawnSync(cmd, a, { cwd, encoding: 'utf8' }); return `${r.stdout}${r.stderr}`; };
+  const read = (who, f) => fs.readFileSync(path.join(at(who), f), 'utf8');
+  try {
+    run(where, 'git', ['clone', '--quiet', '--bare', ROOT, shared]);
+    run(where, 'git', ['clone', '--quiet', shared, at('setup')]);
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/citations.js', 'tools/docregister.js', 'tools/board.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(at('setup'), f));
+    run(at('setup'), 'git', ['add', '-A', 'tools', 'docs']);
+    run(at('setup'), 'git', ['-c', 'user.name=Setup', '-c', 'user.email=s@example.test', '-c', 'core.hooksPath=/dev/null', 'commit', '-qm', 'FS-890: the tools under test']);
+    run(at('setup'), 'git', ['push', '-q', 'origin', 'HEAD:main']);
+    const people = { betty: 'Betty', allan: 'Allan' };
+    for (const [who, name] of Object.entries(people)) {
+      run(where, 'git', ['clone', '--quiet', shared, at(who)]);
+      for (const [k, v] of [['user.name', `${name} Test`], ['user.email', `${who}@example.test`], ['core.hooksPath', '/dev/null']]) run(at(who), 'git', ['config', k, v]);
+      fs.mkdirSync(path.join(at(who), 'sources', 'confidential'), { recursive: true });
+      fs.writeFileSync(path.join(at(who), 'sources', 'confidential', 'protected-names.txt'), '# test list\nZzqx Nobody\n');
+    }
+    const d = (who, ...a) => run(at(who), 'node', ['tools/dibon.js', ...a, '--yes']);
+    const open = require('./register').rows(at('allan')).filter((r) => r.status === 'OPEN').pop();
+    const note = (who, text) => { const f = path.join(at(who), 'REVIEW.md'); const t = fs.readFileSync(f, 'utf8'); fs.writeFileSync(f, t.replace(open.text, open.text.replace(/ \|$/, ` ${text} |`))); };
+    // Allan: a new row, a note on the open row, a line at the end of start-here; uploaded.
+    d('allan', 'new', 'Allan works on it');
+    note('allan', '**Allan:** a note.');
+    fs.appendFileSync(path.join(at('allan'), 'docs', 'start-here.md'), '\nA line from Allan.\n');
+    assert.match(d('allan', 'save', 'Allan\'s work'), /Saved on/);
+    run(at('allan'), 'git', ['push', '-q', '-u', 'origin', 'HEAD']);
+    // Betty: her own new row, a note on the same row, and a paragraph of start-here rewrapped for one word.
+    d('betty', 'new', 'Betty works on it');
+    note('betty', '**Betty:** another note.');
+    const sh = path.join(at('betty'), 'docs', 'start-here.md');
+    const lines = fs.readFileSync(sh, 'utf8').split('\n');
+    let s = lines.findIndex((l, i) => i > 12 && /^[A-Za-z]/.test(l) && lines.slice(i, i + 5).every((x) => /^[A-Za-z*]/.test(x)));
+    let e = s; while (lines[e] && lines[e].trim() && !/^[|#-]/.test(lines[e])) e++;
+    const words = lines.slice(s, e).join(' ').split(/\s+/); words[1] = `${words[1]}x`;
+    const wrapped = []; let cur = '';
+    for (const w of words) { if ((cur + w).length > 50) { wrapped.push(cur.trim()); cur = ''; } cur += `${w} `; }
+    wrapped.push(cur.trim());
+    lines.splice(s, e - s, ...wrapped);
+    fs.writeFileSync(sh, lines.join('\n'));
+    run(at('betty'), 'git', ['fetch', '-q']);
+    const saved = d('betty', 'save', 'Betty\'s work');
+    assert.match(saved, /also being changed on .*Allan Test/);
+    assert.match(saved, /a paragraph rewrapped\?/);
+    assert.match(saved, /Saved on/);
+    // Allan's work reaches main; Betty downloads.
+    run(at('allan'), 'git', ['push', '-q', 'origin', 'HEAD:main']);
+    const allanId = (run(at('allan'), 'git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3}/) || [])[0];
+    const got = d('betty', 'download');
+    assert.match(got, new RegExp(`${allanId} was taken on main meanwhile: your row is now FS-[0-9]{3}`));
+    const reg = require('./register').rows(at('betty'));
+    assert.strictEqual(reg.filter((r) => r.id === allanId).length, 1);
+    assert.ok(reg.some((r) => /Betty works on it/.test(r.point) && r.id !== allanId));
+    const merged = reg.filter((r) => r.id === open.id);
+    assert.strictEqual(merged.length, 1);
+    assert.match(merged[0].notes, /\*\*Allan:\*\* a note\..*\*\*Betty:\*\* another note\./);
+    assert.doesNotMatch(run(at('betty'), 'git', ['rev-parse', '--abbrev-ref', 'HEAD']), new RegExp(allanId));
+    assert.match(run(at('betty'), 'node', ['tools/check.js']), /all checks pass/);
+  } finally {
+    fs.rmSync(where, { recursive: true, force: true });
+  }
+});
+
+// FS-892: a row may name several, the lead first, each on the team.
+test('register: a row with several people passes, and one not on the team fails', () => {
+  const give = (who) => (d) => patch(d, 'REVIEW.md', (t) => t.replace(/^(\| FS-012 \|[^|]*\|[^|]*\| OPEN \| Low \|) [^|]+ \|/m, `$1 ${who} |`));
+  assert.deepStrictEqual(runWith(give('Betty, Lillian')), []);
+  assert.deepStrictEqual(names(runWith(give('Betty, Somebody'))), ['register']);
+});
+
+// FS-891, FS-892: join puts me on a row after its lead, on my own branch;
+// the board shows it being done, then in review; leave hands it back.
+test('words: join, leave and the board, in a pretend repository', () => {
+  const { spawnSync } = require('child_process');
+  const where = fs.mkdtempSync(path.join(os.tmpdir(), 'dibon-join-'));
+  const work = path.join(where, 'work');
+  const run = (cmd, a) => { const r = spawnSync(cmd, a, { cwd: fs.existsSync(work) ? work : where, encoding: 'utf8' }); return `${r.stdout}${r.stderr}`; };
+  try {
+    run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
+    run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'tools/check.js']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const [k, v] of [['user.name', 'Lillian Test'], ['user.email', 'lillian@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
+    run('git', ['add', '-A', 'tools']);
+    run('git', ['commit', '-qm', 'FS-891: the tools under test']);
+    run('git', ['push', '-q', 'origin', 'HEAD:main']);
+    const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
+    const reg = () => require('./register').rows(work);
+    const row = reg().find((r) => r.status === 'OPEN' && r.with === 'Eric');
+    assert.match(d('join', row.id), new RegExp(`Joined ${row.id}: Eric leads`));
+    assert.strictEqual(reg().find((r) => r.id === row.id).with, 'Eric, Lillian');
+    const here = run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).trim();
+    assert.match(here, new RegExp(`^docs/${row.id}-lillian-`));
+    const b = require('./board');
+    assert.ok(b.board(work).doing.some((c) => c.id === row.id));
+    fs.writeFileSync(path.join(work, '.git', 'dibon-reviews.json'), JSON.stringify([{ headRefName: here, isDraft: false, createdAt: new Date().toISOString() }]));
+    assert.ok(b.board(work).review.some((c) => c.id === row.id));
+    assert.match(d('join', row.id), /You are on .* already/);
+    assert.match(d('leave', row.id), /Eric has it/);
+    assert.strictEqual(reg().find((r) => r.id === row.id).with, 'Eric');
+    const alone = reg().find((r) => r.status === 'OPEN' && r.with === 'Eric' && r.id !== row.id);
+    run('git', ['config', 'user.name', 'Eric Test']);
+    assert.match(d('leave', alone.id), /You are the only one/);
+    assert.match(d('leave', alone.id, '--to', 'Betty'), /Betty has it/);
+  } finally {
+    fs.rmSync(where, { recursive: true, force: true });
+  }
+});

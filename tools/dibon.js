@@ -34,7 +34,12 @@ const norm = (s) => s.replace(/\r\n/g, '\n');
 // ── words: the one source of the help, the guide's headings and the tests ─
 const WORDS = [
   ['download', 'Bring the latest from the repository into my copy (the repository to me).', ['dibon download']],
-  ['start', 'Begin a piece of work on its own branch, with its register row.', ['dibon start "Roan Capital meeting, 22 October"', 'dibon start "Fix the agenda" --row FS-826']],
+  ['start', 'Begin a piece of work on its own branch, with its register row; the same as new.', ['dibon start "Roan Capital meeting, 22 October"', 'dibon start "Fix the agenda" --row FS-826']],
+  ['new', 'The same as start; name a kind (spec, journey, module, customer, meeting) to make the document too.', ['dibon new spec "Loan top-up"', 'dibon new journey "A borrower tops up a loan"', 'dibon new "Fix the agenda"']],
+  ['resume', 'Go back to something you started: lists them, or takes you to one by number, row or a word; your unsaved edits are parked, not lost.', ['dibon resume', 'dibon resume 2', 'dibon resume FS-890', 'dibon resume top-up']],
+  ['continue', 'The same as resume.', ['dibon continue', 'dibon continue top-up']],
+  ['join', 'Take part in a row someone has: your name on it, after its lead, and your own branch for it.', ['dibon join FS-826']],
+  ['leave', 'Step off a row: the next name leads; the last one on it hands it to someone.', ['dibon leave FS-826', 'dibon leave FS-826 --to Betty']],
   ['note', 'Write the change note: what changed, for whom.', ['dibon note "Two open answers settled" --for roan-capital', 'dibon note "Checks explain themselves" --for team --kind patch']],
   ['meeting', 'Open a meeting record for a customer, registered as a document.', ['dibon meeting roan-capital 2026-10-22']],
   ['answered', 'Move a customer\'s open answer to Answered, dated, with the answer.', ['dibon answered roan-capital 24 "The accountant and the finance lead receive it"']],
@@ -120,13 +125,315 @@ function explain(failures) {
 // ── the register: a new row on start ─────────────────────────────────────
 // The next id is the next across REVIEW.md and review/ (FS-866); a new row
 // is open, so it goes in REVIEW.md.
+// FS-889: the next id no one has: not in this copy's register, nor in my
+// parked edits or on my other branches, nor on the repository's main.
+function nextFree() {
+  const pad = (n) => `FS-${String(n).padStart(3, '0')}`;
+  let top = +require('./register').nextId(ROOT).slice(3) - 1;
+  const seen = (text) => { for (const m of (text || '').matchAll(/^\| FS-(\d{3}) \|/gm)) top = Math.max(top, +m[1]); };
+  const refs = [...git(['for-each-ref', 'refs/heads', '--format=%(refname:short)'], { ok: true }).split('\n'),
+    ...git(['stash', 'list', '--format=%gd'], { ok: true }).split('\n')].filter(Boolean);
+  if (hasRemote()) refs.push('origin/main');
+  for (const r of refs) seen(git(['show', `${r}:REVIEW.md`], { ok: true }));
+  return pad(top + 1);
+}
+
+// ── after a download (FS-890) ─────────────────────────────────────────────
+// The register merges by union, so a row two people touched comes back
+// twice. Brought together here, so no one does it by hand:
+//   - a row new on both sides (the same id taken twice): mine renumbered
+//     to the next free id, everywhere my branch cites it;
+//   - a row both edited: merged cell by cell against the row as it was;
+//     notes added on both sides both kept; a cell both changed keeps the
+//     repository's, and says so.
+const rowAt = (ref, id) => git(['grep', '-h', '-e', `^| ${id} |`, ref, '--', 'REVIEW.md', 'review/'], { ok: true }).split('\n').find(Boolean) || null;
+const cellsOf = (l) => l.split('|').slice(1, -1).map((s) => s.trim());
+const COLS = ['Id', 'Raised by', 'Point', 'Status', 'Criticality', 'With', 'Notes'];
+function mergeRow(b, m, t) {
+  const [B, M, T] = [b, m, t].map(cellsOf);
+  const said = [];
+  const out = T.map((tc, i) => {
+    const bc = B[i] || ''; const mc = M[i] || '';
+    if (mc === bc || mc === tc) return tc;
+    if (tc === bc) return mc;
+    if (i === 6) return mc.startsWith(bc) && tc.startsWith(bc) ? tc + mc.slice(bc.length) : `${tc} ${mc}`;
+    said.push(`${COLS[i]} kept as the repository has it ("${tc}"; yours said "${mc}")`);
+    return tc;
+  });
+  return { text: `| ${out.join(' | ')} |`, said };
+}
+function bringTogether(base, mine) {
+  const reg = require('./register');
+  const groups = new Map();
+  for (const r of reg.rows(ROOT)) groups.set(r.id, [...(groups.get(r.id) || []), r]);
+  const renamed = [];
+  const said = [];
+  for (const [id, copies] of groups) {
+    if (copies.length < 2) continue;
+    const b = rowAt(base, id);
+    const m = rowAt(mine, id);
+    const t = rowAt('origin/main', id);
+    const edit = (file, from, to) => { const x = read(file); write(file, x.replace(from, to)); };
+    if (!b && m && t) {
+      const fresh = nextFree();
+      const mineCopy = copies.find((c) => c.text === m) || copies[copies.length - 1];
+      edit(mineCopy.file, `${mineCopy.text}\n`, `${mineCopy.text.replace(`| ${id} |`, `| ${fresh} |`)}\n`);
+      renamed.push([id, fresh]);
+    } else if (b && m && t) {
+      const r = mergeRow(b, m, t);
+      copies.forEach((c, i) => edit(c.file, `${c.text}\n`, i === 0 ? `${r.text}\n` : ''));
+      for (const s of r.said) said.push(`${id}: ${s}`);
+    }
+  }
+  if (renamed.length) {
+    // Everywhere my branch cites a renumbered id: its documents, notes and name.
+    const mineFiles = git(['diff', '--name-only', `origin/main...${mine}`], { ok: true }).split('\n').filter((f) => f && !/^(REVIEW\.md|review\/)/.test(f) && fs.existsSync(path.join(ROOT, f)) && /\.(md|js)$/.test(f));
+    for (const f of mineFiles) {
+      let x = read(f);
+      for (const [a, z] of renamed) x = x.replace(new RegExp(`\\b${a}\\b`, 'g'), z);
+      write(f, x);
+    }
+    for (const [a, z] of renamed) if (branch().includes(a)) git(['branch', '-m', branch().replace(a, z)]);
+  }
+  reg.tidy(ROOT);
+  return { renamed, said };
+}
+// Generated sections are made again, never merged by hand (FS-890).
+function regenerate() {
+  const c = require('./citations');
+  const d = require('./docregister');
+  let n = 0;
+  for (const f of c.documents(ROOT)) if (c.refresh(ROOT, f)) n++;
+  for (const id of d.customers(ROOT)) if (d.refresh(ROOT, id)) n++;
+  return n;
+}
+
+// ── warnings on save (FS-890) ─────────────────────────────────────────────
+// A file I change that someone else's uploaded branch changes too; and a
+// paragraph rewrapped for a word, which makes every line of it collide.
+function alsoElsewhere(files) {
+  if (!hasRemote()) return [];
+  const mine = new Set(files.filter((f) => !/^(REVIEW\.md|review\/|changes\/)/.test(f)));
+  const out = [];
+  for (const ref of git(['for-each-ref', 'refs/remotes/origin', '--format=%(refname:short)'], { ok: true }).split('\n').filter(Boolean)) {
+    if (['origin/main', 'origin/HEAD', 'origin', `origin/${branch()}`].includes(ref)) continue;
+    const theirs = git(['diff', '--name-only', `origin/main...${ref}`], { ok: true }).split('\n').filter((f) => mine.has(f));
+    if (theirs.length) out.push({ ref: ref.replace(/^origin\//, ''), who: git(['log', '-1', '--format=%an', ref], { ok: true }), files: theirs });
+  }
+  return out;
+}
+function rewrapped(files) {
+  const out = [];
+  for (const f of files.filter((x) => x.endsWith('.md'))) {
+    const lines = git(['diff', '--numstat', 'HEAD', '--', f], { ok: true }).split('\t');
+    const removed = +lines[1] || 0;
+    if (removed < 4) continue;
+    const words = git(['diff', '--word-diff=porcelain', 'HEAD', '--', f], { ok: true }).split('\n')
+      .filter((l) => /^[-+]/.test(l) && !/^(\+\+\+|---)/.test(l)).reduce((n, l) => n + l.slice(1).trim().split(/\s+/).filter(Boolean).length, 0);
+    if (words * 2 <= removed) out.push({ file: f, removed, words });
+  }
+  return out;
+}
+
 function newRow(point) {
   const t = read('REVIEW.md');
-  const id = require('./register').nextId(ROOT);
+  const id = nextFree();
   const who = git(['config', '--get', 'user.name'], { ok: true }).split(' ')[0] || role();
   const row = `| ${id} | ${who} | ${point.replace(/\|/g, '/')} | OPEN | Medium | ${who} | **${today()}:** started (dibon) |`;
   write('REVIEW.md', `${t.trimEnd()}\n${row}\n`);
   return id;
+}
+
+// ── start and new (FS-888) ────────────────────────────────────────────────
+// The kinds a new document can be made as: where it goes, its template,
+// and what the person still fills in. A kind's index row, where a check
+// needs one, is added here; the rest is said.
+const KINDS = {
+  spec: { dir: 'docs/specs', branch: 'spec', todo: 'what it implements, depends on and is used by (its front matter), §1\'s diagram and Related line, then each section' },
+  journey: { dir: 'docs/journeys', branch: 'docs', todo: 'who and where, then each step with its capability' },
+  module: { dir: 'docs/modules', branch: 'docs', todo: 'its capability table and ids, and its place in the overview' },
+  customer: { dir: 'docs/customers', branch: 'docs', todo: 'its row in docs/customers.md, with a CU id, then each section' },
+};
+const CHOICES = [['changes', 'changes to documents we already have'], ['spec', 'a new spec'], ['journey', 'a new journey'], ['module', 'a new module'], ['customer', 'a new customer']];
+async function choose() {
+  if (YES || !process.stdin.isTTY) return 'changes';
+  say('What are you starting?');
+  CHOICES.forEach(([, label], i) => say(`  ${i + 1}  ${label}`));
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  const a = await new Promise((res) => rl.question('Number [1]: ', res));
+  rl.close();
+  const n = +(a.trim() || '1');
+  if (!CHOICES[n - 1]) stop('Not started: say a number from the list.');
+  return CHOICES[n - 1][0];
+}
+
+async function begin() {
+  if (plain[1] === 'meeting') { plain.splice(1, 1); return word.meeting(); }
+  const named = KINDS[plain[1]] ? plain[1] : null;
+  const topic = named ? plain[2] : plain[1];
+  if (!topic) stop(`Say what you are starting: dibon ${plain[0]} "Roan Capital meeting, 22 October", or dibon new spec "Loan top-up".`);
+  const kind = named || (flag('--row') ? 'changes' : await choose());
+  // Already started? Offer to go back to it rather than start it twice.
+  const same = started().find((s) => s.branch.endsWith(`-${slug(topic)}`));
+  if (same) {
+    say(`You started that already: ${same.branch}.`);
+    if (await ask('Resume it instead?')) { plain.splice(1, plain.length - 1, same.branch); return word.resume(); }
+  }
+  // Unsaved edits on another piece of work are parked with it (FS-889);
+  // on main they stop the start, since main is no one's work.
+  const dirty = unsaved().filter((u) => u.code !== '??');
+  if (dirty.length && onMain()) stop('You have unsaved edits on main. Save or discard them first, so this work starts clean.');
+  const b = flag('--kind') || (KINDS[kind] ? KINDS[kind].branch : 'docs');
+  if (!['docs', 'spec', 'code', 'fix', 'tool'].includes(b)) stop('--kind is docs, spec, code, fix or tool.');
+  let base = 'main';
+  if (hasRemote()) { git(['fetch', '--quiet', 'origin']); base = 'origin/main'; }
+  const row = flag('--row');
+  if (row && !/^FS-\d{3}$/.test(row)) stop('--row is an FS id: --row FS-826.');
+  const file = KINDS[kind] ? `${KINDS[kind].dir}/${slug(topic)}.md` : null;
+  if (file && fs.existsSync(path.join(ROOT, file))) stop(`${file} already exists: dibon start "${topic}" changes it instead.`);
+  const name = `${b}/${row || 'FS-NEW'}-${slug(topic)}`;
+  const what = KINDS[kind] ? `a new ${kind}, "${topic}"` : `"${topic}"`;
+  if (!await ask(`Start ${what} on a new branch from the repository${row ? `, for ${row}` : ', with a new register row'}?`)) return say('Not started.');
+  tooMany();
+  const from = branch();
+  if (!onMain() && park(from)) say(`Your unsaved edits on ${from} are parked; they come back when you resume it.`);
+  git(['switch', '-c', name, base]);
+  let id = row;
+  if (!id) {
+    id = newRow(KINDS[kind] ? `New ${kind}: ${topic}` : topic);
+    git(['branch', '-m', name.replace('FS-NEW', id)]);
+  }
+  if (!file) return say(`Started on ${branch()}, for ${id}. Make your changes, then: dibon save, dibon upload, and dibon share when it is ready for the team.`);
+  const listed = makeDoc(kind, topic, id, file);
+  say(`Started on ${branch()}, for ${id}. Made ${file} from its template${listed ? `, listed in ${listed}` : ''}.`);
+  say(`Still yours to write: ${KINDS[kind].todo}. dibon check says what is missing; dibon save once it passes.`);
+}
+
+// A document from its kind's template, its front matter filled; the index
+// row added where the check needs one. Returns the index it was listed in.
+function makeDoc(kind, topic, id, file) {
+  const s = slug(topic);
+  let t = read(`${KINDS[kind].dir}/_template.md`);
+  const set = (key, value) => { t = t.replace(new RegExp(`^${key}:.*$`, 'm'), `${key}: ${value}`); };
+  set('review_ids', `[${id}]`);
+  set('last_reviewed', today());
+  set('released', 'unreleased');
+  let listed = null;
+  if (kind === 'spec') {
+    const type = flag('--type') === 'component' ? 'component' : 'build';
+    set('id', s); set('name', `${topic} — ${type} specification`); set('type', type); set('owner', 'Solution architect');
+    t = t.replace(/^# .*$/m, `# ${topic} — ${type} specification`);
+    const idx = read('docs/specs/README.md').split('\n');
+    const head = idx.findIndex((l) => l.startsWith('| Spec | Type |'));
+    let at = head + 2;
+    while (idx[at] && idx[at].startsWith('| [')) at++;
+    idx.splice(at, 0, `| [${s}](${s}.md) | ${type === 'build' ? 'Build' : 'Component'} | ${topic}: to write | — | R1 |`);
+    write('docs/specs/README.md', `${idx.join('\n')}`);
+    listed = 'docs/specs/README.md';
+  } else if (kind === 'journey') {
+    const idx = read('docs/journeys/README.md').split('\n');
+    const rows = idx.map((l, i) => ({ i, m: l.match(/^\| JN-(\d{2}) \|/) })).filter((x) => x.m);
+    const n = String(Math.max(...rows.map((x) => +x.m[1])) + 1).padStart(2, '0');
+    set('id', `jn-${n}-${s}`); set('name', `JN-${n} · ${topic}`);
+    t = t.replace(/^# .*$/m, `# JN-${n} · ${topic}`);
+    const last = rows.reduce((a, x) => (+x.m[1] > +a.m[1] ? x : a));
+    idx.splice(last.i + 1, 0, `| JN-${n} | ${topic} | R1 | [${s}.md](${s}.md) |`);
+    write('docs/journeys/README.md', idx.join('\n'));
+    listed = 'docs/journeys/README.md';
+  } else if (kind === 'module') {
+    set('id', s); set('name', topic);
+    t = t.replace(/^# .*$/m, `# ${topic}`);
+  } else if (kind === 'customer') {
+    set('id', s); set('name', `${topic} — delivery map`);
+    t = t.replace(/^# .*$/m, `# ${topic} · delivery map`);
+  }
+  write(file, t);
+  return listed;
+}
+
+// ── resume (FS-889) ───────────────────────────────────────────────────────
+// What I have started and not yet seen merged: my branches with saves of
+// their own, the one I am on, and any with parked edits. Claude's branches
+// (claude/…) are Claude's, and a teammate's are theirs (FS-886): not listed.
+const PARK = (b) => `dibon: parked on ${b}`;
+function parkedOf(b) {
+  const lines = git(['stash', 'list', '--format=%gd %s'], { ok: true }).split('\n').filter(Boolean);
+  const hit = lines.find((l) => l.endsWith(PARK(b)));
+  return hit ? hit.split(' ')[0] : null;
+}
+// FS-907: started('claude') is my own Claude's work instead: its branches
+// claude/<my handle>/…, and those from before handles (claude/FS-…), shown
+// to me but not resumed by me, since they are its work (FS-886).
+const myClaude = () => (git(['config', '--get', 'dibon.claude'], { ok: true }).match(/<claude-([^@>]+)@/) || [])[1] || null;
+function started(of = 'me') {
+  const base = hasRemote() ? 'origin/main' : 'main';
+  const here = branch();
+  const refs = git(['for-each-ref', 'refs/heads', '--format=%(refname:short)|%(committerdate:relative)'], { ok: true }).split('\n').filter(Boolean);
+  const handle = myClaude();
+  const out = [];
+  for (const r of refs) {
+    const [b, when] = r.split('|');
+    if (['main', 'master'].includes(b)) continue;
+    const claudes = handle && (b.startsWith(`claude/${handle}/`) || /^claude\/FS-\d{3}/.test(b));
+    if (of === 'me' ? b.startsWith('claude/') : !claudes) continue;
+    const ahead = +git(['rev-list', '--count', `${base}..${b}`], { ok: true }) || 0;
+    const parked = parkedOf(b);
+    if (!ahead && b !== here && !parked) continue;
+    const id = (b.match(/FS-\d{3}/) || [])[0] || null;
+    // The words the person typed, from the branch: a row may be unsaved,
+    // or parked, and so not in this copy's register.
+    const words = b.split('/').pop().replace(/^FS-\d{3}(?:-\d{3})?-/, '').replace(/-/g, ' ');
+    const title = words.charAt(0).toUpperCase() + words.slice(1);
+    const remote = git(['rev-parse', '--verify', '--quiet', `refs/remotes/origin/${b}`], { ok: true });
+    const tip = git(['rev-parse', b], { ok: true });
+    const up = !remote ? 'not uploaded' : remote === tip ? 'uploaded' : 'saved since upload';
+    let state = ahead ? `${ahead} save${ahead === 1 ? '' : 's'}, last ${when}, ${up}` : 'nothing saved yet';
+    if (b === here) { const u = unsaved().filter((x) => x.code !== '??').length; if (u) state += `; here now, ${u} file${u === 1 ? '' : 's'} unsaved`; else state += '; here now'; }
+    if (parked) state += '; edits parked';
+    out.push({ branch: b, id, title, state, here: b === here });
+  }
+  return out.sort((a, c) => (a.id || '~').localeCompare(c.id || '~'));
+}
+// This branch's unsaved edits put aside with it: tracked changes, and new
+// documents (.md) not yet saved. Other untracked files stay where they are,
+// for they may be files kept out of git on purpose.
+function park(b) {
+  const tracked = git(['diff', '--name-only', 'HEAD'], { ok: true }).split('\n').filter(Boolean);
+  const fresh = git(['ls-files', '--others', '--exclude-standard'], { ok: true }).split('\n').filter((f) => f.endsWith('.md'));
+  const files = [...tracked, ...fresh];
+  if (!files.length) return false;
+  git(['stash', 'push', '--include-untracked', '-m', PARK(b), '--', ...files]);
+  return true;
+}
+function unpark(b) {
+  const ref = parkedOf(b);
+  if (!ref) return false;
+  const r = git(['stash', 'pop', ref], { ok: true, full: true });
+  if (r.status !== 0) stop(`On ${b}, but its parked edits could not come back cleanly; nothing is lost: they are kept as "${PARK(b)}". Ask for help to bring them back.`);
+  return true;
+}
+
+// ── join and leave (FS-892) ───────────────────────────────────────────────
+// Me, by the name the team table knows (my git name's first word); my
+// handle, for my branches' names.
+function myName() {
+  const n = git(['config', '--get', 'user.name'], { ok: true }).split(' ')[0];
+  if (!n || !require('./register').team(ROOT).has(n)) stop(`Your name${n ? `, "${n}",` : ''} is not on the team table in ways-of-working §1: ask for your row there, or set git's user.name to the name it gives you.`);
+  return n;
+}
+const handleOf = (name) => (require('./register').team(ROOT).get(name) || {}).handle || slug(name);
+// A row's With set, in whichever register file holds it.
+function setWith(id, names) {
+  const row = require('./register').rows(ROOT).find((r) => r.id === id);
+  const c = row.text.split('|').slice(1, -1).map((s) => s.trim());
+  c[5] = names.join(', ');
+  write(row.file, read(row.file).replace(row.text, `| ${c.join(' | ')} |`));
+}
+// FS-891: a note, never a stop, at three things started at once.
+const WIP = 3;
+function tooMany() {
+  const n = started().length;
+  if (n >= WIP) say(`Note: you have ${n} things started already. Finishing one first keeps work moving (ways-of-working §5): dibon resume lists them.`);
 }
 
 // ── the document register: a new row ─────────────────────────────────────
@@ -200,9 +507,12 @@ const word = {
     if (dirty.length) stop(`You have unsaved edits (${dirty.map((u) => u.file).join(', ')}). Save them (dibon save) or discard them (dibon discard <file>) first.`);
     if (!hasRemote()) stop('There is no repository to download from.');
     git(['fetch', '--quiet', 'origin']);
+    require('./board').remember(ROOT); // FS-891: the board's In review
     const behind = +git(['rev-list', '--count', 'HEAD..origin/main']);
     if (!behind) { say('Your copy is up to date: nothing new from the team.'); return; }
     const files = git(['diff', '--name-only', 'HEAD...origin/main']).split('\n').filter(Boolean);
+    const base = git(['merge-base', 'HEAD', 'origin/main']);
+    const mine = git(['rev-parse', 'HEAD']);
     const r = git(['rebase', 'origin/main'], { ok: true, full: true });
     if (r.status !== 0) {
       git(['rebase', '--abort'], { ok: true });
@@ -210,28 +520,116 @@ const word = {
     }
     say(`Your copy is up to date: ${behind} change${behind === 1 ? '' : 's'} from the team, in ${files.length} file${files.length === 1 ? '' : 's'}:`);
     for (const f of files.slice(0, 10)) say(`  ${f}`);
+    // FS-890: the register's rows brought together, generated sections
+    // made again, and saved as one change of mine.
+    if (onMain()) return;
+    const { renamed, said } = bringTogether(base, mine);
+    const regen = regenerate();
+    for (const [a, z] of renamed) say(`${a} was taken on main meanwhile: your row is now ${z}, and your branch says so.`);
+    for (const s of said) say(`Brought together: ${s}.`);
+    if (regen) say(`Generated sections made again in ${regen} document${regen === 1 ? '' : 's'}.`);
+    if (renamed.length || said.length || regen) {
+      git(['add', '-u']);
+      const c = git(['commit', '-q', '-m', `${rowOfBranch() || renamed[0][1]}: brought together after download`], { ok: true, full: true });
+      say(c.status === 0 ? `Saved on ${branch()}.` : `Left unsaved, for you to look at: ${(c.stderr || c.stdout).trim().split('\n')[0]}. dibon check says what is wrong; dibon save when it passes.`);
+    }
   },
 
-  async start() {
-    const topic = plain[1];
-    if (!topic) stop('Say what you are starting: dibon start "Roan Capital meeting, 22 October".');
-    const dirty = unsaved().filter((u) => u.code !== '??');
-    if (dirty.length) stop('You have unsaved edits. Save or discard them first, so this work starts clean.');
-    const kind = flag('--kind') || 'docs';
-    if (!['docs', 'spec', 'code', 'fix', 'tool'].includes(kind)) stop('--kind is docs, spec, code, fix or tool.');
+  // FS-888: start and new are one word. Naming a kind (spec, journey,
+  // module, customer) also makes the document from its template; meeting
+  // is the meeting word. A title alone asks what is being started, once.
+  async start() { return begin(); },
+  async new() { return begin(); },
+
+  // FS-889: back to something started. Alone, lists them; with a number,
+  // a row or a word, goes there, parking this branch's unsaved edits and
+  // bringing back that branch's.
+  // The same word as resume, at the owner's asking.
+  async continue() { return word.resume(); },
+
+  // FS-892: take part in a row, rather than take it. Adds my name to its
+  // With (the lead stays first) and starts my own branch for it.
+  async join() {
+    const id = (plain[1] || '').toUpperCase();
+    if (!/^FS-\d{3}$/.test(id)) stop('Say which row: dibon join FS-826.');
+    const row = require('./register').rows(ROOT).find((r) => r.id === id);
+    if (!row) stop(`${id} is not in your copy's register: dibon download first.`);
+    if (row.status !== 'OPEN') stop(`${id} is ${row.status.toLowerCase()}: reopen it before joining.`);
+    const me = myName();
+    const on = row.with.split(/\s*,\s*/);
+    if (on.includes(me)) {
+      const mine = started().find((s) => s.id === id);
+      return say(`You are on ${id} already${mine ? `: dibon resume ${id} takes you to your branch` : ''}.`);
+    }
+    if (!await ask(`Join ${id}, "${row.point.slice(0, 80)}", led by ${on[0]}? It starts your own branch for it.`)) return say('Not joined.');
+    tooMany();
+    const from = branch();
+    if (!onMain() && park(from)) say(`Your unsaved edits on ${from} are parked; they come back when you resume it.`);
     let base = 'main';
     if (hasRemote()) { git(['fetch', '--quiet', 'origin']); base = 'origin/main'; }
-    const row = flag('--row');
-    if (row && !/^FS-\d{3}$/.test(row)) stop('--row is an FS id: --row FS-826.');
-    const name = `${kind}/${row || 'FS-NEW'}-${slug(topic)}`;
-    if (!await ask(`Start "${topic}" on a new branch from the repository${row ? `, for ${row}` : ', with a new register row'}?`)) return say('Not started.');
+    const name = `docs/${id}-${handleOf(me)}-${slug(row.point).split('-').slice(0, 4).join('-')}`;
     git(['switch', '-c', name, base]);
-    let id = row;
-    if (!id) {
-      id = newRow(topic);
-      git(['branch', '-m', name.replace('FS-NEW', id)]);
+    setWith(id, [...on, me]);
+    say(`Joined ${id}: ${on[0]} leads, and you are on it too. Your branch: ${name}. Save and upload as usual; the board shows you on it once your save is merged.`);
+  },
+
+  // FS-892: step off a row. The next name leads; the last one hands it on.
+  async leave() {
+    const id = (plain[1] || '').toUpperCase();
+    if (!/^FS-\d{3}$/.test(id)) stop('Say which row: dibon leave FS-826.');
+    if (onMain()) stop(`Leave from your work on ${id}: dibon resume ${id}, then dibon leave ${id}.`);
+    const row = require('./register').rows(ROOT).find((r) => r.id === id);
+    if (!row) stop(`${id} is not in your copy's register.`);
+    const me = myName();
+    const on = row.with.split(/\s*,\s*/);
+    if (!on.includes(me)) stop(`You are not on ${id}: it is with ${row.with}.`);
+    const rest = on.filter((n) => n !== me);
+    const to = flag('--to');
+    if (!rest.length && !to) stop(`You are the only one on ${id}: say who takes it, dibon leave ${id} --to Betty.`);
+    if (to && !require('./register').team(ROOT).has(to)) stop(`${to} is not on the team table (ways-of-working §1).`);
+    const next = rest.length ? rest : [to];
+    if (!await ask(`Leave ${id}? ${next[0]} ${on[0] === me ? 'leads it from now' : 'still leads it'}.`)) return say('Still on it.');
+    setWith(id, next);
+    say(`Left ${id}: ${next.join(', ')} ${next.length === 1 ? 'has' : 'have'} it, ${next[0]} leading. Save it: dibon save "Left ${id}". Your branch stays yours.`);
+  },
+
+  async resume() {
+    const list = started();
+    const theirs = started('claude');
+    const pick = plain.slice(1).join(' ');
+    const line = (s, n) => `${s.here ? '*' : ' '} ${n}  ${s.id || '      '}  ${s.title.padEnd(34).slice(0, 34)}  ${s.state}`;
+    if (!pick) {
+      if (!list.length) say('Nothing of yours started that is not yet merged. dibon new "…" begins something.');
+      else {
+        say(`You have ${list.length} thing${list.length === 1 ? '' : 's'} started:`);
+        list.forEach((s, i) => say(line(s, i + 1)));
+        say('Say: dibon resume 1, or its row (dibon resume FS-890), or a word from it.');
+      }
+      // FS-907: my Claude's work, to see, not to resume: it is Claude's.
+      if (theirs.length) {
+        say(`Your Claude's, waiting for you (${theirs.length}):`);
+        theirs.forEach((s) => say(line(s, '-')));
+        say('It is Claude\'s work: ask Claude to go on with it, or to upload, merge and push it.');
+      }
+      return;
     }
-    say(`Started on ${branch()}, for ${id}. Make your changes, then: dibon save, dibon upload, and dibon share when it is ready for the team.`);
+    const claudes = theirs.filter((s) => s.branch === pick || s.id === pick.toUpperCase() || s.branch.includes(slug(pick)));
+    if (claudes.length && !list.some((s) => s.branch === pick || s.id === pick.toUpperCase() || s.branch.includes(slug(pick)))) {
+      stop(`That is your Claude's work (${claudes.map((s) => s.branch).join(', ')}): ask Claude to go on with it. It is not yours to resume.`);
+    }
+    let found = list.filter((s) => s.branch === pick); // a branch named in full
+    if (found.length) { /* that one */ } else if (/^\d+$/.test(pick)) found = list[+pick - 1] ? [list[+pick - 1]] : [];
+    else if (/^FS-\d{3}$/i.test(pick)) found = list.filter((s) => s.id === pick.toUpperCase());
+    else found = list.filter((s) => s.branch.includes(slug(pick)));
+    if (!found.length) stop(`Nothing started matches "${pick}". dibon resume lists what you have started.`);
+    if (found.length > 1) stop(`"${pick}" matches ${found.length}: ${found.map((s) => s.branch).join(', ')}. Say which by its number or row.`);
+    const to = found[0];
+    if (to.here) return say(`You are already on ${to.branch}.`);
+    const from = branch();
+    const parked = park(from);
+    git(['switch', to.branch]);
+    const back = unpark(to.branch);
+    say(`On ${to.branch}${to.id ? `, for ${to.id}` : ''}.${parked ? ` Your unsaved edits on ${from} are parked; they come back when you resume it.` : ''}${back ? ' Your parked edits here are back.' : ''}`);
   },
 
   async note() {
@@ -338,6 +736,11 @@ const word = {
     say('To save:');
     for (const u of changed) say(`  ${u.code.includes('?') || u.code.includes('A') ? 'new     ' : u.code.includes('D') ? 'removed ' : 'changed '} ${u.file}`);
     if (!arg) stop('What did you change? Say it: dibon save "Open answer 26: two administrators".');
+    // FS-890: warnings, never a stop: someone else changing the same file,
+    // and a paragraph rewrapped for a word.
+    const touched = [...new Set([...changed.map((u) => u.file), ...(hasRemote() ? git(['diff', '--name-only', 'origin/main...HEAD'], { ok: true }).split('\n').filter(Boolean) : [])])];
+    for (const o of alsoElsewhere(touched)) say(`Note: ${o.files.join(', ')} ${o.files.length === 1 ? 'is' : 'are'} also being changed on ${o.ref} (${o.who}). Talk before you both change the same lines.`);
+    for (const w of rewrapped(changed.map((u) => u.file))) say(`Note: in ${w.file}, ${w.removed} lines changed for ${w.words} word${w.words === 1 ? '' : 's'}: a paragraph rewrapped? Rewrap only the lines you change (ways-of-working §6).`);
     const failures = checks();
     if (failures.length) { explain(failures); process.exitCode = 1; return; }
     const row = rowOfBranch();
@@ -416,6 +819,8 @@ const word = {
     pushBranch();
     // A review opened for the team, or an open one marked ready.
     const open = spawnSync('gh', ['pr', 'create', '--fill', '--base', 'main'], { cwd: ROOT, encoding: 'utf8' });
+    // FS-891: the board's In review, as GitHub has it now.
+    require('./board').remember(ROOT);
     if (open.status === 0) return say(`Shared: the team is asked to review ${open.stdout.trim()}.`);
     const ready = spawnSync('gh', ['pr', 'ready'], { cwd: ROOT, encoding: 'utf8' });
     if (ready.status === 0) return say('Shared: your review is marked ready, and the team is asked.');
@@ -434,6 +839,17 @@ const word = {
     }
     const waiting = rel.notes(ROOT).filter((n) => !n.released.includes('docs'));
     say(`${waiting.length} change note${waiting.length === 1 ? '' : 's'} waiting for the next release.`);
+    // FS-889: what else I have started, one line.
+    const list = started();
+    if (list.length > 1) say(`Started: ${list.map((s) => `${s.id || s.branch}${s.here ? ' (here)' : ''}`).join(', ')}. dibon resume goes back to one.`);
+    const theirs = started('claude');
+    if (theirs.length) say(`Your Claude has ${theirs.length} waiting for you: ${theirs.map((s) => s.id || s.branch).join(', ')}.`);
+    // FS-890: a copy that has not heard from the repository for a day.
+    const fetched = path.join(ROOT, '.git', 'FETCH_HEAD');
+    if (hasRemote() && fs.existsSync(fetched)) {
+      const days = Math.floor((Date.now() - fs.statSync(fetched).mtimeMs) / 86400000);
+      if (days >= 1) say(`Last downloaded ${days} day${days === 1 ? '' : 's'} ago: dibon download first, so your work starts from the team's latest.`);
+    }
   },
 
   // FS-853: the reader's History section, in a terminal.
@@ -479,7 +895,7 @@ const word = {
     run(['config', 'dibon.role', me], path.join(where, 'work'));
     say(`A practice copy, with its own pretend repository: ${path.join(where, 'work')}`);
     say('Nothing you do there reaches the real documents. Go there and try, in order:');
-    for (const s of ['dibon status', 'dibon download', 'dibon start "Practice: a meeting"', 'dibon answered roan-capital 25 "No Airtel Money"', 'dibon note "Practice note" --for team', 'dibon save "Practice: answer 25"', 'dibon undo', 'dibon save "Practice: answer 25, again"', 'dibon upload', 'dibon share', 'dibon help']) say(`  ${s}`);
+    for (const s of ['dibon status', 'dibon download', 'dibon start "Practice: a meeting"', 'dibon new "Practice: a second thing"', 'dibon resume', 'dibon resume 1', 'dibon answered roan-capital 25 "No Airtel Money"', 'dibon note "Practice note" --for team', 'dibon save "Practice: answer 25"', 'dibon undo', 'dibon save "Practice: answer 25, again"', 'dibon upload', 'dibon share', 'dibon help']) say(`  ${s}`);
     say('Delete the folder when you are done.');
   },
 };
@@ -498,6 +914,8 @@ const ASK = {
   pull: 'We say download: dibon download brings the latest from the repository into your copy.',
   push: 'We say upload (your branch to the repository, still yours) or share (before the team, for review): dibon upload or dibon share.',
   ready: 'We say share: dibon share puts your uploaded work before the team, for review.',
+  switch: 'We say resume: dibon resume lists what you have started and takes you back to one; your unsaved edits are parked, and come back when you return.',
+  checkout: 'We say resume: dibon resume lists what you have started and takes you back to one; your unsaved edits are parked, and come back when you return.',
 };
 
 async function main() {

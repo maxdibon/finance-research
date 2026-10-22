@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896]
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892]
 last_reviewed: 2026-10-22
 ---
 
@@ -272,6 +272,9 @@ by the owner on 2026-10-16, FS-867):
 | **Small, short-lived changes** | Branches live a day or two; a pull request a reviewer can read in twenty minutes |
 | **Reviews within a working day** | Reviewers answer within one working day; a suggested change can be applied in one click |
 | **Ownership is visible** | The code owners table answers "whom do I ask?" |
+| **One board, from the register** | The reader's Board (FS-891): every open row as a card, to pick up, being done, in review, done in the last fortnight, each with who is on it and since when; built from the register and the branches, so there is no second list to keep. Until the team is in Dibon's GitHub organisation, a card moves only once its save is merged |
+| **Join, don't claim** | Anyone joins a row with `dibon join` (FS-892): their name goes on it after its lead, and they work on their own branch. The first name leads: answers for the row and says when it is done. `dibon leave` steps off; the next name leads, and the last one hands it to someone. Claude joins only on its person's word |
+| **About three at once** | More than three things started at once and nothing finishes: `dibon new` and `dibon join` note it, and `dibon resume` lists them (FS-891) |
 | **Specs before code** | A capability is built from its spec and journey; a story cites both (testing.md) |
 | **Released by a switch, not a deploy** | New behaviour ships off, behind a flag, and is turned on when ready |
 | **Definition of done** | Merged with its tests, its documents and its runbook current; the register row closed |
@@ -297,12 +300,16 @@ team's words (§7 to §10, FS-847), which follow these rules for them.
 | **Commit subject** | `FS-123: what changed`, at most 72 characters; the hook refuses a subject without its register row (Merge, Revert and Release excepted) |
 | **Commit body** | Why, not what; wrapped at 72 columns; trailers last (`Co-Authored-By:`) |
 | **Mechanical changes apart** | A sweep across many files (a status for every document, renumbered ids) is its own commit, never mixed with a change a reviewer must read |
+| **Who settles a conflict** | Its author, by downloading: the repository's latest under their own work, settled on their own branch. The person who merges takes in only what is already clean, so a merge never rewrites anyone's lines (FS-886, FS-890) |
+| **Generated sections are made again** | "Regulations cited", each customer's documents table: never merged by hand; `dibon download` makes them again after the team's changes arrive (FS-890) |
+| **Rewrap only what you change** | A word changed is one line changed: rewrapping a whole paragraph for it makes every line of it collide with anyone else's change there. `dibon save` notes a paragraph rewrapped for a word (FS-890) |
+| **Say when you share a file** | `dibon save` notes a file you changed that someone's uploaded branch changes too, naming the branch and its author: talk before you both change the same lines (FS-890) |
 | **Keep current by rebasing** | `git fetch`, then `git rebase origin/main`; never merge main into a branch. Force-push only your own branch, and only `--force-with-lease`; never main |
 | **Undo with a new commit** | `git revert` on main; history on main is never rewritten |
 | **Merge, keeping who did what** | Squash only within one person's own branch; between people, a merge commit, so each commit keeps its author and the merge records who took it in. One person's pull request may still be squashed to one commit under their name (FS-886) |
 | **Tags are annotated, and signed once keys exist** | `git tag -a docs-2026.10.15 -m "…"`; a published tag is never moved or deleted |
 | **Line endings** | LF everywhere (`.gitattributes`); a clone sets nothing by hand |
-| **The register** | REVIEW.md, its open rows, and review/, its closed rows by the hundred (FS-866), merge by union, so two branches' new rows both survive; the register check fails a skipped or repeated FS id. Two branches that take the same id fail the check, and the later renumbers its row |
+| **The register** | REVIEW.md, its open rows, and review/, its closed rows by the hundred (FS-866), merge by union, so two branches' new rows both survive; the register check fails a skipped or repeated FS id. Rows two people touched come back twice; `dibon download` brings them together (FS-890): a row new on both sides keeps the repository's id and mine is renumbered, everywhere my branch cites it; a row both edited is merged cell by cell, notes from both kept, and a cell both changed keeps the repository's, said aloud |
 | **Changelogs** | Never edited by hand: each pull request carries a change note, and a release gathers them (rules, Dibon 12) |
 | **Hooks** | `git config core.hooksPath .githooks` once per clone: pre-commit runs the checks, commit-msg holds the subject |
 | **Size** | A pull request a reviewer reads in one sitting, about 400 changed lines for code; the reader's preview shows documents as pages |
@@ -360,7 +367,10 @@ tool, and Claude in the desktop app, ask which you mean.
 | Say | What it does |
 |---|---|
 | **download** | Bring the latest from the repository into my copy (the repository to me) |
-| **start** "…" | Begin a piece of work on its own branch, with its register row |
+| **start** "…", or **new** | Begin a piece of work on its own branch, with its register row; **new spec** "…" (or journey, module, customer) makes the document too |
+| **resume**, or **continue** | Go back to something I started; my unsaved edits are parked, not lost |
+| **join** row | Take part in a row someone has: my name after its lead, my own branch for it |
+| **leave** row | Step off a row; the next name leads |
 | **note** "…" | Write the change note: what changed, and for whom |
 | **meeting** customer date | Open a meeting record, registered as a document |
 | **answered** customer number "…" | Move a customer's open answer to Answered, dated |
@@ -377,6 +387,7 @@ tool, and Claude in the desktop app, ask which you mean.
 | **release** | The owner only: release to the public, the documentation or a customer's delivery |
 | **practice** | A private sandbox to try every word safely |
 | **role** "…" | Tell the words your role, once |
+| **claude** handle | Set, once, the name my Claude commits under |
 
 ### Three rules, and once before the first time
 
@@ -385,7 +396,8 @@ lost, and the message says what to do. Nothing is guessed: say what you
 mean, and a word that cannot tell asks.
 
 **Once, before the first time:** `dibon role "Project manager"` (your
-role, never your name), and, for developers,
+role, beside your name), `dibon claude` and your handle if you work with
+Claude (§1), and, for developers,
 `git config core.hooksPath .githooks`. On Windows, `dibon` runs from the
 repository's folder (`dibon.cmd`); elsewhere `./dibon`.
 
@@ -394,7 +406,12 @@ repository's folder (`dibon.cmd`); elsewhere `./dibon`.
 ### download
 
 Brings the latest from the repository into your copy: from the repository to you,
-never the other way. Example: `dibon download`. **If it stops** because you have unsaved
+never the other way. Example: `dibon download`. Daily, at least:
+`dibon status` reminds you after a day. **Afterwards** it brings the
+register's rows together (a row of yours whose id the team took meanwhile
+is renumbered, and says so; a row you both edited is merged, both notes
+kept), makes the generated sections again, and saves that as one change
+of yours (FS-890). **If it stops** because you have unsaved
 edits: save or discard them first. **If it stops** because your change
 and a teammate's touch the same lines: nothing is lost; ask Claude or an
 engineer to bring the two together. Never edit conflict markers by hand.
@@ -402,9 +419,58 @@ engineer to bring the two together. Never edit conflict markers by hand.
 ### start
 
 Begins a piece of work on its own branch, named after its register row;
-without `--row`, it opens a new row. Examples:
+without `--row`, it opens a new row. Given only a title, it asks once
+what you are starting: changes to documents we have, or a new spec,
+journey, module or customer. Started that title already? It offers to
+take you back to it instead. Unsaved edits on what you were doing are
+parked with it (see resume). Examples:
 `dibon start "Roan Capital meeting, 22 October"`;
 `dibon start "Fix the agenda" --row FS-826`.
+
+### new
+
+The same word as start (FS-888). Name a kind and it makes the document
+too, from its template, its front matter filled in: `spec` (with
+`--type component` for a product we configure), `journey` (the next JN
+number), `module` or `customer`. A spec and a journey are listed in their
+index at once; it says what is still yours to write, and the checks say
+what is missing until you save. `dibon new meeting` is the meeting word.
+Examples: `dibon new spec "Loan top-up"`;
+`dibon new journey "A borrower tops up a loan"`.
+
+### resume
+
+Back to something you started (FS-889). Alone, it lists your work not yet
+merged, numbered, with what each has saved, whether it is uploaded, and
+where you are now. Say which by its number, its row or a word from its
+title, and it takes you there: your unsaved edits are parked with the
+work you leave, and come back when you return to it. Your own Claude's
+work waiting for you is listed under yours (FS-907), to see, not to
+resume: ask Claude to go on with it. A teammate's branches, and their
+Claude's, are theirs and not listed. Examples:
+`dibon resume`; `dibon resume 2`; `dibon resume FS-890`;
+`dibon resume top-up`.
+
+### join
+
+Takes part in a row someone already has (FS-892): your name goes in its
+With, after its lead's, and a branch of your own starts for it,
+`docs/<row>-<your handle>-<words>`, so your work stays yours. No one's
+leave is needed; the people on it see you on the board once your save is
+merged. With three things already started, it notes it. Example:
+`dibon join FS-826`.
+
+### leave
+
+Steps off a row: your name comes out of its With, and the next name
+leads. The last one on it hands it to someone: `--to` and their name.
+Your branch stays yours, to finish or discard. Examples:
+`dibon leave FS-826`; `dibon leave FS-826 --to Betty`.
+
+### continue
+
+The same word as resume. Examples: `dibon continue`;
+`dibon continue top-up`.
 
 ### note
 
@@ -448,7 +514,9 @@ row. Never on main. Examples: `dibon save "Open answer 26: two administrators"`;
 `dibon save docs/customers/roan-capital.md` (that file only; it then asks
 what you changed). **It stops** when you give no description, when the
 checks fail, and when you give it a document from outside: that is
-`received`. `--body-file` adds a body to the saved change from a file:
+`received`. **It notes, without stopping,** a file you changed that
+someone's uploaded branch changes too, and a paragraph rewrapped for a
+word (FS-890). `--body-file` adds a body to the saved change from a file:
 why it changed, and any trailer such as Co-Authored-By (FS-862).
 
 ### undo

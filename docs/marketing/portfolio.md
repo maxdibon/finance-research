@@ -6,7 +6,7 @@ status: agreed
 released: 2026.10.15
 owner: Commercial lead
 classification: Public once approved
-last_reviewed: 2026-10-09
+last_reviewed: 2026-10-22
 ---
 
 # Dibon Financial Services portfolio
@@ -302,12 +302,13 @@ loan it replaced.
 **Features:**
 - KYC against the national ID and business registries; tiers and a
   completeness gate
-- A collateral register for vehicles and land: documents, searches and
-  originals in custody
+- A collateral register for vehicles and land: documents, searches,
+  originals in custody, and recovery kept to the law, every notice dated
 - Approval chains and unanimous committees; approve from the app or email
 - Statement appraisal, behaviour scores and risk classes
-- Agreements and disclosures signed on the phone; CBK's lender rules built
-  in
+- Agreements and disclosures signed on the phone; CBK's 2026 lender
+  regulations built in: the arrears cap, repayment order, pricing and
+  collection conduct
 - Reminders by SMS, email or WhatsApp; a dashboard; migration from Mifos
 **Facts:**
 - Built on: Apache Fineract
@@ -384,7 +385,7 @@ in the ERP leave the business’s own account; Dibon only instructs.
 **Facts:**
 - ERPs: Odoo first, then Zoho
 - Pays: By mobile money once approved; bank APIs coming soon
-- For: SMEs and fintechs
+- For: SMEs and fintechs, directly or through their bank
 
 ### Omni-channel banking
 
@@ -504,7 +505,8 @@ services it is built on.
 
 ### Tier-2 banks with a core but a manual back office
 
-**Start with:** Reconciliation, with approvals and mandates
+**Start with:** Reconciliation beside your core, with approvals and mandates;
+SME Reconciliation for your business customers, through you
 **Add:** The Business suite for helpdesk, HR and procurement; Collect
 
 ### Tier-3 banks
