@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-456, FS-464, FS-508, FS-612]
-last_reviewed: 2026-10-08
+review_ids: [FS-456, FS-464, FS-508, FS-612, FS-924, FS-958]
+last_reviewed: 2026-10-23
 ---
 
 # Competitors — who we meet, and what we learn from each
@@ -42,3 +42,6 @@ confirmed says so. We describe what they offer, never disparage it.
 | CP-18 | Infosys Finacle | Core banking | Tier-1 and tier-2 bank cores | Integrated mode | We integrate with it more than compete | finacle.com |
 | CP-19 | BlackLine | Financial close and transaction matching | Transaction Matching for the month-end close: bank to ledger, card, intercompany and suspense accounts; rules on amount, reference and date with tolerances; one-to-one, many-to-one and many-to-many matches; rules that match, or only suggest a match for a person to approve | Recon RO-02 and SME Recon, at larger companies and banks' finance teams | Suggest-then-approve as a rule mode, many-to-many matching and the auto-match rate as the headline figure; its paper cites 96% to 99% automated at one customer (vendor's claim) | Vendor paper, sources/market (FS-508) |
 | CP-20 | Reiterate | Reconciliation for finance teams | Payment, bank and data reconciliation against payment providers, invoice data extraction, payment-provider performance, and fee estimates compared with settlement statements | Recon RO-20 and SME Recon, for businesses with several payment providers | Checking the fees a provider charged against its tariff and settlement is a feature finance teams buy | reiterate.com, read 2026-10-06 (FS-508) |
+| CP-21 | Rumango | Banking software and services | iCust (onboarding, loan origination, channels), a service bus, a data warehouse, central-bank reporting, Recon Tech (reconciliation) and revenue assurance; implementation, testing, training and managed services | At SBM Bank (PT-56): iCust is the bank's loan-origination platform, and Rumango supported its FLEXCUBE upgrade, as Rumango's site says | The incumbent at SBM Bank, with a reconciliation product of its own: we offer what sits alongside iCust and FLEXCUBE, not in place of them: SME Recon for the bank's business customers, Collect, and reconciliation across mobile money and transfer corridors (FS-924) | rumango.com, read 2026-10-22 |
+| CP-22 | WizGlobal | Fund-management software | UnitMaster (unit trusts), FundGuard, PensionMaster, portfolio management, MasterAccounting; over 50 institutions in five countries; M-Pesa, PesaLink and identity integrations; NAV reconciliation | At Lofty Corban (CU-05), whose fund system is UnitMaster | A partner more than a rival: its reconciliation is of fund valuations, ours of money to investor accounts, so UnitMaster's interface is the question (Lofty Corban's open answer 1); a partnership could reach its fund managers | wizglobal.co.ke, read 2026-10-22 |
+| CP-23 | ReconArt | Reconciliation and month-end close | Enterprise reconciliation and close: a rule builder, PDF extraction, high volumes, SOX controls, balance-sheet certification | Finance teams at large banks and corporates | A different market from our daily operational reconciliation for tier-2 and tier-3 banks, Saccos, MFIs and SMEs; worth borrowing: matching rules written in plain language, and certifying the close | reconart.com, read 2026-10-22 |
