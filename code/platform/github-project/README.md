@@ -1,6 +1,6 @@
 # The MVP day's board on GitHub
 
-The goals of the MVP day (23 October 2026) as GitHub issues on a
+The goals of the MVP day (30 October 2026, moved from 23 October: FS-962) as GitHub issues on a
 Project (FS-930). `goals.json` is the one list: the register's rows
 FS-938 to FS-951 were made from it, and so are the issues, so the two
 cannot disagree.

@@ -33,10 +33,11 @@ here.
 
 ## Where I left off
 
-As at 23 October 2026, the morning of the MVP day (12:00 to 16:00),
-after main was pushed with FS-952 to FS-960.
+As at 23 October 2026. The MVP day was not run today: it moved to
+Friday 30 October, 12:00 to 16:00 (FS-962). Main pushed with FS-952 to
+FS-961.
 
-- **GitHub first** (FS-952 to FS-954): before noon, he and Jimmy alone
+- **GitHub first** (FS-952 to FS-954): before the day, he and Jimmy alone
   create the organisation `dibon-consulting` on Team (he is first
   owner, Jimmy second), require two-factor, set member privileges, move
   this repository in, set the rules on main, and make the GitHub Project
@@ -122,7 +123,7 @@ after main was pushed with FS-952 to FS-960.
 | FS-929 | Work in the cloud, for visibility: each person deploys their components on Azure to test and check configurati | High |
 | FS-930 | Use GitHub's board (Projects) as part of the set-up, for the MVP day and after | High |
 | FS-934 | Roan Capital's three products, as locked on 21 October: Biashara (unsecured, KES 3,000 to 100,000, 14 or 30 da | High |
-| FS-950 | MVP day (23 October), Eric: The day's authority: decisions, reviews, merges, and a mock change advisory board | High |
+| FS-950 | MVP day (30 October), Eric: The day's authority: decisions, reviews, merges, and a mock change advisory board | High |
 | FS-036 | Check the Odoo Enterprise Agreement for limits on serving internal work through portal users or API accounts | Medium |
 | FS-161 | WhatsApp route: Meta's Cloud API directly, or through a business solution provider. Either way Meta approves t | Medium |
 | FS-162 | Quiet hours and rate limits per recipient: what the Communications Authority requires, and what we set as poli | Medium |
@@ -254,4 +255,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-960-mvp-day-page`: nothing saved yet; here now, 4 files unsaved
+- `claude/emokaya/FS-962-mvp-day-moved`: nothing saved yet; here now, 7 files unsaved
