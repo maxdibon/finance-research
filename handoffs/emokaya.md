@@ -34,7 +34,7 @@ here.
 ## Where I left off
 
 As at 23 October 2026, the morning of the MVP day (12:00 to 16:00),
-after main was pushed with FS-952 to FS-959.
+after main was pushed with FS-952 to FS-960.
 
 - **GitHub first** (FS-952 to FS-954): before noon, he and Jimmy alone
   create the organisation `dibon-consulting` on Team (he is first
@@ -55,6 +55,7 @@ after main was pushed with FS-952 to FS-959.
   sandbox, the bank stand-in and text messages are not on Azure. The
   Azure run (code/platform/azure-sandbox) is still his or Allan's, after
   Jimmy's subscription (FS-938).
+- **The MVP day page** is in the reader (docs/mvp-day.md, the top bar's "MVP day"; FS-960), copied from goals.json: change both together.
 - **The brief** is republished with all this:
   https://claude.ai/artifact/HL6TiL9R3oQNVLr2hRf9MR; not yet shared.
 - **SBM Bank** (PT-56): its NDA due today (FS-911), kept as received and
@@ -253,4 +254,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-959-land-act`: nothing saved yet; here now, 5 files unsaved
+- `claude/emokaya/FS-960-mvp-day-page`: nothing saved yet; here now, 4 files unsaved

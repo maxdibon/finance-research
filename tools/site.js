@@ -479,7 +479,7 @@ blockquote{border-left:3px solid var(--line);margin:12px 0;padding:2px 14px}bloc
 
 const NAV = [['index.html', 'Search'], ['README.html', 'README'], ['docs/start-here.html', 'Start here'], ['docs/overview.html', 'Overview'],
   ['docs/journeys/README.html', 'Journeys'], ['docs/specs/README.html', 'Specs'], ['docs/customers/roan-capital.html', 'Roan Capital'],
-  ['docs/delivery-plan.html', 'Delivery plan'], ['REVIEW.html', 'Review'], ['board.html', 'Board'], ['HANDOFF.html', 'Handoff']];
+  ['docs/delivery-plan.html', 'Delivery plan'], ['docs/mvp-day.html', 'MVP day'], ['REVIEW.html', 'Review'], ['board.html', 'Board'], ['HANDOFF.html', 'Handoff']];
 
 // FS-891: the board, from the register and the branches (tools/board.js):
 // a card per row, in four columns, filtered by person on the page.
