@@ -33,7 +33,8 @@ here.
 
 ## Where I left off
 
-As at 23 October 2026, the morning of the MVP day (12:00 to 16:00).
+As at 23 October 2026, the morning of the MVP day (12:00 to 16:00),
+after main was pushed with FS-952 to FS-959.
 
 - **GitHub first** (FS-952 to FS-954): before noon, he and Jimmy alone
   create the organisation `dibon-consulting` on Team (he is first
@@ -59,13 +60,19 @@ As at 23 October 2026, the morning of the MVP day (12:00 to 16:00).
 - **SBM Bank** (PT-56): its NDA due today (FS-911), kept as received and
   reviewed; then the pack (FS-912, FS-913, FS-920); Rumango is the
   incumbent (FS-924); the Kapu trademark (FS-921).
-- **Roan Capital:** the Motor Vehicle and Title Deed product documents
-  (FS-934); the sale window against the law for the 29 October meeting
-  (FS-935).
+- **Roan Capital:** all three products now have draft documents
+  (Biashara; Motor Vehicle and Title Deed, FS-957), with Roan Capital's
+  answers to gather; the Product Understanding Document for all three
+  (FS-947). Motor Vehicle's sale window against the law, for the 29
+  October meeting (FS-935). The Land Act is on the law register (LR-47,
+  FS-959): a land sale no earlier than about day 160 after a missed
+  payment; its s.85(3) early-discharge charge sits against reg 56.
+- **Competitors:** Rumango (CP-21, SBM Bank's incumbent), WizGlobal
+  (CP-22), ReconArt (CP-23) added (FS-958); FS-924 closed.
 - **Lofty Corban** (CU-05): the follow-up draft to send
   (clients/lofty-corban/working); its NDA (FS-918).
 - **Waiting on his decision:** FS-893 (who sees and does what), FS-898
-  (delegation), FS-897 (the GitHub connector), FS-924 (competitors),
+  (delegation), FS-897 (the GitHub connector),
   FS-926 and FS-927 (credit limits, duplicate retries), FS-928 (the
   Board's team filter); FS-906 (iManage's data processing agreement).
 - **Older:** the Data Commissioner registration (FS-367, Critical); which
@@ -75,7 +82,7 @@ As at 23 October 2026, the morning of the MVP day (12:00 to 16:00).
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric (161)
+### Rows with Eric (160)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -109,7 +116,6 @@ As at 23 October 2026, the morning of the MVP day (12:00 to 16:00).
 | FS-915 | A new customer, Lofty Corban: a fund manager (investments and retirement benefits; insurance a new line), regu | High |
 | FS-916 | Lofty Corban's regulators are CMA, RBA and IRA, none of whose laws our law register holds: which to read first | High |
 | FS-920 | SBM: what we promised in the meeting. A diagram of how data is handled (asked for), the documentation on how w | High |
-| FS-924 | How we compare to competitors: Creodata, WizGlobal, ReconArt, Rumango | High |
 | FS-925 | A team hackathon on 23 October, noon to 16:00 with breaks: what to practise, build and close, how to involve e | High |
 | FS-928 | Coordinating the MVP day and after: dependencies, the critical path, everyone with their own Claude and GitHub | High |
 | FS-929 | Work in the cloud, for visibility: each person deploys their components on Azure to test and check configurati | High |
@@ -247,4 +253,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-952-mvp-start`: nothing saved yet; here now, 7 files unsaved
+- `claude/emokaya/FS-959-land-act`: nothing saved yet; here now, 5 files unsaved

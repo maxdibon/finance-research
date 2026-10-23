@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Compliance lead
 classification: Internal
-review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431, FS-499, FS-538, FS-673, FS-686, FS-899, FS-901, FS-916]
-last_reviewed: 2026-10-22
+review_ids: [FS-400, FS-423, FS-425, FS-426, FS-427, FS-428, FS-429, FS-431, FS-499, FS-538, FS-673, FS-686, FS-899, FS-901, FS-916, FS-959]
+last_reviewed: 2026-10-23
 ---
 
 # Law register — the legislation that applies to us and our customers
@@ -97,6 +97,7 @@ background, and large). The check matches the copies to this register. Supersede
 | LR-44 | Capital Markets Act (Cap. 485A) | [capital-markets-act@2025-12-11](https://new.kenyalaw.org/akn/ke/act/1989/17/eng@2025-12-11) | 2025-12-11 | Institution | Fund managers and collective investment schemes, licensed by the CMA: Lofty Corban (CU-05) | — | Unread | 2026-10-22 | Held for Lofty Corban (FS-916). Its regulations on collective investment schemes, which bear most on a fund manager's collections and investor accounts, are not found on Kenya Law by search: to locate, with the CMA |
 | LR-45 | Retirement Benefits Act (Cap. 197) | [retirement-benefits-act@2025-06-20](https://new.kenyalaw.org/akn/ke/act/1997/3/eng@2025-06-20) | 2025-06-20 | Institution | Retirement benefit schemes, their trustees, administrators and fund managers, regulated by the RBA: Lofty Corban (CU-05) | — | Unread | 2026-10-22 | Held for Lofty Corban (FS-916); which of its roles Lofty Corban holds is its open answer 7 |
 | LR-46 | Insurance Act (Cap. 487) | [insurance-act@2023-12-11](https://new.kenyalaw.org/akn/ke/act/1985/1/eng@2023-12-11) | 2023-12-11 | Institution | Insurers and intermediaries, regulated by the IRA: Lofty Corban's new line (CU-05) | — | Unread | 2026-10-22 | Held for Lofty Corban (FS-916) |
+| LR-47 | Land Act (Cap. 280) | [land-act@2025-11-04](https://new.kenyalaw.org/akn/ke/act/2012/6/eng@2025-11-04) | 2025-11-04 | Obligation | Lenders taking a charge over land as security: Roan Capital's Title Deed loan | MF-03 | Targeted | 2026-10-23 | Read ss.79, 80, 85, 88, 90, 96, 97, 101 to 103 (FS-959): a charge registered, with a spouse's assent for a matrimonial home; after a month in default, a notice giving at least three months to pay; then a notice to sell and forty days before a sale completes, after a forced sale valuation; discharge by paying in full at any time before the sale. LR-03 reg 30(3) sends land security here. Earliest sale about day 160 after a missed payment |
 
 ## Reports and strategies
 
