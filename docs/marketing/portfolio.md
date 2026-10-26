@@ -6,7 +6,7 @@ status: agreed
 released: 2026.10.15
 owner: Commercial lead
 classification: Public once approved
-last_reviewed: 2026-10-22
+last_reviewed: 2026-10-26
 ---
 
 # Dibon Financial Services portfolio
@@ -419,7 +419,7 @@ SIM-swap check where the operator offers one.
 **Intro:** For SMEs and fintechs without an ERP, and for Saccos, MFIs and
 banks that want their own back office in order. Dibon implements Odoo, as
 an Odoo Ready Partner, and Zoho, as a Zoho partner. Odoo runs on OLP, Odoo
-Launch Pad, our own Odoo management platform, hosted in Kenya. An
+Launch Pad, our own Odoo management platform. An
 institution's customer accounts stay in its core; Odoo receives the daily
 totals for the general ledger.
 **Apps:**
@@ -435,8 +435,8 @@ totals for the general ledger.
 **Diagram caption:** Odoo is the back office around your core, never a
 second core.
 **Band:** Odoo on OLP, *set up for Kenya.*
-**Band text:** eTIMS invoicing, Kenyan payroll and M-Pesa payments, hosted in
-Kenya and supported from Nairobi. Each market we enter gets the same: its
+**Band text:** eTIMS invoicing, Kenyan payroll and M-Pesa payments,
+supported from Nairobi. Each market we enter gets the same: its
 tax, its payroll, its rails. Zoho runs on Zoho's own cloud; both share one
 sign-on with the rest of the Dibon platform.
 

@@ -11,7 +11,7 @@ depends_on: [access-keycloak, event-bus-kafka]
 used_by: [messaging, recon]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-644, FS-965, FS-966, FS-967, FS-968, FS-969, FS-970]
+review_ids: [FS-644, FS-965, FS-966, FS-967, FS-968, FS-969, FS-970, FS-971]
 last_reviewed: 2026-10-26
 ---
 
@@ -132,7 +132,7 @@ depends on [access-keycloak](access-keycloak.md) and
     service cannot be the back office (it can still be a business's own
     books, through sme-recon's wrappers).
 11. **One contract test suite.** Every adapter passes the same suite
-    (§10); a new ERP is supported when its adapter passes, and not before.
+    (§11); a new ERP is supported when its adapter passes, and not before.
 12. **Nothing on the money path waits for it.** Payments, postings and
     approvals never call the back office in their path; the gateway
     queues what it cannot deliver and delivers it in order when the ERP
@@ -232,7 +232,7 @@ authority for its records, the gateway only the way to them.
 
 ## 9 · Porting an institution's back office
 
-1. **The target edition passes §10's suite** in a test instance.
+1. **The target edition passes §11's suite** in a test instance.
 2. **Map** each job's records from the old ERP to the new, by our
    references.
 3. **Rehearse:** export from a copy of the live back office, import into
@@ -246,7 +246,35 @@ authority for its records, the gateway only the way to them.
 Signed documents need no migration of their own: they are already in the
 vault (rule 7).
 
-## 10 · Acceptance tests
+## 10 · Upgrading the ERP
+
+FS-971. An upgrade is a port between two versions of the same ERP, so it
+follows §9, with these rules besides:
+
+1. **Each major version is an edition,** with its own adapter version;
+   the old and the new run side by side until cut-over, and the switch
+   is the instance's edition setting.
+2. **On a copy first.** Production is copied to staging, the copy is
+   upgraded, then §11's contract tests, our modules' tests and a staff
+   check run on it; promotion waits for all three, and a failure keeps
+   production as it was (OLP's procedure, its review §2.1; olp N3).
+3. **The right migration for the edition.** Odoo Enterprise through
+   Odoo's own upgrade service, which carries Sign, Helpdesk and
+   Documents; Odoo Community through OCA's OpenUpgrade; any other ERP by
+   its own route, named in its edition.
+4. **Ready before we move.** Our modules ported, and every OCA module we
+   depend on (auth_oidc first, FS-646) released for the target version.
+5. **Configuration as code.** Each institution's set-up is data files in
+   our module, in git, re-applied and checked after the upgrade, never
+   clicks remembered by one person.
+6. **Once a year,** within the versions the ERP's maker supports, one
+   major version at a time unless the maker's own service skips safely;
+   in a change window, through change enablement.
+7. **Watch the footprint.** We count our customisations and record how
+   long each upgrade took, so a back office growing harder to upgrade is
+   seen before it is a problem.
+
+## 11 · Acceptance tests
 
 | # | Given | When | Then | Id, source |
 |---|---|---|---|---|
@@ -259,8 +287,9 @@ vault (rule 7).
 | A7 | Our Odoo module | It is installed on Odoo Community | It installs and its screens work | BS-21, rule 6 |
 | A8 | A consent withdrawn in the ERP | The adapter learns of it | `kapu.backoffice.consent.changed` is published, and messaging stops that channel within five minutes | BS-21, MS-11 |
 | A9 | A second edition's adapter | A port is rehearsed (§9) | Counts reconcile by job and the suite passes on the target | BS-22 |
+| A10 | An Enterprise instance and the next Odoo version | The upgrade is rehearsed on a staging copy (§10) | Sign, Helpdesk and Documents work after it, the contract suite passes, counts reconcile, and production is untouched until promotion | BS-21, FS-971 |
 
-## 11 · Open questions
+## 12 · Open questions
 
 **For the owner:**
 

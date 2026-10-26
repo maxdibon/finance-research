@@ -89,7 +89,7 @@ review's reading of the handbook, not of OLP's code.
 |---|---|---|---|---|
 | N1 | Enterprise upgrades through Odoo's own upgrade service, beside OpenUpgrade for Community, so Sign, Helpdesk and Documents move too | Must | Every Enterprise site | Gap (G1) |
 | N2 | A target inside an institution's instance: Odoo on Kubernetes through Flux, with CloudNativePG and object storage; or an agreed boundary where OLP's steps run against it | Must, if institutions' back offices are to be on OLP | Institutions | Gap (G2) |
-| N3 | A hook before promoting an upgraded or staged copy, so back-office §10's contract tests run on it, and promotion waits for them | Must | Every site the back-office gateway serves | Gap (G3) |
+| N3 | A hook before promoting an upgraded or staged copy, so back-office §11's contract tests run on it, and promotion waits for them | Must | Every site the back-office gateway serves | Gap (G3) |
 | N4 | Sign-in to OLP through Keycloak; hardware keys for anyone with server or restore rights (SE-26) | Must | Dibon's engineers | Gap (G4) |
 | N5 | SSH keys held in OpenBao, used through the bastion, every session recorded | Must | Every managed server | Not stated (G5) |
 | N6 | Backups encrypted, held in Kenya at two sites, never over FTP, kept as docs/documents.md says | Must | Institutions; Should for SMEs | Not stated (G6) |

@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957]
-last_reviewed: 2026-10-23
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965]
+last_reviewed: 2026-10-26
 ---
 
 # Roan Capital — delivery map
@@ -195,6 +195,8 @@ choice (MF-04, FS-619).
 | 30 | CBK must be told thirty days before a new delivery channel rolls out (reg 27(1)), with the mobile-money number used for payouts and repayments, any app, and the bank accounts (27(2)). The platform is that channel: who notifies CBK, and by when before go-live? | FS-830 | Open, for senior management (FS-827) |
 | 31 | A reading we are confirming: whether a restructure the borrower asks for must still wait the thirty days' notice that reg 54(7) gives for any change to a loan agreement (the power to restructure is reg 28(3)). We will confirm it before anything is built on it; does your counsel have a view? | FS-876 (LQ-06) | Open |
 | 32 | A reading we are confirming: which regulation sets how often guarantors receive statements. We cite reg 47(2); reg 39(3) may be the right one. We will confirm it before anything is built on it; does your counsel have a view? | FS-876 (LQ-16) | Open |
+| 33 | Your staff found the Mifos screens hard to use. We propose screens of our own in Odoo for daily lending (FS-965): which tasks were hardest? May we watch two or three staff at their desks, on 29 October or soon after? | FS-965 | Open, for 29 October |
+| 34 | Would licence cost lead you to a lower-cost edition of Odoo (Community, supported by us rather than Odoo), knowing the trade-offs? | FS-967 | Open, for 29 October |
 
 ### Answered
 

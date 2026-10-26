@@ -1756,3 +1756,24 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** one more service in R1, small; Odoo's features
   used through our words, so a feature without a job waits for one; a
   contract test suite kept for every adapter.
+
+## FS-965 · Staff work in Odoo, over Kapu MFI; Fineract stays the core
+
+*Entry written 2026-10-26 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** in R1, an institution's staff do their daily lending in
+  screens of ours inside Odoo (the staff workspace, BS-23), not the
+  Mifos web app: reads live and never stored, every write a command to
+  Kapu MFI, every decision in the approval engine with step-up, each act
+  as the person. Odoo is only the interface. The phase 1 cap is 251.
+- **Requires:** BS-23; docs/specs/staff-workspace.md.
+- **Argued (owner):** "roan users found mifos difficult to use, can we
+  replace the back office backend with our custom odoo pages?"; "odoo
+  would only be the interface not replace fineract"; "i meant FS-965 in
+  r1".
+- **Argued against:** the Mifos web app, generic and found hard to use;
+  screens of our own outside Odoo, a fourth place to sign in to; storing
+  loans in Odoo, a second core.
+- **Costs (inferred):** one more R1 capability; Kapu MFI's API must be
+  specified first; Odoo's availability now matters to staff's day, with
+  a read-only fallback to choose.
