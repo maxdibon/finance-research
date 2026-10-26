@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759, FS-792, FS-896, FS-932]
-last_reviewed: 2026-10-22
+review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759, FS-792, FS-896, FS-932, FS-970]
+last_reviewed: 2026-10-26
 ---
 
 # Technology: the register of components we run
@@ -72,7 +72,7 @@ yet tried) · *Bought* (commercial, chosen with its supplier). All checked
 | Component | Role | Licence | Governed by | Verdict | Alternatives | Why |
 |---|---|---|---|---|---|---|
 | Apache Fineract | The ledger (kapu-core-fineract) | Apache-2.0 | Apache Software Foundation | Keep | A bought core | Open, proven in microfinance, ours to host (FS-136) |
-| Odoo | Back office: Sign, Helpdesk, HR, CRM | LGPL-3.0 core; Enterprise bought | Odoo SA | Keep; Enterprise for institutions (FS-644) | Zoho (beside it); ERPNext (GPL) | Dibon is a partner; one back office for every product |
+| Odoo | Back office: Sign, Helpdesk, HR, CRM | LGPL-3.0 core; Enterprise bought | Odoo SA | Keep; Enterprise for institutions (FS-644), behind the back-office gateway (FS-970) | Odoo Community with OCA, ERPNext (GPL) and Tryton (GPL), to evaluate (FS-970); Zoho for a business's own books | Dibon is a partner; one back office for every product |
 | Apache Superset | Insights | Apache-2.0 | Apache Software Foundation | Keep | Metabase (AGPL) | Permissive, and governed (FS-230) |
 | Flowza | The team inbox for conversations | Dibon's own | Dibon | Keep, once FS-664 to FS-666 close | — | Ours; messaging stays the only sender (FS-663) |
 

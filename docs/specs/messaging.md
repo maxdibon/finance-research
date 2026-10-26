@@ -8,12 +8,12 @@ law: LR-03
 released: 2026.10.16
 release: R1
 implements: [messaging]
-depends_on: [access-keycloak, event-bus-kafka]
+depends_on: [access-keycloak, event-bus-kafka, back-office]
 used_by: [access-keycloak, lender-rules, observability-grafana]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802]
-last_reviewed: 2026-10-16
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802, FS-970]
+last_reviewed: 2026-10-26
 ---
 
 # Messaging and its templates — build specification
@@ -40,7 +40,7 @@ the channel reported.
 | MS-06 | WhatsApp with Meta-approved templates | No: SMS and email in R1; WhatsApp once FS-165 is answered (FS-674) |
 | MS-09 | A truthful status per message | Yes |
 | MS-10 | Replies, keywords, STOP | Yes, replies and STOP |
-| MS-11 | Consent per person, channel and purpose, held in Odoo | Yes, for SMS and email |
+| MS-11 | Consent per person, channel and purpose, held in the back office (Odoo today), reached through the back-office gateway (back-office §4) | Yes, for SMS and email |
 | MS-12 | Events become messages from templates, on each person's channels, with the regulatory overrides | Yes |
 | MS-14 | Templates with merge fields; SMS length in the right alphabet | Yes |
 | MS-15 | Quiet hours and rate limits | Yes |
@@ -82,7 +82,8 @@ and MCP access (MS-17), partners' routes outside Kenya (MS-04).
 ```
 
 **Related:** implements [messaging](../modules/messaging.md); depends on
-[access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by
+[access-keycloak](access-keycloak.md), [event-bus-kafka](event-bus-kafka.md) and
+[back-office](back-office.md); used by
 [access-keycloak](access-keycloak.md),
 [lender-rules](lender-rules.md) and
 [observability-grafana](observability-grafana.md); journeys

@@ -8,11 +8,11 @@ released: 2026.10.15
 release: R1
 implements: [recon-observability]
 depends_on: [observability-grafana]
-used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, messaging, recon]
+used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, messaging, recon, back-office]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802]
-last_reviewed: 2026-10-14
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970]
+last_reviewed: 2026-10-26
 ---
 
 # The event bus on Kafka — component specification
@@ -76,8 +76,8 @@ shared with institutions' own systems.
 [observability-grafana](observability-grafana.md); used by
 [approval-engine](approval-engine.md), [lender-rules](lender-rules.md),
 [kapu-core-fineract](kapu-core-fineract.md),
-[end-of-day-runner](end-of-day-runner.md), [messaging](messaging.md)
-and [recon](recon.md); the rules every event follows are also in
+[end-of-day-runner](end-of-day-runner.md), [messaging](messaging.md),
+[recon](recon.md) and [back-office](back-office.md); the rules every event follows are also in
 [interfaces](../architecture/interfaces.md).
 
 ## 2 · Version and hosting
@@ -159,6 +159,7 @@ every consumer has moved. A name not in this table is not published.
 | access | `kapu.access.role.changed`, `.user.disabled`, `.blocked`, `.recovered` | Access | Messaging (T23, T25, T42), audit |
 | identity | `kapu.identity.sim.changed` | Identity | Messaging (T24), access |
 | messaging | `kapu.messaging.message.sent`, `.delivered`, `.failed`, `.held`, `.blocked`, `.opted_out` | Messaging | Products, Odoo, observability |
+| backoffice | `kapu.backoffice.ticket.opened`, `.ticket.updated`, `.ticket.closed`, `.signature.completed`, `.signature.declined`, `.signature.expired`, `.consent.changed`, `.staff.joined`, `.staff.changed`, `.staff.left` | The back-office gateway (back-office §4) | Messaging, recon, access (provisioning), the vault |
 
 A dot-leading name (`.loan.approved`) continues the domain's prefix.
 

@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973]
+last_reviewed: 2026-10-26
 ---
 
 # Specifications
@@ -47,6 +47,8 @@ as the components table below names it.
 | [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
 | [github](github.md) | Component | GitHub: the organisation, teams and roles, rulesets on main, code owners, push rulesets, Actions with runners in Kenya, secrets from OpenBao, deploys by pull request and the change calendar, planning in Projects; plans checked | platform-security | R1 |
 | [recon](recon.md) | Build | The reconciliation platform: every movement accounted for by count and amount, tracing, auto-correction, and three ledgers that must agree (the master, a shadow, an independent companion) | recon-observability | R1 |
+| [back-office](back-office.md) | Build | The back office behind one interface: the jobs our services ask of the ERP, one adapter per ERP, the contract tests, and how an institution is ported from one ERP to another | business-suite | R1 |
+| [olp](olp.md) | Component | OLP, Dibon's Odoo platform, as Financial Services uses it: which sites run on it, and what Financial Services needs from it (N1 to N14); OLP's own design is OLP's | business-suite | R2 |
 
 **To write, in the order R1 needs them:** odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
 rails (M-Pesa and bank instructions, their lifecycle and signing).
@@ -101,6 +103,9 @@ says what crosses each line.
 | kapu-core-fineract | recon | Postings and signed checkpoints, as events; balances read by API; recon never writes back |
 | recon | end-of-day-runner | The intake and break checks (C3 to C6, P5) and the morning's breaks and match rate |
 | recon | approval-engine | Reads approvals, to compare them with the ledger; reversals go back through the engine |
+| messaging | back-office | Signature requests and consents, by our references; signatures completed and consents changed come back as events |
+| recon | back-office | Tickets for breaks and exceptions, by our references (recon's extensions) |
+| back-office | access-keycloak | Service accounts for its callers; staff sign in to the ERP through access |
 
 ## Components
 
@@ -122,7 +127,9 @@ Every box in a spec's diagram is named as this table names it (FS-632).
 | RECONCILIATION | Matches the ledger with the rails, proves completeness, compares the three ledgers | `[kapu_service]` | [recon](recon.md) |
 | SHADOW LEDGER | Rebuilds the master's ledger from its postings, near real time, in memory | `[kapu_service]` | [recon](recon.md) |
 | COMPANION LEDGER | Computes, on its own, what every account should hold, from the source events and the product's terms | `[kapu_service]` | [recon](recon.md) |
-| ODOO | Back office: signing, HR, helpdesk, general-ledger summaries | `[odoo]` | to write |
+| BACK-OFFICE GATEWAY | Offers the back office's jobs to our services, through one adapter per ERP | `[kapu_service]` | [back-office](back-office.md) |
+| ODOO | Back office: signing, HR, helpdesk, general-ledger summaries; the first ERP behind the gateway | `[odoo]` | [back-office](back-office.md) |
+| OLP | Runs Odoo sites: provisioning, add-ons, staging, backups, upgrades; Dibon's, with its own roadmap | `[olp]` | [olp](olp.md) |
 | DATABASE | PostgreSQL, one per service | `[postgresql]` | — |
 | M-PESA | Safaricom's mobile money | `[rail]` | — |
 | BANKS | The institution's banks | `[rail]` | — |

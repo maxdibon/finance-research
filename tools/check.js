@@ -1278,7 +1278,7 @@ function checkProducts(root) {
 // `version:` stays only on documents that go outside on their own.
 const LIFECYCLES = {
   living: ['register', 'index', 'overview', 'plan', 'delivery', 'product', 'shared-service', 'channel', 'checklist', 'guide', 'service', 'law'],
-  agreed: ['architecture', 'policy', 'handbook', 'manual', 'partner-model', 'marketing'],
+  agreed: ['architecture', 'policy', 'handbook', 'manual', 'partner-model', 'marketing', 'review'],
 };
 function statusesFor(kind) {
   if (kind === 'spec') return SPEC_STATUSES;

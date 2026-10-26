@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-23
+last_reviewed: 2026-10-26
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1734,3 +1734,25 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** two more people on the critical path; the
   Enterprise modules fetched through the partner account before noon;
   Odoo's sign-in waits on the staff realm (FS-942).
+
+## FS-970 · The back office behind one interface, so the ERP can change
+
+*Entry written 2026-10-26 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** design for leaving Odoo, or for a second ERP, from R1: our
+  services reach the back office only through a back-office gateway,
+  one adapter per ERP, one contract test suite; no business rule in the
+  ERP; our references as the keys; signed documents in the vault too;
+  everything exportable. Odoo Enterprise stays the back office for now
+  (FS-644); Odoo Community with OCA (FS-967), ERPNext and Tryton (FS-969)
+  are candidates to evaluate.
+- **Requires:** BS-21, BS-22; docs/specs/back-office.md.
+- **Argued (owner):** "my primary thought is how to remain flexible and
+  ensure that if we need to port from odoo, or support another platform
+  for the 'erp inside our platform'. let's design for this."
+- **Argued against:** naming Odoo in every service's integration, the
+  cheapest today and the dearest to leave; choosing a second ERP now,
+  before a customer asks for one; Flectra and ERP5 (FS-969).
+- **Costs (inferred):** one more service in R1, small; Odoo's features
+  used through our words, so a feature without a job waits for one; a
+  contract test suite kept for every adapter.

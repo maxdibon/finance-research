@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808]
-last_reviewed: 2026-10-14
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974]
+last_reviewed: 2026-10-26
 ---
 
 # Delivery plan — phase 1 in releases
@@ -81,7 +81,8 @@ the check keeps the two in step):
 - **Access:** AC-03 (borrowers and guarantors by a code to their bound
   phone; passkeys with the app), AC-05, AC-09, AC-13 (codes through our
   messaging).
-- **Business suite:** BS-01 (CRM for leads), BS-02 (Odoo Sign, for loan
+- **Business suite:** BS-21 (the back office behind one interface, so
+  the ERP can change: FS-970), BS-01 (CRM for leads), BS-02 (Odoo Sign, for loan
   agreements), BS-12 (the employee record only, in Odoo's Employees
   app, which provisions staff access; payroll, leave and attendance
   later, FS-769).
@@ -128,7 +129,7 @@ live (FS-777).
 **The current scope is the target** (FS-490): v1 is everything in phase 1
 today, and it does not grow by drift.
 
-**v1 cap:** 249 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585, FS-586, FS-618, FS-638).
+**v1 cap:** 250 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585, FS-586, FS-618, FS-638, FS-974).
 
 Nothing moves into phase 1 unless something of similar size moves out, or
 the team grows to carry it. Raising the cap is a decision: the line above

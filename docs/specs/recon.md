@@ -8,12 +8,12 @@ law: LR-03
 released: 2026.10.16
 release: R1
 implements: [recon-observability]
-depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine]
+depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine, back-office]
 used_by: [end-of-day-runner]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809]
-last_reviewed: 2026-10-16
+review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809, FS-970]
+last_reviewed: 2026-10-26
 ---
 
 # Reconciliation platform — build specification
@@ -91,8 +91,8 @@ change-data capture (all R2); the extension catalogue (RO-28, phase 2).
 [kapu-core-fineract](kapu-core-fineract.md),
 [event-bus-kafka](event-bus-kafka.md),
 [observability-grafana](observability-grafana.md),
-[access-keycloak](access-keycloak.md), [lender-rules](lender-rules.md)
-and [approval-engine](approval-engine.md); used by
+[access-keycloak](access-keycloak.md), [lender-rules](lender-rules.md),
+[approval-engine](approval-engine.md) and [back-office](back-office.md); used by
 [end-of-day-runner](end-of-day-runner.md); journeys
 [JN-16](../journeys/unplaced-payment.md),
 [JN-17](../journeys/accountant-morning.md),
@@ -387,7 +387,7 @@ rates of its day (RO-02, RO-26).
 A catalogue of proven extensions (RO-28, phase 2; R1 and R2 run the same
 actions built in), built, tested and signed by Dibon, which an
 institution switches on and configures (FS-791). **Odoo first** (owner,
-FS-794): raise and update a ticket in Odoo Helpdesk, then Zoho; alert; pause a rail; notify a customer through messaging;
+FS-794): raise and update a ticket in the back office through the back-office gateway (back-office §4; Odoo Helpdesk today), then Zoho; alert; pause a rail; notify a customer through messaging;
 propose a reversal for approval. Two kinds: **per transaction**, which act
 on one customer's break, and **per system**, which act on a source or a
 rail. Institutions never upload code; a new extension enters the

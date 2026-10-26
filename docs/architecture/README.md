@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793]
-last_reviewed: 2026-10-16
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970]
+last_reviewed: 2026-10-26
 ---
 
 # Platform architecture — who holds what
@@ -489,6 +489,16 @@ logs or samples.
 ---
 
 ## 8 · Odoo, at least cost to the customer
+
+**The ERP is replaceable** (FS-970). Odoo Enterprise is the back office
+today, and stays so for now; Odoo Community with OCA's modules, ERPNext
+and Tryton are candidates to evaluate. Our services reach the back
+office only through the back-office gateway, in our own words, with one
+adapter per ERP and one contract test suite every adapter passes; no
+business rule lives in the ERP, our references are the keys, signed
+documents are in the vault too, and everything exports
+(docs/specs/back-office.md). Porting an institution, or supporting a
+second ERP, is a new adapter, not a rewrite.
 
 Assume Odoo Enterprise, since we are integration partners (FS-026). The cost
 of an Odoo deployment is internal users, so external people stay external:
