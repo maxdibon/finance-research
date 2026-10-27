@@ -1,7 +1,7 @@
 # Dibon financial services — session handoff
 
     release: 2026.10.16 · minor
-    updated: 2026-10-22
+    updated: 2026-10-27
     the release is the documentation's, moved by each release (FS-842);
     this file has no version of its own
     purpose: hand this repository to a session that knows nothing about it;
@@ -45,7 +45,10 @@ Fineract), Collect and the Pay Gateway (which ran in production at Onit
 Bank), Escrow, SME Recon, and the business suite on Odoo; under them the
 shared services (access, identity and the vault, mandates, messaging,
 rails, reconciliation, financial crime, decisioning, insights, platform
-security). **R1 is Roan Capital's pilot** (customers CU-01). **Lofty
+security). **Around Fineract** (FS-970 to FS-988): the lending service,
+the only writer to the core, and the deposits service; Odoo the staff's
+interface only, behind the back-office gateway; the Kapu Console for
+Dibon's own operators. **R1 is Roan Capital's pilot** (customers CU-01). **Lofty
 Corban** (CU-05), a fund manager regulated by the CMA, RBA and IRA, is
 the first customer outside CBK's rules: reconciliation first. **SBM Bank**
 (partners PT-56) is in discussion: the bank channel, Collect and escrow.
@@ -278,6 +281,16 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
 - **Kept local, never committed:** `sources/odpc_registration.png`,
   `sources/dibon/recon-notes/`, and `design/card_design.png`, a
   third-party design image.
+- **Products:** `docs/products/`: each institution's product version
+  drafts, the loan kinds the vocabulary can describe, and `briefs/`, a
+  brief for each product that is hard for an institution to do alone
+  (FS-1029). **Who uses which app:** `docs/channels.md`. **Starter
+  templates** for an institution's business customers and partners:
+  `docs/templates/` (FS-1021).
+- **Our documents' numbers** (`DC-FS-<kind>-<serial>`) are in
+  design-system §7, and who received each in the document register's
+  distribution log (FS-1026): give anything sent outside a number, and
+  log its sending.
 - **Binary files** are refused by the pre-commit hook unless listed in
   `.githooks/allowed-binaries`. **Logos:** `design/brand/` (FS-524).
 
@@ -437,6 +450,19 @@ register row.
   an FS id fails review-ids; use a real one.
 - **Angle brackets in a register row** are read as HTML: a branch
   pattern goes in backticks.
+- **A reader tab opened from a file is a snapshot:** in the browser pane, a
+  `file://` page never refreshes when the site is rebuilt, and looks as
+  if today's work is missing. Use `preview_start` name `site` and its
+  localhost address, and reload.
+- **A merge does not rebuild the reader:** the hook runs on a commit, not
+  on a merge, so after "merge and push" the reader may still be built from
+  the last branch committed on. Run `node tools/site.js` on main.
+- **Run the tests on a still tree:** a run that overlaps edits, commits or
+  a branch switch reported 50 failures that a quiet rerun did not
+  (FS-1028). The suite takes several minutes: start it, then leave the
+  files alone.
+- **Register ids have four digits past FS-999** (FS-1000): every tool reads
+  `FS-\d{3,4}` and sorts by number; a new pattern must too.
 - **The SBM deck is an artifact on claude.ai,** not a file here; its PDF
   is rebuilt locally into build/proposals/.
 
