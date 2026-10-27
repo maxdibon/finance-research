@@ -1892,3 +1892,20 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** a portal and an intake to build with MF-40; each
   partner's onboarding is the institution's work; an operator's consent
   for Dibon to host and process (FS-1002).
+
+## FS-1004 · A borrower consents to each partner apart
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** a borrower's consent to a partner's data being used is
+  given for each partner apart by default; an institution may set a
+  product's partner terms to one consent for the partners named at that
+  moment, never future ones, or turn consent off only where another
+  lawful basis is recorded by decision with its impact assessment.
+- **Requires:** MF-42; docs/specs/lending-service.md §5.
+- **Argued (owner):** "i think the more restrictive is that retailers
+  consent per distributor, unless this is waived or turned off".
+- **Argued against:** one consent for every partner, present and future,
+  which is not specific enough to stand as consent.
+- **Costs (inferred):** a consent asked at each new relationship; the
+  basis behind "off" settled with counsel (LQ-22).

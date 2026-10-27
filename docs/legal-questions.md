@@ -7,7 +7,7 @@ law: LR-03
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989]
+review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989, FS-1004]
 last_reviewed: 2026-10-27
 ---
 
@@ -62,7 +62,7 @@ lost.
 | LQ-19 | Is a logbook loan, the vehicle jointly registered with the lender, a security right under the MPSR Act, or a hire-purchase agreement; and if hire purchase, may the lender repossess without a court once two-thirds is paid? | lender-rules §2.11; Roan Capital RC-08 | Institutions | MPSR Act s.65(4) (LR-23); Hire-Purchase Act s.15 (LR-42) | Open | A security right; a product marked hire purchase refuses repossession without a recorded court order once two-thirds of its price is paid | FS-899 |
 | LQ-20 | When a loan is paid to a supplier for goods, and the goods are faulty or never arrive, may the borrower withhold repayment, and must the lender pursue the supplier? What must the agreement and the key information document say about it? | docs/products/loan-kinds.md | Institutions | Reg 54 (LR-03) | Open | The partner's agreement refunds returned or undelivered goods to the loan; the borrower's agreement says so, and a complaint about the goods pauses collection on that draw (JN-08) | FS-989 |
 | LQ-21 | For goods financed as their own security (a motorbike, equipment), is the lender's title a hire-purchase agreement or a security right under the MPSR Act, and which steps then apply to repossession? (with LQ-19) | docs/products/loan-kinds.md | Institutions | Hire-Purchase Act s.15 (LR-42); MPSR Act s.65(4) (LR-23) | Open | As LQ-19: a product marked hire purchase refuses repossession without a recorded court order once two-thirds is paid | FS-989 |
-| LQ-22 | On what lawful basis may a distributor share a retailer's purchase history with a lender to set its limit: the retailer's consent, or another ground? | docs/products/loan-kinds.md | Institutions; Dibon | Data Protection Act s.30, s.32 (LR-17) | Open | The retailer's recorded consent, before any data is shared, withdrawable; without it, no limit from the partner's data | FS-989 |
+| LQ-22 | On what lawful basis may a distributor share a retailer's purchase history with a lender to set its limit: the retailer's consent, or another ground? | docs/products/loan-kinds.md | Institutions; Dibon | Data Protection Act s.30, s.32 (LR-17) | Open | The retailer's recorded consent, before any data is shared, withdrawable, given for each distributor apart by default (FS-1004); without it, no limit from the partner's data | FS-989, FS-1004 |
 
 ## Regulations cited
 

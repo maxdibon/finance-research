@@ -8,7 +8,7 @@ released: unreleased
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-989, FS-995, FS-996, FS-1000]
+review_ids: [FS-989, FS-995, FS-996, FS-1000, FS-1004]
 last_reviewed: 2026-10-27
 ---
 
@@ -76,7 +76,7 @@ last_reviewed: 2026-10-27
 | 5 | The feed contract is agreed (fields, format, frequency) and a test feed passes its checks | Partner manager, the distributor | — | MF-42, RO-01 |
 | 6 | Two approvers approve the distributor, its exposure cap and first-loss share; it goes live | Approvers | — | MD-01, MF-41 |
 | 7 | Its staff and sales representatives get the partner portal; its system's address for events is registered and tested | Partner manager | — | BS-03, MF-41 |
-| 8 | Each retailer consents by USSD or the app; its purchases arrive through the intake; the risk team sets each relationship's limit | Retailers, risk team | — | MF-42, DE-01, MF-41 |
+| 8 | Each retailer consents, to this distributor apart, by USSD or the app; its purchases arrive through the intake; the risk team sets each relationship's limit | Retailers, risk team | — | MF-42, DE-01, MF-41 |
 | 9 | A retailer draws against an invoice; the distributor is paid, and its system is told, signed | Retailer, the distributor | — | MF-40, MF-41 |
 
 ## 3 · When it goes wrong
@@ -100,6 +100,6 @@ last_reviewed: 2026-10-27
 ## 5 · Open questions
 
 1. How long may a distributor's raw files be kept: the data-sharing
-   agreement's term, at most 90 days (privacy PR-21)?
-2. Does the retailer consent once, for every distributor it buys from,
-   or once per distributor (LQ-22)?
+   agreement's term, at most 90 days (privacy PR-21)? Answered: a retailer
+   consents to each distributor apart, unless the institution sets
+   otherwise as lending-service §5 allows (FS-1004).

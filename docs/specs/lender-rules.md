@@ -12,7 +12,7 @@ depends_on: [kapu-core-fineract, messaging, event-bus-kafka]
 used_by: [end-of-day-runner, recon, lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896, FS-983, FS-978, FS-981, FS-989, FS-991]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896, FS-983, FS-978, FS-981, FS-989, FS-991, FS-1004]
 last_reviewed: 2026-10-27
 ---
 
@@ -391,7 +391,7 @@ stay internal, as decisioning's risk classes do.
 | Documents | The checklist (identity ID-02) | What a borrower must provide |
 | Disbursement | The channels: M-Pesa or a bank, and which account | How the money is paid out, and from where |
 | Payee | Who receives the money: the borrower; or a third party (a supplier, dealer, school, hospital, insurer, agro-dealer, merchant), only from an approved list and against a proof (an invoice, a proforma, a quotation, a fee structure, a premium notice); whether any part goes to the borrower (FS-989) | Whether the money reaches the borrower, or pays for what the loan was for |
-| Partner | The third party (a distributor, dealer, school, hospital, insurer, employer, produce buyer, merchant, or a mobile operator whose wallet carries the product) and its part: whether it shares data (with the borrower's consent), what it pays towards the price, any first loss it takes, whether returned goods are refunded to the loan (FS-989) | What the partner owes the lender, and the borrower |
+| Partner | The third party (a distributor, dealer, school, hospital, insurer, employer, produce buyer, merchant, or a mobile operator whose wallet carries the product) and its part: whether it shares data, and how the borrower consents to it (each partner apart, the default; once for partners named at the time, never future ones; or off, only where another lawful basis is recorded by decision: FS-1004) (with the borrower's consent), what it pays towards the price, any first loss it takes, whether returned goods are refunded to the loan (FS-989) | What the partner owes the lender, and the borrower |
 | Cut-off | When payments stop being released (Roan Capital: 23:00 to 04:00, RC-21) | When payouts stop being released |
 | Purposes | The list a borrower chooses from | The reasons a borrower can choose from |
 | Bureau reporting | When the product's loans are reported (crb, phase 2) | When the product's loans are reported to the bureaus |

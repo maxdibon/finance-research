@@ -394,6 +394,7 @@
       "properties": {
         "kind": {"enum": ["distributor", "dealer", "school", "hospital", "insurer", "employer", "produce_buyer", "merchant", "mobile_operator"]},
         "shares_data": {"type": "boolean"},
+        "consent": {"enum": ["each_partner", "named_partners", "off"]},
         "pays_towards_price": {"$ref": "#/$defs/percent"},
         "first_loss": {"$ref": "#/$defs/percent"},
         "refunds_returns_to_loan": {"type": "boolean"}

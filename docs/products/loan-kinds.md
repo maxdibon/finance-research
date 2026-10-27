@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-989, FS-990, FS-991, FS-1000]
+review_ids: [FS-989, FS-990, FS-991, FS-1000, FS-1003]
 last_reviewed: 2026-10-27
 ---
 
@@ -65,8 +65,8 @@ of accounts and around-the-clock savings (FS-992).
 
 ## A worked example: retailer financing
 
-From Dibon's own concept of April 2025 (sources/dibon/
-2025-04-01-retailer-financing-for-msmes.pptx; FS-990), and the model a
+From Dibon's own concept of April 2025 (held with the KCB sources,
+outside git; FS-990, FS-1003), and the model a
 bank's retailer finance runs (FS-989):
 
 1. **The partner:** a distributor shares, with each retailer's consent, a

@@ -12,7 +12,7 @@ depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, dep
 used_by: [staff-workspace, kapu-console]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002]
+review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005]
 last_reviewed: 2026-10-27
 ---
 
@@ -199,7 +199,13 @@ later (Odoo's through sme-recon's wrapper):
 
 - **A contract per feed:** its fields, format, frequency and version.
 - **A consent gate:** no person's data is used without their recorded
-  consent (LQ-22, privacy PR-21).
+  consent (LQ-22, privacy PR-21), **given for each partner apart** by
+  default (FS-1004): a retailer who buys from two distributors consents
+  to each. The institution may set a product's partner terms to one
+  consent for the partners named at that moment, never for future ones;
+  or turn consent off only where another lawful basis is recorded by
+  decision, with its impact assessment. A consent is withdrawable, and
+  its withdrawal stops the partner's data at the next feed.
 - **Checks and quarantine:** completeness, duplicates, freshness, and
   odd jumps (purchases inflated before a limit renews) held for a person.
 - **Only metrics go forward** to decisioning (DE-01), never the raw file;
@@ -207,6 +213,27 @@ later (Odoo's through sme-recon's wrapper):
   what the operator withholds (FS-1002).
 - **Cross-checked** against what the institution actually paid the
   partner, by recon.
+
+**Where partner data is kept** (FS-1005). All of it in the institution's
+own instance, in Kenya; none in Dibon's central systems, in git or on a
+device (endpoints §2); each partner's raw data apart from every other
+source's, as operators' agreements require (FS-1002):
+
+| What | Where | Protected by | Kept |
+|---|---|---|---|
+| The company: its record, contacts, directors and owners | Odoo, through the gateway | Staff sign-in through access; the partner manager and compliance only | While a partner, then as Dibon's records rules say (docs/documents.md) |
+| Due diligence and KYB evidence, signed agreements | The document vault (ID-15) | Each file encrypted under keys in OpenBao; access logged | As the agreement's and the regulations' records rules say |
+| Settlement accounts, caps, first loss, status; relationships and their limits | This service's own database (PostgreSQL, a primary and a synchronous standby) | Encrypted at rest; every change an approved request, every read logged | While a partner and its loans run, then seven years |
+| Consents, per person and partner | The back office's consent store (MS-11), through the gateway, with the time, the channel and the text consented to | As the back office | While the relationship runs, then with the loan file |
+| Raw feed files, and those quarantined | Recon's intake, in object storage: a bucket per partner | Encrypted under keys in OpenBao; no person reads a file but to clear quarantine | At most 90 days (PR-21), less where the data-sharing agreement says; then deleted, the file's hash kept for lineage |
+| Metrics made from the feeds | Decisioning, in the decision record (DE-01) | As decisioning | With the loan file, seven years (PR-18) |
+| A partner's credentials: its API keys, its event signing secret | OpenBao | Never in a file or a database; rotated | While a partner |
+| Events sent to a partner, and their delivery | This service's outbox and log; the event bus's signed chain | Signed; the chain never edited (PR-14) | As the event bus keeps |
+
+**At a partner's exit,** its raw files are deleted at once, as operators'
+agreements require of their data (FS-1002); the metrics already in loan
+files stay with them; its record, agreements and evidence stay for their
+retention, read-only.
 
 **It hears back, signed** (FS-997): each draw, payment, freeze and
 change is sent to the partner's own system as an event, signed, over an
@@ -252,6 +279,8 @@ against the person; no Dibon identity holds a product role (AC-09).
 |---|---|---|---|
 | Applications, collateral records and their evidence, overrides | Confidential | Seven years after the loan ends | Borrowers', guarantors' |
 | The outbox | Confidential | Until published, then 30 days | As the change |
+| Partners: settlement accounts, caps, status; relationships and their limits; events sent and their delivery | Confidential | While a partner and its loans run, then seven years | Borrowers' ties to partners |
+| Raw partner feeds | Confidential, in recon's intake (§5) | At most 90 days | Borrowers', with their consent (PR-21) |
 
 The loan itself, its schedule and balances are the core's; this service
 keeps no copy of them.
