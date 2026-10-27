@@ -33,6 +33,9 @@ const draftPath = args.find((a) => a.endsWith('.md'));
 if (!draftPath) { console.error('Give the draft: node tools/products/questionnaires.js docs/products/<draft>.md'); process.exit(1); }
 const outDir = path.resolve(opt('--out', path.join(ROOT, 'build/products')));
 const date = opt('--date', new Date().toISOString().slice(0, 10));
+// FS-1039: the document's number and version (design-system §7), in its footer.
+const number = opt('--number', '');
+const docVersion = opt('--version', '');
 const longDate = new Date(`${date}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 const draft = parse(fs.readFileSync(draftPath, 'utf8'));
@@ -124,56 +127,73 @@ function itemRow(it) {
 const head = (labels) => new TableRow({ tableHeader: true, children: labels.map((h, i) => cell([para([ds.run(h, { bold: true, color: ds.COLOURS.plum, size: 18 })], { after: 0 })], W[i], { fill: ds.COLOURS.headFill })) });
 
 fs.mkdirSync(outDir, { recursive: true });
+// FS-1043: --one-file writes the three parts into one document, a section
+// each; the read-back takes it whole, as its subject names the groups.
+const oneFile = args.includes('--one-file');
+const footerFor = (key) => ds.footer(`${number ? `${number}${docVersion ? ` v${docVersion}` : ''} · ` : ''}Dibon Consulting · ${inst} · ${product}, ${oneFile ? 'part' : 'group'} ${key} · ${longDate}`);
+const thanks = () => ds.p(`Thank you. Once all three ${oneFile ? 'parts' : 'groups'} are answered, the product goes to two of ${inst}'s people for approval, then to CBK, where its pricing needs approval (reg 55), and only then is it offered to borrowers.`, { before: 240 });
+async function write(sections, subject, title, file, report) {
+  const doc = new Document({ creator: 'Dibon Company Limited', title, subject, styles: ds.styles, numbering: ds.numbering, sections });
+  const entries = zip.read(await Packer.toBuffer(doc));
+  const after = swapFields(entries.get('word/document.xml').toString('utf8'));
+  const left = (after.match(/@@FIELD\d+@@/g) || []).length;
+  const made = (after.match(/<w:sdt>/g) || []).length;
+  if (left || made !== fields.length) throw new Error(`${report}: ${made} fields made of ${fields.length}, ${left} markers left`);
+  entries.set('word/document.xml', Buffer.from(after, 'utf8'));
+  const out = path.join(outDir, file);
+  fs.writeFileSync(out, zip.write(entries));
+  return out;
+}
+const stem = `${inst.replace(/\s+/g, '-')}-${product.replace(/\s+/g, '-')}`;
 (async () => {
+  const sections = [];
+  const made = [];
   for (const key of 'ABC') {
     const g = GROUPS[key];
     const all = draft.items.filter((it) => it.group === key);
     const ask = all.filter((it) => it.ask);
     const settled = all.filter((it) => !it.ask);
     if (!ask.length) { console.log(`group ${key}: nothing to ask`); continue; }
-    fields.length = 0;
+    if (!oneFile) fields.length = 0;
+    const first = !oneFile || !made.length;
     const count = (k) => ask.filter((it) => it.ask === k).length;
     const tally = ['Confirm', 'Choose', 'Provide', 'Decide'].filter(count)
       .map((k) => `${count(k)} to ${k === 'Choose' ? 'choose from options' : k.toLowerCase()}`);
     const children = [
       ds.p(`**${longDate}**`, { after: 160 }),
-      new Paragraph({ children: [ds.run(`${product} · product version ${version} (draft)`, { bold: true, color: ds.COLOURS.plum, size: 26 })], spacing: { after: 60 } }),
-      new Paragraph({ children: [ds.run(g.title, { bold: true, color: ds.COLOURS.aubergine, size: 22 })], spacing: { after: 200 } }),
+      new Paragraph({ children: [ds.run(`${product} · product version ${version} (${draft.front.status || 'draft'})`, { bold: true, color: ds.COLOURS.plum, size: 26 })], spacing: { after: 60 } }),
+      new Paragraph({ children: [ds.run(oneFile ? g.title.replace(/^Group/, 'Part') : g.title, { bold: true, color: ds.COLOURS.aubergine, size: 22 })], spacing: { after: 200 } }),
       ds.p(`**For:** ${inst}'s ${g.who}.`),
       ds.p(g.intro),
-      ds.p(`What we have comes from your requirement document and the prototype your team built. **${ask.length} items** need your answer: ${tally.join(', ')}. Under each item's name is why it matters; beside each value, where it came from.`, { after: 160 }),
-      ds.h('How to answer'),
-      ds.li('Every answer goes in a field in the last column. Click it, then choose from its list or type.'),
-      ds.li('**Confirm:** choose "Confirmed", or "Not right" and write the correct value in the field beneath.'),
-      ds.li('**Choose one:** pick an option from the list; where it asks for detail, write it beneath.'),
-      ds.li('**Provide** or **Decide:** type the answer.'),
-      ds.li('Unsure? Leave the field as it is, and we will go through it together.'),
-      ds.li('Save the document under its own name and return the file itself to your Dibon delivery lead. We read the answers from the fields, so please do not retype them elsewhere or turn the file into a PDF.'),
-      ds.h('The questions'),
-      new Table({ width: { size: ds.WIDTH, type: WidthType.DXA }, columnWidths: W, rows: [head(['Item', 'What we have', 'Your answer']), ...ask.map(itemRow)] }),
     ];
+    if (oneFile && first) children.push(ds.p('This questionnaire has three parts, each for the person who knows its answers: A, the product\'s terms; B, eligibility and limits; C, how it runs. One person may answer all three.'));
+    children.push(ds.p(`What we have comes from what you have given us: your requirement document, your prototype and our meetings. **${ask.length} items** need your answer${oneFile ? ' in this part' : ''}: ${tally.join(', ')}. Under each item's name is why it matters; beside each value, where it came from.`, { after: 160 }));
+    if (first) {
+      children.push(
+        ds.h('How to answer'),
+        ds.li('Every answer goes in a field in the last column. Click it, then choose from its list or type.'),
+        ds.li('**Confirm:** choose "Confirmed", or "Not right" and write the correct value in the field beneath.'),
+        ds.li('**Choose one:** pick an option from the list; where it asks for detail, write it beneath.'),
+        ds.li('**Provide** or **Decide:** type the answer.'),
+        ds.li('Unsure? Leave the field as it is, and we will go through it together.'),
+        ds.li('Save the document under its own name and return the file itself to your Dibon delivery lead. We read the answers from the fields, so please do not retype them elsewhere or turn the file into a PDF.'),
+      );
+    }
+    children.push(ds.h('The questions'), new Table({ width: { size: ds.WIDTH, type: WidthType.DXA }, columnWidths: W, rows: [head(['Item', 'What we have', 'Your answer']), ...ask.map(itemRow)] }));
     if (settled.length) {
       children.push(ds.h('Already settled'), ds.p('Nothing to answer here; for your information.'));
       for (const it of settled) children.push(ds.li(`**${it.id} · ${plain(it.name)}:** ${plain(it.value)}. Source: ${plain(it.source).replace(/^The /, 'the ')}.`));
     }
-    children.push(ds.p(`Thank you. Once all three groups are answered, the product goes to two of ${inst}'s people for approval, then to CBK, where its pricing needs approval (reg 55), and only then is it offered to borrowers.`, { before: 240 }));
-    const doc = new Document({
-      creator: 'Dibon Company Limited', title: `${inst} · ${product} · ${g.title}`,
-      subject: `${draft.front.id} · group ${key} · built ${date}`,
-      styles: ds.styles, numbering: ds.numbering,
-      sections: [{ properties: ds.page, headers: { default: ds.header(g.kicker) },
-        footers: { default: ds.footer(`Dibon Consulting · ${inst} · ${product}, group ${key} · ${longDate}`) },
-        children }],
-    });
-    const entries = zip.read(await Packer.toBuffer(doc));
-    const before = entries.get('word/document.xml').toString('utf8');
-    const after = swapFields(before);
-    const left = (after.match(/@@FIELD\d+@@/g) || []).length;
-    const made = (after.match(/<w:sdt>/g) || []).length;
-    if (left || made !== fields.length) throw new Error(`group ${key}: ${made} fields made of ${fields.length}, ${left} markers left`);
-    entries.set('word/document.xml', Buffer.from(after, 'utf8'));
-    const out = path.join(outDir, `${inst.replace(/\s+/g, '-')}-${product.replace(/\s+/g, '-')}-${g.file}.docx`);
-    fs.writeFileSync(out, zip.write(entries));
+    const section = { properties: ds.page, headers: { default: ds.header(g.kicker) }, footers: { default: footerFor(key) }, children };
+    made.push(key);
+    if (oneFile) { sections.push(section); continue; }
+    children.push(thanks());
+    const out = await write([section], `${draft.front.id} · group ${key} · built ${date}`, `${inst} · ${product} · ${g.title}`, `${stem}-${g.file}.docx`, `group ${key}`);
     console.log(`${path.relative(ROOT, out)}: ${ask.length} items, ${fields.length} fields; ${settled.length} settled`);
+  }
+  if (oneFile && sections.length) {
+    sections[sections.length - 1].children.push(thanks());
+    const out = await write(sections, `${draft.front.id} · groups ${made.join('')} · built ${date}`, `${inst} · ${product} · questionnaire`, `${stem}-questionnaire.docx`, `parts ${made.join('')}`);
+    console.log(`${path.relative(ROOT, out)}: parts ${made.join(', ')}, ${fields.length} fields`);
   }
 })().catch((e) => { console.error(e.message); process.exit(1); });

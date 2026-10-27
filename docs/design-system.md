@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-728, FS-781, FS-816, FS-817, FS-1024, FS-1025, FS-1026]
+review_ids: [FS-728, FS-781, FS-816, FS-817, FS-1024, FS-1025, FS-1026, FS-1039]
 last_reviewed: 2026-10-27
 ---
 
@@ -203,6 +203,7 @@ Services), a kind, and a serial:
 - [ ] No register ids, no names (except a named copy's recipient, logged),
       no customer data.
 - [ ] Its number and version in the footer (§7), and its sending logged.
+- [ ] Where it cites regulations, its last page lists them (tools/regulations-page.py for Word; tools/citations.js --external otherwise).
 - [ ] Made from its kind's template, in the right look (§6).
 - [ ] A version for anything a reader will hold, and the status "draft"
       until it is issued.

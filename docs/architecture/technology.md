@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759, FS-792, FS-896, FS-932, FS-970]
-last_reviewed: 2026-10-26
+review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759, FS-792, FS-896, FS-932, FS-970, FS-1041, FS-1042]
+last_reviewed: 2026-10-28
 ---
 
 # Technology: the register of components we run
@@ -155,7 +155,7 @@ and the rule that no customer data leaves our own systems.
 | Video meetings | The weekly meeting, customers' reviews | Jitsi Meet: Apache-2.0 | 8x8 and its community | Evaluate | Google Meet, Microsoft Teams, Zoom | Self-hosted if we want recordings kept in Kenya; otherwise whatever the customer uses |
 | Shared credentials | The few logins that cannot use single sign-on: providers' portals, and GitHub's until single sign-on | Vaultwarden: AGPL-3.0, run unmodified; Bitwarden's clients | Its community | Evaluate | Bitwarden or 1Password, hosted | Never for secrets the platform uses, which stay in OpenBao |
 | The code's mirror | A second copy of every repository, in Kenya (github spec §5) | Plain git over SSH; or Gitea: MIT | — ; Gitea Ltd | Evaluate: plain git proposed | Forgejo, GPL-3.0 since v9, which the licence rule would need a decision for | A mirror only has to receive and hold; a browsing interface is a nicety |
-| Email, calendar and files | The company's own mail, calendar and shared files | — | — | Open: not written down (FS-710) | Microsoft 365; Google Workspace; Odoo's own | Decides where client material is backed up |
+| Email, calendar and files | The company's own mail, calendar and shared files; the team's reviews in Google Docs (FS-1041) | — | Google | In use: Google Workspace (owner, 2026-10-28, FS-1041). Its data processing terms and data region to confirm (rules, Dibon 6); files sit outside Kenya (LQ-30), so client material's home stays Dibon's Odoo Documents in Kenya (rules, Dibon 10), and Drive holds only working copies for a review, closed after | Microsoft 365; Odoo's own | Decides where client material is backed up |
 
 ## 4 · Open
 

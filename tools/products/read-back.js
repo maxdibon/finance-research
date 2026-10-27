@@ -57,7 +57,8 @@ const coreXml = entries.get('docProps/core.xml');
 if (!docXml) { console.error('Not a Word document: no word/document.xml'); process.exit(1); }
 const core = coreXml ? coreXml.toString('utf8') : '';
 const subject = unxml((core.match(/<dc:subject>([^<]*)<\/dc:subject>/) || [])[1] || '');
-const sm = subject.match(/^(\S+) · group ([ABC]) · built (\d{4}-\d{2}-\d{2})$/);
+// FS-1043: one group per file, or several in one ("groups ABC").
+const sm = subject.match(/^(\S+) · groups? ([ABC]+) · built (\d{4}-\d{2}-\d{2})$/);
 if (!sm) { console.error(`This is not one of our questionnaires (its subject is "${subject}")`); process.exit(1); }
 const [, draftId, group, built] = sm;
 const modified = (core.match(/<dcterms:modified[^>]*>(\d{4}-\d{2}-\d{2})/) || [])[1];
@@ -77,7 +78,7 @@ const forPerson = [];
 const updates = [];
 const toEncode = [];
 const typed = JSON.parse(JSON.stringify((draft.typed && draft.typed.data) || {}));
-const items = draft.items.filter((it) => it.group === group);
+const items = draft.items.filter((it) => group.includes(it.group));
 const known = new Set();
 // "Shorter (give the days)" with "15 days" beneath → "Shorter: 15 days"
 const GIVE = /\s*\(give [^)]*\)$/;
@@ -146,7 +147,7 @@ const open = {};
 for (const it of after.filter((x) => x.askText !== '—')) (open[it.ask] = open[it.ask] || []).push(`${it.id} ${it.name}`);
 
 const say = (title, list) => { console.log(`\n${title} (${list.length})`); for (const l of list) console.log(`  ${l}`); };
-console.log(`${path.basename(file)}: ${draftId}, group ${group}, built ${built}; answers dated ${date}`);
+console.log(`${path.basename(file)}: ${draftId}, ${group.length > 1 ? `groups ${group.split('').join(', ')}` : `group ${group}`}, built ${built}; answers dated ${date}`);
 say('Answered', answered);
 say('Changed a value we had', changed);
 say('For a person to look at', forPerson);
