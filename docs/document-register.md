@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-834, FS-835, FS-857, FS-874]
-last_reviewed: 2026-10-16
+review_ids: [FS-834, FS-835, FS-857, FS-874, FS-1026]
+last_reviewed: 2026-10-27
 ---
 
 # Document register
@@ -81,3 +81,29 @@ checked with the owner (FS-840).
 | DR-039 | Roan Capital | 30-day loan questionnaire A, product terms, with the regulations cited | Questions on the 30-day loan's terms, and a last page listing the regulations they rest on, two readings marked as being confirmed | Working | 0.2 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
 | DR-040 | Roan Capital | 30-day loan questionnaire B, eligibility and limits, with the regulations cited | Questions on who may borrow and how much, and a last page listing the regulations they rest on | Working | 0.2 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
 | DR-041 | Roan Capital | 30-day loan questionnaire C, how it runs, with the regulations cited | Questions on how the loan runs from day to day, and a last page listing the regulation it rests on | Working | 0.2 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
+
+## Our documents, numbered, and who received them
+
+FS-1026. Documents Dibon produces for someone outside, by their number
+(design-system §7). A copy kept of one we sent is also a DR row above, a
+Record, under its party.
+
+**Numbered documents:**
+
+| Number | Title | Kind | Version | Status | Issued | Made by |
+|---|---|---|---|---|---|---|
+| DC-FS-PF-001 | Dibon Financial Services Portfolio (the full edition) | PF | 1.2 | issued | 2026-10-22 | design/portfolio-pdf/ |
+| DC-FS-PF-002 | Dibon Financial Services Overview (the short edition) | PF | 1.2 | issued | 2026-10-22 | design/portfolio-pdf/ |
+| DC-FS-PR-001 | Bank channel proposal | PR | 1.0 | issued | 2026-10-05 | design/bank-channel-proposal/ |
+| DC-FS-DK-001 | Dibon for SBM Bank, the deck for the meeting of 22 October | DK | 1.0 | issued | 2026-10-22 | build/proposals/ |
+| DC-FS-LT-001 | Requests to banks for statements, alerts and balances, one copy per bank | LT | 0.1 | draft | — | design/outreach-pdf/ |
+| DC-FS-TM-001 | Onboarding pack for an institution's business customers and partners | TM | 0.1 | draft | — | docs/templates/onboarding-pack.md |
+
+**Distribution log:** each sending of a numbered document. The
+organisation, the recipient's role, never their name (it stays on the
+CRM opportunity).
+
+| Number | Version | To | Recipient's role | Date | How | Named copy | Record |
+|---|---|---|---|---|---|---|---|
+| DC-FS-DK-001 | 1.0 | SBM Bank | Its team at the meeting of 22 October (to confirm: shown, or also sent) | 2026-10-22 | Presented; sending to confirm | No | — |
+| DC-FS-PF-001 | 1.2 | SBM Bank | To confirm | To confirm | To confirm | To confirm | — |
