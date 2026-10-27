@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704]
-last_reviewed: 2026-10-10
+review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032]
+last_reviewed: 2026-10-27
 ---
 
 # One instance, as R1 deploys it
@@ -29,38 +29,58 @@ sites is in [deployment](deployment.md).
   +------------------------------------------------------------------------------------------+
                                                 |
                                                 v
-  +--------------------+  +--------------------+  +--------------------+  +--------------------+
-  | KAPU MFI           |  | APPROVAL ENGINE    |  | LENDER RULES       |  | END-OF-DAY RUNNER  |
-  | asks, then acts    |  | decides            |  | corrects           |  | closes the day     |
-  | [kapu_service]     |  | [kapu_service]     |  | [kapu_service]     |  | [kapu_service]     |
-  +--------------------+  +--------------------+  +--------------------+  +--------------------+
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+  | KAPU CONSOLE        |  | STAFF WORKSPACE     |  | CUSTOMER PAGES      |  | FLOWZA              |
+  | our operators       |  | staff, in Odoo      |  | borrowers, members  |  | conversations       |
+  | [kapu_service]      |  | [odoo]              |  | [kapu_service]      |  | [kapu_service]      |
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
 
-  +--------------------+  +--------------------+  +--------------------+  +--------------------+
-  | RAILS              |  | RECONCILIATION     |  | MESSAGING          |  | IDENTITY           |
-  | pays               |  | matches            |  | sends to people    |  | verifies           |
-  | [kapu_service]     |  | [kapu_service]     |  | [kapu_service]     |  | [kapu_service]     |
-  +--------------------+  +--------------------+  +--------------------+  +--------------------+
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+  | LENDING SERVICE     |  | APPROVAL ENGINE     |  | LENDER RULES        |  | END-OF-DAY RUNNER   |
+  | asks, then acts     |  | decides             |  | corrects            |  | closes the day      |
+  | [kapu_service]      |  | [kapu_service]      |  | [kapu_service]      |  | [kapu_service]      |
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
 
-  +--------------------+  +--------------------+  +--------------------+  +--------------------+
-  | KAPU CORE          |  | ODOO               |  | ACCESS             |  | EVENT BUS          |
-  | records            |  | back office        |  | signs in, steps up |  | carries events     |
-  | [apache_fineract]  |  | [odoo]             |  | [keycloak]         |  | [kafka]            |
-  +--------------------+  +--------------------+  +--------------------+  +--------------------+
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+  | DEPOSITS SERVICE    |  | CORE ADAPTER        |  | BACK-OFFICE GATEWAY |  | RAILS               |
+  | keeps deposits      |  | reaches the core    |  | reaches the ERP     |  | pays                |
+  | [kapu_service]      |  | [kapu_service]      |  | [kapu_service]      |  | [kapu_service]      |
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
 
-  +--------------------+  +--------------------+  +--------------------+  +--------------------+
-  | DATABASE           |  | OBJECT STORAGE     |  | OPENBAO            |  | OBSERVABILITY      |
-  | one per service    |  | vault files        |  | keys and secrets   |  | watches            |
-  | [postgresql]       |  | [ceph_or_blob]     |  | [openbao]          |  | [grafana]          |
-  +--------------------+  +--------------------+  +--------------------+  +--------------------+
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+  | RECONCILIATION      |  | MESSAGING           |  | IDENTITY            |  | VAULT               |
+  | matches             |  | sends to people     |  | verifies            |  | keeps documents     |
+  | [kapu_service]      |  | [kapu_service]      |  | [kapu_service]      |  | [kapu_service]      |
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
 
-  every box above runs in this institution's own namespace, with its own databases, keys and
-  backups (FS-491); each talks to the others only as the network policy allows (SE-05)
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+  | KAPU CORE           |  | ODOO                |  | ACCESS              |  | EVENT BUS           |
+  | records             |  | back office         |  | signs in, steps up  |  | carries events      |
+  | [apache_fineract]   |  | [odoo]              |  | [keycloak]          |  | [kafka]             |
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+  | DATABASE            |  | OBJECT STORAGE      |  | OPENBAO             |  | OBSERVABILITY       |
+  | by tier, below      |  | vault files         |  | keys and secrets    |  | watches             |
+  | [postgresql]        |  | [ceph_or_blob]      |  | [openbao]           |  | [grafana]           |
+  +---------------------+  +---------------------+  +---------------------+  +---------------------+
+
+  every box above runs in this institution's own instance, with its own databases, keys and
+  backups (FS-491), in the namespaces below; each talks to the others only as the network
+  policy allows (SE-05)
 ```
 
 | Box | What it is | Spec or module |
 |---|---|---|
 | EDGE | The only way in: a web application firewall and an API gateway; how it works, [flows](flows.md) §1 | platform-security SE-01, SE-02 |
-| KAPU MFI | The lending product's service: applications, collateral, vetting, the only writer to the ledger | mfi |
+| KAPU CONSOLE | Our operators' approvals, the read-only fallback, products read-only, outside Odoo | [kapu-console](../specs/kapu-console.md) |
+| STAFF WORKSPACE | Staff's screens for daily lending, inside Odoo | [staff-workspace](../specs/staff-workspace.md) |
+| CUSTOMER PAGES | Borrowers' and members' own pages: consents, signing, statements | to write |
+| LENDING SERVICE | Applications, collateral, vetting, product versions, partners; the only writer to the core; Kapu MFI is it configured for lenders | [lending-service](../specs/lending-service.md) |
+| DEPOSITS SERVICE | Deposit accounts, in native mode | [deposits-service](../specs/deposits-service.md) |
+| CORE ADAPTER | One interface to the core: Kapu Core, or the institution's own | [lending-service](../specs/lending-service.md) |
+| BACK-OFFICE GATEWAY | The back office's jobs, through one adapter per ERP | [back-office](../specs/back-office.md) |
+| VAULT | Signed documents and their evidence | identity ID-15; to write |
 | APPROVAL ENGINE | Approval chains and decisions, step-up at each | [approval-engine](../specs/approval-engine.md) |
 | LENDER RULES | The CBK lender regulations applied to each loan | [lender-rules](../specs/lender-rules.md) |
 | END-OF-DAY RUNNER | The night's close: checks, Fineract's close, ours | [end-of-day-runner](../specs/end-of-day-runner.md) |
@@ -73,10 +93,53 @@ sites is in [deployment](deployment.md).
 | ODOO | Back office: Sign, Helpdesk, HR, the institution's parties | business-suite |
 | ACCESS | Keycloak: four realms, step-up | [access-keycloak](../specs/access-keycloak.md) |
 | EVENT BUS | Kafka: every state change, signed | [event-bus-kafka](../specs/event-bus-kafka.md) |
-| DATABASE | PostgreSQL, one database per service, nothing shared | [README](README.md) §6.1 |
-| OBJECT STORAGE | The vault's files | identity ID-15 |
+| DATABASE | PostgreSQL, a database per component, nothing shared; by tier, below | [README](README.md) §6.1 |
+| OBJECT STORAGE | The vault's files, Odoo's filestore | identity ID-15 |
 | OPENBAO | Every key and secret | [README](README.md) §6 |
 | OBSERVABILITY | Agents and local stores, feeding the fleet's Grafana | [observability-grafana](../specs/observability-grafana.md) |
+
+## Stores and namespaces
+
+Counted so they cannot drift (FS-1032; the review of
+[27 October](../reviews/architecture-2026-10-27.md)). **The clusters and
+namespaces are proposed, for the owner to decide (FS-1036).**
+
+**Databases: 16 in an instance** (15 without deposits, as R1), each its
+own, reached only by its component's role. **Proposed: five PostgreSQL
+clusters,** by tier, each a primary and a synchronous standby:
+
+| Cluster | Its databases | Why apart |
+|---|---|---|
+| Ledger | Fineract | The ledger; its database is Fineract's alone (kapu-core-fineract) |
+| Access | Keycloak | Restricted as a whole (access-keycloak) |
+| Back office | Odoo | Large, and upgraded on its own cadence (back-office §10) |
+| Secrets | OpenBao | First up on failover; nothing else waits on it |
+| Services | Lending, deposits, approvals, lender rules, rails, recon, companion, messaging, identity and the vault, end-of-day, back-office gateway, Flowza | A database and a role each; their outboxes with them |
+
+Without a database: the core adapter, the Kapu Console (sessions only),
+customer pages, the shadow ledger (in memory), the staff workspace (in
+Odoo). Other stores: the event bus, and object storage.
+
+**Namespaces: proposed, a cluster per institution in production, and ten
+namespaces in it,** the four zones (deployment §1) and the platform's
+own. Site B the same, at zero.
+
+| Namespace | What runs there |
+|---|---|
+| edge | The web application firewall and API gateway |
+| services | Our services, Kapu Core, access, Odoo, Flowza |
+| data | The PostgreSQL clusters, the event bus, OpenBao, object storage's gateway |
+| bastion | The bastion through which people reach anything inside |
+| flux-system | GitOps |
+| cnpg-system | The PostgreSQL operator |
+| kafka-system | The event bus's operator |
+| cert-manager | Certificates |
+| spire | Workload identity |
+| observability | Agents and local stores, feeding the fleet's Grafana |
+
+A component added to an instance is added to the table of boxes above,
+with its database and namespace; every deployment's register follows
+(deployments, FS-1037).
 
 **Environments.** One code base, the same signed images, promoted through:
 

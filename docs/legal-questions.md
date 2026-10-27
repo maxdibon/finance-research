@@ -7,7 +7,7 @@ law: LR-03
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989, FS-1004, FS-1010, FS-1023, FS-1029]
+review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989, FS-1004, FS-1010, FS-1023, FS-1029, FS-1035, FS-1033]
 last_reviewed: 2026-10-27
 ---
 
@@ -69,6 +69,8 @@ lost.
 | LQ-26 | On what lawful basis are a business's directors checked against the registry, the credit bureau and sanctions lists: their consent, the institution's legal obligation to know its customer, or both, and what must they be told? | templates/onboarding-pack.md | Institutions | Data Protection Act s.30 (LR-17); POCAML Act (LR-13); Credit Reference Bureau Regulations (LR-06) | Open | The checks told to each director in B4, with consent asked where it is the basis | FS-1023 |
 | LQ-27 | May a director's personal guarantee be signed electronically, and do the lender regulations' protections for guarantors apply to a director guaranteeing their own company's loan? | templates/onboarding-pack.md | Institutions | CBK lender regulations (LR-03); Kenya Information and Communications Act (LR-21) | Open | Treated as a guarantor: consent before appointment, statements, notice before demand (MF-37) | FS-1023 |
 | LQ-28 | When a wallet loan is not repaid, may the lender recover it automatically from the customer's savings or wallet balance: on what consent and notice, and how do the lender regulations' limits on collection, and a deposit-taker's duties to its depositors, apply? | products/briefs/wallet-lending.md | Institutions | CBK lender regulations (LR-03); Microfinance Act (LR-07) | Open | Recovery from savings or the wallet only where the agreement says so and the customer agreed to it when borrowing; the customer told before and after each recovery | FS-1029 |
+| LQ-29 | When SME Recon writes a business's bank and mobile-money transactions into books it keeps on a service hosted outside Kenya (Zoho Books, QuickBooks Online), who is transferring the personal data in them out of Kenya, the business or Dibon, and on what basis? | modules/sme-recon §7 | Dibon; businesses | Data Protection Act (LR-17) | Open | The business chooses its books and instructs the transfer; Dibon acts as its processor under an agreement that says so; nothing written abroad beyond what the books need | FS-1033 |
+| LQ-30 | May Dibon keep client material and its own records in a cloud service outside Kenya (its Odoo on odoo.sh; its books on QuickBooks Online): on what basis for the personal data in them, what its clients' agreements and NDAs allow, and must a company's accounting records be kept in Kenya? | rules, Dibon 10; FS-1035 | Dibon | Data Protection Act (LR-17); Companies Act (LR-34); Tax Procedures Act (LR-31) | Open | Recorded as an exception until Dibon's Odoo moves to OLP in Kenya (FS-1035) | FS-1035 |
 
 ## Regulations cited
 

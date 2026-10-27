@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896, FS-1032, FS-1037]
+last_reviewed: 2026-10-27
 ---
 
 # Deployment: sites, the fleet, and what is central
@@ -141,9 +141,10 @@ site B takes over (FS-691).
   |                                             |    |                                             |
   | EDGE ................... in traffic         |    | EDGE ................... no traffic         |
   | SERVICES ............... full size          |    | SERVICES ............... at zero            |
-  |   Kapu MFI, approvals, lender rules,        |    |   the same signed images; rails, the        |
-  |   rails, recon, messaging, identity,        |    |   runner and every consumer off, so         |
-  |   the end-of-day runner                     |    |   nothing pays or closes twice              |
+  |   lending and deposits, approvals, lender   |    |   the same signed images; rails, the        |
+  |   rules, rails, recon, messaging, identity  |    |   runner and every consumer off, so         |
+  |   and the vault, the back-office gateway,   |    |   nothing pays or closes twice              |
+  |   the Kapu Console, the end-of-day runner   |    |                                             |
   | KAPU CORE . ACCESS . ODOO .. full size      |    | KAPU CORE . ACCESS . ODOO .. at zero        |
   |                                             |    |                                             |
   | DATABASE  primary + synchronous standby  1  |--->| DATABASE  replica cluster, streaming     1  |
@@ -212,6 +213,10 @@ OpenBao unseal key held at site B; the runbook rehearsed once.
 issue #38 is open), so its data lives in PostgreSQL, a backend its
 documentation calls production ready (FS-693); site B runs no Kafka under
 cold or warm standby (FS-694). **Open:** site B's provider (§1), needed before Roan Capital's go-live, since its contract takes warm standby (FS-775).
+
+The steps are the [site failover runbook](../runbooks/site-failover.md);
+each deployment's own continuity is its page in
+[deployments](../deployments/README.md) (FS-1037).
 
 ## 3 · The offline copy
 

@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Compliance lead
 classification: Internal
-review_ids: [FS-368, FS-370, FS-420, FS-437, FS-440, FS-443, FS-444]
-last_reviewed: 2026-10-16
+review_ids: [FS-368, FS-370, FS-420, FS-437, FS-440, FS-443, FS-444, FS-1037]
+last_reviewed: 2026-10-27
 ---
 
 # Outsourcing approval pack
@@ -49,7 +49,7 @@ Nothing here is sent as a commitment until it is Ready.
 | 11 | Regulator's access to our premises, books, records, systems and staff | Lenders (reg 31(5)), banks, Saccos | A standard contract clause | To prepare, with the legal partner (SD-12) |
 | 12 | No use of the institution's data for our own purposes | Banks (draft guideline) | A standard contract clause | To prepare, with the legal partner |
 | 13 | Subcontracting only with the institution's approval | Banks (draft guideline) | A standard contract clause | To prepare, with the legal partner |
-| 14 | Exit plan: data returned and purged, and support through a handover | Banks (draft guideline), Saccos | A standard exit schedule | To prepare |
+| 14 | Exit plan: data returned and purged, and support through a handover | Banks (draft guideline), Saccos | A standard exit schedule: each deployment's §10 (deployments; Roan Capital's proposed, FS-1037) | Drafted |
 | 15 | Financial statements and insurance (professional indemnity, cyber) | Banks, Saccos | Latest audited statements; insurance certificates | To confirm: insurance cover not recorded |
 | 16 | SASRA bank guarantee of 10% of float | Saccos | Priced and arranged per Sacco | To confirm (LC-05) |
 

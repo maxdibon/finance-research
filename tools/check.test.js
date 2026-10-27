@@ -195,6 +195,26 @@ test('template: an id that does not match the file name fails', () => {
   assert.deepStrictEqual(names(f), ['template']);
 });
 
+test('briefs: a brief whose heading differs from the template fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'products', 'briefs', 'virtual-cards.md'), (x) => x.replace('## 4 · What we have run or learnt', '## 4 · Lessons')));
+  assert.deepStrictEqual(names(f), ['briefs']);
+});
+
+test('deployments: a box of the instance missing from a deployment fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'deployments', 'roan-capital-production.md'), (x) => x.replace(/^\| FLOWZA \|.*\n/m, '')));
+  assert.deepStrictEqual(names(f), ['deployments']);
+});
+
+test('deployments: a namespace the instance page does not name fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'deployments', 'roan-capital-production.md'), (x) => x.replace('| RAILS | Yes: M-Pesa, and banks by statement | R1 | services |', '| RAILS | Yes: M-Pesa, and banks by statement | R1 | money |')));
+  assert.deepStrictEqual(names(f), ['deployments']);
+});
+
+test('runbooks: a runbook whose heading differs from the template fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'runbooks', 'site-failover.md'), (x) => x.replace('## 6 · Rehearsals', '## 6 · Practice')));
+  assert.deepStrictEqual(names(f), ['runbooks']);
+});
+
 test('capabilities: a status outside the vocabulary fails', () => {
   // Replaces whatever status the row has, so the test survives status changes.
   const f = runWith((d) => patch(d, COLLECT, (t) => t.replace(/^(\| CO-01 \|[^|]*\|) \w+ \|/m, '$1 Ready |')));

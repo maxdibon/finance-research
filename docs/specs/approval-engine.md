@@ -12,7 +12,7 @@ depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka]
 used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032]
 last_reviewed: 2026-10-27
 ---
 
@@ -109,7 +109,7 @@ extra: the engine holds the facts already.
 
 ## 3 · Data model
 
-The engine keeps its own PostgreSQL schema in each institution's
+The engine keeps its own PostgreSQL database in each institution's
 instance (architecture §9). Decisions and request history are append-only:
 the database role the service runs as cannot update or delete them.
 

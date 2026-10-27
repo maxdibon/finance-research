@@ -9,8 +9,8 @@ classification: Internal
 audience: [sme, fintech]
 depends_on: [access, recon-observability, rails, mandates, messaging, gateway, crb]
 consumed_by: [business-suite, insights, mfi, identity]
-review_ids: [FS-026, FS-027, FS-028, FS-033, FS-036, FS-037, FS-038, FS-095, FS-124, FS-125, FS-127, FS-130, FS-131, FS-132, FS-133, FS-134, FS-135, FS-439, FS-441, FS-522]
-last_reviewed: 2026-10-08
+review_ids: [FS-026, FS-027, FS-028, FS-033, FS-036, FS-037, FS-038, FS-095, FS-124, FS-125, FS-127, FS-130, FS-131, FS-132, FS-133, FS-134, FS-135, FS-439, FS-441, FS-522, FS-1033]
+last_reviewed: 2026-10-27
 ---
 
 # SME Recon
@@ -23,7 +23,8 @@ will be matched to an invoice or investment, and every shilling going
 out to an expense. Payments the business approves in its ERP will be
 executed by bank API or mobile money. It is planned as a standalone
 product on the recon engine (FS-095), wrapped for each ERP: Odoo first,
-then Zoho and others (FS-027). The accountant will work inside the ERP's
+then Zoho, as we are a Zoho partner, and QuickBooks Online, then others
+(FS-027, FS-1033). The accountant will work inside the ERP's
 own reconciliation, not in a second tool. **Dibon will be the first
 customer** (FS-033): our own accounts at NCBA, KCB, M-Pesa, Airtel Money
 and T-Kash, reconciled into our own Odoo (FS-125). Banks may also offer
@@ -74,8 +75,9 @@ Every row is **Planned**.
 | SR-10 | Matches written into the ERP's own bank reconciliation | Planned | FS-027 | 1 |
 | SR-11 | Payments approved in the ERP executed by bank API or mobile money (B2C, B2B) | Planned | FS-028. Regulatory and control questions — FS-037, FS-132 | 2 |
 | SR-12 | Payment outcome written back to the ERP; a failure becomes an exception | Planned | FS-028 | 2 |
-| SR-13 | Zoho wrapper | Planned | FS-027 | 3 |
-| SR-14 | Further ERP wrappers | Planned | FS-027. Which ones is a market question — FS-134 | later |
+| SR-13 | Zoho wrapper | Planned | FS-027; FS-1033: we are a Zoho partner, and Zoho implementations (business-suite BS-13, phase 2) need it | 2 |
+| SR-14 | Further ERP wrappers | Planned | FS-027. Which ones is a market question — FS-134; QuickBooks taken up as SR-15 (FS-1033) | later |
+| SR-15 | QuickBooks Online wrapper: statements and mobile money matched into a business's own QuickBooks Online, as SR-13 does for Zoho; the business keeps its books where they are | Planned | FS-1033: Flex Money keeps its books in QuickBooks, as Dibon does today (FS-1034) | 2 |
 
 ## 4 · Where it sits
 
@@ -112,10 +114,10 @@ one we overwrite (FS-133).
 
 | | Integrated — the business has an ERP | Native — it has none |
 |---|---|---|
-| Where entries are posted | Its own Odoo or Zoho, through the wrapper | An Odoo we implement for it, as integration partners — FS-131 |
+| Where entries are posted | Its own Odoo, Zoho or QuickBooks, through the wrapper | An Odoo we implement for it, as integration partners — FS-131 |
 | What differs in this module | Matches land in the ERP's own reconciliation | The same, in an Odoo we set up |
 | What the customer must provide | ERP API access; its bank and shortcode credentials, or delegated access | Its accounts' access; an Odoo subscription |
-| Who it suits | SMEs already on Odoo or Zoho | SMEs on spreadsheets or desktop accounting |
+| Who it suits | SMEs already on Odoo, Zoho or QuickBooks | SMEs on spreadsheets or desktop accounting |
 
 ## 5 · How it works
 
@@ -135,7 +137,7 @@ one we overwrite (FS-133).
      confirmed match|             | open items, edits made in the ERP
                     v             |
                  +-------------------+
-                 |  ERP WRAPPER      |  Odoo first; Zoho next
+                 |  ERP WRAPPER      |  Odoo first; Zoho and QuickBooks next
                  +-------------------+
                     |             ^
                     v             |
@@ -166,10 +168,14 @@ is an allocation the accountant makes, not one the engine guesses.
 | Card acquirer | in | settlement file | Planned (SR-04) |
 | Odoo | in / out | external API | Planned — FS-130 |
 | Zoho Books | in / out | API | Planned (SR-13) |
+| QuickBooks Online | in / out | API | Planned (SR-15) |
 
 ## 7 · Regulatory position
 
 - **Custody:** none. Funds stay in the business's own accounts.
+- **Books kept abroad:** Zoho Books and QuickBooks Online run outside
+  Kenya. The business chose them, and SME Recon writes its transactions
+  into them on its instruction; the basis for that transfer is LQ-29.
 - **Pattern:** pass-through for matching; **initiation** for SR-11. We
   instruct payments from the business's own account on its approval
   (docs/architecture/README.md §3). The NPS Act position on initiation is open —

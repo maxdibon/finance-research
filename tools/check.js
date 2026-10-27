@@ -1194,6 +1194,117 @@ function checkSpecs(root) {
 // leads to a file that exists, so a rename cannot strand a reader (FS-627);
 // a link to a section names a heading that exists, by GitHub's anchor
 // (FS-641). REVIEW.md is history and keeps the paths it was written with.
+// ── briefs ───────────────────────────────────────────────────────────────
+// FS-1031: every product brief follows docs/products/briefs/_template.md:
+// its front matter, an id of brief-<file>, and the template's headings in
+// order; the external versions are made from them, so they stay alike.
+const BRIEFS = path.join('docs', 'products', 'briefs');
+function checkBriefs(root) {
+  const dir = path.join(root, BRIEFS);
+  if (!fs.existsSync(dir)) return [];
+  const template = read(root, path.join(BRIEFS, '_template.md'));
+  const wantKeys = frontMatterKeys(template);
+  const wantHeadings = headings(template);
+  const failures = [];
+  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.md') && !f.startsWith('_') && f !== 'README.md').sort()) {
+    const file = path.join(BRIEFS, name);
+    const text = read(root, file);
+    const keys = frontMatterKeys(text) || [];
+    for (const k of wantKeys) if (!keys.includes(k)) failures.push(fail('briefs', file, 1, `front matter missing "${k}"`));
+    const id = text.match(/^id: *(\S+)/m);
+    const want = `brief-${path.basename(name, '.md')}`;
+    if (!id || id[1] !== want) failures.push(fail('briefs', file, 1, `id "${id ? id[1] : ''}" should be "${want}"`));
+    const got = headings(text);
+    const n = Math.max(got.length, wantHeadings.length);
+    for (let i = 0; i < n; i++) {
+      if (got[i] !== wantHeadings[i]) {
+        failures.push(fail('briefs', file, 0, `heading ${i + 1} is "${got[i] || '(missing)'}"; the template has "${wantHeadings[i] || '(none)'}"`));
+        break;
+      }
+    }
+  }
+  return failures;
+}
+
+// ── deployments and runbooks ─────────────────────────────────────────────
+// FS-1037: each deployment's page and each runbook follows its folder's
+// _template.md (front matter, headings in order); a deployment's §2 lists
+// every box of architecture/instance.md exactly once, and a deployed one
+// sits in a namespace and database cluster the instance page names.
+const DEPLOYMENTS = path.join('docs', 'deployments');
+const RUNBOOKS = path.join('docs', 'runbooks');
+const INSTANCE = path.join('docs', 'architecture', 'instance.md');
+function tableAfter(text, header) {
+  const lines = text.split('\n');
+  const i = lines.findIndex((l) => l.startsWith(header));
+  if (i < 0) return [];
+  const out = [];
+  for (let j = i + 2; j < lines.length && lines[j].startsWith('|'); j++) out.push({ line: j + 1, cells: lines[j].split('|').slice(1, -1).map((x) => x.trim()) });
+  return out;
+}
+function againstTemplate(root, dir, check) {
+  const full = path.join(root, dir);
+  if (!fs.existsSync(full)) return { files: [], failures: [] };
+  const template = read(root, path.join(dir, '_template.md'));
+  const wantKeys = frontMatterKeys(template);
+  const wantHeadings = headings(template);
+  const failures = [];
+  const files = fs.readdirSync(full).filter((f) => f.endsWith('.md') && !f.startsWith('_') && f !== 'README.md').sort().map((f) => path.join(dir, f));
+  for (const file of files) {
+    const text = read(root, file);
+    const keys = frontMatterKeys(text) || [];
+    for (const k of wantKeys) if (!keys.includes(k)) failures.push(fail(check, file, 1, `front matter missing "${k}"`));
+    const got = headings(text);
+    const n = Math.max(got.length, wantHeadings.length);
+    for (let i = 0; i < n; i++) {
+      if (got[i] !== wantHeadings[i]) {
+        failures.push(fail(check, file, 0, `heading ${i + 1} is "${got[i] || '(missing)'}"; the template has "${wantHeadings[i] || '(none)'}"`));
+        break;
+      }
+    }
+  }
+  return { files, failures };
+}
+function checkDeployments(root) {
+  const { files, failures } = againstTemplate(root, DEPLOYMENTS, 'deployments');
+  if (!files.length || !fs.existsSync(path.join(root, INSTANCE))) return failures;
+  const instance = read(root, INSTANCE);
+  const boxes = tableAfter(instance, '| Box |').map((r) => r.cells[0]);
+  const namespaces = new Set(tableAfter(instance, '| Namespace |').map((r) => r.cells[0]));
+  const clusters = new Set(tableAfter(instance, '| Cluster |').map((r) => r.cells[0]));
+  const register = read(root, path.join(DEPLOYMENTS, 'README.md'));
+  for (const file of files) {
+    const text = read(root, file);
+    const base = path.basename(file);
+    if (!register.includes(`(${base})`)) failures.push(fail('deployments', file, 0, `not in the register, deployments/README.md`));
+    const rows = tableAfter(text, '| Component |');
+    const seen = new Map();
+    for (const r of rows) {
+      const [name, deployed, , ns, db] = r.cells;
+      if (!boxes.includes(name)) { failures.push(fail('deployments', file, r.line, `"${name}" is not a box of architecture/instance.md`)); continue; }
+      if (seen.has(name)) failures.push(fail('deployments', file, r.line, `"${name}" listed twice`));
+      seen.set(name, r);
+      if (/^No\b/.test(deployed)) continue;
+      if (!namespaces.has(ns)) failures.push(fail('deployments', file, r.line, `${name}: namespace "${ns}" is not one the instance page names`));
+      if (db !== '—') {
+        for (const part of db.split(/,\s*/)) {
+          const cl = part.split(':')[0].trim();
+          if (!clusters.has(cl)) failures.push(fail('deployments', file, r.line, `${name}: database cluster "${cl}" is not one the instance page names`));
+        }
+      }
+    }
+    for (const b of boxes) if (!seen.has(b)) failures.push(fail('deployments', file, 0, `${b} is not in §2: list every box, "No" and why if it is not deployed`));
+  }
+  return failures;
+}
+function checkRunbooks(root) {
+  const { files, failures } = againstTemplate(root, RUNBOOKS, 'runbooks');
+  if (!files.length) return failures;
+  const index = read(root, path.join(RUNBOOKS, 'README.md'));
+  for (const file of files) if (!index.includes(`(${path.basename(file)})`)) failures.push(fail('runbooks', file, 0, 'not listed in runbooks/README.md'));
+  return failures;
+}
+
 // ── products ─────────────────────────────────────────────────────────────
 // FS-816, FS-817: a product version's draft is the data its questionnaires
 // are built from and its answers read back into. Every item has an id, a
@@ -1770,6 +1881,9 @@ function runAll(root) {
     ...checkOverview(root, files),
     ...checkSpecs(root),
     ...checkProducts(root),
+    ...checkBriefs(root),
+    ...checkDeployments(root),
+    ...checkRunbooks(root),
     ...checkDocRegister(root, files),
     ...checkStatus(root, files),
     ...checkStatusGlossary(root),

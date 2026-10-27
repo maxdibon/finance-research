@@ -7,8 +7,8 @@ law: LR-17
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-482, FS-485, FS-657, FS-758, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-482, FS-485, FS-657, FS-758, FS-896, FS-1037]
+last_reviewed: 2026-10-27
 ---
 
 # Business continuity plan
@@ -21,6 +21,11 @@ This plan adds people, suppliers, the processes that are not IT, and how
 we tell customers and regulators. It is the start of ISO 22301 (compliance
 LC-09); SASRA expects a recovery plan from Sacco vendors (LC-05) and CBK's
 draft risk guidelines expect one from banks' providers.
+
+**Each deployment's own continuity** (FS-1037): its recovery
+objectives, backups, tests, runbooks and who is called are its §5 in
+[deployments](deployments/README.md); the steps are
+[the runbooks](runbooks/README.md). This plan is the company's.
 
 ## Business impact
 

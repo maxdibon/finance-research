@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-1029]
+review_ids: [FS-1029, FS-1031]
 last_reviewed: 2026-10-27
 ---
 
@@ -90,7 +90,7 @@ the money can only be spent on stock, so it is hard to divert.
 
 **Where it stands:** designed, phase 2 (product-landscape).
 
-## 4 · What we have run before
+## 4 · What we have run or learnt
 
 Dibon ran the USSD channel and digital lending for a bank's retailer
 finance from 2022 to 2025 (customers CU-03). The loans were booked on the
