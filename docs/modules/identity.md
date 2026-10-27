@@ -10,7 +10,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite, decisioning]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028]
 last_reviewed: 2026-10-27
 ---
 
@@ -147,6 +147,42 @@ mode, to Fineract.
        result written to the person's authority (core / Fineract /
        Odoo); the register's data is not copied
 ```
+
+### The identity model
+
+FS-1018, FS-1028. Who someone is, and what they may do, in four parts:
+
+1. **One identity per person, per institution.** A person has one
+   identity at each institution they deal with, in the realm for outside
+   people (access-keycloak §3), bound to their ID number, phone and SIM
+   (ID-12), with one credential. Never one identity across institutions:
+   each institution's customers are its own (ID-25).
+2. **Each role a profile, granted by its owner.** Themselves, a business
+   they act for, a partner they work for: each profile a membership of
+   an access organisation, granted by whoever owns it. A business's
+   people are granted by its administrators under its mandate, its first
+   administrators those its board resolution names (onboarding pack B1),
+   checked against the registry's directors; a partner's people by its
+   administrator, within the limits the institution approved. Every act
+   is done in one profile, shown on screen and audited (ID-25).
+3. **A tier belongs to the identity, or to the business.** A person's
+   KYC tier (ID-19, ID-21 to ID-24) goes with them into every profile; a
+   business's KYB tier (ID-22) is its own, whoever acts for it.
+4. **Staff apart.** A staff member signs in to the staff realm, never
+   with their customer identity. The two are linked by ID number for
+   conflict checks only: the approval engine refuses a staff member
+   deciding a request in which they are the borrower, a guarantor or a
+   business's officer (ID-26, in R1; approval-engine rule 2; privacy
+   PR-20). Nothing else crosses.
+
+**Why this shape** (decisions FS-1018): a login per role hides conflicts
+between roles; one identity across institutions joins data two
+institutions own; one identity for staff and customer weakens the
+separation of duties.
+
+**Where each part is set out:** the realms and organisations in
+access-keycloak §3; the apps and their profiles in channels §2; each
+profile's documents in ID-27.
 
 ## 6 · Rails and integrations
 
