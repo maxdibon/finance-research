@@ -1852,3 +1852,21 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** the form and its previews in R1; training for the
   product owner; the institution's accountability for its products agreed
   in writing.
+
+## FS-989 · The vocabulary describes loans paid to a third party, and credit lines
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** four terms added to the product vocabulary (Facility,
+  Repayment source, Payee, Partner) and three kinds of collateral
+  (financed goods, receivables, salary), with four rules across terms and
+  their worked examples; a catalogue of loan kinds, each with what it
+  needs; MF-40 for running them, in phase 2.
+- **Requires:** MF-40; docs/products/loan-kinds.md.
+- **Argued (owner):** "does our product template accommodate this
+  product? Other types of loan products we may not be covering?"; "go
+  ahead with fs-989".
+- **Argued against:** a product type per kind, each with its own form;
+  leaving the payee to the disbursement's channels.
+- **Costs (inferred):** the payee check and partner terms to build with
+  MF-40; three legal questions (LQ-20 to LQ-22) to settle first.

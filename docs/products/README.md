@@ -7,11 +7,14 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823, FS-825]
-last_reviewed: 2026-10-16
+review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823, FS-825, FS-989]
+last_reviewed: 2026-10-27
 ---
 
 # Products
+
+**Which kinds of loan the vocabulary can describe,** and which it cannot
+yet: [loan-kinds.md](loan-kinds.md) (FS-989).
 
 Each product an institution offers on the platform is a product version
 document (lender-rules §2.4). Its home is the institution's own instance

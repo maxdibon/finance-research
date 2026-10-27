@@ -127,6 +127,30 @@ const RULES = [
     },
   },
   {
+    id: 'third-party-payee-has-proof',
+    source: 'lender-rules §2.4, Payee (FS-989)',
+    check: ({ payee: p }) => (p && p.to === 'third_party' && (!has(p.proof) || p.approved_list !== true)
+      ? 'a third party is paid only against a proof, and only from an approved list' : null),
+  },
+  {
+    id: 'credit-line-has-draw-term',
+    source: 'lender-rules §2.4, Facility (FS-989)',
+    check: ({ facility: f }) => (f && f.kind === 'credit_line' && (!has(f.draw_term) || !has(f.renews))
+      ? 'a credit line says how long each draw runs and when the limit renews' : null),
+  },
+  {
+    id: 'till-share-has-a-share',
+    source: 'lender-rules §2.4, Repayment source (FS-989)',
+    check: ({ repayment_source: r }) => (r && Array.isArray(r.sources) && r.sources.includes('till_share') && !has(r.till_share)
+      ? 'repayment from till takings says what share of them' : null),
+  },
+  {
+    id: 'financed-goods-bought-from-someone',
+    source: 'lender-rules §2.4, Collateral (FS-989)',
+    check: ({ collateral: c, payee: p }) => (c && Array.isArray(c.types) && c.types.includes('financed_goods') && !(p && p.to === 'third_party')
+      ? 'goods financed as their own security are paid for to whoever sells them' : null),
+  },
+  {
     id: 'cut-off-is-a-window',
     source: 'lender-rules §2.4, Cut-off',
     check: ({ cut_off: c }) => (c && has(c.no_payout_from) && c.no_payout_from === c.to ? 'the cut-off starts and ends at the same time' : null),
