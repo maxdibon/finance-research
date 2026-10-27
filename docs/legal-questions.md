@@ -7,7 +7,7 @@ law: LR-03
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989, FS-1004, FS-1010, FS-1023]
+review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989, FS-1004, FS-1010, FS-1023, FS-1029]
 last_reviewed: 2026-10-27
 ---
 
@@ -68,6 +68,7 @@ lost.
 | LQ-25 | Must a company's board resolution or mandate still bear its common seal, or is the seal optional for companies under the Companies Act; and may an institution still ask for it? | templates/onboarding-pack.md | Institutions | Companies Act (LR-34) | Open | The seal optional in the starter templates; an institution that asks for it adds it | FS-1023 |
 | LQ-26 | On what lawful basis are a business's directors checked against the registry, the credit bureau and sanctions lists: their consent, the institution's legal obligation to know its customer, or both, and what must they be told? | templates/onboarding-pack.md | Institutions | Data Protection Act s.30 (LR-17); POCAML Act (LR-13); Credit Reference Bureau Regulations (LR-06) | Open | The checks told to each director in B4, with consent asked where it is the basis | FS-1023 |
 | LQ-27 | May a director's personal guarantee be signed electronically, and do the lender regulations' protections for guarantors apply to a director guaranteeing their own company's loan? | templates/onboarding-pack.md | Institutions | CBK lender regulations (LR-03); Kenya Information and Communications Act (LR-21) | Open | Treated as a guarantor: consent before appointment, statements, notice before demand (MF-37) | FS-1023 |
+| LQ-28 | When a wallet loan is not repaid, may the lender recover it automatically from the customer's savings or wallet balance: on what consent and notice, and how do the lender regulations' limits on collection, and a deposit-taker's duties to its depositors, apply? | products/briefs/wallet-lending.md | Institutions | CBK lender regulations (LR-03); Microfinance Act (LR-07) | Open | Recovery from savings or the wallet only where the agreement says so and the customer agreed to it when borrowing; the customer told before and after each recovery | FS-1029 |
 
 ## Regulations cited
 
