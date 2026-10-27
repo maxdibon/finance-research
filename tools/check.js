@@ -207,7 +207,7 @@ function checkReviewIds(root, files) {
   const failures = [];
   for (const file of files) {
     read(root, file).split('\n').forEach((text, i) => {
-      for (const m of text.matchAll(/\bFS-\d{3}\b/g)) {
+      for (const m of text.matchAll(/\bFS-\d{3,4}\b/g)) {
         if (!known.has(m[0])) failures.push(fail('review-ids', file, i + 1, `${m[0]} is not in the register (REVIEW.md, review/)`));
       }
     });
@@ -378,7 +378,7 @@ function checkPartners(root) {
 // internal references: register ids, partner or decision ids, or paths
 // into this repository.
 const PUBLIC_DIR = path.join('docs', 'marketing');
-const INTERNAL = /\b(FS-\d{3}|PT-\d{2}|SD-\d{2}|[A-Z]{2}-\d{2})\b|REVIEW\.md|sources\/|clients\/|docs\/(modules|architecture|partners|decisions)/;
+const INTERNAL = /\b(FS-\d{3,4}|PT-\d{2}|SD-\d{2}|[A-Z]{2}-\d{2})\b|REVIEW\.md|sources\/|clients\/|docs\/(modules|architecture|partners|decisions)/;
 
 function checkPublic(root) {
   const dir = path.join(root, PUBLIC_DIR);
@@ -494,7 +494,7 @@ function checkDecisions(root) {
   const entries = new Map();
   read(root, DECISIONS).split('\n').forEach((text, i) => {
     if (!text.startsWith('## ')) return;
-    for (const m of text.matchAll(/FS-\d{3}/g)) entries.set(m[0], i + 1);
+    for (const m of text.matchAll(/FS-\d{3,4}/g)) entries.set(m[0], i + 1);
   });
   for (const r of rows) {
     if (r.notes.includes('[decision]') && !entries.has(r.id)) {
@@ -528,14 +528,14 @@ function checkObligations(root) {
   let cur = null;
   lines.forEach((t, i) => {
     if (t.startsWith('## ')) {
-      const m = t.match(/FS-(\d{3})/);
+      const m = t.match(/FS-(\d{3,4})/);
       cur = m ? { id: m[0], n: Number(m[1]), line: i + 1, req: null } : null;
       if (cur) entries.push(cur);
       return;
     }
     // FS-896: an entry a later decision replaced keeps its text and stops
     // requiring what it once did; the later entry must exist.
-    const s = t.match(/^- \*\*Superseded by:\*\* (FS-\d{3})\b/);
+    const s = t.match(/^- \*\*Superseded by:\*\* (FS-\d{3,4})\b/);
     if (s && cur) cur.supersededBy = { id: s[1], line: i + 1 };
     const r = t.match(/^- \*\*Requires:\*\* (.*)$/);
     if (r && cur) {
@@ -793,7 +793,7 @@ const DELIVERY = path.join('docs', 'delivery-plan.md');
 function checkScope(root) {
   if (!fs.existsSync(path.join(root, DELIVERY))) return [fail('scope', DELIVERY, 0, 'delivery plan missing')];
   const text = read(root, DELIVERY);
-  const m = text.match(/^\*\*v1 cap:\*\* (\d+) capabilities in phase 1 \((FS-\d{3})(?:, FS-\d{3})*\)\.$/m);
+  const m = text.match(/^\*\*v1 cap:\*\* (\d+) capabilities in phase 1 \((FS-\d{3,4})(?:, FS-\d{3,4})*\)\.$/m);
   if (!m) return [fail('scope', DELIVERY, 0, 'no "**v1 cap:** N capabilities in phase 1 (FS-xxx)." line')];
   const cap = +m[1];
   let n = 0;
@@ -1430,7 +1430,7 @@ function checkChanges(root) {
     const get = (k) => (fm.match(new RegExp(`^${k}: *(.*)$`, 'm')) || [])[1];
     const kind = get('kind');
     const forWhom = get('for');
-    const rows = (get('rows') || '').match(/FS-\d{3}/g) || [];
+    const rows = (get('rows') || '').match(/FS-\d{3,4}/g) || [];
     const body = text.replace(/^---\n[\s\S]*?\n---\n/, '').trim();
     if (!NOTE_KINDS.includes(kind)) at(`kind "${kind || ''}" is not ${NOTE_KINDS.join(', ')}`);
     if (!['team', 'everyone', ...customers].includes(forWhom)) at(`for "${forWhom || ''}" is not team, everyone or a customer's id (${customers.join(', ')})`);
@@ -1538,7 +1538,7 @@ function checkDocRegister(root, files) {
     if (!/^`(?:clients|sources\/confidential)\/[^`]*`$/.test(where)) at('its place must be in clients/ or sources/confidential/, outside git');
     if (status === 'kept' && !/\/originals\/`$/.test(where)) at('kept, but not in a party\'s originals/');
     if (kind === 'Working' ? print !== '—' : !/^`[0-9a-f]{12}`$/.test(print)) at(kind === 'Working' ? 'a working document has no fingerprint' : 'an original or a record needs its fingerprint, twelve hex characters');
-    const ids = rows.match(/FS-\d{3}/g) || [];
+    const ids = rows.match(/FS-\d{3,4}/g) || [];
     if (!ids.length) at('no register row (FS id) behind it');
     for (const id of ids) if (!review.has(id)) at(`cites ${id}, which REVIEW.md does not have`);
   }

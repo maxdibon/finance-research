@@ -21,7 +21,7 @@ const DIR = 'review';
 // FS-882: With, who has the row, by first name (the team: ways-of-working §1).
 const HEADER = '| Id | Raised by | Point | Status | Criticality | With | Notes |';
 const RULE = '|---|---|---|---|---|---|---|';
-const ROW = /^\| FS-(\d{3}) \|/;
+const ROW = /^\| FS-(\d{3,4}) \|/;
 const norm = (s) => s.replace(/\r\n/g, '\n');
 const pad = (n) => String(n).padStart(3, '0');
 
@@ -34,7 +34,7 @@ const fileFor = (n) => {
 // Every register file, REVIEW.md first, then review/ in id order.
 function files(root) {
   const dir = path.join(root, DIR);
-  const more = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => /^FS-\d{3}-\d{3}\.md$/.test(f)).sort().map((f) => `${DIR}/${f}`) : [];
+  const more = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => /^FS-\d{3,4}-\d{3,4}\.md$/.test(f)).sort((a, b) => parseInt(a.slice(3), 10) - parseInt(b.slice(3), 10)).map((f) => `${DIR}/${f}`) : [];
   return [MAIN, ...more].filter((f) => fs.existsSync(path.join(root, f)));
 }
 
@@ -74,7 +74,7 @@ function tidy(root) {
   const load = (f) => {
     if (!texts.has(f)) {
       const p = path.join(root, f);
-      texts.set(f, fs.existsSync(p) ? norm(fs.readFileSync(p, 'utf8')) : newFile(+f.match(/FS-(\d{3})/)[1]));
+      texts.set(f, fs.existsSync(p) ? norm(fs.readFileSync(p, 'utf8')) : newFile(+f.match(/FS-(\d{3,4})/)[1]));
     }
     return texts.get(f);
   };

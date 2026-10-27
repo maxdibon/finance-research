@@ -44,10 +44,10 @@ function read(root, rel) {
   const text = fs.readFileSync(path.join(root, rel), 'utf8').replace(/\r\n/g, '\n');
   if (rel !== 'REVIEW.md') return text;
   const lines = text.split('\n');
-  const at = lines.findIndex((l) => /^\| FS-\d{3} \|/.test(l));
+  const at = lines.findIndex((l) => /^\| FS-\d{3,4} \|/.test(l));
   if (at < 0) return text;
   const rows = require('./register').rows(root).sort((a, b) => a.n - b.n).map((r) => r.text);
-  return [...lines.slice(0, at), ...rows, ...lines.slice(at).filter((l) => !/^\| FS-\d{3} \|/.test(l))].join('\n');
+  return [...lines.slice(0, at), ...rows, ...lines.slice(at).filter((l) => !/^\| FS-\d{3,4} \|/.test(l))].join('\n');
 }
 
 function sources(root) {
@@ -546,7 +546,7 @@ function reviewBody(body, team = new Map()) {
   const one = (n) => (team.has(n) ? `${n} (${team.get(n).role})` : n);
   const who = (w) => w.split(/\s*,\s*/).map(one).join(', ');
   if (at < 0) return body;
-  const rows = lines.filter((l) => /^\| FS-\d{3} \|/.test(l)).map((l) => l.split('|').slice(1, -1).map((s) => s.trim()));
+  const rows = lines.filter((l) => /^\| FS-\d{3,4} \|/.test(l)).map((l) => l.split('|').slice(1, -1).map((s) => s.trim()));
   const open = rows.filter((c) => c[3] === 'OPEN')
     .sort((a, b) => CRITICALITY_ORDER.indexOf(a[4]) - CRITICALITY_ORDER.indexOf(b[4]) || a[0].localeCompare(b[0]));
   const tally = (list, i) => list.reduce((m, c) => { m[c[i]] = (m[c[i]] || 0) + 1; return m; }, {});
@@ -565,7 +565,7 @@ function reviewBody(body, team = new Map()) {
     '## The register, in id order',
     '',
   ];
-  const end = at + 2 + lines.slice(at + 2).findIndex((l) => !/^\| FS-\d{3} \|/.test(l));
+  const end = at + 2 + lines.slice(at + 2).findIndex((l) => !/^\| FS-\d{3,4} \|/.test(l));
   const table = lines.slice(at + 2, end < at + 2 ? lines.length : end);
   const hundreds = [...new Set(table.map((l) => Math.floor(+l.slice(5, 8) / 100)))];
   const grouped = hundreds.flatMap((h) => [`### FS-${String(Math.max(1, h * 100)).padStart(3, '0')} to FS-${String(h * 100 + 99).padStart(3, '0')}`, '', lines[at], lines[at + 1], ...table.filter((l) => Math.floor(+l.slice(5, 8) / 100) === h), '']);
