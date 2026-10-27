@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-989, FS-990]
+review_ids: [FS-989, FS-990, FS-991]
 last_reviewed: 2026-10-27
 ---
 
@@ -46,10 +46,22 @@ goods, receivables and salary.
 | Agricultural inputs | Paid to the agro-dealer, repaid at harvest, or by the produce buyer | Payee, Repayment source (the buyer), Repayment frequency at maturity | Yes, with the four terms | MF-40 | LR-03 |
 | Check-off and pay-day loans | Repaid by the employer from wages | Repayment source (employer), Collateral (salary), Facility (a line for pay-day limits) | Yes, with the four terms | MF-36, BS-17 | Employment Act s.19(3) |
 | Revenue-based, from till takings | A share of each day's M-Pesa takings | Repayment source (a share of the till) | Yes, with the four terms | MF-40, Collect | LR-03 |
+| **Savings and loans inside a mobile wallet** | M-Shwari (NCBA with Safaricom), M-Fanisi (Onit Bank, then Maisha Microfinance, with Airtel Money, 2017): an account opened from the phone, savings and lock savings, a limit from the operator's data, 30-day loans for a one-off fee, recovered from savings | Loans: Facility (a line, its limit from the operator's data), Repayment source (automatic recovery), Partner (the mobile operator). Savings: the deposit product terms (deposits-service §4) | Loans yes, with the terms of FS-989 and FS-991; savings once the deposit terms have their schema | The deposits service, the lending service (MF-36, MF-40), decisioning, rails (RL-03; Airtel RL-04), omni-channel (OC-03) | LR-04 or LR-07 for the deposits; LR-03; LR-17 for the operator's data |
 | Revolving credit and overdrafts | A business credit line | Facility | Yes, with the four terms | MF-40 | LR-03 |
 | Staged or construction loans | Paid in tranches by milestone | A schedule of payouts, each approved | No: payouts in stages are not a term yet | — | LR-03 |
 | Group and chama loans | Group liability | Who may borrow (a group), Guarantors | Partly | MF-17 (phase 2) | LR-03 |
 | Sharia-compliant finance | Murabaha: the lender buys the goods and sells them at a mark-up | A profit rate in place of interest | No: a vocabulary of its own | — | LR-03; LR-04 for banks |
+
+**What we have run before** (customers CU-03): the USSD channel and
+digital lending for a bank's retailer finance, float lending, term loans
+and Sharia-compliant (Sahl) lending, 2022 to 2025, on Dibon's menu
+platform; the products' books were the bank's.
+
+**What a wallet product still needs** (FS-991): fully automated limits,
+explained to the customer (MF-29) and tried in shadow first (DE-05);
+recovery from the wallet, which depends on the operator (FS-993); the
+product inside the operator's menu (FS-993); and a load test at millions
+of accounts and around-the-clock savings (FS-992).
 
 ## A worked example: retailer financing
 

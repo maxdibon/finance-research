@@ -145,6 +145,12 @@ const RULES = [
       ? 'repayment from till takings says what share of them' : null),
   },
   {
+    id: 'auto-recovery-says-from-what',
+    source: 'lender-rules §2.4, Repayment source (FS-991)',
+    check: ({ repayment_source: r }) => (r && Array.isArray(r.sources) && r.sources.includes('auto_recovery') && !has(r.recover_from)
+      ? 'automatic recovery says what it recovers from: savings, the wallet, or both' : null),
+  },
+  {
     id: 'financed-goods-bought-from-someone',
     source: 'lender-rules §2.4, Collateral (FS-989)',
     check: ({ collateral: c, payee: p }) => (c && Array.isArray(c.types) && c.types.includes('financed_goods') && !(p && p.to === 'third_party')
