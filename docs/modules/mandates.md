@@ -9,8 +9,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, sme, fintech]
 depends_on: [access, messaging, rails]
 consumed_by: [mfi, sacco, collect, gateway, sme-recon, escrow, recon-observability, core, crb, financial-crime, omni-channel, business-suite, insights, identity, decisioning]
-review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453, FS-494, FS-495, FS-498, FS-497, FS-561, FS-582]
-last_reviewed: 2026-10-08
+review_ids: [FS-042, FS-046, FS-097, FS-122, FS-132, FS-138, FS-142, FS-143, FS-144, FS-145, FS-146, FS-402, FS-416, FS-449, FS-453, FS-494, FS-495, FS-498, FS-497, FS-561, FS-582, FS-987]
+last_reviewed: 2026-10-27
 ---
 
 # Mandates — signing and debit
@@ -81,6 +81,7 @@ owner's request (FS-042).
 | MD-18 | Approval from email: the request arrives in Outlook or Gmail with a summary and a single-use, short-lived signed link; anything that moves money is decided only after step-up at the act (MD-10); one click only for approvals that move none; never by replying | Planned | FS-449, FS-453. Outlook actionable messages and Gmail can carry the buttons; the authentication is ours (access AC-05) | 1 |
 | MD-19 | Bill payments: supplier bills from Odoo or Zoho approved by amount tier; new or changed payee details in the last 30 days add an approver; a changed amount or payee re-opens approval | Planned | Owner, 2026-10-06 (FS-494); docs/specs/approval-engine.md §10; sme-recon SR-11 | 2 |
 | MD-20 | Payment triggers after approval: on approval, on the due date or in a scheduled batch; standing approvals for recurring bills within a payee, a cap and an end date; never payment without approval | Planned | Owner, 2026-10-06 (FS-494); approval-engine spec §10; sme-recon SR-11, SR-12 | 2 |
+| MD-21 | The Kapu Console: the approval engine's decision page and each person's open steps; read-only fallback views of clients, loans, payouts and arrears for named staff; products read-only; outside Odoo, so it works whatever Odoo's state | Designed | FS-976, FS-987, FS-988; docs/specs/kapu-console.md | 1 |
 
 ## 4 · Where it sits
 

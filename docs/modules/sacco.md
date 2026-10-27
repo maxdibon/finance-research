@@ -9,13 +9,19 @@ classification: Internal
 audience: [sacco]
 depends_on: [mandates, identity, rails, messaging, recon-observability, collect, crb, financial-crime, access, core, gateway, mfi, decisioning]
 consumed_by: [omni-channel, insights, business-suite]
-review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453, FS-499, FS-522, FS-539, FS-554, FS-582]
-last_reviewed: 2026-10-08
+review_ids: [FS-023, FS-062, FS-066, FS-146, FS-172, FS-173, FS-174, FS-175, FS-176, FS-177, FS-402, FS-407, FS-431, FS-453, FS-499, FS-522, FS-539, FS-554, FS-582, FS-983, FS-985]
+last_reviewed: 2026-10-27
 ---
 
 # Kapu Sacco
 
 ## 1 · In one paragraph
+
+**It runs on the Kapu lending and deposits services** (FS-983, FS-985):
+the lending service lends against members' deposits, the deposits service
+holds members' deposits and shares, and Sacco rules (SASRA) sit beside
+both; staff work in the staff workspace inside Odoo, members on our own
+pages and apps.
 
 Kapu Sacco will run a Sacco's member book: membership, share capital,
 contributions, deposits, loans backed by guarantors, dividends and member

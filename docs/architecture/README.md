@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970]
-last_reviewed: 2026-10-26
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985]
+last_reviewed: 2026-10-27
 ---
 
 # Platform architecture — who holds what
@@ -88,6 +88,59 @@ record of architecture decisions.
 ```
 
 ---
+
+### How the lending design fits together
+
+FS-984. People sign in through access; staff work in the staff workspace
+inside Odoo, or the Kapu Console when Odoo is down; borrowers and members
+on their own pages. Every screen asks the lending service, or the
+deposits service, as the person; those two alone write to the core,
+through one adapter; decisions are the approval engine's; Odoo is reached
+through the back-office gateway; every change goes on the event bus, and
+recon, observability and the vault check and keep it
+(docs/specs/lending-service.md, deposits-service.md, kapu-console.md,
+staff-workspace.md, back-office.md).
+
+```
+  PEOPLE      Institution staff        Borrowers, guarantors, members         Dibon engineers
+                     |                              |                                 |
+            +--------v------------------------------v---------------------------------v----------+
+  SIGN-IN   | ACCESS                                                                             |
+            | signs in, steps up: staff by password and key; customers by a code to              |
+            | their phone; Dibon's engineers by hardware keys, never into a product              |
+            | [keycloak]                                                                         |
+            +------------------------------------------------------------------------------------+
+                    |                  |                   |                          |
+            +-------v--------+ +-------v--------+ +--------v--------+        +--------v--------+
+  SCREENS   | STAFF WORKSPACE| | KAPU CONSOLE   | | CUSTOMER PAGES  |        | OBSERVABILITY   |
+            | daily lending, | | approvals,     | | consents, sign, |        | dashboards,     |
+            | tasks, products| | fallback views | | statements      |        | on-call         |
+            | [odoo]         | | [kapu_service] | | [kapu_service]  |        | [grafana]       |
+            +-------+--------+ +-------+--------+ +--------+--------+        +--------+--------+
+                    | as the person    |                   | as the person     never a product
+                    +------------------+-------------------+
+                                       v
+            +--------------------------v--------------------------------+   +----------------------+
+  CORE      | LENDING SERVICE                                           |   | DEPOSITS SERVICE     |
+  SERVICES  | lends: loans, collateral, guarantors, product versions;   |<--| keeps accounts;      |
+            | LENDER RULES and SACCO RULES beside it                    |   | regulators' rules    |
+            | [kapu_service]                                            |   | [kapu_service]       |
+            +-----------------------------------------------------------+   +------------+---------+
+                     | decisions    | payouts   | messages         |  |                  |
+                     |              |           |                  |  +--- postings -----+
+                     v              v           v                  v signatures          v
+            +-----------------+ +-------+ +-----------+ +---------------------+ +------------------+
+  SERVICES  | APPROVAL ENGINE | | RAILS | | MESSAGING | | BACK-OFFICE GATEWAY | | CORE ADAPTER     |
+            | decides         | | pays  | | sends     | | translates, to ODOO | | posts, to KAPU   |
+            | [kapu_service]  | |       | |           | | [kapu_service]      | | CORE or theirs   |
+            +-----------------+ +-------+ +-----------+ +---------------------+ +------------------+
+  EVENTS    ===== EVENT BUS [kafka]: every change, signed, in order ==============================
+                 |                          |                             |
+            +----v-------------+  +---------v----------+  +---------------v--+
+  CHECKS    | RECONCILIATION   |  | OBSERVABILITY      |  | VAULT            |
+            | three ledgers    |  | metrics, alerts    |  | signed records   |
+            +------------------+  +--------------------+  +------------------+
+```
 
 ## 2 · Three authorities
 
@@ -286,6 +339,14 @@ decision with a separate agreement. A deposit-taking Sacco in native mode
 holds members' deposits in Fineract under SASRA's rules, which makes Dibon
 a core-system vendor. That is the intent (FS-178), and its requirements
 fall on us before the first such Sacco goes live (FS-179).
+
+**Deposits, by mode** (FS-985). Integrated, the usual case for a bank:
+deposits stay in the institution's core, the authority, never copied as
+the record; we bring Collect, channels, recon and approvals around it.
+Native: the deposits service keeps them in Kapu Core, under the deposit
+regulator's rules, and Dibon is a core-system vendor (FS-178, FS-179),
+once Fineract's fit as a deposit core is tested (FS-185). The lending
+and deposits services reach either core through one core adapter.
 
 **A third mode is likely and is not assumed yet:** a core that holds
 deposits but has no loan module, so loans go to Kapu Core and deposits

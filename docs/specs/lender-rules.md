@@ -9,11 +9,11 @@ released: 2026.10.16
 release: R1
 implements: [mfi]
 depends_on: [kapu-core-fineract, messaging, event-bus-kafka]
-used_by: [end-of-day-runner, recon]
+used_by: [end-of-day-runner, recon, lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896, FS-983, FS-978, FS-981]
+last_reviewed: 2026-10-27
 ---
 
 # Lender rules — build specification
@@ -78,7 +78,7 @@ own: FS-629).
 **Related:** implements [mfi](../modules/mfi.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
 [messaging](messaging.md) and [event-bus-kafka](event-bus-kafka.md);
-used by [end-of-day-runner](end-of-day-runner.md) and [recon](recon.md), whose companion recomputes what the rules produce, independently: written from the regulations and the product's terms, not from this service's code (recon §3, FS-793). Both read one interpretation record for the readings not yet settled, and both are tested on §2.9's worked examples (recon §3.1, FS-796); journeys
+used by [lending-service](lending-service.md), [end-of-day-runner](end-of-day-runner.md) and [recon](recon.md), whose companion recomputes what the rules produce, independently: written from the regulations and the product's terms, not from this service's code (recon §3, FS-793). Both read one interpretation record for the readings not yet settled, and both are tested on §2.9's worked examples (recon §3.1, FS-796); journeys
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and
 [JN-06](../journeys/restructuring.md).
@@ -269,9 +269,16 @@ companion all take the terms from it, and none keeps terms of its own.
   in the code repository, changed only by pull request; adding a term
   means this service, the Fineract mapping and the companion support it
   together.
-- **Drafted in the back office** by the institution's product owner, on a
-  form bound to the vocabulary, usually from one of Dibon's starter
-  templates. Before it can be submitted, the form previews sample
+- **Drafted by the institution itself** (FS-978): its product owner, in
+  the staff workspace's Products screen inside Odoo, on a form bound to
+  the vocabulary, usually from one of Dibon's starter templates. Odoo is
+  only the form: this service checks every value as it is entered,
+  computes every preview, and stores the version (staff-workspace rule
+  9). **A version Dibon drafts is *proposed*** (FS-981): during
+  onboarding, or as a change we suggest. Dibon never submits, approves or
+  activates one; the institution's product owner reviews it, edits it,
+  and **adopts** it as its own draft, or rejects it. Every version records
+  who drafted it and who adopted it. Before it can be submitted, the form previews sample
   schedules, the APR and total cost of credit, the draft key information
   document, and the companion's own figures for the same samples; if
   this service's preview and the companion's disagree, it cannot be
@@ -679,6 +686,7 @@ notices under §2.6's checks.
 | `GET /products/{id}/versions/{v}/apr` | APR and total cost of credit |
 | `GET /products/{id}/versions/{v}/kid` | Key information document |
 | `POST /product-changes`, `.../{id}/cbk-approval` | Product version, CBK approval |
+| `POST /product-versions` (draft or proposed), `.../{id}:validate`, `.../{id}:preview`, `.../{id}:adopt`, `.../{id}:submit` | The Products screen: draft, check, preview, adopt a proposed version, submit (FS-978, FS-981) |
 | `POST /loans/{id}/variations`, `.../acceptance` | Variation notice, acceptance |
 | `GET /policies/collection-messaging` | Working hours, recipients, template rules |
 | `POST /complaints/events` | Desk events in, clocks out |

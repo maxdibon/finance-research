@@ -9,11 +9,11 @@ released: 2026.10.16
 release: R1
 implements: [mandates]
 depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka]
-used_by: [recon, staff-workspace]
+used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965]
-last_reviewed: 2026-10-26
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983]
+last_reviewed: 2026-10-27
 ---
 
 # Approval engine — build specification
@@ -81,7 +81,7 @@ extra: the engine holds the facts already.
 
 **Related:** implements [mandates](../modules/mandates.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
-[access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by [recon](recon.md), which compares approvals with the ledger (rails, to write, will be too), and [staff-workspace](staff-workspace.md), where staff decide; journeys
+[access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by [kapu-console](kapu-console.md), [deposits-service](deposits-service.md), [lending-service](lending-service.md), [recon](recon.md), which compares approvals with the ledger (rails, to write, will be too), and [staff-workspace](staff-workspace.md), where staff decide; journeys
 [JN-02](../journeys/manual-identity-check.md),
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and

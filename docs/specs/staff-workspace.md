@@ -1,27 +1,29 @@
 ---
 id: staff-workspace
-name: The staff workspace in Odoo, over Kapu MFI — build specification
+name: The staff workspace in Odoo, over the lending service — build specification
 kind: spec
 type: build
 status: draft
 released: unreleased
 release: R1
 implements: [business-suite]
-depends_on: [access-keycloak, approval-engine]
+depends_on: [access-keycloak, approval-engine, lending-service]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-964, FS-965, FS-970]
-last_reviewed: 2026-10-26
+review_ids: [FS-136, FS-964, FS-965, FS-970, FS-978, FS-979, FS-982, FS-983, FS-987]
+last_reviewed: 2026-10-27
 ---
 
-# The staff workspace in Odoo, over Kapu MFI — build specification
+# The staff workspace in Odoo, over the lending service — build specification
 
 Roan Capital's staff found the Mifos web app hard to use (FS-965). In R1
 they do their daily lending in screens of our own inside Odoo, the back
 office they already sign in to for leads, the desk and signing. **Odoo is
-only the interface:** Fineract stays the core, Kapu MFI stays its only
-writer, and the approval engine stays where decisions are made. Nothing
+only the interface:** Fineract stays the core, the lending service
+(lending-service; Kapu MFI is its configuration for lenders) stays its
+only writer, and the approval engine stays where decisions are made.
+Roan Capital's product owner also manages its products here (FS-978). Nothing
 is built: every behaviour here is **designed**, and the screens are
 confirmed with Roan Capital's staff before they are drawn (open answer
 33; FS-237).
@@ -33,7 +35,7 @@ in their words, without a second core?
 
 | Id | Capability | In R1 |
 |---|---|---|
-| BS-23 | The staff workspace: an institution's staff do their daily lending in screens of ours inside Odoo, over Kapu MFI's API; reads live and never stored, every write a command to Kapu MFI, every decision in the approval engine | Yes |
+| BS-23 | The staff workspace: an institution's staff do their daily lending, and manage their products, in screens of ours inside Odoo, over the lending service's API; reads live and never stored, every write a command to Kapu MFI, every decision in the approval engine | Yes |
 
 **Out of R1:** reports beyond the arrears list (insights); product set-up,
 which is Dibon's through the product version documents (lender-rules
@@ -43,7 +45,7 @@ which is Dibon's through the product version documents (lender-rules
 
 ```
   +----------------------+ reads,     +----------------------+ the only   +----------------------+
-  | STAFF WORKSPACE      | commands   | KAPU MFI             | writer     | KAPU CORE            |
+  | STAFF WORKSPACE      | commands   | LENDING SERVICE      | writer     | KAPU CORE            |
   | shows, asks          |----------->| lends                |----------->| records              |
   | [odoo]               |            | [kapu_service]       |            | [apache_fineract]    |
   +----------------------+            +----------------------+            +----------------------+
@@ -64,8 +66,9 @@ which is Dibon's through the product version documents (lender-rules
 ```
 
 **Related:** implements [business-suite](../modules/business-suite.md);
-depends on [access-keycloak](access-keycloak.md) and
-[approval-engine](approval-engine.md); used by none yet; the back office
+depends on [access-keycloak](access-keycloak.md),
+[approval-engine](approval-engine.md) and
+[lending-service](lending-service.md); used by none yet; the back office
 it lives in is behind [back-office](back-office.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md) and
 [JN-05](../journeys/guarantor.md).
@@ -109,10 +112,15 @@ it lives in is behind [back-office](back-office.md); journeys
    only, and holds no rule (back-office rule 6), so it runs on either
    Odoo edition and its logic survives a move to another ERP.
 8. **When Odoo is down,** nothing on the money path stops (payments never
-   pass through Odoo); named staff keep a read-only way in to the core
-   (open question 2), and the approval engine's console and email still
-   take decisions.
-9. **In Roan Capital's words, English and Swahili** (OC-14), to the
+   pass through Odoo); named staff keep a read-only way in through the
+   Kapu Console (kapu-console), where approvers also decide, as they can
+   from email.
+9. **Products: Odoo is only the form** (FS-978). Every value is checked,
+   every preview computed, and every version stored, approved and
+   activated by lender rules and the approval engine (lender-rules §2.4);
+   a version Dibon drafts arrives as *proposed*, and only the
+   institution's product owner adopts it (FS-981).
+10. **In Roan Capital's words, English and Swahili** (OC-14), to the
    experience principles (docs/experience.md): the right thing is the
    easy thing.
 
@@ -128,6 +136,30 @@ To confirm with Roan Capital's staff on 29 October (open answer 33):
 | Payouts | Approved loans to pay out, and each payout's state at the bank | Reads; payout confirmed by rails' events |
 | Repayments | A borrower's payments, and those not yet placed (JN-16) | Reads |
 | Arrears | Loans past due, by days, with the next contact due under the collection ladder | Reads (lender rules) |
+| Products | Draft a version from a template, see its previews, adopt a version Dibon proposed, submit it; approvers decide in My tasks; record CBK's letter; retire a version | Lender rules: draft, validate, preview, adopt, submit; the approval engine |
+
+**Roles and their screens** (FS-979), Roan Capital's eight positions;
+"act" means the role can do things on the screen, "read" view only; a
+person holding several roles sees each role's screens (FS-982):
+
+| Screen | Loan Officer | Credit Manager | Head Office | CEO | Finance | Collections | Auditor | Super Admin |
+|---|---|---|---|---|---|---|---|---|
+| Leads (Odoo CRM) | Act | Act | — | Read | — | — | Read | — |
+| Client | Act (contact details) | Read | Read | Read | Read | Read (own cases) | Read | — |
+| New application | Act | Act (may originate) | — | — | — | — | Read | — |
+| My tasks | — | Stage 1 | Stage 2 | Stage 3; overrides | Payout preparation | — | Read | — |
+| Payouts | — | Read | Read | Read | Prepare | — | Read | — |
+| Repayments | Read | Read | Read | Read | Act (match to loan) | Read | Read | — |
+| Arrears | Read (own clients) | Read | Read | Read | Read | Act | Read | — |
+| Products | Read active | Draft (product owner)* | Approve* | Approve* | Approve* | — | Read | Never alone |
+| Helpdesk: complaints | — | Complaints, compliance* | — | Read | — | — | Read | — |
+| Morning sign-off | — | — | — | Deputy | Act | — | Read | — |
+| Users and roles | — | — | — | Approves role changes* | — | — | Read | Users only |
+
+\* A duty held within the position (roan-capital, "Its roles"); the two
+product approvers are two of those marked, never the drafter. With three
+or four staff, roles fold as roan-capital says; the approval engine still
+refuses anyone deciding their own request or two steps in a row.
 
 ## 5 · Interfaces
 
@@ -189,10 +221,10 @@ To confirm with Roan Capital's staff on 29 October (open answer 33):
 
 **For the owner:**
 
-1. Kapu MFI's spec, which this workspace needs first: its reads and
-   commands.
-2. The read-only fallback when Odoo is down: Fineract's own screens with
-   a read-only role for named staff, or a page of ours.
+1. Answered: the lending service (lending-service §5) gives its reads
+   and commands.
+2. Answered (FS-976, FS-987): the Kapu Console, read-only, for named
+   staff.
 
 **For Roan Capital:** which tasks were hard in Mifos, watched at the
 desk (open answer 33).

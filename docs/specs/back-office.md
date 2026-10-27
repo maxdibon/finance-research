@@ -8,11 +8,11 @@ released: unreleased
 release: R1
 implements: [business-suite]
 depends_on: [access-keycloak, event-bus-kafka]
-used_by: [messaging, recon]
+used_by: [messaging, recon, lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-644, FS-965, FS-966, FS-967, FS-968, FS-969, FS-970, FS-971]
-last_reviewed: 2026-10-26
+review_ids: [FS-644, FS-965, FS-966, FS-967, FS-968, FS-969, FS-970, FS-971, FS-983]
+last_reviewed: 2026-10-27
 ---
 
 # The back office behind one interface — build specification
@@ -68,7 +68,7 @@ phase 2).
 **Related:** implements [business-suite](../modules/business-suite.md);
 depends on [access-keycloak](access-keycloak.md) and
 [event-bus-kafka](event-bus-kafka.md); used by
-[messaging](messaging.md) and [recon](recon.md); journeys
+[lending-service](lending-service.md), [messaging](messaging.md) and [recon](recon.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and
 [the complaint](../journeys/complaint.md).

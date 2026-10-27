@@ -10,13 +10,19 @@ classification: Internal
 audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway, sme-recon, business-suite, escrow, decisioning]
 consumed_by: [omni-channel, insights, business-suite, sacco]
-review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532, FS-582, FS-581, FS-602, FS-618, FS-619, FS-625, FS-629, FS-764, FS-769, FS-812]
-last_reviewed: 2026-10-16
+review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532, FS-582, FS-581, FS-602, FS-618, FS-619, FS-625, FS-629, FS-764, FS-769, FS-812, FS-983]
+last_reviewed: 2026-10-27
 ---
 
 # Kapu MFI
 
 ## 1 · In one paragraph
+
+**It runs on the Kapu lending service** (FS-983; docs/specs/lending-service.md):
+one thin service for MFI and Sacco, with Fineract configured for what it
+does natively and Odoo, through the back-office gateway, for what it does
+well; Kapu MFI is that service configured for lenders, with lender rules
+beside it.
 
 Kapu MFI is loan management for small non-deposit-taking lenders —
 licensed or registered with CBK, or applying — moving their book off

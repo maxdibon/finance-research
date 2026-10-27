@@ -1,22 +1,23 @@
 ---
 id: roan-capital-30-day-loan-v1
-name: Roan Capital — Biashara, the 30-day loan, product version 1 (draft)
+name: Roan Capital — Biashara, the 30-day loan, product version 1 (proposed)
 kind: product-version
-status: draft
+status: proposed
 law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830, FS-934]
-last_reviewed: 2026-10-23
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830, FS-934, FS-981]
+last_reviewed: 2026-10-27
 ---
 
-# Roan Capital · Biashara, the 30-day loan · product version 1 · draft
+# Roan Capital · Biashara, the 30-day loan · product version 1 · proposed
 
     product:   Biashara (unsecured), the 30-day loan
-    version:   1 (draft, not submitted)
+    version:   1 (proposed, not submitted)
     drafted:   2026-10-14, by Dibon, for Roan Capital's product owner
-    status:    draft: every Ask below answered before it can be submitted
+    status:    proposed: drafted by Dibon; Roan Capital adopts it as its
+               own draft, and every Ask is answered, before it is submitted
     source:    Roan Capital's requirement document; delivery map RC-26,
                RC-27, RC-30; lender-rules §2.4 (the vocabulary), §2.9
 

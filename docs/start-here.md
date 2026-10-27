@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781, FS-855, FS-896, FS-973]
-last_reviewed: 2026-10-26
+review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781, FS-855, FS-896, FS-973, FS-981]
+last_reviewed: 2026-10-27
 ---
 
 # Start here
@@ -150,7 +150,7 @@ approves the document.
 | Documents kept current | **living** (kept true as things change; never finished) | Kinds: `register`, `index`, `overview`, `plan`, `delivery`, `product`, `shared-service`, `channel`, `checklist`, `guide`, `service`, `law`. E.g. docs/delivery-plan.md, docs/document-register.md, this page |
 | Documents that are agreed | **draft** (read it, but do not rely on it yet) · **agreed** (the approving role's go, its code owner in ways-of-working.md §2) · **superseded** (replaced by a later document it names; kept for the record) | Kinds: `architecture`, `policy`, `handbook`, `manual`, `partner-model`, `marketing`, `review` (a component reviewed at a date, superseded by the next review, FS-973). E.g. docs/rules.md (agreed), docs/architecture/README.md (draft) |
 | Outreach letters | **draft** · **sent** (it keeps its own version, as it travels alone) · **answered** (the answer recorded where it belongs) · **withdrawn** (not sent after all, or taken back) | E.g. docs/outreach/liquid-partner-request.md (draft), docs/outreach/api-requests.md (withdrawn) |
-| Product versions | **draft** (with the institution; private) · **awaiting-approval** (the institution's own) · **awaiting-cbk** (the Central Bank of Kenya's, where the law asks; still private) · **active** (loans are written on it, and its terms are public: decisions, FS-803) · **retired** (no new loans; the loans made under it keep its terms) | E.g. docs/products/roan-capital-30-day-loan-v1.md (draft) |
+| Product versions | **proposed** (drafted by Dibon, for the institution to adopt or reject; FS-981) · **draft** (the institution's own, written or adopted by it; private) · **awaiting-approval** (the institution's own) · **awaiting-cbk** (the Central Bank of Kenya's, where the law asks; still private) · **active** (loans are written on it, and its terms are public: decisions, FS-803) · **retired** (no new loans; the loans made under it keep its terms) | E.g. docs/products/roan-capital-30-day-loan-v1.md (draft) |
 | Specs | **draft** · **agreed** (the owner's go; from then on changed only through change enablement) · **building** (code is being written against it) · **built** (its acceptance tests pass) | E.g. docs/specs/lender-rules.md (draft) |
 | Journeys | **draft** · **agreed** (the owner's go) · **validated** (walked through with real users, named in `validated_with`) · **tested** (its acceptance items pass) | E.g. docs/journeys/loan-to-disbursement.md |
 | Capabilities | **Planned** (intended) · **Designed** (specified well enough to build) · **Built** (code exists and its tests pass; not yet in use) · **Live** (a customer uses it). Say "built" or "live" only when it is | E.g. MF-01, AC-05 |

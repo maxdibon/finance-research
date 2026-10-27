@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974, FS-965]
-last_reviewed: 2026-10-26
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974, FS-965, FS-987]
+last_reviewed: 2026-10-27
 ---
 
 # Delivery plan — phase 1 in releases
@@ -45,7 +45,7 @@ the check keeps the two in step):
   title searches and charge registration (MF-18) and programmatic NTSA
   (MF-05) are phase 2, as the document's exclusions say; land titles are
   stored in R1 under MF-03 (FS-581).
-- **Approvals:** MD-01, MD-02, MD-03 (the chain frozen at submission),
+- **Approvals:** MD-21 (the Kapu Console: FS-987), MD-01, MD-02, MD-03 (the chain frozen at submission),
   MD-04 (roles resolved to people when needed), MD-05, MD-06, MD-07 (a
   flag ends with its authority), MD-08 (reminders and escalation), MD-09
   (the 3-of-3 committee), MD-10, MD-18 (approval from email).
@@ -130,7 +130,7 @@ live (FS-777).
 **The current scope is the target** (FS-490): v1 is everything in phase 1
 today, and it does not grow by drift.
 
-**v1 cap:** 251 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585, FS-586, FS-618, FS-638, FS-974, FS-965).
+**v1 cap:** 252 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585, FS-586, FS-618, FS-638, FS-974, FS-965, FS-987).
 
 Nothing moves into phase 1 unless something of similar size moves out, or
 the team grows to carry it. Raising the cap is a decision: the line above

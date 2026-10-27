@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965]
-last_reviewed: 2026-10-26
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987]
+last_reviewed: 2026-10-27
 ---
 
 # Specifications
@@ -49,6 +49,9 @@ as the components table below names it.
 | [recon](recon.md) | Build | The reconciliation platform: every movement accounted for by count and amount, tracing, auto-correction, and three ledgers that must agree (the master, a shadow, an independent companion) | recon-observability | R1 |
 | [back-office](back-office.md) | Build | The back office behind one interface: the jobs our services ask of the ERP, one adapter per ERP, the contract tests, and how an institution is ported from one ERP to another | business-suite | R1 |
 | [staff-workspace](staff-workspace.md) | Build | The staff workspace: an institution's staff do their daily lending in our screens inside Odoo, over Kapu MFI; Fineract stays the core, the approval engine decides | business-suite | R1 |
+| [lending-service](lending-service.md) | Build | The Kapu lending service: one thin service for MFI and Sacco; what Fineract, Odoo and this service each do; the only writer to the core, through the core adapter; each regulator's rules beside it | mfi, sacco | R1 |
+| [deposits-service](deposits-service.md) | Build | The Kapu deposits service: deposit accounts in native mode, each deposit regulator's rules beside it; designed now, built for the first native deposit-taker | core, sacco | R4 |
+| [kapu-console](kapu-console.md) | Build | The Kapu Console: approvals, the read-only fallback and products read-only, outside Odoo | mandates | R1 |
 | [olp](olp.md) | Component | OLP, Dibon's Odoo platform, as Financial Services uses it: which sites run on it, and what Financial Services needs from it (N1 to N14); OLP's own design is OLP's | business-suite | R2 |
 
 **To write, in the order R1 needs them:** odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
@@ -109,6 +112,16 @@ says what crosses each line.
 | back-office | access-keycloak | Service accounts for its callers; staff sign in to the ERP through access |
 | staff-workspace | approval-engine | A person's open steps and their decisions, with step-up |
 | staff-workspace | access-keycloak | Staff sign-in, and the person's token for each call (token exchange) |
+| staff-workspace | lending-service | Reads and commands, as the person |
+| kapu-console | lending-service | Read-only views, as the person |
+| kapu-console | approval-engine | Decisions, with step-up |
+| lending-service | kapu-core-fineract | Postings and settings, through the core adapter, as the only writer |
+| lending-service | approval-engine | Requests to decide; acts only on the engine's yes |
+| lending-service | lender-rules | Every rule a loan or product is checked against |
+| lending-service | back-office | Leads, signatures, tickets |
+| lending-service | deposits-service | Members' deposits and shares, read live |
+| deposits-service | kapu-core-fineract | Deposit postings, through the core adapter |
+| deposits-service | approval-engine | Money out, where the product asks |
 
 ## Components
 
@@ -118,7 +131,13 @@ Every box in a spec's diagram is named as this table names it (FS-632).
 |---|---|---|---|
 | APPROVAL ENGINE | Decides whether an act may happen | `[kapu_service]` | [approval-engine](approval-engine.md) |
 | LENDER RULES | Applies the lender regulations to each loan, inside Kapu MFI (FS-629) | `[kapu_service]` | [lender-rules](lender-rules.md) |
-| KAPU MFI | The lending product's own service: applications, collateral, vetting | `[kapu_service]` | — |
+| LENDING SERVICE | Lends for MFI and Sacco: applications, collateral, vetting, product versions; the only writer to the core | `[kapu_service]` | [lending-service](lending-service.md) |
+| KAPU MFI | The lending service configured for lenders, with lender rules beside it | `[kapu_service]` | [lending-service](lending-service.md) |
+| DEPOSITS SERVICE | Keeps deposit accounts in native mode | `[kapu_service]` | [deposits-service](deposits-service.md) |
+| CORE ADAPTER | One interface to the core: Kapu Core, or the institution's own | `[kapu_service]` | [lending-service](lending-service.md) |
+| KAPU CONSOLE | Approvals, the read-only fallback, products read-only, outside Odoo | `[kapu_service]` | [kapu-console](kapu-console.md) |
+| CUSTOMER PAGES | Borrowers' and members' own pages: consents, signing, statements | `[kapu_service]` | to write |
+| VAULT | Signed documents and their evidence | `[kapu_service]` | to write |
 | KAPU CORE | The ledger: clients, loans, the general ledger, close of business | `[apache_fineract]` | [kapu-core-fineract](kapu-core-fineract.md) |
 | END-OF-DAY RUNNER | Closes the business day: checks, runs, watches, escalates | `[kapu_service]` | [end-of-day-runner](end-of-day-runner.md) |
 | OBSERVABILITY | Metrics, logs, traces, dashboards and alert rules | `[grafana]` | [observability-grafana](observability-grafana.md) |

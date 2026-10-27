@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-26
+last_reviewed: 2026-10-27
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1777,3 +1777,78 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** one more R1 capability; Kapu MFI's API must be
   specified first; Odoo's availability now matters to staff's day, with
   a read-only fallback to choose.
+
+## FS-983 · One thin lending service for MFI and Sacco
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** the Kapu lending service: one service lends for every kind
+  of institution, configured as Kapu MFI or Kapu Sacco; Fineract
+  configured for what it does natively, Odoo used through the gateway,
+  and only what neither does built: the regulators' rules and the
+  orchestration; the only writer to the core, through a core adapter.
+- **Requires:** MF-01, MF-07, MF-11; docs/specs/lending-service.md.
+- **Argued (owner):** "do we need a separate module for kapu mfi or can
+  most of the capability be handled between odoo and fineract?"; "the
+  lending service is only for mfi or also for sacco?"
+- **Argued against:** putting the rules in Odoo, a second core that every
+  Odoo upgrade or port puts at risk; separate services for MFI and Sacco.
+- **Costs (inferred):** the core adapter to build and keep; Sacco rules
+  to specify before R4.
+
+## FS-985 · Deposits by ledger mode, and a deposits service beside lending
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** deposits stay in a bank's own core in integrated mode; in
+  native mode a deposits service keeps them, beside the lending service,
+  with each deposit regulator's rules; designed now, built for the first
+  native deposit-taker, after Fineract's fit is tested (FS-185).
+- **Requires:** KC-02, KC-03; docs/specs/deposits-service.md.
+- **Argued (owner):** "as we're also talking to banks and other fis that
+  accept deposits, how does the design handle deposits?"; "go ahead with
+  the list".
+- **Argued against:** deposits inside the lending service, whose rules,
+  hours and regulators differ.
+- **Costs (inferred):** a core-system vendor's obligations (FS-179) with
+  the first native deposit-taker; a fit-gap of Fineract first.
+
+## FS-987 · The Kapu Console: approvals and the fallback, outside Odoo
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** one application of ours outside Odoo for an institution's
+  staff: the approval engine's decision page and each person's open
+  steps, read-only fallback views for named staff, products read-only.
+  Odoo's Approvals app only for workflows that move no money (BS-09,
+  FS-988). The phase 1 cap is 252.
+- **Requires:** MD-21; docs/specs/kapu-console.md.
+- **Argued (owner):** "i like the idea of having a separate 'admin'
+  interface for the fallback"; "maybe we rename the component?"; "keep
+  the kapu console".
+- **Argued against:** approvals in Odoo's Approvals app, without step-up,
+  the payout's hash or independence from Odoo; a fallback of Fineract's
+  own screens.
+- **Costs (inferred):** one more R1 capability; a second screen over the
+  engine to keep in step with My tasks.
+
+## FS-978 · Institutions manage their own products, in Odoo
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** an institution's product owner drafts, adopts, submits and
+  retires product versions in the staff workspace's Products screen;
+  Odoo only the form; lender rules checks, previews, stores and activates;
+  two of the institution's people approve. A version Dibon drafts is
+  proposed until the institution adopts it (FS-981).
+- **Requires:** BS-23, MF-24; docs/specs/lender-rules.md §2.
+- **Argued (owner):** "i also want product management in odoo so that
+  roan can manage products on their own, without requiring us, reducing
+  our ops effort"; "if we do, for instance during onboarding, then they
+  are marked as draft or something that needs the client approval".
+- **Argued against:** Dibon drafting every version, the operations
+  effort the owner wants gone; the form outside Odoo, a fourth place for
+  staff.
+- **Costs (inferred):** the form and its previews in R1; training for the
+  product owner; the institution's accountability for its products agreed
+  in writing.
