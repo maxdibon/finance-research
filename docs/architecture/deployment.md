@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896, FS-1032]
+last_reviewed: 2026-10-27
 ---
 
 # Deployment: sites, the fleet, and what is central
@@ -141,9 +141,10 @@ site B takes over (FS-691).
   |                                             |    |                                             |
   | EDGE ................... in traffic         |    | EDGE ................... no traffic         |
   | SERVICES ............... full size          |    | SERVICES ............... at zero            |
-  |   Kapu MFI, approvals, lender rules,        |    |   the same signed images; rails, the        |
-  |   rails, recon, messaging, identity,        |    |   runner and every consumer off, so         |
-  |   the end-of-day runner                     |    |   nothing pays or closes twice              |
+  |   lending and deposits, approvals, lender   |    |   the same signed images; rails, the        |
+  |   rules, rails, recon, messaging, identity  |    |   runner and every consumer off, so         |
+  |   and the vault, the back-office gateway,   |    |   nothing pays or closes twice              |
+  |   the Kapu Console, the end-of-day runner   |    |                                             |
   | KAPU CORE . ACCESS . ODOO .. full size      |    | KAPU CORE . ACCESS . ODOO .. at zero        |
   |                                             |    |                                             |
   | DATABASE  primary + synchronous standby  1  |--->| DATABASE  replica cluster, streaming     1  |

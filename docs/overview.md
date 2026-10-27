@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973, FS-1006, FS-1012, FS-1021]
+review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973, FS-1006, FS-1012, FS-1021, FS-1032]
 last_reviewed: 2026-10-27
 ---
 
@@ -166,6 +166,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | Every app and channel, who uses it, and one way in for people with several roles | [channels.md](channels.md) |
 | Starter templates for onboarding a business or a partner, and where every document is kept and seen | [templates/onboarding-pack.md](templates/onboarding-pack.md) |
 | OLP, Dibon's Odoo platform, reviewed as it stands (26 October 2026); what Financial Services needs from it is the OLP spec | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [specs/olp.md](specs/olp.md) |
+| The architecture reviewed (27 October 2026): its databases and namespaces counted, eight findings | [reviews/architecture-2026-10-27.md](reviews/architecture-2026-10-27.md) |
 | What a customer and each product need to go live | [onboarding.md](onboarding.md) |
 | Which partners we are talking to | [partners.md](partners.md) |
 | Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |
