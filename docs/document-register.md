@@ -92,7 +92,7 @@ checked with the owner (FS-840).
 | DR-050 | Roan Capital | Title Deed questionnaire C, how it runs (DC-FS-QN-003) | Questions on how the loan runs day to day, for its operations lead, a form field for each answer, built from the product's draft, and a last page of the regulations cited | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
 | DR-051 | Roan Capital | Roles, approvals and going live (DC-FS-QN-004) | The open questions on who does what, who approves, outages, and what CBK needs before go-live, in six sections by who answers, and a last page of the regulations cited | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
 | DR-052 | Roan Capital | Fallback for a platform outage, template (DC-FS-TM-002) | A starter for Roan Capital's own procedure in an outage, in the plain look, for it to adopt | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
-| DR-053 | Roan Capital | Email, documents for 29 October | Our draft covering email for the pack above, for Eric's review; not sent | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-053 | Roan Capital | Email, documents for 29 October | Our draft covering email for the pack above, for Eric's review; not sent. v0.2 counts the documents as five, the questionnaires' parts grouped | Working | 0.2 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
 
 ## Our documents, numbered, and who received them
 
