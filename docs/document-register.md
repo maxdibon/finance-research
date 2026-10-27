@@ -7,7 +7,7 @@ released: 2026.10.16
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-834, FS-835, FS-857, FS-874, FS-1026, FS-1039]
-last_reviewed: 2026-10-27
+last_reviewed: 2026-10-28
 ---
 
 # Document register
@@ -92,8 +92,8 @@ checked with the owner (FS-840).
 | DR-050 | Roan Capital | Title Deed questionnaire C, how it runs (DC-FS-QN-003) | Questions on how the loan runs day to day, for its operations lead, a form field for each answer, built from the product's draft, and a last page of the regulations cited | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040 |
 | DR-051 | Roan Capital | Roles, approvals and going live (DC-FS-QN-004) | The open questions on who does what, who approves, outages, and what CBK needs before go-live, in six sections by who answers, and a last page of the regulations cited | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040 |
 | DR-052 | Roan Capital | Fallback for a platform outage, template (DC-FS-TM-002) | A starter for Roan Capital's own procedure in an outage, in the plain look, for it to adopt | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040 |
-| DR-053 | Roan Capital | Email, documents for 29 October | Our draft covering email for the pack above, for Eric's review; not sent. v0.2 counts the documents as five, the questionnaires' parts grouped | Working | 0.2 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040 |
-| DR-054 | Roan Capital | Team review request, the pack for 29 October | Our internal request, by email, to the team to review the pack before it goes to Roan Capital: the delivery lead the whole pack; the dev lead, with the CI/CD engineer shadowing, the worksheet and the questionnaires; the CEO the regulations pages; the ops lead the fallback template; by Wednesday 28 October at noon; not sent | Working | 0.2 | internal | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1040 |
+| DR-053 | Roan Capital | Email, documents for 29 October | Our draft covering email for the pack above; not sent. v0.2 counts five documents; v0.3 shares them in a Google Drive folder Roan Capital edits (FS-1042) | Working | 0.3 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040, FS-1042 |
+| DR-054 | Roan Capital | Team review request, the pack for 29 October | Our internal request to the team to review the pack before it goes to Roan Capital, the pack in a restricted Google Drive folder (v0.3): the delivery lead the whole pack; the dev lead, with the CI/CD engineer shadowing, the worksheet and the questionnaires; the CEO the regulations pages; the ops lead the fallback template; by Wednesday 28 October at noon; not sent | Working | 0.3 | internal | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1040, FS-1041 |
 
 ## Our documents, numbered, and who received them
 

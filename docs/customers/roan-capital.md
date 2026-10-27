@@ -8,7 +8,7 @@ released: 2026.10.16
 owner: Delivery lead
 classification: Internal
 review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965, FS-978, FS-979, FS-981, FS-982]
-last_reviewed: 2026-10-27
+last_reviewed: 2026-10-28
 ---
 
 # Roan Capital — delivery map
@@ -278,8 +278,8 @@ product drafts themselves are in docs/products/ by exception (FS-806).
 | DR-050 | Title Deed questionnaire C, how it runs (DC-FS-QN-003) | Questions on how the loan runs day to day, for its operations lead, a form field for each answer, built from the product's draft, and a last page of the regulations cited | Working | draft | 2026-10-27 | Dibon |
 | DR-051 | Roles, approvals and going live (DC-FS-QN-004) | The open questions on who does what, who approves, outages, and what CBK needs before go-live, in six sections by who answers, and a last page of the regulations cited | Working | draft | 2026-10-27 | Dibon |
 | DR-052 | Fallback for a platform outage, template (DC-FS-TM-002) | A starter for Roan Capital's own procedure in an outage, in the plain look, for it to adopt | Working | draft | 2026-10-27 | Dibon |
-| DR-053 | Email, documents for 29 October | Our draft covering email for the pack above, for Eric's review; not sent. v0.2 counts the documents as five, the questionnaires' parts grouped | Working | draft | 2026-10-27 | Dibon |
-| DR-054 | Team review request, the pack for 29 October | Our internal request, by email, to the team to review the pack before it goes to Roan Capital: the delivery lead the whole pack; the dev lead, with the CI/CD engineer shadowing, the worksheet and the questionnaires; the CEO the regulations pages; the ops lead the fallback template; by Wednesday 28 October at noon; not sent | Working | internal | 2026-10-27 | Dibon |
+| DR-053 | Email, documents for 29 October | Our draft covering email for the pack above; not sent. v0.2 counts five documents; v0.3 shares them in a Google Drive folder Roan Capital edits (FS-1042) | Working | draft | 2026-10-27 | Dibon |
+| DR-054 | Team review request, the pack for 29 October | Our internal request to the team to review the pack before it goes to Roan Capital, the pack in a restricted Google Drive folder (v0.3): the delivery lead the whole pack; the dev lead, with the CI/CD engineer shadowing, the worksheet and the questionnaires; the CEO the regulations pages; the ops lead the fallback template; by Wednesday 28 October at noon; not sent | Working | internal | 2026-10-27 | Dibon |
 
 - Capability statuses: the modules named in §2.
 - Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in
