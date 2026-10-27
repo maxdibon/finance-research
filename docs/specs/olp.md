@@ -11,8 +11,8 @@ depends_on: []
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-293, FS-970, FS-971, FS-972, FS-973]
-last_reviewed: 2026-10-26
+review_ids: [FS-293, FS-970, FS-971, FS-972, FS-973, FS-986]
+last_reviewed: 2026-10-27
 ---
 
 # OLP, as Financial Services uses it — component specification
@@ -75,9 +75,10 @@ depends on none; used by none yet; the back office's interface is
 - **Odoo versions:** OLP installs 17.0 to 20.0 and accepts imports from
   15.0 (its handbook). Financial Services' sites follow back-office §3's
   upgrade rules once written (FS-971).
-- **Where OLP runs:** to be hosted on Liquid's Azure Stack in Kenya
-  (business-suite). Until it is, no Financial Services document says
-  OLP is "hosted in Kenya" (N12).
+- **Where the sites run:** every site OLP deploys for our clients is
+  hosted in Kenya (FS-986); that is what our documents mean by "Odoo on
+  OLP, hosted in Kenya". OLP's own dashboard and services are to be
+  hosted on Liquid's Azure Stack (business-suite; N12).
 
 ## 4 · What Financial Services needs and wants from OLP
 
@@ -98,7 +99,7 @@ review's reading of the handbook, not of OLP's code.
 | N9 | Add-ons deployed from main after review, to staging first, never from any push | Should | Every site with our modules | Partly: a webhook syncs a branch |
 | N10 | Generated passwords and subscription codes written to OpenBao, not shown once to be copied | Should | Every site | Gap (G8) |
 | N11 | An export of a site's records in open formats, with our references, beside Odoo's own dumps (back-office rule 8) | Should | Every site the gateway serves | Gap: dumps load only into their own Odoo version |
-| N12 | OLP itself hosted in Kenya, on Liquid's Azure Stack, before we say so | Must, for what we publish | Our marketing (portfolio) | Planned |
+| N12 | Every site OLP deploys for our clients on servers in Kenya, and a way to show where each site and its backups are; OLP's own services on Liquid's Azure Stack | Must, for what we publish | Our clients' sites; the portfolio | Sites: by how we deploy them (FS-986); OLP's services: planned |
 | N13 | Switching a site between Enterprise and Community | Could, and present | A cost-led customer (FS-967) | Met |
 | N14 | Access tokens signed with keys, not one secret shared by every service | Should | OLP's own services | Gap (G9) |
 
