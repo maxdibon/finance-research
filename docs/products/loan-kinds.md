@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-989, FS-990, FS-991, FS-1000, FS-1003]
+review_ids: [FS-989, FS-990, FS-991, FS-1000, FS-1003, FS-1029]
 last_reviewed: 2026-10-27
 ---
 
@@ -64,6 +64,9 @@ product inside the operator's menu (FS-993); and a load test at millions
 of accounts and around-the-clock savings (FS-992).
 
 ## A worked example: retailer financing
+
+The product as a whole, why it is hard and what we bring:
+[briefs/retailer-finance.md](briefs/retailer-finance.md) (FS-1029).
 
 From Dibon's own concept of April 2025 (held with the KCB sources,
 outside git; FS-990, FS-1003), and the model a
