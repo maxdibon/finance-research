@@ -1892,3 +1892,61 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** a portal and an intake to build with MF-40; each
   partner's onboarding is the institution's work; an operator's consent
   for Dibon to host and process (FS-1002).
+
+## FS-1004 · A borrower consents to each partner apart
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** a borrower's consent to a partner's data being used is
+  given for each partner apart by default; an institution may set a
+  product's partner terms to one consent for the partners named at that
+  moment, never future ones, or turn consent off only where another
+  lawful basis is recorded by decision with its impact assessment.
+- **Requires:** MF-42; docs/specs/lending-service.md §5.
+- **Argued (owner):** "i think the more restrictive is that retailers
+  consent per distributor, unless this is waived or turned off".
+- **Argued against:** one consent for every partner, present and future,
+  which is not specific enough to stand as consent.
+- **Costs (inferred):** a consent asked at each new relationship; the
+  basis behind "off" settled with counsel (LQ-22).
+
+## FS-1010 · Virtual cards, through a sponsor bank and an issuer processor
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** virtual cards come in through partners: the institution
+  issues under a sponsor bank's BIN with an issuer processor; a card
+  draws on a deposit account or a credit line, each authorisation asked
+  of us in real time; card numbers stay with the processor, never stored
+  or seen by us; the scheme's settlement reconciled by recon. Physical
+  cards and card processing stay theirs.
+- **Requires:** OC-25.
+- **Argued (owner):** "what about supporting virtual cards, onit was
+  interested in this".
+- **Argued against:** processing cards ourselves, which would bring PCI
+  DSS's full scope and scheme membership; leaving cards out altogether,
+  as the product landscape first said.
+- **Costs (inferred):** a sponsor bank and a processor per market; a
+  real-time authorisation path with the deposits service's availability;
+  the approvals in LQ-23.
+
+## FS-1018 · One identity per person, per institution; roles as profiles; staff apart
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** one identity per person, per institution, never one across
+  institutions; each role a profile granted by its owner (themselves, a
+  business under its mandate, a partner within the institution's
+  limits); a business's first administrators those its board resolution
+  names, checked against the registry; a partner's field agent in a
+  profile of their own identity; staff in the staff realm, linked to
+  their own customer identity by ID number for conflict checks only.
+- **Requires:** ID-25, ID-26; docs/channels.md.
+- **Argued (owner):** "agreed on all four, go ahead".
+- **Argued against:** a login per role, which hides conflicts between
+  roles; one identity across institutions, which joins data two
+  institutions own; staff and customer as one identity, which weakens
+  separation of duties where fraud happens.
+- **Costs (inferred):** profiles and organisations to build in access
+  and every channel; a board resolution for each business, from a
+  template (FS-1019); the link's privacy line kept true.

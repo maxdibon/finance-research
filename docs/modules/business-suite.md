@@ -10,7 +10,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, messaging, sme-recon, mandates, insights, sacco, mfi, identity]
 consumed_by: [insights, mfi]
-review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518, FS-521, FS-527, FS-532, FS-606, FS-608, FS-618, FS-644, FS-769, FS-770, FS-772, FS-777, FS-805, FS-970, FS-965, FS-996]
+review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518, FS-521, FS-527, FS-532, FS-606, FS-608, FS-618, FS-644, FS-769, FS-770, FS-772, FS-777, FS-805, FS-970, FS-965, FS-996, FS-1011, FS-1021]
 last_reviewed: 2026-10-27
 ---
 
@@ -84,6 +84,8 @@ hosting on OLP, is **Built** (FS-293).
 | BS-21 | The back office behind one interface: our services reach the ERP inside an institution's instance only through the back-office gateway, one adapter per ERP, one contract test suite every adapter passes; Odoo Enterprise first, Odoo Community, ERPNext and Tryton candidates to evaluate | Designed | FS-970; docs/specs/back-office.md | 1 |
 | BS-22 | Porting an institution's back office from one ERP to another: export, mapping, a rehearsal, cut-over by switching the adapter, counts reconciled and signed off | Designed | FS-970; docs/specs/back-office.md §9 | 2 |
 | BS-23 | The staff workspace: an institution's staff do their daily lending in screens of ours inside Odoo, over Kapu MFI's API; reads live and never stored, every write a command to Kapu MFI, every decision in the approval engine; in place of the Mifos web app | Designed | FS-965; docs/specs/staff-workspace.md | 1 |
+| BS-24 | A website for an institution that has none, as part of the business suite: built by Dibon on Odoo Website and hosted on OLP in Kenya, on the institution's own domain; its pages approved by the institution: who it is, its branches and contacts, its products with their terms and key information documents published from active versions, the calculator and the "Request a loan" form (BS-20), complaints, the privacy notice, and that it is regulated by CBK (reg 47) | Planned | FS-1011; product landscape (an institution without a site) | 2 |
+| BS-25 | An onboarding pack for an institution's business customers and partners: starter templates (a board resolution naming the administrators and signatories, the account mandate, a beneficial ownership declaration, directors' consent to checks, directors' guarantees; a partner agreement, a data-sharing agreement, a letter naming a partner's administrators), adopted by each institution with its counsel, filled from the records held, signed in Odoo Sign, filed in the vault | Planned | FS-1019, FS-1021; templates/onboarding-pack.md | 2 |
 
 ## 4 · Where it sits
 
@@ -215,7 +217,7 @@ FS-036, FS-290, FS-291, FS-292.
 | reg 27 | reg 27(3) | Thirty days' notice to the Central Bank before a new delivery channel rolls out, with the mobile money account, apps and bank accounts to be used; a way to opt out of marketing messages; channels that are available, safe, protected from fraud, easy to use and affordable |
 | reg 28 | reg 28(2) | Applications considered under the credit policy, ability to repay assessed and no reckless lending (28(1)); a refusal given at once, with reasons (28(2)); a loan may be restructured on the borrower's request or with prior notice (28(3)) |
 | reg 38 | reg 38 | Before contracting, the customer is told they are free not to enter a contract that seems onerous or unsuitable, and of any difficulty their financial position may cause in performing it |
-| reg 47 | reg 47(1)(d) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
+| reg 47 | reg 47, reg 47(1)(d) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
 | reg 48 | reg 48 | A key information document for each product: its benefits, risks, terms and conditions, in summary |
 | reg 56 | reg 56(3) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
 

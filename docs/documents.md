@@ -7,8 +7,8 @@ law: mixed
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-063, FS-527, FS-532, FS-537, FS-538, FS-591]
-last_reviewed: 2026-10-16
+review_ids: [FS-063, FS-527, FS-532, FS-537, FS-538, FS-591, FS-1024]
+last_reviewed: 2026-10-27
 ---
 
 # Document catalogue
@@ -123,6 +123,10 @@ of employment.
 | DT-37 | Staff contracts and written particulars | Employment Act s.10(6): 5 years after employment ends; s.79 register | 5 years, E | Confidential | Vault (FS-527) |
 | DT-38 | An employee's written request for a check-off deduction | Employment Act s.19(1)(g) | 5 years after the deduction ends (proposed) | Confidential | The employer's Odoo (BS-14) |
 | DT-39 | Accounting and tax records: books, invoices, tax returns | Tax Procedures Act s.23(1)(c): five years from the end of the reporting period | 7 years, D (covers it) | Internal | Odoo |
+| DT-40 | Directors' consent to, or notice of, the registry, bureau and sanctions checks made on them (onboarding pack B4; LQ-26) | Data Protection Act s.32; POCAML Regs reg 42(2) | 7 years, R | Confidential | Vault |
+| DT-41 | A partner agreement, signed (onboarding pack P1) | The partnership; MF-41 | Term of the agreement and 7 years (proposed) | Confidential | Vault; the contract record in Odoo |
+| DT-42 | A data-sharing agreement with a partner, signed (onboarding pack P2) | Data Protection Act; MF-42 | Term of the agreement and 7 years (proposed) | Confidential | Vault; the contract record in Odoo |
+| DT-43 | A letter naming a partner's administrators, and each change to it (onboarding pack P3) | Authority to act for the partner; ID-25 | While a partner, and 7 years (proposed) | Confidential | Vault |
 
 ## What else was read (FS-538)
 

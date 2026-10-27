@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15.1
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763, FS-765, FS-768, FS-769, FS-773, FS-776, FS-782, FS-783, FS-784, FS-896, FS-996]
+review_ids: [FS-548, FS-558, FS-637, FS-668, FS-680, FS-684, FS-689, FS-763, FS-765, FS-768, FS-769, FS-773, FS-776, FS-782, FS-783, FS-784, FS-896, FS-996, FS-1008]
 last_reviewed: 2026-10-27
 ---
 
@@ -79,5 +79,6 @@ Copy [_template.md](_template.md) and keep every heading.
 | JN-18 | A member of staff joins, moves and leaves: roles by mandate, hardware keys | R1 | [staff-access.md](staff-access.md) |
 | JN-19 | An outage: the institution on its fallback runbook, then everything brought back in | R1 | [outage.md](outage.md) |
 | JN-20 | One of Dibon's engineers joins, moves and leaves: one central identity, hardware keys, access by ticket, GitHub and devices | R1 | [engineer-access.md](engineer-access.md) |
+| JN-22 | A customer moves up a KYC tier: told what the next tier needs, the evidence given and checked, the tier risen from the evidence | phase 2 | [kyc-tier-up.md](kyc-tier-up.md) |
 | JN-21 | A distributor onboarded for retailer financing: due diligence, agreements, verified accounts, a feed with consent, two approvals, then draws paid to it | phase 2 | [distributor-onboarding.md](distributor-onboarding.md) |
 | JN-15 | A trader who does not read, paid to his own till, told by voice, saving and borrowing for stock | phase 2 | [micro-trader.md](micro-trader.md) |
