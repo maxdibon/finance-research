@@ -6,7 +6,7 @@ status: living
 released: unreleased
 owner: Product lead, channels
 classification: Internal
-review_ids: [FS-1012, FS-1013, FS-1014, FS-1015, FS-1016, FS-1017, FS-1018]
+review_ids: [FS-1012, FS-1013, FS-1014, FS-1015, FS-1016, FS-1017, FS-1018, FS-1022]
 last_reviewed: 2026-10-27
 ---
 
@@ -110,7 +110,8 @@ managed device (OC-19), the customer app their own.
 | Agent banking | Customers at an institution's agents | The agent's device; the customer's PIN | Planned | Phase 2 | OC-23 |
 | Virtual cards | Customers, from the app | The app; the processor's display | Designed | Later | OC-25 |
 | Telegram | Customers who start a chat | As the channel | Planned | Later | OC-21 |
-| Website | Anyone: products, terms, the calculator, "Request a loan" | — | Planned | With BS-20; for those without one, BS-24 | BS-20, BS-24 |
+| Website | Anyone: products, terms, the calculator, "Request a loan"; blank forms for the paper route | — | Planned | With BS-20; for those without one, BS-24 | BS-20, BS-24, BS-25 |
+| Documents, in every channel | Each person, in each profile: to sign, signed, statements, notices; from the vault | As the channel | Planned | Own pages R1; the rest with each channel | ID-17, ID-27 |
 
 ## 4 · How it would be built
 

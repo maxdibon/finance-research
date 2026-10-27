@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974, FS-965, FS-987]
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974, FS-965, FS-987, FS-1020]
 last_reviewed: 2026-10-27
 ---
 
@@ -49,7 +49,7 @@ the check keeps the two in step):
   MD-04 (roles resolved to people when needed), MD-05, MD-06, MD-07 (a
   flag ends with its authority), MD-08 (reminders and escalation), MD-09
   (the 3-of-3 committee), MD-10, MD-18 (approval from email).
-- **Identity:** ID-01, ID-02, ID-03 (re-verification), ID-07 (business registration), ID-10 (what is kept, and each query's cost), ID-11 (the phone number confirmed), ID-19 (KYC tiers), ID-15 (the
+- **Identity:** ID-26 (staff and customer identities linked for conflict checks: FS-1020), ID-01, ID-02, ID-03 (re-verification), ID-07 (business registration), ID-10 (what is kept, and each query's cost), ID-11 (the phone number confirmed), ID-19 (KYC tiers), ID-15 (the
   document vault), ID-17 (sharing documents out), ID-12 (the number bound to its SIM).
 - **Messaging:** MS-01, MS-02 (SMS through our own gateway, FS-565),
   MS-03 (Roan Capital's sender ID), MS-09 (delivery status), MS-10
@@ -130,7 +130,7 @@ live (FS-777).
 **The current scope is the target** (FS-490): v1 is everything in phase 1
 today, and it does not grow by drift.
 
-**v1 cap:** 252 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585, FS-586, FS-618, FS-638, FS-974, FS-965, FS-987).
+**v1 cap:** 253 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585, FS-586, FS-618, FS-638, FS-974, FS-965, FS-987, FS-1020).
 
 Nothing moves into phase 1 unless something of similar size moves out, or
 the team grows to carry it. Raising the cap is a decision: the line above
