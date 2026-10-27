@@ -12,7 +12,7 @@ depends_on: [kapu-core-fineract, messaging, event-bus-kafka]
 used_by: [end-of-day-runner, recon, lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896, FS-983, FS-978, FS-981, FS-989]
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896, FS-983, FS-978, FS-981, FS-989, FS-991]
 last_reviewed: 2026-10-27
 ---
 
@@ -345,8 +345,8 @@ the form and in the questionnaires (FS-816).
 | Amount limits | Minimum and maximum, KES | The smallest and largest loan the product offers |
 | Term | Length and unit (days, weeks, months); minimum and maximum, or a list of allowed terms (14 or 30 days) | How long the borrower has; it sets the due dates |
 | Repayment frequency | Once at maturity, daily, weekly, monthly, or chosen by the borrower to fit their pay cycle within set bounds; when the first instalment falls (the day after disbursement) | When each instalment falls: it sets the repayment schedule |
-| Facility | A term loan; or a credit line: when its limit renews (monthly, from new purchases, for example), what sets it (assessed, a partner's purchases, salary, a multiple of deposits), and how long each draw runs (FS-989) | Whether the borrower takes one loan, or draws on a limit again and again |
-| Repayment source | Who repays: the borrower; the employer, by check-off; the buyer of an invoice; a share of the borrower's till takings, and what share (FS-989) | Where repayments come from, which the borrower must know before signing |
+| Facility | A term loan; or a credit line: when its limit renews (monthly, from new purchases, for example), what sets it (assessed, a partner's purchases, salary, a multiple of deposits, a mobile operator's data on the customer), and how long each draw runs (FS-989, FS-991) | Whether the borrower takes one loan, or draws on a limit again and again |
+| Repayment source | Who repays: the borrower; the employer, by check-off; the buyer of an invoice; a share of the borrower's till takings, and what share; automatic recovery on the due date from the borrower's savings or wallet, with their consent, and from which (FS-989, FS-991) | Where repayments come from, which the borrower must know before signing |
 | Interest method | Flat; or reducing balance, with equal instalments or equal principal | How interest is worked out; it changes the total cost of credit |
 | Interest rate and its unit | A number, with its period: for the term, a day, a month or a year | The loan's price; published, and pricing needs CBK's approval (reg 55) |
 | Rate type | Fixed; or variable: a benchmark (KESONIA, the Central Bank Rate) plus a margin, and when it resets | Whether the price can change during the loan, and how |
@@ -391,7 +391,7 @@ stay internal, as decisioning's risk classes do.
 | Documents | The checklist (identity ID-02) | What a borrower must provide |
 | Disbursement | The channels: M-Pesa or a bank, and which account | How the money is paid out, and from where |
 | Payee | Who receives the money: the borrower; or a third party (a supplier, dealer, school, hospital, insurer, agro-dealer, merchant), only from an approved list and against a proof (an invoice, a proforma, a quotation, a fee structure, a premium notice); whether any part goes to the borrower (FS-989) | Whether the money reaches the borrower, or pays for what the loan was for |
-| Partner | The third party's part: whether it shares data (with the borrower's consent), what it pays towards the price, any first loss it takes, whether returned goods are refunded to the loan (FS-989) | What the partner owes the lender, and the borrower |
+| Partner | The third party (a distributor, dealer, school, hospital, insurer, employer, produce buyer, merchant, or a mobile operator whose wallet carries the product) and its part: whether it shares data (with the borrower's consent), what it pays towards the price, any first loss it takes, whether returned goods are refunded to the loan (FS-989) | What the partner owes the lender, and the borrower |
 | Cut-off | When payments stop being released (Roan Capital: 23:00 to 04:00, RC-21) | When payouts stop being released |
 | Purposes | The list a borrower chooses from | The reasons a borrower can choose from |
 | Bureau reporting | When the product's loans are reported (crb, phase 2) | When the product's loans are reported to the bureaus |

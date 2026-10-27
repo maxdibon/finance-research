@@ -56,7 +56,7 @@
       "properties": {
         "kind": {"enum": ["term_loan", "credit_line"]},
         "renews": {"enum": ["month", "quarter", "year", "never"]},
-        "limit_basis": {"enum": ["assessed", "partner_purchases", "salary", "deposits_multiple"]},
+        "limit_basis": {"enum": ["assessed", "partner_purchases", "salary", "deposits_multiple", "operator_data"]},
         "draw_term": {"$ref": "#/$defs/term_length"}
       }
     },
@@ -65,8 +65,9 @@
       "required": ["sources"],
       "additionalProperties": false,
       "properties": {
-        "sources": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["borrower", "employer_check_off", "invoice_buyer", "till_share"]}},
-        "till_share": {"$ref": "#/$defs/percent"}
+        "sources": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["borrower", "employer_check_off", "invoice_buyer", "till_share", "auto_recovery"]}},
+        "till_share": {"$ref": "#/$defs/percent"},
+        "recover_from": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["savings", "wallet"]}}
       }
     },
     "interest_method": {
@@ -391,7 +392,7 @@
       "required": ["kind"],
       "additionalProperties": false,
       "properties": {
-        "kind": {"enum": ["distributor", "dealer", "school", "hospital", "insurer", "employer", "produce_buyer", "merchant"]},
+        "kind": {"enum": ["distributor", "dealer", "school", "hospital", "insurer", "employer", "produce_buyer", "merchant", "mobile_operator"]},
         "shares_data": {"type": "boolean"},
         "pays_towards_price": {"$ref": "#/$defs/percent"},
         "first_loss": {"$ref": "#/$defs/percent"},

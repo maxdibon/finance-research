@@ -11,7 +11,7 @@ depends_on: [kapu-core-fineract, approval-engine]
 used_by: [lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-066, FS-178, FS-179, FS-185, FS-985]
+review_ids: [FS-066, FS-178, FS-179, FS-185, FS-985, FS-991]
 last_reviewed: 2026-10-27
 ---
 
@@ -98,30 +98,52 @@ and [JN-12](../journeys/transfer-in.md).
 7. **A higher tier than lending:** withdrawals and transfers run around
    the clock.
 
-## 4 · Interfaces
+## 4 · Savings products and their terms
+
+FS-991. A savings product is described as a loan is (lender-rules §2.4):
+a version, in a vocabulary, checked, approved by two people and activated
+from a date; the schema follows when the first native deposit-taker
+signs. Its terms:
+
+| Term | Values | Why it matters |
+|---|---|---|
+| Account kind | Regular savings; lock or fixed (a term to maturity); recurring (a regular amount); a Sacco's deposits (BOSA) and savings (FOSA); shares | What the customer holds, and how they reach it |
+| Interest rate | A rate, or a rate per balance tier (M-Shwari pays more above each threshold), with its period | What the customer earns; published |
+| Interest basis and posting | The day count; when interest accrues; when it is posted (monthly, at maturity) | Decides interest to the shilling |
+| Lock term | Shortest and longest term, and whether the customer sets it (one to twelve months, for example) | How long locked money stays locked |
+| Early break | Allowed or not; whole or partial; what is lost (the interest, a fee); how soon the money is paid (48 hours, for example) | What it costs to take locked money out early |
+| Opening and minimum balance | The least to open and to keep | Who can open one, and what keeps it open |
+| Withdrawal limits | By channel and KYC tier (identity ID-19), daily and per transaction | Guards money out (rule 4) |
+| Fees | Each fee, as for loans; most savings carry none | What the customer pays |
+| Withholding tax | On interest, as the law sets it | What the customer receives after tax |
+| Dormancy | Days without activity before an account is dormant, and what follows (unclaimed assets) | What happens to an account left alone |
+| Deposit insurance | The deposit insurer's cover, stated to the customer | What protects the money |
+| Lien for loans | Whether savings secure a loan, and are recovered from on default (lender-rules, Repayment source: automatic recovery) | Whether a loan can be recovered from savings |
+
+## 5 · Interfaces
 
 Reads of accounts and balances for the lending service, the staff
 workspace and the channels; commands to open, close and post; events in
 a `kapu.deposits` domain, to add to the bus's catalogue when built.
 
-## 5 · Security and audit
+## 6 · Security and audit
 
 As the lending service; every money-out act with step-up and the
 person's own token.
 
-## 6 · Data
+## 7 · Data
 
 | What | Class | Kept | Personal data |
 |---|---|---|---|
 | Account records beyond the core's | Confidential | As the regulator requires, then seven years | Customers' and members' |
 
-## 7 · Quality and metrics
+## 8 · Quality and metrics
 
 Around-the-clock tier; a withdrawal answered within two seconds at the
-95th percentile; alerts on any posting the core received that this
+95th percentile, at the scale a wallet product brings (FS-992); alerts on any posting the core received that this
 service did not make.
 
-## 8 · Threats
+## 9 · Threats
 
 | Threat | For example | The answer |
 |---|---|---|
@@ -132,7 +154,7 @@ service did not make.
 | Denial of service | A busy month-end | The higher tier (rule 7) |
 | Elevation of privilege | A teller posting outside their till | Tills and maker-checker (KC-06, KC-08) |
 
-## 9 · Acceptance tests
+## 10 · Acceptance tests
 
 | # | Given | When | Then | Id, source |
 |---|---|---|---|---|
@@ -140,7 +162,7 @@ service did not make.
 | A2 | A SIM swapped in the last day | A withdrawal is asked for | It is held as financial crime says | KC-02, rule 4 |
 | A3 | A posting made directly in the core | The nightly check runs | It is found and alerted | rule 3 |
 
-## 10 · Open questions
+## 11 · Open questions
 
 **For the owner:**
 
@@ -150,3 +172,5 @@ service did not make.
    native deposit-taker goes live.
 3. The split mode (FS-066): deposits in the institution's core, loans in
    ours.
+4. The scale a wallet product needs: millions of accounts, savings round
+   the clock (FS-992).

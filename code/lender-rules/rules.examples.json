@@ -33,5 +33,7 @@
   {"rule": "till-share-has-a-share", "product": {"repayment_source": {"sources": ["till_share"], "till_share": 10}}, "breaks": false},
   {"rule": "till-share-has-a-share", "product": {"repayment_source": {"sources": ["borrower", "till_share"]}}, "breaks": true},
   {"rule": "financed-goods-bought-from-someone", "product": {"collateral": {"types": ["financed_goods"]}, "payee": {"to": "third_party", "kinds": ["dealer"], "approved_list": true, "proof": ["proforma"]}}, "breaks": false},
-  {"rule": "financed-goods-bought-from-someone", "product": {"collateral": {"types": ["financed_goods"]}, "payee": {"to": "borrower"}}, "breaks": true}
+  {"rule": "financed-goods-bought-from-someone", "product": {"collateral": {"types": ["financed_goods"]}, "payee": {"to": "borrower"}}, "breaks": true},
+  {"rule": "auto-recovery-says-from-what", "product": {"repayment_source": {"sources": ["borrower", "auto_recovery"], "recover_from": ["savings", "wallet"]}}, "breaks": false},
+  {"rule": "auto-recovery-says-from-what", "product": {"repayment_source": {"sources": ["auto_recovery"]}}, "breaks": true}
 ]
