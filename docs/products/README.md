@@ -71,6 +71,8 @@ the answers, never later.
 | Institution | Product | Version | Status | Document |
 |---|---|---|---|---|
 | Roan Capital | 30-day loan | 1 | Draft | [roan-capital-30-day-loan-v1.md](roan-capital-30-day-loan-v1.md) |
+| Roan Capital | Motor Vehicle, the logbook loan | 1 | Proposed | [roan-capital-motor-vehicle-v1.md](roan-capital-motor-vehicle-v1.md) |
+| Roan Capital | Title Deed, the land-secured loan | 1 | Proposed | [roan-capital-title-deed-v1.md](roan-capital-title-deed-v1.md) |
 
 ## Regulations cited
 
