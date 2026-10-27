@@ -7,7 +7,7 @@ law: LR-23
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-1029]
+review_ids: [FS-1029, FS-1031]
 last_reviewed: 2026-10-27
 ---
 
@@ -90,7 +90,16 @@ the hardest part, is where the law is strictest.
 **Where it stands:** in R1 for Roan Capital's Motor Vehicle and Title
 Deed; paid to a dealer, phase 2 (product-landscape).
 
-## 4 · What is still open
+## 4 · What we have run or learnt
+
+Roan Capital's Motor Vehicle and Title Deed are the first we run, in R1
+(FS-934, FS-957). Learnt in drafting them: a recovery ladder set by
+business practice has to be checked against the notices the law
+requires before a sale (FS-899, FS-935); and the Land Act puts a sale of
+charged land no earlier than about day 160 after a missed payment
+(LR-47, FS-959).
+
+## 5 · What is still open
 
 - **The sale window:** Roan Capital's ladder against the notices the law
   requires (FS-935, Critical).
@@ -103,7 +112,7 @@ Deed; paid to a dealer, phase 2 (product-landscape).
 - **Long mortgages:** not yet tried against the vocabulary
   (product-landscape).
 
-## 5 · Who might want it
+## 6 · Who might want it
 
 Lenders and banks with vehicle, logbook and equipment books; Saccos
 lending against land; dealers' finance partners (product-landscape).

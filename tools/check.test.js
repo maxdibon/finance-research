@@ -195,6 +195,11 @@ test('template: an id that does not match the file name fails', () => {
   assert.deepStrictEqual(names(f), ['template']);
 });
 
+test('briefs: a brief whose heading differs from the template fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'products', 'briefs', 'virtual-cards.md'), (x) => x.replace('## 4 · What we have run or learnt', '## 4 · Lessons')));
+  assert.deepStrictEqual(names(f), ['briefs']);
+});
+
 test('capabilities: a status outside the vocabulary fails', () => {
   // Replaces whatever status the row has, so the test survives status changes.
   const f = runWith((d) => patch(d, COLLECT, (t) => t.replace(/^(\| CO-01 \|[^|]*\|) \w+ \|/m, '$1 Ready |')));

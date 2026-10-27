@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-1029]
+review_ids: [FS-1029, FS-1031]
 last_reviewed: 2026-10-27
 ---
 
@@ -84,7 +84,7 @@ the institution deposits as well as loans.
 **Where it stands:** loans in phase 2; wallet savings once the deposit
 terms have their schema (product-landscape).
 
-## 4 · What we have learnt
+## 4 · What we have run or learnt
 
 From the contracts of a microfinance bank that ran such a product
 (FS-999, FS-1002), as lessons only: the operator's menu offers, opts

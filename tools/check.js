@@ -1194,6 +1194,38 @@ function checkSpecs(root) {
 // leads to a file that exists, so a rename cannot strand a reader (FS-627);
 // a link to a section names a heading that exists, by GitHub's anchor
 // (FS-641). REVIEW.md is history and keeps the paths it was written with.
+// ── briefs ───────────────────────────────────────────────────────────────
+// FS-1031: every product brief follows docs/products/briefs/_template.md:
+// its front matter, an id of brief-<file>, and the template's headings in
+// order; the external versions are made from them, so they stay alike.
+const BRIEFS = path.join('docs', 'products', 'briefs');
+function checkBriefs(root) {
+  const dir = path.join(root, BRIEFS);
+  if (!fs.existsSync(dir)) return [];
+  const template = read(root, path.join(BRIEFS, '_template.md'));
+  const wantKeys = frontMatterKeys(template);
+  const wantHeadings = headings(template);
+  const failures = [];
+  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.md') && !f.startsWith('_') && f !== 'README.md').sort()) {
+    const file = path.join(BRIEFS, name);
+    const text = read(root, file);
+    const keys = frontMatterKeys(text) || [];
+    for (const k of wantKeys) if (!keys.includes(k)) failures.push(fail('briefs', file, 1, `front matter missing "${k}"`));
+    const id = text.match(/^id: *(\S+)/m);
+    const want = `brief-${path.basename(name, '.md')}`;
+    if (!id || id[1] !== want) failures.push(fail('briefs', file, 1, `id "${id ? id[1] : ''}" should be "${want}"`));
+    const got = headings(text);
+    const n = Math.max(got.length, wantHeadings.length);
+    for (let i = 0; i < n; i++) {
+      if (got[i] !== wantHeadings[i]) {
+        failures.push(fail('briefs', file, 0, `heading ${i + 1} is "${got[i] || '(missing)'}"; the template has "${wantHeadings[i] || '(none)'}"`));
+        break;
+      }
+    }
+  }
+  return failures;
+}
+
 // ── products ─────────────────────────────────────────────────────────────
 // FS-816, FS-817: a product version's draft is the data its questionnaires
 // are built from and its answers read back into. Every item has an id, a
@@ -1770,6 +1802,7 @@ function runAll(root) {
     ...checkOverview(root, files),
     ...checkSpecs(root),
     ...checkProducts(root),
+    ...checkBriefs(root),
     ...checkDocRegister(root, files),
     ...checkStatus(root, files),
     ...checkStatusGlossary(root),

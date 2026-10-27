@@ -7,7 +7,7 @@ law: LR-11
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-1029]
+review_ids: [FS-1029, FS-1031]
 last_reviewed: 2026-10-27
 ---
 
@@ -82,7 +82,14 @@ spendable anywhere cards are taken. Onit Bank asked for it (FS-1010).
 **Where it stands:** designed, for later (channels; product-landscape).
 Physical cards and card processing stay with the partners.
 
-## 4 · What is still open
+## 4 · What we have run or learnt
+
+Nothing run yet. Learnt: Onit Bank asked for cards for its customers
+(FS-1010); in Kenya, institutions without a card programme of their own
+issue through a sponsor bank and an issuer processor (KCB with Ukheshe,
+DTB with Paymentology), which is the route OC-25 takes.
+
+## 5 · What is still open
 
 - **The approvals:** whether a microfinance bank or a lender may issue
   under a sponsor bank's BIN, with what approvals from CBK and the
@@ -94,7 +101,7 @@ Physical cards and card processing stay with the partners.
   answering authorisations around the clock, which the card path needs
   more than any other.
 
-## 5 · Who might want it
+## 6 · Who might want it
 
 Microfinance banks and Saccos whose customers pay online, and lenders
 whose credit lines would be more useful as a card (product-landscape §2,

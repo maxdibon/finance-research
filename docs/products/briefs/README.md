@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-1029]
+review_ids: [FS-1029, FS-1031]
 last_reviewed: 2026-10-27
 ---
 
@@ -19,6 +19,20 @@ Each says what the product is and why it is interesting, how it works,
 in a diagram, what makes it hard, what we bring (with the capability
 ids), what we have run or learnt before, what is still open, and who
 might want it. Internal first; a version for prospects may follow.
+
+**A new brief** starts from [_template.md](_template.md) (FS-1031): the
+same headings, in the same order, which the check holds every brief to.
+
+**The external version** of a brief, for prospects, is made from it:
+
+- **The same sections,** less §4's lessons and §5's open rows, which
+  stay inside; what we bring said as what the institution gets.
+- **No register ids, no capability ids,** not even in notes (as the
+  portfolio).
+- **Nothing from confidential material,** and no customer or partner
+  named without its agreement (FS-420).
+- **Dibon's look** (design-system §6), numbered `DC-FS-PR-<serial>` and
+  its sending logged in the document register (design-system §7).
 
 | Product | Brief | Where it stands |
 |---|---|---|
