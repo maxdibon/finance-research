@@ -1909,3 +1909,23 @@ against without reasons of its own; this entry gives them.*
   which is not specific enough to stand as consent.
 - **Costs (inferred):** a consent asked at each new relationship; the
   basis behind "off" settled with counsel (LQ-22).
+
+## FS-1010 · Virtual cards, through a sponsor bank and an issuer processor
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** virtual cards come in through partners: the institution
+  issues under a sponsor bank's BIN with an issuer processor; a card
+  draws on a deposit account or a credit line, each authorisation asked
+  of us in real time; card numbers stay with the processor, never stored
+  or seen by us; the scheme's settlement reconciled by recon. Physical
+  cards and card processing stay theirs.
+- **Requires:** OC-25.
+- **Argued (owner):** "what about supporting virtual cards, onit was
+  interested in this".
+- **Argued against:** processing cards ourselves, which would bring PCI
+  DSS's full scope and scheme membership; leaving cards out altogether,
+  as the product landscape first said.
+- **Costs (inferred):** a sponsor bank and a processor per market; a
+  real-time authorisation path with the deposits service's availability;
+  the approvals in LQ-23.

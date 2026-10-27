@@ -6,7 +6,7 @@ status: living
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-1006, FS-989, FS-991, FS-985]
+review_ids: [FS-1006, FS-989, FS-991, FS-985, FS-1010, FS-1011]
 last_reviewed: 2026-10-27
 ---
 
@@ -50,6 +50,10 @@ deposit and loan accounts), not by assets alone.
 
 ## 2 · Product kinds, who sells them, and our support
 
+**An institution with no website** gets one as part of the business suite
+(BS-24, FS-1011), which also meets the lender regulations' duty to publish
+product terms (regs 47, 48).
+
 **Our support:** **R1** in Roan Capital's delivery; **designed** in a spec
 or the vocabulary, built later; **phase 2** a capability planned after R1;
 **not yet** described nowhere; **out of scope** what we leave to the
@@ -74,7 +78,7 @@ institution's core or a partner by design.
 | Group and chama loans | Sidian, Faulu, KWFT | Phase 2 | MF-17 |
 | Sacco loans against deposits (BOSA), salary advances (FOSA) | Mwalimu, Kenya Police Sacco, Stima | R4, with Kapu Sacco | lending-service; deposits-service; sacco |
 | Sharia-compliant finance (murabaha, musharakah, ijara) | KCB (Sahl), Gulf African (with Halal Pesa) | **Not yet:** a vocabulary without interest | loan-kinds |
-| Cards | KCB, SBM, KWFT, Kenya Police Sacco (through Sacco Link) | **Out of scope:** card processing stays with the card's issuer and network | — |
+| Cards | KCB, SBM, KWFT, Kenya Police Sacco (through Sacco Link) | **Virtual cards through partners, designed** (a sponsor bank's BIN and an issuer processor; FS-1010); physical cards and card processing stay with them | OC-25 |
 | Bancassurance and microinsurance | KCB, Family, KWFT | **Out of scope** as insurance; premium financing paid to an insurer, phase 2 | MF-40 |
 | Mobile, USSD and agency channels | Nearly all; agency banking at Family and the large banks | Designed; USSD built (OC-03) | omni-channel |
 
@@ -92,8 +96,9 @@ institution's core or a partner by design.
    profit rate and the bank's purchase of the goods in place of interest.
 4. **Device financing with a lock** (Watu) is a niche of its own; we
    leave it until a customer asks.
-5. **Trade finance and cards stay out of scope:** they live in a bank's
-   core and with card networks; we work around them.
+5. **Trade finance stays out of scope,** in a bank's core. **Cards** come
+   in only as virtual cards through a sponsor bank and an issuer processor
+   (OC-25, FS-1010); card processing stays theirs.
 
 ## 4 · Whom to approach with what
 
@@ -103,7 +108,7 @@ institution's core or a partner by design.
 | Tier 2 banks (SBM, Family, Sidian) | Good SME books, digital apps, LPO and asset finance | Supplier and retailer finance, credit lines, wallet loans, the bank channel for SMEs (SME Recon), without building them |
 | Tier 3 banks | Narrow niches: corporate, Sharia, SME bonds | For Gulf African Bank, Sharia products once the vocabulary exists; for the others, SME lending and invoice finance |
 | Microfinance banks | Group lending, SME finance, some wallet products | Group loans, LPO finance, wallet savings and loans, a modern core (native mode) |
-| Saccos | BOSA and FOSA, check-off, mobile apps | Kapu Sacco (R4): lending against deposits, check-off, members' pages and apps |
+| Saccos | BOSA and FOSA, check-off, mobile apps; not every one has a website | Kapu Sacco (R4): lending against deposits, check-off, members' pages and apps; a website for those without one (BS-24, FS-1011) |
 | Non-deposit lenders | Digital and asset loans at scale | Kapu MFI for smaller lenders such as Roan Capital; for large digital lenders, our rules (the lender regulations) and reconciliation |
 
 ## Sources

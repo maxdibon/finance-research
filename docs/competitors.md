@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-456, FS-464, FS-508, FS-612, FS-924, FS-958, FS-998]
+review_ids: [FS-456, FS-464, FS-508, FS-612, FS-924, FS-958, FS-998, FS-1009]
 last_reviewed: 2026-10-27
 ---
 
@@ -46,3 +46,44 @@ confirmed says so. We describe what they offer, never disparage it.
 | CP-22 | WizGlobal | Fund-management software | UnitMaster (unit trusts), FundGuard, PensionMaster, portfolio management, MasterAccounting; over 50 institutions in five countries; M-Pesa, PesaLink and identity integrations; NAV reconciliation | At Lofty Corban (CU-05), whose fund system is UnitMaster | A partner more than a rival: its reconciliation is of fund valuations, ours of money to investor accounts, so UnitMaster's interface is the question (Lofty Corban's open answer 1); a partnership could reach its fund managers | wizglobal.co.ke, read 2026-10-22 |
 | CP-23 | ReconArt | Reconciliation and month-end close | Enterprise reconciliation and close: a rule builder, PDF extraction, high volumes, SOX controls, balance-sheet certification | Finance teams at large banks and corporates | A different market from our daily operational reconciliation for tier-2 and tier-3 banks, Saccos, MFIs and SMEs; worth borrowing: matching rules written in plain language, and certifying the close | reconart.com, read 2026-10-22 |
 | CP-24 | Finonyx | Oracle banking implementation and support | Oracle FLEXCUBE, OBDX (digital banking) and OFSAA (financial crime and compliance) implementation, upgrade and managed services; its own add-ons for FLEXCUBE: configurable notifications, end-of-day monitoring, archiving; offices in the UAE and India, established 2010, 85 or more customers in 20 or more countries | At banks on FLEXCUBE, SBM Bank among them (CP-21) | A competitor for integration, upgrade and support work around FLEXCUBE, and a possible partner: our integrated mode works beside its core; its end-of-day monitoring overlaps our end-of-day runner and recon. Where FLEXCUBE banks are our market, we meet it | Its corporate profile, 2024 (sources/market/Finonyx_Profile_2024.pdf, outside git) |
+| CP-25 | Kwara | Sacco core banking and digital channels | Core banking and digital banking for Saccos; bought IRNET, KUSCCO's Sacco software arm, in 2023; says over 120 Saccos | Kapu Sacco; Saccos' mobile channels | The strongest Sacco-focused rival we know: local, digital-first, with KUSCCO's base | hapakenya.com, 12 Jan 2023 |
+| CP-26 | Anansi Technology | Sacco digital banking | Core banking and mobile banking apps for Saccos, from Nairobi | Kapu Sacco; omni-channel | A younger local rival in Saccos' digital channels | CB Insights profile |
+| CP-27 | Appzone (BankOne) | Core banking, cloud | BankOne core banking, pitched to Kenyan Saccos in 2022 on price and local support; from Nigeria | Kapu Core, Sacco | A cloud core competing on price | appzonegroup.com |
+| CP-28 | Questbanker | Core banking | Core banking for Saccos, MFIs and banks, from Uganda | Kapu Core, MFI, Sacco | A regional rival for small institutions | CB Insights profile |
+
+## How we compare, against the lending and core platforms
+
+FS-1009. From the vendors' public pages and the press, read on 27 October
+2026; "not stated" means we found nothing either way, not that they lack
+it. Ours is the design as it stands: much of it designed, not yet built.
+
+| | Dibon (Kapu) | Musoni (CP-10) | Craft Silicon (CP-07) | Kwara (CP-25) | Neptune, Coretec (CP-09, CP-08) | Mambu, Oradian (CP-12, CP-11) |
+|---|---|---|---|---|---|---|
+| Built on | Apache Fineract, unforked, with our services around it | Mifos X (Fineract's family) | Its own core, Bankers Realm; Elma for mobile banking | Its own core | Their own; Coretec on Microsoft Dynamics | Their own cloud cores |
+| Who for | Lenders, Saccos, microfinance and small banks; services around a bank's own core | MFIs and Saccos | Banks, MFIs, Saccos | Saccos | MFIs and Saccos | MFIs and banks |
+| Hosted | In Kenya, an instance per institution (on Liquid, or the institution's own) | Cloud | On premises, or its data centre | Not stated | Not stated | Cloud, outside Kenya as far as stated |
+| Works beside an existing core | Yes, by design (integrated mode) | No: it is the core | No: it is the core | No | No | No |
+| The lender regulations' rules built in (arrears cap, APR, conduct) | Yes, designed (lender rules) | Not stated | Not stated | Not stated | Not stated | Not stated |
+| Approvals with step-up, tied to the payout | Yes, designed (approval engine) | Not stated | Maker-checker | Not stated | Not stated | Not stated |
+| Reconciliation, three ledgers | Yes, designed (recon) | Not stated | Not stated | Not stated | Not stated | Not stated |
+| Back office: CRM, desk, signing, HR | Odoo, behind one interface | Accounting module | Not stated | Not stated | Coretec: Dynamics | Partners |
+| Mobile money | M-Pesa built (Collect at Onit Bank); Airtel designed | M-Pesa, Airtel | Yes | Yes | Coretec: mobile apps | Partners |
+| USSD | Built: ran a bank's digital lending 2022 to 2025 | Not stated | Yes (Elma) | Yes | Not stated | Partners |
+| Partner and supply-chain finance | Designed (MF-40 to MF-42) | Not stated | Not stated | Not stated | Not stated | Not stated |
+| Price | Per institution, with Odoo priced in | From about EUR 15,000 a year (listed) | Setup, then per transaction (as a microfinance bank's contract shows) | Not stated | Not stated | Subscription |
+
+**Who else to compare ourselves with, and why:**
+
+- **For Saccos:** Kwara, Anansi, Coretec, and Craft Silicon's Sacco
+  customers: the Sacco market is where local, digital-first rivals are
+  strongest.
+- **For microfinance:** Musoni, Neptune, Craft Silicon, Oradian and
+  Appzone: the cores a microfinance bank or lender would weigh.
+- **For banks:** Rumango (CP-21) and Finonyx (CP-24), who work around a
+  bank's core as we would in integrated mode; and the banks' own teams,
+  where a bank builds in-house, as one large bank now does (FS-1000).
+- **For digital lending:** cloud lending platforms (Mambu; and lending
+  software sold into Africa from abroad, still to research) for lenders
+  who want only origination and scoring.
+- **For reconciliation:** BlackLine, Reiterate and ReconArt (CP-19,
+  CP-20, CP-23), already on this list.
