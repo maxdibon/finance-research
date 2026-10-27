@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-456, FS-464, FS-508, FS-612, FS-924, FS-958]
-last_reviewed: 2026-10-23
+review_ids: [FS-456, FS-464, FS-508, FS-612, FS-924, FS-958, FS-998]
+last_reviewed: 2026-10-27
 ---
 
 # Competitors — who we meet, and what we learn from each
@@ -45,3 +45,4 @@ confirmed says so. We describe what they offer, never disparage it.
 | CP-21 | Rumango | Banking software and services | iCust (onboarding, loan origination, channels), a service bus, a data warehouse, central-bank reporting, Recon Tech (reconciliation) and revenue assurance; implementation, testing, training and managed services | At SBM Bank (PT-56): iCust is the bank's loan-origination platform, and Rumango supported its FLEXCUBE upgrade, as Rumango's site says | The incumbent at SBM Bank, with a reconciliation product of its own: we offer what sits alongside iCust and FLEXCUBE, not in place of them: SME Recon for the bank's business customers, Collect, and reconciliation across mobile money and transfer corridors (FS-924) | rumango.com, read 2026-10-22 |
 | CP-22 | WizGlobal | Fund-management software | UnitMaster (unit trusts), FundGuard, PensionMaster, portfolio management, MasterAccounting; over 50 institutions in five countries; M-Pesa, PesaLink and identity integrations; NAV reconciliation | At Lofty Corban (CU-05), whose fund system is UnitMaster | A partner more than a rival: its reconciliation is of fund valuations, ours of money to investor accounts, so UnitMaster's interface is the question (Lofty Corban's open answer 1); a partnership could reach its fund managers | wizglobal.co.ke, read 2026-10-22 |
 | CP-23 | ReconArt | Reconciliation and month-end close | Enterprise reconciliation and close: a rule builder, PDF extraction, high volumes, SOX controls, balance-sheet certification | Finance teams at large banks and corporates | A different market from our daily operational reconciliation for tier-2 and tier-3 banks, Saccos, MFIs and SMEs; worth borrowing: matching rules written in plain language, and certifying the close | reconart.com, read 2026-10-22 |
+| CP-24 | Finonyx | Oracle banking implementation and support | Oracle FLEXCUBE, OBDX (digital banking) and OFSAA (financial crime and compliance) implementation, upgrade and managed services; its own add-ons for FLEXCUBE: configurable notifications, end-of-day monitoring, archiving; offices in the UAE and India, established 2010, 85 or more customers in 20 or more countries | At banks on FLEXCUBE, SBM Bank among them (CP-21) | A competitor for integration, upgrade and support work around FLEXCUBE, and a possible partner: our integrated mode works beside its core; its end-of-day monitoring overlaps our end-of-day runner and recon. Where FLEXCUBE banks are our market, we meet it | Its corporate profile, 2024 (sources/Finonyx_Profile_2024.pdf) |
