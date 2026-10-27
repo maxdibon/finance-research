@@ -79,7 +79,7 @@ screens are [staff-workspace](staff-workspace.md).
 ## 3 · Interfaces
 
 The approval engine's REST (approval-engine §6); the lending service's
-reads (lending-service §5); lender rules' product reads (lender-rules
+reads (lending-service §6); lender rules' product reads (lender-rules
 §3); access's `kapu-console` client, code flow with PKCE.
 
 ## 4 · Security and audit

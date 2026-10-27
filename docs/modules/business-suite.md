@@ -10,8 +10,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, messaging, sme-recon, mandates, insights, sacco, mfi, identity]
 consumed_by: [insights, mfi]
-review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518, FS-521, FS-527, FS-532, FS-606, FS-608, FS-618, FS-644, FS-769, FS-770, FS-772, FS-777, FS-805, FS-970, FS-965]
-last_reviewed: 2026-10-26
+review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518, FS-521, FS-527, FS-532, FS-606, FS-608, FS-618, FS-644, FS-769, FS-770, FS-772, FS-777, FS-805, FS-970, FS-965, FS-996]
+last_reviewed: 2026-10-27
 ---
 
 # Business Suite, on Odoo and Zoho
@@ -63,7 +63,7 @@ hosting on OLP, is **Built** (FS-293).
 |---|---|---|---|---|
 | BS-01 | Odoo implementation: CRM, helpdesk, accounting and invoicing, configured to the customer. The helpdesk includes a restricted compliance team for identity mismatches referred from identity ID-01: visible to the compliance officer and those it names, never to the customer portal or the service desk's AI agent, and holding a link to the application, never its documents | Planned | FS-002, FS-281; owner, 2026-10-06 (FS-555). Tipping off is an offence (POCAMLA s.8) | 1 |
 | BS-02 | Odoo Sign for agreements, mandates, consents and onboarding forms; external signers need no licence. A signed document that carries personal data is filed in the document vault, and Odoo keeps the record and a link (architecture §6, FS-527). Completion emails carry a link, never the signed file (to confirm against Odoo; if it cannot be set, signing moves to our own page, FS-532) | Planned | FS-044, FS-049, FS-527 | 1 |
-| BS-03 | Customer portal: invoices, statements, tickets, signed documents; portal users need no licence | Planned | FS-026 | 1 |
+| BS-03 | Customer portal: invoices, statements, tickets, signed documents; portal users need no licence; for an institution's partners (a distributor, a school) the partner portal: data uploaded, deliveries confirmed, payments seen, returns (lending-service §5, FS-996) | Planned | FS-026 | 1 |
 | BS-04 | Bank and mobile-money statements reconciled into Odoo accounting, through SME Recon | Planned | sme-recon SR-10 | 1 |
 | BS-05 | Campaigns and templates in Odoo, delivered through Dibon's messaging, with honest delivery status written back | Planned | messaging MS-13 | 2 |
 | BS-06 | Single sign-on through access (Keycloak) | Planned | access AC-02 | 1 |
