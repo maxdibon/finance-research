@@ -30,61 +30,85 @@ here.
 - **Downloads need his word;** never sign in, or enter a password, for him.
 - **Visibility:** he prefers the team's work in the cloud and on a shared
   board (FS-929, FS-930); meetings are in person, no chat tool yet.
+- **Document, don't build** (FS-1016): design and write it down; frame
+  choices as design decisions, never as steps "before building".
+- **Track legal concerns** (FS-1023): every legal uncertainty becomes an
+  LQ row in docs/legal-questions.md in the same pass; name the new LQ ids
+  in the reply.
+- **Show where it landed:** after a batch of work, say where each piece is
+  in the reader, with its links.
 
 ## Where I left off
 
-As at 23 October 2026. The MVP day was not run today: it moved to
-Friday 30 October, 12:00 to 16:00 (FS-962). Main pushed with FS-952 to
-FS-961.
+As at 27 October 2026. Main pushed to origin with FS-962 to FS-1029;
+`origin` is still github.com/eric-mokaya/finance until the move to
+dibon-consulting. Last session: the design around Fineract, partners,
+identity, channels and documents; all on main and in the reader.
 
-- **GitHub first** (FS-952 to FS-954): before the day, he and Jimmy alone
-  create the organisation `dibon-consulting` on Team (he is first
-  owner, Jimmy second), require two-factor, set member privileges, move
-  this repository in, set the rules on main, and make the GitHub Project
-  there; then run code/platform/github-project/create-issues.js with
-  `--repo dibon-consulting/finance --owner dibon-consulting`, a dry run
-  first. At 12:00, with everyone: accounts and two-factor for those
-  without, invitations, teams, `git remote set-url`, `dibon claude`.
-  The words still assume one owner who uploads for all (spec §8 step
-  11): change them once the organisation exists.
-- **Odoo is in the delivery** (FS-955, a decision): sign-in through
-  Keycloak, a lead in CRM, the agreement in Sign, a complaint in
-  Helpdesk, the eight positions in Employees (Gibeon FS-945, Daniel
-  FS-946); the books stay phase 2. The Enterprise modules come through
-  the partner account before noon.
-- **On the sandbox** (FS-956): the components only; GitHub, M-Pesa's
-  sandbox, the bank stand-in and text messages are not on Azure. The
-  Azure run (code/platform/azure-sandbox) is still his or Allan's, after
-  Jimmy's subscription (FS-938).
-- **The MVP day page** is in the reader (docs/mvp-day.md, the top bar's "MVP day"; FS-960), copied from goals.json: change both together.
-- **The brief** is republished with all this:
-  https://claude.ai/artifact/HL6TiL9R3oQNVLr2hRf9MR; not yet shared.
-- **SBM Bank** (PT-56): its NDA due today (FS-911), kept as received and
-  reviewed; then the pack (FS-912, FS-913, FS-920); Rumango is the
-  incumbent (FS-924); the Kapu trademark (FS-921).
-- **Roan Capital:** all three products now have draft documents
-  (Biashara; Motor Vehicle and Title Deed, FS-957), with Roan Capital's
-  answers to gather; the Product Understanding Document for all three
-  (FS-947). Motor Vehicle's sale window against the law, for the 29
-  October meeting (FS-935). The Land Act is on the law register (LR-47,
-  FS-959): a land sale no earlier than about day 160 after a missed
-  payment; its s.85(3) early-discharge charge sits against reg 56.
-- **Competitors:** Rumango (CP-21, SBM Bank's incumbent), WizGlobal
-  (CP-22), ReconArt (CP-23) added (FS-958); FS-924 closed.
-- **Lofty Corban** (CU-05): the follow-up draft to send
-  (clients/lofty-corban/working); its NDA (FS-918).
-- **Waiting on his decision:** FS-893 (who sees and does what), FS-898
-  (delegation), FS-897 (the GitHub connector),
-  FS-926 and FS-927 (credit limits, duplicate retries), FS-928 (the
-  Board's team filter); FS-906 (iManage's data processing agreement).
+- **MVP day, Friday 30 October, 12:00 to 16:00** (FS-962; the hackathon
+  moved to it). GitHub first, he and Jimmy alone before the day
+  (FS-952 to FS-954): the organisation `dibon-consulting`, two-factor,
+  the repository moved in, rules on main, the Project and its issues
+  (create-issues.js, a dry run first). Odoo in the delivery (FS-955); the
+  sandbox runs the components only (FS-956); Azure still his or Allan's,
+  after Jimmy's subscription (FS-938). At the move, Betty fills the
+  document register's distribution log (FS-1027).
+- **Roan Capital, 29 October:** the Motor Vehicle sale window against the
+  law (FS-935, Critical); open answers 33 to 41; the three product drafts
+  (30-day loan, Motor Vehicle, Title Deed; the last two "proposed", for
+  Roan Capital to adopt) and the Product Understanding Document (FS-947).
+  Roan Capital's own staff manage products in Odoo, ours marked proposed
+  until they approve (FS-978, FS-981); three or four staff, roles folded
+  (FS-982).
+- **The design around Fineract** (FS-970 to FS-988): the back-office
+  gateway, so the ERP can be changed and upgraded (Odoo Enterprise now;
+  ERPNext and Tryton to evaluate); the lending service the only writer to
+  the core, for MFI and Sacco; the deposits service; the Kapu Console for
+  our operators, with the admin fallback; the staff workspace's roles and
+  screens; OLP's spec and its review, hosted in Kenya (FS-975, FS-986).
+- **Partners and loan kinds** (FS-989 to FS-1005): loans paid to a third
+  party and credit lines in the vocabulary; retailer finance, the lesson
+  of per-distributor limits held above the core (FS-1000); wallet savings
+  and loans (FS-991; FS-992 scale and FS-993 the operator's agreement
+  open); the partners design in lending-service §5, consent per
+  distributor by default (FS-1004).
+- **Landscape, KYC, competitors, cards, websites** (FS-1006 to FS-1011):
+  18 institutions' products against ours; KYC and KYB tiers (ID-21 to
+  ID-24); CP-21 to CP-28 and "How we compare"; virtual cards through a
+  sponsor bank (OC-25, LQ-23); websites as part of the business suite.
+- **Channels and identity** (FS-1012 to FS-1018, FS-1028): docs/channels.md,
+  two apps and three websites, internet banking among them; one identity
+  per person per institution, roles as profiles, staff apart; ID-26 in R1
+  (FS-1020). The model with four diagrams is in identity §5. Still to
+  decide (channels §5): the apps' framework, whose name is in the app
+  store, the channel API's backend (OC-15).
+- **Documents** (FS-1019 to FS-1027): the onboarding pack (DC-FS-TM-001),
+  documents kept in the vault and seen in every channel, one look per kind
+  and whose brand, document numbers and the distribution log; LQ-20 to
+  LQ-28 for counsel.
+- **Product briefs** (FS-1029): retailer finance, wallet savings and
+  loans, virtual cards, asset finance with title; internal first, a
+  version for prospects to decide.
+- **Still waiting on his word:** FS-963, FS-964, FS-966, FS-967 (answered
+  in the design; to close), FS-1015 (how to build omni-channel), FS-893
+  and FS-898 (permissions, delegation), FS-185 (Fineract's deposit
+  fit-gap), FS-906 (iManage's agreement); FS-999 (Onit Bank's files,
+  lessons taken in FS-1002, to close).
+- **Customers and partners:** SBM Bank's NDA and pack (FS-911 to FS-913,
+  FS-920); Lofty Corban's follow-up (CU-05, FS-918); Onit Bank, wallet
+  and cards interest (CU-02).
 - **Older:** the Data Commissioner registration (FS-367, Critical); which
-  outreach letters went (FS-839); whether KCB and NBK may be named (FS-420).
+  outreach letters went (FS-839); whether KCB and NBK may be named
+  (FS-420).
+- **On his machine:** Poppler for scanned PDFs, unpacked outside the
+  repository and not on PATH; confidential scans rendered inside their
+  folder and deleted after.
 
 ## Generated
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric (160)
+### Rows with Eric (167)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -124,6 +148,12 @@ FS-961.
 | FS-930 | Use GitHub's board (Projects) as part of the set-up, for the MVP day and after | High |
 | FS-934 | Roan Capital's three products, as locked on 21 October: Biashara (unsecured, KES 3,000 to 100,000, 14 or 30 da | High |
 | FS-950 | MVP day (30 October), Eric: The day's authority: decisions, reviews, merges, and a mock change advisory board | High |
+| FS-964 | What is our UI? How do customers reach the different platforms and services? | High |
+| FS-966 | Customers who prefer Zoho, or a free and open-source ERP to cut cost: how we address them, and what to conside | High |
+| FS-967 | Assume Roan Capital wants to minimise cost, which probably means an open-source ERP in place of Odoo Enterpris | High |
+| FS-992 | A wallet product brings millions of accounts, tiny loans and savings round the clock: Fineract and the lending | High |
+| FS-993 | A wallet product needs the mobile operator's agreement: the product in its menu, the customer's data for limit | High |
+| FS-1015 | How do we actually go about the omni-channel implementation? | High |
 | FS-036 | Check the Odoo Enterprise Agreement for limits on serving internal work through portal users or API accounts | Medium |
 | FS-161 | WhatsApp route: Meta's Cloud API directly, or through a business solution provider. Either way Meta approves t | Medium |
 | FS-162 | Quiet hours and rate limits per recipient: what the Communications Authority requires, and what we set as poli | Medium |
@@ -165,6 +195,7 @@ FS-961.
 | FS-919 | Lofty Corban's open question: following a customer's international transfer that has not yet arrived (an SLA,  | Medium |
 | FS-926 | Credit limits: one across all of a borrower's loans, one for a group of products, one per product | Medium |
 | FS-927 | Duplicate transactions: two the same within a few seconds, as when a customer retries believing the first fail | Medium |
+| FS-963 | Which pending items to tackle next | Medium |
 | FS-013 | Recon PDF: "Complaint" for "Compliant" ×6 on the functional-spec page; "Maintaince" ×1; timeline column headed | Low |
 | FS-035 | Sacco needs its own regulatory line: SASRA for DT-Saccos, the co-operatives regime for credit-only | Low |
 | FS-037 | Executing payments from an ERP approval: attribute the approval at the act (STANDARDS.md §6.2 — "move money"), | Low |
@@ -255,4 +286,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-962-mvp-day-moved`: nothing saved yet; here now, 7 files unsaved
+- `claude/emokaya/FS-1030-handover`: nothing saved yet; here now, 3 files unsaved
