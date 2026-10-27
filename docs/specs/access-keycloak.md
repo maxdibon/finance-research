@@ -11,7 +11,7 @@ depends_on: [messaging]
 used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging, endpoints, github, recon, back-office, staff-workspace, kapu-console]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983]
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018]
 last_reviewed: 2026-10-27
 ---
 
@@ -119,9 +119,13 @@ where an identity lives, not only by which roles it holds:
 | Realm | Who | How they sign in | What it may reach |
 |---|---|---|---|
 | `staff` | The institution's staff and approvers; the services that act for it | A password, then an authenticator app or a security key; services by signed client assertion | The products, Fineract, Odoo, the approval engine, the institution's Grafana folder |
-| `customers` | Borrowers and guarantors in R1, as code-only users (owner, 2026-10-08, FS-643); members and customers later | A code to their bound phone (ID-12), by SMS; no password | Their own pages: consents, agreements to sign, statements (MF-37, MF-38) |
+| `customers` | Borrowers and guarantors in R1, as code-only users (owner, 2026-10-08, FS-643); later every outside person: individuals, businesses' people and partners' people, one identity each with their roles as profiles (FS-1018; ID-25) | A code to their bound phone (ID-12), by SMS; no password | Their own pages: consents, agreements to sign, statements (MF-37, MF-38) |
 | `ops` | Whoever operates the instance: Dibon's engineers, brokered from Dibon's central Keycloak, never local accounts; where the institution runs its own operations, its operators too, and Dibon's engineers only when it grants them (FS-645) | Hardware security keys only (SE-26), or the institution's own identity provider for its operators | The platform's tools: Grafana's operations views, the on-call tool, the cluster. **Never a product, never an institution's money** (FS-588) |
 | `master` | No one, day to day | Sealed break-glass accounts only (SE-26) | Keycloak's own administration, every use alerted |
+
+**A staff member who is also a customer** has an identity in each realm,
+linked by ID number for the approval engine's conflict checks only (ID-26,
+FS-1018).
 
 **Why separate realms:** the products and Fineract accept tokens only
 from `staff` (and the customer pages only from `customers`). A token from
@@ -152,7 +156,7 @@ Keycloak events (SE-26).
 | Fine-grained admin permissions (v2) | Yes | An institution's administrator manages its users, never approval roles (§6) |
 | User and admin events | Yes | AC-11, to Loki and the audit trail |
 | Session limits, persistent sessions | Yes | AC-10 |
-| Organisations | Not in R1 | For partners' users later (Collect) |
+| Organisations | Not in R1 | For businesses and partners: each person's profiles as memberships, granted by the organisation's administrators (FS-1018; ID-25; Collect's partners too) |
 | FAPI client policies, DPoP, PAR | Not in R1 | Partner APIs (AC-04) and the app, phase 2 |
 | CIBA | Not in R1 | AC-06, phase 2 |
 | Identity brokering, LDAP, SCIM | Not in R1 | Banks' own identity providers (AC-07); provisioning in R1 uses the admin API (§6) |

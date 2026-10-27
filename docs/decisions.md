@@ -1929,3 +1929,24 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** a sponsor bank and a processor per market; a
   real-time authorisation path with the deposits service's availability;
   the approvals in LQ-23.
+
+## FS-1018 · One identity per person, per institution; roles as profiles; staff apart
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** one identity per person, per institution, never one across
+  institutions; each role a profile granted by its owner (themselves, a
+  business under its mandate, a partner within the institution's
+  limits); a business's first administrators those its board resolution
+  names, checked against the registry; a partner's field agent in a
+  profile of their own identity; staff in the staff realm, linked to
+  their own customer identity by ID number for conflict checks only.
+- **Requires:** ID-25, ID-26; docs/channels.md.
+- **Argued (owner):** "agreed on all four, go ahead".
+- **Argued against:** a login per role, which hides conflicts between
+  roles; one identity across institutions, which joins data two
+  institutions own; staff and customer as one identity, which weakens
+  separation of duties where fraud happens.
+- **Costs (inferred):** profiles and organisations to build in access
+  and every channel; a board resolution for each business, from a
+  template (FS-1019); the link's privacy line kept true.

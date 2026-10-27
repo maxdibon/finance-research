@@ -6,7 +6,7 @@ status: living
 released: unreleased
 owner: Product lead, channels
 classification: Internal
-review_ids: [FS-1012, FS-1013, FS-1014, FS-1015, FS-1016, FS-1017]
+review_ids: [FS-1012, FS-1013, FS-1014, FS-1015, FS-1016, FS-1017, FS-1018]
 last_reviewed: 2026-10-27
 ---
 
@@ -35,10 +35,10 @@ person and channel, and the rules for people who hold more than one role.
 
 FS-1013. One person may be a borrower, a guarantor for a friend, a
 director of the business that borrows, and a distributor's sales
-representative, all at once. Proposed:
+representative, all at once. **Decided** (FS-1018):
 
 1. **One identity per person, per institution,** in access's realm for
-   outside people (\`customers\`, access §3), bound to their ID, phone and
+   outside people (`customers`, access §3), bound to their ID, phone and
    SIM (ID-12). One sign-in, one PIN or passkey, whatever roles they hold.
 2. **Each role is a profile, not an account:** the person switches
    between them in the app ("Me", "Wanjiku Stores", "Field: Route 12"),
@@ -50,16 +50,25 @@ representative, all at once. Proposed:
    - **a partner:** granted by the partner's administrator, a field
      agent's rights limited to their route (lending-service §5).
    Access's organisations hold businesses and partners and their members
-   (access §4, "Organisations", planned for partners).
+   (access §4, "Organisations").
+   **A business's first administrators** are those its board resolution
+   names, checked against the directors in the business registry's
+   record (ID-22); they then grant its other people their profiles.
+   **A partner's field agent** works in a profile of their own identity,
+   not a separate work identity.
 3. **What a person does is always in one profile,** shown on the screen,
    recorded in the audit trail, and checked by the approval engine: a
    field agent cannot approve a draw for a retailer they own, nor a
    guarantor sign for themselves (MD-06).
 4. **Staff are apart.** An institution's staff member who is also its
-   customer has two identities, in two realms: \`staff\` for work,
-   \`customers\` for their own money. No product accepts one for the
+   customer has two identities, in two realms: `staff` for work,
+   `customers` for their own money. No product accepts one for the
    other (access §3), so no one can carry a staff role into their own
    account.
+   **The two are linked by ID number, for conflict checks only:** the
+   approval engine refuses a staff member deciding a request in which
+   they are the borrower, a guarantor or a business's officer; nothing
+   else crosses between the identities (ID-26; privacy PR-20).
 5. **Step-up follows money, not the profile:** anything that moves money
    asks again, whichever profile it is done from (OC-05, MD-10).
 
@@ -113,7 +122,7 @@ register documents it and builds nothing (FS-1016):
    person, in a profile. A channel is a screen over it and holds no rule,
    as the staff workspace is over the lending service. Without it, each
    channel grows its own logic, and they disagree.
-2. **Identity and profiles next:** the \`customers\` realm with
+2. **Identity and profiles next:** the `customers` realm with
    organisations for businesses and partners, profiles as memberships,
    step-up by money (§2). Everything after reuses it.
 3. **Then the channels in the order customers need them:**

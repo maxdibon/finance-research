@@ -10,7 +10,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite, decisioning]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018]
 last_reviewed: 2026-10-27
 ---
 
@@ -87,6 +87,8 @@ screening, once ID-08, moved to financial-crime FC-05 and FC-06 (FS-431).
 | ID-22 | KYB in tiers, for companies and for partners: tier 1 the registry's record and the tax PIN; tier 2 adds the directors and beneficial owners, each identified and screened; tier 3 adds audited accounts, tax compliance and enhanced due diligence; a company's limits and products by tier, as ID-19 for people | Planned | FS-1008; ID-07; FC-05; lending-service §5 | 2 |
 | ID-23 | A mobile operator's KYC, shared with the customer's consent, taken as evidence and labelled with its source: it may confirm tier 1, never stand alone above it | Planned | FS-1008; an operator's agreement shares KYC only after consent (FS-1002) | 2 |
 | ID-24 | Moving up a tier: the customer is told what the next tier needs and why (a higher limit, a product), gives the evidence in the app, on USSD with an officer, or at a branch; the tier rises when the evidence is checked, and the customer is told; journey JN-22 | Planned | FS-1008 | 2 |
+| ID-25 | One identity per person, per institution, in the realm for outside people, bound to ID number, phone and SIM (ID-12), with one credential; each role a profile (themselves, a business, a partner) held as a membership of an access organisation and granted by its owner: a business's people by its administrators under its mandate, its first administrators those its board resolution names, checked against the registry's directors; a partner's people by its administrator, within limits the institution approved; every act in one profile, shown and audited; the KYC tier the identity's, a business's KYB tier its own | Planned | FS-1013, FS-1018; channels §2 | 2 |
+| ID-26 | A staff member's staff identity and their customer identity, if they have one, kept apart and linked by ID number for conflict checks only: the approval engine refuses a staff member deciding a request in which they are the borrower, a guarantor or a business's officer; nothing else crosses | Planned | FS-1018; access §3; privacy PR-20 | 2 |
 | ID-18 | Evidence from source, with the business's consent: statements taken from its SME Recon feeds, its bank's API or its M-Pesa shortcode (rails RL-20) instead of files that can be edited; licences checked against the regulators' published lists | Planned | Owner, 2026-10-06 (FS-536). Would close Roan Capital's statement gap (RC-05) and feed credit scoring (decisioning DE-06) | 2 |
 
 **Retired ids:** ID-08, moved to financial-crime FC-05 and FC-06 (FS-431). A retired id is never reused.

@@ -12,7 +12,7 @@ depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka]
 used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018]
 last_reviewed: 2026-10-27
 ---
 
@@ -172,8 +172,10 @@ Each rule has a test in §11.
    for subject type and product (falling back to `*`), picks the tier by
    amount, appends any flag authorities, and freezes the result on the
    request. A later mandate change never alters it (MD-03).
-2. **The originator never decides** any step of their own request
-   (RC-13).
+2. **The originator never decides** any step of their own request, nor
+   does anyone who is, by ID number across realms, the borrower, a
+   guarantor or an officer of the business the request is for (ID-26,
+   FS-1018) (RC-13).
 3. **No one person decides two consecutive steps**, even holding both
    roles (MD-06). In a quorum step a person counts once.
 4. **Unfillable chains are refused at submission.** If the frozen chain
