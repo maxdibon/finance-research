@@ -33,6 +33,9 @@ const draftPath = args.find((a) => a.endsWith('.md'));
 if (!draftPath) { console.error('Give the draft: node tools/products/questionnaires.js docs/products/<draft>.md'); process.exit(1); }
 const outDir = path.resolve(opt('--out', path.join(ROOT, 'build/products')));
 const date = opt('--date', new Date().toISOString().slice(0, 10));
+// FS-1039: the document's number and version (design-system §7), in its footer.
+const number = opt('--number', '');
+const docVersion = opt('--version', '');
 const longDate = new Date(`${date}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 const draft = parse(fs.readFileSync(draftPath, 'utf8'));
@@ -137,11 +140,11 @@ fs.mkdirSync(outDir, { recursive: true });
       .map((k) => `${count(k)} to ${k === 'Choose' ? 'choose from options' : k.toLowerCase()}`);
     const children = [
       ds.p(`**${longDate}**`, { after: 160 }),
-      new Paragraph({ children: [ds.run(`${product} · product version ${version} (draft)`, { bold: true, color: ds.COLOURS.plum, size: 26 })], spacing: { after: 60 } }),
+      new Paragraph({ children: [ds.run(`${product} · product version ${version} (${draft.front.status || 'draft'})`, { bold: true, color: ds.COLOURS.plum, size: 26 })], spacing: { after: 60 } }),
       new Paragraph({ children: [ds.run(g.title, { bold: true, color: ds.COLOURS.aubergine, size: 22 })], spacing: { after: 200 } }),
       ds.p(`**For:** ${inst}'s ${g.who}.`),
       ds.p(g.intro),
-      ds.p(`What we have comes from your requirement document and the prototype your team built. **${ask.length} items** need your answer: ${tally.join(', ')}. Under each item's name is why it matters; beside each value, where it came from.`, { after: 160 }),
+      ds.p(`What we have comes from what you have given us: your requirement document, your prototype and our meetings. **${ask.length} items** need your answer: ${tally.join(', ')}. Under each item's name is why it matters; beside each value, where it came from.`, { after: 160 }),
       ds.h('How to answer'),
       ds.li('Every answer goes in a field in the last column. Click it, then choose from its list or type.'),
       ds.li('**Confirm:** choose "Confirmed", or "Not right" and write the correct value in the field beneath.'),
@@ -162,7 +165,7 @@ fs.mkdirSync(outDir, { recursive: true });
       subject: `${draft.front.id} · group ${key} · built ${date}`,
       styles: ds.styles, numbering: ds.numbering,
       sections: [{ properties: ds.page, headers: { default: ds.header(g.kicker) },
-        footers: { default: ds.footer(`Dibon Consulting · ${inst} · ${product}, group ${key} · ${longDate}`) },
+        footers: { default: ds.footer(`${number ? `${number}${docVersion ? ` v${docVersion}` : ''} · ` : ''}Dibon Consulting · ${inst} · ${product}, group ${key} · ${longDate}`) },
         children }],
     });
     const entries = zip.read(await Packer.toBuffer(doc));

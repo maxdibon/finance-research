@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-834, FS-835, FS-857, FS-874, FS-1026]
+review_ids: [FS-834, FS-835, FS-857, FS-874, FS-1026, FS-1039]
 last_reviewed: 2026-10-27
 ---
 
@@ -78,9 +78,21 @@ checked with the owner (FS-840).
 | DR-036 | Flex Money | Reconciliation dashboard demonstration and its script | A demonstration of the reconciliation dashboard, with the script it follows | Working | — | draft | 2026-08-04 | Dibon | `clients/flexmoney/` | — | FS-835 |
 | DR-037 | Roan Capital | Loan application form, v0.2 with a page of the regulations cited, tracked, from DR-018 | The form with our 28 suggested changes, and a last page listing each regulation cited with what each provision requires; two readings marked as being confirmed | Working | 0.3 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
 | DR-038 | Roan Capital | Loan application form, schedule of v0.3's changes | The 28 changes in one table, for Roan Capital to accept or decline, and the page of regulations cited | Working | 0.3 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
-| DR-039 | Roan Capital | 30-day loan questionnaire A, product terms, with the regulations cited | Questions on the 30-day loan's terms, and a last page listing the regulations they rest on, two readings marked as being confirmed | Working | 0.2 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
-| DR-040 | Roan Capital | 30-day loan questionnaire B, eligibility and limits, with the regulations cited | Questions on who may borrow and how much, and a last page listing the regulations they rest on | Working | 0.2 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
-| DR-041 | Roan Capital | 30-day loan questionnaire C, how it runs, with the regulations cited | Questions on how the loan runs from day to day, and a last page listing the regulation it rests on | Working | 0.2 | draft | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
+| DR-039 | Roan Capital | 30-day loan questionnaire A, product terms, with the regulations cited | Questions on the 30-day loan's terms, and a last page listing the regulations they rest on, two readings marked as being confirmed | Working | 0.2 | superseded | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
+| DR-040 | Roan Capital | 30-day loan questionnaire B, eligibility and limits, with the regulations cited | Questions on who may borrow and how much, and a last page listing the regulations they rest on | Working | 0.2 | superseded | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
+| DR-041 | Roan Capital | 30-day loan questionnaire C, how it runs, with the regulations cited | Questions on how the loan runs from day to day, and a last page listing the regulation it rests on | Working | 0.2 | superseded | 2026-10-16 | Dibon | `clients/roan-capital/working/` | — | FS-874 |
+| DR-042 | Roan Capital | 30-day loan (Biashara) questionnaire A, product terms (DC-FS-QN-001) | Questions on the product's terms, for its product owner, a form field for each answer, built from the product's draft | Working | 0.3 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-043 | Roan Capital | 30-day loan (Biashara) questionnaire B, eligibility and limits (DC-FS-QN-001) | Questions on who may borrow and how much, for its credit lead, a form field for each answer, built from the product's draft | Working | 0.3 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-044 | Roan Capital | 30-day loan (Biashara) questionnaire C, how it runs (DC-FS-QN-001) | Questions on how the loan runs day to day, for its operations lead, a form field for each answer, built from the product's draft | Working | 0.3 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-045 | Roan Capital | Motor Vehicle questionnaire A, product terms (DC-FS-QN-002) | Questions on the product's terms, for its product owner, a form field for each answer, built from the product's draft | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-046 | Roan Capital | Motor Vehicle questionnaire B, eligibility and limits (DC-FS-QN-002) | Questions on who may borrow and how much, for its credit lead, a form field for each answer, built from the product's draft | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-047 | Roan Capital | Motor Vehicle questionnaire C, how it runs (DC-FS-QN-002) | Questions on how the loan runs day to day, for its operations lead, a form field for each answer, built from the product's draft | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-048 | Roan Capital | Title Deed questionnaire A, product terms (DC-FS-QN-003) | Questions on the product's terms, for its product owner, a form field for each answer, built from the product's draft | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-049 | Roan Capital | Title Deed questionnaire B, eligibility and limits (DC-FS-QN-003) | Questions on who may borrow and how much, for its credit lead, a form field for each answer, built from the product's draft | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-050 | Roan Capital | Title Deed questionnaire C, how it runs (DC-FS-QN-003) | Questions on how the loan runs day to day, for its operations lead, a form field for each answer, built from the product's draft | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-051 | Roan Capital | Roles, approvals and going live (DC-FS-QN-004) | The open questions on who does what, who approves, outages, and what CBK needs before go-live, in six sections by who answers | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-052 | Roan Capital | Fallback for a platform outage, template (DC-FS-TM-002) | A starter for Roan Capital's own procedure in an outage, in the plain look, for it to adopt | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
+| DR-053 | Roan Capital | Email, documents for 29 October | Our draft covering email for the pack above, for Eric's review; not sent | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039 |
 
 ## Our documents, numbered, and who received them
 
@@ -97,7 +109,12 @@ Record, under its party.
 | DC-FS-PR-001 | Bank channel proposal | PR | 1.0 | issued | 2026-10-05 | design/bank-channel-proposal/ |
 | DC-FS-DK-001 | Dibon for SBM Bank, the deck for the meeting of 22 October | DK | 1.0 | issued | 2026-10-22 | build/proposals/ |
 | DC-FS-LT-001 | Requests to banks for statements, alerts and balances, one copy per bank | LT | 0.1 | draft | — | design/outreach-pdf/ |
+| DC-FS-QN-001 | Roan Capital: the 30-day loan (Biashara), questionnaires A to C | QN | 0.3 | draft | — | tools/products/questionnaires.js |
+| DC-FS-QN-002 | Roan Capital: Motor Vehicle, questionnaires A to C | QN | 0.1 | draft | — | tools/products/questionnaires.js |
+| DC-FS-QN-003 | Roan Capital: Title Deed, questionnaires A to C | QN | 0.1 | draft | — | tools/products/questionnaires.js |
+| DC-FS-QN-004 | Roan Capital: roles, approvals and going live | QN | 0.1 | draft | — | design/system/docx.js |
 | DC-FS-TM-001 | Onboarding pack for an institution's business customers and partners | TM | 0.1 | draft | — | docs/templates/onboarding-pack.md |
+| DC-FS-TM-002 | An institution's fallback for a platform outage, starter template (from runbooks/institution-fallback) | TM | 0.1 | draft | — | design/system/docx.js |
 
 **Distribution log:** each sending of a numbered document. The
 organisation, the recipient's role, never their name (it stays on the
