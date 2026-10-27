@@ -279,7 +279,7 @@ product drafts themselves are in docs/products/ by exception (FS-806).
 | DR-051 | Roles, approvals and going live (DC-FS-QN-004) | The open questions on who does what, who approves, outages, and what CBK needs before go-live, in six sections by who answers, and a last page of the regulations cited | Working | draft | 2026-10-27 | Dibon |
 | DR-052 | Fallback for a platform outage, template (DC-FS-TM-002) | A starter for Roan Capital's own procedure in an outage, in the plain look, for it to adopt | Working | draft | 2026-10-27 | Dibon |
 | DR-053 | Email, documents for 29 October | Our draft covering email for the pack above, for Eric's review; not sent. v0.2 counts the documents as five, the questionnaires' parts grouped | Working | draft | 2026-10-27 | Dibon |
-| DR-054 | Team review request, the pack for 29 October | Our internal request to the team to review the pack before it goes to Roan Capital: who reviews which part, against what, by Wednesday 28 October at noon; not sent | Working | internal | 2026-10-27 | Dibon |
+| DR-054 | Team review request, the pack for 29 October | Our internal request, by email, to the team to review the pack before it goes to Roan Capital: the delivery lead the whole pack; the dev lead, with the CI/CD engineer shadowing, the worksheet and the questionnaires; the CEO the regulations pages; the ops lead the fallback template; by Wednesday 28 October at noon; not sent | Working | internal | 2026-10-27 | Dibon |
 
 - Capability statuses: the modules named in §2.
 - Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in
