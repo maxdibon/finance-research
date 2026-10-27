@@ -175,6 +175,100 @@ FS-1018, FS-1028. Who someone is, and what they may do, in four parts:
    business's officer (ID-26, in R1; approval-engine rule 2; privacy
    PR-20). Nothing else crosses.
 
+**One person, one identity at each institution** (part 1): each
+institution runs its own instance, and nothing joins the two.
+
+```
+                          one person
+                (ID number, phone and SIM)
+                  /                      \
+                 v                        v
+   +---------------------------+  +---------------------------+
+   | Institution A             |  | Institution B             |
+   | realm for outside people  |  | realm for outside people  |
+   |   one identity            |  |   one identity            |
+   |   one credential: a code  |  |   one credential: a code  |
+   |     to the bound phone    |  |     to the bound phone    |
+   |   its own KYC tier        |  |   its own KYC tier        |
+   +---------------------------+  +---------------------------+
+                  never joined: each institution's
+                  customers, and their data, are its own
+```
+
+**One identity, several profiles** (parts 2 and 3): the person signs
+in once, chooses a profile, and acts in it; the screen shows which, and
+the audit records it.
+
+```
+                  identity at Institution A
+               KYC tier: the person's, in every profile
+                              |
+          +-------------------+----------------------+
+          |                   |                      |
+          v                   v                      v
+   +-------------+   +--------------------+   +---------------------+
+   | Me          |   | A business         |   | A partner           |
+   | own loans,  |   | role: maker,       |   | role: field agent,  |
+   | savings,    |   |  approver, viewer  |   |  supervisor, admin  |
+   | documents   |   | KYB tier: the      |   | limits: those the   |
+   |             |   |  business's own    |   |  institution set    |
+   +-------------+   +--------------------+   +---------------------+
+   always there      granted by the           granted by the
+                     business's               partner's
+                     administrators           administrator
+
+   every act:  who  +  which profile  +  what  +  when   --> audit
+```
+
+**Who grants what** (part 2): authority runs down from a document the
+owner signed, never from a request typed into a screen.
+
+```
+   A business                              A partner
+   ----------                              ---------
+   board resolution (onboarding B1)        partner agreement (P1),
+     names the first administrators          approved by the institution
+               |                             with its limits
+               |  checked against the                 |
+               |  registry's directors                v
+               v                           letter naming its
+   administrators                            administrators (P3)
+               |                                      |
+               |  grant and withdraw,                 |  grant within the
+               |  within the mandate (B2)             |  institution's limits
+               v                                      v
+   the business's people:                  field agents, supervisors:
+   makers, approvers, viewers              each a profile of their
+   (each a profile of their                own identity
+   own identity)
+```
+
+**Staff apart** (part 4, ID-26, in R1):
+
+```
+   staff realm                               realm for outside people
+   +------------------------+                +------------------------+
+   | staff identity         |                | customer identity      |
+   | a staff member at work |                | the same person, as a  |
+   | staff workspace,       |                | borrower, a guarantor  |
+   | Kapu Console           |                | or a business officer  |
+   +-----------+------------+                +-----------+------------+
+               |                                         |
+               +----------- linked by ID number ---------+
+                         for conflict checks only
+                                    |
+                                    v
+                       approval engine, rule 2:
+             is the person deciding this request also its
+             borrower, a guarantor, or an officer of the business?
+                     |                               |
+                    yes                              no
+                     v                               v
+             refused (RC-13)                  may decide
+
+   nothing else crosses: no sign-in, no balances, no history
+```
+
 **Why this shape** (decisions FS-1018): a login per role hides conflicts
 between roles; one identity across institutions joins data two
 institutions own; one identity for staff and customer weakens the
