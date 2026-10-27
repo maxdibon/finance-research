@@ -11,7 +11,7 @@ depends_on: [access-keycloak, approval-engine, lending-service]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-964, FS-965, FS-970, FS-978, FS-979, FS-982, FS-983, FS-987]
+review_ids: [FS-136, FS-964, FS-965, FS-970, FS-978, FS-979, FS-982, FS-983, FS-987, FS-996]
 last_reviewed: 2026-10-27
 ---
 
@@ -136,6 +136,7 @@ To confirm with Roan Capital's staff on 29 October (open answer 33):
 | Payouts | Approved loans to pay out, and each payout's state at the bank | Reads; payout confirmed by rails' events |
 | Repayments | A borrower's payments, and those not yet placed (JN-16) | Reads |
 | Arrears | Loans past due, by days, with the next contact due under the collection ladder | Reads (lender rules) |
+| Partners | See and manage partners: the record, relationships and their limits, feeds and their quality, events sent, freezes; propose, ask to change an account, refresh limits in bulk (lending-service §5) | Partners' reads and commands; the approval engine |
 | Products | Draft a version from a template, see its previews, adopt a version Dibon proposed, submit it; approvers decide in My tasks; record CBK's letter; retire a version | Lender rules: draft, validate, preview, adopt, submit; the approval engine |
 
 **Roles and their screens** (FS-979), Roan Capital's eight positions;
@@ -154,6 +155,7 @@ person holding several roles sees each role's screens (FS-982):
 | Products | Read active | Draft (product owner)* | Approve* | Approve* | Approve* | — | Read | Never alone |
 | Helpdesk: complaints | — | Complaints, compliance* | — | Read | — | — | Read | — |
 | Morning sign-off | — | — | — | Deputy | Act | — | Read | — |
+| Partners | — | Manage (partner manager)* | Approve* | Approve* | Read | — | Read | — |
 | Users and roles | — | — | — | Approves role changes* | — | — | Read | Users only |
 
 \* A duty held within the position (roan-capital, "Its roles"); the two
@@ -221,7 +223,7 @@ refuses anyone deciding their own request or two steps in a row.
 
 **For the owner:**
 
-1. Answered: the lending service (lending-service §5) gives its reads
+1. Answered: the lending service (lending-service §6) gives its reads
    and commands.
 2. Answered (FS-976, FS-987): the Kapu Console, read-only, for named
    staff.

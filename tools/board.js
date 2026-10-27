@@ -37,7 +37,7 @@ function branches(root) {
   for (const ref of refs) {
     const name = ref.replace(/^origin\//, '');
     if (['main', 'master', 'HEAD', 'origin'].includes(name) || seen.has(name)) continue;
-    const ids = name.match(/FS-\d{3}/g);
+    const ids = name.match(/FS-\d{3,4}/g);
     if (!ids) continue;
     // Its first save of its own. With none, it is only just started if I
     // am on it; otherwise it is merged, or was left: not on the board.
@@ -75,7 +75,7 @@ function board(root, now = Date.now()) {
     else cols.pick.push({ ...card, since: Date.parse(firstDate(r.notes) || '') || null });
   }
   const order = ['Critical', 'High', 'Medium', 'Low'];
-  for (const k of ['pick', 'doing', 'review']) cols[k].sort((a, b) => order.indexOf(a.criticality) - order.indexOf(b.criticality) || a.id.localeCompare(b.id));
+  for (const k of ['pick', 'doing', 'review']) cols[k].sort((a, b) => order.indexOf(a.criticality) - order.indexOf(b.criticality) || a.id.localeCompare(b.id, undefined, { numeric: true }));
   cols.done.sort((a, b) => b.since - a.since);
   return cols;
 }

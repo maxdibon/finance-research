@@ -1870,3 +1870,25 @@ against without reasons of its own; this entry gives them.*
   leaving the payee to the disbursement's channels.
 - **Costs (inferred):** the payee check and partner terms to build with
   MF-40; three legal questions (LQ-20 to LQ-22) to settle first.
+
+## FS-996 · Partners: one record in two places, relationships with their own limits, feeds with consent
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** each institution's partners kept as one record in two places
+  (the company in Odoo; what touches money in the lending service, every
+  change approved by a second person); a borrower's tie to a partner a
+  record with its own limit, nested with the product's, the borrower's
+  and the core's; a lifecycle from proposal to exit; one intake for their
+  data, consent first, only metrics forward; signed events back; a
+  partner portal in Odoo; MF-41 and MF-42 in phase 2.
+- **Requires:** MF-41, MF-42; docs/specs/lending-service.md §5.
+- **Argued (owner):** "how are we pulling/receiving/managing data from
+  the telcos or ... distributors? how do we 'onboard' and manage the 3rd
+  parties?"; "go ahead with the partners design".
+- **Argued against:** limits per distributor held only in a channel, as
+  a bank's core once forced (FS-1000); plain callbacks to a fixed
+  address; raw partner data passed to decisioning.
+- **Costs (inferred):** a portal and an intake to build with MF-40; each
+  partner's onboarding is the institution's work; an operator's consent
+  for Dibon to host and process (FS-1002).

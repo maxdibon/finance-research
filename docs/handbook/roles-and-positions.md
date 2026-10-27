@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-770, FS-771, FS-772]
-last_reviewed: 2026-10-13
+review_ids: [FS-770, FS-771, FS-772, FS-996]
+last_reviewed: 2026-10-27
 ---
 
 # 1 · Roles and positions
@@ -38,6 +38,7 @@ list (for Roan Capital, its delivery map's open answer 7):
 | Collections officer | `collections` | The collection ladder's actions and calls | — |
 | Complaints handler | `complaints` | The complaints register | — |
 | Compliance officer | `compliance` | The restricted team in the helpdesk: identity mismatches, suspected fraud, complaints about staff | — |
+| Partner manager | `partner-manager` | Proposing and managing the institution's partners: their records, agreements, feeds and monitoring (lending-service §5); never activating one alone | Approving its own partner's activation or account change |
 | Auditor | `auditor` | Reading the audit trail and reports; nothing else | Any role that acts |
 | Administrator | `administrator` | Creating and disabling users, resets after an identity check; never an approval role | `access-approver` |
 | [The approver of access changes] | `access-approver` | Deciding role requests (HB-21) | `administrator` |

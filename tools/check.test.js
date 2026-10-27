@@ -93,6 +93,21 @@ test('register: a row closed but left in REVIEW.md fails, and tidy files it', ()
   assert.deepStrictEqual(f, []);
 });
 
+// FS-1000: ids past FS-999 are rows like any other, filed by their hundred.
+test('register: a four-digit id is a row, and tidy files it by its hundred', () => {
+  const reg = require('./register');
+  assert.strictEqual(reg.fileFor(1000), 'review/FS-1000-1099.md');
+  const f = runWith((d) => {
+    const n = Math.max(1000, +reg.nextId(d).slice(3));
+    const id = `FS-${n}`;
+    patch(d, 'REVIEW.md', (t) => t.replace(/(\n\| FS-\d{3,4} \|[^\n]*)(?![\s\S]*\n\| FS-\d{3,4} \|)/, `$1\n| ${id} | Eric | A row past FS-999 | DECIDED | — | — | A test |`));
+    assert.ok(reg.rows(d).some((r) => r.id === id));
+    const moved = reg.tidy(d);
+    assert.ok(moved.includes(`${id} to ${reg.fileFor(n)}`), moved.join('; '));
+  });
+  assert.deepStrictEqual(f, []);
+});
+
 test('register: a row reopened in review/ fails, and tidy brings it back', () => {
   const reopen = (d) => patch(d, path.join('review', 'FS-001-099.md'), (t) => t.replace(/^(\| FS-002 \|[^|]*\|[^|]*\|) DECIDED \| — \| — \|/m, '$1 OPEN | Low | Eric |'));
   assert.deepStrictEqual(names(runWith(reopen)), ['register']);
@@ -160,7 +175,7 @@ test('register: a row\'s marker written into the title fails (FS-866)', () => {
 
 test('review-ids: citing an id the register does not have fails', () => {
   // Assembled at run time so this file does not itself cite a missing id.
-  const missing = ['FS', '999'].join('-');
+  const missing = ['FS', '9999'].join('-');
   const f = runWith((d) => patch(d, 'README.md', (t) => `${t}\nSee ${missing}.\n`));
   assert.deepStrictEqual(names(f), ['review-ids']);
 });
@@ -247,7 +262,7 @@ function assembleWith(edit) {
 }
 
 test('assemble: refuses to build from failing sources', () => {
-  const missing = ['FS', '999'].join('-');
+  const missing = ['FS', '9999'].join('-');
   const r = assembleWith((d) => patch(d, 'README.md', (t) => `${t}\nSee ${missing}.\n`));
   assert.ok(r.error && /checks failing/.test(r.error.message));
 });
@@ -1022,12 +1037,12 @@ test('site --reader: builds without the names list, and says so; refuses any oth
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-site-'));
   for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
   fs.rmSync(path.join(dir, names));
-  patch(dir, 'README.md', (t) => `${t}\nSee ${['FS', '999'].join('-')}.\n`);
+  patch(dir, 'README.md', (t) => `${t}\nSee ${['FS', '9999'].join('-')}.\n`);
   try { assert.throws(() => buildSite(dir, undefined, { reader: true }), /checks failing/); } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
 
 test('site: refuses to build from failing sources', () => {
-  const missing = ['FS', '999'].join('-');
+  const missing = ['FS', '9999'].join('-');
   const r = siteWith((d) => patch(d, 'README.md', (t) => `${t}\nSee ${missing}.\n`));
   assert.ok(r.error && /checks failing/.test(r.error.message));
 });
@@ -1327,7 +1342,7 @@ test('words: download brings two people\'s register rows together', () => {
     assert.match(saved, /Saved on/);
     // Allan's work reaches main; Betty downloads.
     run(at('allan'), 'git', ['push', '-q', 'origin', 'HEAD:main']);
-    const allanId = (run(at('allan'), 'git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3}/) || [])[0];
+    const allanId = (run(at('allan'), 'git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3,4}/) || [])[0];
     const got = d('betty', 'download');
     assert.match(got, new RegExp(`${allanId} was taken on main meanwhile: your row is now FS-[0-9]{3}`));
     const reg = require('./register').rows(at('betty'));
@@ -1408,7 +1423,7 @@ test('words: save does the routine for you, in a pretend repository', () => {
     fs.writeFileSync(path.join(work, 'sources', 'confidential', 'protected-names.txt'), '# test list\nZzqx Nobody\n');
     const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
     d('new', 'A clearer testing note');
-    const id = (run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3}/) || [])[0];
+    const id = (run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3,4}/) || [])[0];
     const f = path.join(work, 'docs', 'testing.md');
     const t = fs.readFileSync(f, 'utf8');
     fs.writeFileSync(f, t.replace(/\n## /, '\nA sentence added to the testing strategy.\n\n## '));
@@ -1445,7 +1460,7 @@ test('words: session start and end keep a personal handover, in a pretend reposi
     run('git', ['push', '-q', 'origin', 'HEAD:main']);
     const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
     d('new', 'Betty has a thing to do');
-    const id = (run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3}/) || [])[0];
+    const id = (run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3,4}/) || [])[0];
     assert.match(d('session', 'end'), /Your handover is current/);
     const mine = fs.readFileSync(path.join(work, 'handoffs', 'bflorah.md'), 'utf8');
     assert.match(mine, /^# Betty · personal handover/m);

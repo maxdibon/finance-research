@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-989, FS-990, FS-991]
+review_ids: [FS-989, FS-990, FS-991, FS-1000]
 last_reviewed: 2026-10-27
 ---
 
@@ -55,7 +55,7 @@ goods, receivables and salary.
 **What we have run before** (customers CU-03): the USSD channel and
 digital lending for a bank's retailer finance, float lending, term loans
 and Sharia-compliant (Sahl) lending, 2022 to 2025, on Dibon's menu
-platform; the products' books were the bank's.
+platform; the loans were booked on the bank's own loan core, Sopra's (FS-994). The core held one limit per retailer, so the limit for each distributor was held in our layer and every draw checked against both (FS-1000): the lending service does the same, holding limits beneath whatever the core can (per relationship, product or partner).
 
 **What a wallet product still needs** (FS-991): fully automated limits,
 explained to the customer (MF-29) and tried in shadow first (DE-05);

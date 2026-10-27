@@ -81,7 +81,7 @@ async function ask(question) {
 }
 const branch = () => git(['rev-parse', '--abbrev-ref', 'HEAD']);
 const onMain = () => ['main', 'master'].includes(branch());
-const rowOfBranch = () => (branch().match(/FS-\d{3}/) || [])[0];
+const rowOfBranch = () => (branch().match(/FS-\d{3,4}/) || [])[0];
 const hasRemote = () => git(['remote'], { ok: true }).split('\n').includes('origin');
 // Not trimmed: porcelain's first column may be a space (" M file").
 const unsaved = () => git(['status', '--porcelain'], { full: true }).stdout.split('\n').filter((l) => l.trim()).map((l) => ({ code: l.slice(0, 2), file: l.slice(3).replace(/^"|"$/g, '') }));
@@ -133,7 +133,7 @@ function explain(failures) {
 function nextFree() {
   const pad = (n) => `FS-${String(n).padStart(3, '0')}`;
   let top = +require('./register').nextId(ROOT).slice(3) - 1;
-  const seen = (text) => { for (const m of (text || '').matchAll(/^\| FS-(\d{3}) \|/gm)) top = Math.max(top, +m[1]); };
+  const seen = (text) => { for (const m of (text || '').matchAll(/^\| FS-(\d{3,4}) \|/gm)) top = Math.max(top, +m[1]); };
   const refs = [...git(['for-each-ref', 'refs/heads', '--format=%(refname:short)'], { ok: true }).split('\n'),
     ...git(['stash', 'list', '--format=%gd'], { ok: true }).split('\n')].filter(Boolean);
   if (hasRemote()) refs.push('origin/main');
@@ -377,7 +377,7 @@ async function begin() {
   let base = 'main';
   if (hasRemote()) { git(['fetch', '--quiet', 'origin']); base = 'origin/main'; }
   const row = flag('--row');
-  if (row && !/^FS-\d{3}$/.test(row)) stop('--row is an FS id: --row FS-826.');
+  if (row && !/^FS-\d{3,4}$/.test(row)) stop('--row is an FS id: --row FS-826.');
   const file = KINDS[kind] ? `${KINDS[kind].dir}/${slug(topic)}.md` : null;
   if (file && fs.existsSync(path.join(ROOT, file))) stop(`${file} already exists: dibon start "${topic}" changes it instead.`);
   const name = `${b}/${row || 'FS-NEW'}-${slug(topic)}`;
@@ -463,15 +463,15 @@ function started(of = 'me') {
   for (const r of refs) {
     const [b, when] = r.split('|');
     if (['main', 'master'].includes(b)) continue;
-    const claudes = handle && (b.startsWith(`claude/${handle}/`) || /^claude\/FS-\d{3}/.test(b));
+    const claudes = handle && (b.startsWith(`claude/${handle}/`) || /^claude\/FS-\d{3,4}/.test(b));
     if (of === 'me' ? b.startsWith('claude/') : !claudes) continue;
     const ahead = +git(['rev-list', '--count', `${base}..${b}`], { ok: true }) || 0;
     const parked = parkedOf(b);
     if (!ahead && b !== here && !parked) continue;
-    const id = (b.match(/FS-\d{3}/) || [])[0] || null;
+    const id = (b.match(/FS-\d{3,4}/) || [])[0] || null;
     // The words the person typed, from the branch: a row may be unsaved,
     // or parked, and so not in this copy's register.
-    const words = b.split('/').pop().replace(/^FS-\d{3}(?:-\d{3})?-/, '').replace(/-/g, ' ');
+    const words = b.split('/').pop().replace(/^FS-\d{3,4}(?:-\d{3,4})?-/, '').replace(/-/g, ' ');
     const title = words.charAt(0).toUpperCase() + words.slice(1);
     const remote = git(['rev-parse', '--verify', '--quiet', `refs/remotes/origin/${b}`], { ok: true });
     const tip = git(['rev-parse', b], { ok: true });
@@ -481,7 +481,7 @@ function started(of = 'me') {
     if (parked) state += '; edits parked';
     out.push({ branch: b, id, title, state, here: b === here });
   }
-  return out.sort((a, c) => (a.id || '~').localeCompare(c.id || '~'));
+  return out.sort((a, c) => (a.id || '~').localeCompare(c.id || '~', undefined, { numeric: true }));
 }
 // This branch's unsaved edits put aside with it: tracked changes, and new
 // documents (.md) not yet saved. Other untracked files stay where they are,
@@ -640,7 +640,7 @@ const word = {
   // With (the lead stays first) and starts my own branch for it.
   async join() {
     const id = (plain[1] || '').toUpperCase();
-    if (!/^FS-\d{3}$/.test(id)) stop('Say which row: dibon join FS-826.');
+    if (!/^FS-\d{3,4}$/.test(id)) stop('Say which row: dibon join FS-826.');
     const row = require('./register').rows(ROOT).find((r) => r.id === id);
     if (!row) stop(`${id} is not in your copy's register: dibon download first.`);
     if (row.status !== 'OPEN') stop(`${id} is ${row.status.toLowerCase()}: reopen it before joining.`);
@@ -665,7 +665,7 @@ const word = {
   // FS-892: step off a row. The next name leads; the last one hands it on.
   async leave() {
     const id = (plain[1] || '').toUpperCase();
-    if (!/^FS-\d{3}$/.test(id)) stop('Say which row: dibon leave FS-826.');
+    if (!/^FS-\d{3,4}$/.test(id)) stop('Say which row: dibon leave FS-826.');
     if (onMain()) stop(`Leave from your work on ${id}: dibon resume ${id}, then dibon leave ${id}.`);
     const row = require('./register').rows(ROOT).find((r) => r.id === id);
     if (!row) stop(`${id} is not in your copy's register.`);
@@ -708,7 +708,7 @@ const word = {
     }
     let found = list.filter((s) => s.branch === pick); // a branch named in full
     if (found.length) { /* that one */ } else if (/^\d+$/.test(pick)) found = list[+pick - 1] ? [list[+pick - 1]] : [];
-    else if (/^FS-\d{3}$/i.test(pick)) found = list.filter((s) => s.id === pick.toUpperCase());
+    else if (/^FS-\d{3,4}$/i.test(pick)) found = list.filter((s) => s.id === pick.toUpperCase());
     else found = list.filter((s) => s.branch.includes(slug(pick)));
     if (!found.length) stop(`Nothing started matches "${pick}". dibon resume lists what you have started.`);
     if (found.length > 1) stop(`"${pick}" matches ${found.length}: ${found.map((s) => s.branch).join(', ')}. Say which by its number or row.`);
@@ -840,8 +840,8 @@ const word = {
     if (regen) say(`Generated sections made again in ${regen} document${regen === 1 ? '' : 's'}.`);
     const failures = checks();
     if (failures.length) { explain(failures); process.exitCode = 1; return; }
-    const subject = /^FS-\d{3}/.test(arg) ? arg : `${row || 'FS-???'}: ${arg}`;
-    if (!/^FS-\d{3}/.test(subject)) stop('Which register row? Your branch has none: start with dibon start, or begin the description with FS-123.');
+    const subject = /^FS-\d{3,4}/.test(arg) ? arg : `${row || 'FS-???'}: ${arg}`;
+    if (!/^FS-\d{3,4}/.test(subject)) stop('Which register row? Your branch has none: start with dibon start, or begin the description with FS-123.');
     if (!await ask(`Save ${changed.length} file${changed.length === 1 ? '' : 's'} as "${subject}"?`)) return say('Not saved.');
     if (only) git(['add', '--', ...changed.map((u) => u.file)]); else git(['add', '-A']);
     const r = git(['commit', '-q', ...message(subject)], { ok: true, full: true });
