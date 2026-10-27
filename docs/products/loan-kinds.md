@@ -55,7 +55,7 @@ goods, receivables and salary.
 **What we have run before** (customers CU-03): the USSD channel and
 digital lending for a bank's retailer finance, float lending, term loans
 and Sharia-compliant (Sahl) lending, 2022 to 2025, on Dibon's menu
-platform; the products' books were the bank's.
+platform; the loans were booked on the bank's own loan core, Sopra's (FS-994).
 
 **What a wallet product still needs** (FS-991): fully automated limits,
 explained to the customer (MF-29) and tried in shadow first (DE-05);
