@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960]
-last_reviewed: 2026-10-23
+review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973]
+last_reviewed: 2026-10-26
 ---
 
 # Dibon financial services — the portfolio
@@ -161,7 +161,8 @@ what each person goes through is in [the journeys](journeys/README.md).
 | Who our customers are, and what we are building for each | [customers.md](customers.md), with each customer's delivery map linked from its row |
 | Every document we hold with a party: received, sent or worked on, by DR id | [document-register.md](document-register.md) |
 | What we build next, release by release | [delivery-plan.md](delivery-plan.md) |
-| The MVP day, 23 October 2026: the goal, the plan and who does what | [mvp-day.md](mvp-day.md) |
+| The MVP day, 30 October 2026: the goal, the plan and who does what | [mvp-day.md](mvp-day.md) |
+| OLP, Dibon's Odoo platform, reviewed as it stands (26 October 2026); what Financial Services needs from it is the OLP spec | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [specs/olp.md](specs/olp.md) |
 | What a customer and each product need to go live | [onboarding.md](onboarding.md) |
 | Which partners we are talking to | [partners.md](partners.md) |
 | Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |

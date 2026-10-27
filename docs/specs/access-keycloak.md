@@ -8,11 +8,11 @@ released: 2026.10.15
 release: R1
 implements: [access]
 depends_on: [messaging]
-used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging, endpoints, github, recon]
+used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging, endpoints, github, recon, back-office, staff-workspace, kapu-console]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983]
+last_reviewed: 2026-10-27
 ---
 
 # Access on Keycloak — component specification
@@ -85,11 +85,12 @@ on-call tool signs in through the "ops" realm.
 
 **Related:** implements [access](../modules/access.md); depends on
 [messaging](messaging.md) for codes; used by
-[approval-engine](approval-engine.md), [messaging](messaging.md),
+[kapu-console](kapu-console.md), [approval-engine](approval-engine.md), [messaging](messaging.md),
 [kapu-core-fineract](kapu-core-fineract.md),
 [end-of-day-runner](end-of-day-runner.md),
 [observability-grafana](observability-grafana.md),
-[endpoints](endpoints.md), [github](github.md) and [recon](recon.md); journeys
+[endpoints](endpoints.md), [github](github.md), [recon](recon.md), [back-office](back-office.md) and
+[staff-workspace](staff-workspace.md); journeys
 [JN-02](../journeys/manual-identity-check.md),
 [JN-04](../journeys/loan-to-disbursement.md) and
 [JN-05](../journeys/guarantor.md).

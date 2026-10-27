@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899]
-last_reviewed: 2026-10-21
+review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989]
+last_reviewed: 2026-10-27
 ---
 
 # Legal questions
@@ -60,6 +60,9 @@ lost.
 | LQ-17 | Reg 30(4)'s "notice of thirty days" before selling movable security: calendar or working days, counted from the notice's delivery; and does it replace the Act's five working days (MPSR Act s.73) or come on top of the default notice's time to pay (MPSR Act s.67)? | lender-rules §2.11 | Institutions | Reg 30(4) (LR-03); MPSR Act s.67, s.73 (LR-23) | Open | Thirty calendar days from delivery of the sale notice, given only after the default notice's time to pay has run | FS-899 |
 | LQ-18 | When a lender repossesses a vehicle under the MPSR Act, do the Auctioneers Rules' steps apply (their r.5 yields where another law provides otherwise), and must a licensed auctioneer act? If they apply, how do they sit with reg 30(4) (LR-03): may its thirty days run alongside the Rules' seven-day redemption notice, given a sale must fall seven to fourteen days after the advertisement (Auctioneers Rules r.12(1)(f))? | lender-rules §2.11 | Institutions | Reg 30(1)(l), 30(4) (LR-03); Auctioneers Act s.9, s.23 (LR-41); Auctioneers Rules r.5, r.12 (LR-43); MPSR Act s.72 (LR-23) | Open | A licensed auctioneer acts and follows the Rules; the sale date is set first, at least thirty days after the sale notice, and the Rules' steps scheduled back from it | FS-899 |
 | LQ-19 | Is a logbook loan, the vehicle jointly registered with the lender, a security right under the MPSR Act, or a hire-purchase agreement; and if hire purchase, may the lender repossess without a court once two-thirds is paid? | lender-rules §2.11; Roan Capital RC-08 | Institutions | MPSR Act s.65(4) (LR-23); Hire-Purchase Act s.15 (LR-42) | Open | A security right; a product marked hire purchase refuses repossession without a recorded court order once two-thirds of its price is paid | FS-899 |
+| LQ-20 | When a loan is paid to a supplier for goods, and the goods are faulty or never arrive, may the borrower withhold repayment, and must the lender pursue the supplier? What must the agreement and the key information document say about it? | docs/products/loan-kinds.md | Institutions | Reg 54 (LR-03) | Open | The partner's agreement refunds returned or undelivered goods to the loan; the borrower's agreement says so, and a complaint about the goods pauses collection on that draw (JN-08) | FS-989 |
+| LQ-21 | For goods financed as their own security (a motorbike, equipment), is the lender's title a hire-purchase agreement or a security right under the MPSR Act, and which steps then apply to repossession? (with LQ-19) | docs/products/loan-kinds.md | Institutions | Hire-Purchase Act s.15 (LR-42); MPSR Act s.65(4) (LR-23) | Open | As LQ-19: a product marked hire purchase refuses repossession without a recorded court order once two-thirds is paid | FS-989 |
+| LQ-22 | On what lawful basis may a distributor share a retailer's purchase history with a lender to set its limit: the retailer's consent, or another ground? | docs/products/loan-kinds.md | Institutions; Dibon | Data Protection Act s.30, s.32 (LR-17) | Open | The retailer's recorded consent, before any data is shared, withdrawable; without it, no limit from the partner's data | FS-989 |
 
 ## Regulations cited
 
@@ -76,7 +79,7 @@ lost.
 | reg 39 | reg 39(3) | A receipt for every transaction, a free loan statement on request and a way to see it at any time (39(1)); errors corrected promptly (39(2)); a guarantor kept informed through periodic statements (39(3)) |
 | reg 42 | reg 42 | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
 | reg 47 | reg 47, reg 47(2) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
-| reg 54 | reg 54(7) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
+| reg 54 | reg 54, reg 54(7) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
 | reg 56 | reg 56, reg 56(3), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
 | reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |
 | reg 59 | reg 59 | A pricing model with clear parameters: its components and costs justified, rates that may vary with the borrower's creditworthiness (59(2)(c)), the criteria for non-performance, credit bureau scores, all-inclusive pricing except third-party costs (59(2)(f)), and the APR disclosed |
@@ -98,6 +101,8 @@ lost.
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 25 | s. 25 | The principles of data protection: personal data processed lawfully, fairly and transparently, for explicit purposes, limited to what is necessary, accurate, kept no longer than needed, secure, and not transferred out of Kenya without safeguards |
+| s. 30 | s. 30 | No processing without a lawful basis: the person's consent for a stated purpose, or necessity for a contract, a legal obligation, vital interests, a public task or another ground the section lists |
+| s. 32 | s. 32 | Whoever relies on consent proves it was given for the purpose; consent can be withdrawn at any time; it is not freely given where a service is made to depend on consent to processing it does not need |
 
 **[LR-23](law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).
 

@@ -25,5 +25,13 @@
   {"rule": "collection-ladder-in-order", "product": {"collection_ladder": {"counted_from": "disbursement", "stages": [{"stage": "reminder", "from": 25, "to": 25}, {"stage": "default_run", "from": 30, "to": 40}]}}, "breaks": false},
   {"rule": "collection-ladder-in-order", "product": {"collection_ladder": {"counted_from": "disbursement", "stages": [{"stage": "default_run", "from": 30, "to": 40}, {"stage": "reminder", "from": 25, "to": 25}]}}, "breaks": true},
   {"rule": "cut-off-is-a-window", "product": {"cut_off": {"no_payout_from": "23:00", "to": "04:00", "zone": "Africa/Nairobi"}}, "breaks": false},
-  {"rule": "cut-off-is-a-window", "product": {"cut_off": {"no_payout_from": "23:00", "to": "23:00", "zone": "Africa/Nairobi"}}, "breaks": true}
+  {"rule": "cut-off-is-a-window", "product": {"cut_off": {"no_payout_from": "23:00", "to": "23:00", "zone": "Africa/Nairobi"}}, "breaks": true},
+  {"rule": "third-party-payee-has-proof", "product": {"payee": {"to": "third_party", "kinds": ["supplier"], "approved_list": true, "proof": ["invoice"]}}, "breaks": false},
+  {"rule": "third-party-payee-has-proof", "product": {"payee": {"to": "third_party", "kinds": ["supplier"]}}, "breaks": true},
+  {"rule": "credit-line-has-draw-term", "product": {"facility": {"kind": "credit_line", "renews": "month", "limit_basis": "partner_purchases", "draw_term": {"max": 30, "unit": "day"}}}, "breaks": false},
+  {"rule": "credit-line-has-draw-term", "product": {"facility": {"kind": "credit_line"}}, "breaks": true},
+  {"rule": "till-share-has-a-share", "product": {"repayment_source": {"sources": ["till_share"], "till_share": 10}}, "breaks": false},
+  {"rule": "till-share-has-a-share", "product": {"repayment_source": {"sources": ["borrower", "till_share"]}}, "breaks": true},
+  {"rule": "financed-goods-bought-from-someone", "product": {"collateral": {"types": ["financed_goods"]}, "payee": {"to": "third_party", "kinds": ["dealer"], "approved_list": true, "proof": ["proforma"]}}, "breaks": false},
+  {"rule": "financed-goods-bought-from-someone", "product": {"collateral": {"types": ["financed_goods"]}, "payee": {"to": "borrower"}}, "breaks": true}
 ]

@@ -6,7 +6,7 @@ status: agreed
 released: 2026.10.15
 owner: Commercial lead
 classification: Public once approved
-last_reviewed: 2026-10-22
+last_reviewed: 2026-10-27
 ---
 
 # Dibon Financial Services portfolio

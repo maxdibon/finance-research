@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957]
-last_reviewed: 2026-10-23
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965, FS-978, FS-979, FS-981, FS-982]
+last_reviewed: 2026-10-27
 ---
 
 # Roan Capital — delivery map
@@ -195,6 +195,15 @@ choice (MF-04, FS-619).
 | 30 | CBK must be told thirty days before a new delivery channel rolls out (reg 27(1)), with the mobile-money number used for payouts and repayments, any app, and the bank accounts (27(2)). The platform is that channel: who notifies CBK, and by when before go-live? | FS-830 | Open, for senior management (FS-827) |
 | 31 | A reading we are confirming: whether a restructure the borrower asks for must still wait the thirty days' notice that reg 54(7) gives for any change to a loan agreement (the power to restructure is reg 28(3)). We will confirm it before anything is built on it; does your counsel have a view? | FS-876 (LQ-06) | Open |
 | 32 | A reading we are confirming: which regulation sets how often guarantors receive statements. We cite reg 47(2); reg 39(3) may be the right one. We will confirm it before anything is built on it; does your counsel have a view? | FS-876 (LQ-16) | Open |
+| 33 | Your staff found the Mifos screens hard to use. We propose screens of our own in Odoo for daily lending (FS-965): which tasks were hardest? May we watch two or three staff at their desks, on 29 October or soon after? | FS-965 | Open, for 29 October |
+| 34 | Would licence cost lead you to a lower-cost edition of Odoo (Community, supported by us rather than Odoo), knowing the trade-offs? | FS-967 | Open, for 29 October |
+| 35 | Your staff, by job title, and how many; we fold the eight positions to fit (FS-982) | FS-982 | Open, for 29 October |
+| 36 | The approval threshold: up to it, one approval by someone other than the originator; above it, two. And the committee of three, or this shorter chain (with open answer 28)? | FS-982 | Open, for 29 October |
+| 37 | Who releases a payout once Finance has prepared it, or is preparation enough, the payout going only to the verified account for the computed amount? | FS-979 | Open, for 29 October |
+| 38 | Which staff may use the Kapu Console's read-only views when Odoo is down? | FS-976, FS-987 | Open, for 29 October |
+| 39 | Your product owner, and the two people who approve a product version; and your agreement that you are accountable for your products and for CBK's approval of them, our rules stopping only what the law forbids (FS-978) | FS-978, FS-981 | Open, for 29 October |
+| 40 | Who approves when the CEO is away? | FS-982, FS-898 | Open, for 29 October |
+| 41 | Who is your external auditor, for a read-only account? | FS-982 | Open, for 29 October |
 
 ### Answered
 
@@ -218,11 +227,11 @@ its link goes to Roan Capital's own product page.
 
 | Product | Version | Status | Where |
 |---|---|---|---|
-| Biashara, the 30-day loan | 1 | Draft: seven blanks, among them open answers 3 (the default interest's base) and 4 (the rate's unit), and the amount limits, fees, insurance, default period and holiday rule | [The draft](../products/roan-capital-30-day-loan-v1.md), in git by exception until Roan Capital's workspace in Dibon's Odoo Documents exists (rules, Dibon 10; FS-806) |
-| Motor Vehicle, the logbook loan | 1 | Draft, from 21 October's definition: amount limits, fees, insurance, default interest and the third-party charges to provide; the sale window to change first (FS-935) | [The draft](../products/roan-capital-motor-vehicle-v1.md), in git by exception as above |
-| Title Deed, the land-secured loan | 1 | Draft, from 21 October's definition: amount limits, term, fees, insurance, collateral and charges to provide; the Land Act to add to the law register | [The draft](../products/roan-capital-title-deed-v1.md), in git by exception as above |
+| Biashara, the 30-day loan | 1 | Proposed by Dibon (FS-981): seven blanks, among them open answers 3 (the default interest's base) and 4 (the rate's unit), and the amount limits, fees, insurance, default period and holiday rule | [The draft](../products/roan-capital-30-day-loan-v1.md), in git by exception until Roan Capital's workspace in Dibon's Odoo Documents exists (rules, Dibon 10; FS-806) |
+| Motor Vehicle, the logbook loan | 1 | Proposed by Dibon, from 21 October's definition: amount limits, fees, insurance, default interest and the third-party charges to provide; the sale window to change first (FS-935) | [The draft](../products/roan-capital-motor-vehicle-v1.md), in git by exception as above |
+| Title Deed, the land-secured loan | 1 | Proposed by Dibon, from 21 October's definition: amount limits, term, fees, insurance, collateral and charges to provide; the Land Act to add to the law register | [The draft](../products/roan-capital-title-deed-v1.md), in git by exception as above |
 
-Statuses: draft, awaiting approval, awaiting CBK, active, retired.
+Statuses: proposed (by Dibon, for Roan Capital to adopt), draft, awaiting approval, awaiting CBK, active, retired.
 
 ## 6 · Documents
 
@@ -294,6 +303,31 @@ also hold is a role added to their position, never a position of its own.
 | Collections Officer | Works the collection ladder: calls, visits, promises to pay, logged | Records repayments; contacts anyone but the borrower and guarantor (reg 30) |
 | Auditor | Reads everything, the audit log included | Changes anything |
 | Super Admin | Creates and disables users; settings that move no money | Approves, grants an approval role, changes a product alone (a product version needs two people, lender-rules §2.4) |
+
+**With three or four staff** (FS-982), each person holds several
+positions; the approval engine still refuses anyone deciding their own
+request or two steps in a row, and a chain it cannot fill with distinct
+people is refused at submission (approval-engine §4). Proposed, to
+confirm (open answers 35 to 41):
+
+| Person, with four staff | Holds | Never |
+|---|---|---|
+| CEO | Final approval above the threshold; overrides; a product approver; approves role changes; deputy for the morning sign-off | Originates; prepares payouts |
+| Credit Manager | First approval; originates up to the threshold only; product owner; collections; complaints, except on loans it decided | Approves what it originated; approves a product it drafted |
+| Loan Officer | Originates; collections; creates and disables users | Approves anything; grants roles |
+| Finance / Cashier | Prepares payouts; matches payments; the morning sign-off; a product approver | Approves loans; records a repayment without a rail record |
+
+**Never folded:** the originator never approves; whoever prepares a
+payout never approved the loan; the user administrator never grants
+roles; the drafter of a product never approves it; Dibon holds no role.
+**With three staff,** the Loan Officer's work is the Credit Manager's,
+and above the threshold Finance gives the second approval as a recorded
+exception. **Compensating controls:** a payout goes only to the
+borrower's verified account, for the net amount the system computes;
+the CEO receives the day's payouts and overrides; recon computes every
+loan on its own. **The auditor** is outside the staff: the external
+auditor or a board member, read-only. **Absence** is the real risk:
+each approval role needs a named second holder (FS-898).
 
 **Functions to assign within the positions** (proposed, to confirm): the
 access approver (HB-11) and the finance lead, the Chief Executive

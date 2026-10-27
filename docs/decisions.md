@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-23
+last_reviewed: 2026-10-27
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1734,3 +1734,139 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** two more people on the critical path; the
   Enterprise modules fetched through the partner account before noon;
   Odoo's sign-in waits on the staff realm (FS-942).
+
+## FS-970 · The back office behind one interface, so the ERP can change
+
+*Entry written 2026-10-26 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** design for leaving Odoo, or for a second ERP, from R1: our
+  services reach the back office only through a back-office gateway,
+  one adapter per ERP, one contract test suite; no business rule in the
+  ERP; our references as the keys; signed documents in the vault too;
+  everything exportable. Odoo Enterprise stays the back office for now
+  (FS-644); Odoo Community with OCA (FS-967), ERPNext and Tryton (FS-969)
+  are candidates to evaluate.
+- **Requires:** BS-21, BS-22; docs/specs/back-office.md.
+- **Argued (owner):** "my primary thought is how to remain flexible and
+  ensure that if we need to port from odoo, or support another platform
+  for the 'erp inside our platform'. let's design for this."
+- **Argued against:** naming Odoo in every service's integration, the
+  cheapest today and the dearest to leave; choosing a second ERP now,
+  before a customer asks for one; Flectra and ERP5 (FS-969).
+- **Costs (inferred):** one more service in R1, small; Odoo's features
+  used through our words, so a feature without a job waits for one; a
+  contract test suite kept for every adapter.
+
+## FS-965 · Staff work in Odoo, over Kapu MFI; Fineract stays the core
+
+*Entry written 2026-10-26 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** in R1, an institution's staff do their daily lending in
+  screens of ours inside Odoo (the staff workspace, BS-23), not the
+  Mifos web app: reads live and never stored, every write a command to
+  Kapu MFI, every decision in the approval engine with step-up, each act
+  as the person. Odoo is only the interface. The phase 1 cap is 251.
+- **Requires:** BS-23; docs/specs/staff-workspace.md.
+- **Argued (owner):** "roan users found mifos difficult to use, can we
+  replace the back office backend with our custom odoo pages?"; "odoo
+  would only be the interface not replace fineract"; "i meant FS-965 in
+  r1".
+- **Argued against:** the Mifos web app, generic and found hard to use;
+  screens of our own outside Odoo, a fourth place to sign in to; storing
+  loans in Odoo, a second core.
+- **Costs (inferred):** one more R1 capability; Kapu MFI's API must be
+  specified first; Odoo's availability now matters to staff's day, with
+  a read-only fallback to choose.
+
+## FS-983 · One thin lending service for MFI and Sacco
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** the Kapu lending service: one service lends for every kind
+  of institution, configured as Kapu MFI or Kapu Sacco; Fineract
+  configured for what it does natively, Odoo used through the gateway,
+  and only what neither does built: the regulators' rules and the
+  orchestration; the only writer to the core, through a core adapter.
+- **Requires:** MF-01, MF-07, MF-11; docs/specs/lending-service.md.
+- **Argued (owner):** "do we need a separate module for kapu mfi or can
+  most of the capability be handled between odoo and fineract?"; "the
+  lending service is only for mfi or also for sacco?"
+- **Argued against:** putting the rules in Odoo, a second core that every
+  Odoo upgrade or port puts at risk; separate services for MFI and Sacco.
+- **Costs (inferred):** the core adapter to build and keep; Sacco rules
+  to specify before R4.
+
+## FS-985 · Deposits by ledger mode, and a deposits service beside lending
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** deposits stay in a bank's own core in integrated mode; in
+  native mode a deposits service keeps them, beside the lending service,
+  with each deposit regulator's rules; designed now, built for the first
+  native deposit-taker, after Fineract's fit is tested (FS-185).
+- **Requires:** KC-02, KC-03; docs/specs/deposits-service.md.
+- **Argued (owner):** "as we're also talking to banks and other fis that
+  accept deposits, how does the design handle deposits?"; "go ahead with
+  the list".
+- **Argued against:** deposits inside the lending service, whose rules,
+  hours and regulators differ.
+- **Costs (inferred):** a core-system vendor's obligations (FS-179) with
+  the first native deposit-taker; a fit-gap of Fineract first.
+
+## FS-987 · The Kapu Console: approvals and the fallback, outside Odoo
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** one application of ours outside Odoo for an institution's
+  staff: the approval engine's decision page and each person's open
+  steps, read-only fallback views for named staff, products read-only.
+  Odoo's Approvals app only for workflows that move no money (BS-09,
+  FS-988). The phase 1 cap is 252.
+- **Requires:** MD-21; docs/specs/kapu-console.md.
+- **Argued (owner):** "i like the idea of having a separate 'admin'
+  interface for the fallback"; "maybe we rename the component?"; "keep
+  the kapu console".
+- **Argued against:** approvals in Odoo's Approvals app, without step-up,
+  the payout's hash or independence from Odoo; a fallback of Fineract's
+  own screens.
+- **Costs (inferred):** one more R1 capability; a second screen over the
+  engine to keep in step with My tasks.
+
+## FS-978 · Institutions manage their own products, in Odoo
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** an institution's product owner drafts, adopts, submits and
+  retires product versions in the staff workspace's Products screen;
+  Odoo only the form; lender rules checks, previews, stores and activates;
+  two of the institution's people approve. A version Dibon drafts is
+  proposed until the institution adopts it (FS-981).
+- **Requires:** BS-23, MF-24; docs/specs/lender-rules.md §2.
+- **Argued (owner):** "i also want product management in odoo so that
+  roan can manage products on their own, without requiring us, reducing
+  our ops effort"; "if we do, for instance during onboarding, then they
+  are marked as draft or something that needs the client approval".
+- **Argued against:** Dibon drafting every version, the operations
+  effort the owner wants gone; the form outside Odoo, a fourth place for
+  staff.
+- **Costs (inferred):** the form and its previews in R1; training for the
+  product owner; the institution's accountability for its products agreed
+  in writing.
+
+## FS-989 · The vocabulary describes loans paid to a third party, and credit lines
+
+*Entry written 2026-10-27 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** four terms added to the product vocabulary (Facility,
+  Repayment source, Payee, Partner) and three kinds of collateral
+  (financed goods, receivables, salary), with four rules across terms and
+  their worked examples; a catalogue of loan kinds, each with what it
+  needs; MF-40 for running them, in phase 2.
+- **Requires:** MF-40; docs/products/loan-kinds.md.
+- **Argued (owner):** "does our product template accommodate this
+  product? Other types of loan products we may not be covering?"; "go
+  ahead with fs-989".
+- **Argued against:** a product type per kind, each with its own form;
+  leaving the payee to the disbursement's channels.
+- **Costs (inferred):** the payee check and partner terms to build with
+  MF-40; three legal questions (LQ-20 to LQ-22) to settle first.

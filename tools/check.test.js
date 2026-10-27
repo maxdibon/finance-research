@@ -1068,7 +1068,7 @@ test('overview: removing a direct link fails', () => {
 const SPEC = (f) => path.join('docs', 'specs', `${f}.md`);
 
 test('specs: a relation one spec states and the other does not fails', () => {
-  const f = runWith((d) => patch(d, SPEC('lender-rules'), (t) => t.replace('used_by: [end-of-day-runner, recon]', 'used_by: [recon]')));
+  const f = runWith((d) => patch(d, SPEC('lender-rules'), (t) => t.replace(/^used_by: \[end-of-day-runner, /m, 'used_by: [')));
   assert.deepStrictEqual(names(f), ['specs']);
 });
 
@@ -1120,7 +1120,7 @@ test('site: a spec shows what it implements and what uses it, what links to it, 
     assert.match(spec, /<details class="back"><summary>Linked from \d+ documents?<\/summary>/);
     assert.match(spec, /<nav class="toc"><b>Contents<\/b><a href="#s1">/);
     const core = fs.readFileSync(path.join(outDir, 'docs', 'modules', 'core.html'), 'utf8');
-    assert.match(core, /<b>Specs:<\/b>[^<]*<a href="\.\.\/specs\/end-of-day-runner\.html">/);
+    assert.match(core, /<b>Specs:<\/b>.*?<a href="\.\.\/specs\/end-of-day-runner\.html">/);
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }

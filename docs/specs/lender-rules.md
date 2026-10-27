@@ -9,11 +9,11 @@ released: 2026.10.16
 release: R1
 implements: [mfi]
 depends_on: [kapu-core-fineract, messaging, event-bus-kafka]
-used_by: [end-of-day-runner, recon]
+used_by: [end-of-day-runner, recon, lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896, FS-983, FS-978, FS-981, FS-989]
+last_reviewed: 2026-10-27
 ---
 
 # Lender rules — build specification
@@ -78,7 +78,7 @@ own: FS-629).
 **Related:** implements [mfi](../modules/mfi.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
 [messaging](messaging.md) and [event-bus-kafka](event-bus-kafka.md);
-used by [end-of-day-runner](end-of-day-runner.md) and [recon](recon.md), whose companion recomputes what the rules produce, independently: written from the regulations and the product's terms, not from this service's code (recon §3, FS-793). Both read one interpretation record for the readings not yet settled, and both are tested on §2.9's worked examples (recon §3.1, FS-796); journeys
+used by [lending-service](lending-service.md), [end-of-day-runner](end-of-day-runner.md) and [recon](recon.md), whose companion recomputes what the rules produce, independently: written from the regulations and the product's terms, not from this service's code (recon §3, FS-793). Both read one interpretation record for the readings not yet settled, and both are tested on §2.9's worked examples (recon §3.1, FS-796); journeys
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and
 [JN-06](../journeys/restructuring.md).
@@ -269,9 +269,16 @@ companion all take the terms from it, and none keeps terms of its own.
   in the code repository, changed only by pull request; adding a term
   means this service, the Fineract mapping and the companion support it
   together.
-- **Drafted in the back office** by the institution's product owner, on a
-  form bound to the vocabulary, usually from one of Dibon's starter
-  templates. Before it can be submitted, the form previews sample
+- **Drafted by the institution itself** (FS-978): its product owner, in
+  the staff workspace's Products screen inside Odoo, on a form bound to
+  the vocabulary, usually from one of Dibon's starter templates. Odoo is
+  only the form: this service checks every value as it is entered,
+  computes every preview, and stores the version (staff-workspace rule
+  9). **A version Dibon drafts is *proposed*** (FS-981): during
+  onboarding, or as a change we suggest. Dibon never submits, approves or
+  activates one; the institution's product owner reviews it, edits it,
+  and **adopts** it as its own draft, or rejects it. Every version records
+  who drafted it and who adopted it. Before it can be submitted, the form previews sample
   schedules, the APR and total cost of credit, the draft key information
   document, and the companion's own figures for the same samples; if
   this service's preview and the companion's disagree, it cannot be
@@ -338,6 +345,8 @@ the form and in the questionnaires (FS-816).
 | Amount limits | Minimum and maximum, KES | The smallest and largest loan the product offers |
 | Term | Length and unit (days, weeks, months); minimum and maximum, or a list of allowed terms (14 or 30 days) | How long the borrower has; it sets the due dates |
 | Repayment frequency | Once at maturity, daily, weekly, monthly, or chosen by the borrower to fit their pay cycle within set bounds; when the first instalment falls (the day after disbursement) | When each instalment falls: it sets the repayment schedule |
+| Facility | A term loan; or a credit line: when its limit renews (monthly, from new purchases, for example), what sets it (assessed, a partner's purchases, salary, a multiple of deposits), and how long each draw runs (FS-989) | Whether the borrower takes one loan, or draws on a limit again and again |
+| Repayment source | Who repays: the borrower; the employer, by check-off; the buyer of an invoice; a share of the borrower's till takings, and what share (FS-989) | Where repayments come from, which the borrower must know before signing |
 | Interest method | Flat; or reducing balance, with equal instalments or equal principal | How interest is worked out; it changes the total cost of credit |
 | Interest rate and its unit | A number, with its period: for the term, a day, a month or a year | The loan's price; published, and pricing needs CBK's approval (reg 55) |
 | Rate type | Fixed; or variable: a benchmark (KESONIA, the Central Bank Rate) plus a margin, and when it resets | Whether the price can change during the loan, and how |
@@ -351,7 +360,7 @@ the form and in the questionnaires (FS-816).
 | Grace | Days after a due date before default interest starts | When default interest starts after a missed instalment |
 | Default interest | Rate, period (a day), base (principal outstanding, or the overdue amount), from which day past due | The charge on a late payment; it counts within the cap (reg 29) |
 | Default period | The days past due at which a loan becomes non-performing: at most 30 for a loan contracted for 30 days or less, 90 for a longer one (reg 57(1)); stated in the credit policy and the agreement (57(2), (3)) | When a late loan becomes non-performing, which starts the cap (reg 57) |
-| Collateral | Unsecured; or the types accepted (a vehicle, chattels, land, deposits), the loan-to-value, and the steps each needs (MF-03) | What secures the loan, and the steps each type needs |
+| Collateral | Unsecured; or the types accepted (a vehicle, chattels, land, deposits; the goods financed, their title kept until paid; receivables; salary, by check-off), the loan-to-value, and the steps each needs (MF-03, FS-989) | What secures the loan, and the steps each type needs |
 | Guarantors | How many; each guarantee's limit; for a Sacco, deposits pledged (reg 42; MF-37) | Who else answers for the loan, and for how much (reg 42) |
 | Restructuring | Allowed or not; how often; any fee, inside the cap (reg 54(7); MF-09) | Whether a borrower in difficulty can have new terms (reg 54(7)) |
 | Statements | How often the borrower and each guarantor receive one (reg 47(2); MF-37, MF-38) | How often borrower and guarantor are told where the loan stands (reg 47(2)) |
@@ -381,6 +390,8 @@ stay internal, as decisioning's risk classes do.
 | Approval chain | By amount tier (mandates MD-01) | Who must approve each loan, by amount |
 | Documents | The checklist (identity ID-02) | What a borrower must provide |
 | Disbursement | The channels: M-Pesa or a bank, and which account | How the money is paid out, and from where |
+| Payee | Who receives the money: the borrower; or a third party (a supplier, dealer, school, hospital, insurer, agro-dealer, merchant), only from an approved list and against a proof (an invoice, a proforma, a quotation, a fee structure, a premium notice); whether any part goes to the borrower (FS-989) | Whether the money reaches the borrower, or pays for what the loan was for |
+| Partner | The third party's part: whether it shares data (with the borrower's consent), what it pays towards the price, any first loss it takes, whether returned goods are refunded to the loan (FS-989) | What the partner owes the lender, and the borrower |
 | Cut-off | When payments stop being released (Roan Capital: 23:00 to 04:00, RC-21) | When payouts stop being released |
 | Purposes | The list a borrower chooses from | The reasons a borrower can choose from |
 | Bureau reporting | When the product's loans are reported (crb, phase 2) | When the product's loans are reported to the bureaus |
@@ -679,6 +690,7 @@ notices under §2.6's checks.
 | `GET /products/{id}/versions/{v}/apr` | APR and total cost of credit |
 | `GET /products/{id}/versions/{v}/kid` | Key information document |
 | `POST /product-changes`, `.../{id}/cbk-approval` | Product version, CBK approval |
+| `POST /product-versions` (draft or proposed), `.../{id}:validate`, `.../{id}:preview`, `.../{id}:adopt`, `.../{id}:submit` | The Products screen: draft, check, preview, adopt a proposed version, submit (FS-978, FS-981) |
 | `POST /loans/{id}/variations`, `.../acceptance` | Variation notice, acceptance |
 | `GET /policies/collection-messaging` | Working hours, recipients, template rules |
 | `POST /complaints/events` | Desk events in, clocks out |

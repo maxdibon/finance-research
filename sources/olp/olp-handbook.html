@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="How to run Odoo sites on OdooLaunchPad, and how the platform works underneath.">
+<title>OdooLaunchPad Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  /* Layout: a sticky contents rail beside one reading column; stacks to a disclosure on phones. */
+  :root {
+    --bg:        #fbfcfd;
+    --surface:   #ffffff;
+    --fg:        #10212b;
+    --fg-soft:   #4d6472;
+    --rule:      #dde6ea;
+    --accent:    #0d7d83;
+    --accent-dim:#e3f2f2;
+    --warn:      #9a5b00;
+    --warn-bg:   #fdf3e2;
+    --danger:    #a32020;
+    --danger-bg: #fdeceb;
+
+    --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+    --body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #0b1418;
+      --surface:   #111f25;
+      --fg:        #e7f0f3;
+      --fg-soft:   #9bb2bc;
+      --rule:      #23373f;
+      --accent:    #4fd1cd;
+      --accent-dim:#11312f;
+      --warn:      #f0b760;
+      --warn-bg:   #2e2412;
+      --danger:    #f08b84;
+      --danger-bg: #331a19;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:        #0b1418;
+    --surface:   #111f25;
+    --fg:        #e7f0f3;
+    --fg-soft:   #9bb2bc;
+    --rule:      #23373f;
+    --accent:    #4fd1cd;
+    --accent-dim:#11312f;
+    --warn:      #f0b760;
+    --warn-bg:   #2e2412;
+    --danger:    #f08b84;
+    --danger-bg: #331a19;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  * { box-sizing: border-box; }
+
+  .shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 0 72px;
+    display: grid;
+    grid-template-columns: 236px minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  }
+
+  /* ── Masthead ───────────────────────────────────────────────────── */
+  .masthead {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid var(--rule);
+    padding-block: 40px 28px;
+    margin-bottom: 36px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+  }
+  .masthead h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    margin: 0 0 12px;
+    text-wrap: balance;
+  }
+  .standfirst {
+    margin: 0;
+    max-width: 62ch;
+    font-size: 1.05rem;
+    color: var(--fg-soft);
+  }
+  .meta {
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--fg-soft);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+  }
+
+  /* ── Contents rail ──────────────────────────────────────────────── */
+  nav.toc {
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 16px);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    font-size: 13.5px;
+    padding-bottom: 20px;
+  }
+  @media (max-width: 900px) {
+    nav.toc {
+      position: static;
+      max-height: none;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 4px 16px 12px;
+      margin-bottom: 36px;
+      background: var(--surface);
+    }
+  }
+  nav.toc h2 {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+    margin: 20px 0 8px;
+    font-weight: 500;
+  }
+  nav.toc h2:first-child { margin-top: 0; }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  nav.toc a {
+    color: var(--fg-soft);
+    text-decoration: none;
+    display: block;
+    padding: 3px 8px;
+    border-radius: 5px;
+    border-left: 2px solid transparent;
+  }
+  nav.toc a:hover { color: var(--fg); background: var(--accent-dim); }
+  nav.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* ── Reading column ─────────────────────────────────────────────── */
+  main { min-width: 0; }
+  section { scroll-margin-top: 24px; margin-bottom: 56px; }
+
+  .part-rule {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-top: 2px solid var(--accent);
+    padding-top: 10px;
+    margin: 72px 0 28px;
+  }
+  .part-rule:first-of-type { margin-top: 0; }
+
+  h2.sec {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: -.015em;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.14rem;
+    margin: 32px 0 6px;
+    text-wrap: balance;
+  }
+  h4 {
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: .96rem;
+    margin: 22px 0 4px;
+  }
+  p { margin: 0 0 14px; max-width: 68ch; }
+  .lede { color: var(--fg-soft); margin-bottom: 20px; max-width: 68ch; }
+  ul, ol.steps { max-width: 68ch; padding-left: 20px; margin: 0 0 14px; }
+  li { margin-bottom: 7px; }
+  a { color: var(--accent); }
+
+  code {
+    font-family: var(--mono);
+    font-size: .85em;
+    background: var(--accent-dim);
+    padding: 1px 5px;
+    border-radius: 4px;
+    word-break: break-word;
+  }
+  pre {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    margin: 0 0 16px;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+
+  .tablewrap { overflow-x: auto; margin: 0 0 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 460px; }
+  th, td {
+    text-align: left;
+    padding: 9px 14px 9px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  th {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+    font-weight: 500;
+  }
+  td code { font-size: 12.5px; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  .note {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-dim);
+    padding: 12px 16px;
+    border-radius: 0 7px 7px 0;
+    margin: 0 0 18px;
+    max-width: 68ch;
+  }
+  .note p:last-child { margin-bottom: 0; }
+  .note.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+  .note.danger { border-left-color: var(--danger); background: var(--danger-bg); }
+  .note strong { font-weight: 600; }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  .label.warn { color: var(--warn); }
+  .label.danger { color: var(--danger); }
+  .label.accent { color: var(--accent); }
+
+  ol.steps { counter-reset: step; list-style: none; padding-left: 0; }
+  ol.steps > li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 12px;
+  }
+  ol.steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    display: grid;
+    place-items: center;
+  }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .card { border: 1px solid var(--rule); border-radius: 9px; padding: 16px; background: var(--surface); min-width: 0; }
+  .card h4 { margin-top: 0; }
+  .card p:last-child { margin-bottom: 0; font-size: 14px; color: var(--fg-soft); }
+
+  footer.colophon {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 13px;
+    color: var(--fg-soft);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+</style>
+<style>
+  /* Baseline the artifact host normally provides; a file opened from disk needs its own. */
+  :root { color-scheme: light dark; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="masthead">
+    <p class="eyebrow">Platform handbook</p>
+    <h1>OdooLaunchPad Handbook</h1>
+    <p class="standfirst">
+      How to run Odoo sites on OdooLaunchPad, and how the platform does it underneath.
+      Part one is the guide for anyone using the dashboard. Part two is for whoever has to
+      fix it.
+    </p>
+    <p class="meta">
+      <span>Covers Odoo 17.0 – 20.0</span>
+      <span>prov-api schema V77</span>
+      <span>Four services, one dashboard</span>
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Using it</h2>
+    <ol>
+      <li><a href="#what">What OdooLaunchPad is</a></li>
+      <li><a href="#start">Your first site</a></li>
+      <li><a href="#sites">Running a site</a></li>
+      <li><a href="#editions">Editions and licences</a></li>
+      <li><a href="#addons">Add-ons from GitHub</a></li>
+      <li><a href="#domains">Domains and HTTPS</a></li>
+      <li><a href="#staging">Staging</a></li>
+      <li><a href="#backups">Backups and restores</a></li>
+      <li><a href="#upgrade">Version upgrades</a></li>
+      <li><a href="#migrate">Bringing a site in</a></li>
+      <li><a href="#team">Your team</a></li>
+      <li><a href="#trouble">When something breaks</a></li>
+    </ol>
+    <h2>How it works</h2>
+    <ol>
+      <li><a href="#arch">The four services</a></li>
+      <li><a href="#identity">Identity and tenancy</a></li>
+      <li><a href="#provisioning">Provisioning</a></li>
+      <li><a href="#anatomy">Anatomy of a site</a></li>
+      <li><a href="#backup-arch">Backup architecture</a></li>
+      <li><a href="#takeover">Imported servers</a></li>
+      <li><a href="#alerts">Alerts and the audit trail</a></li>
+      <li><a href="#deploy">Deployment</a></li>
+      <li><a href="#reference">Reference</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <!-- ══════════════════ PART ONE ══════════════════ -->
+    <p class="part-rule">Part one — Using OdooLaunchPad</p>
+
+    <section id="what">
+      <h2 class="sec">What OdooLaunchPad is</h2>
+      <p class="lede">
+        A place to run Odoo without running servers. You get a site with its own address and
+        HTTPS certificate, backed up on a schedule, with a staging copy when you need one.
+      </p>
+
+      <p>
+        Everything you create is an <strong>Odoo site</strong>: one Odoo application with its own
+        database, its own address, and its own add-ons. Sites live on <strong>servers</strong>.
+        You do not have to own a server — that is the first choice the product asks you to make,
+        and it is the only one that is hard to change later.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h4>Launch — on our hosting</h4>
+          <p>
+            Pick what you need and we put the site on infrastructure we already run. Nothing to
+            install, no cloud account, no server to look after. This is the quick path.
+          </p>
+        </div>
+        <div class="card">
+          <h4>Your own server</h4>
+          <p>
+            Rent a machine from DigitalOcean, Vultr or AWS through your own account, or connect
+            one you already have over SSH. We install Docker, PostgreSQL, nginx and the
+            certificates, then keep it monitored. The machine stays yours.
+          </p>
+        </div>
+      </div>
+
+      <p>
+        Both end up with the same thing running: Odoo in a Docker container, a PostgreSQL database
+        beside it, and nginx in front terminating HTTPS. The difference is who owns the machine and
+        who pays the cloud provider.
+      </p>
+    </section>
+
+    <section id="start">
+      <h2 class="sec">Your first site</h2>
+      <p class="lede">From a new account to a site you can sign in to.</p>
+
+      <h3>If you want us to host it</h3>
+      <ol class="steps">
+        <li>Open <strong>Launch</strong> in the sidebar. This is the only route that assumes nothing about servers.</li>
+        <li>Choose what you want, confirm the address, and pay. The address is yours on our base domain, and you can attach your own domain later.</li>
+        <li>Wait. The page tracks the build: the server is readied, the database is created, the certificate is issued. It moves itself along — you do not have to press anything.</li>
+        <li>When it finishes, the page shows the link and the admin password. <strong>Copy the password somewhere safe</strong>; it is how you first sign in to Odoo.</li>
+      </ol>
+
+      <h3>If you are bringing your own server</h3>
+      <ol class="steps">
+        <li>
+          <strong>Connect a cloud account</strong> under Settings → Cloud, or have the server's SSH
+          key ready. DigitalOcean connects by OAuth; Vultr and AWS take an API key.
+        </li>
+        <li>
+          <strong>Add a server</strong> from the Servers page. Choose the provider, region and size,
+          or pick <em>Connect over SSH</em> for a machine you already have. Provisioning installs
+          Docker, PostgreSQL, nginx and certbot and takes a few minutes.
+        </li>
+        <li>
+          <strong>Add a site</strong> from that server's page. Name it, pick the Odoo version and
+          edition, and keep the admin password it generates.
+        </li>
+        <li>
+          <strong>Point your domain</strong> at the server, or use the address we give you. See
+          <a href="#domains">Domains and HTTPS</a>.
+        </li>
+      </ol>
+
+      <div class="note">
+        <p>
+          <strong>The name becomes the address.</strong> A site named <code>bright-compass</code>
+          is reachable at <code>bright-compass.&lt;your base domain&gt;</code> as soon as it is
+          running. Pick something you will recognise in a list of twenty.
+        </p>
+      </div>
+    </section>
+
+    <section id="sites">
+      <h2 class="sec">Running a site</h2>
+      <p class="lede">The Sites page lists everything you run, with staging copies nested under the site they came from.</p>
+
+      <h3>What the list tells you</h3>
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>State</th><th>What it means</th><th>What to do</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Running</strong></td><td>Odoo is up and answering.</td><td>Nothing.</td></tr>
+            <tr><td><strong>Stopped</strong></td><td>Deliberately stopped. The data is intact; nothing is serving.</td><td>Press Start when you want it back.</td></tr>
+            <tr><td><strong>Deploying</strong></td><td>Being built or changed right now.</td><td>Wait. Open the logs if it is taking too long.</td></tr>
+            <tr><td><strong>Error</strong></td><td>Something failed. The reason is shown on the row itself.</td><td>Read the message, then the logs.</td></tr>
+            <tr><td><strong>Unreachable</strong></td><td>The site says running but its server is not answering.</td><td>Check the server, not the site.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        A row marked <strong>Staging</strong> and indented under another site is a copy of that
+        site, not a separate one. See <a href="#staging">Staging</a>.
+      </p>
+
+      <h3>Starting, stopping, deleting</h3>
+      <p>
+        Stopping a site stops the container. Nothing is lost and it costs you nothing in storage;
+        it simply does not answer. Deleting is different: it removes the database and the files,
+        and it cannot be undone. You will be asked to type the site's name to confirm, because the
+        name on the screen above the box is not enough to stop a mis-click on the wrong row.
+      </p>
+
+      <div class="note warn">
+        <p class="label warn">Before you delete</p>
+        <p>
+          Take a backup first if there is any chance you want the data. A deleted site's database
+          is gone from the server — the only copy left is whatever backup you already took.
+        </p>
+      </div>
+    </section>
+
+    <section id="editions">
+      <h2 class="sec">Editions and licences</h2>
+      <p class="lede">Community is free. Enterprise is Odoo's paid product, and only Odoo can say whether your database is covered.</p>
+
+      <h3>The two editions</h3>
+      <p>
+        <strong>Community</strong> is the open-source Odoo. It needs no subscription, has no expiry,
+        and a Community database carries no licence state at all. <strong>Enterprise</strong> runs
+        the same Odoo with Odoo's paid add-ons layered on top of the add-ons path. Those add-ons
+        require a subscription bought from Odoo.
+      </p>
+
+      <h3>Registering a subscription</h3>
+      <p>
+        Enter your subscription code either in <strong>Advanced options</strong> when creating the
+        site, or on the site's page afterwards. The code goes into the database as
+        <code>database.enterprise_code</code> and Odoo validates it against odoo.com — the same
+        thing Odoo's own "Activate your subscription" screen does. The expiry shown back to you is
+        Odoo's answer, not ours.
+      </p>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>What you see</th><th>What it means</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Licensed</strong></td><td>Odoo accepted the code and gave an expiry a subscription could plausibly have.</td></tr>
+            <tr><td><strong>Ends in N days</strong></td><td>Within 30 days of expiry. Renew or it stops serving.</td></tr>
+            <tr><td><strong>Expired</strong></td><td>The date has passed.</td></tr>
+            <tr><td><strong>Code rejected</strong></td><td>A code was entered and Odoo refused it. Check the code and register it again.</td></tr>
+            <tr><td><strong>No licence</strong></td><td>Nothing has been registered. Odoo gives a new Enterprise database a short trial; enter your code before it ends.</td></tr>
+            <tr><td><strong>Unverified</strong></td><td>The expiry is set further out than any Odoo subscription runs, so it cannot be confirmed.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note">
+        <p>
+          <strong>Why "Unverified" exists.</strong> The expiry is a row in the database, and
+          anything able to write to that database can put any date in it. A date decades out was
+          not sold by Odoo, so the platform reports it as unconfirmed rather than repeating it as
+          though Odoo had vouched for it. Sites brought in from other hosts often arrive this way.
+        </p>
+      </div>
+
+      <h3>Supplying the Enterprise add-ons</h3>
+      <p>
+        Enterprise add-ons are files, and the platform needs a copy. Under
+        <strong>Settings → Enterprise</strong> you can give either a private GitHub repository with
+        a token, or the <code>odoo_&lt;version&gt;+e.&lt;date&gt;.tar.gz</code> archive Odoo gives
+        subscribers. One source per Odoo major version. The first Enterprise site of a version on a
+        server installs them; every later one on that server reuses the same copy.
+      </p>
+    </section>
+
+    <section id="addons">
+      <h2 class="sec">Add-ons from GitHub</h2>
+      <p class="lede">Your own Odoo modules, kept in a repository and synced onto the site.</p>
+
+      <p>
+        On a site's page, connect a Git repository and branch. The platform clones it onto the
+        server, links every module it finds onto Odoo's add-ons path, and restarts the site so the
+        modules appear in Apps. Press sync again whenever the branch moves; a webhook can do it for
+        you on every push.
+      </p>
+
+      <h4>Python packages your modules need</h4>
+      <p>
+        If a module imports something the Odoo image does not ship — pandas, openpyxl, a vendor SDK
+        — put a <code>requirements.txt</code> at the root of the repository. Those packages are
+        installed into the site's own package directory before Odoo loads the modules, and they
+        survive the container being rebuilt.
+      </p>
+
+      <div class="note warn">
+        <p class="label warn">A missing dependency is not a graceful failure</p>
+        <p>
+          A module that cannot import aborts Odoo's registry, and every page of the site then
+          returns an error. Declaring the requirement is how you avoid finding that out in
+          production.
+        </p>
+      </div>
+    </section>
+
+    <section id="domains">
+      <h2 class="sec">Domains and HTTPS</h2>
+      <p class="lede">Every site gets an address on the platform domain. Your own domain takes one DNS record.</p>
+
+      <ol class="steps">
+        <li>
+          <strong>Point the domain at the server.</strong> Create an <code>A</code> record for your
+          domain pointing at the server's IP address, at your DNS provider.
+        </li>
+        <li>
+          <strong>Add it in OdooLaunchPad</strong>, on the Domains page or the site's own page.
+        </li>
+        <li>
+          <strong>Wait for the certificate.</strong> Once the domain resolves to the server, a
+          Let's Encrypt certificate is issued automatically and nginx starts serving HTTPS on it.
+        </li>
+      </ol>
+
+      <div class="note warn">
+        <p class="label warn">DNS first, certificate second</p>
+        <p>
+          Let's Encrypt proves you control the domain by reaching it over the public internet. If
+          the record has not propagated, the certificate cannot be issued yet — that is not a
+          failure, just the order things happen in. Verify the domain again once DNS has caught up.
+        </p>
+      </div>
+
+      <p>
+        A site can hold any number of domains; each gets its own HTTPS virtual host pointing at the
+        same Odoo.
+      </p>
+    </section>
+
+    <section id="staging">
+      <h2 class="sec">Staging</h2>
+      <p class="lede">A copy of a live site to try things on, with a way to put the code back.</p>
+
+      <p>
+        Creating a staging environment clones a production site — database, files and add-ons —
+        into a second site of its own. You can break it freely. When the change is good, merging
+        takes the <em>code</em> back to production; it does not copy the staging data over your
+        live database.
+      </p>
+
+      <p>
+        In the Sites list, a staging copy is indented beneath the site it came from and marked
+        <strong>Staging</strong>. That nesting is deliberate: the risk with staging is acting on
+        the wrong one of two sites whose names differ by a word.
+      </p>
+
+      <div class="note">
+        <p>
+          <strong>Order matters when deleting.</strong> A staging copy can be removed on its own.
+          Production cannot be removed while a staging copy of it still exists — delete the staging
+          site first.
+        </p>
+      </div>
+    </section>
+
+    <section id="backups">
+      <h2 class="sec">Backups and restores</h2>
+      <p class="lede">A backup is one compressed archive holding the database dump and the filestore.</p>
+
+      <h3>Where backups go</h3>
+      <p>
+        Every organization gets <strong>platform storage</strong> by default — storage the platform
+        runs, included with your plan. You can add your own destination instead (cPanel/FTP,
+        DigitalOcean Spaces, or any S3-compatible bucket) under Backups → Destinations. When a
+        backup policy names no destination, it uses platform storage.
+      </p>
+
+      <h3>Scheduling</h3>
+      <p>
+        A policy says three things: <strong>how often</strong>, <strong>from what time</strong>, and
+        <strong>in whose clock</strong>. The cadence can be every 1, 2, 4, 6, 8 or 12 hours, or
+        daily, weekly or monthly. "Every 6 hours from 02:00" means 02:00, 08:00, 14:00 and 20:00.
+      </p>
+
+      <div class="note">
+        <p>
+          <strong>Set the timezone.</strong> The quietest hour of the night is a local idea, and it
+          is the whole reason backups are scheduled for it. Policies default to your browser's
+          timezone; older ones are in UTC.
+        </p>
+      </div>
+
+      <p>
+        Retention keeps the most recent backups and prunes the rest, so a schedule does not fill
+        your storage indefinitely.
+      </p>
+
+      <h3>Restoring</h3>
+      <p>Pressing Restore asks where it should go.</p>
+
+      <div class="cards">
+        <div class="card">
+          <h4>Put this site back</h4>
+          <p>
+            Replaces the site's own database and files with the backup. Anything since that backup
+            is lost. This is the undo button.
+          </p>
+        </div>
+        <div class="card">
+          <h4>Restore into another site, as a copy</h4>
+          <p>
+            Puts this data onto a different site — to test an upgrade against real data, refresh
+            staging, or recover onto a replacement.
+          </p>
+        </div>
+      </div>
+
+      <p>
+        Restoring onto a <em>different</em> site destroys whatever that site holds, so it asks you
+        to type the name of the site being replaced — not the backup — and it takes a rollback
+        snapshot of the target first.
+      </p>
+
+      <div class="note danger">
+        <p class="label danger">Versions must match</p>
+        <p>
+          An Odoo dump only loads into its own major version. Restoring a 17.0 backup onto an 18.0
+          site is refused, and for good reason: it would not error, it would start migrating the
+          schema on first boot and leave a half-converted database whose only dump is the one just
+          consumed.
+        </p>
+      </div>
+    </section>
+
+    <section id="upgrade">
+      <h2 class="sec">Version upgrades</h2>
+      <p class="lede">One major version at a time, on a copy, with production untouched until you say so.</p>
+
+      <ol class="steps">
+        <li>Pick a running site. The target is always the next major version — 18.0 goes to 19.0, never straight to 20.0.</li>
+        <li>The platform clones it to a staging copy and runs the migration there, using OpenUpgrade. Production keeps serving throughout.</li>
+        <li>Check the migrated copy. It is a real site; sign in and look at the data.</li>
+        <li>Promote when you are satisfied. The production domain starts serving the migrated site, and the old one is kept so you can roll back.</li>
+      </ol>
+
+      <p>
+        Rolling back returns the domain to the original site with its data intact. Discarding
+        deletes the migrated copy and leaves production exactly as it was.
+      </p>
+    </section>
+
+    <section id="migrate">
+      <h2 class="sec">Bringing a site in</h2>
+      <p class="lede">Migration takes a backup from another Odoo host and restores it into a site here.</p>
+
+      <ol class="steps">
+        <li>Upload the backup <code>.zip</code> on the Migration page. It is inspected on arrival — version, edition, modules and size are read out of the archive itself.</li>
+        <li>Choose a target: an existing site, or let the platform create one for you first.</li>
+        <li>Run the migration. Restoring into a site that already holds data requires explicit confirmation, and a rollback snapshot is taken before anything is overwritten.</li>
+      </ol>
+
+      <p>
+        Backups from Odoo 15.0 onwards are accepted, which is wider than the versions the platform
+        will install new. That is deliberate: the archive describes somebody else's site, and
+        refusing to let you say "16.0" would not make it a newer backup.
+      </p>
+    </section>
+
+    <section id="team">
+      <h2 class="sec">Your team</h2>
+      <p class="lede">Roles are named sets of permissions, and each role holds everything the one below it does.</p>
+
+      <p>
+        Invite colleagues from <strong>Team</strong> in the account menu. Each member gets a role,
+        and the role decides what they can do. Senior roles always include everything junior ones
+        have — that is structural, so it cannot be broken by a configuration mistake.
+      </p>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>Role</th><th>Sees</th><th>Can, in addition to the role above</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Org user</strong></td><td>Their own work</td><td>View sites and their logs, view backups</td></tr>
+            <tr><td><strong>Developer</strong></td><td>Their own work</td><td>Create and manage sites, add-ons, staging; take backups; run migrations</td></tr>
+            <tr><td><strong>Org manager</strong></td><td>The organization</td><td>Create and manage servers, attach domains, restore backups, configure schedules</td></tr>
+            <tr><td><strong>Org admin</strong></td><td>The organization</td><td>Organization settings, billing, API keys, invite members and set roles</td></tr>
+            <tr><td><strong>Org owner</strong></td><td>The organization</td><td>Everything, including deleting servers, sites, backups and members</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Deletion sits with the owner everywhere in the product. That is a default a platform
+        administrator can change, not a law.
+      </p>
+
+      <h3>Removing somebody</h3>
+      <p>
+        <strong>Deactivating</strong> keeps a person on the team list and stops them signing in —
+        right for somebody who will be back. <strong>Removing</strong> ends their membership
+        entirely and they disappear from the list. Their account is not deleted, because one email
+        can belong to several organizations; inviting the same address adds them back.
+      </p>
+
+      <div class="note">
+        <p>
+          You cannot remove yourself. The moment it succeeded you would have no role in the
+          organization and could not put yourself back — somebody else would have to, and if you
+          were the only owner, nobody could.
+        </p>
+      </div>
+    </section>
+
+    <section id="trouble">
+      <h2 class="sec">When something breaks</h2>
+
+      <h3>The site shows 502 Bad Gateway</h3>
+      <p>
+        nginx is up but cannot reach Odoo. Usually the container is still starting — give it a
+        minute. If it persists, open the site's logs: Odoo prints why it refused to start, and a
+        module that cannot import is the most common reason.
+      </p>
+
+      <h3>The site says Running but will not load</h3>
+      <p>
+        Check the server, not the site. If the server is offline or unreachable, every site on it
+        is affected and the site's own status is stale.
+      </p>
+
+      <h3>HTTPS is not working on my domain</h3>
+      <p>
+        The certificate cannot be issued until the domain resolves to the server. Confirm the
+        <code>A</code> record points at the right IP, wait for propagation, then verify the domain
+        again.
+      </p>
+
+      <h3>Odoo says my database has expired</h3>
+      <p>
+        An Enterprise database without a valid subscription stops serving when its trial ends.
+        Register your subscription code on the site's page. If the code is refused, the site will
+        say so — Odoo decides, not the platform.
+      </p>
+
+      <h3>I cannot delete a server</h3>
+      <p>
+        Two things refuse it. <strong>Deletion protection</strong> is a lock an owner can switch on;
+        only an owner can switch it off. Separately, removing the record of a machine that is still
+        live at the provider is refused once, so you read the warning that the machine will keep
+        running and billing — confirm again and it goes ahead.
+      </p>
+
+      <div class="note">
+        <p>
+          <strong>Delete Record and Destroy are different.</strong> Delete Record removes
+          OdooLaunchPad's record and leaves the machine alone. Destroy terminates the machine at
+          the provider. For a server imported from elsewhere, only Delete Record is offered: the
+          platform will not terminate a machine it does not own.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════ PART TWO ══════════════════ -->
+    <p class="part-rule">Part two — How OdooLaunchPad works</p>
+
+    <section id="arch">
+      <h2 class="sec">The four services</h2>
+      <p class="lede">One dashboard in front, four backends behind it, sharing one JWT secret.</p>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>Service</th><th>Stack</th><th>Owns</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>olp</strong><br><code>odoo-launch-pad-backend/olp</code></td>
+              <td>Spring Boot, MySQL, Flyway, Kafka, Redis</td>
+              <td>Identity: organizations, users, roles and permissions, JWTs, 2FA, social login, billing and plans</td>
+            </tr>
+            <tr>
+              <td><strong>prov-api</strong><br><code>launchpad_prov_api</code></td>
+              <td>Spring Boot, PostgreSQL, Flyway, Terraform, Ansible</td>
+              <td>The core: servers, sites, domains, staging, upgrades, monitoring, alerts, the catalog</td>
+            </tr>
+            <tr>
+              <td><strong>migration-api</strong><br><code>launchpad_migration_api</code></td>
+              <td>Node, Express, Sequelize, ssh2</td>
+              <td>Backups, backup destinations, schedules, restores, migrations in</td>
+            </tr>
+            <tr>
+              <td><strong>notification</strong><br><code>…/notification</code></td>
+              <td>Spring Boot, Kafka consumer</td>
+              <td>Turns olp's events into email</td>
+            </tr>
+            <tr>
+              <td><strong>frontend</strong><br><code>launchpad_Frontend_V1</code></td>
+              <td>React, Vite, TypeScript, React Query, STOMP</td>
+              <td>The dashboard</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        prov-api and migration-api share one PostgreSQL database. prov-api's schema is owned by
+        Flyway; migration-api's Sequelize owns only the <code>migration_*</code> tables in that same
+        database and never touches the rest. That is why migration-api can read a site's Odoo
+        version directly and why a schema change on either side has to respect the other.
+      </p>
+    </section>
+
+    <section id="identity">
+      <h2 class="sec">Identity and tenancy</h2>
+
+      <p>
+        olp signs access tokens; prov-api and migration-api validate them with the
+        <em>same</em> secret. If those drift between services, logins succeed and every
+        subsequent request 401s.
+      </p>
+
+      <p>
+        <strong>The <code>organizationId</code> claim is the tenant id.</strong> Every query in
+        prov-api and migration-api is scoped by it. A resource belonging to another organization
+        reads as <em>absent</em> rather than forbidden, so an endpoint cannot be used to discover
+        which ids exist.
+      </p>
+
+      <p>
+        The token also carries the holder's permissions, as codes such as <code>bak.restore</code>
+        or <code>srv.delete</code>. Every door asks for a permission rather than a role name. This
+        replaced thirty hand-written role lists that had drifted apart — at one point an
+        organization's owner could not restore their own backup, because the route listed three
+        roles and ownership was added to the product after they were written.
+      </p>
+
+      <h3>Belonging to more than one organization</h3>
+      <p>
+        One email can hold memberships of several organizations with a different role in each.
+        Switching re-scopes the session: a new token is minted carrying the role held
+        <em>there</em>, and that organization's entitlements. Nothing about the account changes —
+        only which organization the session is acting in.
+      </p>
+    </section>
+
+    <section id="provisioning">
+      <h2 class="sec">Provisioning</h2>
+      <p class="lede">Terraform makes the machine, Ansible prepares it, shell scripts over SSH do everything after that.</p>
+
+      <ol class="steps">
+        <li><strong>Terraform</strong> creates the machine in the customer's own cloud account, using credentials they connected.</li>
+        <li><strong>Ansible</strong> installs Docker, PostgreSQL, nginx, certbot and the firewall rules, and starts a shared PostgreSQL container on a private Docker network.</li>
+        <li><strong>Per-site scripts</strong> run over SSH for everything afterwards: creating a site, removing one, switching edition, upgrading, syncing add-ons, cleaning disk.</li>
+      </ol>
+
+      <p>
+        Long operations run in the background and report progress over websockets, so the dashboard
+        shows a live status rather than a spinner. Every run writes a log file named deterministically
+        after the operation and the site, which is what the dashboard's log viewer reads.
+      </p>
+
+      <h3>Where the work actually happens</h3>
+      <p>
+        Nothing executes on the platform's own servers. Scripts are streamed to the customer's
+        machine over SSH stdin and run there, so the platform holds no copy of a customer's data in
+        transit and a backup's bytes go from the customer's server straight to the storage
+        destination.
+      </p>
+    </section>
+
+    <section id="anatomy">
+      <h2 class="sec">Anatomy of a site</h2>
+      <p class="lede">What exists on the server once a site is running.</p>
+
+      <pre><code>/opt/odoo/instances/&lt;name&gt;/
+├── config/odoo.conf        the Odoo configuration, mounted read-only
+├── data/                   filestore + sessions  (Odoo's data_dir)
+├── extra-addons/           add-ons cloned from Git
+└── python-packages/        pip packages installed with --target</code></pre>
+
+      <p>
+        The container is named <code>odoo-&lt;name&gt;</code> and joins the shared
+        <code>odoo-net</code> Docker network, where PostgreSQL is reachable simply as
+        <code>postgres</code>. Odoo's HTTP port 8069 and longpolling port 8072 are published to
+        host ports allocated per site; nginx proxies the public domain to the published HTTP port.
+      </p>
+
+      <h4>The configuration</h4>
+      <pre><code>[options]
+db_host = postgres
+db_name = odoo_&lt;name&gt;
+db_filter = ^odoo_&lt;name&gt;$
+admin_passwd = …
+proxy_mode = True
+http_interface = 0.0.0.0
+addons_path = /mnt/enterprise,/mnt/extra-addons,…</code></pre>
+
+      <div class="note warn">
+        <p class="label warn">Two settings that are not optional</p>
+        <p>
+          <code>proxy_mode</code> tells Odoo to trust the headers nginx forwards, since nginx
+          terminates TLS. <code>http_interface</code> must be <code>0.0.0.0</code>: Odoo 20 changed
+          its default to loopback, and inside a container that means the published port forwards to
+          nothing — nginx returns 502 while Odoo logs a perfectly clean start.
+        </p>
+      </div>
+
+      <h4>File ownership differs by version</h4>
+      <p>
+        The user Odoo runs as inside its image is not the same across versions: Odoo 17 runs as
+        <code>101:101</code>, Odoo 18 and later as <code>100:101</code>. Anything written into the
+        site's directories has to match, or Odoo cannot write its own sessions and every request
+        fails.
+      </p>
+    </section>
+
+    <section id="backup-arch">
+      <h2 class="sec">Backup architecture</h2>
+
+      <p>
+        A backup is one archive containing a <code>pg_dump</code> of the database and a tar of the
+        filestore. One archive means one object in storage, which keeps object counts — and an FTP
+        account's inode limit — a long way from mattering.
+      </p>
+
+      <h3>Destinations</h3>
+      <p>
+        A destination is either cPanel/FTP or S3-compatible. DigitalOcean Spaces is S3, so it needs
+        no separate backend — only the right endpoint, which is derived from the region so the two
+        cannot disagree. Destinations belong either to the platform (shared, the default for every
+        organization) or to one organization.
+      </p>
+
+      <h3>Reading a backup later</h3>
+      <p>
+        Every backup records the destination that wrote it. Downloads, restores and deletions
+        resolve <em>that</em> destination, not whichever one is current. Changing where backups go
+        retires the old destination rather than overwriting it, so archives already stored stay
+        reachable with credentials that still work.
+      </p>
+
+      <h3>Scheduling</h3>
+      <p>
+        The scheduler asks "when should this last have run, and has it?" rather than "is it that
+        hour now". A tick that lands late still fires; one that lands twice does not fire twice; and
+        an hour missed because the service was restarting is caught up rather than lost.
+      </p>
+    </section>
+
+    <section id="takeover">
+      <h2 class="sec">Imported servers</h2>
+      <p class="lede">A machine the platform did not build can be brought under observation without being touched.</p>
+
+      <p>
+        Takeover inspects a running server over SSH — reading only, with no file written — records
+        what it finds, and leaves it <strong>Observed</strong>. The sites on it are marked externally
+        managed. In that state the platform monitors and nothing else: starting, stopping,
+        reprovisioning and destroying are all refused.
+      </p>
+
+      <p>
+        Promoting a server moves it to <strong>Managed</strong> and lifts those refusals. Destroy is
+        refused outright until then, because an imported machine is somebody's live server that the
+        platform merely wrote down, and terminating it is the one act that could never be undone.
+      </p>
+
+      <div class="note">
+        <p>
+          <strong>Delete Record always works.</strong> A record is a description, and keeping one of
+          something nobody can reach serves nobody. Forgetting a server also forgets the records of
+          its sites; the sites themselves keep running.
+        </p>
+      </div>
+    </section>
+
+    <section id="alerts">
+      <h2 class="sec">Alerts and the audit trail</h2>
+
+      <p>
+        Alerts are <strong>opt-in per organization, per type</strong>. Nothing fires until somebody
+        switches it on, which is why a new organization is quiet. Each type can go to email, SMS or
+        a webhook independently. An alert that was suppressed is recorded as suppressed, because
+        from the outside that looks identical to one that failed to send — and that is the question
+        support actually gets asked.
+      </p>
+
+      <p>
+        Removals are also written down. Deleting a site or forgetting a server records who did it,
+        what it was and when, and raises an alert naming the person. Creations are recorded but not
+        emailed: whoever made it already knows, and a message for every new site trains people to
+        ignore the ones that matter.
+      </p>
+    </section>
+
+    <section id="deploy">
+      <h2 class="sec">Deployment</h2>
+
+      <p>
+        All four services and the dashboard run in one k3s cluster, in a namespace per environment.
+        Deployments are image-tag updates onto deployments that already exist; a structural change —
+        a new environment variable, different resources — means editing the manifests and
+        re-running the bootstrap.
+      </p>
+
+      <h4>Gates</h4>
+      <p>
+        <code>main</code> is hard-gated: failing tests for a changed module block the production
+        deploy. <code>dev</code> is soft-gated, so a red suite is visible but does not stop
+        iteration — which means a change that reddens the suite stalls at the dev-to-main merge
+        instead.
+      </p>
+
+      <div class="note danger">
+        <p class="label danger">Never edit an applied migration</p>
+        <p>
+          Flyway records a checksum for every migration it has run. Changing one that has already
+          been applied — even a comment — makes Flyway refuse to start against a history it no
+          longer recognises, and the pod crash-loops. Add a new migration instead.
+        </p>
+      </div>
+
+      <h4>Caching</h4>
+      <p>
+        Assets are content-hashed and served immutable for a year; <code>index.html</code> is served
+        <code>no-store</code>. That pairing is what makes a deploy reach people: the entry point is
+        the only file that names the hashed bundles, so if it is cached, browsers keep loading the
+        previous build indefinitely.
+      </p>
+    </section>
+
+    <section id="reference">
+      <h2 class="sec">Reference</h2>
+
+      <h3>Odoo versions</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Context</th><th>Versions</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>Installed new</td><td class="num">17.0 – 20.0</td><td>What the platform provisions today</td></tr>
+            <tr><td>Accepted from a migration</td><td class="num">15.0 – 20.0</td><td>Describes someone else's site, so it is wider</td></tr>
+            <tr><td>Enterprise add-ons</td><td class="num">15 and newer</td><td>A floor, not a list — a new release needs no code change</td></tr>
+            <tr><td>Upgrade step</td><td>One major at a time</td><td>OpenUpgrade migrates between adjacent versions</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ports and paths</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Thing</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Odoo HTTP (in container)</td><td class="num">8069</td></tr>
+            <tr><td>Odoo longpolling (in container)</td><td class="num">8072</td></tr>
+            <tr><td>Site directory</td><td><code>/opt/odoo/instances/&lt;name&gt;</code></td></tr>
+            <tr><td>Odoo data dir</td><td><code>/var/lib/odoo/.local/share/Odoo</code></td></tr>
+            <tr><td>Filestore</td><td><code>&lt;data&gt;/filestore/&lt;db&gt;</code></td></tr>
+            <tr><td>Enterprise add-ons</td><td><code>/opt/odoo/enterprise/&lt;major&gt;</code></td></tr>
+            <tr><td>Container name</td><td><code>odoo-&lt;name&gt;</code></td></tr>
+            <tr><td>Database name</td><td><code>odoo_&lt;name&gt;</code> (hyphens become underscores)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Permission codes</h3>
+      <p>
+        These travel in the access token and are compared in all four services. The prefix says
+        which area: <code>org.</code>, <code>srv.</code>, <code>inst.</code>, <code>bak.</code>,
+        <code>mig.</code>.
+      </p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Code</th><th>Allows</th></tr></thead>
+          <tbody>
+            <tr><td><code>srv.create</code></td><td>Provision a server, connect one over SSH, import a running one</td></tr>
+            <tr><td><code>srv.manage</code></td><td>Reboot, resize, recover, clean up, promote</td></tr>
+            <tr><td><code>srv.delete</code></td><td>Delete or destroy a server</td></tr>
+            <tr><td><code>inst.create</code></td><td>Create sites</td></tr>
+            <tr><td><code>inst.manage</code></td><td>Start, stop, restart</td></tr>
+            <tr><td><code>inst.addons</code></td><td>Manage add-ons, switch edition, register a subscription code</td></tr>
+            <tr><td><code>inst.staging</code></td><td>Create and promote staging sites</td></tr>
+            <tr><td><code>inst.domains</code></td><td>Attach and remove domains</td></tr>
+            <tr><td><code>inst.delete</code></td><td>Delete a site, its database and its files</td></tr>
+            <tr><td><code>bak.create</code></td><td>Take a backup, run a policy now</td></tr>
+            <tr><td><code>bak.restore</code></td><td>Restore a site from a backup</td></tr>
+            <tr><td><code>bak.policy</code></td><td>Configure schedules and destinations</td></tr>
+            <tr><td><code>bak.delete</code></td><td>Delete a backup or a policy</td></tr>
+            <tr><td><code>mig.run</code></td><td>Import and migrate existing sites</td></tr>
+            <tr><td><code>org.members.manage</code></td><td>Add and invite members</td></tr>
+            <tr><td><code>org.members.remove</code></td><td>Remove members</td></tr>
+            <tr><td><code>org.billing</code></td><td>View and manage billing, choose a plan</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        A <code>.view</code> permission means "the ones you created"; the matching
+        <code>.view.all</code> means every one in the organization. Below Org manager, a member
+        opens a page and finds their own work.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="colophon">
+    <p>
+      OdooLaunchPad Handbook. Part one is written for anyone using the dashboard; part two for
+      whoever maintains the platform. Version numbers, paths and permission codes were read from
+      the running system rather than from older documentation — check them again after a release
+      that changes them.
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>

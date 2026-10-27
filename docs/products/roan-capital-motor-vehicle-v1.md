@@ -1,22 +1,23 @@
 ---
 id: roan-capital-motor-vehicle-v1
-name: Roan Capital — Motor Vehicle, the logbook loan, product version 1 (draft)
+name: Roan Capital — Motor Vehicle, the logbook loan, product version 1 (proposed)
 kind: product-version
-status: draft
+status: proposed
 law: LR-03
 released: unreleased
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-934, FS-935, FS-957]
-last_reviewed: 2026-10-23
+review_ids: [FS-934, FS-935, FS-957, FS-981]
+last_reviewed: 2026-10-27
 ---
 
-# Roan Capital · Motor Vehicle, the logbook loan · product version 1 · draft
+# Roan Capital · Motor Vehicle, the logbook loan · product version 1 · proposed
 
     product:   Motor Vehicle (secured by the vehicle's logbook)
-    version:   1 (draft, not submitted)
+    version:   1 (proposed, not submitted)
     drafted:   2026-10-23, by Dibon, for Roan Capital's product owner
-    status:    draft: every Ask below answered before it can be submitted
+    status:    proposed: drafted by Dibon; Roan Capital adopts it as its
+               own draft, and every Ask is answered, before it is submitted
     source:    Roan Capital's weekly update of 21 October 2026, where the
                product was defined (FS-934); lender-rules §2.4 (the
                vocabulary), §2.11 (selling security)

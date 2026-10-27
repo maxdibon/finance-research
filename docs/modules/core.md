@@ -10,8 +10,8 @@ classification: Internal
 audience: [mfi, sacco, bank]
 depends_on: [access, identity, mandates, messaging, rails, recon-observability, financial-crime]
 consumed_by: [mfi, sacco, collect, omni-channel, insights, financial-crime, decisioning]
-review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431, FS-450, FS-453, FS-574, FS-578, FS-626, FS-633]
-last_reviewed: 2026-10-16
+review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431, FS-450, FS-453, FS-574, FS-578, FS-626, FS-633, FS-985]
+last_reviewed: 2026-10-27
 ---
 
 # Kapu Core
@@ -31,6 +31,9 @@ they run on that core instead, as Collect did at Onit Bank (the
 integrated mode, FS-390). Kapu Core is the native mode of the
 architecture, packaged as a product (docs/architecture/README.md §4). **The money
 stays in the institution's own accounts; Kapu Core will be its ledger.**
+Deposit accounts are kept by the deposits service (FS-985;
+docs/specs/deposits-service.md), loans by the lending service, both
+posting through one core adapter.
 
 ## 2 · Who it is for
 

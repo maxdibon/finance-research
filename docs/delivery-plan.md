@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808]
-last_reviewed: 2026-10-14
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974, FS-965, FS-987]
+last_reviewed: 2026-10-27
 ---
 
 # Delivery plan — phase 1 in releases
@@ -45,7 +45,7 @@ the check keeps the two in step):
   title searches and charge registration (MF-18) and programmatic NTSA
   (MF-05) are phase 2, as the document's exclusions say; land titles are
   stored in R1 under MF-03 (FS-581).
-- **Approvals:** MD-01, MD-02, MD-03 (the chain frozen at submission),
+- **Approvals:** MD-21 (the Kapu Console: FS-987), MD-01, MD-02, MD-03 (the chain frozen at submission),
   MD-04 (roles resolved to people when needed), MD-05, MD-06, MD-07 (a
   flag ends with its authority), MD-08 (reminders and escalation), MD-09
   (the 3-of-3 committee), MD-10, MD-18 (approval from email).
@@ -81,7 +81,9 @@ the check keeps the two in step):
 - **Access:** AC-03 (borrowers and guarantors by a code to their bound
   phone; passkeys with the app), AC-05, AC-09, AC-13 (codes through our
   messaging).
-- **Business suite:** BS-01 (CRM for leads), BS-02 (Odoo Sign, for loan
+- **Business suite:** BS-21 (the back office behind one interface, so
+  the ERP can change: FS-970), BS-23 (the staff workspace in Odoo, in
+  place of the Mifos web app: FS-965), BS-01 (CRM for leads), BS-02 (Odoo Sign, for loan
   agreements), BS-12 (the employee record only, in Odoo's Employees
   app, which provisions staff access; payroll, leave and attendance
   later, FS-769).
@@ -128,7 +130,7 @@ live (FS-777).
 **The current scope is the target** (FS-490): v1 is everything in phase 1
 today, and it does not grow by drift.
 
-**v1 cap:** 249 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585, FS-586, FS-618, FS-638).
+**v1 cap:** 252 capabilities in phase 1 (FS-490, FS-500, FS-503, FS-516, FS-531, FS-532, FS-539, FS-551, FS-552, FS-560, FS-574, FS-582, FS-585, FS-586, FS-618, FS-638, FS-974, FS-965, FS-987).
 
 Nothing moves into phase 1 unless something of similar size moves out, or
 the team grows to carry it. Raising the cap is a decision: the line above
@@ -168,10 +170,10 @@ not:
 - **Fineract** already does loan products, schedules, charges,
   repayments by component, accounting and standard reports: configure,
   do not build.
-- **The Mifos X web app** (its licence to confirm against architecture §6.1
-  before use; if MPL-2.0, it is used unmodified) is Fineract's back-office screen:
-  use it, with our screens only where a flow is ours (the committee vote,
-  the collateral gate).
+- **The staff workspace in Odoo** (BS-23, FS-965) is staff's screen over
+  Fineract, through Kapu MFI: Roan Capital's staff found the Mifos X web
+  app hard to use. Mifos X stays at most a read-only fallback for named
+  staff (staff-workspace, open question 2).
 - **Odoo** does leads, the public page, documents and the desk.
 - **Keycloak** does login, single sign-on and step-up: configure.
 - **Identity checks** (ID-01, ID-07) through one vendor's API (partners

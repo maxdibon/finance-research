@@ -9,11 +9,11 @@ released: 2026.10.16
 release: R1
 implements: [core]
 depends_on: [access-keycloak, event-bus-kafka]
-used_by: [approval-engine, lender-rules, end-of-day-runner, recon]
+used_by: [approval-engine, lender-rules, end-of-day-runner, recon, lending-service, deposits-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802]
-last_reviewed: 2026-10-16
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983]
+last_reviewed: 2026-10-27
 ---
 
 # Kapu Core on Apache Fineract — component specification
@@ -82,7 +82,7 @@ FS-185. Groups (KC-01, later).
 
 **Related:** implements [core](../modules/core.md); depends on
 [access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by
-[approval-engine](approval-engine.md), [lender-rules](lender-rules.md),
+[deposits-service](deposits-service.md), [lending-service](lending-service.md), [approval-engine](approval-engine.md), [lender-rules](lender-rules.md),
 [end-of-day-runner](end-of-day-runner.md) and [recon](recon.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md) and
 [JN-06](../journeys/restructuring.md).
@@ -338,8 +338,10 @@ On a running 1.15 instance, before the build relies on each (FS-625):
 
 **For the owner:**
 
-1. Do staff use Fineract's own screens, through the Mifos web app, and
-   which version (FS-136)? Until settled, staff have no Fineract role.
+1. Answered (FS-965): staff do not use the Mifos web app; they work in
+   the staff workspace in Odoo, over Kapu MFI (staff-workspace). Staff
+   have no Fineract role, unless a read-only one for named staff is
+   chosen as the fallback (staff-workspace, open question 2).
 2. Fineract as a deposit core for Saccos and banks (FS-185).
 
 **For Roan Capital:**
