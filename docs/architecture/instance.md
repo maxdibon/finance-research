@@ -121,11 +121,25 @@ customer pages, the shadow ledger (in memory), the staff workspace (in
 Odoo). Other stores: the event bus, and object storage.
 
 **Namespaces: proposed, a cluster per institution in production, and ten
-namespaces in it:** edge, services, data and bastion (the four zones,
-deployment §1), and the platform's flux-system, cnpg-system,
-kafka-system, cert-manager, spire and observability. Site B the same, at
-zero. A component added to an instance is added here, with its database
-and namespace.
+namespaces in it,** the four zones (deployment §1) and the platform's
+own. Site B the same, at zero.
+
+| Namespace | What runs there |
+|---|---|
+| edge | The web application firewall and API gateway |
+| services | Our services, Kapu Core, access, Odoo, Flowza |
+| data | The PostgreSQL clusters, the event bus, OpenBao, object storage's gateway |
+| bastion | The bastion through which people reach anything inside |
+| flux-system | GitOps |
+| cnpg-system | The PostgreSQL operator |
+| kafka-system | The event bus's operator |
+| cert-manager | Certificates |
+| spire | Workload identity |
+| observability | Agents and local stores, feeding the fleet's Grafana |
+
+A component added to an instance is added to the table of boxes above,
+with its database and namespace; every deployment's register follows
+(deployments, FS-1037).
 
 **Environments.** One code base, the same signed images, promoted through:
 

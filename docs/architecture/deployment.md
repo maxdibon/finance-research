@@ -6,7 +6,7 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896, FS-1032]
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896, FS-1032, FS-1037]
 last_reviewed: 2026-10-27
 ---
 
@@ -213,6 +213,10 @@ OpenBao unseal key held at site B; the runbook rehearsed once.
 issue #38 is open), so its data lives in PostgreSQL, a backend its
 documentation calls production ready (FS-693); site B runs no Kafka under
 cold or warm standby (FS-694). **Open:** site B's provider (§1), needed before Roan Capital's go-live, since its contract takes warm standby (FS-775).
+
+The steps are the [site failover runbook](../runbooks/site-failover.md);
+each deployment's own continuity is its page in
+[deployments](../deployments/README.md) (FS-1037).
 
 ## 3 · The offline copy
 
