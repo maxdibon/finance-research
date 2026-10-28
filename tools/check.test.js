@@ -478,7 +478,7 @@ test('customers: a delivery map that drifts from the register fails', () => {
 const PRODUCT = path.join('docs', 'products', 'roan-capital-30-day-loan-v1.md');
 
 test('products: an ask outside the fixed list fails', () => {
-  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace('| The prototype (open answer 29) | Confirm |', '| The prototype (open answer 29) | Select |')));
+  const f = runWith((d) => patch(d, PRODUCT, (t) => t.replace("| Minimum KES 3,000; maximum KES 100,000 | Roan Capital's weekly update, 21 October; the prototype | Confirm |", "| Minimum KES 3,000; maximum KES 100,000 | Roan Capital's weekly update, 21 October; the prototype | Select |")));
   assert.deepStrictEqual(names(f), ['products']);
 });
 
