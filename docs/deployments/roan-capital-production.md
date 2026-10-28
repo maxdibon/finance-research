@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-1037, FS-1045]
+last_reviewed: 2026-10-28
 ---
 
 # Roan Capital · production
@@ -59,11 +59,166 @@ Written from the design (FS-1037); generated from the code once it exists
 | OPENBAO | Yes | To pin | data | Secrets: openbao | 3 | architecture README §6 |
 | OBSERVABILITY | Yes: agents and local stores; the fleet's Grafana central | Grafana 13.x | observability | — | 1 | observability-grafana |
 
+### How the components interact
+
+FS-1045. Seven diagrams, each adding a layer to the one before: the way
+in; a loan asked for and decided; money moving; events and checks; a
+signed agreement; the night's close; and what everything stands on.
+Names as in the table above.
+
+**1 · The way in.** Everyone comes through the edge, and signs in at
+access; each kind of person reaches only their own screens.
+
+```
+  Roan Capital's staff       borrowers, guarantors          Dibon's engineers
+  (browser)                  (links, codes to their phone)  (by ticket)
+         |                              |                             |
+         v                              v                             v
+  +---------------------------------------------------------+  +-----------+
+  | EDGE   firewall and gateway: the only way in            |  | BASTION   |
+  +---------------------------------------------------------+  +-----------+
+         |                              |                     platform tooling
+         v                              v                     only; data never
+  +---------------------------------------------------------+
+  | ACCESS  staff realm: password and two-factor            |
+  |         customers realm: a code to the bound phone      |
+  +---------------------------------------------------------+
+         |                  |                       |
+         v                  v                       v
+  STAFF WORKSPACE      KAPU CONSOLE            CUSTOMER PAGES
+  daily lending,       approvals; read-only    consents, signing,
+  inside ODOO          views if Odoo is down   statements
+```
+
+**2 · A loan, asked for and decided.** The screens never write to the
+ledger: they ask the lending service, which checks, asks for a decision,
+and alone writes to the core.
+
+```
+  STAFF WORKSPACE --- an application, as the person signed in ---+
+                                                                  v
+                                                    +---------------------------+
+                                                    | LENDING SERVICE           |
+                                                    | (Kapu MFI, for lenders)   |
+                                                    +---------------------------+
+                      checks the borrower              |    |    |
+       IDENTITY <--------------------------------------+    |    |
+       national ID register, phone and SIM checks           |    |
+                                                            |    |
+                      the regulations, on each loan         |    |
+       LENDER RULES <---------------------------------------+    |
+                                                                 |
+                      who must approve, by the mandate           |
+       APPROVAL ENGINE <-----------------------------------------+
+       never the originator, nor anyone who is the borrower,
+       a guarantor or an officer (by ID number); step-up at ACCESS
+                                                                 |
+                      once approved: the only writer             v
+                                         CORE ADAPTER ------> KAPU CORE
+                                                             the loan, its schedule,
+                                                             the general ledger
+```
+
+**3 · Money moving.** Payouts go out through the bank by Roan Capital's
+own release; repayments come in to its paybill; both come back to the
+ledger and are matched.
+
+```
+  LENDING SERVICE --- approved payout ---> RAILS --- payout instruction ---+
+                                                                           v
+                                              NCBA: released by Roan Capital's
+                                              staff in its internet banking
+                                              (maker-checker); never by us
+                                                                           |
+  borrower pays by M-Pesa                                                  | statement
+         |                                                                 v
+         v                                                       +--------------------+
+  Roan Capital's paybill --- callback, and transactions pulled --->| RAILS              |
+                                                                 +--------------------+
+                                                                           |
+                                    LENDING SERVICE <--- each payment -----+
+                                          |
+                                          v
+                                    CORE ADAPTER ---> KAPU CORE: posted
+```
+
+**4 · Events, and the checks on them.** Every change is written with its
+event in one transaction, published in order, and read by whoever needs
+it; nothing on the money path waits for a reader.
+
+```
+  LENDING SERVICE  APPROVAL ENGINE  RAILS  KAPU CORE  IDENTITY  ...
+         |               |            |        |          |
+         +---------------+------------+--------+----------+   each from its own outbox
+                                   |
+                                   v
+  ================== EVENT BUS: every change, signed, in order ==================
+          |                     |                      |                     |
+          v                     v                      v                     v
+  RECONCILIATION         MESSAGING              BACK-OFFICE GATEWAY    OBSERVABILITY
+  the ledger against     SMS under Roan         to ODOO: contacts,     metrics, logs,
+  the rails; SHADOW      Capital's sender ID,   tickets, signing;      alerts, to the
+  and COMPANION          WhatsApp, email;       queued if Odoo is      fleet's Grafana
+  ledgers beside it      FLOWZA for replies     down
+```
+
+**5 · An agreement, signed.** The agreement goes out for signing through
+the back office, and comes back to the vault with its evidence.
+
+```
+  LENDING SERVICE --- agreement and key facts ---> BACK-OFFICE GATEWAY ---> ODOO: Sign
+                                                                               |
+                     MESSAGING --- the signing link ---> borrower, guarantor   |
+                                                                               |
+         a code to each signer's bound phone; who signed, when, from which phone
+                                                                               v
+                           VAULT (OBJECT STORAGE) <--- signed document and its evidence
+                           ODOO keeps the contract record; personal data only in the vault
+```
+
+**6 · The night's close.** The runner checks before Fineract closes the
+day, applies the regulations after, and tells someone when anything
+fails.
+
+```
+  21:00   END-OF-DAY RUNNER: first pass of the checks, an early warning
+  23:45   final pass (payments posted, rails reconciled, services healthy)
+            |   a blocking check failing --> held, the accountant and on-call told
+            v
+          KAPU CORE closes the business day
+            v
+          post-checks: the date moved, every loan closed, the trial balance balances
+            v
+          LENDER RULES for the day (default interest, ladders, notices)
+            v
+  06:00   the morning report to Roan Capital's accountant and our operations
+
+          anything still held or unfinished at 03:00 --> OBSERVABILITY --> on-call, by phone
+```
+
+**7 · What everything stands on.** One instance, its own namespaces,
+databases, secrets and copies (the clusters as proposed, FS-1036).
+
+```
+  +--------------------------- Roan Capital's instance, site A ---------------------------+
+  |  edge         services                                          data         bastion  |
+  |  EDGE         every component above                             DATABASE              |
+  |                 |  its own database and role, in one of five:   EVENT BUS             |
+  |                 |  Ledger, Access, Back office, Secrets,        OPENBAO               |
+  |                 |  Services                                     OBJECT STORAGE        |
+  |                 |  every secret from OPENBAO, never a file                            |
+  |  observability: agents ----------------------------------------> the fleet's Grafana |
+  +---------------------------------------------------------------------------------------+
+            |  databases streaming; object storage replicated; backups
+            v
+  site B: the same, at zero, until a failover (runbooks: site failover)
+```
+
 ## 3 · Diagrams
 
-As the instance's (architecture instance) and the warm standby's
-(deployment §2), with site A and site B as above. What this deployment
-adds is drawn here:
+The sites and what this deployment adds outside the instance; how the
+components interact inside it is §2. As the instance's (architecture
+instance) and the warm standby's (deployment §2):
 
 ```
    borrowers: links, codes, SMS, WhatsApp        Roan Capital's staff: browser
@@ -176,6 +331,7 @@ the replicas in §2 are the minimum each spec sets.
 | Date | What changed | Row |
 |---|---|---|
 | 2026-10-27 | The page written from the design | FS-1037 |
+| 2026-10-28 | How the components interact, in seven diagrams (§2) | FS-1045 |
 
 ## Regulations cited
 

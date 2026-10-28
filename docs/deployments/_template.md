@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-1037, FS-1045]
+last_reviewed: 2026-10-28
 ---
 
 # The institution · the environment
@@ -39,6 +39,13 @@ decide", with the row, rather than guess.
 | Component | Deployed | Version | Namespace | Database (cluster) | Replicas | Spec or module |
 |---|---|---|---|---|---|---|
 | EDGE | Yes | As its spec | edge | — | 2 | platform-security |
+
+### How the components interact
+
+A series of diagrams below the table, each adding a layer to the one
+before: for a full instance, the way in; a request decided; money
+moving; events and checks; documents; the night; what it stands on.
+Only what this deployment runs, named as in the table.
 
 ## 3 · Diagrams
 

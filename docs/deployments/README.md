@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-1037, FS-1045]
+last_reviewed: 2026-10-28
 ---
 
 # Deployments
@@ -34,6 +34,8 @@ instance in one environment, across its sites; a sandbox counts.
   components, versions, integrations and certificates come from there,
   and the page keeps only what code cannot know: who decided, what was
   agreed, what was tested.
+- **How they interact** is drawn below §2's table, in diagrams that
+  build on each other (FS-1045).
 - **Every component of an instance** (architecture instance, the table
   of boxes) is listed in §2, deployed or not and why; its namespace and
   database cluster are among the instance page's. The check holds every

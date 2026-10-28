@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-1037, FS-1045]
+last_reviewed: 2026-10-28
 ---
 
 # The MVP sandbox
@@ -57,6 +57,51 @@ code/platform/azure-sandbox; what it makes is in that README.
 | OBJECT STORAGE | Yes, Azure Blob, for Odoo's files | Azure | data | — | 1 | identity ID-15 |
 | OPENBAO | No: sandbox credentials in the cluster's own store | — | — | — | — | architecture README §6 |
 | OBSERVABILITY | No | — | — | — | — | observability-grafana |
+
+### How the components interact
+
+FS-1045. Two diagrams, the second adding to the first: what is built
+for the day, then the day's walk-through across it. Made-up data only.
+
+**1 · What is built.** GitHub holds the code; Flux puts it on the
+cluster; each component has its own database.
+
+```
+  GitHub: the platform repository --- Flux follows it ---> the cluster in rg-mvp
+                                                                  |
+          +---------------------------+---------------------------+
+          v                           v                           v
+  +----------------+          +----------------+          +----------------+
+  | ACCESS         |          | KAPU CORE      |          | ODOO           |
+  | staff realm,   |          | Fineract,      |          | CRM, Sign,     |
+  | Roan Capital's |          | Biashara       |          | Helpdesk,      |
+  | positions      |          | configured     |          | Employees      |
+  +-------+--------+          +-------+--------+          +-------+--------+
+          v                           v                           v
+  DATABASE: keycloak          DATABASE: fineract          DATABASE: odoo, its files
+                                                          in OBJECT STORAGE
+```
+
+**2 · The walk-through.** A made-up loan from lead to complaint, across
+what is built; the RAILS stand-in plays the bank and M-Pesa's sandbox.
+
+```
+  a staff member signs in at ACCESS (two-factor) ---> ODOO and KAPU CORE alike
+         |
+         v
+  ODOO CRM: a lead ---> keyed into KAPU CORE as a client and a Biashara loan
+         |
+         v
+  ODOO Sign: the agreement and key facts, signed by a made-up borrower
+         |
+         v
+  KAPU CORE: approved ---> RAILS stand-in: the payout instruction by bank
+                                 |
+         M-Pesa's sandbox -------+---> a repayment ---> KAPU CORE: posted
+         |
+         v
+  ODOO Helpdesk: a complaint, its 30-day clock running
+```
 
 ## 3 · Diagrams
 
@@ -114,6 +159,7 @@ Nothing to return: `tofu destroy` removes everything.
 | Date | What changed | Row |
 |---|---|---|
 | 2026-10-27 | The page written from the design | FS-1037 |
+| 2026-10-28 | How the components interact, in two diagrams (§2) | FS-1045 |
 
 ## Regulations cited
 
