@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-1037, FS-1045, FS-1046]
+last_reviewed: 2026-10-28
 ---
 
 # Roan Capital · production
@@ -59,11 +59,206 @@ Written from the design (FS-1037); generated from the code once it exists
 | OPENBAO | Yes | To pin | data | Secrets: openbao | 3 | architecture README §6 |
 | OBSERVABILITY | Yes: agents and local stores; the fleet's Grafana central | Grafana 13.x | observability | — | 1 | observability-grafana |
 
-## 3 · Diagrams
+### How the components interact
 
-As the instance's (architecture instance) and the warm standby's
-(deployment §2), with site A and site B as above. What this deployment
-adds is drawn here:
+FS-1045. Seven diagrams, each adding a layer to the one before: the way
+in; a loan asked for and decided; money moving; events and checks; a
+signed agreement; the night's close; and what everything stands on.
+Names as in the table above.
+
+**1 · The way in.** Everyone comes through the edge, and signs in at
+access; each kind of person reaches only their own screens.
+
+```
+  Roan Capital's staff       borrowers, guarantors          Dibon's engineers
+  (browser)                  (links, codes to their phone)  (by ticket)
+         |                              |                             |
+         v                              v                             v
+  +---------------------------------------------------------+  +-----------+
+  | EDGE   firewall and gateway: the only way in            |  | BASTION   |
+  +---------------------------------------------------------+  +-----------+
+         |                              |                     platform tooling
+         v                              v                     only; data never
+  +---------------------------------------------------------+
+  | ACCESS  staff realm: password and two-factor            |
+  |         customers realm: a code to the bound phone      |
+  +---------------------------------------------------------+
+         |                  |                       |
+         v                  v                       v
+  STAFF WORKSPACE      KAPU CONSOLE            CUSTOMER PAGES
+  daily lending,       approvals; read-only    consents, signing,
+  inside ODOO          views if Odoo is down   statements
+```
+
+**2 · A loan, asked for and decided.** The screens never write to the
+ledger: they ask the lending service, which checks, asks for a decision,
+and alone writes to the core.
+
+```
+  STAFF WORKSPACE --- an application, as the person signed in ---+
+                                                                  v
+                                                    +---------------------------+
+                                                    | LENDING SERVICE           |
+                                                    | (Kapu MFI, for lenders)   |
+                                                    +---------------------------+
+                      checks the borrower              |    |    |
+       IDENTITY <--------------------------------------+    |    |
+       national ID register, phone and SIM checks           |    |
+                                                            |    |
+                      the regulations, on each loan         |    |
+       LENDER RULES <---------------------------------------+    |
+                                                                 |
+                      who must approve, by the mandate           |
+       APPROVAL ENGINE <-----------------------------------------+
+       never the originator, nor anyone who is the borrower,
+       a guarantor or an officer (by ID number); step-up at ACCESS
+                                                                 |
+                      once approved: the only writer             v
+                                         CORE ADAPTER ------> KAPU CORE
+                                                             the loan, its schedule,
+                                                             the general ledger
+```
+
+**3 · Money moving.** Payouts go out through the bank by Roan Capital's
+own release; repayments come in to its paybill; both come back to the
+ledger and are matched.
+
+```
+  LENDING SERVICE --- approved payout ---> RAILS --- payout instruction ---+
+                                                                           v
+                                              NCBA: released by Roan Capital's
+                                              staff in its internet banking
+                                              (maker-checker); never by us
+                                                                           |
+  borrower pays by M-Pesa                                                  | statement
+         |                                                                 v
+         v                                                       +--------------------+
+  Roan Capital's paybill --- callback, and transactions pulled --->| RAILS              |
+                                                                 +--------------------+
+                                                                           |
+                                    LENDING SERVICE <--- each payment -----+
+                                          |
+                                          v
+                                    CORE ADAPTER ---> KAPU CORE: posted
+```
+
+**4 · Events, and the checks on them.** Every change is written with its
+event in one transaction, published in order, and read by whoever needs
+it; nothing on the money path waits for a reader.
+
+```
+  LENDING SERVICE  APPROVAL ENGINE  RAILS  KAPU CORE  IDENTITY  ...
+         |               |            |        |          |
+         +---------------+------------+--------+----------+   each from its own outbox
+                                   |
+                                   v
+  ================== EVENT BUS: every change, signed, in order ==================
+          |                     |                      |                     |
+          v                     v                      v                     v
+  RECONCILIATION         MESSAGING              BACK-OFFICE GATEWAY    OBSERVABILITY
+  the ledger against     SMS under Roan         to ODOO: contacts,     metrics, logs,
+  the rails; SHADOW      Capital's sender ID,   tickets, signing;      alerts, to the
+  and COMPANION          WhatsApp, email;       queued if Odoo is      fleet's Grafana
+  ledgers beside it      FLOWZA for replies     down
+```
+
+**5 · An agreement, signed.** The agreement goes out for signing through
+the back office, and comes back to the vault with its evidence.
+
+```
+  LENDING SERVICE --- agreement and key facts ---> BACK-OFFICE GATEWAY ---> ODOO: Sign
+                                                                               |
+                     MESSAGING --- the signing link ---> borrower, guarantor   |
+                                                                               |
+         a code to each signer's bound phone; who signed, when, from which phone
+                                                                               v
+                           VAULT (OBJECT STORAGE) <--- signed document and its evidence
+                           ODOO keeps the contract record; personal data only in the vault
+```
+
+**6 · The night's close.** The runner checks before Fineract closes the
+day, applies the regulations after, and tells someone when anything
+fails.
+
+```
+  21:00   END-OF-DAY RUNNER: first pass of the checks, an early warning
+  23:45   final pass (payments posted, rails reconciled, services healthy)
+            |   a blocking check failing --> held, the accountant and on-call told
+            v
+          KAPU CORE closes the business day
+            v
+          post-checks: the date moved, every loan closed, the trial balance balances
+            v
+          LENDER RULES for the day (default interest, ladders, notices)
+            v
+  06:00   the morning report to Roan Capital's accountant and our operations
+
+          anything still held or unfinished at 03:00 --> OBSERVABILITY --> on-call, by phone
+```
+
+**7 · What everything stands on.** One instance, its own namespaces,
+databases, secrets and copies (the clusters as proposed, FS-1036).
+
+```
+  +--------------------------- Roan Capital's instance, site A ---------------------------+
+  |  edge         services                                          data         bastion  |
+  |  EDGE         every component above                             DATABASE              |
+  |                 |  its own database and role, in one of five:   EVENT BUS             |
+  |                 |  Ledger, Access, Back office, Secrets,        OPENBAO               |
+  |                 |  Services                                     OBJECT STORAGE        |
+  |                 |  every secret from OPENBAO, never a file                            |
+  |  observability: agents ----------------------------------------> the fleet's Grafana |
+  +---------------------------------------------------------------------------------------+
+            |  databases streaming; object storage replicated; backups
+            v
+  site B: the same, at zero, until a failover (runbooks: site failover)
+```
+
+## 3 · Settings
+
+FS-1046. What Roan Capital's deployment sets. **Status:** *Set* (as the
+spec says, the same for every institution), *Agreed* (Roan Capital's
+choice, with its source) or *To decide* (with its open answer or row).
+No secret, host or address: those stay in the generated configuration
+record (service management §3).
+
+| Component | Setting | This deployment | Defined in | Decided by | Status |
+|---|---|---|---|---|---|
+| KAPU CORE | Tenant time zone | Africa/Nairobi | kapu-core-fineract §2 | The spec | Set |
+| KAPU CORE | Global configuration | Maker-checker off (approvals are the approval engine's); transactions allowed on holidays and non-working days; the business date moved only by the end-of-day runner | kapu-core-fineract §4 | The spec | Set |
+| KAPU CORE | A due date on a holiday | Moves to the next working day | kapu-core-fineract §4 (onboarding OB-COM-20) | Roan Capital, 21 October | Agreed |
+| KAPU CORE | Every loan product | Progressive schedule; advanced payment allocation in the repayment order the lender regulations set (LR-03); no overdue penalty charges on capped products; non-performing as they define it; each product's terms applied from its product version, never by hand | kapu-core-fineract §4; lender-rules §2.4 | The spec | Set |
+| KAPU CORE | Staff permissions | No staff role may approve, disburse, reschedule, waive or write off in Fineract; only the lending service's account | kapu-core-fineract §4 | The spec | Set |
+| LENDING SERVICE | Products | Biashara, Motor Vehicle and Title Deed, each product version 1, proposed: the values as Roan Capital answers its questionnaires | docs/products | Roan Capital's product owner and a second approver | To decide |
+| LENDING SERVICE | Amounts | KES, to 2 decimal places | The product versions | Roan Capital, 21 October | Agreed |
+| LENDING SERVICE | Partners and their limits | None in R1 | lending-service §5 | — | Set |
+| APPROVAL ENGINE | The approval chain and its threshold | Proposed: up to a threshold, one approval by someone other than the originator; above it, two | approval-engine §4; open answers 28, 36 | Roan Capital | To decide |
+| APPROVAL ENGINE | Who releases a payout | Open | open answer 37 | Roan Capital | To decide |
+| APPROVAL ENGINE | Who approves when the CEO is away | Open | open answer 40; FS-898 | Roan Capital | To decide |
+| ACCESS | Staff sign-in | Every login at level 2 (password and a second factor); level 3 again for anything that moves money, approves or grants a role; passwords of 12 characters or more; sessions 30 minutes idle, 10 hours at most; five wrong attempts lock for 15 minutes | access-keycloak §5 | The spec | Set |
+| ACCESS | Customer sign-in | A 6-digit code by SMS to the bound phone, valid 5 minutes, three attempts; sessions 15 minutes idle, 1 hour at most; a changed SIM holds sign-in | access-keycloak §5 | The spec | Set |
+| ACCESS | Roles | The eight positions, folded for three or four staff; who holds which, and the two administrators | customers/roan-capital §7; FS-982; open answers 26, 35 | Roan Capital | To decide |
+| RAILS | Payouts | By bank only: NCBA, released by Roan Capital's staff; no payout 23:00 to 04:00 | rails; RC-18, RC-21 | Roan Capital, 21 October | Agreed |
+| RAILS | A second bank | Access Bank, or NCBA only | open answer 6 | Roan Capital | To decide |
+| RAILS | Repayments | M-Pesa into Roan Capital's own paybill, its number in the generated record; Airtel Money or T-Kash if used | rails RL-03, RL-20; open answer 25 | Roan Capital | Agreed; Airtel to decide |
+| MESSAGING | Sender | Roan Capital's own sender ID | messaging MS-03; DR-006 | Roan Capital, 9 October | Agreed; whitelisting pending |
+| MESSAGING | Reminders | Day 25 of a 30-day loan, then the collection ladder of each product | RC-20; the product versions | Roan Capital | Agreed; ladders to decide (FS-935) |
+| MESSAGING | WhatsApp | For remote loan processing; route direct or through a provider | FS-737, FS-161 | Dibon | To decide |
+| END-OF-DAY RUNNER | The night | Checks at 21:00 and 23:45; held or unfinished at 03:00 is severity 1; the report at 06:00 | end-of-day-runner §3 | The spec | Set |
+| END-OF-DAY RUNNER | Who gets the morning report | Roan Capital's accountant and Dibon's operations; who else, and who deputises | open answer 24 | Roan Capital | To decide |
+| OBSERVABILITY | Alerts | The notification policy in Africa/Nairobi time; severities 1 and 2 to on-call, 3 and 4 to the helpdesk; R1's alert rules | observability-grafana §4 | The spec | Set |
+| OBSERVABILITY | Roan Capital's incident contact | By role, with a deputy | onboarding OB-COM-13 | Roan Capital | To decide |
+| ODOO | Edition and apps | Enterprise: CRM, Sign, Helpdesk, Documents, Employees, and the staff workspace; sign-in through Keycloak | business-suite; back-office §3 | Dibon | Set |
+| ODOO | Users | One per staff member who uses it; a lower-cost edition to weigh | FS-529; open answer 34 | Roan Capital | To decide |
+| BACK-OFFICE GATEWAY | Edition | Odoo Enterprise's adapter | back-office §3 | The spec | Set |
+| DATABASE | Clusters | Five by tier, each a primary and a synchronous standby | architecture instance | Eric | To decide (FS-1036) |
+| OPENBAO | Unsealing at each site | A key held at the site, or automatically from a hardware module | runbooks/openbao-unseal | Eric | To decide (FS-1038) |
+
+## 4 · Diagrams
+
+The sites and what this deployment adds outside the instance; how the
+components interact inside it is §2. As the instance's (architecture
+instance) and the warm standby's (deployment §2):
 
 ```
    borrowers: links, codes, SMS, WhatsApp        Roan Capital's staff: browser
@@ -82,7 +277,7 @@ adds is drawn here:
                        statements back
 ```
 
-## 4 · Integrations
+## 5 · Integrations
 
 | Integration | What for | Whose agreement | Credentials | Status |
 |---|---|---|---|---|
@@ -96,7 +291,7 @@ adds is drawn here:
 | National ID register | Identity checks | To decide: Roan Capital's or Dibon's on its behalf (FS-202) | OpenBao | Open |
 | Business registry | Business borrowers | To confirm what is available (FS-205) | OpenBao | Open |
 
-## 5 · Continuity
+## 6 · Continuity
 
 | | |
 |---|---|
@@ -109,7 +304,7 @@ adds is drawn here:
 | Who is called | Dibon: the on-call engineer, the incident manager, the CTIO (incident management §2). Roan Capital: its incident contact (onboarding OB-COM-13), its accountant for the close, its Super Admin |
 | Before go-live | Site B's provider (FS-775); site B's outbound addresses registered with Safaricom and NCBA; site B's OpenBao unseal key held at site B; the failover runbook rehearsed once (deployment §2) |
 
-## 6 · Access
+## 7 · Access
 
 | Who | What | How |
 |---|---|---|
@@ -118,7 +313,7 @@ adds is drawn here:
 | Dibon's engineers | Platform tooling only, standing; anything else just in time | The `ops` realm, brokered from Dibon's own Keycloak; a ticket, through the bastion, 4 hours by default (architecture README §9) |
 | Roan Capital, over Dibon | May switch Dibon's broker off at any time | By contract (README §9) |
 
-## 7 · Data
+## 8 · Data
 
 - **The privacy register's rows that apply:** PR-01 (onboarding and
   KYC), PR-02 (payments and the ledger), PR-03 (credit decisions), PR-06
@@ -133,7 +328,7 @@ adds is drawn here:
   security service (SE-13); notifications and links, never balances or
   documents, through SMS, WhatsApp and email (deployment §1).
 
-## 8 · Licences and suppliers
+## 9 · Licences and suppliers
 
 | Licence or supplier | What for | Count or terms | Whose | Status |
 |---|---|---|---|---|
@@ -145,13 +340,13 @@ adds is drawn here:
 | WhatsApp | Remote loan processing | Per conversation | To decide (FS-161) | To decide |
 | Managed security service | Round-the-clock detection | Per endpoint and server | Dibon's (SE-13) | To contract |
 
-## 9 · Size
+## 10 · Size
 
 To size (architecture review A7), from: three or four staff; borrowers
 and loans a month, and messages a day, to ask Roan Capital. Until then,
 the replicas in §2 are the minimum each spec sets.
 
-## 10 · Exit
+## 11 · Exit
 
 **Proposed, for the contract** (approval pack item 14):
 
@@ -171,11 +366,13 @@ the replicas in §2 are the minimum each spec sets.
    the law requires of Dibon itself (its invoices, the access register),
    nothing of borrowers.
 
-## 11 · Changes
+## 12 · Changes
 
 | Date | What changed | Row |
 |---|---|---|
 | 2026-10-27 | The page written from the design | FS-1037 |
+| 2026-10-28 | How the components interact, in seven diagrams (§2) | FS-1045 |
+| 2026-10-28 | Its settings, component by component (§3) | FS-1046 |
 
 ## Regulations cited
 

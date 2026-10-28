@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-1037, FS-1045, FS-1046]
+last_reviewed: 2026-10-28
 ---
 
 # The MVP sandbox
@@ -58,20 +58,78 @@ code/platform/azure-sandbox; what it makes is in that README.
 | OPENBAO | No: sandbox credentials in the cluster's own store | — | — | — | — | architecture README §6 |
 | OBSERVABILITY | No | — | — | — | — | observability-grafana |
 
-## 3 · Diagrams
+### How the components interact
+
+FS-1045. Two diagrams, the second adding to the first: what is built
+for the day, then the day's walk-through across it. Made-up data only.
+
+**1 · What is built.** GitHub holds the code; Flux puts it on the
+cluster; each component has its own database.
+
+```
+  GitHub: the platform repository --- Flux follows it ---> the cluster in rg-mvp
+                                                                  |
+          +---------------------------+---------------------------+
+          v                           v                           v
+  +----------------+          +----------------+          +----------------+
+  | ACCESS         |          | KAPU CORE      |          | ODOO           |
+  | staff realm,   |          | Fineract,      |          | CRM, Sign,     |
+  | Roan Capital's |          | Biashara       |          | Helpdesk,      |
+  | positions      |          | configured     |          | Employees      |
+  +-------+--------+          +-------+--------+          +-------+--------+
+          v                           v                           v
+  DATABASE: keycloak          DATABASE: fineract          DATABASE: odoo, its files
+                                                          in OBJECT STORAGE
+```
+
+**2 · The walk-through.** A made-up loan from lead to complaint, across
+what is built; the RAILS stand-in plays the bank and M-Pesa's sandbox.
+
+```
+  a staff member signs in at ACCESS (two-factor) ---> ODOO and KAPU CORE alike
+         |
+         v
+  ODOO CRM: a lead ---> keyed into KAPU CORE as a client and a Biashara loan
+         |
+         v
+  ODOO Sign: the agreement and key facts, signed by a made-up borrower
+         |
+         v
+  KAPU CORE: approved ---> RAILS stand-in: the payout instruction by bank
+                                 |
+         M-Pesa's sandbox -------+---> a repayment ---> KAPU CORE: posted
+         |
+         v
+  ODOO Helpdesk: a complaint, its 30-day clock running
+```
+
+## 3 · Settings
+
+FS-1046. What the sandbox sets; made-up data only, nothing secret here.
+
+| Component | Setting | This deployment | Defined in | Decided by | Status |
+|---|---|---|---|---|---|
+| KAPU CORE | Tenant time zone | Africa/Nairobi | kapu-core-fineract §2 | The spec | Set |
+| KAPU CORE | Biashara | Configured from its product document, with made-up values where Roan Capital has not answered | FS-941 | The core workstream | Set |
+| ACCESS | Staff realm | Roan Capital's eight positions as roles; two-factor sign-in | FS-942; access-keycloak §5 | The core workstream | Set |
+| ODOO | Edition and apps | Enterprise, through the partner account: CRM, Sign, Helpdesk, Employees | FS-945, FS-946 | The back-office workstream | Set |
+| RAILS | Stand-in | A bank payout instruction; M-Pesa's sandbox for a repayment | FS-943 | The money workstream | Set |
+| — | Azure | South Africa North only; a budget per group, alerts at 50%, 80% and 100% | code/platform/azure-sandbox | The platform workstream | Set |
+
+## 4 · Diagrams
 
 The MVP day's own (docs/mvp-day.md): GitHub, then the sandbox and its
 cluster, Flux, Kapu Core and Biashara, the payout by bank, the
 walk-through, with Keycloak and Odoo beside.
 
-## 4 · Integrations
+## 5 · Integrations
 
 | Integration | What for | Whose agreement | Credentials | Status |
 |---|---|---|---|---|
 | M-Pesa, Daraja sandbox | The repayment in the walk-through | Dibon's developer account | Sandbox only, in the cluster | To set up on the day |
 | GitHub | The code, and Flux following the platform repository | Dibon's organisation (FS-952) | Dibon's | Before the day |
 
-## 5 · Continuity
+## 6 · Continuity
 
 | | |
 |---|---|
@@ -83,37 +141,39 @@ walk-through, with Keycloak and Odoo beside.
 | The institution's fallback | Not applicable |
 | Who is called | The platform workstream |
 
-## 6 · Access
+## 7 · Access
 
 Every member reads every group; each changes their own; the platform
 workstream changes the MVP environment (the sandbox README). Sign-in
 through Entra; Claude never signs in for anyone.
 
-## 7 · Data
+## 8 · Data
 
 Made-up data only: no customer, borrower or staff data (rules, Dibon 1;
 privacy, "In Kenya"). Nothing in the privacy register applies.
 
-## 8 · Licences and suppliers
+## 9 · Licences and suppliers
 
 | Licence or supplier | What for | Count or terms | Whose | Status |
 |---|---|---|---|---|
 | Azure | The sandbox | A budget per group, alerting at 50%, 80% and 100% | Dibon's subscription (FS-938) | To set up |
 | Odoo Enterprise | Sign, Helpdesk, Employees in the walk-through | Through the partner account | Dibon's | Before the day |
 
-## 9 · Size
+## 10 · Size
 
 One small cluster, sized for the day; each group's budget caps it.
 
-## 10 · Exit
+## 11 · Exit
 
 Nothing to return: `tofu destroy` removes everything.
 
-## 11 · Changes
+## 12 · Changes
 
 | Date | What changed | Row |
 |---|---|---|
 | 2026-10-27 | The page written from the design | FS-1037 |
+| 2026-10-28 | How the components interact, in two diagrams (§2) | FS-1045 |
+| 2026-10-28 | Its settings (§3) | FS-1046 |
 
 ## Regulations cited
 

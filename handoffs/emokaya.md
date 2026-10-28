@@ -40,11 +40,30 @@ here.
 
 ## Where I left off
 
-As at 27 October 2026. Main pushed to origin with FS-962 to FS-1029;
-`origin` is still github.com/eric-mokaya/finance until the move to
-dibon-consulting. Last session: the design around Fineract, partners,
-identity, channels and documents; all on main and in the reader.
+As at 28 October 2026. Main pushed with FS-962 to FS-1048; `origin` is
+still github.com/eric-mokaya/finance until the move to dibon-consulting.
 
+- **Roan Capital's pack for 29 October** (FS-1039 to FS-1044): five Word
+  files in clients/roan-capital/working/: the Biashara questionnaire
+  v0.5, Motor Vehicle v0.2, Title Deed v0.2 (one file each, parts A to
+  C, each with its regulations page and what we already know); Roles,
+  approvals and going live v0.2; the fallback template v0.1; and the
+  covering email v0.5. **Next:** his Drive checklist v0.3: upload to
+  Roan Capital / Meetings / 2026-10-29 / Team review (internal), send the
+  team's email v0.8 (review by 15:00; Lillian with Max on the
+  questionnaires and worksheet, Betty the pack, Jimmy the regulations,
+  Allan the fallback), then Claude carries the accepted changes into the
+  sources and rebuilds clean copies for "For Roan Capital"; tell Claude
+  when it goes, for the distribution log.
+- **Waiting on his word:** FS-1036 (a Kubernetes cluster per institution,
+  five database clusters), FS-1038 (how each site's OpenBao unseals),
+  FS-1034 and FS-1035 (Dibon's books from QuickBooks to Odoo; Dibon's
+  Odoo off odoo.sh to OLP in Kenya, LQ-30).
+- **Done since 27 October:** the briefs' template (FS-1031); the
+  architecture reviewed, 16 databases an instance (FS-1032); Zoho and
+  QuickBooks for a business's own books (FS-1033, LQ-29); deployments and
+  runbooks (FS-1037), with diagrams and settings (FS-1045, FS-1046);
+  Google Workspace for reviews (FS-1041, FS-1042).
 - **MVP day, Friday 30 October, 12:00 to 16:00** (FS-962; the hackathon
   moved to it). GitHub first, he and Jimmy alone before the day
   (FS-952 to FS-954): the organisation `dibon-consulting`, two-factor,
@@ -102,13 +121,16 @@ identity, channels and documents; all on main and in the reader.
   (FS-420).
 - **On his machine:** Poppler for scanned PDFs, unpacked outside the
   repository and not on PATH; confidential scans rendered inside their
-  folder and deleted after.
+  folder and deleted after. No LibreOffice: Word files are rendered to PDF
+  through Word itself, closing only the Word it started. The docx package
+  for the builders: DOCX_MODULE pointing at another local project's copy
+  (E:/Agents/Claude/DialysisWater/node_modules/docx).
 
 ## Generated
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric (167)
+### Rows with Eric (173)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -154,6 +176,11 @@ identity, channels and documents; all on main and in the reader.
 | FS-992 | A wallet product brings millions of accounts, tiny loans and savings round the clock: Fineract and the lending | High |
 | FS-993 | A wallet product needs the mobile operator's agreement: the product in its menu, the customer's data for limit | High |
 | FS-1015 | How do we actually go about the omni-channel implementation? | High |
+| FS-1035 | Dibon's own Odoo is hosted on odoo.sh: how do we reconcile that with our design (rule 10: client material in D | High |
+| FS-1036 | Decide: each institution's production instance on a Kubernetes cluster of its own, a namespace per zone inside | High |
+| FS-1038 | Decide how each site's OpenBao unseals: a key held at the site, as deployment §2 says for site B, or automatic | High |
+| FS-1040 | Roan Capital's pack for 29 October (FS-1039), the email and its attachments, goes to the team for review befor | High |
+| FS-1042 | Add Roan Capital to the Google Drive folder, so its people update the documents themselves | High |
 | FS-036 | Check the Odoo Enterprise Agreement for limits on serving internal work through portal users or API accounts | Medium |
 | FS-161 | WhatsApp route: Meta's Cloud API directly, or through a business solution provider. Either way Meta approves t | Medium |
 | FS-162 | Quiet hours and rate limits per recipient: what the Communications Authority requires, and what we set as poli | Medium |
@@ -196,6 +223,7 @@ identity, channels and documents; all on main and in the reader.
 | FS-926 | Credit limits: one across all of a borrower's loans, one for a group of products, one per product | Medium |
 | FS-927 | Duplicate transactions: two the same within a few seconds, as when a customer retries believing the first fail | Medium |
 | FS-963 | Which pending items to tackle next | Medium |
+| FS-1034 | Dibon keeps its own books in QuickBooks: port them to Odoo, and keep both for a time to learn what each can do | Medium |
 | FS-013 | Recon PDF: "Complaint" for "Compliant" ×6 on the functional-spec page; "Maintaince" ×1; timeline column headed | Low |
 | FS-035 | Sacco needs its own regulatory line: SASRA for DT-Saccos, the co-operatives regime for credit-only | Low |
 | FS-037 | Executing payments from an ERP approval: attribute the approval at the act (STANDARDS.md §6.2 — "move money"), | Low |
@@ -286,4 +314,6 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-1030-handover`: nothing saved yet; here now, 3 files unsaved
+- `claude/emokaya/FS-1044-known-answers`: 2 saves, last 11 hours ago, not uploaded
+- `claude/emokaya/FS-1045-deployment-diagrams`: 6 saves, last 47 seconds ago, not uploaded
+- `claude/emokaya/FS-1048-handover`: 6 saves, last 47 seconds ago, not uploaded; here now, 3 files unsaved

@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757, FS-780, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757, FS-780, FS-896, FS-1046]
+last_reviewed: 2026-10-28
 ---
 
 # Service management
@@ -120,7 +120,8 @@ institution's instance:
 - each component and its version: Fineract, Keycloak, Grafana, GoAlert,
   our services;
 - the settings the specs define (for Fineract,
-  [kapu-core-fineract](../specs/kapu-core-fineract.md) §4);
+  [kapu-core-fineract](../specs/kapu-core-fineract.md) §4), and until it
+  is generated, each deployment's page, §3 (deployments, FS-1046);
 - its integrations: rails, banks, the core where it keeps its own;
 - its certificates and their expiry dates;
 - the ids of its secrets in OpenBao, never their values.

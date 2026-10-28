@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-1037, FS-1045, FS-1046]
+last_reviewed: 2026-10-28
 ---
 
 # The institution · the environment
@@ -40,19 +40,39 @@ decide", with the row, rather than guess.
 |---|---|---|---|---|---|---|
 | EDGE | Yes | As its spec | edge | — | 2 | platform-security |
 
-## 3 · Diagrams
+### How the components interact
+
+A series of diagrams below the table, each adding a layer to the one
+before: for a full instance, the way in; a request decided; money
+moving; events and checks; documents; the night; what it stands on.
+Only what this deployment runs, named as in the table.
+
+## 3 · Settings
+
+What this deployment sets, component by component: the settings each
+spec defines, and the values the institution decides. Never a secret,
+a host or an address: those stay in the generated configuration record
+inside the instance (service management §3). **Status:** *Set* (as the
+spec says, the same everywhere), *Agreed* (the institution's choice,
+with its source) or *To decide* (with its open question or row).
+
+| Component | Setting | This deployment | Defined in | Decided by | Status |
+|---|---|---|---|---|---|
+| | | | | | |
+
+## 4 · Diagrams
 
 The instance's diagram (architecture instance) and anything this
 deployment draws differently: its sites, its integrations, its own
 network.
 
-## 4 · Integrations
+## 5 · Integrations
 
 | Integration | What for | Whose agreement | Credentials | Status |
 |---|---|---|---|---|
 | | | | By OpenBao id, never the value | |
 
-## 5 · Continuity
+## 6 · Continuity
 
 | | |
 |---|---|
@@ -64,33 +84,33 @@ network.
 | The institution's fallback | Its own runbook for an outage, agreed at onboarding (OB-COM-23) |
 | Who is called | By role, on each side |
 
-## 6 · Access
+## 7 · Access
 
 Who may reach what, by role: Dibon's standing access, just-in-time
 access by ticket, the institution's own staff and operators, the broker
 link (architecture README §9).
 
-## 7 · Data
+## 8 · Data
 
 The privacy register's rows that apply, where the data lives, what
 leaves Kenya, the impact assessment's status.
 
-## 8 · Licences and suppliers
+## 9 · Licences and suppliers
 
 | Licence or supplier | What for | Count or terms | Whose | Status |
 |---|---|---|---|---|
 
-## 9 · Size
+## 10 · Size
 
 What it is sized for (staff, borrowers, loans a month, messages a day),
 and the size of each node pool and database.
 
-## 10 · Exit
+## 11 · Exit
 
 How the institution's data is returned and purged if it leaves, and what
 support it has through the handover.
 
-## 11 · Changes
+## 12 · Changes
 
 | Date | What changed | Row |
 |---|---|---|
