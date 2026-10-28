@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-834, FS-835, FS-857, FS-874, FS-1026, FS-1039, FS-1043]
+review_ids: [FS-834, FS-835, FS-857, FS-874, FS-1026, FS-1039, FS-1043, FS-1044]
 last_reviewed: 2026-10-28
 ---
 
@@ -90,12 +90,12 @@ checked with the owner (FS-840).
 | DR-048 | Roan Capital | Title Deed questionnaire A, product terms (DC-FS-QN-003) | Questions on the product's terms, for its product owner, a form field for each answer, built from the product's draft, and a last page of the regulations cited | Working | 0.1 | superseded | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040, FS-1043 |
 | DR-049 | Roan Capital | Title Deed questionnaire B, eligibility and limits (DC-FS-QN-003) | Questions on who may borrow and how much, for its credit lead, a form field for each answer, built from the product's draft, and a last page of the regulations cited | Working | 0.1 | superseded | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040, FS-1043 |
 | DR-050 | Roan Capital | Title Deed questionnaire C, how it runs (DC-FS-QN-003) | Questions on how the loan runs day to day, for its operations lead, a form field for each answer, built from the product's draft, and a last page of the regulations cited | Working | 0.1 | superseded | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040, FS-1043 |
-| DR-051 | Roan Capital | Roles, approvals and going live (DC-FS-QN-004) | The open questions on who does what, who approves, outages, and what CBK needs before go-live, in six sections by who answers, and a last page of the regulations cited | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040 |
+| DR-051 | Roan Capital | Roles, approvals and going live (DC-FS-QN-004) | The open questions on who does what, who approves, outages, and what CBK needs before go-live, in six sections by who answers, and a last page of the regulations cited; v0.2 with what we already have under each question it applies to | Working | 0.2 | draft | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040, FS-1044 |
 | DR-052 | Roan Capital | Fallback for a platform outage, template (DC-FS-TM-002) | A starter for Roan Capital's own procedure in an outage, in the plain look, for it to adopt | Working | 0.1 | draft | 2026-10-27 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040 |
 | DR-053 | Roan Capital | Email, documents for 29 October | Our draft covering email for the pack above; not sent. v0.2 counts five documents; v0.3 shares them in a Google Drive folder Roan Capital edits (FS-1042); v0.4 without the set-up note, ready to paste; v0.5 for five files, a questionnaire per product; v0.5 also as a Word file, for the team to comment on in Drive | Working | 0.5 | draft | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1039, FS-1040, FS-1042, FS-1043 |
 | DR-054 | Roan Capital | Team review request, the pack for 29 October | Our internal request to the team to review the pack before it goes to Roan Capital, the pack in a restricted Google Drive folder; v0.4 without the set-up note, the team already able to open the folder, Suggesting mode: the delivery lead the whole pack; the dev lead, with the CI/CD engineer shadowing, the worksheet and the questionnaires; the CEO the regulations pages; the ops lead the fallback template; by Wednesday 28 October at noon; not sent; v0.5 for five files; v0.6 with every file a Word file; v0.7 in plain text for pasting into Gmail, six files listed, due 15:00 on the day; v0.8 with who reviews what as a table | Working | 0.8 | internal | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1040, FS-1041, FS-1043 |
 | DR-055 | Roan Capital | Drive set-up for 29 October, Eric's checklist | The steps to set up, run and close the two Drive folders: before the team's review, after it, and after Roan Capital answers; v0.2 for five files; v0.3 with every file uploaded as Word, and Roan Capital's clean copies rebuilt from their sources | Working | 0.3 | internal | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1041, FS-1042, FS-1043 |
-| DR-056 | Roan Capital | 30-day loan (Biashara) questionnaire, parts A to C in one (DC-FS-QN-001) | The questions on the product's terms, eligibility and limits, and how it runs, a part and a page each, a form field for each answer, built from the product's draft, and a last page of the regulations cited | Working | 0.4 | draft | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1043 |
+| DR-056 | Roan Capital | 30-day loan (Biashara) questionnaire, parts A to C in one (DC-FS-QN-001) | The questions on the product's terms, eligibility and limits, and how it runs, a part and a page each, a form field for each answer, built from the product's draft, and a last page of the regulations cited; v0.5 with what Roan Capital agreed on 21 October shown as what we have | Working | 0.5 | draft | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1043, FS-1044 |
 | DR-057 | Roan Capital | Motor Vehicle questionnaire, parts A to C in one (DC-FS-QN-002) | As DR-056, for Motor Vehicle | Working | 0.2 | draft | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1043 |
 | DR-058 | Roan Capital | Title Deed questionnaire, parts A to C in one (DC-FS-QN-003) | As DR-056, for Title Deed | Working | 0.2 | draft | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1043 |
 
@@ -114,10 +114,10 @@ Record, under its party.
 | DC-FS-PR-001 | Bank channel proposal | PR | 1.0 | issued | 2026-10-05 | design/bank-channel-proposal/ |
 | DC-FS-DK-001 | Dibon for SBM Bank, the deck for the meeting of 22 October | DK | 1.0 | issued | 2026-10-22 | build/proposals/ |
 | DC-FS-LT-001 | Requests to banks for statements, alerts and balances, one copy per bank | LT | 0.1 | draft | — | design/outreach-pdf/ |
-| DC-FS-QN-001 | Roan Capital: the 30-day loan (Biashara), its questionnaire, parts A to C in one file | QN | 0.4 | draft | — | tools/products/questionnaires.js |
+| DC-FS-QN-001 | Roan Capital: the 30-day loan (Biashara), its questionnaire, parts A to C in one file | QN | 0.5 | draft | — | tools/products/questionnaires.js |
 | DC-FS-QN-002 | Roan Capital: Motor Vehicle, its questionnaire, parts A to C in one file | QN | 0.2 | draft | — | tools/products/questionnaires.js |
 | DC-FS-QN-003 | Roan Capital: Title Deed, its questionnaire, parts A to C in one file | QN | 0.2 | draft | — | tools/products/questionnaires.js |
-| DC-FS-QN-004 | Roan Capital: roles, approvals and going live | QN | 0.1 | draft | — | design/system/docx.js |
+| DC-FS-QN-004 | Roan Capital: roles, approvals and going live | QN | 0.2 | draft | — | design/system/docx.js |
 | DC-FS-TM-001 | Onboarding pack for an institution's business customers and partners | TM | 0.1 | draft | — | docs/templates/onboarding-pack.md |
 | DC-FS-TM-002 | An institution's fallback for a platform outage, starter template (from runbooks/institution-fallback) | TM | 0.1 | draft | — | design/system/docx.js |
 
