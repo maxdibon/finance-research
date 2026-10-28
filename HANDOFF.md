@@ -1,7 +1,7 @@
 # Dibon financial services — session handoff
 
     release: 2026.10.16 · minor
-    updated: 2026-10-27
+    updated: 2026-10-28
     the release is the documentation's, moved by each release (FS-842);
     this file has no version of its own
     purpose: hand this repository to a session that knows nothing about it;
@@ -284,13 +284,29 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
 - **Products:** `docs/products/`: each institution's product version
   drafts, the loan kinds the vocabulary can describe, and `briefs/`, a
   brief for each product that is hard for an institution to do alone
-  (FS-1029). **Who uses which app:** `docs/channels.md`. **Starter
+  (FS-1029), from `briefs/_template.md`, which the check holds them to
+  (FS-1031). **Who uses which app:** `docs/channels.md`. **Starter
   templates** for an institution's business customers and partners:
   `docs/templates/` (FS-1021).
 - **Our documents' numbers** (`DC-FS-<kind>-<serial>`) are in
   design-system §7, and who received each in the document register's
   distribution log (FS-1026): give anything sent outside a number, and
   log its sending.
+- **Deployments and running them:** `docs/deployments/`, a page per
+  deployment from its template (components, how they interact, settings,
+  integrations, continuity, access, data, licences, size, exit), checked
+  against architecture/instance.md (FS-1037, FS-1045, FS-1046);
+  `docs/runbooks/`, the steps when something fails (FS-1037); the
+  architecture's review of 27 October in `docs/reviews/` (FS-1032).
+- **A customer's working drafts** (questionnaires, worksheets, emails)
+  live in `clients/<customer>/working/`, outside git; the document
+  register records each, by DR id and version. Questionnaires: build with
+  `--one-file`, then `tools/regulations-page.py`, then render through
+  Word and look (products README).
+- **Reviews with the team** run in Google Workspace (FS-1041): Word files
+  uploaded as they are, never converted, so questionnaires keep their
+  answer fields; a customer gets clean copies rebuilt from the sources,
+  never the reviewed files (FS-1042).
 - **Binary files** are refused by the pre-commit hook unless listed in
   `.githooks/allowed-binaries`. **Logos:** `design/brand/` (FS-524).
 
@@ -463,6 +479,12 @@ register row.
   files alone.
 - **Register ids have four digits past FS-999** (FS-1000): every tool reads
   `FS-\d{3,4}` and sorts by number; a new pattern must too.
+- **A change to a product draft can break a products test** that finds
+  its row by the old text: the test then edits nothing and fails. Run
+  the products tests after changing a draft (FS-1044).
+- **A product draft's notes do not reach its questionnaire:** only its
+  items do. Fold anything agreed into the items, or the customer is
+  asked again what they already told us (FS-1044).
 - **The SBM deck is an artifact on claude.ai,** not a file here; its PDF
   is rebuilt locally into build/proposals/.
 
