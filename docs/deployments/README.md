@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045]
+review_ids: [FS-1037, FS-1045, FS-1046]
 last_reviewed: 2026-10-28
 ---
 
@@ -15,8 +15,8 @@ last_reviewed: 2026-10-28
 
 FS-1037. **Every deployment of the platform, one row each,** and a page
 for each from [the template](_template.md): what runs in it, its
-diagrams, integrations, continuity, access, data, licences and
-suppliers, size, exit, and changes. A deployment is one institution's
+settings, diagrams, integrations, continuity, access, data, licences
+and suppliers, size, exit, and changes. A deployment is one institution's
 instance in one environment, across its sites; a sandbox counts.
 
 **The register:**
@@ -34,6 +34,9 @@ instance in one environment, across its sites; a sandbox counts.
   components, versions, integrations and certificates come from there,
   and the page keeps only what code cannot know: who decided, what was
   agreed, what was tested.
+- **Its settings** are its §3: each component's, with the value this
+  deployment takes and who decided it; never a secret, host or address
+  (FS-1046).
 - **How they interact** is drawn below §2's table, in diagrams that
   build on each other (FS-1045).
 - **Every component of an instance** (architecture instance, the table
@@ -46,8 +49,8 @@ instance in one environment, across its sites; a sandbox counts.
   Dibon 1 and 2).
 - **Continuity in two layers:** the company's plan is
   [business-continuity](../business-continuity.md); each deployment's own
-  is its §5, and the steps are [the runbooks](../runbooks/README.md).
-- **A deployment changes** by pull request, its §11 noting what and why;
+  is its §6, and the steps are [the runbooks](../runbooks/README.md).
+- **A deployment changes** by pull request, its §12 noting what and why;
   a change to production also goes through change enablement (service
   management §2).
 
