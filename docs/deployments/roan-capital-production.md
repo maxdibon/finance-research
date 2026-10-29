@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046]
-last_reviewed: 2026-10-28
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050]
+last_reviewed: 2026-10-29
 ---
 
 # Roan Capital · production
@@ -220,7 +220,9 @@ FS-1046. What Roan Capital's deployment sets. **Status:** *Set* (as the
 spec says, the same for every institution), *Agreed* (Roan Capital's
 choice, with its source) or *To decide* (with its open answer or row).
 No secret, host or address: those stay in the generated configuration
-record (service management §3).
+record (service management §3). Where a component has a baseline (settings, FS-1050), its row here
+summarises this deployment's file for it, which holds its choices,
+departures and exceptions in full.
 
 | Component | Setting | This deployment | Defined in | Decided by | Status |
 |---|---|---|---|---|---|
@@ -235,9 +237,7 @@ record (service management §3).
 | APPROVAL ENGINE | The approval chain and its threshold | Proposed: up to a threshold, one approval by someone other than the originator; above it, two | approval-engine §4; open answers 28, 36 | Roan Capital | To decide |
 | APPROVAL ENGINE | Who releases a payout | Open | open answer 37 | Roan Capital | To decide |
 | APPROVAL ENGINE | Who approves when the CEO is away | Open | open answer 40; FS-898 | Roan Capital | To decide |
-| ACCESS | Staff sign-in | Every login at level 2 (password and a second factor); level 3 again for anything that moves money, approves or grants a role; passwords of 12 characters or more; sessions 30 minutes idle, 10 hours at most; five wrong attempts lock for 15 minutes | access-keycloak §5 | The spec | Set |
-| ACCESS | Customer sign-in | A 6-digit code by SMS to the bound phone, valid 5 minutes, three attempts; sessions 15 minutes idle, 1 hour at most; a changed SIM holds sign-in | access-keycloak §5 | The spec | Set |
-| ACCESS | Roles | The eight positions, folded for three or four staff; who holds which, and the two administrators | customers/roan-capital §7; FS-982; open answers 26, 35 | Roan Capital | To decide |
+| ACCESS | All, in [its Keycloak settings](roan-capital-production/keycloak.md) | The baseline's, with five choices of its own (one set, one agreed, three to decide: its theme, its staff roles, its two administrators), no departures from a default, no exceptions | settings/keycloak | The baseline; Roan Capital for its choices | See the file |
 | RAILS | Payouts | By bank only: NCBA, released by Roan Capital's staff; no payout 23:00 to 04:00 | rails; RC-18, RC-21 | Roan Capital, 21 October | Agreed |
 | RAILS | A second bank | Access Bank, or NCBA only | open answer 6 | Roan Capital | To decide |
 | RAILS | Repayments | M-Pesa into Roan Capital's own paybill, its number in the generated record; Airtel Money or T-Kash if used | rails RL-03, RL-20; open answer 25 | Roan Capital | Agreed; Airtel to decide |

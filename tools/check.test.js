@@ -215,6 +215,16 @@ test('runbooks: a runbook whose heading differs from the template fails', () => 
   assert.deepStrictEqual(names(f), ['runbooks']);
 });
 
+test('settings: a deployment that leaves a per-deployment setting unset fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'deployments', 'roan-capital-production', 'keycloak.md'), (x) => x.replace(/^\| S33 \|.*\n/m, '')));
+  assert.deepStrictEqual(names(f), ['settings']);
+});
+
+test('settings: a mandatory setting changed as if it were a default fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'deployments', 'roan-capital-production', 'keycloak.md'), (x) => x.replace('None. Replicas, password', '| Id | Default | This deployment | Why | Decided by |\n|---|---|---|---|---|\n| S22 | 5 minutes | 15 minutes | Longer | Someone |\n\nReplicas, password')));
+  assert.deepStrictEqual(names(f), ['settings']);
+});
+
 test('capabilities: a status outside the vocabulary fails', () => {
   // Replaces whatever status the row has, so the test survives status changes.
   const f = runWith((d) => patch(d, COLLECT, (t) => t.replace(/^(\| CO-01 \|[^|]*\|) \w+ \|/m, '$1 Ready |')));
