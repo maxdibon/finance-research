@@ -226,11 +226,7 @@ departures and exceptions in full.
 
 | Component | Setting | This deployment | Defined in | Decided by | Status |
 |---|---|---|---|---|---|
-| KAPU CORE | Tenant time zone | Africa/Nairobi | kapu-core-fineract §2 | The spec | Set |
-| KAPU CORE | Global configuration | Maker-checker off (approvals are the approval engine's); transactions allowed on holidays and non-working days; the business date moved only by the end-of-day runner | kapu-core-fineract §4 | The spec | Set |
-| KAPU CORE | A due date on a holiday | Moves to the next working day | kapu-core-fineract §4 (onboarding OB-COM-20) | Roan Capital, 21 October | Agreed |
-| KAPU CORE | Every loan product | Progressive schedule; advanced payment allocation in the repayment order the lender regulations set (LR-03); no overdue penalty charges on capped products; non-performing as they define it; each product's terms applied from its product version, never by hand | kapu-core-fineract §4; lender-rules §2.4 | The spec | Set |
-| KAPU CORE | Staff permissions | No staff role may approve, disburse, reschedule, waive or write off in Fineract; only the lending service's account | kapu-core-fineract §4 | The spec | Set |
+| KAPU CORE | All, in [its Fineract settings](roan-capital-production/fineract.md) | The baseline's, with three choices of its own (a due date on a holiday moves to the next working day, agreed on 21 October; its chart of accounts and its working days, to decide), no departures from a default, no exceptions | settings/fineract | The baseline; Roan Capital for its choices | See the file |
 | LENDING SERVICE | Products | Biashara, Motor Vehicle and Title Deed, each product version 1, proposed: the values as Roan Capital answers its questionnaires | docs/products | Roan Capital's product owner and a second approver | To decide |
 | LENDING SERVICE | Amounts | KES, to 2 decimal places | The product versions | Roan Capital, 21 October | Agreed |
 | LENDING SERVICE | Partners and their limits | None in R1 | lending-service §5 | — | Set |
@@ -251,8 +247,8 @@ departures and exceptions in full.
 | ODOO | Edition and apps | Enterprise: CRM, Sign, Helpdesk, Documents, Employees, and the staff workspace; sign-in through Keycloak | business-suite; back-office §3 | Dibon | Set |
 | ODOO | Users | One per staff member who uses it; a lower-cost edition to weigh | FS-529; open answer 34 | Roan Capital | To decide |
 | BACK-OFFICE GATEWAY | Edition | Odoo Enterprise's adapter | back-office §3 | The spec | Set |
-| DATABASE | Clusters | Five by tier, each a primary and a synchronous standby | architecture instance | Eric | To decide (FS-1036) |
-| OPENBAO | Unsealing at each site | A key held at the site, or automatically from a hardware module | runbooks/openbao-unseal | Eric | To decide (FS-1038) |
+| DATABASE | All, in [its PostgreSQL settings](roan-capital-production/postgresql.md) | The baseline's, with two choices of its own (a replica cluster at site B, as warm standby needs; its size, to decide); the five clusters themselves to decide (FS-1036); no departures, no exceptions | settings/postgresql | The baseline; its contract | See the file |
+| OPENBAO | All, in [its OpenBao settings](roan-capital-production/openbao.md) | The baseline's throughout, no choice of its own; how each site unseals to decide for every deployment (FS-1038) | settings/openbao | The baseline | See the file |
 
 ## 4 · Diagrams
 

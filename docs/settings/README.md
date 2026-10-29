@@ -66,9 +66,9 @@ the people and grants stay in the application.
 | Component | Baseline | Owner | Status |
 |---|---|---|---|
 | ACCESS (Keycloak) | [keycloak.md](keycloak.md) | Security lead | Written |
-| KAPU CORE (Fineract) | To write, from kapu-core-fineract §4 | Solution architect | Next |
-| DATABASE (PostgreSQL) | To write | Operations lead | Next |
-| OPENBAO | To write | Security lead | Next |
+| KAPU CORE (Fineract) | [fineract.md](fineract.md) | Solution architect | Written |
+| DATABASE (PostgreSQL) | [postgresql.md](postgresql.md) | Operations lead | Written |
+| OPENBAO | [openbao.md](openbao.md) | Security lead | Written |
 | EDGE | To write | Security lead | Next |
 | EVENT BUS, ODOO, OBSERVABILITY and the rest | To write | As each component's owner | Later |
 

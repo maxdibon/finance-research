@@ -12,8 +12,8 @@ depends_on: [access-keycloak, event-bus-kafka]
 used_by: [approval-engine, lender-rules, end-of-day-runner, recon, lending-service, deposits-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983]
-last_reviewed: 2026-10-27
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050]
+last_reviewed: 2026-10-29
 ---
 
 # Kapu Core on Apache Fineract — component specification
@@ -122,50 +122,16 @@ FS-185. Groups (KC-01, later).
 
 ## 4 · Settings
 
-**Global configuration:**
-
-| Setting | Value | Why |
-|---|---|---|
-| maker-checker | off | §3 |
-| allow-transactions-on-holiday, allow-transactions-on-non_workingday | on | Repayments land every day; M-Pesa never closes |
-| reschedule-repayments-on-holidays, reschedule-future-repayments | per the institution's credit policy | Whether a due date on a holiday moves (onboarding OB-COM-20) |
-| business date | on, moved only by the end-of-day runner (§7) | |
-
-**Every loan product:**
-
-| Setting | Value |
-|---|---|
-| Loan schedule type | Progressive |
-| Transaction processing strategy | Advanced payment allocation |
-| Payment allocation, default rule | Past-due principal, past-due fees, past-due penalties, past-due interest; then due principal, fees, penalties, interest; then in advance in the same order (reg 56: principal, then fees and charges, then interest) |
-| Future installments | Next installment first, unless the product says otherwise |
-| Interest method | Flat or declining balance, as the product version says |
-| Minimum and maximum nominal rate | The product's range: a rate change outside it is refused |
-| Overdue days for non-performing | Matched to reg 57 where the product's tenors sit wholly on one side of 30 days (lender-rules) |
-| Moves out of non-performing only when arrears are cleared | On |
-| Can be used for top-up | On, where the credit policy allows top-ups |
-| Overdue penalty charges | None, for capped products |
-
-**Applied from the product version document,** never by hand
-(lender-rules §2.4, FS-802): the service sets each loan product's
-settings through the API from the signed document; each night recon
-compares Fineract's live product settings, and each loan's copied terms,
-with the document its version names (check F15).
-
-**Roles and permissions:** staff roles never hold `APPROVE_LOAN`,
-`REJECT_LOAN`, `WITHDRAW_LOAN`, `DISBURSE_LOAN`, `DISBURSETOSAVINGS_LOAN`,
-`APPROVALUNDO_LOAN`, `DISBURSALUNDO_LOAN`, `CREATE_RESCHEDULELOAN`,
-`APPROVE_RESCHEDULELOAN`, `REJECT_RESCHEDULELOAN`, `REAGE_LOAN`, `REAMORTIZE_LOAN`,
-`WAIVEINTERESTPORTION_LOAN`, `WAIVE_LOANCHARGE`, `WRITEOFF_LOAN` or
-`FORECLOSURE_LOAN`. Only Kapu MFI's service account does, and it acts only
-on an approved request. Whether staff use Fineract's own screens at all,
-and so whether they need a read-only role, is open (§13).
-
-**Codes:** reschedule reasons and re-amortization reasons, matching the
-reasons Kapu MFI records (MF-09).
-
-**Accounting:** accrual accounting, the institution's chart of accounts
-(OB-KC-02); accruals stop on a non-performing loan (§7).
+**The settings are Fineract's baseline,** [settings/fineract](../settings/fineract.md)
+(FS-1050), each with its class (mandatory, default or per deployment),
+why, and how it is enforced and checked; each deployment's own values are
+its file, `deployments/<deployment>/fineract.md`; its database's are the
+[PostgreSQL baseline](../settings/postgresql.md). In short: maker-checker
+off, as the approval engine decides (baseline S06); the business date
+moved only by the end-of-day runner (S09); every product progressive,
+with the repayment order reg 56 sets (S10, S11), set only from its signed
+product version and compared each night (S12, check F15); no staff role
+able to move a loan, only Kapu MFI's service account (S16, S17).
 
 ## 5 · Contracts
 
@@ -361,4 +327,3 @@ On a running 1.15 instance, before the build relies on each (FS-625):
 |---|---|---|
 | reg 29 | reg 29, reg 29(3) | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
 | reg 56 | reg 56, reg 56(1) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
-| reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |
