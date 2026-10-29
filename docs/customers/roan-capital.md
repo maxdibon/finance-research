@@ -284,6 +284,7 @@ product drafts themselves are in docs/products/ by exception (FS-806).
 | DR-056 | 30-day loan (Biashara) questionnaire, parts A to C in one (DC-FS-QN-001) | The questions on the product's terms, eligibility and limits, and how it runs, a part and a page each, a form field for each answer, built from the product's draft, and a last page of the regulations cited; v0.5 with what Roan Capital agreed on 21 October shown as what we have | Working | draft | 2026-10-28 | Dibon |
 | DR-057 | Motor Vehicle questionnaire, parts A to C in one (DC-FS-QN-002) | As DR-056, for Motor Vehicle | Working | draft | 2026-10-28 | Dibon |
 | DR-058 | Title Deed questionnaire, parts A to C in one (DC-FS-QN-003) | As DR-056, for Title Deed | Working | draft | 2026-10-28 | Dibon |
+| DR-059 | 30-day loan (Biashara) questionnaire, what needs an answer set apart from what 21 October told us (DC-FS-QN-001) | Each part opens with what needs an answer; what Roan Capital told us on 21 October follows, confirmed with one answer, a correction beside each item; settled last; a count of each on the first page; a last page of the regulations cited. For Eric's review | Working | draft | 2026-10-29 | Dibon |
 
 - Capability statuses: the modules named in §2.
 - Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in

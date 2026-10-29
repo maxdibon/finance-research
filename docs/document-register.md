@@ -98,6 +98,7 @@ checked with the owner (FS-840).
 | DR-056 | Roan Capital | 30-day loan (Biashara) questionnaire, parts A to C in one (DC-FS-QN-001) | The questions on the product's terms, eligibility and limits, and how it runs, a part and a page each, a form field for each answer, built from the product's draft, and a last page of the regulations cited; v0.5 with what Roan Capital agreed on 21 October shown as what we have | Working | 0.5 | draft | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1043, FS-1044 |
 | DR-057 | Roan Capital | Motor Vehicle questionnaire, parts A to C in one (DC-FS-QN-002) | As DR-056, for Motor Vehicle | Working | 0.2 | draft | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1043 |
 | DR-058 | Roan Capital | Title Deed questionnaire, parts A to C in one (DC-FS-QN-003) | As DR-056, for Title Deed | Working | 0.2 | draft | 2026-10-28 | Dibon | `clients/roan-capital/working/` | — | FS-1043 |
+| DR-059 | Roan Capital | 30-day loan (Biashara) questionnaire, what needs an answer set apart from what 21 October told us (DC-FS-QN-001) | Each part opens with what needs an answer; what Roan Capital told us on 21 October follows, confirmed with one answer, a correction beside each item; settled last; a count of each on the first page; a last page of the regulations cited. For Eric's review | Working | 0.6 | draft | 2026-10-29 | Dibon | `clients/roan-capital/working/` | — | FS-1049 |
 
 ## Our documents, numbered, and who received them
 
@@ -114,7 +115,7 @@ Record, under its party.
 | DC-FS-PR-001 | Bank channel proposal | PR | 1.0 | issued | 2026-10-05 | design/bank-channel-proposal/ |
 | DC-FS-DK-001 | Dibon for SBM Bank, the deck for the meeting of 22 October | DK | 1.0 | issued | 2026-10-22 | build/proposals/ |
 | DC-FS-LT-001 | Requests to banks for statements, alerts and balances, one copy per bank | LT | 0.1 | draft | — | design/outreach-pdf/ |
-| DC-FS-QN-001 | Roan Capital: the 30-day loan (Biashara), its questionnaire, parts A to C in one file | QN | 0.5 | draft | — | tools/products/questionnaires.js |
+| DC-FS-QN-001 | Roan Capital: the 30-day loan (Biashara), its questionnaire, parts A to C in one file | QN | 0.6 | draft | — | tools/products/questionnaires.js |
 | DC-FS-QN-002 | Roan Capital: Motor Vehicle, its questionnaire, parts A to C in one file | QN | 0.2 | draft | — | tools/products/questionnaires.js |
 | DC-FS-QN-003 | Roan Capital: Title Deed, its questionnaire, parts A to C in one file | QN | 0.2 | draft | — | tools/products/questionnaires.js |
 | DC-FS-QN-004 | Roan Capital: roles, approvals and going live | QN | 0.2 | draft | — | design/system/docx.js |

@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823, FS-825, FS-989, FS-1029, FS-1039, FS-1043]
-last_reviewed: 2026-10-28
+review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823, FS-825, FS-989, FS-1029, FS-1039, FS-1043, FS-1049]
+last_reviewed: 2026-10-29
 ---
 
 # Products
@@ -51,7 +51,7 @@ the answers would break.
 
 | Step | Run | Notes |
 |---|---|---|
-| Build the questionnaires | `node tools/products/questionnaires.js docs/products/<draft>.md --one-file --number DC-FS-QN-<serial> --version <v>` | Needs the docx package (`npm install docx` anywhere; DOCX_MODULE points at it). Writes build/products/: with --one-file one Word document per product, its three groups as parts A to C, a page each (FS-1043); without it, one per group. Render it and look at every page before sending |
+| Build the questionnaires | `node tools/products/questionnaires.js docs/products/<draft>.md --one-file --number DC-FS-QN-<serial> --version <v>` | Needs the docx package (`npm install docx` anywhere; DOCX_MODULE points at it). Writes build/products/: with --one-file one Word document per product, its three groups as parts A to C, a page each (FS-1043); without it, one per group. Render it and look at every page before sending. With `--agreed-on "the meeting"` (FS-1049), each part opens with what needs an answer, and the Confirm items whose source names that meeting follow in one block, confirmed with one answer, a correction field beside each; the read-back takes the one answer for the block |
 | Add the regulations page | `py tools/regulations-page.py <in.docx> <out.docx>` | Each questionnaire ends with the regulations it cites, read from the instrument cards, with no register ids (FS-874); never sent without it (FS-1039) |
 | Send them | To the institution's product owner, credit lead and operations lead | The file itself comes back, not an email of answers |
 | Keep what comes back | In `clients/<institution>/` | Client material: never in git |

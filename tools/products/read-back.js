@@ -86,9 +86,19 @@ const withDetail = (option, note) => (note ? `${option.replace(GIVE, '')}: ${not
 const same = (a, b) => cellText(a) === cellText(b);
 
 for (const it of items) {
-  const main = fields.get(it.id);
+  let main = fields.get(it.id);
   const note = fields.get(`${it.id}.note`);
   known.add(it.id); known.add(`${it.id}.note`);
+  // FS-1049: an item in its part's "What you told us" block has no field of
+  // its own: the block's one answer confirms it, and a correction beside it
+  // marks it not right.
+  const block = fields.get(`${it.group}.agreed`);
+  if (!main && block && it.ask === 'Confirm') {
+    known.add(`${it.group}.agreed`);
+    if (note && note.text) main = { blank: false, value: 'not-right', text: note.text };
+    else if (!block.blank && (block.value === 'all' || block.value === 'corrections')) main = { blank: false, value: 'confirmed', text: 'Confirmed' };
+    else main = { blank: true };
+  }
   if (!main) { if (it.ask) forPerson.push(`${it.id} ${it.name}: no field for it in this document (built ${built}; the draft may have changed since)`); continue; }
   const comment = note && note.text;
   if (!it.ask) {
