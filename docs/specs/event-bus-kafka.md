@@ -11,8 +11,8 @@ depends_on: [observability-grafana]
 used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, messaging, recon, back-office]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970]
-last_reviewed: 2026-10-26
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970, FS-1053]
+last_reviewed: 2026-10-29
 ---
 
 # The event bus on Kafka — component specification
@@ -46,7 +46,7 @@ shared with institutions' own systems.
 
 ```
   +--------------------+  +--------------------+  +--------------------+  +--------------------+
-  | KAPU MFI           |  | APPROVAL ENGINE    |  | RAILS              |  | KAPU CORE          |
+  | LENDING SERVICE    |  | APPROVAL ENGINE    |  | RAILS              |  | KAPU CORE          |
   | asks, then acts    |  | decides            |  | pays               |  | records            |
   | [kapu_service]     |  | [kapu_service]     |  | [kapu_service]     |  | [apache_fineract]  |
   +--------------------+  +--------------------+  +--------------------+  +--------------------+

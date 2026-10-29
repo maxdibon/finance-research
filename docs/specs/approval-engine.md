@@ -12,8 +12,8 @@ depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka]
 used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032]
-last_reviewed: 2026-10-27
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032, FS-1053]
+last_reviewed: 2026-10-29
 ---
 
 # Approval engine — build specification
@@ -62,7 +62,7 @@ extra: the engine holds the facts already.
 **Where it sits.**
 
 ```
-  approvers: console, email, app
+  approvers: in the Kapu Console, by email link, in the app
         |
         v
   +---------------------+  roles, step-up      +---------------------+
@@ -72,11 +72,11 @@ extra: the engine holds the facts already.
   +---------------------+                      +---------------------+
      ^ request    | approved, declined
      |            v
-  +---------------------+  approve, reject,    +---------------------+
-  | KAPU MFI            |--------------------->| KAPU CORE           |
-  | asks, then acts     |  disburse            | records             |
-  | [kapu_service]      |                      | [apache_fineract]   |
-  +---------------------+                      +---------------------+
+  +---------------------+  approve, reject,    +---------------------+      +---------------------+
+  | LENDING SERVICE     |--------------------->| CORE ADAPTER        |----->| KAPU CORE           |
+  | asks, then acts     |  disburse            | posts to the core   |      | records             |
+  | [kapu_service]      |                      | [kapu_service]      |      | [apache_fineract]   |
+  +---------------------+                      +---------------------+      +---------------------+
 ```
 
 **Related:** implements [mandates](../modules/mandates.md); depends on

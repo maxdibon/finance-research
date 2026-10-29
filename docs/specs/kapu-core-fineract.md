@@ -12,7 +12,7 @@ depends_on: [access-keycloak, event-bus-kafka]
 used_by: [approval-engine, lender-rules, end-of-day-runner, recon, lending-service, deposits-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050]
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050, FS-1053]
 last_reviewed: 2026-10-29
 ---
 
@@ -55,16 +55,16 @@ FS-185. Groups (KC-01, later).
 **Where it sits.**
 
 ```
-  staff, back office                     borrowers, guarantors
+  staff, in the staff workspace          borrowers, guarantors
         |                                        |
         v                                        v
   +----------------+   +--------------------------------+   +-------------------+
-  | ACCESS         |-->| KAPU MFI                       |<->| APPROVAL ENGINE   |
-  | signs in       |   | the only writer to the ledger  |   | decides           |
-  | [keycloak]     |   | [kapu_service]                 |   | [kapu_service]    |
+  | ACCESS         |-->| LENDING SERVICE                |<->| APPROVAL ENGINE   |
+  | signs in       |   | the only writer, by its core   |   | decides           |
+  | [keycloak]     |   | adapter        [kapu_service]  |   | [kapu_service]    |
   +----------------+   +--------------------------------+   +-------------------+
-        | OAuth          | commands,         ^ waivers
-        |                | service account   |
+        | OAuth          | commands, by the  ^ waivers
+        |                | core adapter      |
         v                v                   |
   +-----------------------------------------------+   +-------------------+
   | KAPU CORE                                     |   | LENDER RULES      |

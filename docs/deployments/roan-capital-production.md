@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1050]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053]
 last_reviewed: 2026-10-29
 ---
 
@@ -263,7 +263,7 @@ instance) and the warm standby's (deployment §2):
                       v                                     v
    +----------------------------------------------------------------------+
    | ROAN CAPITAL'S INSTANCE, site A (site B at zero, copies arriving)    |
-   |   EDGE --> services --> data           bastion: Dibon's engineers,  |
+   |   EDGE --> services --> data           bastion: Dibon's engineers,   |
    |                                        by ticket only                |
    +-------+-----------------+--------------------+-----------------------+
            |                 |                    |

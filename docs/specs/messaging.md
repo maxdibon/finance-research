@@ -12,8 +12,8 @@ depends_on: [access-keycloak, event-bus-kafka, back-office]
 used_by: [access-keycloak, lender-rules, observability-grafana]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802, FS-970]
-last_reviewed: 2026-10-26
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802, FS-970, FS-1053]
+last_reviewed: 2026-10-29
 ---
 
 # Messaging and its templates — build specification
@@ -56,7 +56,7 @@ and MCP access (MS-17), partners' routes outside Kenya (MS-04).
 
 ```
   +------------------+    +------------------+    +------------------+    +------------------+
-  | KAPU MFI         |    | APPROVAL ENGINE  |    | ACCESS           |    | LENDER RULES     |
+  | LENDING SERVICE  |    | APPROVAL ENGINE  |    | ACCESS           |    | LENDER RULES     |
   | asks, then acts  |    | decides          |    | signs in         |    | corrects         |
   | [kapu_service]   |    | [kapu_service]   |    | [keycloak]       |    | [kapu_service]   |
   +------------------+    +------------------+    +------------------+    +------------------+
@@ -71,8 +71,9 @@ and MCP access (MS-17), partners' routes outside Kenya (MS-04).
   | template version in force --> merge (no balance, no ID) --> consent and quiet hours      |
   | --> channel the person chose, or the regulatory override --> route --> message log       |
   +------------------------------------------------------------------------------------------+
-          |                       |                       |                         ^ consent,
-          |                       |                       |                         | opt-outs
+          |                       |                       |                         ^ consent, opt-
+          |                       |                       |                         | outs, by the
+          |                       |                       |                         | gateway
           v                       v                       v                         v
    SMS: Safaricom,          WhatsApp                email, our own        +------------------+
    Airtel, Telkom           (with consent)          relay (MS-19)         | ODOO             |
