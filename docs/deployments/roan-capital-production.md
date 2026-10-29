@@ -233,6 +233,7 @@ departures and exceptions in full.
 | APPROVAL ENGINE | The approval chain and its threshold | Proposed: up to a threshold, one approval by someone other than the originator; above it, two | approval-engine §4; open answers 28, 36 | Roan Capital | To decide |
 | APPROVAL ENGINE | Who releases a payout | Open | open answer 37 | Roan Capital | To decide |
 | APPROVAL ENGINE | Who approves when the CEO is away | Open | open answer 40; FS-898 | Roan Capital | To decide |
+| EDGE | All, in [its edge settings](roan-capital-production/edge.md) | The baseline's, with three choices of its own (its rate limits, its provider's flood protection and its host names, all to decide), no departures, no exceptions | settings/edge | The baseline; Dibon and Roan Capital for its choices | See the file |
 | ACCESS | All, in [its Keycloak settings](roan-capital-production/keycloak.md) | The baseline's, with five choices of its own (one set, one agreed, three to decide: its theme, its staff roles, its two administrators), no departures from a default, no exceptions | settings/keycloak | The baseline; Roan Capital for its choices | See the file |
 | RAILS | Payouts | By bank only: NCBA, released by Roan Capital's staff; no payout 23:00 to 04:00 | rails; RC-18, RC-21 | Roan Capital, 21 October | Agreed |
 | RAILS | A second bank | Access Bank, or NCBA only | open answer 6 | Roan Capital | To decide |

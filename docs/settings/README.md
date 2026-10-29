@@ -69,7 +69,7 @@ the people and grants stay in the application.
 | KAPU CORE (Fineract) | [fineract.md](fineract.md) | Solution architect | Written |
 | DATABASE (PostgreSQL) | [postgresql.md](postgresql.md) | Operations lead | Written |
 | OPENBAO | [openbao.md](openbao.md) | Security lead | Written |
-| EDGE | To write | Security lead | Next |
+| EDGE | [edge.md](edge.md) | Security lead | Written |
 | EVENT BUS, ODOO, OBSERVABILITY and the rest | To write | As each component's owner | Later |
 
 ## Regulations cited
