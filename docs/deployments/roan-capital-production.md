@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046]
-last_reviewed: 2026-10-28
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050]
+last_reviewed: 2026-10-29
 ---
 
 # Roan Capital · production
@@ -220,24 +220,20 @@ FS-1046. What Roan Capital's deployment sets. **Status:** *Set* (as the
 spec says, the same for every institution), *Agreed* (Roan Capital's
 choice, with its source) or *To decide* (with its open answer or row).
 No secret, host or address: those stay in the generated configuration
-record (service management §3).
+record (service management §3). Where a component has a baseline (settings, FS-1050), its row here
+summarises this deployment's file for it, which holds its choices,
+departures and exceptions in full.
 
 | Component | Setting | This deployment | Defined in | Decided by | Status |
 |---|---|---|---|---|---|
-| KAPU CORE | Tenant time zone | Africa/Nairobi | kapu-core-fineract §2 | The spec | Set |
-| KAPU CORE | Global configuration | Maker-checker off (approvals are the approval engine's); transactions allowed on holidays and non-working days; the business date moved only by the end-of-day runner | kapu-core-fineract §4 | The spec | Set |
-| KAPU CORE | A due date on a holiday | Moves to the next working day | kapu-core-fineract §4 (onboarding OB-COM-20) | Roan Capital, 21 October | Agreed |
-| KAPU CORE | Every loan product | Progressive schedule; advanced payment allocation in the repayment order the lender regulations set (LR-03); no overdue penalty charges on capped products; non-performing as they define it; each product's terms applied from its product version, never by hand | kapu-core-fineract §4; lender-rules §2.4 | The spec | Set |
-| KAPU CORE | Staff permissions | No staff role may approve, disburse, reschedule, waive or write off in Fineract; only the lending service's account | kapu-core-fineract §4 | The spec | Set |
+| KAPU CORE | All, in [its Fineract settings](roan-capital-production/fineract.md) | The baseline's, with three choices of its own (a due date on a holiday moves to the next working day, agreed on 21 October; its chart of accounts and its working days, to decide), no departures from a default, no exceptions | settings/fineract | The baseline; Roan Capital for its choices | See the file |
 | LENDING SERVICE | Products | Biashara, Motor Vehicle and Title Deed, each product version 1, proposed: the values as Roan Capital answers its questionnaires | docs/products | Roan Capital's product owner and a second approver | To decide |
 | LENDING SERVICE | Amounts | KES, to 2 decimal places | The product versions | Roan Capital, 21 October | Agreed |
 | LENDING SERVICE | Partners and their limits | None in R1 | lending-service §5 | — | Set |
 | APPROVAL ENGINE | The approval chain and its threshold | Proposed: up to a threshold, one approval by someone other than the originator; above it, two | approval-engine §4; open answers 28, 36 | Roan Capital | To decide |
 | APPROVAL ENGINE | Who releases a payout | Open | open answer 37 | Roan Capital | To decide |
 | APPROVAL ENGINE | Who approves when the CEO is away | Open | open answer 40; FS-898 | Roan Capital | To decide |
-| ACCESS | Staff sign-in | Every login at level 2 (password and a second factor); level 3 again for anything that moves money, approves or grants a role; passwords of 12 characters or more; sessions 30 minutes idle, 10 hours at most; five wrong attempts lock for 15 minutes | access-keycloak §5 | The spec | Set |
-| ACCESS | Customer sign-in | A 6-digit code by SMS to the bound phone, valid 5 minutes, three attempts; sessions 15 minutes idle, 1 hour at most; a changed SIM holds sign-in | access-keycloak §5 | The spec | Set |
-| ACCESS | Roles | The eight positions, folded for three or four staff; who holds which, and the two administrators | customers/roan-capital §7; FS-982; open answers 26, 35 | Roan Capital | To decide |
+| ACCESS | All, in [its Keycloak settings](roan-capital-production/keycloak.md) | The baseline's, with five choices of its own (one set, one agreed, three to decide: its theme, its staff roles, its two administrators), no departures from a default, no exceptions | settings/keycloak | The baseline; Roan Capital for its choices | See the file |
 | RAILS | Payouts | By bank only: NCBA, released by Roan Capital's staff; no payout 23:00 to 04:00 | rails; RC-18, RC-21 | Roan Capital, 21 October | Agreed |
 | RAILS | A second bank | Access Bank, or NCBA only | open answer 6 | Roan Capital | To decide |
 | RAILS | Repayments | M-Pesa into Roan Capital's own paybill, its number in the generated record; Airtel Money or T-Kash if used | rails RL-03, RL-20; open answer 25 | Roan Capital | Agreed; Airtel to decide |
@@ -251,8 +247,8 @@ record (service management §3).
 | ODOO | Edition and apps | Enterprise: CRM, Sign, Helpdesk, Documents, Employees, and the staff workspace; sign-in through Keycloak | business-suite; back-office §3 | Dibon | Set |
 | ODOO | Users | One per staff member who uses it; a lower-cost edition to weigh | FS-529; open answer 34 | Roan Capital | To decide |
 | BACK-OFFICE GATEWAY | Edition | Odoo Enterprise's adapter | back-office §3 | The spec | Set |
-| DATABASE | Clusters | Five by tier, each a primary and a synchronous standby | architecture instance | Eric | To decide (FS-1036) |
-| OPENBAO | Unsealing at each site | A key held at the site, or automatically from a hardware module | runbooks/openbao-unseal | Eric | To decide (FS-1038) |
+| DATABASE | All, in [its PostgreSQL settings](roan-capital-production/postgresql.md) | The baseline's, with two choices of its own (a replica cluster at site B, as warm standby needs; its size, to decide); the five clusters themselves to decide (FS-1036); no departures, no exceptions | settings/postgresql | The baseline; its contract | See the file |
+| OPENBAO | All, in [its OpenBao settings](roan-capital-production/openbao.md) | The baseline's throughout, no choice of its own; how each site unseals to decide for every deployment (FS-1038) | settings/openbao | The baseline | See the file |
 
 ## 4 · Diagrams
 

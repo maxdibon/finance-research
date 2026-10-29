@@ -1305,6 +1305,72 @@ function checkRunbooks(root) {
   return failures;
 }
 
+// ── settings ─────────────────────────────────────────────────────────────
+// FS-1050: each component's baseline follows docs/settings/_template.md, its
+// settings with unique ids and a class; each deployment's file for a
+// component (docs/deployments/<deployment>/<component>.md) follows its
+// template, names only the baseline's ids, sets every Per deployment
+// setting in §2, changes only Defaults in §3 and departs only from
+// Mandatory settings in §4.
+const SETTINGS = path.join('docs', 'settings');
+const CLASSES = ['Mandatory', 'Per deployment'];
+function settingsOf(text) {
+  const out = new Map();
+  for (const r of tableAfter(text, '| Id | Setting | Value | Class |')) {
+    const [id, , , cls] = r.cells;
+    out.set(id, { line: r.line, cls: cls.startsWith('Default') ? 'Default' : cls });
+  }
+  return out;
+}
+function checkSettings(root) {
+  const { files, failures } = againstTemplate(root, SETTINGS, 'settings');
+  const baselines = new Map();
+  for (const file of files) {
+    const text = read(root, file);
+    const seen = new Set();
+    for (const r of tableAfter(text, '| Id | Setting | Value | Class |')) {
+      const [id, , , cls] = r.cells;
+      if (!/^S\d{2}$/.test(id)) failures.push(fail('settings', file, r.line, `"${id}" is not a setting id (S01, S02...)`));
+      if (seen.has(id)) failures.push(fail('settings', file, r.line, `${id} listed twice`));
+      seen.add(id);
+      if (!CLASSES.includes(cls) && !cls.startsWith('Default')) failures.push(fail('settings', file, r.line, `${id}: class "${cls}" is not Mandatory, Default or Per deployment`));
+    }
+    baselines.set(path.basename(file, '.md'), settingsOf(text));
+  }
+  const deps = path.join(root, DEPLOYMENTS);
+  if (!fs.existsSync(deps)) return failures;
+  const tmpl = path.join(DEPLOYMENTS, '_settings-template.md');
+  const wantHeadings = fs.existsSync(path.join(root, tmpl)) ? headings(read(root, tmpl)) : [];
+  for (const d of fs.readdirSync(deps, { withFileTypes: true }).filter((x) => x.isDirectory())) {
+    for (const name of fs.readdirSync(path.join(deps, d.name)).filter((f) => f.endsWith('.md')).sort()) {
+      const file = path.join(DEPLOYMENTS, d.name, name);
+      const text = read(root, file);
+      const got = headings(text);
+      for (let i = 0; i < Math.max(got.length, wantHeadings.length); i++) {
+        if (got[i] !== wantHeadings[i]) { failures.push(fail('settings', file, 0, `heading ${i + 1} is "${got[i] || '(missing)'}"; the template has "${wantHeadings[i] || '(none)'}"`)); break; }
+      }
+      if (!fs.existsSync(path.join(deps, `${d.name}.md`))) failures.push(fail('settings', file, 0, `no deployment page ${d.name}.md beside its folder`));
+      const base = baselines.get(path.basename(name, '.md'));
+      if (!base) { failures.push(fail('settings', file, 0, `no baseline settings/${name}`)); continue; }
+      const want = { 2: 'Per deployment', 3: 'Default', 4: 'Mandatory' };
+      let section = 0;
+      const set = new Set();
+      text.split('\n').forEach((line, i) => {
+        const h = line.match(/^## (\d+) · /);
+        if (h) { section = Number(h[1]); return; }
+        const id = (line.match(/^\| (S\d{2}) \|/) || [])[1];
+        if (!id || !want[section]) return;
+        const s = base.get(id);
+        if (!s) { failures.push(fail('settings', file, i + 1, `${id} is not in the baseline`)); return; }
+        if (s.cls !== want[section]) failures.push(fail('settings', file, i + 1, `${id} is ${s.cls} in the baseline, so it does not belong in §${section}`));
+        if (section === 2) set.add(id);
+      });
+      for (const [id, s] of base) if (s.cls === 'Per deployment' && !set.has(id)) failures.push(fail('settings', file, 0, `${id} is Per deployment in the baseline: set it in §2`));
+    }
+  }
+  return failures;
+}
+
 // ── products ─────────────────────────────────────────────────────────────
 // FS-816, FS-817: a product version's draft is the data its questionnaires
 // are built from and its answers read back into. Every item has an id, a
@@ -1884,6 +1950,7 @@ function runAll(root) {
     ...checkBriefs(root),
     ...checkDeployments(root),
     ...checkRunbooks(root),
+    ...checkSettings(root),
     ...checkDocRegister(root, files),
     ...checkStatus(root, files),
     ...checkStatusGlossary(root),

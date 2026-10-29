@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046]
-last_reviewed: 2026-10-28
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050]
+last_reviewed: 2026-10-29
 ---
 
 # Deployments
@@ -47,6 +47,11 @@ instance in one environment, across its sites; a sandbox counts.
   addresses and endpoints stay in the generated record inside the
   instance; secrets by their OpenBao id only; people by role (rules,
   Dibon 1 and 2).
+- **Settings in two layers** (FS-1050): each component's baseline is in
+  [settings](../settings/README.md); a deployment's own values for a
+  component are a file in a folder named as its page,
+  `deployments/<deployment>/<component>.md`, from
+  [its template](_settings-template.md), and its page's §3 summarises them.
 - **Continuity in two layers:** the company's plan is
   [business-continuity](../business-continuity.md); each deployment's own
   is its §6, and the steps are [the runbooks](../runbooks/README.md).

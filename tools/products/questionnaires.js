@@ -130,6 +130,23 @@ fs.mkdirSync(outDir, { recursive: true });
 // FS-1043: --one-file writes the three parts into one document, a section
 // each; the read-back takes it whole, as its subject names the groups.
 const oneFile = args.includes('--one-file');
+// FS-1049: --agreed-on "21 October" sets apart what the institution told us
+// then (a Confirm item whose source names it): those follow what needs an
+// answer, in one block confirmed with one answer, a correction beside each.
+const agreedOn = opt('--agreed-on', '');
+const isAgreed = (it) => Boolean(agreedOn) && it.ask === 'Confirm' && it.source.includes(agreedOn);
+const AGREED = [{ text: 'All as agreed', value: 'all' }, { text: 'Corrections below', value: 'corrections' }];
+function agreedRow(it) {
+  const left = [para([ds.run(it.id, { color: ds.COLOURS.muted, size: 16 })], { after: 0 }), para([ds.run(plain(it.name), { bold: true, size: 19 })], { after: 0 })];
+  const mid = [para(ds.rich(plain(it.value), { size: 19 }), { after: 0 })];
+  const right = [field(`${it.id}.note`, `${it.id} · ${it.name}: correction`, 'text', 'A correction, if any'), new Paragraph({ children: [], spacing: { after: 0, line: 120 } })];
+  return new TableRow({ cantSplit: true, children: [cell(left, W[0]), cell(mid, W[1]), cell(right, W[2])] });
+}
+const partCounts = (key) => {
+  const all = draft.items.filter((it) => it.group === key);
+  const ask = all.filter((it) => it.ask);
+  return { open: ask.filter((it) => !isAgreed(it)).length, told: ask.filter(isAgreed).length, settled: all.length - ask.length };
+};
 const footerFor = (key) => ds.footer(`${number ? `${number}${docVersion ? ` v${docVersion}` : ''} · ` : ''}Dibon Consulting · ${inst} · ${product}, ${oneFile ? 'part' : 'group'} ${key} · ${longDate}`);
 const thanks = () => ds.p(`Thank you. Once all three ${oneFile ? 'parts' : 'groups'} are answered, the product goes to two of ${inst}'s people for approval, then to CBK, where its pricing needs approval (reg 55), and only then is it offered to borrowers.`, { before: 240 });
 async function write(sections, subject, title, file, report) {
@@ -156,7 +173,9 @@ const stem = `${inst.replace(/\s+/g, '-')}-${product.replace(/\s+/g, '-')}`;
     if (!ask.length) { console.log(`group ${key}: nothing to ask`); continue; }
     if (!oneFile) fields.length = 0;
     const first = !oneFile || !made.length;
-    const count = (k) => ask.filter((it) => it.ask === k).length;
+    const told = ask.filter(isAgreed);
+    const open = ask.filter((it) => !isAgreed(it));
+    const count = (k) => open.filter((it) => it.ask === k).length;
     const tally = ['Confirm', 'Choose', 'Provide', 'Decide'].filter(count)
       .map((k) => `${count(k)} to ${k === 'Choose' ? 'choose from options' : k.toLowerCase()}`);
     const children = [
@@ -166,8 +185,20 @@ const stem = `${inst.replace(/\s+/g, '-')}-${product.replace(/\s+/g, '-')}`;
       ds.p(`**For:** ${inst}'s ${g.who}.`),
       ds.p(g.intro),
     ];
-    if (oneFile && first) children.push(ds.p('This questionnaire has three parts, each for the person who knows its answers: A, the product\'s terms; B, eligibility and limits; C, how it runs. One person may answer all three.'));
-    children.push(ds.p(`What we have comes from what you have given us: your requirement document, your prototype and our meetings. **${ask.length} items** need your answer${oneFile ? ' in this part' : ''}: ${tally.join(', ')}. Under each item's name is why it matters; beside each value, where it came from.`, { after: 160 }));
+    if (oneFile && first) {
+      children.push(ds.p('This questionnaire has three parts, each for the person who knows its answers: A, the product\'s terms; B, eligibility and limits; C, how it runs. One person may answer all three.'));
+      if (agreedOn) {
+        const rows = [...'ABC'].map((k) => ({ k, ...partCounts(k) })).filter((c) => c.open + c.told);
+        children.push(
+          ds.p(`**Where to start.** Each part begins with what still needs your answer. What you told us on ${agreedOn} follows it, to confirm with one answer; what is settled comes last.`),
+          ds.table([['Part', 'Needs your answer', `You told us on ${agreedOn}: confirm`, 'Already settled'],
+            ...rows.map((c) => [`${c.k} · ${GROUPS[c.k].title.replace(/^Group . · /, '')}`, String(c.open), String(c.told), String(c.settled)]),
+            ['**All parts**', `**${rows.reduce((s, c) => s + c.open, 0)}**`, `**${rows.reduce((s, c) => s + c.told, 0)}**`, `**${rows.reduce((s, c) => s + c.settled, 0)}**`]], [3026, 2000, 2000, 2000]),
+        );
+      }
+    }
+    const toldLine = told.length ? ` **${told.length} things** you told us on ${agreedOn} follow, to confirm with one answer.` : '';
+    children.push(ds.p(`What we have comes from what you have given us: your requirement document, your prototype and our meetings. **${open.length} items** need your answer${oneFile ? ' in this part' : ''}: ${tally.join(', ')}.${toldLine} Under each item's name is why it matters; beside each value, where it came from.`, { after: 160 }));
     if (first) {
       children.push(
         ds.h('How to answer'),
@@ -175,11 +206,20 @@ const stem = `${inst.replace(/\s+/g, '-')}-${product.replace(/\s+/g, '-')}`;
         ds.li('**Confirm:** choose "Confirmed", or "Not right" and write the correct value in the field beneath.'),
         ds.li('**Choose one:** pick an option from the list; where it asks for detail, write it beneath.'),
         ds.li('**Provide** or **Decide:** type the answer.'),
+        ...(agreedOn ? [ds.li(`**What you told us on ${agreedOn}:** choose "All as agreed" once for the whole list, or "Corrections below" and write each correction beside its item.`)] : []),
         ds.li('Unsure? Leave the field as it is, and we will go through it together.'),
         ds.li('Save the document under its own name and return the file itself to your Dibon delivery lead. We read the answers from the fields, so please do not retype them elsewhere or turn the file into a PDF.'),
       );
     }
-    children.push(ds.h('The questions'), new Table({ width: { size: ds.WIDTH, type: WidthType.DXA }, columnWidths: W, rows: [head(['Item', 'What we have', 'Your answer']), ...ask.map(itemRow)] }));
+    if (open.length) children.push(ds.h(agreedOn ? 'Needs your answer' : 'The questions'), new Table({ width: { size: ds.WIDTH, type: WidthType.DXA }, columnWidths: W, rows: [head(['Item', 'What we have', 'Your answer']), ...open.map(itemRow)] }));
+    if (told.length) {
+      children.push(
+        ds.h(`What you told us on ${agreedOn}`),
+        ds.p(`We have taken these from ${agreedOn}. If they are all as agreed, one answer confirms them all; if any is not, choose "Corrections below" and write the correction beside it.`),
+        field(`${key}.agreed`, `Part ${key}: what you told us on ${agreedOn}`, 'list', 'All as agreed, or corrections below?', AGREED),
+        new Table({ width: { size: ds.WIDTH, type: WidthType.DXA }, columnWidths: W, rows: [head(['Item', 'What you told us', 'Correction, if any']), ...told.map(agreedRow)] }),
+      );
+    }
     if (settled.length) {
       children.push(ds.h('Already settled'), ds.p('Nothing to answer here; for your information.'));
       for (const it of settled) children.push(ds.li(`**${it.id} · ${plain(it.name)}:** ${plain(it.value)}. Source: ${plain(it.source).replace(/^The /, 'the ')}.`));

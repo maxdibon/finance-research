@@ -11,8 +11,8 @@ depends_on: [messaging]
 used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging, endpoints, github, recon, back-office, staff-workspace, kapu-console]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018]
-last_reviewed: 2026-10-27
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018, FS-1050]
+last_reviewed: 2026-10-29
 ---
 
 # Access on Keycloak — component specification
@@ -167,42 +167,15 @@ Keycloak events (SE-26).
 
 ## 5 · Settings
 
-**Levels of authentication** (realm `staff`):
-
-| ACR | Level | What it takes | Max age |
-|---|---|---|---|
-| `loa1` | 1 | Password | 10 hours |
-| `loa2` | 2 | Password and an authenticator app code or a security key | 10 hours: the working day |
-| `loa3` | 3 | The second factor again, now | 0: asked every time |
-
-Every staff login is `loa2`. Anything that moves money, approves,
-releases or grants a role asks for `loa3` (§7).
-
-**Staff and approvers:**
-
-- Both authenticators registered before first use (required actions):
-  an authenticator app (time-based, 6 digits, 30 seconds, SHA-1, which
-  Google and Microsoft Authenticator need) and a security key or
-  passkey. Either signs in; a lost one is revoked at once (AC-16).
-- Passwords: at least 12 characters, not the username, not reused from
-  the last five.
-- Sessions: 30 minutes idle, 10 hours at most; one session per approver
-  per client.
-- Brute force: five wrong attempts lock the account for 15 minutes and
-  raise a security event (as approval-engine §8); twenty in a day lock it
-  until an administrator, with a second administrator, unlocks it after
-  an identity check.
-
-**Customers:**
-
-- A code of 6 digits by SMS to the phone bound at enrolment, valid 5
-  minutes, three attempts, then 15 minutes locked.
-- Sessions: 15 minutes idle, 1 hour at most.
-- A changed SIM holds sign-in until re-verification (ID-13).
-
-**Engineers (`ops`):** hardware security keys with attestation; 8-hour
-sessions; break-glass accounts sealed and split like the backup keys
-(SE-21, SE-26).
+**The settings are Keycloak's baseline,** [settings/keycloak](../settings/keycloak.md)
+(FS-1050), each with its class (mandatory, default or per deployment),
+why, and how it is enforced and checked; each deployment's own values are
+its file, `deployments/<deployment>/keycloak.md`. In short: every staff
+sign-in at level 2 (a password and a second factor), level 3 again for
+anything that moves money, approves, releases or grants a role
+(baseline S11, S12); both authenticators before first use (S13);
+customers by a code to their bound phone (S18); tokens of 5 minutes
+(S22); the clients in the table below, and no others (S24).
 
 **Clients** (realm `staff` unless noted):
 
@@ -217,10 +190,6 @@ sessions; break-glass accounts sealed and split like the backup keys
 | `grafana` | Confidential; people | Role from a group: viewer, editor (§7) |
 | `customer-pages` | Public with PKCE; realm `customers` | Consents, signing, statements |
 | `goalert` | Confidential; realm `ops` | The on-call tool |
-
-**Tokens:** access tokens live 5 minutes; refresh tokens rotate and are
-revoked on sign-out; service accounts take a new token rather than
-refresh one.
 
 ## 6 · Roles, and who grants them
 
