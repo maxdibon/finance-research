@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-1037, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Runbooks
@@ -29,6 +29,7 @@ Each deployment's continuity section names the runbooks it uses
 | [OpenBao unseal](openbao-unseal.md) | An instance's OpenBao is sealed: a restart, a failover | On-call engineer | Draft |
 | [Rotating a rail's credentials](rail-credentials.md) | On schedule, when someone leaves, or when they may be exposed | On-call engineer; the institution's rail owner | Draft |
 | [Upgrading Odoo](odoo-upgrade.md) | A new major version, once a year | Back-office engineer; the institution's staff check | Draft |
+| [Setting up GitHub](github-setup.md) | Once: the organisation created and this repository moved into it | The team lead and the CEO; each person | Draft |
 | [An institution's fallback](institution-fallback.md) | An outage, from the institution's side; each institution adopts its own | The institution's staff; never Dibon (FS-588) | Draft, a template for each institution |
 
 **Rules for runbooks:**

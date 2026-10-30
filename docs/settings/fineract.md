@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1050]
-last_reviewed: 2026-10-29
+review_ids: [FS-1050, FS-1056, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Fineract · baseline settings
@@ -41,12 +41,12 @@ sets them in Fineract from each signed product version, and S12 says how.
 | S09 | Business date | On; moved only by the end-of-day runner | Mandatory | One owner of the ledger's day (kapu-core-fineract §7) | Global configuration; the runner | F12 |
 | S10 | Loan schedule | Progressive, with advanced payment allocation, for every product | Mandatory | Restructuring and a rate change on a live loan need it; the repayment order is a setting | Product settings, by the lending service | F1, F3 |
 | S11 | Repayment order | Past-due principal, fees, penalties, interest; then due, in the same order; then in advance, in the same order | Mandatory | Lender regulations reg 56: principal, then fees and charges, then interest | Product settings, by the lending service | F3 |
-| S12 | Product settings | Set only from the signed product version document, through the API, never by hand; compared each night with the document | Mandatory | The product a borrower agreed to is the product that runs (lender-rules §2.4) | The lending service | F15 |
+| S12 | Product settings | Set only from the signed product version document, through the API, never by hand; compared each night with the document | Mandatory | The product a borrower agreed to is the product that runs (product-versions) | The lending service | F15 |
 | S13 | Non-performing | The product's overdue days matched to reg 57 where its tenors sit wholly on one side of 30 days; out of non-performing only when arrears are cleared | Mandatory | Lender regulations reg 57 | Product settings, by the lending service | F6 |
 | S14 | Overdue penalties | None on capped products: Fineract's overdue-penalty step off; default interest posted by the lender rules, within the cap | Mandatory | The cap on what can be recovered (reg 29) | Product settings; the jobs' configuration | F5 |
 | S15 | Future instalments | Next instalment first, unless the product says otherwise | Default: as here, or as the product version says | The common case | Product settings | F3 |
 | S16 | Staff permissions | No staff role holds any of `APPROVE_LOAN`, `REJECT_LOAN`, `WITHDRAW_LOAN`, `DISBURSE_LOAN`, `DISBURSETOSAVINGS_LOAN`, `APPROVALUNDO_LOAN`, `DISBURSALUNDO_LOAN`, `CREATE_RESCHEDULELOAN`, `APPROVE_RESCHEDULELOAN`, `REJECT_RESCHEDULELOAN`, `REAGE_LOAN`, `REAMORTIZE_LOAN`, `WAIVEINTERESTPORTION_LOAN`, `WAIVE_LOANCHARGE`, `WRITEOFF_LOAN`, `FORECLOSURE_LOAN` | Mandatory | Only an approved request moves a loan (KC-08) | Roles from git | K9; the nightly comparison |
-| S17 | The one writer | Kapu MFI's service account alone, its credentials in OpenBao and rotated; each command carrying the approval request it acts on | Mandatory | One writer to the ledger | Roles from git; OpenBao | The nightly comparison (approval-engine §9) |
+| S17 | The one writer | The lending service's account alone, its credentials in OpenBao and rotated; each command carrying the approval request it acts on | Mandatory | One writer to the ledger | Roles from git; OpenBao | The nightly comparison (approval-engine §9) |
 | S18 | Staff in Fineract's own screens | None: staff work in the staff workspace (FS-965) | Default: none; a read-only role for named staff only if chosen as the fallback (staff-workspace, open question 2) | No second way into the ledger | Roles from git | Nightly read-back |
 | S19 | Reason codes | Reschedule and re-amortization reasons matching those Kapu MFI records (MF-09) | Mandatory | One list of reasons | Codes from git | Nightly read-back |
 | S20 | Accounting | Accrual accounting; accruals stop on a non-performing loan | Mandatory | The books the lender regulations expect | Configuration from git | F6 |

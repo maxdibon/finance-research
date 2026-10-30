@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032, FS-1053]
-last_reviewed: 2026-10-29
+review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032, FS-1053, FS-1055]
+last_reviewed: 2026-10-30
 ---
 
 # One instance, as R1 deploys it
@@ -122,7 +122,7 @@ clusters,** by tier, each a primary and a synchronous standby:
 |---|---|---|
 | Ledger | Fineract | The ledger; its database is Fineract's alone (kapu-core-fineract) |
 | Access | Keycloak | Restricted as a whole (access-keycloak) |
-| Back office | Odoo | Large, and upgraded on its own cadence (back-office §10) |
+| Back office | Odoo | Large, and upgraded on its own cadence (back-office §9.4) |
 | Secrets | OpenBao | First up on failover; nothing else waits on it |
 | Services | Lending, deposits, approvals, lender rules, rails, recon, companion, messaging, identity and the vault, end-of-day, back-office gateway, Flowza | A database and a role each; their outboxes with them |
 
@@ -156,7 +156,7 @@ with its database and namespace; every deployment's register follows
 | Environment | What it is for | Data |
 |---|---|---|
 | Development | Each engineer's own, with the simulators (rails RL-17, identity ID-20) | Synthetic only |
-| Test | Shared; every acceptance test and the checks before the build (Fineract F1 to F13, Keycloak K1 to K14, Grafana G1 to G8) | Synthetic only |
+| Test | Shared; every acceptance test and the checks before the build (Fineract F1 to F13, Keycloak K1 to K15, Grafana G1 to G8) | Synthetic only |
 | Staging | Each release, configured as production is, before it reaches an institution | Synthetic only |
 | Production | One per institution | Real |
 

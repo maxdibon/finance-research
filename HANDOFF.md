@@ -202,7 +202,7 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   that must agree, never writing to the master (FS-788 to FS-794); the
   ledger database has no superuser and no human login (FS-789).
 - **Products:** the product version document is a product's one
-  authority (lender-rules §2.4), published only once active; a product is
+  authority (product-versions), published only once active; a product is
   data as well as words, every value checked wherever it enters against
   the schema and rules in `code/lender-rules/` (FS-823, FS-825); answers
   come back in form fields, never by email (FS-817).

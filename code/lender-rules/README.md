@@ -8,7 +8,7 @@ them here, through a merge request, as you would there.
 
 | File | What it is |
 |---|---|
-| [product-vocabulary.schema.json](product-vocabulary.schema.json) | The typed form of every term of the product vocabulary (lender-rules §2.4): each value's fields and allowed values, in JSON Schema |
+| [product-vocabulary.schema.json](product-vocabulary.schema.json) | The typed form of every term of the product vocabulary (product-versions §4): each value's fields and allowed values, in JSON Schema |
 | [rules.js](rules.js) | The rules across terms that a schema cannot express (minimum below maximum, a default period within reg 57, no early-repayment charge), each citing its source |
 | [rules.examples.json](rules.examples.json) | Worked examples for every rule, one that breaks it and one that does not; any implementation must pass them all |
 
@@ -17,7 +17,7 @@ validates every product draft's typed block against them on each commit:
 what we propose, the options we offer, and every value an institution
 settles. The read-back (`tools/products/read-back.js`) validates an
 answer before writing it. In the code: the back office's product form,
-the `product.version` approval and activation (lender-rules §2.4).
+the `product.version` approval and activation (product-versions §3).
 
 **The schema's subset.** The docs' validator
 (`tools/products/validate.js`, written because this repository installs
@@ -33,5 +33,5 @@ implementation must pass rules.examples.json, which is the shared truth,
 as lender-rules §2.9's worked examples are.
 
 **Changing a term** changes three things together: its row in
-lender-rules §2.4, its definition in the schema, and any product draft
+product-versions §4, its definition in the schema, and any product draft
 that uses it. The check fails a term in one and not the other.

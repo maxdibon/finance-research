@@ -40,7 +40,7 @@ const longDate = new Date(`${date}T12:00:00Z`).toLocaleDateString('en-GB', { day
 
 const draft = parse(fs.readFileSync(draftPath, 'utf8'));
 if (draft.problems.length) { console.error(draft.problems.join('\n')); process.exit(1); }
-const why = purposes(fs.readFileSync(path.join(ROOT, 'docs/specs/lender-rules.md'), 'utf8'));
+const why = purposes(fs.readFileSync(path.join(ROOT, 'docs/specs/product-versions.md'), 'utf8'));
 const [inst, rest] = (draft.front.name || '').split(' — ');
 if (!inst || !rest) { console.error('The front matter\'s name must read "<institution> — <product>, product version <n> (draft)"'); process.exit(1); }
 const product = rest.split(', product version')[0];

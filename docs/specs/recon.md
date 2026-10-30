@@ -8,12 +8,12 @@ law: LR-03
 released: 2026.10.16
 release: R1
 implements: [recon-observability]
-depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine, back-office]
+depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine, back-office, product-versions]
 used_by: [end-of-day-runner]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809, FS-970, FS-1053]
-last_reviewed: 2026-10-29
+review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809, FS-970, FS-1053, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Reconciliation platform — build specification
@@ -98,7 +98,7 @@ change-data capture (all R2); the extension catalogue (RO-28, phase 2).
 [JN-16](../journeys/unplaced-payment.md),
 [JN-17](../journeys/accountant-morning.md),
 [JN-10](../journeys/deposit.md), [JN-11](../journeys/transfer-out.md)
-and [JN-12](../journeys/transfer-in.md).
+and [JN-12](../journeys/transfer-in.md); its product terms come from [product-versions](product-versions.md).
 
 ## 2 · Concepts
 
@@ -195,7 +195,7 @@ rules' results, and compared with both (FS-793, FS-796).
 
 | Input | From | Why this source |
 |---|---|---|
-| The product version document, in its vocabulary (lender-rules §2.4): every term the companion needs | The signed document; the companion keeps its own copy, verifying the signature, the hash and the approval | The terms as approved, not as configured in Fineract |
+| The product version document, in its vocabulary (product-versions §4): every term the companion needs | The signed document; the companion keeps its own copy, verifying the signature, the hash and the approval | The terms as approved, not as configured in Fineract |
 | Each loan's contract: amount, product version, borrower's references | The approved request (`kapu.mandates.request.approved`) and the signed agreement's record | What was approved and signed |
 | The disbursement and its value date | The rail's own record: the bank's statement or M-Pesa's confirmation (`kapu.rails.payout.confirmed`) | When money actually left |
 | Every repayment, with its rail date | The rail's own record (`kapu.rails.payment.received`), identified by the account's payment reference (RO-02) | When money actually arrived |

@@ -7,8 +7,8 @@ law: LR-23
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-1029, FS-1031]
-last_reviewed: 2026-10-27
+review_ids: [FS-1029, FS-1031, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Asset finance with title
@@ -84,7 +84,7 @@ the hardest part, is where the law is strictest.
 | A collateral model: coverage, custody, recovery, sale, release | Vehicles first, then title deeds, chattels and equipment | MF-03, MF-18 |
 | Registrations and documents kept | Scans, the NTSA record and the collateral-registry search in the vault; the registry's number on the record | MF-03; ID-15 |
 | Recovery that keeps to the law | The rules for selling security, the notices counted, a hire purchase two-thirds paid refused without a recorded court order | lender-rules §2.11 |
-| The product described as data | The terms we have; Payee and Collateral (financed goods) for dealer-paid loans | loan-kinds; lender-rules §2.4 |
+| The product described as data | The terms we have; Payee and Collateral (financed goods) for dealer-paid loans | loan-kinds; product-versions §4 |
 | Paying a dealer | Against its invoice, from an approved list, tied by the approval engine | MF-40 |
 
 **Where it stands:** in R1 for Roan Capital's Motor Vehicle and Title

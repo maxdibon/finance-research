@@ -12,8 +12,8 @@ depends_on: [access-keycloak, event-bus-kafka, back-office]
 used_by: [access-keycloak, lender-rules, observability-grafana]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802, FS-970, FS-1053]
-last_reviewed: 2026-10-29
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802, FS-970, FS-1053, FS-1054]
+last_reviewed: 2026-10-30
 ---
 
 # Messaging and its templates — build specification
@@ -106,8 +106,8 @@ and MCP access (MS-17), partners' routes outside Kenya (MS-04).
 - **Owner and approver:** who writes the words and who signs them off
   (§3.3).
 - **Event:** what makes a message: a product's event on the bus, or a
-  direct request (codes, approval emails). Names follow the event bus
-  spec once written; the ones here are proposed.
+  direct request (codes, approval emails). Names are in the event bus
+  catalogue (event-bus-kafka §5).
 
 ## 3 · Rules
 
@@ -284,7 +284,7 @@ Business API (FS-664 to FS-666).
 templates (§4), configured, effective-dated and approved like a
 template.
 
-**Events out** (proposed names): `kapu.messaging.message.sent`,
+**Events out** (event-bus-kafka §5): `kapu.messaging.message.sent`,
 `.delivered`, `.failed`, `.held` (quiet hours), `.blocked` (a rule
 refused it), `.opted_out`.
 

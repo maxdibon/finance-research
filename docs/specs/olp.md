@@ -11,8 +11,8 @@ depends_on: []
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-293, FS-970, FS-971, FS-972, FS-973, FS-986]
-last_reviewed: 2026-10-27
+review_ids: [FS-293, FS-970, FS-971, FS-972, FS-973, FS-986, FS-1052, FS-1054]
+last_reviewed: 2026-10-30
 ---
 
 # OLP, as Financial Services uses it — component specification
@@ -73,8 +73,8 @@ depends on none; used by none yet; the back office's interface is
 ## 3 · Version and hosting
 
 - **Odoo versions:** OLP installs 17.0 to 20.0 and accepts imports from
-  15.0 (its handbook). Financial Services' sites follow back-office §3's
-  upgrade rules once written (FS-971).
+  15.0 (its handbook). Financial Services' sites follow back-office §9.4's
+  upgrade rules (FS-971).
 - **Where the sites run:** every site OLP deploys for our clients is
   hosted in Kenya (FS-986); that is what our documents mean by "Odoo on
   OLP, hosted in Kenya". OLP's own dashboard and services are to be
@@ -90,7 +90,7 @@ review's reading of the handbook, not of OLP's code.
 |---|---|---|---|---|
 | N1 | Enterprise upgrades through Odoo's own upgrade service, beside OpenUpgrade for Community, so Sign, Helpdesk and Documents move too | Must | Every Enterprise site | Gap (G1) |
 | N2 | A target inside an institution's instance: Odoo on Kubernetes through Flux, with CloudNativePG and object storage; or an agreed boundary where OLP's steps run against it | Must, if institutions' back offices are to be on OLP | Institutions | Gap (G2) |
-| N3 | A hook before promoting an upgraded or staged copy, so back-office §11's contract tests run on it, and promotion waits for them | Must | Every site the back-office gateway serves | Gap (G3) |
+| N3 | A hook before promoting an upgraded or staged copy, so back-office §10's contract tests run on it, and promotion waits for them | Must | Every site the back-office gateway serves | Gap (G3) |
 | N4 | Sign-in to OLP through Keycloak; hardware keys for anyone with server or restore rights (SE-26) | Must | Dibon's engineers | Gap (G4) |
 | N5 | SSH keys held in OpenBao, used through the bastion, every session recorded | Must | Every managed server | Not stated (G5) |
 | N6 | Backups encrypted, held in Kenya at two sites, never over FTP, kept as docs/documents.md says | Must | Institutions; Should for SMEs | Not stated (G6) |
@@ -98,7 +98,7 @@ review's reading of the handbook, not of OLP's code.
 | N8 | Alerts on by default for Financial Services' sites, and sent to our observability by webhook | Should | Every site | Partly: alerts are opt-in; webhooks exist |
 | N9 | Add-ons deployed from main after review, to staging first, never from any push | Should | Every site with our modules | Partly: a webhook syncs a branch |
 | N10 | Generated passwords and subscription codes written to OpenBao, not shown once to be copied | Should | Every site | Gap (G8) |
-| N11 | An export of a site's records in open formats, with our references, beside Odoo's own dumps (back-office rule 8) | Should | Every site the gateway serves | Gap: dumps load only into their own Odoo version |
+| N11 | An export of a site's records in open formats, with our references, beside Odoo's own dumps (back-office rule 6) | Should | Every site the gateway serves | Gap: dumps load only into their own Odoo version |
 | N12 | Every site OLP deploys for our clients on servers in Kenya, and a way to show where each site and its backups are; OLP's own services on Liquid's Azure Stack | Must, for what we publish | Our clients' sites; the portfolio | Sites: by how we deploy them (FS-986); OLP's services: planned |
 | N13 | Switching a site between Enterprise and Community | Could, and present | A cost-led customer (FS-967) | Met |
 | N14 | Access tokens signed with keys, not one secret shared by every service | Should | OLP's own services | Gap (G9) |
@@ -113,7 +113,7 @@ review's reading of the handbook, not of OLP's code.
   for change enablement (docs/service-management/README.md §2) before it
   reaches our sites.
 - **Financial Services pins the OLP release** its sites run on, as it
-  pins Fineract and Keycloak, and moves only after §9's checks.
+  pins Fineract and Keycloak, and moves only after §10's checks.
 
 ## 6 · Security
 

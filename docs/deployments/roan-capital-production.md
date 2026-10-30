@@ -8,7 +8,7 @@ released: unreleased
 owner: Solution architect
 classification: Internal
 review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053]
-last_reviewed: 2026-10-29
+last_reviewed: 2026-10-30
 ---
 
 # Roan Capital · production
@@ -51,7 +51,7 @@ Written from the design (FS-1037); generated from the code once it exists
 | MESSAGING | Yes | R1 | services | Services: messaging | 2 | messaging |
 | IDENTITY | Yes | R1 | services | Services: identity | 2 | identity |
 | KAPU CORE | Yes | Apache Fineract 1.15.x | services | Ledger: fineract | To size | kapu-core-fineract |
-| ODOO | Yes, Enterprise | To pin (back-office §10) | services | Back office: odoo | To size | business-suite |
+| ODOO | Yes, Enterprise | To pin (back-office §9.4) | services | Back office: odoo | To size | business-suite |
 | ACCESS | Yes | Keycloak 26.x | services | Access: keycloak | 2 | access-keycloak |
 | EVENT BUS | Yes | Apache Kafka 4.x, Strimzi 1.2 | data | — | 3 | event-bus-kafka |
 | DATABASE | Yes: five clusters, each a primary and a synchronous standby (FS-1036) | PostgreSQL, through CloudNativePG; to pin | data | Ledger, Access, Back office, Secrets, Services | 2 each | architecture instance |

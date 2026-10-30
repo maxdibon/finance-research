@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-1029, FS-1031]
-last_reviewed: 2026-10-27
+review_ids: [FS-1029, FS-1031, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Retailer finance
@@ -81,7 +81,7 @@ the money can only be spent on stock, so it is hard to divert.
 | Need | How it is met | Ids |
 |---|---|---|
 | A line per distributor, under the borrower's overall limit, whatever the core holds | The lending service holds the limits beneath the core and checks every draw against both | lending-service §5; MF-40; FS-1000 |
-| The product described as data | Facility (a line, renewed monthly), Payee (the distributor, against an invoice), Partner (data, first loss, returns) | loan-kinds; lender-rules §2.4 |
+| The product described as data | Facility (a line, renewed monthly), Payee (the distributor, against an invoice), Partner (data, first loss, returns) | loan-kinds; product-versions §4 |
 | The payout tied to the payee and the invoice | The approval engine holds the payout to the approved payee and amount; the rails pay it | MF-40; RL-01 |
 | Partners onboarded and managed | Intake with KYB, the partner's agreement and data-sharing agreement, its people as profiles, a portal, signed events to its system, exposure caps and freezes | lending-service §5; MF-41, MF-42; JN-21; onboarding pack P1 to P3 |
 | Consent, for each distributor apart | Asked and recorded before any of its data is used, withdrawable | FS-1004; privacy |

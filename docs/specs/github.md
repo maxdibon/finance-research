@@ -11,8 +11,8 @@ depends_on: [access-keycloak]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-750, FS-805, FS-846, FS-886, FS-894, FS-895, FS-896, FS-897, FS-901, FS-902, FS-904, FS-905, FS-953, FS-954]
-last_reviewed: 2026-10-23
+review_ids: [FS-750, FS-805, FS-846, FS-886, FS-894, FS-895, FS-896, FS-897, FS-901, FS-902, FS-904, FS-905, FS-953, FS-954, FS-1056, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # GitHub — code, reviews, planning and pipelines — component specification
@@ -234,36 +234,8 @@ files over 50 MB refused; branch names `<kind>/<FS id>-<words>` or
 
 ## 5 · Setting up, and being able to leave
 
-**Setting up, in order** (FS-895, FS-896): this repository first, then
-the code.
-
-1. **Each person** creates their own GitHub account with their work
-   email and turns on two-factor authentication, by security key where
-   they have one. They do it themselves.
-2. **The team lead creates the organisation** on the Team plan and is
-   its first owner; the CEO is the second. Steps 2 to 5 and 7 are theirs
-   alone, before anyone else is invited (FS-954); the rest is done with
-   everyone together. The GitHub Project is made in the organisation,
-   not under a person's own account.
-3. **Two-factor authentication required** for every member; members
-   invited only once it is on, since GitHub removes members without it.
-4. **Member privileges:** base permission none; members cannot create
-   public repositories or fork private ones; only owners invite.
-5. **This repository transferred** into the organisation (its settings,
-   Transfer): its history, each commit's author (FS-886, FS-905), its
-   issues and old links carried over; it stays private.
-6. **The teams** created (§4.1), and each person added to theirs from the
-   team table in ways-of-working §1.
-7. **The rulesets** set before anyone else pushes: main (§4.2), tags,
-   push (§4.3), branch names.
-8. **Dependabot alerts** on.
-9. **`CODEOWNERS`, the pull request and issue templates, and the
-   workflow** (§4.4) added, by pull request.
-10. **Each clone's address** changed to the organisation's:
-    `git remote set-url origin https://github.com/dibon-consulting/finance.git`.
-11. **The words updated** (tools/dibon.js): the single-owner exception
-    ends, and each person uploads and shares their own branches.
-12. **Each person's Claude** set once with `dibon claude` (FS-905).
+**Setting up** is done once, in the order the runbook gives:
+[Setting up GitHub](../runbooks/github-setup.md) (FS-895, FS-896; FS-1058).
 
 **Being able to leave, or to work through an outage** (business
 continuity, suppliers):
@@ -285,8 +257,8 @@ continuity, suppliers):
 
 - **Documents:** this repository, `finance`, with the law texts it was
   read from (FS-901).
-- **Code:** one repository per service that deploys on its own (Kapu
-  MFI, the approval engine, the lender rules, rails, messaging,
+- **Code:** one repository per service that deploys on its own (the
+  lending service, the approval engine, the lender rules, rails, messaging,
   reconciliation, identity), so each versions and releases on its own;
   shared libraries in their own; the shared workflows in `ci`.
 - **Manifests:** `platform`, a folder per institution and stage, which
@@ -444,7 +416,7 @@ our evidence (§14):
 ## 18 · Open questions
 
 1. **For the team lead:** the organisation's name, and the day of the
-   move (§5).
+   move (the setup runbook, runbooks/github-setup).
 2. Whether push rulesets apply to private repositories on Team (H7); if
    not, Gitleaks in the workflow carries the whole check.
 3. When to move to Enterprise Cloud: once the engineers' Keycloak is
