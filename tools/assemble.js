@@ -115,6 +115,8 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
     ...folder('architecture'),
     ...modules.map((m) => ({ rel: m.rel })),
     { rel: path.join('docs', 'decisions.md') },
+    // FS-1053: the entries, a file per hundred ids, in order.
+    ...(fs.existsSync(path.join(root, 'docs', 'decisions')) ? fs.readdirSync(path.join(root, 'docs', 'decisions')).filter((x) => /^\d+-\d+\.md$/.test(x)).sort((x, y) => parseInt(x, 10) - parseInt(y, 10)).map((x) => ({ rel: path.join('docs', 'decisions', x) })) : []),
     { rel: path.join('docs', 'partners.md') },
     // Every other register and plan in docs/ (FS-480): the Master holds all
     // of it. Outreach drafts and marketing copy are outward, not the design.
