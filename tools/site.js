@@ -474,12 +474,18 @@ blockquote{border-left:3px solid var(--line);margin:12px 0;padding:2px 14px}bloc
 #q{width:100%;max-width:520px;padding:8px 10px;font-size:15px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px}
 #hits div{padding:4px 0;border-bottom:1px solid var(--line)}
 .reader{margin:0;padding:6px 16px;background:var(--planned-bg);color:var(--planned);font-size:13px}#hits small{color:var(--muted)}
+.foot{margin:2rem auto 1rem;max-width:72rem;padding:0 16px;color:var(--muted);font-size:13px}
 @media (max-width:640px){main{padding:12px 16px}table{font-size:13px}}
 `;
 
-const NAV = [['index.html', 'Search'], ['README.html', 'README'], ['docs/start-here.html', 'Start here'], ['docs/overview.html', 'Overview'],
-  ['docs/journeys/README.html', 'Journeys'], ['docs/specs/README.html', 'Specs'], ['docs/customers/roan-capital.html', 'Roan Capital'],
-  ['docs/delivery-plan.html', 'Delivery plan'], ['docs/mvp-day.html', 'MVP day'], ['REVIEW.html', 'Review'], ['board.html', 'Board'], ['HANDOFF.html', 'Handoff']];
+// FS-1053: the top bar by what readers look for; one customer is never a
+// tab of its own, and pages for people working in the repository go to the
+// foot of every page.
+const NAV = [['docs/start-here.html', 'Start here'], ['docs/overview.html', 'Overview'], ['docs/products/README.html', 'Products'],
+  ['docs/customers.html', 'Customers'], ['docs/delivery-plan.html', 'Delivery plan'], ['docs/mvp-day.html', 'MVP day'], ['docs/architecture/README.html', 'Architecture'],
+  ['docs/specs/README.html', 'Specs'], ['docs/journeys/README.html', 'Journeys'], ['docs/service-management/README.html', 'Running the service'],
+  ['docs/regulation.html', 'Law'], ['REVIEW.html', 'Review'], ['board.html', 'Board'], ['index.html', 'Search']];
+const FOOT = [['README.html', 'README: the repository'], ['HANDOFF.html', 'Handoff'], ['CHANGELOG.html', 'Changelog'], ['status.html', 'Documents by status'], ['unreleased.html', 'Unreleased']];
 
 // FS-891: the board, from the register and the branches (tools/board.js):
 // a card per row, in four columns, filtered by person on the page.
@@ -525,7 +531,7 @@ function shell(title, page, content, note = '') {
   const links = NAV.map(([p, t]) => `<a href="${relHref(page, p)}">${t}</a>`).join('');
   const rel = RELEASE ? `<a class="rel" href="${relHref(page, 'unreleased.html')}">${html(RELEASE)}</a>` : '';
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${html(title)}</title><style>${STYLE}</style></head><body><header><b>Dibon FS</b>${links}${rel}</header>${note ? `<p class="reader">${note}</p>` : ''}<main>${content}</main></body></html>\n`;
+<title>${html(title)}</title><style>${STYLE}</style></head><body><header><b>Dibon FS</b>${links}${rel}</header>${note ? `<p class="reader">${note}</p>` : ''}<main>${content}</main><footer class="foot">${FOOT.map(([p, t]) => `<a href="${relHref(page, p)}">${t}</a>`).join(' · ')}</footer></body></html>\n`;
 }
 
 // The one failure a reader may skip: the protected-names list, which is never
