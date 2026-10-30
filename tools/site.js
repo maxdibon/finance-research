@@ -552,7 +552,23 @@ function reviewBody(body, team = new Map()) {
   const tally = (list, i) => list.reduce((m, c) => { m[c[i]] = (m[c[i]] || 0) + 1; return m; }, {});
   const byCrit = tally(open, 4);
   const byStatus = tally(rows.filter((c) => c[3] !== 'OPEN'), 3);
+  // FS-1053: what waits on the owner's word first: an open row of his whose
+  // latest entry is a proposal, or whose point is a decision to make.
+  const DATED = /\*\*(\d{4}-\d{2}-\d{2})[^*]*:\*\*/g;
+  const latest = (notes) => { const m = [...notes.matchAll(DATED)]; return m.length ? { date: m[m.length - 1][1], text: notes.slice(m[m.length - 1].index) } : { date: '', text: notes }; };
+  const waiting = open.filter((c) => /\bEric\b/.test(c[5]) && (/proposal in chat/i.test(latest(c[6]).text) || /^Decide\b/.test(c[2])))
+    .sort((a, b) => latest(b[6]).date.localeCompare(latest(a[6]).date));
   const summary = [
+    ...(waiting.length ? [
+      '## Waiting on Eric\'s word',
+      '',
+      `${waiting.length} open rows whose latest entry is a proposal, or whose point is a decision to make, newest first.`,
+      '',
+      '| Id | Point | Since |',
+      '|---|---|---|',
+      ...waiting.map((c) => `| ${c[0]} | ${c[2]} | ${latest(c[6]).date || '—'} |`),
+      '',
+    ] : []),
     '## Open, by criticality',
     '',
     `${open.length} open: ${CRITICALITY_ORDER.map((k) => `${byCrit[k] || 0} ${k}`).join(', ')}. Closed: ${Object.entries(byStatus).map(([k, n]) => `${n} ${k.toLowerCase()}`).join(', ')}.`,
@@ -567,8 +583,22 @@ function reviewBody(body, team = new Map()) {
   ];
   const end = at + 2 + lines.slice(at + 2).findIndex((l) => !/^\| FS-\d{3,4} \|/.test(l));
   const table = lines.slice(at + 2, end < at + 2 ? lines.length : end);
-  const hundreds = [...new Set(table.map((l) => Math.floor(+l.slice(5, 8) / 100)))];
-  const grouped = hundreds.flatMap((h) => [`### FS-${String(Math.max(1, h * 100)).padStart(3, '0')} to FS-${String(h * 100 + 99).padStart(3, '0')}`, '', lines[at], lines[at + 1], ...table.filter((l) => Math.floor(+l.slice(5, 8) / 100) === h), '']);
+  // FS-1053: four-digit ids grouped by their own hundred (1000 to 1099).
+  const num = (l) => Number((l.match(/^\| FS-(\d{3,4}) \|/) || [])[1]);
+  // FS-1053: a long note shows its first part and its latest entry; the
+  // full text stays in REVIEW.md, the record.
+  const fold = (l) => {
+    const c = l.split('|');
+    const notes = c[c.length - 2];
+    const m = [...notes.matchAll(DATED)];
+    if (notes.length <= 600 || m.length < 2) return l;
+    const head = notes.slice(0, m[0].index).trimEnd();
+    const tail = notes.slice(m[m.length - 1].index);
+    c[c.length - 2] = `${head} *(${m.length - 1} earlier ${m.length - 1 === 1 ? 'entry' : 'entries'} in REVIEW.md)* ${tail}`;
+    return c.join('|');
+  };
+  const hundreds = [...new Set(table.map((l) => Math.floor(num(l) / 100)))];
+  const grouped = hundreds.flatMap((h) => [`### FS-${String(Math.max(1, h * 100)).padStart(3, '0')} to FS-${String(h * 100 + 99).padStart(3, '0')}`, '', lines[at], lines[at + 1], ...table.filter((l) => Math.floor(num(l) / 100) === h).map(fold), '']);
   return [...lines.slice(0, at), ...summary, ...grouped, ...lines.slice(end < at + 2 ? lines.length : end)].join('\n');
 }
 
