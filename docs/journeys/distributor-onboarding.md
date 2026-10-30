@@ -8,8 +8,8 @@ released: unreleased
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-989, FS-995, FS-996, FS-1000, FS-1004]
-last_reviewed: 2026-10-27
+review_ids: [FS-989, FS-995, FS-996, FS-1000, FS-1004, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # JN-21 · A distributor onboarded for retailer financing
@@ -102,4 +102,4 @@ last_reviewed: 2026-10-27
 1. How long may a distributor's raw files be kept: the data-sharing
    agreement's term, at most 90 days (privacy PR-21)? Answered: a retailer
    consents to each distributor apart, unless the institution sets
-   otherwise as lending-service §5 allows (FS-1004).
+   otherwise as lending-partners §4 allows (FS-1004).

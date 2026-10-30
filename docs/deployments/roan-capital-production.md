@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058]
 last_reviewed: 2026-10-30
 ---
 
@@ -229,7 +229,7 @@ departures and exceptions in full.
 | KAPU CORE | All, in [its Fineract settings](roan-capital-production/fineract.md) | The baseline's, with three choices of its own (a due date on a holiday moves to the next working day, agreed on 21 October; its chart of accounts and its working days, to decide), no departures from a default, no exceptions | settings/fineract | The baseline; Roan Capital for its choices | See the file |
 | LENDING SERVICE | Products | Biashara, Motor Vehicle and Title Deed, each product version 1, proposed: the values as Roan Capital answers its questionnaires | docs/products | Roan Capital's product owner and a second approver | To decide |
 | LENDING SERVICE | Amounts | KES, to 2 decimal places | The product versions | Roan Capital, 21 October | Agreed |
-| LENDING SERVICE | Partners and their limits | None in R1 | lending-service §5 | — | Set |
+| LENDING SERVICE | Partners and their limits | None in R1 | lending-partners | — | Set |
 | APPROVAL ENGINE | The approval chain and its threshold | Proposed: up to a threshold, one approval by someone other than the originator; above it, two | approval-engine §4; open answers 28, 36 | Roan Capital | To decide |
 | APPROVAL ENGINE | Who releases a payout | Open | open answer 37 | Roan Capital | To decide |
 | APPROVAL ENGINE | Who approves when the CEO is away | Open | open answer 40; FS-898 | Roan Capital | To decide |
