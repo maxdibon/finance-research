@@ -142,6 +142,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | What changed, release by release, and each document's status | [the changelog](../CHANGELOG.md); in the reader, "Documents by status" and "Unreleased" |
 | What changed, for readers outside Dibon | [the release notes](marketing/release-notes.md) |
 | What a product does, and what is built | its module, §3 |
+| What an id means, where its row lives, and how the next is taken | [ids.md](ids.md) |
 
 **Products and the market**
 
