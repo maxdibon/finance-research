@@ -202,16 +202,7 @@ Each rule has a test in §14.
    who loses the role can no longer vote; if the quorum can no longer be
    reached, the step is *stalled* and escalates to the institution
    admin, who may re-open it with the current members. Votes from members
-   still eligible stand. **A role left too thin is caught first**
-   (FS-769, JN-18): every `access.role.change` that removes someone, and
-   every exit, is checked against the active mandate steps that name the
-   role; where the holders left would be fewer than a quorum step's N, or
-   than its whole membership when unanimous, or no one eligible for a
-   sequential step once MD-06 is applied, the approver of a move sees a
-   warning naming the steps before deciding. An exit is never held back:
-   the administrator and the manager are told at once, and the role shows
-   as short in the administrator's view until filled. The same check runs
-   nightly.
+   still eligible stand.
 9. **Withdrawal.** The originator may withdraw a request until it is
    approved.
 10. **SLAs** (MD-08). When a step passes `sla_hours`, its approvers are
@@ -228,6 +219,16 @@ Each rule has a test in §14.
     `moves_money` is accepted only with a fresh step-up (AC-05): a time-
     based one-time code (RC-32) no older than 5 minutes. The engine reads
     `acr` and `auth_time` from the token; a session login is not enough.
+13. **A role left too thin is caught first** (FS-769, JN-18): every
+    `access.role.change` that removes someone, and every exit, is
+    checked against the active mandate steps that name the role; where
+    the holders left would be fewer than a quorum step's N, or than its
+    whole membership when unanimous, or no one eligible for a sequential
+    step once MD-06 is applied, the approver of a move sees a warning
+    naming the steps before deciding. An exit is never held back: the
+    administrator and the manager are told at once, and the role shows
+    as short in the administrator's view until filled. The same check
+    runs nightly.
 
 **Roan Capital in R1** (RC-12, RC-16), all configuration:
 
@@ -440,26 +441,25 @@ STRIDE for security, LINDDUN for privacy (platform-security SE-16):
 | A20 | A loan approved in Fineract without an approved request | The nightly comparison runs | An exception is raised | §9 |
 | A21 | A request's decisions | Any stored decision is altered | The hash chain no longer verifies | RO-24 |
 | A22 | A request in progress | The originator opens it | They see the current step, who holds it, how long it has waited and when it is due | FS-494 |
-| A23 | A three-member unanimous committee | One member's exit is recorded | The exit goes ahead; the administrator and the manager are told the committee is short; a move of a second member warns its approver first | Rule 8, FS-769 |
+| A23 | A three-member unanimous committee | One member's exit is recorded | The exit goes ahead; the administrator and the manager are told the committee is short; a move of a second member warns its approver first | Rule 13, FS-769 |
 | A24 | A joiner recorded on Wednesday, starting Monday | Their position's roles are approved on Friday | The roles are mapped on Monday, not before; the joiner is told by email (T42) | access-keycloak §6, FS-770 |
 
 ## 15 · Open questions
 
-1. **Where roles come from:** decided, Keycloak groups (FS-498). Left
-   here so the numbering of the other questions holds.
-2. **Roan Capital's role list** (RC-34, open answer 7), and who
+1. **Roan Capital's role list** (RC-34, open answer 7), and who
    originates: if the Credit Officer originates, rule 2 means a second
    Credit Officer reviews.
-3. **The Head Office Committee:** its members, its quorum and the
+2. **The Head Office Committee:** its members, its quorum and the
    threshold (RC-12, RC-16).
-4. **The override authority** for `limit_override` at Roan Capital
+3. **The override authority** for `limit_override` at Roan Capital
    (MF-06).
-5. **SLAs and escalation roles** per step.
-6. **Borrower names in emails:** decided: never (FS-532).
-7. **One-click** for non-money steps: wanted at all?
-8. **Fineract:** the approve, reject, withdraw and disburse commands,
-   their permission codes, where an external reference can go, and how
-   its own maker-checker is turned off per command.
+4. **SLAs and escalation roles** per step.
+5. **One-click** for non-money steps: wanted at all?
+
+Answered and applied: roles come from Keycloak groups (FS-498); borrower
+names in emails, decided: never (FS-532); Fineract's commands and their
+permission codes are kapu-core-fineract §5, and whether the approve
+command takes an external id is check F9.
 
 ## Regulations cited
 

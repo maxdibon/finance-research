@@ -12,7 +12,7 @@ depends_on: [approval-engine, kapu-core-fineract]
 used_by: [lender-rules, lending-service, recon, staff-workspace]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-803, FS-805, FS-808, FS-813, FS-814, FS-816, FS-817, FS-823, FS-825, FS-978, FS-981, FS-991, FS-1058]
+review_ids: [FS-800, FS-801, FS-802, FS-803, FS-805, FS-808, FS-813, FS-814, FS-816, FS-817, FS-823, FS-825, FS-978, FS-981, FS-991, FS-1058, FS-1054]
 last_reviewed: 2026-10-30
 ---
 
@@ -25,8 +25,8 @@ their terms (FS-800 to FS-802). It was part of lender-rules §2.4 and is
 a spec of its own (FS-1058) because five specs rest on it; the rule on
 changing a price, CBK's approval and notice to the borrower, stays
 lender-rules'. In R1 it runs inside the lender-rules service, not as a
-service of its own, as the lender rules run inside Kapu MFI's service
-layer (FS-629); savings products take the same form in R4
+service of its own, as the lender rules run inside the lending service
+(FS-629); savings products take the same form in R4
 (deposits-service §4). Nothing is built: every behaviour here is
 **designed**.
 

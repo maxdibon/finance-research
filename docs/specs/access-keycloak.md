@@ -18,13 +18,11 @@ last_reviewed: 2026-10-30
 # Access on Keycloak — component specification
 
 How Dibon runs Keycloak as the access service (docs/modules/access.md)
-for R1, Roan Capital's pilot: the version, the realms, the features used
-and not used, the settings, the contracts with every service that signs
-people in or checks who acted, and what must be tried on a running
-instance before the build relies on it (FS-642). Sources: Keycloak's
-Server Administration Guide and its list of features, for 26.8.0
-(released 2026-10-01), read on 2026-10-08; Odoo's and OCA's sign-in
-modules' source. Nothing here is built.
+for R1, Roan Capital's pilot, so that we know who signed in and can prove
+the person acting is the person accountable (FS-642). Sources:
+Keycloak's Server Administration Guide and its list of features, for
+26.8.0 (released 2026-10-01), read on 2026-10-08; Odoo's and OCA's
+sign-in modules' source. Nothing here is built.
 
 ## 1 · Purpose and scope
 
@@ -271,8 +269,8 @@ rule 4):
 (private key in OpenBao); tokens addressed to one audience.
 
 **Fineract:** validates `staff` tokens and maps the token's user to its
-own user (§8, K9); staff hold read-only Fineract roles, if any
-(kapu-core-fineract §13).
+own user (§8, K9); staff hold no Fineract role: they work in the staff
+workspace, and the read-only fallback is the Kapu Console (FS-965, FS-987).
 
 **Grafana:** generic OAuth; its role taken from a group (viewer or
 editor); an institution's users see only its folder (RO-19).
@@ -315,7 +313,8 @@ catalogue (event-bus-kafka §5). No code, password or token in any of them
   authenticator app and AAL3 with a hardware key.
 - **Metrics:** sign-ins, failures, lockouts, step-ups by result, codes
   sent (Keycloak's user-event metrics).
-- **Alerts** (observability-grafana §4): lockouts spiking (2); codes slow
+- **Alerts** (observability-grafana §4): lockouts at more than three
+  times their usual rate, a possible attack (2); codes slow
   (2); an admin event touching roles (§8).
 
 ## 11 · Threats
@@ -356,13 +355,11 @@ On a running 26.8 instance, before the build relies on each (FS-642):
 
 **For the owner:**
 
-1. Whether staff use Fineract's own screens (kapu-core-fineract §13),
-   which decides whether Fineract needs a staff client at all.
-2. Which bastion records engineers' sessions where Dibon runs the
+1. Which bastion records engineers' sessions where Dibon runs the
    instance: Warpgate to evaluate, signing in through this Keycloak
    (FS-645, FS-695).
 
 **For Roan Capital:**
 
-1. Its role list (open answer 7) and who its administrator is.
-2. Session lengths that suit its working day.
+2. Its role list (open answer 7) and who its administrator is.
+3. Session lengths that suit its working day.

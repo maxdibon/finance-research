@@ -11,17 +11,16 @@ depends_on: [observability-grafana]
 used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, messaging, recon, back-office]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970, FS-1053, FS-1057]
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970, FS-1053, FS-1057, FS-1054]
 last_reviewed: 2026-10-30
 ---
 
 # The event bus on Kafka — component specification
 
-How the platform's services tell each other what happened, for R1: the
-version, the envelope every event wears, one catalogue of event names, the
-rules of delivery, and what must be tried on a running cluster before the
-build relies on it (FS-667). Sources: Apache Kafka 4.3, Strimzi 1.2 and
-the CloudEvents 1.0 specification with its Kafka binding, read on
+How the platform's services tell each other what happened, for R1, so
+that every service reads the same signed facts without asking each
+product (FS-667). Sources: Apache Kafka 4.3, Strimzi 1.2 and the
+CloudEvents 1.0 specification with its Kafka binding, read on
 2026-10-08. Nothing here is built.
 
 ## 1 · Purpose and scope
@@ -162,16 +161,15 @@ the domain comes from the rule set the loan's product version names
 
 | Domain | Events | Producer | Main consumers |
 |---|---|---|---|
-| mandates | `kapu.mandates.request.submitted`, `.step.opened`, `.decision.recorded`, `.step.completed`, `.step.stalled`, `.sla.breached`, `.step.escalated`, `.request.approved`, `.request.declined`, `.request.returned`, `.request.withdrawn`, `.mandate.activated` | Approval engine | Kapu MFI, messaging (T26, T27), recon |
+| mandates | `kapu.mandates.request.submitted`, `.step.opened`, `.decision.recorded`, `.step.completed`, `.step.stalled`, `.sla.breached`, `.step.escalated`, `.request.approved`, `.request.declined`, `.request.returned`, `.request.withdrawn`, `.mandate.activated` | Approval engine | The lending service, messaging (T26, T27), recon |
 | mfi | `kapu.mfi.application.submitted`, `.loan.approved`, `.loan.declined`, `.loan.disbursed`, `.loan.settled`, `.loan.variation.issued`, `.loan.variation.accepted`, `.product.version.activated`, `.guarantor.named`, `.guarantor.statement.due`, `.guarantor.notice.issued`, `.guarantee.released`, `.disbursement.delayed`, `.disbursement.returned`, `.collateral.released`, `.complaint.logged`, `.complaint.pending`, `.complaint.resolved`, `.complaint.overdue` | The lending service, for a product under lender rules | Messaging, recon, insights |
 | mfi (lender rules) | `kapu.mfi.loan.nonperforming`, `.loan.performing`, `.loan.cap.reached`, `.loan.charge.waived`, `.repayment.allocated`, `.repayment.allocation.mismatch`, `.loan.ladder.changed` | Lender rules | Messaging, recon, insights |
 | sacco (R4) | The same names as `kapu.mfi` for the same facts, and Sacco rules' own, specified with them | The lending service, for a product under Sacco rules; Sacco rules | Messaging, recon, insights |
 | core | `kapu.core.loan.approved`, `.loan.disbursed`, `.repayment.posted`, `.transaction.reversed`, `.loan.closed`, `.checkpoint` | Kapu Core, through the adapter (kapu-core-fineract §5) | Recon, lender rules |
 | core (the close) | `kapu.core.eod.checked`, `.held`, `.released`, `.closed`, `.failed`, `.reported` | End-of-day runner | Observability, recon |
-| rails | `kapu.rails.payment.received`, `.payout.sent`, `.payout.confirmed`, `.payout.failed`, `.payout.unknown`, `.payout.cancelled`, `.payout.returned`, `.recall.completed`, `.reversal.completed` | Rails | Kapu MFI, recon, messaging (T45 to T47) |
-| recon | `kapu.recon.break.opened`, `.break.cleared`, `.break.escalated`, `.ledger.disagreed`, `.completeness.failed`, `.source.silent`, `.cycle.closed`, `.action.taken` | Recon | Odoo (tickets), observability, the end-of-day runner, insights |
+| rails | `kapu.rails.payment.received`, `.payout.sent`, `.payout.confirmed`, `.payout.failed`, `.payout.unknown`, `.payout.cancelled`, `.payout.returned`, `.recall.completed`, `.reversal.completed` | Rails | The lending service, recon, messaging (T45 to T47) |
+| recon | `kapu.recon.break.opened`, `.break.cleared`, `.break.escalated`, `.ledger.disagreed`, `.completeness.failed`, `.source.silent`, `.cycle.closed`, `.action.taken`, `.exception.opened`, `.exception.resolved` | Recon | Odoo (tickets), the service desk, observability, the end-of-day runner, insights |
 | collect | `kapu.collect.payment.unplaced`, `.payment.still_unplaced`, `.payment.returned`, `.deposit.posted`, `.deposit.refused` | Collect | Messaging (T28 to T30, T43, T44) |
-| recon | `kapu.recon.exception.opened`, `.exception.resolved` | Reconciliation | Service desk, insights |
 | access | `kapu.access.role.changed`, `.user.disabled`, `.blocked`, `.recovered` | Access | Messaging (T23, T25, T42), audit |
 | identity | `kapu.identity.sim.changed` | Identity | Messaging (T24), access |
 | messaging | `kapu.messaging.message.sent`, `.delivered`, `.failed`, `.held`, `.blocked`, `.opted_out` | Messaging | Products, Odoo, observability |

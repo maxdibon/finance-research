@@ -11,19 +11,17 @@ depends_on: [access-keycloak]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-750, FS-805, FS-846, FS-886, FS-894, FS-895, FS-896, FS-897, FS-901, FS-902, FS-904, FS-905, FS-953, FS-954, FS-1056, FS-1058]
+review_ids: [FS-750, FS-805, FS-846, FS-886, FS-894, FS-895, FS-896, FS-897, FS-901, FS-902, FS-904, FS-905, FS-953, FS-954, FS-1056, FS-1058, FS-1054]
 last_reviewed: 2026-10-30
 ---
 
 # GitHub — code, reviews, planning and pipelines — component specification
 
-How Dibon uses GitHub for R1: where code and documents live, how a change
-is reviewed and approved, how work is planned, and how a release reaches
-the clusters. It replaces the GitLab specification (FS-896): GitHub's Team
-plan does what R1 needs at a seventh of GitLab Premium's price, and we are
-already on it; the GitLab specification is in this repository's history.
-It is the tool behind [ways of working](../service-management/ways-of-working.md):
-that page says who decides; this one says how GitHub is set to enforce it.
+How Dibon uses GitHub for R1, so that every change is proposed,
+reviewed, approved and released with its record kept. It replaces the
+GitLab specification (FS-896; §2 says why), and is the tool behind
+[ways of working](../service-management/ways-of-working.md): that page
+says who decides; this one says how GitHub is set to enforce it.
 Sources: GitHub's pricing page and its documentation on plans, rulesets,
 code owners, Actions, environments, Projects and seats, read on
 2026-10-19; each feature's plan as GitHub states it, the uncertain ones

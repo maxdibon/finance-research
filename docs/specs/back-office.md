@@ -11,7 +11,7 @@ depends_on: [access-keycloak, event-bus-kafka]
 used_by: [messaging, recon, lending-service, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-644, FS-965, FS-966, FS-967, FS-968, FS-969, FS-970, FS-971, FS-983, FS-1052, FS-1058]
+review_ids: [FS-644, FS-965, FS-966, FS-967, FS-968, FS-969, FS-970, FS-971, FS-983, FS-1052, FS-1058, FS-1054]
 last_reviewed: 2026-10-30
 ---
 
@@ -109,7 +109,7 @@ depends on [access-keycloak](access-keycloak.md) and
 
 1. **No business rule lives in the ERP** (FS-970). What decides money,
    loans, approvals, conduct or eligibility lives in our services (the
-   approval engine, Kapu MFI, lender rules, recon); the ERP is
+   approval engine, the lending service, lender rules, recon); the ERP is
    configured, not programmed, so what moves to a new one is
    configuration and data. Screens we add inside it, such as the staff
    workspace (FS-965), only show our APIs and send commands to them; our

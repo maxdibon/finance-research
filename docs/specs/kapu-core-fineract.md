@@ -19,12 +19,10 @@ last_reviewed: 2026-10-30
 # Kapu Core on Apache Fineract — component specification
 
 How Dibon runs Apache Fineract as Kapu Core (docs/modules/core.md) for R1,
-Roan Capital's loans: the version, what is used and what is not, the
-settings, the contracts with the services around it, restructuring, end of
-day, and what must be tried on a running instance before the build relies
-on it. Sources: Fineract's documentation for 1.15.0, its API reference and
-its source code, read on 2026-10-08 (FS-625). What they settle is stated
-as fact here; what only a running instance can show is in §12. Nothing here
+Roan Capital's loans: the ledger, which records and never decides.
+Sources: Fineract's documentation for 1.15.0, its API reference and its
+source code, read on 2026-10-08 (FS-625). What they settle is stated as
+fact here; what only a running instance can show is in §12. Nothing here
 is built.
 
 ## 1 · Purpose and scope
@@ -245,8 +243,8 @@ itself is in the end-of-day-runner spec.
 - **Three ledgers** (recon §3): every posting and a signed checkpoint per
   cycle go to recon as events, with per-account sequence numbers; recon's
   shadow and companion must agree with Fineract.
-- **Nightly comparison** (approval-engine §9): any loan approved, disbursed
-  or restructured in Fineract without an approved request is an alert.
+- **Nightly comparison:** a loan approved, disbursed or restructured in
+  Fineract without an approved request; recon raises it (recon §8).
 
 ## 9 · Data
 
@@ -304,17 +302,13 @@ On a running 1.15 instance, before the build relies on each (FS-625):
 
 **For the owner:**
 
-1. Answered (FS-965): staff do not use the Mifos web app; they work in
-   the staff workspace in Odoo, over the lending service (staff-workspace). Staff
-   have no Fineract role, unless a read-only one for named staff is
-   chosen as the fallback (staff-workspace, open question 2).
-2. Fineract as a deposit core for Saccos and banks (FS-185).
+1. Fineract as a deposit core for Saccos and banks (FS-185).
 
 **For Roan Capital:**
 
-1. Flat or declining-balance interest, product by product (open answer 4).
-2. Whether a due date on a holiday moves, and to which day.
-3. Which kinds of restructure it offers, and how often per loan (open
+2. Flat or declining-balance interest, product by product (open answer 4).
+3. Whether a due date on a holiday moves, and to which day.
+4. Which kinds of restructure it offers, and how often per loan (open
    answer 10).
 
 ## Regulations cited

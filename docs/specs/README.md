@@ -73,7 +73,7 @@ the component (`access-keycloak`); the component's id does not.
 | [github](github.md) | Component | GitHub: the organisation, teams and roles, rulesets on main, code owners, push rulesets, Actions with runners in Kenya, secrets from OpenBao, deploys by pull request and the change calendar, planning in Projects; plans checked | platform-security | R1 |
 | [recon](recon.md) | Build | The reconciliation platform: every movement accounted for by count and amount, tracing, auto-correction, and three ledgers that must agree (the master, a shadow, an independent companion) | recon-observability | R1 |
 | [back-office](back-office.md) | Build | The back office behind one interface: the jobs our services ask of the ERP, one adapter per ERP, the contract tests, how an institution is ported from one ERP to another, and how more than one edition or version runs | business-suite | R1 |
-| [staff-workspace](staff-workspace.md) | Build | The staff workspace: an institution's staff do their daily lending in our screens inside Odoo, over Kapu MFI; Fineract stays the core, the approval engine decides | business-suite | R1 |
+| [staff-workspace](staff-workspace.md) | Build | The staff workspace: an institution's staff do their daily lending in our screens inside Odoo, over the lending service; Fineract stays the core, the approval engine decides | business-suite | R1 |
 | [lending-service](lending-service.md) | Build | The Kapu lending service: one thin service for MFI and Sacco; what Fineract, Odoo and this service each do; the only writer to the core, through the core adapter; each regulator's rules beside it | mfi, sacco | R1 |
 | [lending-partners](lending-partners.md) | Build | Partners: the record in two places, relationships with their own limits, the lifecycle, one intake for their data with a consent gate, signed events back; inside the lending service | mfi | phase 2 |
 | [deposits-service](deposits-service.md) | Build | The Kapu deposits service: deposit accounts in native mode, each deposit regulator's rules beside it; designed now, built for the first native deposit-taker | core, sacco | R4 |
@@ -158,7 +158,7 @@ its id is how the component is named wherever a name is an identifier
 | Name in diagrams | What it is | Runs on | Id | Spec |
 |---|---|---|---|---|
 | APPROVAL ENGINE | Decides whether an act may happen | `[kapu_service]` | `approval-engine` | [approval-engine](approval-engine.md) |
-| LENDER RULES | Applies the lender regulations to each loan, inside Kapu MFI (FS-629) | `[kapu_service]` | `lender-rules` | [lender-rules](lender-rules.md) |
+| LENDER RULES | Applies the lender regulations to each loan, inside the lending service (FS-629) | `[kapu_service]` | `lender-rules` | [lender-rules](lender-rules.md) |
 | LENDING SERVICE | Lends for MFI and Sacco: applications, collateral, vetting, product versions; the only writer to the core | `[kapu_service]` | `lending-service` | [lending-service](lending-service.md) |
 | KAPU MFI | The lending service configured for lenders, with lender rules beside it | `[kapu_service]` | — (a configuration of `lending-service`) | [lending-service](lending-service.md) |
 | DEPOSITS SERVICE | Keeps deposit accounts in native mode | `[kapu_service]` | `deposits-service` | [deposits-service](deposits-service.md) |
@@ -178,7 +178,7 @@ its id is how the component is named wherever a name is an identifier
 | SHADOW LEDGER | Rebuilds the master's ledger from its postings, near real time, in memory | `[kapu_service]` | `shadow-ledger` | [recon](recon.md) |
 | COMPANION LEDGER | Computes, on its own, what every account should hold, from the source events and the product's terms | `[kapu_service]` | `companion-ledger` | [recon](recon.md) |
 | BACK-OFFICE GATEWAY | Offers the back office's jobs to our services, through one adapter per ERP | `[kapu_service]` | `back-office-gateway` | [back-office](back-office.md) |
-| STAFF WORKSPACE | Staff's screens for daily lending, inside Odoo, over Kapu MFI | `[odoo]` | `staff-workspace` | [staff-workspace](staff-workspace.md) |
+| STAFF WORKSPACE | Staff's screens for daily lending, inside Odoo, over the lending service | `[odoo]` | `staff-workspace` | [staff-workspace](staff-workspace.md) |
 | ODOO | Back office: signing, HR, helpdesk, general-ledger summaries; the first ERP behind the gateway | `[odoo]` | `odoo` | [back-office](back-office.md) |
 | OTHER BACK OFFICE | Any ERP or tool behind the gateway but Odoo: a candidate edition, or a second product in a composite one | `[erp]` | — (each edition its product's) | [back-office](back-office.md) |
 | OLP | Runs Odoo sites: provisioning, add-ons, staging, backups, upgrades; Dibon's, with its own roadmap | `[olp]` | `olp` | [olp](olp.md) |

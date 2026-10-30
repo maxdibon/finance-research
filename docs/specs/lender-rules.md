@@ -50,7 +50,7 @@ schedules and balances (KC-04). The service decides what Fineract may
 post and corrects what it should not hold. Fineract does not apply the
 in duplum rule itself.
 
-**Where it sits** (inside Kapu MFI's service layer, not a product of its
+**Where it sits** (inside the lending service, not a product of its
 own: FS-629).
 
 ```
@@ -114,18 +114,14 @@ reading (LQ-01), and so is a rollover or restructure keeping it (LQ-02).
 2. Every interest accrual, penalty and charge posted during the episode
    adds to the bucket, whether later paid or not. The bucket never
    exceeds `P_npl`.
-3. Fees and penalties count in the bucket, not only interest: the
-   regulations' definition of "charges" includes interest and fees, and
-   29(2) has no separate allowance for them. This is the cautious reading
-   (open question 1).
-4. Recovery expenses (29(2)(c)) sit outside the bucket, only as a
+3. Recovery expenses (29(2)(c)) sit outside the bucket, only as a
    `recovery-expense` charge with a receipt, maker-checker approval
    (KC-08) and a contract clause disclosing it (reg 30(2)).
-5. Repayments follow reg 56 (2.2). They do not change `P_npl`.
-6. **Reset (29(3)).** Returning to performing closes the episode; a new
+4. Repayments follow 2.2. They do not change `P_npl`.
+5. **Reset (29(3)).** Returning to performing closes the episode; a new
    one opens if the loan falls back, from the principal and unpaid
    charges at that moment.
-7. **Court orders (29(4)).** Interest a court awards after its order is
+6. **Court orders (29(4)).** Interest a court awards after its order is
    not capped; the flag is set manually under maker-checker.
 
 **Where enforced.**
@@ -146,7 +142,7 @@ closed at and why. Per posting: amount, type, capped or waived.
 **Edge cases.** A backdated repayment re-ages the schedule: the service
 re-runs the cap for that loan on posting. A rollover or restructure
 (MF-09) inherits the open episode, and capitalised interest never enters
-a new `P_npl` (open question 2).
+a new `P_npl` (LQ-02).
 
 ### 2.2 Repayment order — reg 56, MF-22
 
@@ -163,14 +159,14 @@ period on early repayment, whatever a product says (LQ-13).
 
 **Behaviour.**
 
-- Fineract's transaction date is the date the money was paid (M-Pesa or
-  bank value date, Africa/Nairobi), not the posting date.
-- Allocation, oldest instalment first: due principal, then fees and
-  penalties, then interest. This replaces MF-08's configurable order for
-  lenders.
-- Money beyond what is due reduces outstanding principal.
+- Fineract's transaction date is the rail's value date (M-Pesa or the
+  bank, Africa/Nairobi), never the posting date.
+- Allocation, oldest instalment first, in Our rule's order; it replaces
+  MF-08's configurable order for lenders. Money beyond what is due
+  reduces outstanding principal.
 - Payoff = outstanding principal + fees due + interest accrued to the
-  payment date. No early-repayment fee may exist on a product.
+  payment date; an early-repayment charge is a never-term
+  (product-versions §4).
 
 **Where enforced.** Every loan product uses Fineract's progressive
 schedule with advanced payment allocation, whose order is a setting:
@@ -210,7 +206,7 @@ Advances are what the borrower receives, net of fees deducted at
 disbursement; repayments are every scheduled principal, interest and
 mandatory fee; `t` and `s` are days from disbursement. Default interest
 (contingent) and third-party costs passed on at cost (59(2)(f)) are left
-out of the APR and shown in the total cost of credit (open question 3).
+out of the APR and shown in the total cost of credit (LQ-03).
 
 *Example:* KES 100,000 for 30 days, 10% interest for the term
 (illustrative; the rate's unit is Roan open answer 4), a KES 2,000 fee
@@ -247,8 +243,8 @@ after 30 days' notice and the borrower's recorded acceptance (reg 55; reg
 
 **Behaviour.**
 
-1. A change is a new **product version**, approved under maker-checker
-   (MD-01, MD-02; Roan RC-31).
+1. A change is a new **product version**, approved by two people
+   (product-versions rule 4; MD-01, MD-02; Roan RC-31).
 2. It stays *Awaiting CBK* until CBK's approval is recorded (reference,
    date, letter attached). No approval, no activation.
 3. Once active it applies to new loans only: Fineract copies a product's
@@ -278,11 +274,9 @@ or sooner where its agreement says so (reg 57(1)). We count from the due
 date (LQ-04).
 
 **Behaviour.** Daily, per loan: days past due of the oldest unpaid
-principal or interest. Non-performing from the first day that exceeds
-the threshold: the shorter of the statutory period (30 or 90 days, by
-contracted term) and the agreement's default period. Days are counted
-from the due date (open question 4). The loan returns to performing when
-nothing is past due beyond the threshold, which closes the cap episode.
+principal or interest, against the shorter of the statutory period and
+the agreement's default period. The loan returns to performing when
+nothing is past due beyond it, which closes the cap episode (2.1).
 
 **Where enforced.** The service is the authority. Fineract's NPA days
 are set to match where a product's tenor range sits wholly on one side
@@ -308,9 +302,8 @@ the contract disclosed (reg 30(1), (2)). Those hours are our reading of
   numbers. Guarantors get statements (47(2)), never collection pressure.
   Alternative contacts (50(1)(i)) are excluded from every collection
   template. Phone books are never read.
-- **Working hours.** Not defined in the regulations. Proposed default:
-  08:00 to 18:00, Monday to Saturday, not public holidays,
-  Africa/Nairobi; narrower allowed, never wider (open question 5).
+- **Working hours.** Our rule's window, not on public holidays,
+  Africa/Nairobi; an institution may narrow it, never widen it.
   Messaging's quiet hours (MS-15) hold a collection message until the
   window opens, never dropping it silently. Staff call tasks are hidden
   outside the window; calls are logged.
@@ -352,13 +345,11 @@ after 48 hours is confirmed in writing (40(4)); resolved within 30 days
 resolved within 14 days, well inside the 30 the regulations allow; their
 48 hours, 7 days and 30 days stay as the backstop (reg 40(3) to (5)).
 
-**Behaviour.** Each complaint carries received-at, channel (oral or
-written) and three clocks: 48 hours, 7 days, 30 days, counted in calendar
-days from the customer's report. It is acknowledged on logging (T16), not
-by day 7, and worked to a target of 14 days inside the 30 (owner,
-2026-10-12, FS-764); warnings at day 12, for the target, and day 25, and
-an overdue event on any breach; the 7-day clock stays as the backstop if
-the acknowledgement was not delivered. The record holds
+**Behaviour.** Each complaint carries received-at, its channel (oral or
+written) and the regulations' three clocks, in calendar days from the
+customer's report, beside the 14-day target (owner, 2026-10-12, FS-764).
+The acknowledgement goes on logging (T16); warnings at day 12, for the
+target, and day 25; an overdue event on any breach. The record holds
 40(6)'s fields: date, nature, status, reason pending, time to resolve,
 outcome.
 
@@ -414,7 +405,7 @@ principal (reg 56): principal 70,000, `P_npl` still 100,000. The bucket
 is 49,000 at the end of day 69; default interest drops to 700 a day; the
 bucket reaches 100,000 on day 142, when 600 is posted instead of 700. If
 29(5)'s "outstanding principal amount" means current principal, the limit
-is 70,000, reached on day 99 (open question 1).
+is 70,000, reached on day 99 (LQ-01).
 
 **Reset.** A longer loan becomes non-performing at principal 100,000
 (cap 100,000), clears its arrears, then falls back at principal 60,000:
@@ -563,19 +554,15 @@ catalogue, event-bus-kafka §5): `kapu.mfi.loan.nonperforming`,
 `kapu.mfi.product.version.activated`, `kapu.mfi.loan.variation.accepted`,
 `kapu.messaging.message.blocked` (published by messaging), `kapu.mfi.complaint.pending`, `kapu.mfi.complaint.overdue`.
 
-**End of day** (KC-07), Africa/Nairobi, run by the end-of-day runner after
-its checks (end-of-day-runner):
+**End of day** (KC-07). The night's order is the end-of-day runner's
+(end-of-day-runner §3): the intake closed and Fineract's close of
+business before these steps, the accounting close and reconciliation
+after. The lender rules' own steps, numbered as the runner calls them:
 
-1. Close the day's intake: post repayments dated today; ask M-Pesa Pull
-   Transactions (RL-20) for missed confirmations.
-2. Fineract's close of business (kapu-core-fineract §7). Its
-   overdue-penalty step is not used for capped products.
 3. Classification: open or close cap episodes; emit events.
 4. Default interest posted by the service, capped at room.
 5. Cap sweep: waive any excess over `P_npl` the same day.
 6. Ladder states moved; reminders queued for the next working window.
-7. Fineract accounting close; snapshots for MF-14 and MF-15;
-   reconciliation (RO-02).
 
 A failure stops the later steps for the loans affected and raises an
 exception to the accountant's queue (MF-12).

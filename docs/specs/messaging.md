@@ -19,10 +19,10 @@ last_reviewed: 2026-10-30
 # Messaging and its templates — build specification
 
 How the messaging service (docs/modules/messaging.md) is designed to be
-built for R1, Roan Capital's pilot, and the catalogue of templates R1
-sends: which event sends what, to whom, on which channel, carrying which
-fields, on what legal basis, and who owns and approves the words
-(FS-648). Nothing here is built; every behaviour is **designed**.
+built for R1, Roan Capital's pilot, with the templates R1 sends, so that
+every message is lawful, in approved words, and truthful about its
+delivery (FS-648). Nothing here is built; every behaviour is
+**designed**.
 
 ## 1 · Purpose and scope
 
@@ -136,9 +136,8 @@ refused at approval, not at sending.
 - **Overrides:** security messages go to every channel the person has;
   notices and collection messages always include a channel with delivery
   reports, SMS at least; marketing needs its own opt-in (MS-11).
-- **Quiet hours:** collection messages only 08:00 to 18:00, Monday to
-  Saturday, not public holidays, Africa/Nairobi (lender-rules §2.6, open
-  question 5); held until the window opens, never dropped. Codes and
+- **Quiet hours:** collection messages only in the window lender rules
+  set (lender-rules §2.6), held until it opens, never dropped. Codes and
   security messages are never held.
 - **Language:** English or Swahili, as the person chose; English by
   default.
@@ -316,7 +315,8 @@ refused it), `.opted_out`.
   within a minute of its posting (proposed).
 - **Metrics:** sent, delivered and failed by route and template; held;
   blocked; opt-outs; code latency.
-- **Alerts** (observability-grafana §4): failures on a route; codes slow.
+- **Alerts** (observability-grafana §4): delivery failures on a route over
+  10% in 15 minutes (2); one-time codes taking over 30 seconds (2).
 
 ## 9 · Threats
 
@@ -364,10 +364,9 @@ refused it), `.opted_out`.
 
 **For Roan Capital:**
 
-1. Its sender ID, and its help line for the templates.
-2. The wording of its collection messages, from the defaults, approved by
+4. Its sender ID, and its help line for the templates.
+5. The wording of its collection messages, from the defaults, approved by
    its compliance role.
-3. Working hours for collection messages (lender-rules open question 5).
 
 **For the gateway** (phase 2): its payment templates carry the merchant's
 paybill or till and the reference in their text (gateway GW-16, FS-662).

@@ -12,7 +12,7 @@ depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, dep
 used_by: [staff-workspace, kapu-console, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058]
+review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054]
 last_reviewed: 2026-10-30
 ---
 
@@ -46,47 +46,31 @@ in detail"); §3 says, capability by capability, which system does each.
 **Out of R1:** Kapu Sacco (R4); group lending (MF-17); the split ledger
 mode (FS-066).
 
-**Where it sits** (the new design, FS-984; deposits beside it, FS-985):
+**Where it sits** (FS-984; deposits beside it, FS-985): its neighbours;
+the whole instance, in layers, is architecture/instance.md.
 
 ```
-  PEOPLE      Institution staff        Borrowers, guarantors, members         Dibon engineers
-                     |                              |                                 |
-            +--------v------------------------------v---------------------------------v----------+
-  SIGN-IN   | ACCESS                                                                             |
-            | signs in, steps up: staff by password and key; customers by a code to              |
-            | their phone; Dibon's engineers by hardware keys, never into a product              |
-            | [keycloak]                                                                         |
-            +------------------------------------------------------------------------------------+
-                    |                  |                   |                          |
-            +-------v--------+ +-------v--------+ +--------v--------+        +--------v--------+
-  SCREENS   | STAFF WORKSPACE| | KAPU CONSOLE   | | CUSTOMER PAGES  |        | OBSERVABILITY   |
-            | daily lending, | | approvals,     | | consents, sign, |        | dashboards,     |
-            | tasks, products| | fallback views | | statements      |        | on-call         |
-            | [odoo]         | | [kapu_service] | | [kapu_service]  |        | [grafana]       |
-            +-------+--------+ +-------+--------+ +--------+--------+        +--------+--------+
-                    | as the person    |                   | as the person     never a product
-                    +------------------+-------------------+
-                                       v
-            +--------------------------v--------------------------------+   +----------------------+
-  CORE      | LENDING SERVICE                                           |   | DEPOSITS SERVICE     |
-  SERVICES  | lends: loans, collateral, guarantors, product versions;   |<--| keeps accounts;      |
-            | LENDER RULES and SACCO RULES beside it                    |   | regulators' rules    |
-            | [kapu_service]                                            |   | [kapu_service]       |
-            +-----------------------------------------------------------+   +------------+---------+
-                     | decisions    | payouts   | messages         |  |                  |
-                     |              |           |                  |  +--- postings -----+
-                     v              v           v                  v signatures          v
-            +-----------------+ +-------+ +-----------+ +---------------------+ +------------------+
-  SERVICES  | APPROVAL ENGINE | | RAILS | | MESSAGING | | BACK-OFFICE GATEWAY | | CORE ADAPTER     |
-            | decides         | | pays  | | sends     | | translates, to ODOO | | posts, to KAPU   |
-            | [kapu_service]  | |       | |           | | [kapu_service]      | | CORE or theirs   |
-            +-----------------+ +-------+ +-----------+ +---------------------+ +------------------+
-  EVENTS    ===== EVENT BUS [kafka]: every change, signed, in order ==============================
-                 |                          |                             |
-            +----v-------------+  +---------v----------+  +---------------v--+
-  CHECKS    | RECONCILIATION   |  | OBSERVABILITY      |  | VAULT            |
-            | three ledgers    |  | metrics, alerts    |  | signed records   |
-            +------------------+  +--------------------+  +------------------+
+  +--------------------+  +--------------------+  +--------------------+  +--------------------+
+  | STAFF WORKSPACE    |  | KAPU CONSOLE       |  | CUSTOMER PAGES     |  | DEPOSITS SERVICE   |
+  | shows, asks        |  | decides, looks up  |  | consents, signs    |  | keeps accounts     |
+  | [odoo]             |  | [kapu_service]     |  | [kapu_service]     |  | [kapu_service]     |
+  +--------------------+  +--------------------+  +--------------------+  +--------------------+
+            | commands              | reads                 | consents              | deposits
+            v                       v                       v                       v
+  +----------------------------------------------------------------------------------------------+
+  | LENDING SERVICE                                                                              |
+  | lends: loans, collateral, guarantors; lender rules or Sacco rules beside it, by the          |
+  | product's rule set (rule 7); acts as the person, on the approval engine's yes                |
+  | [kapu_service]                                                                               |
+  +----------------------------------------------------------------------------------------------+
+          | requests         | payouts          | messages          | signatures,         | postings
+          |                  |                  |                   | tickets             |
+          v                  v                  v                   v                     v
+  +----------------+ +----------------+ +----------------+ +--------------------+ +----------------+
+  | APPROVAL ENGINE| | RAILS          | | MESSAGING      | | BACK-OFFICE GATEWAY| | CORE ADAPTER   |
+  | decides        | | pays           | | sends          | | translates         | | posts          |
+  | [kapu_service] | | [kapu_service] | | [kapu_service] | | [kapu_service]     | | [kapu_service] |
+  +----------------+ +----------------+ +----------------+ +--------------------+ +----------------+
 ```
 
 **Related:** implements [mfi](../modules/mfi.md) and

@@ -12,8 +12,8 @@ depends_on: [kapu-core-fineract, lender-rules, observability-grafana, access-key
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667, FS-674, FS-765, FS-778, FS-792, FS-793]
-last_reviewed: 2026-10-16
+review_ids: [FS-574, FS-630, FS-633, FS-634, FS-642, FS-667, FS-674, FS-765, FS-778, FS-792, FS-793, FS-1054]
+last_reviewed: 2026-10-30
 ---
 
 # End-of-day runner — build specification
@@ -287,9 +287,9 @@ the detail is behind sign-in, in the back office (owner, FS-778).
 
 **For Roan Capital** (the operations conversation, OB-KC-04):
 
-1. Each check's class, against the criteria in §4.
-2. The tolerance for unapplied money (C5).
-3. Who receives each notice: its accountant, its finance lead, others.
+3. Each check's class, against the criteria in §4.
+4. The tolerance for unapplied money (C5).
+5. Who receives each notice: its accountant, its finance lead, others.
 
 ## Regulations cited
 

@@ -35,7 +35,7 @@ in their words, without a second core?
 
 | Id | Capability | In R1 |
 |---|---|---|
-| BS-23 | The staff workspace: an institution's staff do their daily lending, and manage their products, in screens of ours inside Odoo, over the lending service's API; reads live and never stored, every write a command to Kapu MFI, every decision in the approval engine | Yes |
+| BS-23 | The staff workspace: an institution's staff do their daily lending, and manage their products, in screens of ours inside Odoo, over the lending service's API; reads live and never stored, every write a command to the lending service, every decision in the approval engine | Yes |
 
 **Out of R1:** reports beyond the arrears list (insights); deposits and
 savings (Sacco, R4).
@@ -222,13 +222,6 @@ refuses anyone deciding their own request or two steps in a row.
 | A7 | A screen in Swahili | Staff switch language | Every label and message is in Swahili | BS-23, rule 10 |
 
 ## 11 · Open questions
-
-**For the owner:**
-
-1. Answered: the lending service (lending-service §6) gives its reads
-   and commands.
-2. Answered (FS-976, FS-987): the Kapu Console, read-only, for named
-   staff.
 
 **For Roan Capital:** which tasks were hard in Mifos, watched at the
 desk (open answer 33).
