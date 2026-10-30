@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823, FS-825, FS-989, FS-1029, FS-1039, FS-1043, FS-1049]
-last_reviewed: 2026-10-29
+review_ids: [FS-802, FS-805, FS-806, FS-816, FS-817, FS-823, FS-825, FS-989, FS-1029, FS-1039, FS-1043, FS-1049, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Products
@@ -20,7 +20,7 @@ yet: [loan-kinds.md](loan-kinds.md) (FS-989).
 one by one: [briefs/](briefs/README.md) (FS-1029).
 
 Each product an institution offers on the platform is a product version
-document (lender-rules §2.4). Its home is the institution's own instance
+document (product-versions). Its home is the institution's own instance
 once approved, and before that its workspace in Dibon's Odoo Documents
 (rules, Dibon 10). **This folder is the exception** (FS-806): drafts are
 kept here, visible to the whole team and in the reader, until the

@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-10-27
+last_reviewed: 2026-10-30
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -1474,7 +1474,7 @@ FS-805).*
 - **Chose:** a draft, and a version awaiting CBK, private; an active
   version public, on the institution's pages, in each key information
   document and calculator; the pricing model kept apart, for CBK only.
-- **Requires:** BS-20; docs/specs/lender-rules.md "version is public, as regs 47(1)(d) and 48 require"; docs/specs/lender-rules.md "pricing model".
+- **Requires:** BS-20; docs/specs/product-versions.md "version is public, as regs 47(1)(d) and 48 require"; docs/specs/product-versions.md "pricing model".
 - **Argued against:** publishing a product before it is approved and
   active.
 - **Costs (inferred):** every version's terms generated from the signed
@@ -1950,3 +1950,108 @@ against without reasons of its own; this entry gives them.*
 - **Costs (inferred):** profiles and organisations to build in access
   and every channel; a board resolution for each business, from a
   template (FS-1019); the link's privacy line kept true.
+
+## FS-1052 · One live edition per job, while more than one runs
+
+*Entry written 2026-10-29 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** a second ERP, or a second version of one, runs in three
+  shapes: each institution on its own edition through one gateway
+  release carrying every adapter, the contract suite run nightly for
+  every edition in use; two products in one instance, each job in one
+  of them and the person with one home; old and new side by side for a
+  port or an upgrade, the target taking no calls and publishing
+  nothing until the switch. In every shape, one live edition per job.
+  An upgrade never changes the old in place, so falling back stays safe
+  until staff are let into the new; after that, a fault is fixed
+  forward.
+- **Requires:** docs/specs/back-office.md §3 "One live edition per job";
+  docs/runbooks/odoo-upgrade.md.
+- **Argued (owner):** "update the back-office spec to show how a second
+  erp or different versions of the erp running".
+- **Argued against (inferred):** writing to the old and the new at once
+  during a port, so either could be fallen back to at any time, which
+  makes every record a reconciliation and every event a possible
+  duplicate; a gateway for each institution, which makes each release a
+  fork; upgrading production in place, which leaves nothing to fall
+  back to.
+- **Costs (inferred):** two editions to run, size and license for the
+  weeks of a rehearsal (LQ-31); the suite run against every edition in
+  use, each night; a branch of our Odoo modules for each version in use;
+  once staff are let in, no way back but forward.
+
+## FS-1055 · The staff workspace acts as the person, by token exchange
+
+*Entry written 2026-10-30 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** standard token exchange in R1, for the staff workspace only:
+  the `odoo` client exchanges the signed-in person's token for one
+  addressed to the lending service or the approval engine alone, still
+  naming the person. An exchanged token never counts as step-up; a
+  decision still sends the person to Keycloak for a fresh second factor.
+- **Requires:** docs/specs/access-keycloak.md "Token exchange, for the staff workspace only"; docs/specs/access-keycloak.md "K15".
+- **Argued (owner):** "go ahead with all of them", on the review's
+  recommendation.
+- **Argued against (inferred):** passing the person's Odoo token through,
+  which would have the lending service accept tokens addressed to Odoo;
+  a service account with a header naming the user, which trusts Odoo's
+  word for who acted, so a compromised Odoo could act as anyone.
+- **Costs (inferred):** one more Keycloak feature to configure and check
+  (K15); where OCA's auth_oidc keeps tokens is to confirm, since Odoo's
+  own OAuth module stores the access token on the user record.
+
+## FS-1056 · One name per component, in the form each place allows
+
+*Entry written 2026-10-30 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** prose names a component in words; a diagram's box in
+  capitals; an identifier in kebab-case, the component's id, or in
+  snake_case where a hyphen is not allowed; events by product. Kapu MFI
+  and Kapu Sacco are products, named in words only; the service is the
+  lending service, and its Keycloak client is `lending-service`.
+- **Requires:** docs/specs/README.md "One name per component"; docs/specs/README.md "A product we sell (Kapu MFI, Kapu Sacco) is named in words only".
+- **Argued (owner):** "we had a naming scheme, something like
+  lending_service for components, should we use that across the
+  documentation?"; "go ahead with all of them".
+- **Argued against (inferred):** snake_case in prose, against the design
+  system's plain words; one form everywhere, which Kubernetes names and
+  PostgreSQL identifiers cannot both take.
+- **Costs (inferred):** an Id column to keep current; every spec's prose
+  read for the service named as its product.
+
+## FS-1057 · A loan's events in its product's domain
+
+*Entry written 2026-10-30 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** the lending service publishes a loan's events in
+  `kapu.mfi` under lender rules and `kapu.sacco` under Sacco rules,
+  chosen by the rule set the product version names; the same fact keeps
+  the same name in both; each rule set's own events stay in its domain.
+- **Requires:** docs/specs/event-bus-kafka.md "Loans: the domain by product".
+- **Argued (owner):** "i prefer separating kapu.mfi and sacco, so that
+  can correctly attribute the events".
+- **Argued against (inferred):** one `kapu.lending` domain for both,
+  which loses whose product a fact belongs to; a domain chosen by the
+  institution, which breaks for one licensed for both.
+- **Costs (inferred):** consumers read two topics from R4; the same
+  names kept in step across both domains.
+
+## FS-1058 · Product versions and lending partners, specs of their own
+
+*Entry written 2026-10-30 by Claude for Eric (Assistant), from the owner's words in chat.*
+
+- **Chose:** the product version document, its rules and its vocabulary
+  as a spec of its own, running inside the lender-rules service in R1;
+  partners, phase 2, as lending-partners, inside the lending service;
+  bill payments left to the mandates module until built; GitHub's
+  one-time setup a runbook.
+- **Requires:** docs/specs/product-versions.md; docs/specs/lending-partners.md; docs/runbooks/github-setup.md.
+- **Argued (owner):** "go ahead with all of them", on the review's
+  recommendation.
+- **Argued against (inferred):** leaving them where they were, inside
+  the price-change rule and the R1 lending spec, where five specs cited
+  a subsection for the document they all rest on; a service of its own
+  for product versions, which R1 does not need.
+- **Costs (inferred):** two more specs to keep; every citation of
+  "lender-rules §2.4" re-pointed, and the tools that read the vocabulary
+  moved with it.

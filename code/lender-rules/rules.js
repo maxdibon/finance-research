@@ -15,13 +15,13 @@ const DAYS = { day: 1, week: 7, month: 30 };
 const RULES = [
   {
     id: 'amount-limits-in-order',
-    source: 'lender-rules §2.4, Amount limits',
+    source: 'product-versions §4, Amount limits',
     check: ({ amount_limits: a }) => (a && has(a.min) && has(a.max) && a.min > a.max
       ? `the minimum (${a.min}) is above the maximum (${a.max})` : null),
   },
   {
     id: 'term-lengths-in-order',
-    source: 'lender-rules §2.4, Term',
+    source: 'product-versions §4, Term',
     check: ({ term: t }) => {
       if (!t) return null;
       if (has(t.min) && has(t.max) && t.min > t.max) return `the shortest term (${t.min}) is above the longest (${t.max})`;
@@ -31,7 +31,7 @@ const RULES = [
   },
   {
     id: 'instalments-fit-the-term',
-    source: 'lender-rules §2.4, Repayment frequency',
+    source: 'product-versions §4, Repayment frequency',
     check: ({ term: t, repayment_frequency: r }) => {
       if (!t || !r || !DAYS[r.every] || !DAYS[t.unit]) return null;
       const shortest = has(t.allowed) ? Math.min(...t.allowed) : t.min;
@@ -42,7 +42,7 @@ const RULES = [
   },
   {
     id: 'one-price-per-fee',
-    source: 'lender-rules §2.4, Fees',
+    source: 'product-versions §4, Fees',
     check: ({ fees }) => {
       if (!Array.isArray(fees)) return null;
       const bad = fees.filter((f) => ['amount', 'percent', 'tiers'].filter((k) => has(f[k])).length !== 1);
@@ -51,7 +51,7 @@ const RULES = [
   },
   {
     id: 'fee-tiers-within-limits',
-    source: 'lender-rules §2.4, Fees and Amount limits',
+    source: 'product-versions §4, Fees and Amount limits',
     check: ({ fees, amount_limits: a }) => {
       if (!Array.isArray(fees)) return null;
       const out = [];
@@ -90,7 +90,7 @@ const RULES = [
   },
   {
     id: 'default-interest-after-grace',
-    source: 'lender-rules §2.4, Grace and Default interest',
+    source: 'product-versions §4, Grace and Default interest',
     check: ({ grace: g, default_interest: d }) => (g && d && has(g.days) && has(d.from_day_past_due) && d.from_day_past_due <= g.days
       ? `default interest from day ${d.from_day_past_due} falls inside ${g.days} days' grace` : null),
   },
@@ -105,7 +105,7 @@ const RULES = [
   },
   {
     id: 'risk-class-range',
-    source: 'lender-rules §2.4, Rate by risk class; reg 59(2)(c)',
+    source: 'product-versions §4, Rate by risk class; reg 59(2)(c)',
     check: ({ rate_by_risk_class: r }) => {
       if (!r || r.by_risk_class !== true) return null;
       if (r.range === undefined) return 'a rate by risk class with no range to publish';
@@ -115,7 +115,7 @@ const RULES = [
   },
   {
     id: 'collection-ladder-in-order',
-    source: 'lender-rules §2.4, Collection ladder',
+    source: 'product-versions §4, Collection ladder',
     check: ({ collection_ladder: c }) => {
       if (!c || !Array.isArray(c.stages)) return null;
       const out = [];
@@ -128,37 +128,37 @@ const RULES = [
   },
   {
     id: 'third-party-payee-has-proof',
-    source: 'lender-rules §2.4, Payee (FS-989)',
+    source: 'product-versions §4, Payee (FS-989)',
     check: ({ payee: p }) => (p && p.to === 'third_party' && (!has(p.proof) || p.approved_list !== true)
       ? 'a third party is paid only against a proof, and only from an approved list' : null),
   },
   {
     id: 'credit-line-has-draw-term',
-    source: 'lender-rules §2.4, Facility (FS-989)',
+    source: 'product-versions §4, Facility (FS-989)',
     check: ({ facility: f }) => (f && f.kind === 'credit_line' && (!has(f.draw_term) || !has(f.renews))
       ? 'a credit line says how long each draw runs and when the limit renews' : null),
   },
   {
     id: 'till-share-has-a-share',
-    source: 'lender-rules §2.4, Repayment source (FS-989)',
+    source: 'product-versions §4, Repayment source (FS-989)',
     check: ({ repayment_source: r }) => (r && Array.isArray(r.sources) && r.sources.includes('till_share') && !has(r.till_share)
       ? 'repayment from till takings says what share of them' : null),
   },
   {
     id: 'auto-recovery-says-from-what',
-    source: 'lender-rules §2.4, Repayment source (FS-991)',
+    source: 'product-versions §4, Repayment source (FS-991)',
     check: ({ repayment_source: r }) => (r && Array.isArray(r.sources) && r.sources.includes('auto_recovery') && !has(r.recover_from)
       ? 'automatic recovery says what it recovers from: savings, the wallet, or both' : null),
   },
   {
     id: 'financed-goods-bought-from-someone',
-    source: 'lender-rules §2.4, Collateral (FS-989)',
+    source: 'product-versions §4, Collateral (FS-989)',
     check: ({ collateral: c, payee: p }) => (c && Array.isArray(c.types) && c.types.includes('financed_goods') && !(p && p.to === 'third_party')
       ? 'goods financed as their own security are paid for to whoever sells them' : null),
   },
   {
     id: 'cut-off-is-a-window',
-    source: 'lender-rules §2.4, Cut-off',
+    source: 'product-versions §4, Cut-off',
     check: ({ cut_off: c }) => (c && has(c.no_payout_from) && c.no_payout_from === c.to ? 'the cut-off starts and ends at the same time' : null),
   },
 ];

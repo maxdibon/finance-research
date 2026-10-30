@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Security lead
 classification: Internal
-review_ids: [FS-1050]
-last_reviewed: 2026-10-29
+review_ids: [FS-1050, FS-1055, FS-1056]
+last_reviewed: 2026-10-30
 ---
 
 # Keycloak · baseline settings
@@ -49,7 +49,7 @@ are its file, `deployments/<deployment>/keycloak.md`.
 | S21 | Engineer sessions (`ops`) | 8 hours | Default: 8 hours or less | A shift, not a week | Realm configuration from git | Nightly read-back |
 | S22 | Tokens | Access tokens 5 minutes; refresh tokens rotated, revoked on sign-out; service accounts take a new token rather than refresh | Mandatory | A stolen token is short-lived | Realm and client settings, from git | Nightly read-back |
 | S23 | Service accounts | Client credentials with a signed client assertion, its key in OpenBao; one account per service, its own roles only | Mandatory | No shared secret in a file; least privilege | Client settings, from git; OpenBao | K7, K9 |
-| S24 | Clients | Only those the deployed components need, each of the kind access-keycloak §5 lists (the approval engine, Kapu MFI, the end-of-day runner, provisioning, Fineract, Odoo, Grafana, the customer pages, the on-call tool) | Mandatory | No client left over for someone to use | Client settings, from git | Nightly read-back |
+| S24 | Clients | Only those the deployed components need, each of the kind access-keycloak §5 lists (the approval engine, the lending service, the end-of-day runner, provisioning, Fineract, Odoo, Grafana, the customer pages, the on-call tool) | Mandatory | No client left over for someone to use | Client settings, from git | Nightly read-back |
 | S25 | Administration | Fine-grained admin permissions (v2) on: an institution's administrator manages its users, never approval roles; only the provisioning service maps approval roles | Mandatory | Separation of duties (AC-09) | Realm configuration from git | K7 |
 | S26 | Role watch | Every admin event touching roles alerted; role mappings compared each night with approved requests | Mandatory | A role mapped outside a request is found the same night | The alert rule; the nightly comparison | K14 |
 | S27 | Events | User and admin events on, to Loki and the audit trail; no code, password or token in any log | Mandatory | AC-11, SE-18 | Realm configuration from git | K13 |
@@ -78,7 +78,7 @@ are its file, `deployments/<deployment>/keycloak.md`.
 
 ## 4 · How it is checked
 
-- **Before the build relies on it:** checks K1 to K14 on a running
+- **Before the build relies on it:** checks K1 to K15 on a running
   instance (access-keycloak §12), on the version in S01.
 - **Each night:** the realms exported and compared with git, and role
   mappings with approved requests (S26); a difference is drift, alerted

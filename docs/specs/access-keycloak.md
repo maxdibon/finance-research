@@ -11,20 +11,18 @@ depends_on: [messaging]
 used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging, endpoints, github, recon, back-office, staff-workspace, kapu-console]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018, FS-1050]
-last_reviewed: 2026-10-29
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018, FS-1050, FS-1054, FS-1055, FS-1056]
+last_reviewed: 2026-10-30
 ---
 
 # Access on Keycloak — component specification
 
 How Dibon runs Keycloak as the access service (docs/modules/access.md)
-for R1, Roan Capital's pilot: the version, the realms, the features used
-and not used, the settings, the contracts with every service that signs
-people in or checks who acted, and what must be tried on a running
-instance before the build relies on it (FS-642). Sources: Keycloak's
-Server Administration Guide and its list of features, for 26.8.0
-(released 2026-10-01), read on 2026-10-08; Odoo's and OCA's sign-in
-modules' source. Nothing here is built.
+for R1, Roan Capital's pilot, so that we know who signed in and can prove
+the person acting is the person accountable (FS-642). Sources:
+Keycloak's Server Administration Guide and its list of features, for
+26.8.0 (released 2026-10-01), read on 2026-10-08; Odoo's and OCA's
+sign-in modules' source. Nothing here is built.
 
 ## 1 · Purpose and scope
 
@@ -97,7 +95,7 @@ on-call tool signs in through the "ops" realm.
 
 ## 2 · Version and hosting
 
-- **Keycloak 26.x, pinned** to the latest minor that passes §8's checks
+- **Keycloak 26.x, pinned** to the latest minor that passes §12's checks
   (26.8.0 at writing). Apache-2.0. Upgrades are rolling, one minor at a
   time, after the checks pass on the new minor.
 - **One Keycloak per institution's instance** (FS-491), on Kubernetes
@@ -147,7 +145,7 @@ Keycloak events (SE-26).
 | Feature | Used | Why |
 |---|---|---|
 | OpenID Connect, authorization code with PKCE | Yes, for every person | AC-01, AC-02 |
-| Client credentials with a signed client assertion | Yes, for every service account | Kapu MFI, the end-of-day runner, the provisioning service; keys in OpenBao |
+| Client credentials with a signed client assertion | Yes, for every service account | The lending service, the end-of-day runner, the provisioning service; keys in OpenBao |
 | Step-up by level of authentication, ACR mapping, the AMR claim | Yes | AC-05: the act asks for level 3 (§5) |
 | Time-based one-time codes (authenticator app) | Yes, staff and approvers | AC-16; Roan Capital's approvers (RC-32) |
 | WebAuthn: security keys and passkeys | Yes, staff and approvers; Dibon engineers only by hardware key | AC-16, SE-26 |
@@ -160,7 +158,7 @@ Keycloak events (SE-26).
 | FAPI client policies, DPoP, PAR | Not in R1 | Partner APIs (AC-04) and the app, phase 2 |
 | CIBA | Not in R1 | AC-06, phase 2 |
 | Identity brokering, LDAP, SCIM | Not in R1 | Banks' own identity providers (AC-07); provisioning in R1 uses the admin API (§6) |
-| Standard token exchange | Not in R1 | No service acts as a person in R1 |
+| Standard token exchange | **Yes, for the staff workspace only** (FS-1055) | The workspace calls the lending service and the approval engine as the signed-in person (staff-workspace rule 4); §7 says how, K15 checks it |
 | Recovery codes | **No** | A printed code would let someone in without the second factor; recovery needs identity verification (AC-15) |
 | Password grant, implicit flow | **Never** | Credentials or tokens in the wrong place |
 | Social login, Kerberos | No | Not needed |
@@ -181,12 +179,12 @@ customers by a code to their bound phone (S18); tokens of 5 minutes
 
 | Client | Kind | Notes |
 |---|---|---|
-| `approval-engine` | Confidential; people and step-up | Asks for `loa3` at each decision |
-| `kapu-mfi` | Service account | The only writer to Fineract (kapu-core-fineract §8) |
+| `approval-engine` | Confidential; people and step-up | Asks for `loa3` at each decision; accepts the staff workspace's exchanged tokens for reads and a person's open steps, never for a decision (§7) |
+| `lending-service` | Service account; resource server | The only writer to the core, through the core adapter (lending-service rule 2); accepts the staff workspace's exchanged tokens (§7) |
 | `end-of-day-runner` | Service account | Runs only its jobs (end-of-day-runner §8) |
 | `provisioning` | Service account | The only identity that may map approval roles (§6) |
 | `fineract` | Resource server | Accepts `staff` tokens addressed to it |
-| `odoo` | Confidential; people | Code flow with PKCE, through OCA's `auth_oidc` module, unmodified (FS-646; K10) |
+| `odoo` | Confidential; people | Code flow with PKCE, through OCA's `auth_oidc` module, unmodified (FS-646; K10); the only client that may exchange a token, and only for the `lending-service` and `approval-engine` audiences (§7) |
 | `grafana` | Confidential; people | Role from a group: viewer, editor (§7) |
 | `customer-pages` | Public with PKCE; realm `customers` | Consents, signing, statements |
 | `goalert` | Confidential; realm `ops` | The on-call tool |
@@ -252,19 +250,34 @@ customers by a code to their bound phone (S18); tokens of 5 minutes
 The end-of-day runner's overrides (end-of-day-runner §8) and every
 `access.role.change` use the same contract.
 
+**Token exchange, for the staff workspace only** (FS-1055; staff-workspace
+rule 4):
+
+1. Staff sign in to Odoo by the code flow (`odoo` client). For each call
+   the workspace makes as the person, it exchanges the person's token at
+   Keycloak (standard token exchange) for one addressed to the lending
+   service or the approval engine alone, still naming the person.
+2. The exchanged token is short-lived (S22), carries no more than the
+   person's own roles, and is never kept in Odoo's database; impersonation
+   and exchange by any other client stay off.
+3. **It never counts as step-up.** An exchanged token carries the level
+   of the original sign-in, never `loa3`; a decision still sends the
+   person to Keycloak for the step-up above, so approving from Odoo is
+   approving with a fresh second factor.
+
 **Service accounts:** client credentials with a signed client assertion
 (private key in OpenBao); tokens addressed to one audience.
 
 **Fineract:** validates `staff` tokens and maps the token's user to its
-own user (§8, K9); staff hold read-only Fineract roles, if any
-(kapu-core-fineract §13).
+own user (§8, K9); staff hold no Fineract role: they work in the staff
+workspace, and the read-only fallback is the Kapu Console (FS-965, FS-987).
 
 **Grafana:** generic OAuth; its role taken from a group (viewer or
 editor); an institution's users see only its folder (RO-19).
 
 **Events:** user and admin events streamed to Loki (AC-11) and, as
-signed events, to the audit trail (RO-27), names following the event
-bus spec when written. No code, password or token in any of them
+signed events, to the audit trail (RO-27), names from the event bus
+catalogue (event-bus-kafka §5). No code, password or token in any of them
 (SE-18).
 
 ## 8 · Security
@@ -300,7 +313,8 @@ bus spec when written. No code, password or token in any of them
   authenticator app and AAL3 with a hardware key.
 - **Metrics:** sign-ins, failures, lockouts, step-ups by result, codes
   sent (Keycloak's user-event metrics).
-- **Alerts** (observability-grafana §4): lockouts spiking (2); codes slow
+- **Alerts** (observability-grafana §4): lockouts at more than three
+  times their usual rate, a possible attack (2); codes slow
   (2); an admin event touching roles (§8).
 
 ## 11 · Threats
@@ -328,25 +342,24 @@ On a running 26.8 instance, before the build relies on each (FS-642):
 | K5 | Our SMS authenticator: the code arrives through messaging, expires at 5 minutes, locks after three attempts | AC-13 |
 | K6 | A leaver in Odoo HR: disabled, signed out and authenticators removed within minutes | AC-10, MF-35 |
 | K7 | An institution administrator cannot map an approval role; the provisioning service can | AC-09 |
-| K8 | An `ops` token is refused by Fineract, the approval engine and Kapu MFI | AC-09, FS-588 |
+| K8 | An `ops` token is refused by Fineract, the approval engine and the lending service | AC-09, FS-588 |
 | K9 | Fineract under OAuth maps the token's user to its own user, and no Fineract approve permission is reachable | KC-08 |
 | K10 | Odoo signs in by the code flow through OCA's `auth_oidc`, unmodified, on the Odoo version we deploy | AC-02 |
 | K11 | Grafana's role from a group; one institution's users see only its folder | AC-02, RO-19 |
 | K12 | A rolling restart and a minor upgrade sign no one out | AC-10 |
 | K13 | Events reach Loki with no code, password or token in them | AC-11, SE-18 |
 | K14 | The nightly comparison flags a role mapped outside an approved request | AC-09 |
+| K15 | Token exchange: the `odoo` client exchanges a staff token for one addressed to the lending service, and to no other audience; another client's exchange is refused; an exchanged token is refused for a decision that asks for `loa3`; and where OCA's `auth_oidc` keeps the person's tokens: Odoo's own OAuth module stores the access token on the user record, which staff-workspace §6 forbids | AC-05, AC-09; staff-workspace rule 4 |
 
 ## 13 · Open questions
 
 **For the owner:**
 
-1. Whether staff use Fineract's own screens (kapu-core-fineract §13),
-   which decides whether Fineract needs a staff client at all.
-2. Which bastion records engineers' sessions where Dibon runs the
+1. Which bastion records engineers' sessions where Dibon runs the
    instance: Warpgate to evaluate, signing in through this Keycloak
    (FS-645, FS-695).
 
 **For Roan Capital:**
 
-1. Its role list (open answer 7) and who its administrator is.
-2. Session lengths that suit its working day.
+2. Its role list (open answer 7) and who its administrator is.
+3. Session lengths that suit its working day.

@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Security lead
 classification: Internal
-review_ids: [FS-1050]
-last_reviewed: 2026-10-29
+review_ids: [FS-1050, FS-1055]
+last_reviewed: 2026-10-30
 ---
 
 # Roan Capital, production · Keycloak's settings
@@ -40,7 +40,7 @@ None.
 
 ## 5 · Checked
 
-Not yet. Before go-live: checks K1 to K14 on Roan Capital's staging, on
+Not yet. Before go-live: checks K1 to K15 on Roan Capital's staging, on
 Keycloak 26.8 (access-keycloak §12); from go-live, the nightly read-back
 (baseline §4).
 

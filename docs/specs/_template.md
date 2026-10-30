@@ -12,7 +12,7 @@ used_by: []
 owner: Role, never a name
 classification: Internal
 review_ids: [FS-627, FS-667]
-last_reviewed: 2026-10-15
+last_reviewed: 2026-10-30
 ---
 
 <!--
@@ -53,13 +53,33 @@ last_reviewed: 2026-10-15
   what it does, in lower case, a verb; an optional third line says what it
   runs on, in square brackets, in snake case ([kapu_service],
   [apache_fineract]). An arrow's label says what crosses it, as a noun.
+
+  Succinct and complete (FS-1054; back-office is the worked example):
+
+  - Say each thing once. A fact lives in one section; every other place
+    cites it (§9.4, rule 4, A6) and does not restate it.
+  - One diagram. "Where it sits" carries the whole picture: what calls the
+    component, what it calls, and any variants (live and target, a second
+    product). Extend it before drawing another; a second diagram only for
+    what the first cannot show, such as a state machine. When arrows mean
+    different things, a "Reading it" key follows in two or three
+    sentences.
+  - A rule is one thing that always holds. Aspects of one idea are one
+    rule; criteria for choosing a product are not rules, and go beside the
+    choice. Rules are numbered, and cited as "rule N".
+  - One process, one table. A procedure (a port, an upgrade, a night's
+    run) is described once, as a table of phases or steps; its variants
+    are cells or a column, not a second procedure.
+  - Tables for data, prose for reasons. An example in a table is the
+    instance the diagram draws, so the two explain each other.
+  - The opening paragraph says what and why, not what each section holds.
 -->
 
 # Component name — build specification
 
-One paragraph: what this spec designs, for which release, and from which
-sources. While nothing is built, say so: every behaviour here is
-**designed**.
+One paragraph: what this spec designs and why, for which release, and
+from which sources. While nothing is built, say so: every behaviour here
+is **designed**.
 
 ## 1 · Purpose and scope
 
@@ -81,17 +101,22 @@ What the component answers, in a sentence.
   +----------------------+              +----------------------+
 ```
 
+**Reading it** (only when arrows mean different things): what each kind
+of arrow means, and what the drawing shows that today's deployments do
+not have.
+
 **Related:** implements [module-id](../modules/module-id.md); depends on
 [spec-id](spec-id.md); used by none yet; journeys none yet.
 
 ## 2 · Concepts
 
-The terms the rest of the spec uses.
+The terms the rest of the spec uses: each defined, never prescribed.
 
 ## 3 · Rules
 
-What the component does, rule by rule, each with its capability id and
-its source (a regulation, a decision, a customer's requirement).
+What always holds, rule by rule, each with its capability id and its
+source (a regulation, a decision, a customer's requirement). One idea per
+rule; usually fewer than ten.
 
 ## 4 · Interfaces
 

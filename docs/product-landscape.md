@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-1006, FS-989, FS-991, FS-985, FS-1010, FS-1011]
-last_reviewed: 2026-10-27
+review_ids: [FS-1006, FS-989, FS-991, FS-985, FS-1010, FS-1011, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Product landscape
@@ -66,7 +66,7 @@ institution's core or a partner by design.
 | SME term loans and working capital | KCB, Equity, NCBA, SBM, Family, Sidian, Victoria, Gulf African, Bank of Africa, Faulu, KWFT, Onit, Kenya Police Sacco | **R1** | mfi; lending-service |
 | Unsecured personal and salary loans | KCB, Family, SBM, KWFT, Mwalimu, Kenya Police Sacco, Branch, Tala | **R1**; check-off phase 2 | mfi; MF-36, BS-17 |
 | Mobile and app loans (instant, short) | KCB, Equity, NCBA, Onit, Gulf African (Halal Pesa), Mwalimu, Kenya Police Sacco, Tala, Branch | Loans phase 2; wallet savings once their schema exists | loan-kinds; FS-991 to FS-993 |
-| Overdrafts and credit lines (Fuliza, float overdrafts) | NCBA (Fuliza), KCB (float and MSME overdrafts) | Designed (Facility) | lender-rules §2.4; MF-40 |
+| Overdrafts and credit lines (Fuliza, float overdrafts) | NCBA (Fuliza), KCB (float and MSME overdrafts) | Designed (Facility) | product-versions §4; MF-40 |
 | Vehicle and asset finance, logbook loans | KCB, NCBA, Family, Sidian, Gulf African, Bank of Africa, Faulu, Kenya Police Sacco (to confirm), Watu | **R1** (Roan Capital's Motor Vehicle); paid to a dealer, phase 2 | MF-03; MF-40 |
 | Smartphone and device financing with a lock | Watu | **Not yet:** a device lock is a service of its own | loan-kinds |
 | Land-secured loans and mortgages | KCB, Gulf African, Faulu (property improvement), Kenya Police Sacco (land) | **R1** for Title Deed; long mortgages not yet tried against the vocabulary | MF-18; LR-47 |

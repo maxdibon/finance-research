@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Product lead, channels
 classification: Internal
-review_ids: [FS-1012, FS-1013, FS-1014, FS-1015, FS-1016, FS-1017, FS-1018, FS-1022]
-last_reviewed: 2026-10-27
+review_ids: [FS-1012, FS-1013, FS-1014, FS-1015, FS-1016, FS-1017, FS-1018, FS-1022, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Channels
@@ -48,7 +48,7 @@ representative, all at once. **Decided** (FS-1018):
    - **a business:** granted by the business's own administrators, under
      its account mandate (mandates; ID-21, ID-22);
    - **a partner:** granted by the partner's administrator, a field
-     agent's rights limited to their route (lending-service §5).
+     agent's rights limited to their route (lending-partners §5).
    Access's organisations hold businesses and partners and their members
    (access §4, "Organisations").
    **A business's first administrators** are those its board resolution

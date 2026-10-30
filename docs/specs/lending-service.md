@@ -8,12 +8,12 @@ law: LR-03
 released: unreleased
 release: R1
 implements: [mfi, sacco]
-depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, deposits-service]
-used_by: [staff-workspace, kapu-console]
+depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, deposits-service, product-versions]
+used_by: [staff-workspace, kapu-console, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005]
-last_reviewed: 2026-10-27
+review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054]
+last_reviewed: 2026-10-30
 ---
 
 # The Kapu lending service — build specification
@@ -39,8 +39,6 @@ every system that touches it in step?
 | MF-01 | Digital loan application with a timestamped, attributed lifecycle | Yes |
 | MF-07 | Approval chains by product and amount tier, through the approval engine | Yes |
 | MF-11 | Disbursement only from an approved application, with maker-checker on the payout | Yes |
-| MF-41 | Partners onboarded and managed: the record, its relationships and their limits, the lifecycle, signed events back | No: phase 2, with MF-40 (§5) |
-| MF-42 | Partner data feeds: a contract per feed, a consent gate, checks and quarantine, only metrics forward | No: phase 2 (§5) |
 
 These three stand for the whole of Kapu MFI's R1 list (delivery plan, "R1
 in detail"); §3 says, capability by capability, which system does each.
@@ -48,47 +46,31 @@ in detail"); §3 says, capability by capability, which system does each.
 **Out of R1:** Kapu Sacco (R4); group lending (MF-17); the split ledger
 mode (FS-066).
 
-**Where it sits** (the new design, FS-984; deposits beside it, FS-985):
+**Where it sits** (FS-984; deposits beside it, FS-985): its neighbours;
+the whole instance, in layers, is architecture/instance.md.
 
 ```
-  PEOPLE      Institution staff        Borrowers, guarantors, members         Dibon engineers
-                     |                              |                                 |
-            +--------v------------------------------v---------------------------------v----------+
-  SIGN-IN   | ACCESS                                                                             |
-            | signs in, steps up: staff by password and key; customers by a code to              |
-            | their phone; Dibon's engineers by hardware keys, never into a product              |
-            | [keycloak]                                                                         |
-            +------------------------------------------------------------------------------------+
-                    |                  |                   |                          |
-            +-------v--------+ +-------v--------+ +--------v--------+        +--------v--------+
-  SCREENS   | STAFF WORKSPACE| | KAPU CONSOLE   | | CUSTOMER PAGES  |        | OBSERVABILITY   |
-            | daily lending, | | approvals,     | | consents, sign, |        | dashboards,     |
-            | tasks, products| | fallback views | | statements      |        | on-call         |
-            | [odoo]         | | [kapu_service] | | [kapu_service]  |        | [grafana]       |
-            +-------+--------+ +-------+--------+ +--------+--------+        +--------+--------+
-                    | as the person    |                   | as the person     never a product
-                    +------------------+-------------------+
-                                       v
-            +--------------------------v--------------------------------+   +----------------------+
-  CORE      | LENDING SERVICE                                           |   | DEPOSITS SERVICE     |
-  SERVICES  | lends: loans, collateral, guarantors, product versions;   |<--| keeps accounts;      |
-            | LENDER RULES and SACCO RULES beside it                    |   | regulators' rules    |
-            | [kapu_service]                                            |   | [kapu_service]       |
-            +-----------------------------------------------------------+   +------------+---------+
-                     | decisions    | payouts   | messages         |  |                  |
-                     |              |           |                  |  +--- postings -----+
-                     v              v           v                  v signatures          v
-            +-----------------+ +-------+ +-----------+ +---------------------+ +------------------+
-  SERVICES  | APPROVAL ENGINE | | RAILS | | MESSAGING | | BACK-OFFICE GATEWAY | | CORE ADAPTER     |
-            | decides         | | pays  | | sends     | | translates, to ODOO | | posts, to KAPU   |
-            | [kapu_service]  | |       | |           | | [kapu_service]      | | CORE or theirs   |
-            +-----------------+ +-------+ +-----------+ +---------------------+ +------------------+
-  EVENTS    ===== EVENT BUS [kafka]: every change, signed, in order ==============================
-                 |                          |                             |
-            +----v-------------+  +---------v----------+  +---------------v--+
-  CHECKS    | RECONCILIATION   |  | OBSERVABILITY      |  | VAULT            |
-            | three ledgers    |  | metrics, alerts    |  | signed records   |
-            +------------------+  +--------------------+  +------------------+
+  +--------------------+  +--------------------+  +--------------------+  +--------------------+
+  | STAFF WORKSPACE    |  | KAPU CONSOLE       |  | CUSTOMER PAGES     |  | DEPOSITS SERVICE   |
+  | shows, asks        |  | decides, looks up  |  | consents, signs    |  | keeps accounts     |
+  | [odoo]             |  | [kapu_service]     |  | [kapu_service]     |  | [kapu_service]     |
+  +--------------------+  +--------------------+  +--------------------+  +--------------------+
+            | commands              | reads                 | consents              | deposits
+            v                       v                       v                       v
+  +----------------------------------------------------------------------------------------------+
+  | LENDING SERVICE                                                                              |
+  | lends: loans, collateral, guarantors; lender rules or Sacco rules beside it, by the          |
+  | product's rule set (rule 7); acts as the person, on the approval engine's yes                |
+  | [kapu_service]                                                                               |
+  +----------------------------------------------------------------------------------------------+
+          | requests         | payouts          | messages          | signatures,         | postings
+          |                  |                  |                   | tickets             |
+          v                  v                  v                   v                     v
+  +----------------+ +----------------+ +----------------+ +--------------------+ +----------------+
+  | APPROVAL ENGINE| | RAILS          | | MESSAGING      | | BACK-OFFICE GATEWAY| | CORE ADAPTER   |
+  | decides        | | pays           | | sends          | | translates         | | posts          |
+  | [kapu_service] | | [kapu_service] | | [kapu_service] | | [kapu_service]     | | [kapu_service] |
+  +----------------+ +----------------+ +----------------+ +--------------------+ +----------------+
 ```
 
 **Related:** implements [mfi](../modules/mfi.md) and
@@ -100,7 +82,7 @@ used by [staff-workspace](staff-workspace.md) and
 [kapu-console](kapu-console.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and
-[JN-06](../journeys/restructuring.md).
+[JN-06](../journeys/restructuring.md); its product terms come from [product-versions](product-versions.md); partners, inside it, are [lending-partners](lending-partners.md).
 
 ## 2 · Concepts
 
@@ -113,7 +95,7 @@ used by [staff-workspace](staff-workspace.md) and
   (CBK's lender regulations, lender-rules) for lenders; Sacco rules
   (SASRA, the Sacco Societies Act) for Saccos, to be specified.
 - **A product version:** a product's terms as data, the one authority for
-  them (lender-rules §2.4).
+  them (product-versions).
 
 ## 3 · Who does what, capability by capability
 
@@ -150,112 +132,10 @@ and shares (FS-985); this service lends against them, under Sacco rules.
 
 ## 5 · Partners
 
-FS-995, FS-996. The third parties a product works with: distributors,
-dealers, schools, hospitals, insurers, employers, produce buyers,
-merchants, mobile operators (lender-rules §2.4, Partner). Each
-institution keeps its own; Dibon helps, and never approves. Learned from
-what we built for a bank's retailer finance and from a microfinance
-bank's own agreements (FS-997, FS-999, FS-1000, FS-1002).
-
-**One partner, in two places,** joined by our reference:
-
-| Part | Where | Why |
-|---|---|---|
-| The company: registration, directors and owners, contacts, documents, signed agreements | Odoo, through the back-office gateway | Odoo holds the parties no core holds (architecture §2) |
-| What touches money: its verified settlement accounts, its exposure cap, its first-loss share, what it pays towards the price, its status | This service | Each change a request to the approval engine, decided by a second person, a new payee adding an approver (MD-19) |
-
-**Relationships are records** (FS-1000). A borrower's tie to a partner (a
-retailer to its distributor) is a record of its own, with its own limit,
-balance, status and the partner's codes for it (a sales route, a
-territory). A borrower may have several. **Limits nest:** a draw is
-checked against the relationship's limit, the product's, the borrower's
-overall limit and whatever the core holds (FS-926); where the core holds
-only one limit per borrower, as a bank's did, the others live here.
-
-**The lifecycle:**
-
-1. **Proposed** by the institution's partner manager, in Odoo.
-2. **Due diligence** by compliance: the business registry (ID-07), the
-   tax PIN, the directors and beneficial owners, sanctions (FC-05); the
-   documents by kind of partner, as a bank asks of a company (its
-   incorporation, its directors and shareholders, a board resolution,
-   signatories, tax compliance, a year's accounts, a beneficial ownership
-   form; FS-999).
-3. **Agreements signed** in Odoo Sign: the partner agreement (its data
-   accurate, returned goods refunded to the loan, its first loss, fraud)
-   and a data-sharing agreement (what, why, for how long).
-4. **Settlement accounts verified:** the bank account's or paybill's name
-   checked before it may be paid (RL-01).
-5. **A feed contract and a test feed** (below), passed.
-6. **Approved** by two people; then **live**.
-7. **Monitored:** each partner's feed freshness, exposure, its borrowers'
-   arrears, returns and disputes, and fraud signals, on a dashboard.
-8. **Frozen or exited:** new draws stop, its settlement accounts are
-   frozen, a relationship or the whole partner; open loans run off.
-
-**Its data comes in through one intake** (MF-42), built on recon's
-(RO-01): a file through the portal or by SFTP first, an API from its ERP
-later (Odoo's through sme-recon's wrapper):
-
-- **A contract per feed:** its fields, format, frequency and version.
-- **A consent gate:** no person's data is used without their recorded
-  consent (LQ-22, privacy PR-21), **given for each partner apart** by
-  default (FS-1004): a retailer who buys from two distributors consents
-  to each. The institution may set a product's partner terms to one
-  consent for the partners named at that moment, never for future ones;
-  or turn consent off only where another lawful basis is recorded by
-  decision, with its impact assessment. A consent is withdrawable, and
-  its withdrawal stops the partner's data at the next feed.
-- **Checks and quarantine:** completeness, duplicates, freshness, and
-  odd jumps (purchases inflated before a limit renews) held for a person.
-- **Only metrics go forward** to decisioning (DE-01), never the raw file;
-  a mobile operator's scores are taken as scores, never rebuilt into
-  what the operator withholds (FS-1002).
-- **Cross-checked** against what the institution actually paid the
-  partner, by recon.
-
-**Where partner data is kept** (FS-1005). All of it in the institution's
-own instance, in Kenya; none in Dibon's central systems, in git or on a
-device (endpoints §2); each partner's raw data apart from every other
-source's, as operators' agreements require (FS-1002):
-
-| What | Where | Protected by | Kept |
-|---|---|---|---|
-| The company: its record, contacts, directors and owners | Odoo, through the gateway | Staff sign-in through access; the partner manager and compliance only | While a partner, then as Dibon's records rules say (docs/documents.md) |
-| Due diligence and KYB evidence, signed agreements | The document vault (ID-15) | Each file encrypted under keys in OpenBao; access logged | As the agreement's and the regulations' records rules say |
-| Settlement accounts, caps, first loss, status; relationships and their limits | This service's own database (PostgreSQL, a primary and a synchronous standby) | Encrypted at rest; every change an approved request, every read logged | While a partner and its loans run, then seven years |
-| Consents, per person and partner | The back office's consent store (MS-11), through the gateway, with the time, the channel and the text consented to | As the back office | While the relationship runs, then with the loan file |
-| Raw feed files, and those quarantined | Recon's intake, in object storage: a bucket per partner | Encrypted under keys in OpenBao; no person reads a file but to clear quarantine | At most 90 days (PR-21), less where the data-sharing agreement says; then deleted, the file's hash kept for lineage |
-| Metrics made from the feeds | Decisioning, in the decision record (DE-01) | As decisioning | With the loan file, seven years (PR-18) |
-| A partner's credentials: its API keys, its event signing secret | OpenBao | Never in a file or a database; rotated | While a partner |
-| Events sent to a partner, and their delivery | This service's outbox and log; the event bus's signed chain | Signed; the chain never edited (PR-14) | As the event bus keeps |
-
-**At a partner's exit,** its raw files are deleted at once, as operators'
-agreements require of their data (FS-1002); the metrics already in loan
-files stay with them; its record, agreements and evidence stay for their
-retention, read-only.
-
-**It hears back, signed** (FS-997): each draw, payment, freeze and
-change is sent to the partner's own system as an event, signed, over an
-encrypted connection, retried until delivered, and logged; never a plain
-call to a fixed address.
-
-**Its people take part:** a distributor's or a school's staff use a
-partner portal in Odoo (portal users need no licence; BS-03) to upload
-data, confirm deliveries, see what they were paid and handle returns,
-each act that touches money a command to this service; a sales
-representative may help a borrower in the field (a call back, the route's
-borrowers) and nothing more. Larger partners use the API instead.
-
-**Bulk limits:** the institution's risk team refreshes limits in bulk, by
-an upload and a download, approved by two people.
-
-**Mobile operators are integrations, not portal users:** API credentials
-in OpenBao, a test and a live environment, rate limits and monitoring,
-under the institution's agreement with the operator (FS-993), which must
-also allow Dibon to host and process for it (FS-1002). Recovery from a
-wallet is the operator's to grant and withdraw; a payment prompt the
-customer approves is the fallback.
+FS-995, FS-996. The third parties a product works with: their record,
+relationships, lifecycle, data feeds and people are
+[lending-partners](lending-partners.md) (phase 2; FS-1058). In R1 the lending service
+keeps nothing of theirs.
 
 ## 6 · Interfaces
 
@@ -266,7 +146,8 @@ customer approves is the fallback.
 - **Products:** lender rules' endpoints, including the
   draft, validate, preview, adopt and submit calls the Products screen
   uses (FS-978, FS-981; lender-rules §3).
-- **Events:** the `kapu.mfi` domain (event-bus-kafka §5).
+- **Events:** in the domain of the product's rule set: `kapu.mfi`, and
+  `kapu.sacco` from R4 (event-bus-kafka §5, FS-1057).
 
 ## 7 · Security and audit
 
@@ -279,8 +160,6 @@ against the person; no Dibon identity holds a product role (AC-09).
 |---|---|---|---|
 | Applications, collateral records and their evidence, overrides | Confidential | Seven years after the loan ends | Borrowers', guarantors' |
 | The outbox | Confidential | Until published, then 30 days | As the change |
-| Partners: settlement accounts, caps, status; relationships and their limits; events sent and their delivery | Confidential | While a partner and its loans run, then seven years | Borrowers' ties to partners |
-| Raw partner feeds | Confidential, in recon's intake (§5) | At most 90 days | Borrowers', with their consent (PR-21) |
 
 The loan itself, its schedule and balances are the core's; this service
 keeps no copy of them.
@@ -310,10 +189,6 @@ on any write the core received that this service did not make (F15).
 | A2 | A product version activated | The core is checked | Its settings match the version, applied through the adapter | MF-07, rule 2 |
 | A3 | A write made directly in Fineract | The nightly check runs | It is found and alerted | rule 2 |
 | A4 | An institution in integrated mode | A loan is disbursed | It is posted to the institution's core through its adapter | rule 2 |
-| A5 | A retailer with two distributors | It draws from one | The draw is checked against that relationship's limit, the product's, its overall limit and the core's; the other relationship is untouched | MF-41, §5 |
-| A6 | A partner's feed with a retailer who has not consented | The feed arrives | That retailer's rows are held, never used, and the partner told | MF-42, §5 |
-| A7 | A partner's settlement account changed | The change is asked for | It waits for a second person and an added approver; until then payouts go to the old account or stop | MF-41, MD-19 |
-| A8 | A draw paid to a partner | The partner's system is told | The event is signed, retried until delivered, and logged | MF-41, §5 |
 
 ## 12 · Open questions
 

@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830, FS-934, FS-981, FS-1044]
-last_reviewed: 2026-10-28
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830, FS-934, FS-981, FS-1044, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Roan Capital · Biashara, the 30-day loan · product version 1 · proposed
@@ -19,7 +19,7 @@ last_reviewed: 2026-10-28
     status:    proposed: drafted by Dibon; Roan Capital adopts it as its
                own draft, and every Ask is answered, before it is submitted
     source:    Roan Capital's requirement document; delivery map RC-26,
-               RC-27, RC-30; lender-rules §2.4 (the vocabulary), §2.9
+               RC-27, RC-30; product-versions §4 (the vocabulary), §2.9
 
 **Agreed on 21 October 2026, folded into the items below** (FS-934, FS-1044;
 Roan Capital's weekly update). This product is the one Roan Capital calls
@@ -49,13 +49,13 @@ questionnaire becomes "Roan Capital, [date]". **Ask** is what we need:
 **Confirm** a value we have, **Choose** one of the options given,
 **Provide** a fact we do not have, or **Decide** a policy; "—" means
 nothing to answer (the regulations', or our plan). Why each term matters is
-in the vocabulary (lender-rules §2.4).
+in the vocabulary (product-versions §4).
 
 **The questionnaires** are built from these tables, one Word document per
 group, with a form field per item; the answers are read back by script
 into these tables, never retyped: tools/products/questionnaires.js
 builds them, tools/products/read-back.js reads a returned one, until the
-back office's product form replaces both (lender-rules §2.4). Returned
+back office's product form replaces both (product-versions). Returned
 documents are client material: kept in clients/, never in git.
 
 ## A · Product terms
@@ -126,7 +126,7 @@ the typed form of a Choose's options in their order, and `value` what Roan
 Capital settled; `null` is a blank still to fill. The read-back writes a
 settled value here when it can, and lists the rest for a person to encode.
 The check holds the block's shape; the values themselves are checked by
-the schema in the code repository (lender-rules §2.4), not here.
+the schema in the code repository (product-versions §4), not here.
 
 ```json product-version
 {

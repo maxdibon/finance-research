@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-934, FS-935, FS-957, FS-981]
-last_reviewed: 2026-10-27
+review_ids: [FS-934, FS-935, FS-957, FS-981, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Roan Capital · Motor Vehicle, the logbook loan · product version 1 · proposed
@@ -19,7 +19,7 @@ last_reviewed: 2026-10-27
     status:    proposed: drafted by Dibon; Roan Capital adopts it as its
                own draft, and every Ask is answered, before it is submitted
     source:    Roan Capital's weekly update of 21 October 2026, where the
-               product was defined (FS-934); lender-rules §2.4 (the
+               product was defined (FS-934); product-versions (the
                vocabulary), §2.11 (selling security)
 
 **What 21 October agreed** (FS-934). Up to 50% of the vehicle's value;

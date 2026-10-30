@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Product lead, business suite
 classification: Internal
-review_ids: [FS-1019, FS-1021, FS-1022, FS-1024, FS-1025, FS-1026]
-last_reviewed: 2026-10-27
+review_ids: [FS-1019, FS-1021, FS-1022, FS-1024, FS-1025, FS-1026, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Onboarding pack
@@ -31,7 +31,7 @@ DT-09, B3 DT-10, B4 DT-15 and DT-40, B5 DT-18, P1 to P3 DT-41 to DT-43.
 
 1. **Filled, not retyped:** every field comes from a record already
    held: the business's KYB record (ID-22), its people (ID-25), the
-   mandate's rules (mandates), the partner's record (lending-service §5).
+   mandate's rules (mandates), the partner's record (lending-partners §3).
 2. **Signed electronically** in Odoo Sign, each signer with a code to
    their bound phone (BS-02); whether that is enough for each template
    is LQ-24, and whether a seal is wanted LQ-25.
@@ -101,7 +101,7 @@ DT-09, B3 DT-10, B4 DT-15 and DT-40, B5 DT-18, P1 to P3 DT-41 to DT-43.
 the products and roles; the partner's warranty that its data and invoices
 are accurate; goods returned or never delivered refunded to the loan, not
 the borrower (LQ-20); the first-loss share and how it is called; fraud
-and what follows; signed events to its system (lending-service §5);
+and what follows; signed events to its system (lending-partners §6);
 audit rights; data protection by P2; exposure caps and freezes; fees;
 term, exit and the run-off of open loans.
 

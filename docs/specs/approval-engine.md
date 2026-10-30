@@ -9,11 +9,11 @@ released: 2026.10.16
 release: R1
 implements: [mandates]
 depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka]
-used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console]
+used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console, product-versions]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032]
-last_reviewed: 2026-10-27
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032, FS-1053, FS-1054, FS-1056, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Approval engine — build specification
@@ -24,7 +24,7 @@ PRD, FR-6 (sources/kapu), and Roan Capital's delivery map
 (docs/customers/roan-capital.md). Nothing here is built; every behaviour
 is **designed**. Fineract's side is in docs/specs/kapu-core-fineract.md, settled from
 its documentation (FS-625); what only a running instance can show is that
-spec's §9.
+spec's §12.
 
 ## 1 · Purpose and scope
 
@@ -62,7 +62,7 @@ extra: the engine holds the facts already.
 **Where it sits.**
 
 ```
-  approvers: console, email, app
+  approvers: in the Kapu Console, by email link, in the app
         |
         v
   +---------------------+  roles, step-up      +---------------------+
@@ -72,11 +72,11 @@ extra: the engine holds the facts already.
   +---------------------+                      +---------------------+
      ^ request    | approved, declined
      |            v
-  +---------------------+  approve, reject,    +---------------------+
-  | KAPU MFI            |--------------------->| KAPU CORE           |
-  | asks, then acts     |  disburse            | records             |
-  | [kapu_service]      |                      | [apache_fineract]   |
-  +---------------------+                      +---------------------+
+  +---------------------+  approve, reject,    +---------------------+      +---------------------+
+  | LENDING SERVICE     |--------------------->| CORE ADAPTER        |----->| KAPU CORE           |
+  | asks, then acts     |  disburse            | posts to the core   |      | records             |
+  | [kapu_service]      |                      | [kapu_service]      |      | [apache_fineract]   |
+  +---------------------+                      +---------------------+      +---------------------+
 ```
 
 **Related:** implements [mandates](../modules/mandates.md); depends on
@@ -85,7 +85,7 @@ extra: the engine holds the facts already.
 [JN-02](../journeys/manual-identity-check.md),
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and
-[JN-06](../journeys/restructuring.md).
+[JN-06](../journeys/restructuring.md); product versions are approved here ([product-versions](product-versions.md)).
 
 ## 2 · Concepts
 
@@ -118,7 +118,7 @@ the database role the service runs as cannot update or delete them.
 | Field | Type | Notes |
 |---|---|---|
 | id | uuid | |
-| subject_type | text | `loan.application`, `loan.disbursement`, `loan.restructure` (FS-516), `mandate.change`, `product.version` (a product version document, decided by two people, then held until CBK's letter is recorded; lender-rules §2.4, FS-802), `access.role.change` (a role granted or removed, decided by a second person at step-up; access-keycloak §6, FS-642; raised automatically from a job position's role set, and carrying the date it takes effect, FS-770), `manual.act` (a payout or approval made by hand while the platform was down, approved afterwards by the institution's approvers so the nightly comparison can explain it; FS-661), `kyc.manual_verification` (the manual identity route, FS-547; docs/journeys/manual-identity-check.md), `payment.reversal` and `payment.recall` (a reversal or recall of a sent instruction, rails RL-01, FS-587), `guarantee.demand` (a demand to a guarantor, only after the notice and the recovery from the borrower, mfi MF-37, FS-622); later `bill.payment` and `payroll.run` (a month's payroll and its remittances, business-suite BS-19, FS-606) |
+| subject_type | text | `loan.application`, `loan.disbursement`, `loan.restructure` (FS-516), `mandate.change`, `product.version` (a product version document, decided by two people, then held until CBK's letter is recorded; product-versions, FS-802), `access.role.change` (a role granted or removed, decided by a second person at step-up; access-keycloak §6, FS-642; raised automatically from a job position's role set, and carrying the date it takes effect, FS-770), `manual.act` (a payout or approval made by hand while the platform was down, approved afterwards by the institution's approvers so the nightly comparison can explain it; FS-661), `kyc.manual_verification` (the manual identity route, FS-547; docs/journeys/manual-identity-check.md), `payment.reversal` and `payment.recall` (a reversal or recall of a sent instruction, rails RL-01, FS-587), `guarantee.demand` (a demand to a guarantor, only after the notice and the recovery from the borrower, mfi MF-37, FS-622); later `bill.payment` and `payroll.run` (a month's payroll and its remittances, business-suite BS-19, FS-606) |
 | product_code | text | The Fineract product short name, or `*` |
 | version | int | Increments on every change |
 | effective_from | timestamptz | Africa/Nairobi in the UI, UTC stored |
@@ -166,7 +166,7 @@ frozen for quorum steps), `due_at`, `escalated_at`.
 
 ## 4 · Rules
 
-Each rule has a test in §11.
+Each rule has a test in §14.
 
 1. **Resolution.** On submission the engine finds the active mandate
    for subject type and product (falling back to `*`), picks the tier by
@@ -202,16 +202,7 @@ Each rule has a test in §11.
    who loses the role can no longer vote; if the quorum can no longer be
    reached, the step is *stalled* and escalates to the institution
    admin, who may re-open it with the current members. Votes from members
-   still eligible stand. **A role left too thin is caught first**
-   (FS-769, JN-18): every `access.role.change` that removes someone, and
-   every exit, is checked against the active mandate steps that name the
-   role; where the holders left would be fewer than a quorum step's N, or
-   than its whole membership when unanimous, or no one eligible for a
-   sequential step once MD-06 is applied, the approver of a move sees a
-   warning naming the steps before deciding. An exit is never held back:
-   the administrator and the manager are told at once, and the role shows
-   as short in the administrator's view until filled. The same check runs
-   nightly.
+   still eligible stand.
 9. **Withdrawal.** The originator may withdraw a request until it is
    approved.
 10. **SLAs** (MD-08). When a step passes `sla_hours`, its approvers are
@@ -228,6 +219,16 @@ Each rule has a test in §11.
     `moves_money` is accepted only with a fresh step-up (AC-05): a time-
     based one-time code (RC-32) no older than 5 minutes. The engine reads
     `acr` and `auth_time` from the token; a session login is not enough.
+13. **A role left too thin is caught first** (FS-769, JN-18): every
+    `access.role.change` that removes someone, and every exit, is
+    checked against the active mandate steps that name the role; where
+    the holders left would be fewer than a quorum step's N, or than its
+    whole membership when unanimous, or no one eligible for a sequential
+    step once MD-06 is applied, the approver of a move sees a warning
+    naming the steps before deciding. An exit is never held back: the
+    administrator and the manager are told at once, and the role shows
+    as short in the administrator's view until filled. The same check
+    runs nightly.
 
 **Roan Capital in R1** (RC-12, RC-16), all configuration:
 
@@ -261,7 +262,7 @@ Each rule has a test in §11.
 
 ## 6 · Interfaces
 
-**REST** (internal to the instance; called by Kapu MFI, the console and
+**REST** (internal to the instance; called by the lending service, the console and
 the email landing page; OAuth 2 tokens from Keycloak, AC-01):
 
 | Method and path | Purpose |
@@ -333,7 +334,7 @@ decision.
   deleted; a correction is a new record. Each request's events are
   hash-chained (RO-24), so a change shows.
 - **No path around the engine.** Staff hold no Fineract permission to
-  approve or disburse a loan; only the Kapu MFI service account does, and
+  approve or disburse a loan; only the lending service's account does, and
   it acts only on `kapu.mandates.request.approved` (§9).
 - **What goes into an email:** request reference, product, amount, step
   and due time. No names, national ID numbers, statements or documents:
@@ -353,19 +354,19 @@ its own maker-checker, which can hold a command until a second user
 checks it: a global setting, then one per permission (kapu-core-fineract §4). Running both would put two
 approval records side by side that can disagree. So:
 
-1. Kapu MFI creates the loan application in Fineract (state: submitted
+1. The lending service creates the loan application in Fineract (state: submitted
    and pending approval) and submits a request to the engine with the
    Fineract loan id as subject. The loan carries our application id as
    its external id (kapu-core-fineract §5).
 2. Approvers decide in the engine: console, email or app.
-3. On `kapu.mandates.request.approved`, Kapu MFI calls Fineract's approve
+3. On `kapu.mandates.request.approved`, the lending service calls Fineract's approve
    command; on `kapu.mandates.request.declined`, its reject command; on a
    withdrawal, its withdraw command. Fineract's own maker-checker stays
    off for these, and staff roles hold none of their permissions. The
    commands, permission codes and the request id's place are in
    kapu-core-fineract §4 and §5.
 4. Disbursement (MF-11) is a second request, `loan.disbursement`, with
-   its own maker-checker chain. On approval, Kapu MFI pays through the
+   its own maker-checker chain. On approval, the lending service pays through the
    rail (RL-03 or RL-07) and posts the disbursal to Fineract when the
    rail confirms.
 5. A nightly comparison lists any Fineract loan approved or disbursed
@@ -375,22 +376,10 @@ approval records side by side that can disagree. So:
 
 ## 10 · Beyond R1: bill payments (FS-494)
 
-Supplier bills from Odoo or Zoho will be a subject type, `bill.payment`
-(mandates MD-19, phase 2), with a chain by amount tier like any other.
-Two rules matter more for bills than for loans: a supplier whose bank or
-M-Pesa details are new or changed in the last 30 days adds a second
-approver, since changed details are how invoice fraud works; and an
-approved bill is paid only for the approved amount, to the approved
-payee, so a change to either re-opens approval.
-
-**Payment triggers** (MD-20, phase 2): once a bill is approved, payment
-can follow automatically, on approval, on the due date, or in the next
-scheduled batch, through SME Recon's payment execution (SR-11), with the
-outcome written back (SR-12). Automatic means *after* approval, never
-instead of it. The one exception is a standing approval: a recurring
-bill (rent, a subscription) approved once with a payee, a cap per
-payment and an end date, which pays within those limits until it ends or
-is revoked.
+Supplier bills, and payment once a bill is approved, are phase 2 and
+designed in the mandates module (MD-19, MD-20; FS-1058): a subject type,
+`bill.payment`, with a chain by amount tier like any other; nothing in
+R1 depends on them.
 
 ## 11 · Data
 
@@ -452,26 +441,25 @@ STRIDE for security, LINDDUN for privacy (platform-security SE-16):
 | A20 | A loan approved in Fineract without an approved request | The nightly comparison runs | An exception is raised | §9 |
 | A21 | A request's decisions | Any stored decision is altered | The hash chain no longer verifies | RO-24 |
 | A22 | A request in progress | The originator opens it | They see the current step, who holds it, how long it has waited and when it is due | FS-494 |
-| A23 | A three-member unanimous committee | One member's exit is recorded | The exit goes ahead; the administrator and the manager are told the committee is short; a move of a second member warns its approver first | Rule 8, FS-769 |
+| A23 | A three-member unanimous committee | One member's exit is recorded | The exit goes ahead; the administrator and the manager are told the committee is short; a move of a second member warns its approver first | Rule 13, FS-769 |
 | A24 | A joiner recorded on Wednesday, starting Monday | Their position's roles are approved on Friday | The roles are mapped on Monday, not before; the joiner is told by email (T42) | access-keycloak §6, FS-770 |
 
 ## 15 · Open questions
 
-1. **Where roles come from:** decided, Keycloak groups (FS-498). Left
-   here so the numbering of the other questions holds.
-2. **Roan Capital's role list** (RC-34, open answer 7), and who
+1. **Roan Capital's role list** (RC-34, open answer 7), and who
    originates: if the Credit Officer originates, rule 2 means a second
    Credit Officer reviews.
-3. **The Head Office Committee:** its members, its quorum and the
+2. **The Head Office Committee:** its members, its quorum and the
    threshold (RC-12, RC-16).
-4. **The override authority** for `limit_override` at Roan Capital
+3. **The override authority** for `limit_override` at Roan Capital
    (MF-06).
-5. **SLAs and escalation roles** per step.
-6. **Borrower names in emails:** decided: never (FS-532).
-7. **One-click** for non-money steps: wanted at all?
-8. **Fineract:** the approve, reject, withdraw and disburse commands,
-   their permission codes, where an external reference can go, and how
-   its own maker-checker is turned off per command.
+4. **SLAs and escalation roles** per step.
+5. **One-click** for non-money steps: wanted at all?
+
+Answered and applied: roles come from Keycloak groups (FS-498); borrower
+names in emails, decided: never (FS-532); Fineract's commands and their
+permission codes are kapu-core-fineract §5, and whether the approve
+command takes an external id is check F9.
 
 ## Regulations cited
 

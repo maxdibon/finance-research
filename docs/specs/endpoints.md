@@ -12,8 +12,8 @@ depends_on: [access-keycloak, observability-grafana]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777, FS-896, FS-1054]
+last_reviewed: 2026-10-30
 ---
 
 # Endpoints — devices, their protection, and a lost device
@@ -207,7 +207,7 @@ PR-13).
    encrypted and in Kenya, never in git (FS-710).
 4. Fleet's free edition: whether disk-encryption enforcement and the
    other policies we need are in it.
-6. How the bastion learns that a device is enrolled and compliant: a
+5. How the bastion learns that a device is enrolled and compliant: a
    device certificate issued by device management, checked at the
    bastion, is the design to test (E2).
 

@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965, FS-978, FS-979, FS-981, FS-982]
-last_reviewed: 2026-10-29
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965, FS-978, FS-979, FS-981, FS-982, FS-1050, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Roan Capital — delivery map
@@ -35,6 +35,9 @@ the NTSA and land registry steps done by hand and tracked in the system
   reconciliation as shared services.
 - **Hosting:** Dibon's cloud (the document's assumption 4). The prototype
   runs on Vercel; real borrower data stays off it (FS-398).
+- **Its deployment:** [its production deployment](../deployments/roan-capital-production.md),
+  with each component's settings in its own file beside it, against the
+  baselines every deployment follows (FS-1050).
 - **Secrets:** OpenBao, not HashiCorp Vault as the document says (FS-403).
 - **Database:** PostgreSQL, not MySQL as the document says (FS-464).
 - **Confidentiality:** the NDA, signed by both parties and dated 4 August
@@ -220,7 +223,7 @@ inside the table of contents, and misaligned rows in the quality table.
 
 ## 5 · Its products
 
-Each product is a product version document (lender-rules §2.4): a draft
+Each product is a product version document (product-versions): a draft
 or one awaiting approval is Roan Capital's and Dibon's alone; an active
 one is public, as the lender regulations require (regs 47(1)(d), 48), and
 its link goes to Roan Capital's own product page.
@@ -320,7 +323,7 @@ also hold is a role added to their position, never a position of its own.
 | Finance / Cashier | Prepares payouts (the maker); matches an unidentified payment to its loan on the rail's record; the morning's sign-off (JN-17) | Records a repayment without a rail record behind it; releases a payout it prepared |
 | Collections Officer | Works the collection ladder: calls, visits, promises to pay, logged | Records repayments; contacts anyone but the borrower and guarantor (reg 30) |
 | Auditor | Reads everything, the audit log included | Changes anything |
-| Super Admin | Creates and disables users; settings that move no money | Approves, grants an approval role, changes a product alone (a product version needs two people, lender-rules §2.4) |
+| Super Admin | Creates and disables users; settings that move no money | Approves, grants an approval role, changes a product alone (a product version needs two people, product-versions) |
 
 **With three or four staff** (FS-982), each person holds several
 positions; the approval engine still refuses anyone deciding their own

@@ -9,22 +9,20 @@ released: 2026.10.16
 release: R1
 implements: [core]
 depends_on: [access-keycloak, event-bus-kafka]
-used_by: [approval-engine, lender-rules, end-of-day-runner, recon, lending-service, deposits-service]
+used_by: [approval-engine, lender-rules, end-of-day-runner, recon, lending-service, deposits-service, product-versions]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050]
-last_reviewed: 2026-10-29
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050, FS-1053, FS-1054, FS-1056, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Kapu Core on Apache Fineract — component specification
 
 How Dibon runs Apache Fineract as Kapu Core (docs/modules/core.md) for R1,
-Roan Capital's loans: the version, what is used and what is not, the
-settings, the contracts with the services around it, restructuring, end of
-day, and what must be tried on a running instance before the build relies
-on it. Sources: Fineract's documentation for 1.15.0, its API reference and
-its source code, read on 2026-10-08 (FS-625). What they settle is stated
-as fact here; what only a running instance can show is in §9. Nothing here
+Roan Capital's loans: the ledger, which records and never decides.
+Sources: Fineract's documentation for 1.15.0, its API reference and its
+source code, read on 2026-10-08 (FS-625). What they settle is stated as
+fact here; what only a running instance can show is in §12. Nothing here
 is built.
 
 ## 1 · Purpose and scope
@@ -55,16 +53,16 @@ FS-185. Groups (KC-01, later).
 **Where it sits.**
 
 ```
-  staff, back office                     borrowers, guarantors
+  staff, in the staff workspace          borrowers, guarantors
         |                                        |
         v                                        v
   +----------------+   +--------------------------------+   +-------------------+
-  | ACCESS         |-->| KAPU MFI                       |<->| APPROVAL ENGINE   |
-  | signs in       |   | the only writer to the ledger  |   | decides           |
-  | [keycloak]     |   | [kapu_service]                 |   | [kapu_service]    |
+  | ACCESS         |-->| LENDING SERVICE                |<->| APPROVAL ENGINE   |
+  | signs in       |   | the only writer, by its core   |   | decides           |
+  | [keycloak]     |   | adapter        [kapu_service]  |   | [kapu_service]    |
   +----------------+   +--------------------------------+   +-------------------+
-        | OAuth          | commands,         ^ waivers
-        |                | service account   |
+        | OAuth          | commands, by the  ^ waivers
+        |                | core adapter      |
         v                v                   |
   +-----------------------------------------------+   +-------------------+
   | KAPU CORE                                     |   | LENDER RULES      |
@@ -85,7 +83,7 @@ FS-185. Groups (KC-01, later).
 [deposits-service](deposits-service.md), [lending-service](lending-service.md), [approval-engine](approval-engine.md), [lender-rules](lender-rules.md),
 [end-of-day-runner](end-of-day-runner.md) and [recon](recon.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md) and
-[JN-06](../journeys/restructuring.md).
+[JN-06](../journeys/restructuring.md); product versions are applied to it ([product-versions](product-versions.md)).
 
 ## 2 · Version and hosting
 
@@ -131,11 +129,11 @@ off, as the approval engine decides (baseline S06); the business date
 moved only by the end-of-day runner (S09); every product progressive,
 with the repayment order reg 56 sets (S10, S11), set only from its signed
 product version and compared each night (S12, check F15); no staff role
-able to move a loan, only Kapu MFI's service account (S16, S17).
+able to move a loan, only the lending service's service account (S16, S17).
 
 ## 5 · Contracts
 
-**Commands Kapu MFI calls** (the service account, each only after the
+**Commands the lending service calls** (the service account, each only after the
 approval engine's yes where one is needed):
 
 | Act | Fineract command | Approval subject |
@@ -154,7 +152,7 @@ approval engine's yes where one is needed):
 id; each transaction carries our own id (a repayment, the M-Pesa receipt
 number). Fineract accepts up to 100 characters, and a loan can be read by
 its external id. The approval request's id goes in the command's note;
-whether the approve command also takes an external id is in §9.
+whether the approve command also takes an external id is in §12 (F9).
 
 **Events.** Fineract saves each event in the same database transaction as
 the change it describes, sends them in order, at least once, in Avro, to
@@ -162,7 +160,7 @@ Kafka. An adapter re-wraps them in the platform's signed CloudEvents
 envelope (RO-23) for the event bus; consumers never read Fineract's topic
 directly. Names are in the event bus catalogue (event-bus-kafka §5).
 
-**Never:** a write by anyone but Kapu MFI's service account; a change to
+**Never:** a write by anyone but the lending service's service account; a change to
 a posted transaction (a correction is a reversal and a new posting).
 
 ## 6 · Restructuring
@@ -181,7 +179,7 @@ its own feature, and the newer ones exist only for progressive loans
 **A top-up folds what is owed into the new loan.** It pays off the old
 loan's whole balance, overdue interest included, out of the new loan's
 principal: the capitalisation of arrears interest that reg 29 forbids.
-So Kapu MFI refuses a refinance or top-up while interest is overdue,
+So the lending service refuses a refinance or top-up while interest is overdue,
 unless that interest is first paid or waived (JN-06 §3 i).
 
 **Fineract's own classification resets.** After a re-age, nothing is past
@@ -206,7 +204,7 @@ those cores' postings as provisional until their end of day.
 
 **While it runs, the system stays open.** A loan waiting to be closed is
 caught up first when a payment for it arrives; a loan being closed at
-that moment refuses the write with HTTP 409, and Kapu MFI retries. A loan
+that moment refuses the write with HTTP 409, and the lending service retries. A loan
 whose close fails stays locked until it is fixed: the runner lists it
 and raises a ticket (MF-12).
 
@@ -230,7 +228,7 @@ itself is in the end-of-day-runner spec.
 
 ## 8 · Security
 
-- **One writer.** Kapu MFI's service account; its credentials in OpenBao,
+- **One writer.** The lending service's account; its credentials in OpenBao,
   rotated; every command it sends carries the approval request it acts on.
 - **Staff sign in through Keycloak** (AC-02), never with Fineract's own
   passwords.
@@ -245,8 +243,8 @@ itself is in the end-of-day-runner spec.
 - **Three ledgers** (recon §3): every posting and a signed checkpoint per
   cycle go to recon as events, with per-account sequence numbers; recon's
   shadow and companion must agree with Fineract.
-- **Nightly comparison** (approval-engine §9): any loan approved, disbursed
-  or restructured in Fineract without an approved request is an alert.
+- **Nightly comparison:** a loan approved, disbursed or restructured in
+  Fineract without an approved request; recon raises it (recon §8).
 
 ## 9 · Data
 
@@ -271,7 +269,7 @@ itself is in the end-of-day-runner spec.
 
 | Threat | For example | The answer |
 |---|---|---|
-| Elevation of privilege | Staff approve or disburse in Fineract directly | No staff role holds those permissions; only Kapu MFI's account (§4) |
+| Elevation of privilege | Staff approve or disburse in Fineract directly | No staff role holds those permissions; only the lending service's account (§4) |
 | Spoofing | The service account's key stolen | Its key in OpenBao, a signed client assertion, mutual TLS; rotated |
 | Tampering | The database edited directly | Reachable only by Fineract; encrypted; the nightly comparison; the ledger reconciled with the rails |
 | Repudiation | A posting nobody can explain | Every command carries the approval it acts on; Fineract's audit |
@@ -298,23 +296,19 @@ On a running 1.15 instance, before the build relies on each (FS-625):
 | F12 | A missed day caught up; the business date's alarm when it lags | KC-07 |
 | F13 | Kafka events through the adapter: order, duplicates, a broker down and back | RO-23 |
 | F14 | A balance updated directly in the database is caught by recon's companion as a severity 1, and pgAudit's record of it survives the account that made it | FS-789, FS-793; recon A2 |
-| F15 | A product setting changed directly in Fineract is found the next morning, against the product version document | lender-rules §2.4, FS-802 |
+| F15 | A product setting changed directly in Fineract is found the next morning, against the product version document | product-versions, FS-802 |
 
 ## 13 · Open questions
 
 **For the owner:**
 
-1. Answered (FS-965): staff do not use the Mifos web app; they work in
-   the staff workspace in Odoo, over Kapu MFI (staff-workspace). Staff
-   have no Fineract role, unless a read-only one for named staff is
-   chosen as the fallback (staff-workspace, open question 2).
-2. Fineract as a deposit core for Saccos and banks (FS-185).
+1. Fineract as a deposit core for Saccos and banks (FS-185).
 
 **For Roan Capital:**
 
-1. Flat or declining-balance interest, product by product (open answer 4).
-2. Whether a due date on a holiday moves, and to which day.
-3. Which kinds of restructure it offers, and how often per loan (open
+2. Flat or declining-balance interest, product by product (open answer 4).
+3. Whether a due date on a holiday moves, and to which day.
+4. Which kinds of restructure it offers, and how often per loan (open
    answer 10).
 
 ## Regulations cited

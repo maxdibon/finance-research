@@ -7,7 +7,7 @@ released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
 review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974, FS-965, FS-987, FS-1020]
-last_reviewed: 2026-10-27
+last_reviewed: 2026-10-30
 ---
 
 # Delivery plan — phase 1 in releases
@@ -171,9 +171,9 @@ not:
   repayments by component, accounting and standard reports: configure,
   do not build.
 - **The staff workspace in Odoo** (BS-23, FS-965) is staff's screen over
-  Fineract, through Kapu MFI: Roan Capital's staff found the Mifos X web
-  app hard to use. Mifos X stays at most a read-only fallback for named
-  staff (staff-workspace, open question 2).
+  Fineract, through the lending service: Roan Capital's staff found the
+  Mifos X web app hard to use. Mifos X is off for them; the read-only
+  fallback for named staff is the Kapu Console (FS-987).
 - **Odoo** does leads, the public page, documents and the desk.
 - **Keycloak** does login, single sign-on and step-up: configure.
 - **Identity checks** (ID-01, ID-07) through one vendor's API (partners

@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-695, FS-698, FS-699, FS-704, FS-706, FS-707, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-695, FS-698, FS-699, FS-704, FS-706, FS-707, FS-896, FS-1053]
+last_reviewed: 2026-10-29
 ---
 
 # Flows: how the components work together
@@ -83,7 +83,7 @@ bastion.
   | SERVICES                                                                                     |
   | each in this institution's own namespace                                                     |
   | [kapu_service, keycloak, odoo]                                                               |
-  | KAPU MFI . APPROVAL ENGINE . RAILS . MESSAGING . the login pages . ODOO                      |
+  | LENDING SERVICE . KAPU CONSOLE . CUSTOMER PAGES . APPROVAL ENGINE . RAILS . the login pages  |
   +----------------------------------------------------------------------------------------------+
 
   every decision (allowed, blocked, limited) is logged and counted for OBSERVABILITY
@@ -214,7 +214,7 @@ How code becomes a running, signed version, and how it is undone
 ```
   +--------------------------+      +--------------------------+      +--------------------------+
   | GITHUB                   |      | RUNNER                   |      | HARBOR                   |
-  | the pull request,       |--1-> | builds, tests, scans,    |--2-> | the image, by digest     |
+  | the pull request,        |--1-> | builds, tests, scans,    |--2-> | the image, by digest     |
   | reviewed and approved    |      | signs                    |      | [harbor]                 |
   | [github]                 |      | [actions_runner]         |      |                          |
   |                          |      |                          |      | a copy at each site      |

@@ -1386,7 +1386,7 @@ function checkProducts(root) {
   const { validate, subsetProblems } = require('./products/validate');
   const dir = path.join(root, 'docs', 'products');
   if (!fs.existsSync(dir)) return [];
-  const lr = path.join('docs', 'specs', 'lender-rules.md');
+  const lr = path.join('docs', 'specs', 'product-versions.md');
   const why = purposes(read(root, lr));
   const out = [];
   let schema = null;
@@ -1396,8 +1396,8 @@ function checkProducts(root) {
     for (const msg of subsetProblems(schema)) out.push(fail('products', SCHEMA, 0, msg));
     const terms = Object.keys(why).map(slug);
     const defined = Object.keys(schema.properties || {});
-    for (const t of terms.filter((x) => !defined.includes(x))) out.push(fail('products', SCHEMA, 0, `"${t}" is a term of the vocabulary (lender-rules §2.4) with no definition here`));
-    for (const t of defined.filter((x) => !terms.includes(x))) out.push(fail('products', SCHEMA, 0, `"${t}" is defined here but is not a term of the vocabulary (lender-rules §2.4)`));
+    for (const t of terms.filter((x) => !defined.includes(x))) out.push(fail('products', SCHEMA, 0, `"${t}" is a term of the vocabulary (product-versions §4) with no definition here`));
+    for (const t of defined.filter((x) => !terms.includes(x))) out.push(fail('products', SCHEMA, 0, `"${t}" is defined here but is not a term of the vocabulary (product-versions §4)`));
   }
   for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.md')).sort()) {
     const rel = path.join('docs', 'products', name);
@@ -1409,10 +1409,10 @@ function checkProducts(root) {
     for (const msg of d.pending) out.push(fail('products', rel, 0, msg));
     const data = (d.typed && d.typed.data) || {};
     for (const key of Object.keys(data)) {
-      if (!Object.keys(why).some((term) => slug(term) === key)) out.push(fail('products', rel, 0, `typed block, ${key}: not a term of the vocabulary (lender-rules §2.4)`));
+      if (!Object.keys(why).some((term) => slug(term) === key)) out.push(fail('products', rel, 0, `typed block, ${key}: not a term of the vocabulary (product-versions §4)`));
     }
     for (const it of d.items) {
-      if (it.ask && !why[it.name]) out.push(fail('products', rel, it.line + 1, `${it.id} "${it.name}" is asked about but is not a term of the vocabulary (lender-rules §2.4)`));
+      if (it.ask && !why[it.name]) out.push(fail('products', rel, it.line + 1, `${it.id} "${it.name}" is asked about but is not a term of the vocabulary (product-versions §4)`));
     }
     if (!schema) continue;
     // Every value against its term's schema: what we propose and the

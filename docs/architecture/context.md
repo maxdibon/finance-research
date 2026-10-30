@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-649, FS-650]
-last_reviewed: 2026-10-08
+review_ids: [FS-649, FS-650, FS-1053]
+last_reviewed: 2026-10-29
 ---
 
 # Context: who and what the platform connects to
@@ -18,7 +18,8 @@ with [the README](README.md) §2 (who holds which record) and §3 (where
 the licence line is).
 
 ```
-  institutions' staff and approvers . borrowers . guarantors . members . Dibon engineers
+  institutions' staff and approvers . borrowers . guarantors . members . businesses' and
+  partners' people . Dibon engineers
                                                 |
                                                 v
   +--------------------+      +------------------------------------+      +--------------------+
@@ -29,21 +30,29 @@ the licence line is).
   +--------------------+      | one isolated instance per          |      +--------------------+
                               | institution, in Kenya              |
   +--------------------+      |                                    |      +--------------------+
-  | BANKS              |      | collect . gateway . core . mfi     |      | BUREAUX            |
-  | pay out, hold      |<---->| sacco . escrow . sme-recon         |<---->| credit records     |
-  | [rail]             |money | business suite                     |credit| [external]         |
-  | PesaLink, RTGS,    |      |                                    |      | lookups now;       |
-  | SWIFT via a bank   |      | shared services, channels          |      | submissions in R5  |
+  | BANKS              |      | the lending and deposits services, |      | BUREAUX            |
+  | pay out, hold      |<---->| the ledger, the back office (Odoo) |<---->| credit records     |
+  | [rail]             |money | behind its gateway, the Kapu       |credit| [external]         |
+  | PesaLink, RTGS,    |      | Console; collect . gateway . core  |      | lookups now;       |
+  | SWIFT via a bank   |      | mfi . sacco . escrow . sme-recon   |      | submissions in R5  |
   +--------------------+      |                                    |      +--------------------+
-                              |                                    |
-  +--------------------+      |                                    |      +--------------------+
-  | MOBILE NETWORKS    |      |                                    |      | PROVIDERS          |
+                              | shared services, channels: the     |
+  +--------------------+      | customer app, internet banking,    |      +--------------------+
+  | MOBILE NETWORKS    |      | USSD, WhatsApp, the partner portal |      | PROVIDERS          |
   | SMS, SIM checks    |<---->|                                    |<---->| run what we rely on|
   | [operator]         |SMS,  |                                    |host, | [partner]          |
   | Safaricom, Airtel, |SIMs  |                                    |carry | Liquid, Meta,      |
-  | Telkom             |      +------------------------------------+      | Twilio, Odoo       |
-  +--------------------+                        |                         +--------------------+
-                                                |
+  | Telkom             |      |                                    |      | Twilio, Odoo, OLP  |
+  +--------------------+      |                                    |      +--------------------+
+                              |                                    |
+  +--------------------+      |                                    |      +--------------------+
+  | PARTNERS           |      |                                    |      | CARDS AND BOOKS    |
+  | distributors,      |<---->|                                    |<---->| sponsor bank and   |
+  | dealers, schools;  |data, |                                    |cards,| issuer processor   |
+  | operators, for     |pay-  |                                    |books | (later); a busi-   |
+  | wallets [partner]  |outs  |                                    |      | ness's own Zoho or |
+  +--------------------+      +------------------------------------+      | QuickBooks         |
+                                                |                         +--------------------+
                                                 v
                               +------------------------------------+
                               | THE INSTITUTION                    |
@@ -77,6 +86,9 @@ the licence line is).
 | Liquid (hosting), the managed security service | Hosting; security telemetry | Both | Internal telemetry | [deployment](deployment.md) |
 | Meta (WhatsApp), Twilio (on-call calls), our email relay | Messages and calls | Out | Notifications and links only | messaging; observability |
 | Odoo S.A. | Licences | — | None | business-suite |
+| Partners: distributors, dealers, schools; mobile operators, for wallet products | A borrower's data from the partner, with the borrower's consent, for each partner apart; payouts to the partner for goods; signed events to its system | Both | Confidential: only what the partner's agreement and the consent allow | lending-service §5; mfi MF-40 to MF-42; privacy PR-21 |
+| A sponsor bank and an issuer processor, later | Card authorisations, asked of us in real time, and the scheme's settlement files; card numbers stay with the processor | Both | Confidential; never a card number | omni-channel OC-25 |
+| A business's own books: Zoho Books, QuickBooks Online | Its matched bank and mobile-money transactions, on its instruction | Out | Confidential; outside Kenya, as the business chose (LQ-29) | sme-recon SR-13, SR-15 |
 
 **The rule at this boundary:** the institution keeps its licence, its
 money and its records; Dibon runs the platform. Nothing leaves Kenya

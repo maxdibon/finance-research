@@ -12,17 +12,17 @@ depends_on: [access-keycloak, event-bus-kafka, back-office]
 used_by: [access-keycloak, lender-rules, observability-grafana]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802, FS-970]
-last_reviewed: 2026-10-26
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802, FS-970, FS-1053, FS-1054]
+last_reviewed: 2026-10-30
 ---
 
 # Messaging and its templates — build specification
 
 How the messaging service (docs/modules/messaging.md) is designed to be
-built for R1, Roan Capital's pilot, and the catalogue of templates R1
-sends: which event sends what, to whom, on which channel, carrying which
-fields, on what legal basis, and who owns and approves the words
-(FS-648). Nothing here is built; every behaviour is **designed**.
+built for R1, Roan Capital's pilot, with the templates R1 sends, so that
+every message is lawful, in approved words, and truthful about its
+delivery (FS-648). Nothing here is built; every behaviour is
+**designed**.
 
 ## 1 · Purpose and scope
 
@@ -56,7 +56,7 @@ and MCP access (MS-17), partners' routes outside Kenya (MS-04).
 
 ```
   +------------------+    +------------------+    +------------------+    +------------------+
-  | KAPU MFI         |    | APPROVAL ENGINE  |    | ACCESS           |    | LENDER RULES     |
+  | LENDING SERVICE  |    | APPROVAL ENGINE  |    | ACCESS           |    | LENDER RULES     |
   | asks, then acts  |    | decides          |    | signs in         |    | corrects         |
   | [kapu_service]   |    | [kapu_service]   |    | [keycloak]       |    | [kapu_service]   |
   +------------------+    +------------------+    +------------------+    +------------------+
@@ -71,8 +71,9 @@ and MCP access (MS-17), partners' routes outside Kenya (MS-04).
   | template version in force --> merge (no balance, no ID) --> consent and quiet hours      |
   | --> channel the person chose, or the regulatory override --> route --> message log       |
   +------------------------------------------------------------------------------------------+
-          |                       |                       |                         ^ consent,
-          |                       |                       |                         | opt-outs
+          |                       |                       |                         ^ consent, opt-
+          |                       |                       |                         | outs, by the
+          |                       |                       |                         | gateway
           v                       v                       v                         v
    SMS: Safaricom,          WhatsApp                email, our own        +------------------+
    Airtel, Telkom           (with consent)          relay (MS-19)         | ODOO             |
@@ -105,8 +106,8 @@ and MCP access (MS-17), partners' routes outside Kenya (MS-04).
 - **Owner and approver:** who writes the words and who signs them off
   (§3.3).
 - **Event:** what makes a message: a product's event on the bus, or a
-  direct request (codes, approval emails). Names follow the event bus
-  spec once written; the ones here are proposed.
+  direct request (codes, approval emails). Names are in the event bus
+  catalogue (event-bus-kafka §5).
 
 ## 3 · Rules
 
@@ -135,9 +136,8 @@ refused at approval, not at sending.
 - **Overrides:** security messages go to every channel the person has;
   notices and collection messages always include a channel with delivery
   reports, SMS at least; marketing needs its own opt-in (MS-11).
-- **Quiet hours:** collection messages only 08:00 to 18:00, Monday to
-  Saturday, not public holidays, Africa/Nairobi (lender-rules §2.6, open
-  question 5); held until the window opens, never dropped. Codes and
+- **Quiet hours:** collection messages only in the window lender rules
+  set (lender-rules §2.6), held until it opens, never dropped. Codes and
   security messages are never held.
 - **Language:** English or Swahili, as the person chose; English by
   default.
@@ -283,7 +283,7 @@ Business API (FS-664 to FS-666).
 templates (§4), configured, effective-dated and approved like a
 template.
 
-**Events out** (proposed names): `kapu.messaging.message.sent`,
+**Events out** (event-bus-kafka §5): `kapu.messaging.message.sent`,
 `.delivered`, `.failed`, `.held` (quiet hours), `.blocked` (a rule
 refused it), `.opted_out`.
 
@@ -315,7 +315,8 @@ refused it), `.opted_out`.
   within a minute of its posting (proposed).
 - **Metrics:** sent, delivered and failed by route and template; held;
   blocked; opt-outs; code latency.
-- **Alerts** (observability-grafana §4): failures on a route; codes slow.
+- **Alerts** (observability-grafana §4): delivery failures on a route over
+  10% in 15 minutes (2); one-time codes taking over 30 seconds (2).
 
 ## 9 · Threats
 
@@ -363,10 +364,9 @@ refused it), `.opted_out`.
 
 **For Roan Capital:**
 
-1. Its sender ID, and its help line for the templates.
-2. The wording of its collection messages, from the defaults, approved by
+4. Its sender ID, and its help line for the templates.
+5. The wording of its collection messages, from the defaults, approved by
    its compliance role.
-3. Working hours for collection messages (lender-rules open question 5).
 
 **For the gateway** (phase 2): its payment templates carry the merchant's
 paybill or till and the reference in their text (gateway GW-16, FS-662).

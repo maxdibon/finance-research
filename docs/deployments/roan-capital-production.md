@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1050]
-last_reviewed: 2026-10-29
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Roan Capital · production
@@ -51,7 +51,7 @@ Written from the design (FS-1037); generated from the code once it exists
 | MESSAGING | Yes | R1 | services | Services: messaging | 2 | messaging |
 | IDENTITY | Yes | R1 | services | Services: identity | 2 | identity |
 | KAPU CORE | Yes | Apache Fineract 1.15.x | services | Ledger: fineract | To size | kapu-core-fineract |
-| ODOO | Yes, Enterprise | To pin (back-office §10) | services | Back office: odoo | To size | business-suite |
+| ODOO | Yes, Enterprise | To pin (back-office §9.4) | services | Back office: odoo | To size | business-suite |
 | ACCESS | Yes | Keycloak 26.x | services | Access: keycloak | 2 | access-keycloak |
 | EVENT BUS | Yes | Apache Kafka 4.x, Strimzi 1.2 | data | — | 3 | event-bus-kafka |
 | DATABASE | Yes: five clusters, each a primary and a synchronous standby (FS-1036) | PostgreSQL, through CloudNativePG; to pin | data | Ledger, Access, Back office, Secrets, Services | 2 each | architecture instance |
@@ -229,10 +229,11 @@ departures and exceptions in full.
 | KAPU CORE | All, in [its Fineract settings](roan-capital-production/fineract.md) | The baseline's, with three choices of its own (a due date on a holiday moves to the next working day, agreed on 21 October; its chart of accounts and its working days, to decide), no departures from a default, no exceptions | settings/fineract | The baseline; Roan Capital for its choices | See the file |
 | LENDING SERVICE | Products | Biashara, Motor Vehicle and Title Deed, each product version 1, proposed: the values as Roan Capital answers its questionnaires | docs/products | Roan Capital's product owner and a second approver | To decide |
 | LENDING SERVICE | Amounts | KES, to 2 decimal places | The product versions | Roan Capital, 21 October | Agreed |
-| LENDING SERVICE | Partners and their limits | None in R1 | lending-service §5 | — | Set |
+| LENDING SERVICE | Partners and their limits | None in R1 | lending-partners | — | Set |
 | APPROVAL ENGINE | The approval chain and its threshold | Proposed: up to a threshold, one approval by someone other than the originator; above it, two | approval-engine §4; open answers 28, 36 | Roan Capital | To decide |
 | APPROVAL ENGINE | Who releases a payout | Open | open answer 37 | Roan Capital | To decide |
 | APPROVAL ENGINE | Who approves when the CEO is away | Open | open answer 40; FS-898 | Roan Capital | To decide |
+| EDGE | All, in [its edge settings](roan-capital-production/edge.md) | The baseline's, with three choices of its own (its rate limits, its provider's flood protection and its host names, all to decide), no departures, no exceptions | settings/edge | The baseline; Dibon and Roan Capital for its choices | See the file |
 | ACCESS | All, in [its Keycloak settings](roan-capital-production/keycloak.md) | The baseline's, with five choices of its own (one set, one agreed, three to decide: its theme, its staff roles, its two administrators), no departures from a default, no exceptions | settings/keycloak | The baseline; Roan Capital for its choices | See the file |
 | RAILS | Payouts | By bank only: NCBA, released by Roan Capital's staff; no payout 23:00 to 04:00 | rails; RC-18, RC-21 | Roan Capital, 21 October | Agreed |
 | RAILS | A second bank | Access Bank, or NCBA only | open answer 6 | Roan Capital | To decide |
@@ -262,7 +263,7 @@ instance) and the warm standby's (deployment §2):
                       v                                     v
    +----------------------------------------------------------------------+
    | ROAN CAPITAL'S INSTANCE, site A (site B at zero, copies arriving)    |
-   |   EDGE --> services --> data           bastion: Dibon's engineers,  |
+   |   EDGE --> services --> data           bastion: Dibon's engineers,   |
    |                                        by ticket only                |
    +-------+-----------------+--------------------+-----------------------+
            |                 |                    |

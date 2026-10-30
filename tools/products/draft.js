@@ -71,7 +71,7 @@ function parse(md) {
 // "proposed" is what we have, "options" the typed form of a Choose's
 // options in their order, "value" what the institution settled. The
 // schema that checks the values themselves is the code repository's
-// (lender-rules §2.4); here only the shape is held.
+// (product-versions §4); here only the shape is held.
 const FENCE = '```json product-version';
 const ENTRY_KEYS = new Set(['item', 'proposed', 'options', 'value']);
 const slug = (name) => name.toLowerCase().replace(/['’]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
@@ -148,7 +148,7 @@ function rewrite(md, changed, typedData) {
   return crlf ? out.replace(/\n/g, '\r\n') : out;
 }
 
-// Why each term matters, from the vocabulary (lender-rules §2.4).
+// Why each term matters, from the vocabulary (product-versions §4).
 function purposes(lenderRules) {
   const t = lenderRules.replace(/\r\n/g, '\n');
   const s = t.indexOf('**The vocabulary**');

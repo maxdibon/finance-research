@@ -8,12 +8,12 @@ law: LR-03
 released: 2026.10.16
 release: R1
 implements: [mfi]
-depends_on: [kapu-core-fineract, messaging, event-bus-kafka]
+depends_on: [kapu-core-fineract, messaging, event-bus-kafka, product-versions]
 used_by: [end-of-day-runner, recon, lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896, FS-983, FS-978, FS-981, FS-989, FS-991, FS-1004]
-last_reviewed: 2026-10-27
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896, FS-983, FS-978, FS-981, FS-989, FS-991, FS-1004, FS-1054, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Lender rules — build specification
@@ -23,7 +23,7 @@ Non-Deposit Taking Credit Providers Regulations 2026 (law register LR-03)
 to Roan Capital's loans in R1. Nothing here is built; every behaviour is
 **designed**. Fineract's side is in docs/specs/kapu-core-fineract.md, settled from
 its documentation (FS-625); what only a running instance can show is that
-spec's §9.
+spec's §12.
 
 ## 1 · Purpose and scope
 
@@ -50,7 +50,7 @@ schedules and balances (KC-04). The service decides what Fineract may
 post and corrects what it should not hold. Fineract does not apply the
 in duplum rule itself.
 
-**Where it sits** (inside Kapu MFI's service layer, not a product of its
+**Where it sits** (inside the lending service, not a product of its
 own: FS-629).
 
 ```
@@ -81,7 +81,7 @@ own: FS-629).
 used by [lending-service](lending-service.md), [end-of-day-runner](end-of-day-runner.md) and [recon](recon.md), whose companion recomputes what the rules produce, independently: written from the regulations and the product's terms, not from this service's code (recon §3, FS-793). Both read one interpretation record for the readings not yet settled, and both are tested on §2.9's worked examples (recon §3.1, FS-796); journeys
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and
-[JN-06](../journeys/restructuring.md).
+[JN-06](../journeys/restructuring.md); its product terms come from [product-versions](product-versions.md).
 
 ## 2 · The rules
 
@@ -114,18 +114,14 @@ reading (LQ-01), and so is a rollover or restructure keeping it (LQ-02).
 2. Every interest accrual, penalty and charge posted during the episode
    adds to the bucket, whether later paid or not. The bucket never
    exceeds `P_npl`.
-3. Fees and penalties count in the bucket, not only interest: the
-   regulations' definition of "charges" includes interest and fees, and
-   29(2) has no separate allowance for them. This is the cautious reading
-   (open question 1).
-4. Recovery expenses (29(2)(c)) sit outside the bucket, only as a
+3. Recovery expenses (29(2)(c)) sit outside the bucket, only as a
    `recovery-expense` charge with a receipt, maker-checker approval
    (KC-08) and a contract clause disclosing it (reg 30(2)).
-5. Repayments follow reg 56 (2.2). They do not change `P_npl`.
-6. **Reset (29(3)).** Returning to performing closes the episode; a new
+4. Repayments follow 2.2. They do not change `P_npl`.
+5. **Reset (29(3)).** Returning to performing closes the episode; a new
    one opens if the loan falls back, from the principal and unpaid
    charges at that moment.
-7. **Court orders (29(4)).** Interest a court awards after its order is
+6. **Court orders (29(4)).** Interest a court awards after its order is
    not capped; the flag is set manually under maker-checker.
 
 **Where enforced.**
@@ -146,7 +142,7 @@ closed at and why. Per posting: amount, type, capped or waived.
 **Edge cases.** A backdated repayment re-ages the schedule: the service
 re-runs the cap for that loan on posting. A rollover or restructure
 (MF-09) inherits the open episode, and capitalised interest never enters
-a new `P_npl` (open question 2).
+a new `P_npl` (LQ-02).
 
 ### 2.2 Repayment order — reg 56, MF-22
 
@@ -163,14 +159,14 @@ period on early repayment, whatever a product says (LQ-13).
 
 **Behaviour.**
 
-- Fineract's transaction date is the date the money was paid (M-Pesa or
-  bank value date, Africa/Nairobi), not the posting date.
-- Allocation, oldest instalment first: due principal, then fees and
-  penalties, then interest. This replaces MF-08's configurable order for
-  lenders.
-- Money beyond what is due reduces outstanding principal.
+- Fineract's transaction date is the rail's value date (M-Pesa or the
+  bank, Africa/Nairobi), never the posting date.
+- Allocation, oldest instalment first, in Our rule's order; it replaces
+  MF-08's configurable order for lenders. Money beyond what is due
+  reduces outstanding principal.
 - Payoff = outstanding principal + fees due + interest accrued to the
-  payment date. No early-repayment fee may exist on a product.
+  payment date; an early-repayment charge is a never-term
+  (product-versions §4).
 
 **Where enforced.** Every loan product uses Fineract's progressive
 schedule with advanced payment allocation, whose order is a setting:
@@ -210,7 +206,7 @@ Advances are what the borrower receives, net of fees deducted at
 disbursement; repayments are every scheduled principal, interest and
 mandatory fee; `t` and `s` are days from disbursement. Default interest
 (contingent) and third-party costs passed on at cost (59(2)(f)) are left
-out of the APR and shown in the total cost of credit (open question 3).
+out of the APR and shown in the total cost of credit (LQ-03).
 
 *Example:* KES 100,000 for 30 days, 10% interest for the term
 (illustrative; the rate's unit is Roan open answer 4), a KES 2,000 fee
@@ -247,8 +243,8 @@ after 30 days' notice and the borrower's recorded acceptance (reg 55; reg
 
 **Behaviour.**
 
-1. A change is a new **product version**, approved under maker-checker
-   (MD-01, MD-02; Roan RC-31).
+1. A change is a new **product version**, approved by two people
+   (product-versions rule 4; MD-01, MD-02; Roan RC-31).
 2. It stays *Awaiting CBK* until CBK's approval is recorded (reference,
    date, letter attached). No approval, no activation.
 3. Once active it applies to new loans only: Fineract copies a product's
@@ -260,148 +256,9 @@ after 30 days' notice and the borrower's recorded acceptance (reg 55; reg
    request with the new rate from the day it takes effect, within the
    product's range (kapu-core-fineract §6).
 
-**The product version document is the one authority** (FS-800, FS-801,
-FS-802). Every term of a product lives in one signed document; Fineract,
-this service, the key information document, the calculator and recon's
-companion all take the terms from it, and none keeps terms of its own.
-
-- **Written in a vocabulary,** not free text (below). The schema is code,
-  in the code repository, changed only by pull request; adding a term
-  means this service, the Fineract mapping and the companion support it
-  together.
-- **Drafted by the institution itself** (FS-978): its product owner, in
-  the staff workspace's Products screen inside Odoo, on a form bound to
-  the vocabulary, usually from one of Dibon's starter templates. Odoo is
-  only the form: this service checks every value as it is entered,
-  computes every preview, and stores the version (staff-workspace rule
-  9). **A version Dibon drafts is *proposed*** (FS-981): during
-  onboarding, or as a change we suggest. Dibon never submits, approves or
-  activates one; the institution's product owner reviews it, edits it,
-  and **adopts** it as its own draft, or rejects it. Every version records
-  who drafted it and who adopted it. Before it can be submitted, the form previews sample
-  schedules, the APR and total cost of credit, the draft key information
-  document, and the companion's own figures for the same samples; if
-  this service's preview and the companion's disagree, it cannot be
-  submitted. **Until the form exists** (FS-816, FS-817), Dibon drafts it
-  in docs/products/, each item with an id, its source and its ask
-  (confirm, choose, provide, decide), and the institution answers in
-  Word questionnaires built from the draft, one per group, a form field
-  per item; the answers are read back into the draft by script, never
-  retyped (tools/products/). Beside its tables each draft holds the
-  product as data, a typed block with an entry per term (FS-823): what
-  we have, the typed form of each choice's options, and the value once
-  settled; the read-back writes a value when the answer carries one, and
-  a person encodes the rest. **The schema is defined in the code
-  repository and applied wherever a value enters** (FS-823, FS-825):
-  when we draft, when an institution's answers are read back, when a
-  person encodes them, and later in the form, at approval and at
-  activation. Its first files, the schema and the rules across terms
-  with their worked examples, are written in code/lender-rules/ until
-  the code repository exists, and move there when it does.
-- **Approved** as a `product.version` request (approval engine), by two
-  people, each re-authenticated; then held until CBK's letter is recorded
-  (rule 2 above); then activated from its effective date, for new loans.
-- **On activation** the service applies it to Fineract through the API,
-  never by hand (kapu-core-fineract §4); generates the key information
-  document and the calculator from it; and publishes
-  `kapu.mfi.product.version.activated` with its id and hash.
-- **Stored once, never changed:** in this service's append-only store in
-  the institution's instance, signed, with its approvals and CBK's letter;
-  its hash anchored in the audit chain; the key information document in
-  the vault. A change is a new version. The institution's documents are
-  its records, never in Dibon's repositories.
-- **Each loan names its version:** the approved request carries the
-  version's id and hash, so every calculation uses the terms the loan was
-  approved and signed under.
-- **A version recon's companion cannot compute cannot be activated.**
-- **Who sees it, by stage** (FS-803, FS-805): a draft, or a version
-  approved and awaiting CBK, is the institution's and Dibon's alone; an
-  **active** version is public, as regs 47(1)(d) and 48 require: its terms
-  and key information document are published from the signed document on
-  the institution's product page, its calculator and every channel,
-  always the current version, older versions kept for the loans made
-  under them (business-suite BS-20). An institution with no website yet
-  (Roan Capital, until R2) publishes at its offices and in the channels it
-  uses, and gives the key information document before every agreement
-  (MF-34; FS-808). Where rates vary by the borrower's
-  creditworthiness (reg 59(2)(c)), the page shows the range, and each
-  borrower's rate is in their own key information document.
-- **The pricing model is not in the document.** Reg 59(2)(a) to (e)'s
-  components (cost of funds, cost of capital, operations, return to
-  shareholders, the risk premium) are the institution's commercial
-  reasoning: they go to CBK with the version, and are never published.
-
-**The vocabulary** (FS-813, FS-814): what describes a product, in three
-groups, because they are not all published. Each is a field with its
-allowed values; the schema in the code repository enforces it
-(code/lender-rules/ until that repository exists, FS-825). Why each
-matters is shown beside it wherever an institution is asked about it, in
-the form and in the questionnaires (FS-816).
-
-**A · The product's terms:** in the document, published once active.
-
-| Term | Values | Why it matters |
-|---|---|---|
-| Amount limits | Minimum and maximum, KES | The smallest and largest loan the product offers |
-| Term | Length and unit (days, weeks, months); minimum and maximum, or a list of allowed terms (14 or 30 days) | How long the borrower has; it sets the due dates |
-| Repayment frequency | Once at maturity, daily, weekly, monthly, or chosen by the borrower to fit their pay cycle within set bounds; when the first instalment falls (the day after disbursement) | When each instalment falls: it sets the repayment schedule |
-| Facility | A term loan; or a credit line: when its limit renews (monthly, from new purchases, for example), what sets it (assessed, a partner's purchases, salary, a multiple of deposits, a mobile operator's data on the customer), and how long each draw runs (FS-989, FS-991) | Whether the borrower takes one loan, or draws on a limit again and again |
-| Repayment source | Who repays: the borrower; the employer, by check-off; the buyer of an invoice; a share of the borrower's till takings, and what share; automatic recovery on the due date from the borrower's savings or wallet, with their consent, and from which (FS-989, FS-991) | Where repayments come from, which the borrower must know before signing |
-| Interest method | Flat; or reducing balance, with equal instalments or equal principal | How interest is worked out; it changes the total cost of credit |
-| Interest rate and its unit | A number, with its period: for the term, a day, a month or a year | The loan's price; published, and pricing needs CBK's approval (reg 55) |
-| Rate type | Fixed; or variable: a benchmark (KESONIA, the Central Bank Rate) plus a margin, and when it resets | Whether the price can change during the loan, and how |
-| Rate by risk class | One rate, or a rate per risk class (decisioning DE-04): the page shows the range, each borrower's key information document their own (reg 59(2)(c)) | Lets the price follow the borrower's risk; the page shows the range (reg 59(2)(c)) |
-| Interest basis | The day count (actual days over 365, or 30 over 360) and when interest accrues | Decides interest to the shilling, so every system agrees |
-| Fees | Each fee: a fixed amount, a percentage of principal, or tiers by amount; once per loan or once per client (a membership fee); taken at disbursement, added to the schedule, or paid upfront before the application, and whether it is refundable | Part of the total cost of credit and the APR, each shown in the key information document |
-| Tax on fees | Excise duty on each fee as the law sets it: 20% of fees charged by financial institutions and by digital lenders, not on interest or insurance premiums (Excise Duty Act, First Schedule, Part II; LQ-14) | What the law adds to fees, shown in the total cost of credit |
-| Who pays the rail's charges | The borrower or the institution, for M-Pesa's and the bank's own charges on repayments and payouts | Whether M-Pesa's and the bank's charges add to what the borrower pays |
-| Third-party costs | Each: valuation, registration at the collateral registry, a tracking device, insurance premiums; passed on at cost and outside the APR (reg 59(2)(f); LQ-03) | Costs passed on at cost, shown apart from the APR |
-| Insurance | As a fee, or a third party's premium; credit life, and what happens to the loan on a death (JN-14) | What protects the loan, and what happens to it on a death |
-| Grace | Days after a due date before default interest starts | When default interest starts after a missed instalment |
-| Default interest | Rate, period (a day), base (principal outstanding, or the overdue amount), from which day past due | The charge on a late payment; it counts within the cap (reg 29) |
-| Default period | The days past due at which a loan becomes non-performing: at most 30 for a loan contracted for 30 days or less, 90 for a longer one (reg 57(1)); stated in the credit policy and the agreement (57(2), (3)) | When a late loan becomes non-performing, which starts the cap (reg 57) |
-| Collateral | Unsecured; or the types accepted (a vehicle, chattels, land, deposits; the goods financed, their title kept until paid; receivables; salary, by check-off), the loan-to-value, and the steps each needs (MF-03, FS-989) | What secures the loan, and the steps each type needs |
-| Guarantors | How many; each guarantee's limit; for a Sacco, deposits pledged (reg 42; MF-37) | Who else answers for the loan, and for how much (reg 42) |
-| Restructuring | Allowed or not; how often; any fee, inside the cap (reg 54(7); MF-09) | Whether a borrower in difficulty can have new terms (reg 54(7)) |
-| Statements | How often the borrower and each guarantor receive one (reg 47(2); MF-37, MF-38) | How often borrower and guarantor are told where the loan stands (reg 47(2)) |
-| Collection ladder | Its stages by day (MF-39) | What happens on each day a loan is late, and who acts |
-| Holiday rule | Whether a due date on a holiday moves, and which way (KC-15) | Whether a due date on a holiday moves |
-| Rounding | Precision and rule | Keeps every system's figures identical |
-| Languages | Of the key information document and the agreement: English, Swahili | The languages a borrower reads the terms in |
-
-**B · Eligibility and limits:** the institution's credit policy for the
-product. Who may borrow is published; the thresholds behind a decision
-stay internal, as decisioning's risk classes do.
-
-| Rule | Values | Why it matters |
-|---|---|---|
-| Who may borrow | Individuals, businesses, or both; employed or self-employed; age; for a Sacco, members of at least so many months | Who the product is for; published |
-| Affordability | The limit on instalments against income or turnover, from the statement metrics: what share, over how many months, and whose inflows count (the person's, the business's, or both); stated in the credit policy (reg 25(2)(s); DE-02) | The duty to assess ability to repay and never to lend recklessly (reg 28(1)(b), (c)) |
-| Cooling-off period | Its length in days, and what it is: a time after signing to withdraw without charge, or a wait before a new loan (LQ-15) | The credit policy must state one (reg 25(2)(f)) |
-| Limits by KYC tier | The largest loan for each tier (identity ID-19) | The largest loan for each level of identity checks |
-| First loan and limit growth | The first loan's cap; how the limit grows with repayment history; any wait before borrowing again | How a new borrower starts, and how the limit grows |
-| Exposure | Loans a borrower may hold at once; top-ups; for a Sacco, a multiple of deposits; each guarantor's total exposure (Roan Capital RC-41) | How much one borrower or guarantor may owe at once |
-| Bureau | Whether a lookup is required before lending (crb CR-02) | Whether a credit report is checked before lending |
-
-**C · How it runs:** configuration the product links to, never published.
-
-| Setting | Values | Why it matters |
-|---|---|---|
-| Approval chain | By amount tier (mandates MD-01) | Who must approve each loan, by amount |
-| Documents | The checklist (identity ID-02) | What a borrower must provide |
-| Disbursement | The channels: M-Pesa or a bank, and which account | How the money is paid out, and from where |
-| Payee | Who receives the money: the borrower; or a third party (a supplier, dealer, school, hospital, insurer, agro-dealer, merchant), only from an approved list and against a proof (an invoice, a proforma, a quotation, a fee structure, a premium notice); whether any part goes to the borrower (FS-989) | Whether the money reaches the borrower, or pays for what the loan was for |
-| Partner | The third party (a distributor, dealer, school, hospital, insurer, employer, produce buyer, merchant, or a mobile operator whose wallet carries the product) and its part: whether it shares data, and how the borrower consents to it (each partner apart, the default; once for partners named at the time, never future ones; or off, only where another lawful basis is recorded by decision: FS-1004) (with the borrower's consent), what it pays towards the price, any first loss it takes, whether returned goods are refunded to the loan (FS-989) | What the partner owes the lender, and the borrower |
-| Cut-off | When payments stop being released (Roan Capital: 23:00 to 04:00, RC-21) | When payouts stop being released |
-| Purposes | The list a borrower chooses from | The reasons a borrower can choose from |
-| Bureau reporting | When the product's loans are reported (crb, phase 2) | When the product's loans are reported to the bureaus |
-
-**Never terms, whatever an institution wants:** a minimum interest period
-or any charge on early repayment (reg 56(3), (4); FS-807, LQ-13); default
-interest beyond the cap (reg 29); contact with anyone but the borrower and
-the guarantor (reg 30). The repayment order and the cap are the
-regulations', not terms; a reading not yet settled is the interpretation
-record's (recon §3.1.3).
+**The product version** is the one authority for a product's terms: how it
+is written, drafted, approved, published and applied, its vocabulary and
+its never-terms are [product-versions](product-versions.md) (FS-1058).
 
 ### 2.5 Non-performing classification — reg 57, MF-25
 
@@ -417,11 +274,9 @@ or sooner where its agreement says so (reg 57(1)). We count from the due
 date (LQ-04).
 
 **Behaviour.** Daily, per loan: days past due of the oldest unpaid
-principal or interest. Non-performing from the first day that exceeds
-the threshold: the shorter of the statutory period (30 or 90 days, by
-contracted term) and the agreement's default period. Days are counted
-from the due date (open question 4). The loan returns to performing when
-nothing is past due beyond the threshold, which closes the cap episode.
+principal or interest, against the shorter of the statutory period and
+the agreement's default period. The loan returns to performing when
+nothing is past due beyond it, which closes the cap episode (2.1).
 
 **Where enforced.** The service is the authority. Fineract's NPA days
 are set to match where a product's tenor range sits wholly on one side
@@ -447,9 +302,8 @@ the contract disclosed (reg 30(1), (2)). Those hours are our reading of
   numbers. Guarantors get statements (47(2)), never collection pressure.
   Alternative contacts (50(1)(i)) are excluded from every collection
   template. Phone books are never read.
-- **Working hours.** Not defined in the regulations. Proposed default:
-  08:00 to 18:00, Monday to Saturday, not public holidays,
-  Africa/Nairobi; narrower allowed, never wider (open question 5).
+- **Working hours.** Our rule's window, not on public holidays,
+  Africa/Nairobi; an institution may narrow it, never widen it.
   Messaging's quiet hours (MS-15) hold a collection message until the
   window opens, never dropping it silently. Staff call tasks are hidden
   outside the window; calls are logged.
@@ -491,13 +345,11 @@ after 48 hours is confirmed in writing (40(4)); resolved within 30 days
 resolved within 14 days, well inside the 30 the regulations allow; their
 48 hours, 7 days and 30 days stay as the backstop (reg 40(3) to (5)).
 
-**Behaviour.** Each complaint carries received-at, channel (oral or
-written) and three clocks: 48 hours, 7 days, 30 days, counted in calendar
-days from the customer's report. It is acknowledged on logging (T16), not
-by day 7, and worked to a target of 14 days inside the 30 (owner,
-2026-10-12, FS-764); warnings at day 12, for the target, and day 25, and
-an overdue event on any breach; the 7-day clock stays as the backstop if
-the acknowledgement was not delivered. The record holds
+**Behaviour.** Each complaint carries received-at, its channel (oral or
+written) and the regulations' three clocks, in calendar days from the
+customer's report, beside the 14-day target (owner, 2026-10-12, FS-764).
+The acknowledgement goes on logging (T16); warnings at day 12, for the
+target, and day 25; an overdue event on any breach. The record holds
 40(6)'s fields: date, nature, status, reason pending, time to resolve,
 outcome.
 
@@ -553,7 +405,7 @@ principal (reg 56): principal 70,000, `P_npl` still 100,000. The bucket
 is 49,000 at the end of day 69; default interest drops to 700 a day; the
 bucket reaches 100,000 on day 142, when 600 is posted instead of 700. If
 29(5)'s "outstanding principal amount" means current principal, the limit
-is 70,000, reached on day 99 (open question 1).
+is 70,000, reached on day 99 (LQ-01).
 
 **Reset.** A longer loan becomes non-performing at principal 100,000
 (cap 100,000), clears its arrears, then falls back at principal 60,000:
@@ -690,7 +542,6 @@ notices under §2.6's checks.
 | `GET /products/{id}/versions/{v}/apr` | APR and total cost of credit |
 | `GET /products/{id}/versions/{v}/kid` | Key information document |
 | `POST /product-changes`, `.../{id}/cbk-approval` | Product version, CBK approval |
-| `POST /product-versions` (draft or proposed), `.../{id}:validate`, `.../{id}:preview`, `.../{id}:adopt`, `.../{id}:submit` | The Products screen: draft, check, preview, adopt a proposed version, submit (FS-978, FS-981) |
 | `POST /loans/{id}/variations`, `.../acceptance` | Variation notice, acceptance |
 | `GET /policies/collection-messaging` | Working hours, recipients, template rules |
 | `POST /complaints/events` | Desk events in, clocks out |
@@ -703,19 +554,15 @@ catalogue, event-bus-kafka §5): `kapu.mfi.loan.nonperforming`,
 `kapu.mfi.product.version.activated`, `kapu.mfi.loan.variation.accepted`,
 `kapu.messaging.message.blocked` (published by messaging), `kapu.mfi.complaint.pending`, `kapu.mfi.complaint.overdue`.
 
-**End of day** (KC-07), Africa/Nairobi, run by the end-of-day runner after
-its checks (end-of-day-runner):
+**End of day** (KC-07). The night's order is the end-of-day runner's
+(end-of-day-runner §3): the intake closed and Fineract's close of
+business before these steps, the accounting close and reconciliation
+after. The lender rules' own steps, numbered as the runner calls them:
 
-1. Close the day's intake: post repayments dated today; ask M-Pesa Pull
-   Transactions (RL-20) for missed confirmations.
-2. Fineract's close of business (kapu-core-fineract §7). Its
-   overdue-penalty step is not used for capped products.
 3. Classification: open or close cap episodes; emit events.
 4. Default interest posted by the service, capped at room.
 5. Cap sweep: waive any excess over `P_npl` the same day.
 6. Ladder states moved; reminders queued for the next working window.
-7. Fineract accounting close; snapshots for MF-14 and MF-15;
-   reconciliation (RO-02).
 
 A failure stops the later steps for the loans affected and raises an
 exception to the accountant's queue (MF-12).
@@ -738,7 +585,7 @@ exception to the accountant's queue (MF-12).
 | What | Class | Kept | Personal data |
 |---|---|---|---|
 | Cap episodes, classifications, collection stages | Confidential | Seven years after the loan closes (docs/documents.md) | A borrower's repayment conduct (docs/privacy.md) |
-| Product versions, CBK approvals, variation notices and acceptances | Confidential | Seven years after the product or loan ends | Acceptances are the borrower's |
+| CBK approvals, variation notices and acceptances | Confidential | Seven years after the product or loan ends | Acceptances are the borrower's |
 | Complaints clocks | Confidential | With the complaint | The complainant's |
 
 ## 6 · Quality and metrics
@@ -792,11 +639,6 @@ exception to the accountant's queue (MF-12).
 | A20 | KES 5,000 of the day-30 amount disputed in an open complaint | Day 30 default run | No default-run message or action on the KES 5,000; the rest proceeds; the hold recorded | MF-39, MF-28 |
 | A21 | Paid at 14:00 on day 30; our platform down until day 31 | Posted on day 31 | Dated day 30; no default interest; the loan re-run; T48 sent | MF-22, 56(1); §2.10 |
 | A22 | A disruption window over M-Pesa, days 30 to 31 | A loan due on day 30 is paid on day 32 | Default interest for days 31 and 32 waived under the standing waiver; classification counts from day 30 | §2.10 |
-| A23 | A version whose rate unit is missing | Submitted | Refused: the vocabulary requires it | §2.4 |
-| A24 | A version the companion cannot compute | Activation | Refused | §2.4; recon §3.1 |
-| A25 | A version with a minimum interest period, or any charge, on early repayment | Submitted | Refused as a never-term, naming it | §2.4; 56(3), (4) |
-| A26 | A version with a KES 500 fee | Its key information document is generated | The fee shown with its excise duty of KES 100, inside the total cost of credit; no excise on interest or insurance premiums | §2.4; MF-23 |
-| A27 | A version with rates by risk class | Published | The page shows the range; each borrower's key information document shows their own rate | §2.4; 59(2)(c) |
 | A28 | A 30-day loan due day 30; a 14-day cure | Proclamation recorded on day 40 | Refused: the cure date, day 45, has not passed | §2.11; MPSR Act s.67(3) |
 | A29 | Sale notice delivered on day 45 | Sale on day 70 | Refused; allowed from day 75 | §2.11; 30(4) |
 | A30 | A second secured creditor in the registry search | Sale notice | Sent to them too; the sale waits for its delivery | §2.11; MPSR Act s.73(1) |
@@ -848,8 +690,6 @@ meanwhile):
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
-| reg 25 | reg 25(2)(f), reg 25(2)(s) | A written credit policy, consistent with the law, stating among other things the cooling-off period (25(2)(f)) and how the borrower's ability to repay is determined (25(2)(s)) |
-| reg 28 | reg 28(1)(b), reg 28(1)(c) | Applications considered under the credit policy, ability to repay assessed and no reckless lending (28(1)); a refusal given at once, with reasons (28(2)); a loan may be restructured on the borrower's request or with prior notice (28(3)) |
 | reg 29 | reg 29, reg 29(2), reg 29(3), reg 29(4) | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
 | reg 30 | reg 30, reg 30(1), reg 30(2), reg 30(3), reg 30(4) | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
 | reg 33 | reg 33, reg 33(3), reg 33(6), reg 33(7) | Customers' credit information shared with licensed credit reference bureaus, timely, complete and accurate; no negative listing for an amount of one thousand shillings or less (33(3)) |
@@ -857,14 +697,13 @@ meanwhile):
 | reg 40 | reg 40, reg 40(3), reg 40(5) | A complaints mechanism made known to customers; acknowledgement within seven days where a complaint cannot be dealt with promptly; an oral complaint unresolved after forty-eight hours confirmed in writing; resolution within thirty days |
 | reg 41 | reg 41(1)(a) | No unfair, deceptive, oppressive or aggressive practices, among them threatening, intimidating, abusing, ignoring or humiliating a customer (41(1)(a)); no bribes (41(1)(b)); no recruiting other borrowers to earn a benefit (41(1)(c)); no discrimination (41(1)(d)); no misleading or misadvising (41(1)(e)); no reckless or negligent lending (41(1)(f)); no product a customer must buy to get the one they want (41(2)) |
 | reg 42 | reg 42 | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
-| reg 47 | reg 47(1)(d), reg 47(2) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
 | reg 48 | reg 48 | A key information document for each product: its benefits, risks, terms and conditions, in summary |
 | reg 49 | reg 49 | A business or trade name used in place of the company name is accompanied, conspicuously, by the company name |
 | reg 54 | reg 54(7), reg 54(8) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
 | reg 55 | reg 55 | Pricing parameters and credit terms change only with the Central Bank's prior written approval, after thirty days' notice to the customer and the customer's acceptance |
-| reg 56 | reg 56, reg 56(1), reg 56(3), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
+| reg 56 | reg 56, reg 56(1), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
 | reg 57 | reg 57, reg 57(1), reg 57(3) | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |
-| reg 59 | reg 59, reg 59(2)(a), reg 59(2)(c), reg 59(2)(e), reg 59(2)(f) | A pricing model with clear parameters: its components and costs justified, rates that may vary with the borrower's creditworthiness (59(2)(c)), the criteria for non-performance, credit bureau scores, all-inclusive pricing except third-party costs (59(2)(f)), and the APR disclosed |
+| reg 59 | reg 59 | A pricing model with clear parameters: its components and costs justified, rates that may vary with the borrower's creditworthiness (59(2)(c)), the criteria for non-performance, credit bureau scores, all-inclusive pricing except third-party costs (59(2)(f)), and the APR disclosed |
 | reg 60 | reg 60 | Where artificial intelligence makes lending decisions: decisions explained, customers told they are dealing with a machine, human oversight kept, bias assessed, models robust and explainable, data protected |
 
 **[LR-23](../law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).

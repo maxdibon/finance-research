@@ -7,14 +7,14 @@ law: LR-03
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-989, FS-990, FS-991, FS-1000, FS-1003, FS-1029]
-last_reviewed: 2026-10-27
+review_ids: [FS-989, FS-990, FS-991, FS-1000, FS-1003, FS-1029, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Loan kinds
 
 **What this is** (FS-989): the kinds of loan an institution may ask us to
-run, each with the vocabulary terms it needs (lender-rules §2.4), whether
+run, each with the vocabulary terms it needs (product-versions §4), whether
 the vocabulary can describe it today, the capabilities that run it, and
 the law it touches. A kind the vocabulary cannot describe cannot be
 drafted, previewed or approved as a product version; so this list is

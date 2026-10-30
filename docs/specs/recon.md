@@ -8,12 +8,12 @@ law: LR-03
 released: 2026.10.16
 release: R1
 implements: [recon-observability]
-depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine, back-office]
+depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine, back-office, product-versions]
 used_by: [end-of-day-runner]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809, FS-970]
-last_reviewed: 2026-10-26
+review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809, FS-970, FS-1053, FS-1058, FS-1054]
+last_reviewed: 2026-10-30
 ---
 
 # Reconciliation platform — build specification
@@ -77,7 +77,8 @@ change-data capture (all R2); the extension catalogue (RO-28, phase 2).
   | mirrors           | GL| matches, compares | GL| recomputes        |
   | [kapu_service]    |   | [kapu_service]    |   | [kapu_service]    |
   +-------------------+   +-------------------+   +-------------------+
-                             | tickets      | alerts
+                             | tickets, by  | alerts
+                             | the gateway  |
                              v              v
                   +-------------------+   +-------------------+
                   | ODOO              |   | OBSERVABILITY     |
@@ -97,7 +98,7 @@ change-data capture (all R2); the extension catalogue (RO-28, phase 2).
 [JN-16](../journeys/unplaced-payment.md),
 [JN-17](../journeys/accountant-morning.md),
 [JN-10](../journeys/deposit.md), [JN-11](../journeys/transfer-out.md)
-and [JN-12](../journeys/transfer-in.md).
+and [JN-12](../journeys/transfer-in.md); its product terms come from [product-versions](product-versions.md).
 
 ## 2 · Concepts
 
@@ -128,9 +129,7 @@ and [JN-12](../journeys/transfer-in.md).
 - **Completeness proof:** for a channel and a cycle, the count and amount
   the source reports against the count and amount the ledger holds, by
   currency.
-- **Leg:** one part of a split transaction: a C2B payment of 2,000 becomes
-  the amount received, the operator's fee, excise duty on the fee, and any
-  sums owed to tax agencies or other recipients.
+- **Leg:** one part of a split transaction (§5).
 - **Break:** a difference recon cannot explain. **In transit:** a
   difference with a day it should clear.
 - **Action:** what follows a break: completed automatically, reversed,
@@ -170,7 +169,8 @@ and [JN-12](../journeys/transfer-in.md).
    from the regulations and the product's terms, not from lender rules'
    code, and built by someone other than lender rules' author. Two
    implementations of the same rules is the point: a mistake in one shows
-   as a disagreement with the other.
+   as a disagreement with the other. Both are tested against the same
+   worked examples (lender-rules §2.9), which are the shared truth.
 8. **A cut-off and an opening position** (FS-798, FS-802). The shadow and
    the companion start at a cut-off, from an opening position taken from
    the master: every account's balance and, for loans, the schedule,
@@ -194,7 +194,7 @@ rules' results, and compared with both (FS-793, FS-796).
 
 | Input | From | Why this source |
 |---|---|---|
-| The product version document, in its vocabulary (lender-rules §2.4): every term the companion needs | The signed document; the companion keeps its own copy, verifying the signature, the hash and the approval | The terms as approved, not as configured in Fineract |
+| The product version document, in its vocabulary (product-versions §4): every term the companion needs | The signed document; the companion keeps its own copy, verifying the signature, the hash and the approval | The terms as approved, not as configured in Fineract |
 | Each loan's contract: amount, product version, borrower's references | The approved request (`kapu.mandates.request.approved`) and the signed agreement's record | What was approved and signed |
 | The disbursement and its value date | The rail's own record: the bank's statement or M-Pesa's confirmation (`kapu.rails.payout.confirmed`) | When money actually left |
 | Every repayment, with its rail date | The rail's own record (`kapu.rails.payment.received`), identified by the account's payment reference (RO-02) | When money actually arrived |
@@ -247,10 +247,8 @@ precision and the same rule in both.
 | Any time | A balance higher than its money explains | None | Severity 1 (FS-789) |
 | Each night | Fineract's live product settings, and each loan's copied terms, against the product version document | Exact | Severity 2 (kapu-core-fineract F15) |
 
-The companion never corrects anything: each break goes to the queue with
-the companion's working, the master's figures, and the inputs behind
-both, and is settled by an approved posting or by fixing whichever
-calculation was wrong.
+Each break goes to the queue with the companion's working, the master's
+figures and the inputs behind both, and is settled as rule 1 says.
 
 **3.1.5 Edge cases it must get right,** each an acceptance test (§14):
 a repayment at 23:40 on the due date, posted after midnight; a backdated
@@ -281,11 +279,6 @@ produces, its postings to Fineract and its events, is what recon compares
 the companion against, never an input to it. A disagreement is a break;
 the fix goes back through lender rules or an approved request.
 
-**3.1.8 Who builds it.** Someone other than lender rules' author, from
-the regulations, the product version record and the worked examples in
-lender-rules §2.9, never from lender rules' code (rule 7). Both are tested
-against the same worked examples, which are the shared truth.
-
 ## 4 · What recon does
 
 **4.1 Incoming money.** Every credit on every channel matched to its
@@ -301,16 +294,8 @@ before release (RL-01, FS-661).
 **4.3 Internal tracing.** Every hop of a transaction, with both sides'
 evidence, verifiable by anyone holding our public keys (RO-23 to RO-25).
 
-**4.4 Auto-correction.** Each break type has its action, set per
-institution:
-
-| Action | When | Who decides |
-|---|---|---|
-| Complete automatically | A read settles it: a status query, a pulled transaction, a statement line | Recon, alone (RO-07) |
-| Reverse | Money moved wrongly | The institution's approval chain, never recon alone (MD-01) |
-| A person in the middle | Anything the institution's rules say a person must see first | The role its rules name |
-| A ticket | A break needs a person to act | A ticket only for a break that needs a person, and one ticket per root cause, linking every customer and transaction it touches; at millions of transactions a day, never one per transaction (FS-793) |
-| An alert | A system fails: M-Pesa down, a feed silent, a checkpoint missing | On-call, through observability |
+**4.4 Auto-correction.** Each break gets its action from §4.7's four
+questions, set per institution above their floors (RO-07).
 
 **4.5 Finance's manual reconciliation.** What the rules could not
 settle, worked by the accountant in the exception queue, with suggested
@@ -333,10 +318,10 @@ decides:
 
 | # | The question | If yes | The floor the institution cannot lower |
 |---|---|---|---|
-| 1 | Is it a system fault: a source silent, a rail down, a checkpoint missing, the ledgers disagreeing? | An alert to on-call, by severity; the institution told as incident management says | A ledger disagreement is severity 2; a balance grown without money is severity 1 |
-| 2 | Can a read settle it: a status query, a pulled transaction, a statement line, including posting money the rail's own record shows has moved (CO-20)? | Completed automatically by recon | Only on the rail's own record, never on an inference |
-| 3 | Would settling it otherwise move money or change a balance: a reversal, a return, a correction? | A proposal through the institution's approval chain | Never automatic, whatever the amount |
-| 4 | Otherwise | A ticket to the role that owns it, one per root cause | — |
+| 1 | Is it a system fault: a source silent, a rail down, a checkpoint missing, the ledgers disagreeing? | An alert to on-call, through observability, by severity; the institution told as incident management says | A ledger disagreement is severity 2; a balance grown without money is severity 1 |
+| 2 | Can a read settle it: a status query, a pulled transaction, a statement line, including posting money the rail's own record shows has moved (CO-20)? | Completed automatically by recon, alone (RO-07) | Only on the rail's own record, never on an inference |
+| 3 | Would settling it otherwise move money or change a balance: a reversal, a return, a correction? | A proposal through the institution's approval chain, never recon alone (MD-01) | Never automatic, whatever the amount |
+| 4 | Otherwise | A ticket to the role that owns it, one per root cause, linking every customer and transaction it touches; never one per transaction (FS-793) | — |
 
 *When a person must look first,* even where the rule would complete it
 alone: above the institution's amount threshold; anything touching a

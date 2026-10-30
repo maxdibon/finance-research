@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794, FS-802, FS-808]
-last_reviewed: 2026-10-16
+review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794, FS-802, FS-808, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # Customer onboarding checklists
@@ -97,7 +97,7 @@ Module: [core](modules/core.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
-| OB-KC-01 | Products: savings, loans and shares, with interest, fee and charge rules, each written as a product version document from Dibon's starter templates, approved by two people, CBK's letter recorded where reg 55 requires it (lender-rules §2.4) | Operations lead, with the product owner | core KC-02 to KC-04; FS-802 |
+| OB-KC-01 | Products: savings, loans and shares, with interest, fee and charge rules, each written as a product version document from Dibon's starter templates, approved by two people, CBK's letter recorded where reg 55 requires it (product-versions) | Operations lead, with the product owner | core KC-02 to KC-04; FS-802 |
 | OB-KC-02 | Chart of accounts | Finance lead | core KC-05 |
 | OB-KC-03 | Branches, tellers and tills | Operations lead | core KC-06 |
 | OB-KC-04 | End-of-day cycle: the runner's times; each check's class, agreed against the criteria in docs/specs/end-of-day-runner.md §4; the tolerance for unapplied money; who is told of what (docs/service-management/incident-management.md §3); and the returns it files | Finance lead, with our operations | core KC-07, KC-10 |

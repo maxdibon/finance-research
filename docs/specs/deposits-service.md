@@ -11,8 +11,8 @@ depends_on: [kapu-core-fineract, approval-engine]
 used_by: [lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-066, FS-178, FS-179, FS-185, FS-985, FS-991]
-last_reviewed: 2026-10-27
+review_ids: [FS-066, FS-178, FS-179, FS-185, FS-985, FS-991, FS-1058]
+last_reviewed: 2026-10-30
 ---
 
 # The Kapu deposits service — build specification
@@ -100,7 +100,7 @@ and [JN-12](../journeys/transfer-in.md).
 
 ## 4 · Savings products and their terms
 
-FS-991. A savings product is described as a loan is (lender-rules §2.4):
+FS-991. A savings product is described as a loan is (product-versions §4):
 a version, in a vocabulary, checked, approved by two people and activated
 from a date; the schema follows when the first native deposit-taker
 signs. Its terms:

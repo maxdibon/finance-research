@@ -11,18 +11,17 @@ depends_on: [access-keycloak, messaging]
 used_by: [end-of-day-runner, event-bus-kafka, endpoints, recon]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-101, FS-633, FS-640, FS-642, FS-648, FS-653, FS-667, FS-711, FS-792]
-last_reviewed: 2026-10-13
+review_ids: [FS-101, FS-633, FS-640, FS-642, FS-648, FS-653, FS-667, FS-711, FS-792, FS-1054]
+last_reviewed: 2026-10-30
 ---
 
 # Observability on Grafana, with on-call — component specification
 
-How Dibon runs Grafana and its stack for R1: metrics, logs, traces,
-dashboards, alert rules, and the on-call rota that turns a severity 1
-into a phone call to an engineer (FS-633). Sources: Grafana's
-documentation for alerting, contact points, notification policies and
-mute timings, its OnCall maintenance notice, and GoAlert's documentation,
-read on 2026-10-08. Nothing here is built.
+How Dibon runs Grafana and its stack for R1, so that we see the
+platform's health and a severity 1 becomes a phone call to an engineer
+(FS-633). Sources: Grafana's documentation for alerting, contact points,
+notification policies and mute timings, its OnCall maintenance notice,
+and GoAlert's documentation, read on 2026-10-08. Nothing here is built.
 
 ## 1 · Purpose and scope
 
@@ -118,7 +117,10 @@ if Grafana, Prometheus or the route between them stops, the heartbeat
 goes quiet and ON-CALL pages.
 
 **Alert rules for R1** (FS-653). Thresholds are proposed, and tuned after
-go-live; severities follow the incident plan.
+go-live; severities follow the incident plan. A component with a spec
+sets its own alerts there, in its Quality and metrics, and its row here
+says "As" that spec; the rails' rows stay here until their spec is
+written.
 
 | Area | Condition | Severity |
 |---|---|---|
@@ -129,19 +131,19 @@ go-live; severities follow the incident plan.
 | Payouts | A result unknown after 15 minutes; after an hour (RL-10) | 2; 1 |
 | Rails | A rail paused as degraded (RL-15); credentials or certificates 30 days from expiry | 2; 3 |
 | Ledger | A repayment not posted 5 minutes after the rail confirmed it; 30 minutes | 3; 2 |
-| Ledger | A write refused by Fineract after its retries | 3, per loan |
+| Ledger | As kapu-core-fineract §10: a write refused after its retries | As there |
 | Reconciliation | An exception past its SLA (RO-05) | As its SLA policy says |
 | The night's close | As end-of-day-runner §6 | As there |
 | Integrity | A nightly comparison finds an act without an approved request (approval-engine §9, access-keycloak §6) | 1 |
 | Integrity | The audit chain fails verification (RO-24) | 1 |
 | Recovery | Database replication more than 5 minutes behind: the recovery objective breached | 1 |
 | Recovery | A backup, or a restore test, failed | 2 |
-| Platform | Event consumers more than 10 minutes behind | 2 |
+| Platform | As event-bus-kafka §10: consumers behind, dead letters, signatures | As there |
 | Platform | A host's clock more than 500 ms out | 2 |
 | Platform | Disk over 80%; over 95% | 3; 2 |
 | Platform | A certificate 30 days from expiry | 3 |
-| Access | Lockouts at more than three times their usual rate: a possible attack | 2 |
-| Messages | Delivery failures on a route over 10% in 15 minutes; one-time codes taking over 30 seconds | 2 |
+| Access | As access-keycloak §10: lockouts, slow codes, admin events on roles | As there |
+| Messages | As messaging §8: route failures, slow codes | As there |
 | Watchdog | The heartbeat silent | 1, paged by ON-CALL |
 
 ## 5 · On-call: the phone call
