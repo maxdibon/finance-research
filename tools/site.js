@@ -707,15 +707,22 @@ q.addEventListener('input',show);</script>`;
   // FS-839: every document that is not living, by status, so a version's
   // drafts are one page away.
   const byStatus = new Map();
+  // FS-1053: a document not reviewed in 60 days is listed first, oldest
+  // first, so nothing goes stale unseen.
+  const STALE_DAYS = 60;
+  const today = Date.now();
+  const stale = [];
   for (const p of pages) {
     const fields = frontMatter(read(root, p.f)).fields;
+    const reviewed = Date.parse(fields.last_reviewed || '');
+    if (!p.f.includes('/_') && reviewed && (today - reviewed) / 86400000 > STALE_DAYS) stale.push({ p, reviewed, on: fields.last_reviewed });
     if (!fields.status || fields.status === 'living' || p.f.includes('/_')) continue;
     if (!byStatus.has(fields.status)) byStatus.set(fields.status, []);
     byStatus.get(fields.status).push(`<li><a href="${p.page}">${html(p.title)}</a> <small>${html(fields.kind || '')}</small></li>`);
   }
   const order = ['draft', 'awaiting-approval', 'awaiting-cbk', 'sent', 'answered', 'agreed', 'validated', 'building', 'built', 'tested', 'active', 'superseded', 'withdrawn', 'retired'];
   const sts = [...byStatus.keys()].sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
-  const statusPage = `<h1>Documents by status</h1><p class="meta">Every document that is not a living register or index, by its status (FS-839). Versions are in <a href="CHANGELOG.html">the changelog</a>.</p>${sts.map((s) => `<h2>${html(s)} (${byStatus.get(s).length})</h2><ul>${byStatus.get(s).join('')}</ul>`).join('')}`;
+  const statusPage = `<h1>Documents by status</h1><p class="meta">Every document that is not a living register or index, by its status (FS-839). Versions are in <a href="CHANGELOG.html">the changelog</a>.</p><h2>Not reviewed in ${STALE_DAYS} days (${stale.length})</h2>${stale.length ? `<ul>${stale.sort((a, b) => a.reviewed - b.reviewed).map((s) => `<li><a href="${s.p.page}">${html(s.p.title)}</a> <small>last reviewed ${html(s.on)}</small></li>`).join('')}</ul>` : '<p>None.</p>'}${sts.map((s) => `<h2>${html(s)} (${byStatus.get(s).length})</h2><ul>${byStatus.get(s).join('')}</ul>`).join('')}`;
   fs.writeFileSync(path.join(outDir, 'status.html'), shell('Documents by status', 'status.html', statusPage, note));
   // FS-856: a page for each folder in docs/ with no README, listing what it
   // holds, so a folder named in a document opens somewhere useful.
