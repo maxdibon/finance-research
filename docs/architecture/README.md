@@ -7,7 +7,7 @@ law: LR-03
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056, FS-1068, FS-1072]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056, FS-1068, FS-1070, FS-1072]
 last_reviewed: 2026-11-01
 ---
 
@@ -482,7 +482,9 @@ against this paragraph.
 - **Access:** Keycloak for sign-in, roles and step-up
   (docs/specs/access-keycloak.md).
 - **Documents:** one document vault per institution (identity ID-15,
-  FS-500). **Where a document lives** (FS-527):
+  FS-500); how it keeps, shows and deletes them is
+  [the vault](../specs/vault.md) (FS-1070). **Where a document lives**
+  (FS-527), the rule the vault applies:
   - **The vault:** every document that carries personal data. KYC and
     KYB evidence, collateral documents, loan and guarantee agreements and
     key information documents, signed consents and mandates, employee
@@ -724,13 +726,16 @@ the audit trail and matches in reconciliation agree (FS-634).
 
 - Product status — each module's §3.
 - Pricing and business models (FS-024).
-- The legal questions it points at: FS-037, FS-049, FS-056, FS-057, FS-061,
-  FS-428.
+- The legal questions it raises: each is an LQ row in
+  [the legal questions](../legal-questions.md), where counsel's answers
+  are tracked; the rows that first raised them here were FS-037, FS-049,
+  FS-056, FS-057, FS-061 and FS-428.
 - How each service is built or run: the specs (docs/specs/README.md).
 
 ## 12 · Sources
 
-- REVIEW.md decisions FS-025 to FS-033, FS-042 to FS-045.
+- The decisions behind it, FS-025 to FS-033 and FS-042 to FS-045, in
+  [the decisions](../decisions.md).
 - odoo-reconciliation.md (GateKeepr brief), §2 and §3. The principles
   carry over; the GateKeepr references do not (FS-014).
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — §1, §4, FR-6.
