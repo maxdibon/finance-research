@@ -12,8 +12,8 @@ depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, dep
 used_by: [staff-workspace, kapu-console, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054]
-last_reviewed: 2026-10-30
+review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070, FS-1071]
+last_reviewed: 2026-11-01
 ---
 
 # The Kapu lending service — build specification
@@ -130,12 +130,150 @@ and shares (FS-985); this service lends against them, under Sacco rules.
 8. **Deposits are the deposits service's;** this service reads a member's
    deposits and shares there, never from the core directly.
 
-## 5 · Partners
+## 5 · Partners and collateral
+
+### 5.1 · Partners
 
 FS-995, FS-996. The third parties a product works with: their record,
 relationships, lifecycle, data feeds and people are
 [lending-partners](lending-partners.md) (phase 2; FS-1058). In R1 the lending service
 keeps nothing of theirs.
+
+### 5.2 · Collateral: the register
+
+FS-1069. What secures a loan, in one place: each item's record, the
+steps that make it security and later release it, where its originals
+are, and the register that lists them all. It brings together mfi MF-03
+and MF-04 (R1), MF-15's collateral report, and MF-30 and MF-18 (R2);
+what each journey does with it stays in the journey (loan-to-disbursement
+step 2, loan-settled), and recovery's dates stay in lender-rules §2.11.
+
+**The rules:**
+
+1. **The platform records and tracks; named officers act.** In R1 the
+   registry search and registration, NTSA, the land registry and the
+   strong room are done by people, on the registries' portals and in
+   person; each act is a step here with its owner, due date, evidence
+   and outcome (FS-619). Automation later replaces a step, never the
+   checklist (NTSA MF-05, land MF-18).
+2. **One record per item, here.** Fineract's own collateral records are
+   not used (kapu-core-fineract §3), so there is one answer to what
+   secures a loan (architecture §2, "reference by id").
+3. **Documents in the vault, links here.** Every scan, search
+   certificate, valuation, notice and signed agreement is filed in the
+   document vault (identity ID-15, FS-527); the record keeps the link and
+   the registry's numbers, never the file (FS-1070).
+4. **A product version says what it accepts:** the types, the
+   loan-to-value, and which steps hold approval or disbursement
+   (product-versions, "Collateral"; MF-04). Roan Capital chooses its own
+   (roan-capital, open answer 15).
+5. **Nothing is released by one person.** Releasing an original, or the
+   security itself, needs a second person's approval through the approval
+   engine, after the final payment is reconciled and the hold has passed
+   (MD-06; loan-settled step 6).
+6. **A failed check blocks,** unless the override authority records why
+   (MF-04); the override is kept with the record.
+
+**Types in R1** (MF-03, FS-581; RC-08):
+
+| Type | Security | What R1 does | Later |
+|---|---|---|---|
+| A vehicle, by its logbook | A security right registered in the collateral registry (MPSR Act), and the vehicle jointly registered with NTSA | The whole lifecycle below | NTSA by API (MF-05); revaluation and lapse reminders (MF-30) |
+| Land, by its title deed | A charge in the prescribed form, registered against the title (Land Act s.79); holding the deed alone is only a lien | The record, the title in the vault, the charge's reference; the land registry search and the charge's registration tracked as manual steps | Searches and registration by API (MF-18) |
+
+Other types a product version may name (chattels, equipment, deposits,
+the goods financed, receivables) come with MF-18.
+
+**The record:**
+
+| Part | What it holds |
+|---|---|
+| The item | Its type; what identifies it (a vehicle's registration and chassis number; land's title number); its description |
+| Its owners | Each owner by reference to their party; for land that is a matrimonial home, the spouse's assent (Land Act s.79(3)) |
+| What it secures | The loan or loans, by the core's id |
+| Its value | The valuation: amount, valuer, date, and the report in the vault; the loan-to-value at approval against the product version's maximum |
+| Its registrations | The collateral registry's notice: number, time, expiry, and the date the borrower's copy was sent; NTSA's joint registration; for land, the charge's number |
+| Its cover | Insurance: insurer, policy, expiry, and whether the institution is named on it; a tracking device: provider, device, certificate |
+| Its custody | Where each original is now, from the custody log |
+| Its steps | The checklist, below, with each step's state |
+| Its state | One of the states below |
+
+**States,** each move an event on the bus:
+
+| State | Means | Moves on when |
+|---|---|---|
+| Proposed | Captured on an application | The checks before approval pass, or are overridden |
+| Verified | Fit to approve against | The steps before disbursement are done: signed, registered, the original in custody |
+| Secured | Holding a live loan | The loan is settled, or recovery starts |
+| In recovery | A recovery case is open (lender-rules §2.11 for a vehicle) | Paid in full before the sale, back to Secured or on to Released; or sold |
+| Released | Settled, the release checklist done, the originals handed back | Final |
+| Sold | Sold in recovery, the proceeds applied, the registry cleared | Final |
+
+**The checklists,** a step per row, per type and stage; each with an
+owner, a due date, evidence in the vault and an outcome. Which steps hold
+approval or disbursement is the product version's (rule 4).
+
+| Stage | A vehicle | Land |
+|---|---|---|
+| Before approval | The logbook attached (the committee cannot open the application without it, RC-09); NTSA's ownership search; the collateral registry searched by the chassis number or the borrower's identifier, its certificate filed, so an earlier lender's right is found first; the valuation | The title deed attached; the official search; the valuation; for a matrimonial home, whose assent is needed |
+| Before disbursement | The security agreement signed (Odoo Sign); the notice registered, its number, time and expiry recorded; NTSA's joint registration; the original logbook into custody; insurance, and the tracker fitted where the product needs them | The charge signed in the prescribed form, with the spouse's assent where needed; the charge registered against the title, its number recorded; the original title deed into custody |
+| During the loan | The borrower's copy of the notice sent through their own link within ten working days (MPSR Act s.31(2), an offence if missed); insurance expiry; a warning six months before the notice expires if the loan is still live (MPSR Act s.30); the tracker's alerts logged, a recovery opened from them | Insurance expiry, where the product needs cover |
+| At settlement | The cancellation notice registered within ten working days, unasked (MPSR Act s.33); NTSA's joint registration removed; the insurer and the tracker told; the originals released (rule 5) | The discharge registered and the title documents delivered (Land Act s.102); the originals released (rule 5) |
+
+Overdue steps are reminded and escalated (mandates MD-08).
+
+**The custody log** (MF-03): every movement of an original, appended,
+never edited. Received, and where it is kept; out and back (to a
+registry, a court, an auctioneer), with who took it and why; handed back
+to the borrower, their identity checked against the record and the
+handover signed, or to someone they authorised in Odoo Sign (T39), with
+a code to the borrower's phone at the handover (T40). The officer who
+keeps it is named by the institution.
+
+**The vehicle's whereabouts** (FS-1071), in two stages, treated apart:
+
+- **While the loan is live, and up to repossession: where it is.** No
+  live location is held, by us or the institution: the tracker's stream
+  stays with its provider, as a borrower's movements are personal data
+  and holding them is monitoring the loan does not need (privacy PR-22).
+  The tracker's alerts (a red zone, the vehicle untraceable) are logged
+  as now, and may open a recovery (MF-04). **A location is looked up only
+  once a recovery case is open,** through the provider's portal, or its
+  API once there is one (MF-31); each lookup recorded against the loan,
+  with who, when and why. The tracker, and when its location is used,
+  are named in the security agreement and the privacy notice. Whether
+  this is the right basis, and whether a lookup before default could
+  ever be allowed, is LQ-34; until it is answered, this is the design.
+- **From repossession: where it is kept.** A **possession log** for the
+  vehicle, beside the custody log for its papers: appended, never
+  edited, from the day it is taken to its sale or its return.
+
+| Entry | What is recorded |
+|---|---|
+| Taken | When, and where from; the auctioneer and their licence; the basis: the agreement's consent, no objection, or a court order for hire purchase past two-thirds (lender-rules §2.11 step 3) |
+| Inventory and condition | The auctioneer's inventory; photos, mileage, keys and damage, filed in the vault |
+| Personal effects | What was in the vehicle, and when and to whom it was returned; never the borrower's essential effects (reg 30(1)(k)) |
+| Where it is kept | The yard and its address, who holds it, its reference there, and whether it is insured while stored |
+| Each move | Yard to yard, or to the sale's venue: when, who moved it, and why |
+| Costs | Towing, storage and the auctioneer's charges, each with its evidence: recovery costs, within the arrears cap (lender-rules §2.1) |
+| Out | Back to the borrower on redemption (MPSR Act s.69), or to the buyer on the sale, against their signature; the record then Released or Sold |
+
+The yard's address is the institution's business record; the borrower's
+whereabouts are the sensitive part, and are never kept on the record.
+
+**The register** (MF-15): every item, by state, with its loans, value
+and loan-to-value now, registrations and their expiry, insurance expiry,
+where its originals are, and its overdue steps; filtered by what expires
+in 30 or 180 days, what is overdue and what is in recovery; exported to
+CSV. In the staff workspace for credit roles, read-only in the Kapu
+Console when Odoo is down; ID numbers masked (SE-27).
+
+**Recovery.** For a vehicle, lender-rules §2.11 holds the case and its
+dates; this record keeps the evidence and moves to In recovery, then
+Sold or Released. For land, the Land Act's own steps (Land Act s.90: a notice and three months;
+Land Act s.96: forty days; Land Act s.97: a forced sale valuation) are in
+the Title Deed product's ladder; lender-rules does not yet specify them
+(§12).
 
 ## 6 · Interfaces
 
@@ -143,11 +281,16 @@ keeps nothing of theirs.
   clients, applications, loans, collateral, guarantors, payouts,
   repayments, arrears, tasks; each command accepted, refused with a
   reason, or sent to the approval engine.
+- **Collateral** (§5.2): the record and its checklist; a step completed
+  with its evidence's vault link; a custody movement; a possession log
+  entry; a location lookup, with its reason, allowed only in recovery; a release, sent to
+  the approval engine; the register, filtered and exported.
 - **Products:** lender rules' endpoints, including the
   draft, validate, preview, adopt and submit calls the Products screen
   uses (FS-978, FS-981; lender-rules §3).
 - **Events:** in the domain of the product's rule set: `kapu.mfi`, and
-  `kapu.sacco` from R4 (event-bus-kafka §5, FS-1057).
+  `kapu.sacco` from R4 (event-bus-kafka §5, FS-1057); the collateral
+  register's among them (§5.2).
 
 ## 7 · Security and audit
 
@@ -159,6 +302,8 @@ against the person; no Dibon identity holds a product role (AC-09).
 | What | Class | Kept | Personal data |
 |---|---|---|---|
 | Applications, collateral records and their evidence, overrides | Confidential | Seven years after the loan ends | Borrowers', guarantors' |
+| The custody log | Confidential | Seven years after release; twelve from default if the loan went to recovery (DT-21) | Borrowers', and whoever collected for them |
+| The possession log, and each location lookup with its reason | Confidential | As the custody log | Borrowers'; the lookups name who made them |
 | The outbox | Confidential | Until published, then 30 days | As the change |
 
 The loan itself, its schedule and balances are the core's; this service
@@ -189,6 +334,13 @@ on any write the core received that this service did not make (F15).
 | A2 | A product version activated | The core is checked | Its settings match the version, applied through the adapter | MF-07, rule 2 |
 | A3 | A write made directly in Fineract | The nightly check runs | It is found and alerted | rule 2 |
 | A4 | An institution in integrated mode | A loan is disbursed | It is posted to the institution's core through its adapter | rule 2 |
+| A5 | A secured application without its logbook or title | The committee is asked to open it | It is held until the document is attached | RC-09, MF-04 |
+| A6 | A registry notice registered on day 0 | The borrower's copy is not marked sent by the eighth working day | The step is reminded, then escalated, before the tenth | MF-03, MPSR Act s.31(2) |
+| A7 | A loan settled and reconciled, the hold passed | One person releases the original logbook | It is refused until a second person approves | §5.2 rule 5, MD-06 |
+| A8 | A collateral item in Fineract and in this service | The design is checked | Only this service holds it | §5.2 rule 2 |
+| A9 | A notice expiring in six months on a live loan | The night's checks run | A warning is raised to its owner | MF-03, MPSR Act s.30 |
+| A10 | A secured loan with no recovery case open | An officer asks for the vehicle's location | It is refused, and the attempt recorded | §5.2, LQ-34 |
+| A11 | A repossessed vehicle | It is moved from the yard to the sale's venue | The move is recorded, with who and why, before the sale can be marked done | §5.2 |
 
 ## 12 · Open questions
 
@@ -197,9 +349,37 @@ on any write the core received that this service did not make (F15).
 1. Sacco rules: SASRA's regulations read and specified before Kapu Sacco
    (R4).
 2. The split mode (FS-066), owed before its first customer.
+3. Collateral (§5.2, FS-1069): whether one item may secure more than one
+   loan, and how its value is then shared; the land's recovery steps
+   under the Land Act, in lender-rules beside §2.11; and which of Roan
+   Capital's positions keeps the custody log (roan-capital, open answer
+   15).
 
 ## Regulations cited
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-No provisions cited.
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 30 | reg 30(1)(k) | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
+
+**[LR-23](../law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 30 | s. 30 | A registered notice is effective for the period the registrant states, at most ten years; it can be extended only within the six months before it expires, by an amendment notice |
+| s. 31 | s. 31(2) | The Registrar sends the registrant a copy of each registered notice; the registrant sends it to the grantor within ten working days (31(2)), and failing to is an offence (31(3)) |
+| s. 33 | s. 33 | The secured creditor registers an amendment or cancellation notice where a notice exceeds what the grantor authorised, collateral is released, or the security right is extinguished; free of charge, and within ten working days of the grantor's request, or the grantor may go to the Registrar |
+| s. 69 | s. 69 | Anyone affected may redeem the collateral by paying the secured obligation in full with the reasonable cost of enforcement, until it is sold or otherwise disposed of |
+
+**[LR-47](../law/LR-47.md) The Land Act (Cap. 280), formerly No. 6 of 2012.** Regulator: None: the courts apply it; the National Land Commission for public land. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2012/6/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 79 | s. 79, s. 79(3) | A charge is made by an instrument in the prescribed form (79(1)); a charge of a matrimonial home is valid only if the spouse living there also signs or assents (79(3)); a formal charge takes effect only once registered, and gives no remedy until it is (79(5)); holding the title deed alone is an informal charge, a lien by deposit of documents, enforced only by a court's order (79(6), (7)) |
+| s. 90 | s. 90 | After one month in default, a written notice to the chargor (90(1)) stating the default, the amount to pay and a time of at least three months to pay it, or two months for any other default, what follows, and the right to apply to court (90(2)); if not met within ninety days of service, the chargee may sue, appoint a receiver, lease, take possession or sell (90(3)) |
+| s. 96 | s. 96 | A sale only once the time in the s. 90 notice has passed in default (96(1)); then a notice to sell, and no contract of sale completed until forty days after it is served (96(2)); copies to the spouse who consented, co-owners, lessees, other chargees and guarantors, and posted at the land (96(3)) |
+| s. 97 | s. 97 | The chargee owes the chargor, guarantors and later chargees a duty to get the best price reasonably obtainable (97(1)); a forced sale valuation by a valuer before selling (97(2)); a sale 25% or more below market value is presumed a breach, and the chargor may ask a court to void it (97(3)); none of this can be contracted out of (97(7)) |
+| s. 102 | s. 102 | Until the land is sold, the chargor may discharge the charge by paying all it secures, and the chargee then delivers the discharge and the title documents |

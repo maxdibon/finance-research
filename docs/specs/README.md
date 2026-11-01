@@ -64,7 +64,7 @@ By layer, as [the instance](../architecture/instance.md) is drawn (FS-1053).
 
 | Spec | Type | What it covers | Implements | Release |
 |---|---|---|---|---|
-| [lending-service](lending-service.md) | Build | The Kapu lending service: one thin service for MFI and Sacco; what Fineract, Odoo and this service each do; the only writer to the core, through the core adapter; each regulator's rules beside it | mfi, sacco | R1 |
+| [lending-service](lending-service.md) | Build | The Kapu lending service: one thin service for MFI and Sacco; what Fineract, Odoo and this service each do; the only writer to the core, through the core adapter; each regulator's rules beside it; the collateral register (§5.2) | mfi, sacco | R1 |
 | [product-versions](product-versions.md) | Build | The product version: every term of a product in one signed document, in a vocabulary; drafted by the institution, approved by two, applied to the core; what every system prices from | mfi, sacco | R1 |
 | [lender-rules](lender-rules.md) | Build | The CBK lender regulations applied to each loan: the arrears cap, repayment order, pricing, classification, conduct | mfi | R1 |
 | [approval-engine](approval-engine.md) | Build | Approval chains, decisions, step-up, and the hand-off to Fineract | mandates | R1 |

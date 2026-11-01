@@ -11,8 +11,8 @@ depends_on: [observability-grafana]
 used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, messaging, recon, back-office]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970, FS-1053, FS-1057, FS-1054]
-last_reviewed: 2026-10-30
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970, FS-1053, FS-1057, FS-1054, FS-1069]
+last_reviewed: 2026-11-01
 ---
 
 # The event bus on Kafka — component specification
@@ -162,7 +162,7 @@ the domain comes from the rule set the loan's product version names
 | Domain | Events | Producer | Main consumers |
 |---|---|---|---|
 | mandates | `kapu.mandates.request.submitted`, `.step.opened`, `.decision.recorded`, `.step.completed`, `.step.stalled`, `.sla.breached`, `.step.escalated`, `.request.approved`, `.request.declined`, `.request.returned`, `.request.withdrawn`, `.mandate.activated` | Approval engine | The lending service, messaging (T26, T27), recon |
-| mfi | `kapu.mfi.application.submitted`, `.loan.approved`, `.loan.declined`, `.loan.disbursed`, `.loan.settled`, `.loan.variation.issued`, `.loan.variation.accepted`, `.product.version.activated`, `.guarantor.named`, `.guarantor.statement.due`, `.guarantor.notice.issued`, `.guarantee.released`, `.disbursement.delayed`, `.disbursement.returned`, `.collateral.released`, `.complaint.logged`, `.complaint.pending`, `.complaint.resolved`, `.complaint.overdue` | The lending service, for a product under lender rules | Messaging, recon, insights |
+| mfi | `kapu.mfi.application.submitted`, `.loan.approved`, `.loan.declined`, `.loan.disbursed`, `.loan.settled`, `.loan.variation.issued`, `.loan.variation.accepted`, `.product.version.activated`, `.guarantor.named`, `.guarantor.statement.due`, `.guarantor.notice.issued`, `.guarantee.released`, `.disbursement.delayed`, `.disbursement.returned`, `.collateral.verified`, `.collateral.secured`, `.collateral.step.overdue`, `.collateral.recovery.opened`, `.collateral.released`, `.collateral.sold` (lending-service §5.2, FS-1069), `.complaint.logged`, `.complaint.pending`, `.complaint.resolved`, `.complaint.overdue` | The lending service, for a product under lender rules | Messaging, recon, insights |
 | mfi (lender rules) | `kapu.mfi.loan.nonperforming`, `.loan.performing`, `.loan.cap.reached`, `.loan.charge.waived`, `.repayment.allocated`, `.repayment.allocation.mismatch`, `.loan.ladder.changed` | Lender rules | Messaging, recon, insights |
 | sacco (R4) | The same names as `kapu.mfi` for the same facts, and Sacco rules' own, specified with them | The lending service, for a product under Sacco rules; Sacco rules | Messaging, recon, insights |
 | core | `kapu.core.loan.approved`, `.loan.disbursed`, `.repayment.posted`, `.transaction.reversed`, `.loan.closed`, `.checkpoint` | Kapu Core, through the adapter (kapu-core-fineract §5) | Recon, lender rules |
