@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032, FS-1053, FS-1055]
-last_reviewed: 2026-10-30
+review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032, FS-1053, FS-1055, FS-1070]
+last_reviewed: 2026-11-01
 ---
 
 # One instance, as R1 deploys it
@@ -90,7 +90,7 @@ Each layer asks only the one below it, as the arrows show; every change goes on 
 | DEPOSITS SERVICE | Deposit accounts, in native mode | [deposits-service](../specs/deposits-service.md) |
 | CORE ADAPTER | One interface to the core: Kapu Core, or the institution's own | [lending-service](../specs/lending-service.md) |
 | BACK-OFFICE GATEWAY | The back office's jobs, through one adapter per ERP | [back-office](../specs/back-office.md) |
-| VAULT | Signed documents and their evidence | identity ID-15; to write |
+| VAULT | Every document carrying personal data, and its evidence | [vault](../specs/vault.md) |
 | APPROVAL ENGINE | Approval chains and decisions, step-up at each | [approval-engine](../specs/approval-engine.md) |
 | LENDER RULES | The CBK lender regulations applied to each loan | [lender-rules](../specs/lender-rules.md) |
 | END-OF-DAY RUNNER | The night's close: checks, Fineract's close, ours | [end-of-day-runner](../specs/end-of-day-runner.md) |

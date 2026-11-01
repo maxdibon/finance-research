@@ -8,7 +8,7 @@ law: LR-03
 released: unreleased
 release: R1
 implements: [mfi, sacco]
-depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, deposits-service, product-versions]
+depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, deposits-service, product-versions, vault]
 used_by: [staff-workspace, kapu-console, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
@@ -77,7 +77,7 @@ the whole instance, in layers, is architecture/instance.md.
 [sacco](../modules/sacco.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
 [approval-engine](approval-engine.md), [lender-rules](lender-rules.md),
-[back-office](back-office.md) and [deposits-service](deposits-service.md);
+[back-office](back-office.md), [deposits-service](deposits-service.md) and [vault](vault.md);
 used by [staff-workspace](staff-workspace.md) and
 [kapu-console](kapu-console.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md),

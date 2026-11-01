@@ -7,12 +7,12 @@ status: draft
 released: unreleased
 release: phase 2
 implements: [mfi]
-depends_on: [lending-service, back-office]
+depends_on: [lending-service, back-office, vault]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-926, FS-993, FS-995, FS-996, FS-997, FS-999, FS-1000, FS-1002, FS-1004, FS-1005, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-926, FS-993, FS-995, FS-996, FS-997, FS-999, FS-1000, FS-1002, FS-1004, FS-1005, FS-1058, FS-1070]
+last_reviewed: 2026-11-01
 ---
 
 # Lending partners — build specification
@@ -60,7 +60,7 @@ is decisioning's (DE-01); paying a partner, which is rails'.
 ```
 
 **Related:** implements [mfi](../modules/mfi.md); depends on
-[lending-service](lending-service.md) and [back-office](back-office.md);
+[lending-service](lending-service.md), [back-office](back-office.md) and [vault](vault.md), where its due diligence is filed;
 used by none yet; the intake is recon's (RO-01).
 
 ## 2 · Concepts
