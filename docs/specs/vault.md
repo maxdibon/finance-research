@@ -12,7 +12,7 @@ depends_on: [access-keycloak, event-bus-kafka]
 used_by: [lending-service, back-office, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-491, FS-500, FS-525, FS-527, FS-532, FS-537, FS-1022, FS-1069, FS-1070, FS-1071]
+review_ids: [FS-491, FS-500, FS-525, FS-527, FS-532, FS-537, FS-1022, FS-1069, FS-1070, FS-1071, FS-1072]
 last_reviewed: 2026-11-01
 ---
 
@@ -113,9 +113,11 @@ document type is, how long it is kept and where it lives:
 1. **Every document carrying personal data is here;** when in doubt,
    here. A type moves out only by decision (architecture §6, FS-527).
 2. **One file, here; elsewhere a link.** Other systems keep our
-   reference and the vault's id, never the file. The one exception is a
-   signature's own tool, which keeps its signed copy as its evidence
-   (back-office rule 6; §12).
+   reference and the vault's id, never the file. The one exception, by
+   decision: a signed document is kept in both, as the signing tool keeps
+   its signed copy and certificate as the signature's own evidence;
+   everyone else reads the vault's (architecture §6, back-office rule 6,
+   FS-1072).
 3. **Nothing in unchecked.** Each upload's type is checked against what
    it claims to be, scanned for malware (ClamAV, run unmodified as a
    separate service, FS-525), and images are re-encoded, which strips
@@ -148,6 +150,19 @@ document type is, how long it is kept and where it lives:
    whose reference, when, under which rule; never the content.
 9. **One vault per institution, in its own instance** (FS-491, FS-500):
    its own buckets, keys and database; no document crosses institutions.
+
+**What starts each clock.** A type's retention runs from an event
+(docs/documents.md, the catalogue's clock letter). The vault can delete
+on time only if it hears that event; until then the clock has not
+started, and the document is kept.
+
+| Clock | Runs from | How the vault hears it |
+|---|---|---|
+| D | The document's own date | It knows: the date is on the record |
+| T | The transaction, or the loan's closing | `kapu.core.loan.closed` on the bus |
+| E | The end of employment | `kapu.backoffice.staff.left`, from the staff records in the back office |
+| R | The end of the customer relationship | **No event yet** (§13, question 3) |
+| Twelve years from default | A secured loan written off or sent to recovery (docs/documents.md) | `kapu.mfi.collateral.recovery.opened`; a write-off has no event yet (§13, question 3) |
 
 ## 4 · States
 
@@ -281,19 +296,20 @@ events: they go to the access log (§7).
 
 **For the owner:**
 
-1. **Two copies of a signed document.** Architecture §6 says "a file
-   never sits in both" the vault and Odoo; back-office rule 6 keeps the
-   signed copy in both, as Odoo Sign holds its own evidence. Confirm the
-   exception, or keep only Odoo Sign's certificate there (FS-1070).
-2. **Object lock on Azure Stack Hub:** whether its Blob storage locks a
+1. **Object lock on Azure Stack Hub:** whether its Blob storage locks a
    file for a retention set per file, as rule 8 needs; if not, the lock
    is the vault's own, and weaker (a question for Liquid, FS-048).
-3. **How long a link lives:** proposed 15 minutes and one use; the
+2. **How long a link lives:** proposed 15 minutes and one use; the
    quarantine's 7 days likewise proposed.
-4. **Clocks started elsewhere:** a type whose clock starts at an event the
-   vault does not see (a staff member leaving, a relationship ending in
-   Odoo) needs that event from the back office (back-office's staff and
-   party events); which types, and from where, listed with the catalogue.
+3. **Who says a customer relationship has ended?** Most identity and
+   KYC documents are kept seven years from the end of the relationship
+   (clock R), but nothing in the design announces that end: a customer
+   may close their last loan and come back next year. Proposed: the
+   relationship ends when the person has had no live loan, account or
+   guarantee for a period the institution sets (a year, say), declared
+   by the lending service as an event; until then the clock does not
+   start. The same for a write-off, which needs its own event before
+   the twelve-year clock can start.
 
 ## Regulations cited
 

@@ -11,7 +11,7 @@ depends_on: [access-keycloak, event-bus-kafka, vault]
 used_by: [messaging, recon, lending-service, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-644, FS-965, FS-966, FS-967, FS-968, FS-969, FS-970, FS-971, FS-983, FS-1052, FS-1058, FS-1054, FS-1070]
+review_ids: [FS-644, FS-965, FS-966, FS-967, FS-968, FS-969, FS-970, FS-971, FS-983, FS-1052, FS-1058, FS-1054, FS-1070, FS-1072]
 last_reviewed: 2026-11-01
 ---
 
@@ -134,7 +134,8 @@ depends on [access-keycloak](access-keycloak.md),
    queues what it cannot deliver and delivers it in order when the ERP
    is back (architecture §2, availability).
 6. **Nothing is lost by leaving.** A signed document and its evidence
-   are filed in the vault (ID-15) as well as the ERP (messaging §3); and
+   are filed in the vault (ID-15) as well as the ERP (messaging §3), the
+   one file kept in both, by decision (FS-1072); and
    every record exports in open formats (CSV or JSON, and the files),
    with our references, tested each quarter (A6).
 7. **One contract test suite.** Every adapter passes the same suite
