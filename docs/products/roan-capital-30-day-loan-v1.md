@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830, FS-934, FS-981, FS-1044, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830, FS-934, FS-981, FS-1044, FS-1058, FS-1061]
+last_reviewed: 2026-11-01
 ---
 
 # Roan Capital · Biashara, the 30-day loan · product version 1 · proposed
@@ -70,7 +70,7 @@ Published once approved.
 | A4 | Interest method | Flat, on the principal | Roan Capital's weekly update, 21 October; the prototype | Confirm |
 | A5 | Interest rate and its unit | 1% a day, flat (KES 3,000 on KES 10,000 over 30 days); to revisit if CBK declines the pricing; CBK's approval (reg 55) to record | Roan Capital's weekly update, 21 October; Roan Capital's application form | Confirm |
 | A6 | Fees | Membership, KES 100, once per client, and application, KES 500, on the first loan: both paid upfront, non-refundable. On later loans, application, KES 500 (KES 3,000 to 19,999) or KES 1,000 (KES 20,000 to 100,000), deducted at disbursement. On every loan: remittance, KES 120; chattels mortgage, KES 500 (KES 5,001 to 9,999) or KES 1,000 (KES 10,000 to 100,000); both deducted at disbursement. One question: on a first loan of KES 20,000 or more, is the application fee KES 500 or KES 1,000? | Roan Capital's application form; the prototype | Confirm |
-| A7 | Insurance | The Life Income Fund ("LIF"), KES 200 on every loan, deducted at disbursement: what it covers, and whether it is a fee or a third party's cost (LQ-03) | Roan Capital's weekly update, 21 October; Roan Capital's application form | Provide |
+| A7 | Insurance | The Life Income Fund ("LIF"), KES 200 on every loan, deducted at disbursement. Our team understands it as an additional fee of Roan Capital's own, not insurance; if so, it is disclosed with the fees in the agreement and the APR, and taxed as a fee (A6, A17). What does it cover? (LQ-03) | Roan Capital's weekly update, 21 October; Roan Capital's application form | Provide |
 | A8 | Default interest | 1% a day on overdue daily instalments, until the arrears are cleared | Roan Capital's application form; the prototype (open answer 3) | Confirm |
 | A9 | Default period | We suggest 30 days past due, the longest reg 57 allows; shorter only if your agreement says so. Non-performing from day 61 if 30 | The regulations; Dibon's suggestion | Choose: 30 days / Shorter (give the days) |
 | A10 | Collection ladder | Reminder day 25; default run days 30 to 40; final warning days 40 to 47; closure day 47 | The requirement document (RC-27) | Confirm |

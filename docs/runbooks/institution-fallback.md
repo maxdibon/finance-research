@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-1037, FS-1064, FS-1065]
+last_reviewed: 2026-11-01
 ---
 
 # An institution's fallback
@@ -38,12 +38,13 @@ sign in, pay out or see balances.
 | # | Step | Who |
 |---|---|---|
 | 1 | **Enter the fallback,** and tell the staff | [The deciding role] |
-| 2 | **Collections:** nothing to do; M-Pesa still pays into the paybill (SE-24) | — |
+| 2 | **Collections:** nothing to do; M-Pesa still pays into the paybill (SE-24), and a confirmation the platform missed is found afterwards by Pull Transactions (RL-20) | — |
 | 3 | **Urgent payouts only,** by the bank's own portal, within the limit, each written in the fallback log with the borrower, amount and reason | [The paying role] |
 | 4 | **Approvals** follow the institution's documented manual procedure; each written in the log | [The approvers] |
 | 5 | **Borrowers asking:** told of the delay by the agreed message; nothing promised about balances | [Customer-facing role] |
 | 6 | **Leave the fallback** when Dibon reopens the service | [The deciding role] |
-| 7 | **Bring it back in:** every manual act entered as a `manual.act`, approved afterwards by its approvers; every hand payout matched to the rail's statement, so none is paid twice | [The approvers]; Dibon's on-call engineer checks the matching |
+| 7 | **Hand payouts first:** every hand payout in the fallback log entered as a `manual.act` and matched to the rail's statement; until then the payouts that were waiting stay held, since a bank's statement can lag a payout made in its portal (proposed, FS-1065) | [The paying role]; Dibon's on-call engineer checks the matching |
+| 8 | **Then the rest:** the waiting payouts released; every other manual act entered, approved afterwards by its approvers | [The approvers] |
 
 ## 4 · Check it worked
 
