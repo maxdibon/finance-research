@@ -150,14 +150,16 @@ const openAnswers = (text) => {
   return { open: nums(part('Open')), answered: nums(part('Answered')) };
 };
 function stampCustomer(id, version, page, party) {
-  const rows = registerRows(fs.readFileSync(path.join(ROOT, 'docs', 'document-register.md'), 'utf8'), party);
+  const rows = registerRows(fs.readFileSync(path.join(ROOT, 'docs', 'governance', 'document-register.md'), 'utf8'), party);
   const tally = {};
   for (const r of rows) tally[`${r.kind.toLowerCase()} ${r.status}`] = (tally[`${r.kind.toLowerCase()} ${r.status}`] || 0) + 1;
   const oa = openAnswers(fs.readFileSync(page, 'utf8'));
   const head = `Documents ${rows.length} (${Object.entries(tally).map(([k, n]) => `${n} ${k}`).join(', ')}); open answers ${oa.open.length} open, ${oa.answered.length} answered.`;
   const prev = previousTag(id, version);
   if (!prev) return `${head} The first dated release: nothing earlier to compare.`;
-  const oldRows = new Map(registerRows(git(['show', `${prev}:docs/document-register.md`]), party).map((r) => [r.id, r]));
+  // FS-1053: the register moved into docs/governance/; an older release has it at its old path.
+  const was = (p) => { try { return git(['show', `${prev}:${p}`]); } catch { return git(['show', `${prev}:docs/document-register.md`]); } };
+  const oldRows = new Map(registerRows(was('docs/governance/document-register.md'), party).map((r) => [r.id, r]));
   const added = rows.filter((r) => !oldRows.has(r.id)).map((r) => r.id);
   const moved = rows.filter((r) => oldRows.has(r.id) && oldRows.get(r.id).status !== r.status).map((r) => `${r.id} ${oldRows.get(r.id).status} to ${r.status}`);
   const answered = oa.answered.filter((n) => !openAnswers(git(['show', `${prev}:${rel(page)}`])).answered.includes(n));

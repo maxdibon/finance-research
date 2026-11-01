@@ -151,7 +151,7 @@ node design/portfolio-pdf/build.js --edition short   # one edition
 node design/portfolio-pdf/build.js --html-only   # pages only, no PDF
 node design/portfolio-pdf/measure.js    # after a copy change: every page fits
 node design/bank-channel-proposal/build.js --for "Bank"   # the two-page proposal
-node design/system/build.js page.html   # any document on the design system (docs/design-system.md)
+node design/system/build.js page.html   # any document on the design system (docs/company/design-system.md)
 ```
 
 The names check reads `sources/confidential/protected-names.txt`, which is
@@ -193,7 +193,7 @@ fresh clone needs the list before it can commit.
    issue tracker, each story reads "As a *role*, I want *something*, so
    that *benefit*", and cites its journey step (`JN-04 7`), its
    capability (`MF-11`) and the acceptance items that prove it done
-   (docs/testing.md §1).
+   (docs/delivery/testing.md §1).
 
 ## What git does not see, and why
 

@@ -82,7 +82,7 @@ cannot read (rule 5).
 [back-office](back-office.md) (signed documents, rule 6) and
 [lending-partners](lending-partners.md) (due diligence); what each
 document type is, how long it is kept and where it lives:
-[documents](../documents.md); journeys
+[documents](../governance/documents.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md) and
 [JN-14](../journeys/loan-settled.md).
 
@@ -90,7 +90,7 @@ document type is, how long it is kept and where it lives:
 
 - **A document:** one file and its record: its type, whose it is, the
   records it belongs to, its checksum, when it arrived and from where.
-- **A document type:** a row of the catalogue (docs/documents.md, DT-01
+- **A document type:** a row of the catalogue (docs/governance/documents.md, DT-01
   onwards): its class, its retention, and so who may see it and when it
   goes.
 - **Whose it is:** the person or business it is about, by reference to
@@ -145,14 +145,14 @@ document type is, how long it is kept and where it lives:
 8. **Kept for its type's retention, then gone.** Locked against deletion
    until the clock ends; then deleted with its versions, its replica at
    site B and its backups, by the vault itself, no one having to
-   remember (docs/documents.md; Data Protection Act s.39; privacy PR-15).
+   remember (docs/governance/documents.md; Data Protection Act s.39; privacy PR-15).
    A legal hold stops the clock. Each deletion is logged: what type,
    whose reference, when, under which rule; never the content.
 9. **One vault per institution, in its own instance** (FS-491, FS-500):
    its own buckets, keys and database; no document crosses institutions.
 
 **What starts each clock.** A type's retention runs from an event
-(docs/documents.md, the catalogue's clock letter). The vault can delete
+(docs/governance/documents.md, the catalogue's clock letter). The vault can delete
 on time only if it hears that event; until then the clock has not
 started, and the document is kept.
 
@@ -162,7 +162,7 @@ started, and the document is kept.
 | T | The transaction, or the loan's closing | `kapu.core.loan.closed` on the bus |
 | E | The end of employment | `kapu.backoffice.staff.left`, from the staff records in the back office |
 | R | The end of the customer relationship: nothing live for the period the institution set at onboarding (OB-COM-26) | `kapu.mfi.relationship.ended` (or `kapu.sacco`), from the lending service; `.relationship.resumed` stops the clock if they return (lending-service rule 9, FS-1073) |
-| Twelve years from default | A secured loan written off or sent to recovery (docs/documents.md) | `kapu.mfi.collateral.recovery.opened`, or `kapu.core.loan.written_off` |
+| Twelve years from default | A secured loan written off or sent to recovery (docs/governance/documents.md) | `kapu.mfi.collateral.recovery.opened`, or `kapu.core.loan.written_off` |
 
 ## 4 · States
 
@@ -231,7 +231,7 @@ events: they go to the access log (§7).
 
 | What | Class | Kept | Personal data |
 |---|---|---|---|
-| The files, in object storage | As their type: Confidential; ID images and biometric captures Restricted | Their type's retention (docs/documents.md), then deleted | Whoever each is about |
+| The files, in object storage | As their type: Confidential; ID images and biometric captures Restricted | Their type's retention (docs/governance/documents.md), then deleted | Whoever each is about |
 | Each document's record: type, whose, records, checksum, versions, the clock, holds | Confidential | With its document, then the deletion log | References only |
 | The access log | Confidential | Seven years | Who read what |
 | The deletion log | Internal | For the life of the institution | References only |
@@ -274,7 +274,7 @@ events: they go to the access log (§7).
 | Denial of service | A flood of uploads, or a large file | Upload addresses issued per record and short-lived; size limits per type; the scanner queues |
 | Elevation of privilege | A malicious file run by whoever opens it | Type checks, scanning and re-encoding before anyone reads it (rule 3) |
 | Linkability (LINDDUN) | Documents joined across institutions to profile a person | One vault per institution (rule 9); references opaque and per institution |
-| Unawareness (LINDDUN) | A person not knowing what is kept, or for how long | The privacy notice names the types and periods (docs/documents.md); a person sees their own documents (ID-27) |
+| Unawareness (LINDDUN) | A person not knowing what is kept, or for how long | The privacy notice names the types and periods (docs/governance/documents.md); a person sees their own documents (ID-27) |
 | Non-compliance (LINDDUN) | A document kept past its period | Deletion by the vault on its clock, logged (rule 8); "no deletion overdue" watched (§10) |
 
 ## 12 · Acceptance tests

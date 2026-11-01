@@ -26,7 +26,7 @@ move to 1 hour as the rota grows (platform-security §3).
 
 | Role | People | Notes |
 |---|---|---|
-| DevSecOps | 3, a fourth being hired (FS-474); one of the three also builds (FS-477) | The on-call rota; one week in three is heavy, one in four is workable. They run the platform; they are not the build team (docs/delivery-plan.md) |
+| DevSecOps | 3, a fourth being hired (FS-474); one of the three also builds (FS-477) | The on-call rota; one week in three is heavy, one in four is workable. They run the platform; they are not the build team (docs/delivery/delivery-plan.md) |
 | Customer experience | 2, both shared | One is also the project manager, the other the administrator |
 | Odoo implementation consultants | 2; one also builds R1 (FS-477) | Business suite and SME Recon |
 | Compliance and risk officer | 0 (in discussion) | |

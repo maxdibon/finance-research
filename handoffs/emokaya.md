@@ -23,7 +23,7 @@ here.
   (download, save, upload, share, release).
 - **Customer-safe, even inside:** frame what a customer is working towards;
   never judge its systems.
-- **Documents share a look** (docs/design-system.md), consistent, not
+- **Documents share a look** (docs/company/design-system.md), consistent, not
   identical, a little whimsy in the margins only.
 - **Attribution matters:** his work is his, Claude's is Claude's (FS-886,
   FS-905).
@@ -33,7 +33,7 @@ here.
 - **Document, don't build** (FS-1016): design and write it down; frame
   choices as design decisions, never as steps "before building".
 - **Track legal concerns** (FS-1023): every legal uncertainty becomes an
-  LQ row in docs/legal-questions.md in the same pass; name the new LQ ids
+  LQ row in docs/governance/legal-questions.md in the same pass; name the new LQ ids
   in the reply.
 - **Show where it landed:** after a batch of work, say where each piece is
   in the reader, with its links.

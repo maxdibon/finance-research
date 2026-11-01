@@ -37,7 +37,7 @@ opens the conversation; the meeting closes these.
 | 7 | Its certifications (ISO 27001 and others) and audit reports for the data centre | Evidence for our approval pack |
 | 8 | Exit: data returned and purged, and help to move | Approval pack item 14 |
 | 9 | Sophos managed detection and response: machines covered (servers, laptops, Kubernetes nodes), what it may do without asking, how fast it calls us, where telemetry is processed, price per machine, whether we may resell it | SE-13, SE-14; the incident commitments (FS-466, FS-471) |
-| 10 | Partner terms: hosting as an independent software vendor, reselling to financial institutions, in-country billing in shillings, any start-up credits | Runway before the first contract (docs/operating-model.md) |
+| 10 | Partner terms: hosting as an independent software vendor, reselling to financial institutions, in-country billing in shillings, any start-up credits | Runway before the first contract (docs/company/operating-model.md) |
 | 11 | Its Azure Stack in Uganda, Tanzania, Rwanda, Zambia, Zimbabwe and Nigeria | The ready markets (FS-105, FS-371) |
 | 12 | GPU capacity in Kenya | Self-hosted models (insights IN-08) |
 | 13 | Whether consumption on Liquid's Stack counts towards Microsoft's partner programme | Microsoft partner designations (PT-52); unverified |

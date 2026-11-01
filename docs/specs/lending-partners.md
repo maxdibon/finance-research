@@ -192,7 +192,7 @@ source's, as operators' agreements require (FS-1002):
 
 | What | Where | Protected by | Kept |
 |---|---|---|---|
-| The company: its record, contacts, directors and owners | Odoo, through the gateway | Staff sign-in through access; the partner manager and compliance only | While a partner, then as Dibon's records rules say (docs/documents.md) |
+| The company: its record, contacts, directors and owners | Odoo, through the gateway | Staff sign-in through access; the partner manager and compliance only | While a partner, then as Dibon's records rules say (docs/governance/documents.md) |
 | Due diligence and KYB evidence, signed agreements | The document vault (ID-15) | Each file encrypted under keys in OpenBao; access logged | As the agreement's and the regulations' records rules say |
 | Settlement accounts, caps, first loss, status; relationships and their limits | This service's own database (PostgreSQL, a primary and a synchronous standby) | Encrypted at rest; every change an approved request, every read logged | While a partner and its loans run, then seven years |
 | Consents, per person and partner | The back office's consent store (MS-11), through the gateway, with the time, the channel and the text consented to | As the back office | While the relationship runs, then with the loan file |

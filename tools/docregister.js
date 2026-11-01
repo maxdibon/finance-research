@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// The document register's table (docs/document-register.md; FS-835,
+// The document register's table (docs/governance/document-register.md; FS-835,
 // FS-857), read by its header, so a column added or moved changes this file
 // only, and an older register (at an earlier release's tag) still reads.
 // Every tool that reads or writes the register comes here.
@@ -47,7 +47,7 @@ function parse(text) {
 const row = (o) => `| ${COLUMNS.map(([k]) => String(o[k] ?? '—').replace(/\|/g, '/')).join(' | ')} |`;
 
 // ── each customer's documents ────────────────────────────────────────────
-const MARK = '*Generated from the [document register](../document-register.md) by tools/docregister.js: edit the register, never this table.*';
+const MARK = '*Generated from the [document register](../governance/document-register.md) by tools/docregister.js: edit the register, never this table.*';
 const SHOWN = [['id', 'Id'], ['title', 'Title'], ['summary', 'Summary'], ['kind', 'Kind'], ['status', 'Status'], ['date', 'Date'], ['from', 'From']];
 function table(registerText, party) {
   const mine = parse(registerText).rows.filter((r) => r.party === party);
@@ -72,7 +72,7 @@ function refresh(root, id) {
   const raw = fs.readFileSync(p, 'utf8');
   const b = block(raw);
   if (!b) return false;
-  const want = table(fs.readFileSync(path.join(root, 'docs', 'document-register.md'), 'utf8'), partyOf(raw));
+  const want = table(fs.readFileSync(path.join(root, 'docs', 'governance', 'document-register.md'), 'utf8'), partyOf(raw));
   if (b.text === want) return false;
   const t = norm(raw);
   const out = t.slice(0, b.from) + want + t.slice(b.to);

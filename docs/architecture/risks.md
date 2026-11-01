@@ -32,4 +32,4 @@ Each row points to its register row, where its status lives.
 | The bastion not chosen | Engineers' sessions unrecorded | Evaluate Warpgate (Apache-2.0) before R1 go-live | FS-645, FS-695 |
 | One AGPL module inside Odoo | A change to it would have to be published | Never modified | FS-646 |
 | Event names drift from the catalogue | Services diverge again | Every name from the event bus catalogue; a name not in it is not published | FS-667 |
-| Counsel's answers on restructuring | Relief delayed thirty days | Ask counsel: LQ-06, LQ-07 (docs/legal-questions.md) | FS-624 |
+| Counsel's answers on restructuring | Relief delayed thirty days | Ask counsel: LQ-06, LQ-07 (docs/governance/legal-questions.md) | FS-624 |

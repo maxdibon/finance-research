@@ -242,7 +242,7 @@ Statuses: proposed (by Dibon, for Roan Capital to adopt), draft, awaiting approv
 Roan Capital's workspace in Dibon's Odoo Documents exists (FS-805); the
 product drafts themselves are in docs/products/ by exception (FS-806).
 
-*Generated from the [document register](../document-register.md) by tools/docregister.js: edit the register, never this table.*
+*Generated from the [document register](../governance/document-register.md) by tools/docregister.js: edit the register, never this table.*
 
 | Id | Title | Summary | Kind | Status | Date | From |
 |---|---|---|---|---|---|---|

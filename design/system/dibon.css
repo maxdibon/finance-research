@@ -1,7 +1,7 @@
 /* Dibon's document design system (FS-781): one stylesheet for every
    printed document, so that they look like one house without being one
    template. The tokens and components are the portfolio's and the
-   outreach letters'; the guide is docs/design-system.md.
+   outreach letters'; the guide is docs/company/design-system.md.
 
    Use: link this file from a page built on design/system/template.html,
    then print it with `node design/system/build.js <page.html>`. */
@@ -112,7 +112,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .sign .line { width: 60mm; border-bottom: 0.3mm solid var(--ink); height: 12mm; margin-bottom: 1.5mm; }
 .sign .role { font: 600 8pt/1.3 var(--display); color: var(--muted); }
 
-/* ── Whimsy: a little, in the margins (docs/design-system.md §5) ────── */
+/* ── Whimsy: a little, in the margins (docs/company/design-system.md §5) ────── */
 /* Corner line-art, top right of a page or a header band */
 .corner { position: absolute; top: 0; right: 0; width: 70mm; height: 40mm; fill: none; stroke: var(--amber); stroke-width: 1.6; stroke-linecap: round; pointer-events: none; }
 .corner .dot { fill: var(--amber); stroke: none; }

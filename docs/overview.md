@@ -47,7 +47,7 @@ money instead of five that disagree.
 4. **Compliance built in, not bolted on.** What our customers answer to,
    the lender rules, sanctions screening, data protection, records, is a
    capability in the product, checked like any other, not a report added
-   later (financial-crime; mfi MF-21 to MF-29; docs/regulation.md; FS-484).
+   later (financial-crime; mfi MF-21 to MF-29; docs/governance/regulation.md; FS-484).
 5. **Dibon never moves an institution's money, and whoever acts is proven
    at the act.** No Dibon role, break-glass included, may initiate,
    approve or release an institution's payment; anything that moves money,
@@ -55,7 +55,7 @@ money instead of five that disagree.
    only at login (docs/architecture/README.md §3, §7; FS-588).
 6. **Delightful to use.** The right thing is the easy thing: what a person
    must do is obvious, fast and forgiving; what we cannot make obvious we
-   teach (docs/experience.md; FS-660).
+   teach (docs/company/experience.md; FS-660).
 
 ## Who it is for
 
@@ -70,7 +70,7 @@ for licensed institutions; Dibon does not become a bank (FS-379).
 Kenya is our home market. Uganda, Tanzania, Rwanda, Zambia, Zimbabwe and
 Nigeria are ready markets, following Liquid's Azure Stack footprint
 (FS-105, FS-371). Each country brings its own licence, data rules and
-partners (FS-109; docs/partners.md; docs/compliance.md).
+partners (FS-109; docs/market/partners.md; docs/governance/compliance.md).
 
 Collect and the Gateway ran in production at Onit Bank, with W-Harambee,
 from February 2025 to June 2026 (FS-390), on M-Pesa. Since 2021 we have
@@ -79,14 +79,14 @@ work on its loan engine, and the USSD platform that carried its digital
 lending from 2022 to 2025. For NBK: the SMS gateway and its operator
 connections. Much of it is ongoing, with new integration work for KCB and
 shortcodes and USSD for NBK in 2026 (FS-416, FS-419, FS-443). We are in
-discussion with new partner banks (docs/partners.md). Roan Capital is in delivery on
+discussion with new partner banks (docs/market/partners.md). Roan Capital is in delivery on
 Kapu MFI (docs/customers.md).
 
 Dibon is the first customer of its own products: the Gateway carries our
 own payments first, and insights runs on our own data first (FS-033).
 
 **Where we are:** R1 is Roan Capital's pilot on Kapu MFI. What it
-includes, release by release, is in [the delivery plan](delivery-plan.md);
+includes, release by release, is in [the delivery plan](delivery/delivery-plan.md);
 how each R1 component is built or run is in [the specs](specs/README.md);
 what each person goes through is in [the journeys](journeys/README.md).
 
@@ -149,10 +149,10 @@ what each person goes through is in [the journeys](journeys/README.md).
 | If you want | Read |
 |---|---|
 | Each institution's products, as product version documents, drafts included; the kinds of loan we can describe; briefs on products hard to do alone | [products/](products/README.md), with [loan-kinds.md](products/loan-kinds.md) and [the briefs](products/briefs/README.md) |
-| What eighteen of Kenya's institutions sell, from tier 1 banks to Saccos and digital lenders, against what we support | [product-landscape.md](product-landscape.md) |
-| Every app and channel, who uses it, and one way in for people with several roles | [channels.md](channels.md) |
-| Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |
-| Which partners we are talking to | [partners.md](partners.md) |
+| What eighteen of Kenya's institutions sell, from tier 1 banks to Saccos and digital lenders, against what we support | [product-landscape.md](market/product-landscape.md) |
+| Every app and channel, who uses it, and one way in for people with several roles | [channels.md](market/channels.md) |
+| Which competitors we meet, and what we learn from each | [competitors.md](market/competitors.md) |
+| Which partners we are talking to | [partners.md](market/partners.md) |
 
 **Design and build**
 
@@ -162,8 +162,8 @@ what each person goes through is in [the journeys](journeys/README.md).
 | Why something was decided, and what it cost | [decisions.md](decisions.md) |
 | How each component is built or run, and how they connect | [specs/](specs/README.md) |
 | What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
-| How it should feel to use, and how we make it intuitive | [experience.md](experience.md) |
-| How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](testing.md) |
+| How it should feel to use, and how we make it intuitive | [experience.md](company/experience.md) |
+| How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](delivery/testing.md) |
 | Reviews: OLP as it stands (26 October 2026), what we need from it being the [OLP spec](specs/olp.md); the architecture, its databases and namespaces counted (27 October); the specs against their template (29 October) | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [reviews/architecture-2026-10-27.md](reviews/architecture-2026-10-27.md); [reviews/specs-2026-10-29.md](reviews/specs-2026-10-29.md) |
 
 **Customers and delivery**
@@ -171,14 +171,14 @@ what each person goes through is in [the journeys](journeys/README.md).
 | If you want | Read |
 |---|---|
 | Who our customers are, and what we are building for each | [customers.md](customers.md), with each customer's delivery map linked from its row |
-| What we build next, release by release | [delivery-plan.md](delivery-plan.md) |
-| The MVP day, 3 November 2026: the goal, the plan and who does what | [mvp-day.md](mvp-day.md) |
-| What a customer and each product need to go live | [onboarding.md](onboarding.md) |
+| What we build next, release by release | [delivery-plan.md](delivery/delivery-plan.md) |
+| The MVP day, 3 November 2026: the goal, the plan and who does what | [mvp-day.md](delivery/mvp-day.md) |
+| What a customer and each product need to go live | [onboarding.md](delivery/onboarding.md) |
 | Starter templates for onboarding a business or a partner, and where every document is kept and seen | [templates/onboarding-pack.md](templates/onboarding-pack.md) |
-| Every document we hold with a party: received, sent or worked on, by DR id; our numbered documents and who received them | [document-register.md](document-register.md) |
+| Every document we hold with a party: received, sent or worked on, by DR id; our numbered documents and who received them | [document-register.md](governance/document-register.md) |
 | What an institution does on the platform, who does it and when: the handbook template | [handbook/](handbook/README.md) |
 | How people learn it: manuals and training, by role | [training/](training/README.md) |
-| Who keeps our commitments, and whom we hire next | [operating-model.md](operating-model.md) |
+| Who keeps our commitments, and whom we hire next | [operating-model.md](company/operating-model.md) |
 
 **Running the service**
 
@@ -188,21 +188,21 @@ what each person goes through is in [the journeys](journeys/README.md).
 | Every deployment, what runs in each, its continuity and its exit | [deployments/README.md](deployments/README.md) |
 | Each component's settings: the baseline every deployment follows, mandatory, default or its own | [settings/README.md](settings/README.md) |
 | The steps for what goes wrong, and for what we do rarely | [runbooks/README.md](runbooks/README.md) |
-| How the service and the company keep going when something fails | [business-continuity.md](business-continuity.md) |
+| How the service and the company keep going when something fails | [business-continuity.md](governance/business-continuity.md) |
 
 **Law and assurance**
 
 | If you want | Read |
 |---|---|
-| Which laws apply to us and our customers, and what each drives | [regulation.md](regulation.md) |
+| Which laws apply to us and our customers, and what each drives | [regulation.md](governance/regulation.md) |
 | What each law we cite says, provision by provision: citation, regulator, what it requires | [law/](law/README.md) |
-| Which licences, registrations and certifications we hold or need | [compliance.md](compliance.md) |
-| What personal data we process, why and for how long | [privacy.md](privacy.md) |
-| What we hold ourselves, our customers and our partners to | [rules.md](rules.md) |
-| What we need counsel to answer, and what each answer changes | [legal-questions.md](legal-questions.md) |
-| Which documents an institution keeps, under which law, for how long | [documents.md](documents.md) |
-| What a customer files with its regulator about us | [approval-pack.md](approval-pack.md) |
-| Testing we offer institutions we do not supply, and its conflict register | [assurance.md](assurance.md) |
+| Which licences, registrations and certifications we hold or need | [compliance.md](governance/compliance.md) |
+| What personal data we process, why and for how long | [privacy.md](governance/privacy.md) |
+| What we hold ourselves, our customers and our partners to | [rules.md](governance/rules.md) |
+| What we need counsel to answer, and what each answer changes | [legal-questions.md](governance/legal-questions.md) |
+| Which documents an institution keeps, under which law, for how long | [documents.md](governance/documents.md) |
+| What a customer files with its regulator about us | [approval-pack.md](governance/approval-pack.md) |
+| Testing we offer institutions we do not supply, and its conflict register | [assurance.md](market/assurance.md) |
 
 **Material for outside**
 
@@ -210,9 +210,9 @@ what each person goes through is in [the journeys](journeys/README.md).
 |---|---|
 | Every word of the portfolio PDF | [marketing/portfolio.md](marketing/portfolio.md) |
 | Every word of the two-page bank channel proposal | [marketing/bank-channel-proposal.md](marketing/bank-channel-proposal.md) |
-| How banks can offer SME Recon and the business suite to their customers | [bank-channel.md](bank-channel.md) |
+| How banks can offer SME Recon and the business suite to their customers | [bank-channel.md](market/bank-channel.md) |
 | Drafts to partners, operators and regulators | [outreach](outreach/README.md) |
-| How our documents look: tokens, components, templates, numbers and a little whimsy | [design-system.md](design-system.md) |
+| How our documents look: tokens, components, templates, numbers and a little whimsy | [design-system.md](company/design-system.md) |
 | How big each market segment is | business/market-sizing.xlsx |
 
 **The register and the reader**

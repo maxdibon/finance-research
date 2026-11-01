@@ -80,7 +80,7 @@ lost.
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
@@ -96,19 +96,19 @@ lost.
 | reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |
 | reg 59 | reg 59 | A pricing model with clear parameters: its components and costs justified, rates that may vary with the borrower's creditworthiness (59(2)(c)), the criteria for non-performance, credit bureau scores, all-inclusive pricing except third-party costs (59(2)(f)), and the APR disclosed |
 
-**[LR-06](law/LR-06.md) The Banking (Credit Reference Bureau) Regulations, 2020, Legal Notice No. 55 of 2020.** Regulator: Central Bank of Kenya. Made under: The Banking Act (Cap. 488), with the Microfinance Act and the Central Bank of Kenya Act. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2020/55/eng@2022-12-31).
+**[LR-06](../law/LR-06.md) The Banking (Credit Reference Bureau) Regulations, 2020, Legal Notice No. 55 of 2020.** Regulator: Central Bank of Kenya. Made under: The Banking Act (Cap. 488), with the Microfinance Act and the Central Bank of Kenya Act. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2020/55/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | reg 2 | reg 2 | Its definitions; a "subscriber" is an institution licensed under the Banking Act, the Microfinance Act or the Sacco Societies Act that has subscribed to receive customer information from a bureau |
 
-**[LR-11](law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
+**[LR-11](../law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 2 | s. 2 | Its definitions; a "payment service provider" includes whoever provides services for sending, receiving, storing or processing payments electronically, and any person that processes or stores data on behalf of such a provider or its users |
 
-**[LR-17](law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+**[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
@@ -118,7 +118,7 @@ lost.
 | s. 32 | s. 32 | Whoever relies on consent proves it was given for the purpose; consent can be withdrawn at any time; it is not freely given where a service is made to depend on consent to processing it does not need |
 | s. 48 | s. 48 | Personal data transferred out of Kenya only with proof of appropriate safeguards given to the Data Commissioner, or where the transfer is necessary on a ground the section lists |
 
-**[LR-23](law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).
+**[LR-23](../law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
@@ -128,27 +128,27 @@ lost.
 | s. 72 | s. 72 | After default, the secured creditor may sell, lease or license the collateral as it is or after commercially reasonable preparation, choosing the method, time and place (72(1), (2)) |
 | s. 73 | s. 73 | A notice of the intended disposition to the grantor, the debtor and any other secured creditor with a registered notice (73(1)), at least five working days before the sale, describing the collateral, the amount owing with an estimate of enforcement costs, the manner and the date (73(2)); not needed where the collateral may perish within ten working days (73(5)) |
 
-**[LR-38](law/LR-38.md) The Unclaimed Financial Assets Act (Cap. 494; No. 40 of 2011).** Regulator: The Unclaimed Financial Assets Authority. Made under: An Act of Parliament. In force: Yes. Version read: as at 2023-07-01, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/40/eng@2023-07-01).
+**[LR-38](../law/LR-38.md) The Unclaimed Financial Assets Act (Cap. 494; No. 40 of 2011).** Regulator: The Unclaimed Financial Assets Authority. Made under: An Act of Parliament. In force: Yes. Version read: as at 2023-07-01, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/40/eng@2023-07-01).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 13 | s. 13 | Assets held in a fiduciary capacity are presumed abandoned if the owner has shown no interest in them for two years after they became payable |
 | s. 14 | s. 14 | A gift certificate, gift card or credit memo is presumed abandoned after five years unclaimed or unused |
 
-**[LR-41](law/LR-41.md) The Auctioneers Act (Cap. 526).** Regulator: The Auctioneers Licensing Board, which licenses auctioneers and hears complaints against them. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1996/5/eng@2022-12-31).
+**[LR-41](../law/LR-41.md) The Auctioneers Act (Cap. 526).** Regulator: The Auctioneers Licensing Board, which licenses auctioneers and hears complaints against them. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1996/5/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 9 | s. 9 | No one carries on business as an auctioneer in Kenya without a licence from the Board (9(1)); doing so is an offence (9(2)) |
 | s. 23 | s. 23 | An auctioneer acts as an officer of the court (23(a)) and under the prescribed rules when repossessing, attaching, storing or selling property under any law or contract (23(b)) |
 
-**[LR-42](law/LR-42.md) The Hire-Purchase Act (Cap. 507).** Regulator: None: the courts apply it. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1968/42/eng@2022-12-31).
+**[LR-42](../law/LR-42.md) The Hire-Purchase Act (Cap. 507).** Regulator: None: the courts apply it. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1968/42/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 15 | s. 15 | Once two-thirds of the hire-purchase price is paid, the owner may recover the goods only by suit (15(1)); taking them otherwise ends the agreement, releases the hirer and lets the hirer and any guarantor recover all they paid (15(2)) |
 
-**[LR-43](law/LR-43.md) The Auctioneers Rules, Legal Notice No. 120 of 1997.** Regulator: The Auctioneers Licensing Board; a court where it directs otherwise. Made under: The Auctioneers Act (Cap. 526), s. 30. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/1997/120/eng@2022-12-31).
+**[LR-43](../law/LR-43.md) The Auctioneers Rules, Legal Notice No. 120 of 1997.** Regulator: The Auctioneers Licensing Board; a court where it directs otherwise. Made under: The Auctioneers Act (Cap. 526), s. 30. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/1997/120/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|

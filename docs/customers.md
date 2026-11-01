@@ -14,7 +14,7 @@ last_reviewed: 2026-10-27
 
 **What this tracks:** every institution we have delivered to or are
 delivering to, its stage, and the capabilities its delivery depends on
-(FS-413). Partners are in docs/partners.md; prospects are not tracked yet.
+(FS-413). Partners are in docs/market/partners.md; prospects are not tracked yet.
 
 **Rules for this file:**
 
@@ -36,7 +36,7 @@ sections (docs/customers/_template.md, FS-837): the engagement;
 requirements against capabilities, each *Covered*, or *Partial* with its
 gap stated, citing the document it came from; what is out of scope; the
 open answers, open and answered; its products; its documents, by DR id in
-the [document register](document-register.md); its people and roles; and
+the [document register](governance/document-register.md); its people and roles; and
 its changelog. **Each delivery has its own version** (rules, Dibon 12):
 1.0 when the customer agrees its requirements and scope, minor versions
 between, cut on the owner's word; the latest is the first entry of its

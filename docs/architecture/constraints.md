@@ -27,7 +27,7 @@ What the architecture may not change, and where each comes from
 | Licences we may use | [README](README.md) §6.1 | Every component chosen |
 | Odoo Enterprise, priced per internal user | README §8; FS-036, FS-644 | Portal users, Sign, API accounts |
 | An institution's core stays authoritative | README §4 | Integrated mode first |
-| A team of four; a rota of three | docs/operating-model.md | Use what exists; build less (delivery plan) |
+| A team of four; a rota of three | docs/company/operating-model.md | Use what exists; build less (delivery plan) |
 
 ## Regulations cited
 

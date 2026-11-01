@@ -199,7 +199,7 @@ None open in the register.
 ## 12 · Sources
 
 - REVIEW.md FS-098, FS-418, FS-421, FS-422, FS-428, FS-431.
-- docs/regulation.md: LR-03, LR-09, LR-11, LR-13 to LR-16.
+- docs/governance/regulation.md: LR-03, LR-09, LR-11, LR-13 to LR-16.
 - ESAAMLG mutual evaluation of Kenya, Sep 2022; ML/TF national risk
   assessment, 2021 (sources/regulation/ke/reports/).
 - youverify, mobile-money fraud prevention in Kenya, Apr 2026 (controls

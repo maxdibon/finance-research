@@ -93,7 +93,7 @@ None: it is not a lender, and its funds are products of its own.
 Its documents are held in clients/lofty-corban/ until Dibon's Odoo
 Documents holds them (rules, Dibon 10). The table is generated (FS-857).
 
-*Generated from the [document register](../document-register.md) by tools/docregister.js: edit the register, never this table.*
+*Generated from the [document register](../governance/document-register.md) by tools/docregister.js: edit the register, never this table.*
 
 No documents registered yet.
 

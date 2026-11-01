@@ -28,7 +28,7 @@ Nothing here is sent as a commitment until it is Ready.
 | Customer | What it must do before using us | Source |
 |---|---|---|
 | Non-deposit-taking lender | Notify CBK at least 30 days before; send our details, background on our shareholders, directors and senior officers, our business record, and what is outsourced. The contract must give CBK access to our premises, books, records, systems and staff. The lender stays liable for us, and may not outsource its final loan decisions, its management, board decisions, the determination of compliance, or management of its loan portfolio | CBK lender regulations 2026, reg 31 (law register LR-03) |
-| Bank or microfinance bank | CBK approval for a material outsourcing, which the draft guideline extends to software as a service, cloud, software development and cyber security services; 14 days' notice for one that is not material; a register of all its providers to CBK by 5 January; annual independent testing, including penetration tests | Draft CBK Prudential Guideline 16 and Guidance Note on third-party providers (Sep and Aug 2026; drafts, to verify against the final texts); docs/compliance.md LC-08 |
+| Bank or microfinance bank | CBK approval for a material outsourcing, which the draft guideline extends to software as a service, cloud, software development and cyber security services; 14 days' notice for one that is not material; a register of all its providers to CBK by 5 January; annual independent testing, including penetration tests | Draft CBK Prudential Guideline 16 and Guidance Note on third-party providers (Sep and Aug 2026; drafts, to verify against the final texts); docs/governance/compliance.md LC-08 |
 | Payment service provider | 30 days' notice to CBK today; prior written approval under the draft Bill | NPS Regulations 2014 (LR-12); draft NPS Bill 2026, cl.30 (LC-07) |
 | Sacco | SASRA's minimum terms for system vendors: IT audits twice a year by a reputable audit firm, penetration tests, unrestricted SASRA access, 24/7 monitoring, incident reports within 12 hours, a bank guarantee of 10% of float | SASRA circular SASRA/GG/1/2023 (LC-05; the circular's text still to read) |
 
@@ -64,7 +64,7 @@ Nothing here is sent as a commitment until it is Ready.
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|

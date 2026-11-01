@@ -158,11 +158,11 @@ test('register: an id missing from every file fails', () => {
 });
 
 test('markup: a file over 200 KB, or a word in angle brackets, fails', () => {
-  const big = runWith((d) => fs.appendFileSync(path.join(d, 'docs', 'testing.md'), `\n${'A long line of filler text for size. '.repeat(6000)}\n`));
+  const big = runWith((d) => fs.appendFileSync(path.join(d, 'docs', 'delivery', 'testing.md'), `\n${'A long line of filler text for size. '.repeat(6000)}\n`));
   assert.deepStrictEqual(names(big), ['markup']);
-  const tag = runWith((d) => patch(d, path.join('docs', 'testing.md'), (t) => `${t}\nCopy it to clients/<customer>/ first.\n`));
+  const tag = runWith((d) => patch(d, path.join('docs', 'delivery', 'testing.md'), (t) => `${t}\nCopy it to clients/<customer>/ first.\n`));
   assert.deepStrictEqual(names(tag), ['markup']);
-  const coded = runWith((d) => patch(d, path.join('docs', 'testing.md'), (t) => `${t}\nCopy it to \`clients/<customer>/\` first.\n`));
+  const coded = runWith((d) => patch(d, path.join('docs', 'delivery', 'testing.md'), (t) => `${t}\nCopy it to \`clients/<customer>/\` first.\n`));
   assert.deepStrictEqual(coded, []);
 });
 
@@ -260,7 +260,7 @@ test('diagrams: a long line in a fence with a language is not a diagram', () => 
   assert.deepStrictEqual(f, []);
 });
 
-const PARTNERS = path.join('docs', 'partners.md');
+const PARTNERS = path.join('docs', 'market', 'partners.md');
 
 test('partners: a stage outside the vocabulary fails', () => {
   const f = runWith((d) => patch(d, PARTNERS, (t) => t.replace(/(\| PT-07 \|(?:[^|]*\|){5}) Candidate \|/, '$1 Warm |')));
@@ -335,7 +335,7 @@ test('public: a capability id in a marketing document fails', () => {
 });
 
 // ── onboarding, claims, decisions (FS-353) ───────────────────────────────
-const ONBOARDING = path.join('docs', 'onboarding.md');
+const ONBOARDING = path.join('docs', 'delivery', 'onboarding.md');
 const PAGES_REST = path.join('design', 'portfolio-pdf', 'pages-rest.js');
 const CLAIMS = path.join('design', 'portfolio-pdf', 'claims.json');
 
@@ -345,7 +345,7 @@ test('onboarding: a product the portfolio sells with no checklist fails', () => 
 });
 
 test('onboarding: a checklist linking a module that does not exist fails', () => {
-  const f = runWith((d) => patch(d, ONBOARDING, (t) => t.replace('Module: [escrow](modules/escrow.md)', 'Module: [escrow](modules/escrow.md)\n\nModule: [lending](modules/lending.md)')));
+  const f = runWith((d) => patch(d, ONBOARDING, (t) => t.replace('Module: [escrow](../modules/escrow.md)', 'Module: [escrow](modules/escrow.md)\n\nModule: [lending](modules/lending.md)')));
   // The broken link also trips the links check (FS-627).
   assert.deepStrictEqual(names(f), ['links', 'onboarding']);
 });
@@ -566,12 +566,12 @@ test('products: every rule across terms behaves as its worked examples say', () 
 });
 
 test('status: a status its kind\'s lifecycle does not allow fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^status: living$/m, 'status: agreed')));
+  const f = runWith((d) => patch(d, path.join('docs', 'governance', 'regulation.md'), (t) => t.replace(/^status: living$/m, 'status: agreed')));
   assert.deepStrictEqual(names(f), ['status']);
 });
 
 test('status: a version field on a document that does not go outside fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^status: living$/m, 'status: living\nversion: 0.2.0')));
+  const f = runWith((d) => patch(d, path.join('docs', 'governance', 'regulation.md'), (t) => t.replace(/^status: living$/m, 'status: living\nversion: 0.2.0')));
   assert.deepStrictEqual(names(f), ['status']);
 });
 
@@ -579,7 +579,7 @@ test('status: a version field on a document that does not go outside fails', () 
 // resolve them.
 test('paths: a short name after a path means the same folder; alone, the nearest', () => {
   const p = require('./paths');
-  const idx = p.index(new Set(['README.md', 'docs/regulation.md', 'docs/privacy.md', 'docs/customers.md', 'docs/modules/collect.md', 'docs/modules/messaging.md', 'docs/specs/messaging.md', 'docs/specs/lender-rules.md', 'docs/journeys/README.md']));
+  const idx = p.index(new Set(['README.md', 'docs/governance/regulation.md', 'docs/governance/privacy.md', 'docs/customers.md', 'docs/modules/collect.md', 'docs/modules/messaging.md', 'docs/specs/messaging.md', 'docs/specs/lender-rules.md', 'docs/journeys/README.md']));
   const walk = (file, text) => {
     let last = '';
     return p.mentions(text).filter((m) => m.name).map((m) => {
@@ -588,7 +588,7 @@ test('paths: a short name after a path means the same folder; alone, the nearest
       return got;
     });
   };
-  assert.deepStrictEqual(walk('docs/service-management/ways-of-working.md', 'docs/regulation.md, privacy.md, customers.md'), ['docs/regulation.md', 'docs/privacy.md', 'docs/customers.md']);
+  assert.deepStrictEqual(walk('docs/service-management/ways-of-working.md', 'docs/governance/regulation.md, privacy.md, customers.md'), ['docs/governance/regulation.md', 'docs/governance/privacy.md', 'docs/customers.md']);
   assert.deepStrictEqual(walk('docs/overview.md', 'docs/modules/collect.md, messaging.md'), ['docs/modules/collect.md', 'docs/modules/messaging.md']);
   assert.deepStrictEqual(walk('docs/specs/lender-rules.md', 'messaging.md'), ['docs/specs/messaging.md']);
   assert.deepStrictEqual(walk('docs/overview.md', 'messaging.md'), [null]);
@@ -657,7 +657,7 @@ test('citations: a statutory rule cited as a reg fails', () => {
 });
 
 test('citations: in a document citing many laws, a cite naming none fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'documents.md'), (t) => t.replace(/^(## [^\n]*\n)/m, '$1\nKept as reg 9 requires.\n')));
+  const f = runWith((d) => patch(d, path.join('docs', 'governance', 'documents.md'), (t) => t.replace(/^(## [^\n]*\n)/m, '$1\nKept as reg 9 requires.\n')));
   assert.ok(names(f).includes('citations'));
 });
 
@@ -679,7 +679,7 @@ test('citations: a card changed without refreshing fails, and refreshing mends i
 });
 
 test('citations: the section for a reader outside Dibon carries no register ids', () => {
-  const s = require('./citations').section(ROOT, 'docs/privacy.md', { external: true });
+  const s = require('./citations').section(ROOT, 'docs/governance/privacy.md', { external: true });
   assert.ok(!/\bLR-\d{2}\b/.test(s) && /Kenya Law/.test(s));
   // FS-900: and spells each provision out.
   const rows = s.split('\n').filter((l) => /^\| (?:section|regulation|rule) \d/.test(l));
@@ -705,17 +705,17 @@ test('status: a kind missing from its lifecycle in Start here fails', () => {
 
 // FS-852: each document says the release it was last released in.
 test('status: a document with no released line fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^released: .*\n/m, '')));
+  const f = runWith((d) => patch(d, path.join('docs', 'governance', 'regulation.md'), (t) => t.replace(/^released: .*\n/m, '')));
   assert.deepStrictEqual(names(f), ['status']);
 });
 
 test('status: a released line naming no release in the changelog fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^released: .*$/m, 'released: 2026.10.14')));
+  const f = runWith((d) => patch(d, path.join('docs', 'governance', 'regulation.md'), (t) => t.replace(/^released: .*$/m, 'released: 2026.10.14')));
   assert.deepStrictEqual(names(f), ['status']);
 });
 
 test('status: a document not yet released says so, and passes', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'regulation.md'), (t) => t.replace(/^released: .*$/m, 'released: unreleased')));
+  const f = runWith((d) => patch(d, path.join('docs', 'governance', 'regulation.md'), (t) => t.replace(/^released: .*$/m, 'released: unreleased')));
   assert.deepStrictEqual(f, []);
 });
 
@@ -780,7 +780,7 @@ test('changes: a well-formed note for the team passes', () => {
   assert.deepStrictEqual(names(f), []);
 });
 
-const DOCREG = path.join('docs', 'document-register.md');
+const DOCREG = path.join('docs', 'governance', 'document-register.md');
 
 test('docregister: citing a DR id the register does not have fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'customers', 'roan-capital.md'), (t) => t.replace('- Capability statuses: the modules named in §2.', '- Capability statuses: the modules named in §2 (DR-999).')));
@@ -843,7 +843,7 @@ test('originals: a kept file that is changed, made writable, or joined by an unr
   fs.rmSync(party, { recursive: true, force: true });
 });
 
-const REG = path.join('docs', 'regulation.md');
+const REG = path.join('docs', 'governance', 'regulation.md');
 
 test('regulation: a Deep law that drives nothing fails', () => {
   const f = runWith((d) => patch(d, REG, (t) => t.replace('| CR-01, CR-03, MF-19, MF-27 | Targeted |', '| — | Targeted |')));
@@ -865,7 +865,7 @@ test('regulation: citing a law the register does not have fails', () => {
   assert.deepStrictEqual(names(f), ['regulation']);
 });
 
-const ASR = path.join('docs', 'assurance.md');
+const ASR = path.join('docs', 'market', 'assurance.md');
 // The row goes at the conflict register's end, before the generated
 // "Regulations cited" (FS-870).
 const engagement = (who, decision) => (t) => {
@@ -931,13 +931,13 @@ test('obligations: a superseded entry requires nothing, and its successor must e
 });
 
 test('obligations: a required file that does not exist fails', () => {
-  const f = runWith((d) => patchDecisions(d, (t) => t.replace('docs/operating-model.md "Runbooks to write first"', 'docs/specs/recovery.md')));
+  const f = runWith((d) => patchDecisions(d, (t) => t.replace('docs/company/operating-model.md "Runbooks to write first"', 'docs/specs/recovery.md')));
   // The missing path also trips the links check (FS-627).
   assert.deepStrictEqual(names(f), ['links', 'obligations']);
 });
 
 test('obligations: required text the file no longer says fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'operating-model.md'), (t) => t.replace('**Runbooks to write first**', '**Runbooks**')));
+  const f = runWith((d) => patch(d, path.join('docs', 'company', 'operating-model.md'), (t) => t.replace('**Runbooks to write first**', '**Runbooks**')));
   assert.deepStrictEqual(names(f), ['obligations']);
 });
 
@@ -1156,7 +1156,7 @@ test('links: a relative link to a file that does not exist fails', () => {
 });
 
 test('links: a docs path in the text that does not exist fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'testing.md'), (t) => `${t}\nAs docs/specs/rails.md says.\n`));
+  const f = runWith((d) => patch(d, path.join('docs', 'delivery', 'testing.md'), (t) => `${t}\nAs docs/specs/rails.md says.\n`));
   assert.deepStrictEqual(names(f), ['links']);
 });
 
@@ -1195,7 +1195,7 @@ test('site: a section reference links to that section', () => {
 test('site: a diagram is drawn with box lines, names in bold; alerts become callouts', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-site-'));
   for (const rel of COPY) fs.cpSync(path.join(ROOT, rel), path.join(dir, rel), { recursive: true });
-  patch(dir, path.join('docs', 'testing.md'), (t) => `${t}\n> [!WARNING]\n> Nothing here is built.\n`);
+  patch(dir, path.join('docs', 'delivery', 'testing.md'), (t) => `${t}\n> [!WARNING]\n> Nothing here is built.\n`);
   try {
     const { outDir } = buildSite(dir);
     const spec = fs.readFileSync(path.join(outDir, 'docs', 'specs', 'approval-engine.html'), 'utf8');
@@ -1207,7 +1207,7 @@ test('site: a diagram is drawn with box lines, names in bold; alerts become call
 });
 
 test('diagrams: a Mermaid diagram fails; ASCII is the rule (FS-628)', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'testing.md'), (t) => `${t}\n\`\`\`mermaid\nflowchart LR\n  A --> B\n\`\`\`\n`));
+  const f = runWith((d) => patch(d, path.join('docs', 'delivery', 'testing.md'), (t) => `${t}\n\`\`\`mermaid\nflowchart LR\n  A --> B\n\`\`\`\n`));
   assert.deepStrictEqual(names(f), ['diagrams']);
 });
 
@@ -1295,14 +1295,14 @@ test('words: new and resume, in a pretend repository', () => {
     assert.match(read('docs/specs/README.md'), /^\| \[loan-top-up\]\(loan-top-up\.md\) \| Build \|/m);
     assert.match(d('new', 'journey', 'A borrower tops up a loan'), new RegExp(`${id(1)}.*listed in docs/journeys/README.md`));
     assert.match(d('new', 'Fix the agenda'), new RegExp(`docs/${id(2)}-fix-the-agenda`));
-    fs.appendFileSync(path.join(work, 'docs/testing.md'), '\nAn edit on the agenda work.\n');
+    fs.appendFileSync(path.join(work, 'docs/delivery/testing.md'), '\nAn edit on the agenda work.\n');
     const list = d('resume');
     assert.match(list, /3 things started/);
     d('resume', 'top-up');
     assert.ok(fs.existsSync(path.join(work, 'docs/specs/loan-top-up.md')));
-    assert.ok(!read('docs/testing.md').includes('An edit on the agenda work.'));
+    assert.ok(!read('docs/delivery/testing.md').includes('An edit on the agenda work.'));
     d('continue', id(2));
-    assert.ok(read('docs/testing.md').includes('An edit on the agenda work.'));
+    assert.ok(read('docs/delivery/testing.md').includes('An edit on the agenda work.'));
     assert.match(d('new', 'spec', 'Loan top-up'), /You started that already/);
     // FS-907: my Claude's work is listed apart, and is not mine to resume;
     // another person's Claude's is not listed at all.
@@ -1310,7 +1310,7 @@ test('words: new and resume, in a pretend repository', () => {
     run('git', ['stash', 'push', '-q', '-m', 'test: aside']);
     for (const who of ['betty', 'eric']) {
       run('git', ['switch', '-q', '-c', `claude/${who}/FS-907-drafted-for-${who}`, 'origin/main']);
-      fs.appendFileSync(path.join(work, 'docs/testing.md'), `\nDrafted for ${who}.\n`);
+      fs.appendFileSync(path.join(work, 'docs/delivery/testing.md'), `\nDrafted for ${who}.\n`);
       run('git', ['commit', '-qam', `FS-907: drafted for ${who}`]);
     }
     run('git', ['switch', '-q', `spec/${id(0)}-loan-top-up`]);
@@ -1461,7 +1461,7 @@ test('words: save does the routine for you, in a pretend repository', () => {
     const d = (...a) => run('node', ['tools/dibon.js', ...a, '--yes']);
     d('new', 'A clearer testing note');
     const id = (run('git', ['rev-parse', '--abbrev-ref', 'HEAD']).match(/FS-\d{3,4}/) || [])[0];
-    const f = path.join(work, 'docs', 'testing.md');
+    const f = path.join(work, 'docs', 'delivery', 'testing.md');
     const t = fs.readFileSync(f, 'utf8');
     fs.writeFileSync(f, t.replace(/\n## /, '\nA sentence added to the testing strategy.\n\n## '));
     const saved = d('save', 'A sentence added');

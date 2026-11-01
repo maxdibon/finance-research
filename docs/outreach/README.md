@@ -16,7 +16,7 @@ Letters and emails to banks, operators, partners and regulators. **We
 draft; the owner sends,** from their own address. Names, account numbers
 and contacts are filled in the email client, never in these files. Once
 something is sent, its partner's stage moves in
-[partners.md](../partners.md), with the date: that register, not this
+[partners.md](../market/partners.md), with the date: that register, not this
 folder, says what has gone out.
 
 | Draft | To | What it asks | Notes |

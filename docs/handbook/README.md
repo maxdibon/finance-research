@@ -17,7 +17,7 @@ the platform: who does what, when, and what is kept (FS-771). It says
 *what and when*; the training manuals ([training/](../training/README.md))
 say *how* on each screen, once the screens are drawn, and each manual
 links to the procedure it serves. Dibon's own runbooks stay in
-[operating-model.md](../operating-model.md) and
+[operating-model.md](../company/operating-model.md) and
 [service-management/](../service-management/README.md).
 
 **Rules for the handbook:**

@@ -16,7 +16,7 @@ One card for each law whose provisions our documents cite (FS-868): its
 full citation, the regulator, what it was made under, whether it is in
 force, what it is, and a row for every provision we cite, saying in plain
 words what it requires. Each is read from the text the
-[law register](../regulation.md) names; the register keeps the version
+[law register](../governance/regulation.md) names; the register keeps the version
 and the Kenya Law link, the card what a reader needs.
 
 **Citing.** A document that cites provisions names its main instrument

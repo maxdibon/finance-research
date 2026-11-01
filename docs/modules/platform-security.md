@@ -33,7 +33,7 @@ self-managed, with managed detection bought in where we cannot staff it.
 
 **Segments:** every customer, and every regulator who inspects one. Banks
 and payment providers file our security posture with CBK; Saccos file it
-against SASRA's vendor terms (docs/approval-pack.md).
+against SASRA's vendor terms (docs/governance/approval-pack.md).
 
 **The problem, concretely:** a bank's due diligence asks for a security
 summary, a penetration test report, recovery objectives and an incident
@@ -117,7 +117,7 @@ FS-655):
 - **We start at 4 hours** (FS-471): a team of three on call can keep it
   with managed detection (SE-13) watching around the clock. The 1-hour
   target is signed once that service is contracted and the rota has at
-  least five people (docs/operating-model.md).
+  least five people (docs/company/operating-model.md).
 - CBK's guideline for payment service providers sets those customers' own
   deadline: read as 24 hours or as 2 hours, to verify against the text
   before a payment provider signs (FS-464). Four hours meets a 24-hour
@@ -244,7 +244,7 @@ flow that may leave; it is named in §7.
 
 - Certify. ISO 27001 certification is by an accredited body (LC-04).
 - Audit a customer. That is assurance, for non-customers only
-  (docs/assurance.md).
+  (docs/market/assurance.md).
 - Replace a customer's own security on its own systems.
 
 ## 11 · Open questions
@@ -255,7 +255,7 @@ None open in the register.
 
 - REVIEW.md FS-458 to FS-464; research of 2026-10-05 (Azure Stack Hub
   service availability, standards and tool licences).
-- docs/architecture/README.md §3, §6, §6.1, §7; docs/approval-pack.md.
+- docs/architecture/README.md §3, §6, §6.1, §7; docs/governance/approval-pack.md.
 
 ## Regulations cited
 

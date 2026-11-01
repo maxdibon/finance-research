@@ -50,7 +50,7 @@ specs](../specs/README.md), how each component is built and run;
 [the settings](../settings/README.md), each component's baseline;
 [the deployments](../deployments/README.md), each deployment's own
 values and continuity; [the runbooks](../runbooks/README.md);
-[channels](../channels.md), every app and channel by person.
+[channels](../market/channels.md), every app and channel by person.
 
 **Who reads it, for what:**
 
@@ -72,7 +72,7 @@ index, with the entries by hundreds in docs/decisions/.
 
 | Layer | Contents |
 |---|---|
-| **Channels** | omni-channel — mobile apps, internet banking, USSD, the field-officer app; every one, by person, in [channels](../channels.md) |
+| **Channels** | omni-channel — mobile apps, internet banking, USSD, the field-officer app; every one, by person, in [channels](../market/channels.md) |
 | **Products** | collect · gateway · escrow · core (Kapu Core: hosted core banking on Apache Fineract) · mfi and sacco (deposit-taking and credit-only), both run by the lending service, with the deposits service where a Sacco takes deposits · sme-recon (wrappers for a business's own Odoo, Zoho or QuickBooks Online, SR-15) · business-suite (Odoo or Zoho, implemented by Dibon) |
 | **Shared services** | the lending service and the deposits service, the only writers to the core, through the core adapter · recon-observability · mandates (signing and debit, run by the approval engine) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification, and the document vault) · messaging (SMS, WhatsApp, app; Telegram later; transactional and campaigns; Flowza for conversations) · rails · insights · financial-crime (fraud, AML/CFT, transaction rules, reporting) · decisioning (appraisal, scores, risk classes) · the back-office gateway · the end-of-day runner · platform-security |
 | **Systems of record** | the institution's core, or Kapu Core · Odoo · recon engine — §2 |
@@ -104,7 +104,7 @@ index, with the entries by hundreds in docs/decisions/.
 ```
 
 **How people reach it, and who they are.** Every app and channel, who
-each is for and how they sign in, is in [channels](../channels.md); a
+each is for and how they sign in, is in [channels](../market/channels.md); a
 person with several roles signs in once and works in a profile for each
 (channels §2). Who someone is, and what they may do, is [the identity
 model](../modules/identity.md) (identity §5, "The identity model",
@@ -211,7 +211,7 @@ instance (FS-491); reached only through its service's API; encrypted at
 rest (platform-security SE-08; for the databases, how is still to be
 decided, as community PostgreSQL has no encryption of its own, FS-1051)
 and in transit (SE-05, SE-09); backed up to two Kenyan sites (SE-10);
-retention set by docs/documents.md and docs/privacy.md. The last column
+retention set by docs/governance/documents.md and docs/governance/privacy.md. The last column
 adds what goes beyond it.
 
 | Store | Holds | Never holds | Class | Beyond the baseline |
@@ -727,7 +727,7 @@ the audit trail and matches in reconciliation agree (FS-634).
 - Product status — each module's §3.
 - Pricing and business models (FS-024).
 - The legal questions it raises: each is an LQ row in
-  [the legal questions](../legal-questions.md), where counsel's answers
+  [the legal questions](../governance/legal-questions.md), where counsel's answers
   are tracked; the rows that first raised them here were FS-037, FS-049,
   FS-056, FS-057, FS-061 and FS-428.
 - How each service is built or run: the specs (docs/specs/README.md).

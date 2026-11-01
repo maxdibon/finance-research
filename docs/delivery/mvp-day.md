@@ -32,7 +32,7 @@ is the same plan, laid out for printing.
 2. **Lead:** a made-up lead in Odoo CRM, keyed into Kapu Core as the
    borrower.
 3. **Apply:** for Roan Capital's Biashara loan
-   ([its product document](products/roan-capital-30-day-loan-v1.md)).
+   ([its product document](../products/roan-capital-30-day-loan-v1.md)).
 4. **Approve:** by someone else: maker and checker.
 5. **Sign:** the agreement and its key facts in Odoo Sign, by borrower
    and guarantor.
@@ -108,7 +108,7 @@ group first, then moves into `rg-mvp`.
 ## Terms we all use
 
 - **download, new, save, upload, share, join, resume, release:** the
-  words ([ways of working](service-management/ways-of-working.md) §7).
+  words ([ways of working](../service-management/ways-of-working.md) §7).
 - **Planned, Designed, Built, Live:** today moves real capabilities
   towards Built.
 - **FS** register rows; **CU** customers; **RC, LF** their requirements;

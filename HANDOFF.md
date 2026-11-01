@@ -172,7 +172,7 @@ its money and its records; Dibon holds the platform. Read
   the reader's Board shows every open row as a card, from the register
   and the branches; a row's With may name several, the lead first;
   `dibon join` and `dibon leave`. Claude joins only on its person's word.
-- **Documents for outside readers** start from `docs/design-system.md`:
+- **Documents for outside readers** start from `docs/company/design-system.md`:
   one look, a little whimsy in the margins, never in figures or terms.
 - **Never sign in, or enter a password, on a live site**; downloads need
   the owner's permission.
@@ -182,7 +182,7 @@ its money and its records; Dibon holds the platform. Read
 Each is settled, with its register row, and written into the documents
 it shapes (the architecture, the specs, the modules); many have an entry
 in `docs/decisions.md` saying what it cost, and the standing rules are in
-`docs/rules.md`. Do not reopen one without the owner.
+`docs/governance/rules.md`. Do not reopen one without the owner.
 
 - **Architecture:** an isolated instance per institution (FS-491); every
   component replaceable behind a stable contract (FS-584); Keycloak the
@@ -213,7 +213,7 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
 - **Writing:** diagrams in plain text, at most 100 columns, no Mermaid
   (FS-579, FS-628); specs on the template, closing with tests and open
   questions (FS-627); questions for counsel live in
-  `docs/legal-questions.md`, cited by LQ id (FS-744).
+  `docs/governance/legal-questions.md`, cited by LQ id (FS-744).
 - **The portfolio's version is what a reader holds:** v1.0, v1.1 and v1.2
   (22 October, FS-909) have gone out; the next edit starts v1.3 as a draft
   in `design/portfolio-pdf/document.json` (FS-595). The drafts of early
@@ -241,8 +241,8 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   **`review/`**, a file per hundred ids (FS-866); **`CHANGELOG.md`** the releases, and
   `docs/marketing/release-notes.md` the same for readers outside Dibon;
   **`changes/`** the change notes waiting for the next release;
-  **`docs/decisions.md`** what each decision cost; **`docs/rules.md`** the
-  standing rules; **`docs/document-register.md`** every document held
+  **`docs/decisions.md`** what each decision cost; **`docs/governance/rules.md`** the
+  standing rules; **`docs/governance/document-register.md`** every document held
   with a party, by DR id; **`docs/customers/`** a delivery map per
   customer, on `_template.md`, its changelog in §8.
 - **The reader:** `build/site/index.html`, every document linked and every
@@ -268,7 +268,7 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   drafts, the loan kinds the vocabulary can describe, and `briefs/`, a
   brief for each product that is hard for an institution to do alone
   (FS-1029), from `briefs/_template.md`, which the check holds them to
-  (FS-1031). **Who uses which app:** `docs/channels.md`. **Starter
+  (FS-1031). **Who uses which app:** `docs/market/channels.md`. **Starter
   templates** for an institution's business customers and partners:
   `docs/templates/` (FS-1021).
 - **Our documents' numbers** (`DC-FS-<kind>-<serial>`) are in

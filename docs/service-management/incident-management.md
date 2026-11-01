@@ -20,7 +20,7 @@ plan ([the end-of-day runner](../specs/end-of-day-runner.md),
 practices in [service management](README.md).
 Security incidents add the commitments in [platform-security](../modules/platform-security.md) §3; telling
 customers, regulators and staff in a wider disruption is in
-[business continuity](../business-continuity.md). This is the runbook SE-19 asks for, at its
+[business continuity](../governance/business-continuity.md). This is the runbook SE-19 asks for, at its
 start; recon-observability RO-18 runs it.
 
 ## 1 · Severities
@@ -74,7 +74,7 @@ agreed with the rota and each customer (§6).
 | 2 | The institution's operations contact (for end of day, its accountant) | Email, and a ticket | Within one hour, or before its working day starts | §4, the full form |
 | 3 | The owning team; the institution's operations contact | A ticket; email in working hours | Next working day, and in the morning report | What, which records, what to do |
 | 4 | The owning team | A ticket | As the support tier says | — |
-| Any | Dibon staff | A channel that does not depend on our own systems ([business continuity](../business-continuity.md)) | When a severity 1 is declared | That it is, and who leads |
+| Any | Dibon staff | A channel that does not depend on our own systems ([business continuity](../governance/business-continuity.md)) | When a severity 1 is declared | That it is, and who leads |
 
 ## 4 · What a notice says
 
@@ -96,7 +96,7 @@ service, what failed, since when, and where the runbook is.
 any Restricted field. An SMS carries no customer names at all.
 
 Templates for each form are written before they are needed, and checked
-in the twice-yearly tabletop ([business continuity](../business-continuity.md)).
+in the twice-yearly tabletop ([business continuity](../governance/business-continuity.md)).
 
 ## 5 · After
 
@@ -116,7 +116,7 @@ in the twice-yearly tabletop ([business continuity](../business-continuity.md)).
 ## 6 · Open
 
 - The acknowledgement and escalation times above, with the rota (three
-  engineers today, [the operating model](../operating-model.md)).
+  engineers today, [the operating model](../company/operating-model.md)).
 - Each customer's contacts and hours, by support tier, at onboarding
   (OB-COM-13).
 - The on-call tool and its phone route ([observability-grafana](../specs/observability-grafana.md) §5).

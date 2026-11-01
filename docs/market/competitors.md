@@ -15,7 +15,7 @@ last_reviewed: 2026-10-27
 **What this tracks:** companies a customer may choose instead of us, or
 alongside us, with what they sell, where we meet them, and what we learn
 (FS-456, FS-464). Research of 2026-10-05; each row names its source.
-Partners are in docs/partners.md; a company can be both.
+Partners are in docs/market/partners.md; a company can be both.
 
 **Rules:** a claim about a competitor names its source; anything not
 confirmed says so. We describe what they offer, never disparage it.

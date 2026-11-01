@@ -118,7 +118,7 @@ FS-1046. What the sandbox sets; made-up data only, nothing secret here.
 
 ## 4 · Diagrams
 
-The MVP day's own (docs/mvp-day.md): GitHub, then the sandbox and its
+The MVP day's own (docs/delivery/mvp-day.md): GitHub, then the sandbox and its
 cluster, Flux, Kapu Core and Biashara, the payout by bank, the
 walk-through, with Keycloak and Odoo beside.
 

@@ -22,10 +22,10 @@ whimsy, in its place.
 
 | Part | What it is | Where |
 |---|---|---|
-| The stylesheet | Tokens and every component, for HTML printed to PDF | [design/system/dibon.css](../design/system/dibon.css) |
-| The template | One page using every component: copy it to start | [design/system/template.html](../design/system/template.html) |
-| The printer | Inlines the stylesheet and logo, writes the footer band, prints A4 | [design/system/build.js](../design/system/build.js) |
-| Word | The same bands, headings, lists and tables for docx-js | [design/system/docx.js](../design/system/docx.js) |
+| The stylesheet | Tokens and every component, for HTML printed to PDF | [design/system/dibon.css](../../design/system/dibon.css) |
+| The template | One page using every component: copy it to start | [design/system/template.html](../../design/system/template.html) |
+| The printer | Inlines the stylesheet and logo, writes the footer band, prints A4 | [design/system/build.js](../../design/system/build.js) |
+| Word | The same bands, headings, lists and tables for docx-js | [design/system/docx.js](../../design/system/docx.js) |
 | The logo | White for dark bands; vector candidates in white, amber and plum | design/brand/ |
 
 ```bash
@@ -33,7 +33,7 @@ node design/system/build.js                      # the template, as a check
 node design/system/build.js my-letter.html       # any page that links dibon.css
 ```
 
-The portfolio ([design/portfolio-pdf/](../design/portfolio-pdf/build.js))
+The portfolio ([design/portfolio-pdf/](../../design/portfolio-pdf/build.js))
 and the bank-channel proposal keep their own builders, with the same
 tokens; a new document starts from the template.
 
@@ -43,7 +43,7 @@ tokens; a new document starts from the template.
    first page and the footer band on every page. Inside, choose the
    components the job needs.
 2. **Plain words first.** Short sentences, the reader's words, one idea in
-   bold where it carries the paragraph (docs/experience.md).
+   bold where it carries the paragraph (docs/company/experience.md).
 3. **Customer-safe, inside as well as out.** Say what a customer is working
    towards; never judge their systems.
 4. **Roles, never names,** in anything we keep; a name appears only on a

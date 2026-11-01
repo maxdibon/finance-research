@@ -251,7 +251,7 @@ itself is in the end-of-day-runner spec.
 
 | What | Class | Kept | Personal data |
 |---|---|---|---|
-| Clients, loans, schedules, transactions, the general ledger | Confidential | Seven years after the relationship ends (docs/documents.md) | Borrowers' and guarantors' |
+| Clients, loans, schedules, transactions, the general ledger | Confidential | Seven years after the relationship ends (docs/governance/documents.md) | Borrowers' and guarantors' |
 | National ID numbers | Restricted | — | Not stored in Fineract in clear: the identity record holds them (identity ID-15), referenced by id; any field Fineract must hold is encrypted (SE-27) |
 | Fineract's command audit | Confidential | Seven years | Staff and service identities |
 

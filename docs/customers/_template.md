@@ -55,7 +55,7 @@ Where its documents are held, then the table: every document registered
 for it in the document register, generated (FS-857). Register a
 document there, or with dibon received or dibon meeting, never here.
 
-*Generated from the [document register](../document-register.md) by tools/docregister.js: edit the register, never this table.*
+*Generated from the [document register](../governance/document-register.md) by tools/docregister.js: edit the register, never this table.*
 
 No documents registered yet.
 

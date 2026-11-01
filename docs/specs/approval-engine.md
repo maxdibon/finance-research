@@ -385,8 +385,8 @@ R1 depends on them.
 
 | What | Class | Kept | Personal data |
 |---|---|---|---|
-| Requests: subject, amount, product, flags, the frozen chain | Confidential | As long as the record they authorise: seven years after the loan closes (docs/documents.md) | The subject's reference only, never a borrower's name |
-| Decisions: who, when, how they authenticated, the comment, the step-up token's hash | Confidential | The same | Approvers' identities, as staff data (docs/privacy.md) |
+| Requests: subject, amount, product, flags, the frozen chain | Confidential | As long as the record they authorise: seven years after the loan closes (docs/governance/documents.md) | The subject's reference only, never a borrower's name |
+| Decisions: who, when, how they authenticated, the comment, the step-up token's hash | Confidential | The same | Approvers' identities, as staff data (docs/governance/privacy.md) |
 | Mandates and their versions | Internal | Always, versioned | — |
 
 ## 12 · Quality and metrics

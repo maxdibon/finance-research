@@ -13,7 +13,7 @@ last_reviewed: 2026-10-13
 # 2 · People and access
 
 The procedures behind [JN-18](../journeys/staff-access.md). The rules
-they keep are the institution's agreed rules (docs/rules.md §2): named
+they keep are the institution's agreed rules (docs/governance/rules.md §2): named
 users only, two authenticators, a leaver removed the same day, and a
 quarterly access review the institution signs.
 

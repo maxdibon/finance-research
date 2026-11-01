@@ -53,7 +53,7 @@ instance in one environment, across its sites; a sandbox counts.
   `deployments/<deployment>/<component>.md`, from
   [its template](_settings-template.md), and its page's §3 summarises them.
 - **Continuity in two layers:** the company's plan is
-  [business-continuity](../business-continuity.md); each deployment's own
+  [business-continuity](../governance/business-continuity.md); each deployment's own
   is its §6, and the steps are [the runbooks](../runbooks/README.md).
 - **A deployment changes** by pull request, its §12 noting what and why;
   a change to production also goes through change enablement (service

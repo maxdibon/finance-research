@@ -19,7 +19,7 @@ of the others already lives (FS-639, FS-640). This folder holds the
 practices written for us; this page maps all of them (FS-641).
 
 ITIL certifies people, not organisations; what an organisation can hold
-is ISO/IEC 20000-1 ([compliance](../compliance.md) LC-10), and these
+is ISO/IEC 20000-1 ([compliance](../governance/compliance.md) LC-10), and these
 practices are the route to it, and to what banks, CBK's outsourcing
 approvals and SASRA's vendor terms will ask: who approves a change, how
 an incident is handled, how a problem is fixed for good. Written in our
@@ -36,7 +36,7 @@ practices; [deployments](../deployments/README.md) for what runs where,
 its continuity and its exit; [settings](../settings/README.md) for each
 component's baseline and each deployment's values;
 [runbooks](../runbooks/README.md) for the steps when something goes
-wrong; [business continuity](../business-continuity.md) for the company.
+wrong; [business continuity](../governance/business-continuity.md) for the company.
 
 ## 1 · The practices, mapped
 
@@ -61,13 +61,13 @@ answerable for how well the practice works (FS-756).
 
 | Practice | Where | Practice owner |
 |---|---|---|
-| Service desk | [The operating model](../operating-model.md): the AI-first desk on Odoo Helpdesk ([business-suite](../modules/business-suite.md) BS-01) | Operations lead |
+| Service desk | [The operating model](../company/operating-model.md): the AI-first desk on Odoo Helpdesk ([business-suite](../modules/business-suite.md) BS-01) | Operations lead |
 | Monitoring and event management | [Observability on Grafana](../specs/observability-grafana.md) (RO-16 to RO-18) | Operations lead |
-| Service continuity management | [Business continuity](../business-continuity.md); [platform-security](../modules/platform-security.md) SE-20 to SE-25 | Operations lead, with the security lead |
-| Information security management | [Platform security](../modules/platform-security.md); ISO 27001 ([compliance](../compliance.md) LC-04) | Security lead |
-| Supplier management | [Partners](../partners.md); suppliers in [business continuity](../business-continuity.md) | Commercial lead |
+| Service continuity management | [Business continuity](../governance/business-continuity.md); [platform-security](../modules/platform-security.md) SE-20 to SE-25 | Operations lead, with the security lead |
+| Information security management | [Platform security](../modules/platform-security.md); ISO 27001 ([compliance](../governance/compliance.md) LC-04) | Security lead |
+| Supplier management | [Partners](../market/partners.md); suppliers in [business continuity](../governance/business-continuity.md) | Commercial lead |
 | Service catalogue management | The modules, from [the overview](../overview.md) | Product owners |
-| Service validation and testing | [Testing](../testing.md); each [spec](../specs/README.md)'s acceptance tests | Engineering lead |
+| Service validation and testing | [Testing](../delivery/testing.md); each [spec](../specs/README.md)'s acceptance tests | Engineering lead |
 | Service design, business analysis | [Specs](../specs/README.md); [journeys](../journeys/README.md) | Solution architect |
 | Knowledge management | This repository; the desk's knowledge base ([§4](#4--problems-and-known-errors)) | Team lead |
 | Continual improvement | [REVIEW.md](../../REVIEW.md): every point raised, recorded and closed, is the improvement register | Team lead |
@@ -76,10 +76,10 @@ answerable for how well the practice works (FS-756).
 | Architecture management | [Architecture](../architecture/README.md) | Solution architect |
 | Deployment management | GitOps and signed images ([platform-security](../modules/platform-security.md) SE-06, SE-12, SE-23) | Operations lead |
 | Infrastructure and platform management | [Architecture](../architecture/README.md) §9; [platform-security](../modules/platform-security.md) | Operations lead |
-| Software development and management | The code repository; [testing](../testing.md) | Engineering lead |
-| Risk management | [Compliance](../compliance.md); [regulation](../regulation.md); threat models ([platform-security](../modules/platform-security.md) SE-16) | Compliance and risk officer |
-| Workforce and talent management | [The operating model](../operating-model.md) | Team lead |
-| Project, portfolio and strategy management | [The delivery plan](../delivery-plan.md) | Team lead |
+| Software development and management | The code repository; [testing](../delivery/testing.md) | Engineering lead |
+| Risk management | [Compliance](../governance/compliance.md); [regulation](../governance/regulation.md); threat models ([platform-security](../modules/platform-security.md) SE-16) | Compliance and risk officer |
+| Workforce and talent management | [The operating model](../company/operating-model.md) | Team lead |
+| Project, portfolio and strategy management | [The delivery plan](../delivery/delivery-plan.md) | Team lead |
 
 **Later, when the size calls for them:** availability management and
 capacity and performance management (SLOs already exist, RO-17; capacity
@@ -161,7 +161,7 @@ are the defaults we propose, by severity
 
 | Severity | First response to the customer | Updates | Service restored |
 |---|---|---|---|
-| 1 | 30 minutes, around the clock | Every hour | 4 hours (the tier-1 recovery time, [business continuity](../business-continuity.md)) |
+| 1 | 30 minutes, around the clock | Every hour | 4 hours (the tier-1 recovery time, [business continuity](../governance/business-continuity.md)) |
 | 2 | 1 hour, or before the customer's working day | Every 4 hours | 1 working day |
 | 3 | Next working day | At each change | 5 working days |
 | 4 | As the tier says | — | Planned with the customer |
@@ -182,7 +182,7 @@ report, a setting within its tested bounds, and **access for a Dibon
 engineer**: against a ticket, scoped and expiring, approved by the
 institution where it runs its own operations, and entered in the access
 register ([architecture](../architecture/README.md) §9, SE-26). The access cases follow the
-runbooks in [the operating model](../operating-model.md) (FS-505).
+runbooks in [the operating model](../company/operating-model.md) (FS-505).
 
 **An institution's customers' complaints are the institution's** (FS-688):
 it decides them, and it speaks to its customer. Under the Data Protection
@@ -256,7 +256,7 @@ as part of the operating system ([architecture](../architecture/README.md)
 | The bridge from an institution's Helpdesk to ours | Portal and email in R1 (§7) | Its staff's portal accounts set up at onboarding; an API connection later (FS-780) |
 | Service-level targets | Proposed defaults ([§5](#5--service-levels)) | Agree in Roan Capital's contract |
 | The bastion that records engineers' sessions where Dibon runs the instance | Warpgate to evaluate; Teleport's community edition is no longer open source ([technology](../architecture/technology.md)) | Evaluate before R1 go-live (FS-645, FS-695) |
-| An ISO/IEC 20000-1 certification body | No KENAS-accredited body found; SGS advertises it ([compliance](../compliance.md) LC-10) | Stay "in line with" until a route is confirmed |
+| An ISO/IEC 20000-1 certification body | No KENAS-accredited body found; SGS advertises it ([compliance](../governance/compliance.md) LC-10) | Stay "in line with" until a route is confirmed |
 
 ## Regulations cited
 

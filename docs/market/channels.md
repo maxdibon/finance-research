@@ -15,7 +15,7 @@ last_reviewed: 2026-10-30
 **What this tracks** (FS-1012): every app and channel an institution's
 customers, its partners and its staff use, who each is for, how they
 sign in, and where each stands. The capabilities behind them are in
-[omni-channel](modules/omni-channel.md); this register is the view by
+[omni-channel](../modules/omni-channel.md); this register is the view by
 person and channel, and the rules for people who hold more than one role.
 
 ## 1 · Who uses what
@@ -136,7 +136,7 @@ register documents it and builds nothing (FS-1016):
      website, one service in two forms; the voice line; agent banking.
    - **Later:** virtual cards, Telegram.
 4. **One design system and one copy,** in English and Swahili, shared by
-   every channel (docs/design-system.md; docs/experience.md), so a loan
+   every channel (docs/company/design-system.md; docs/company/experience.md), so a loan
    reads the same in the app, on USSD and on a page; nothing needs
    reading (omni-channel §1).
 5. **White-labelled builds:** one code base per app, each institution's

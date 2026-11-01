@@ -59,7 +59,7 @@ confirm them before the first agreement (SD-12).
 | Branding | Dibon's, presented by the bank | Co-branded: the bank's package, our product named inside it |
 | Odoo licences | Through Dibon as the Odoo partner, billed to the business | Through Dibon, billed to the business or covered by the bank's package |
 | Support | Dibon, first line and up | Dibon; the bank's relationship manager knows how to escalate |
-| Bank's regulator | Likely nothing to file: no service is outsourced (to confirm) | Possibly an outsourcing notice or approval if CBK sees it as the bank's service (docs/approval-pack.md) |
+| Bank's regulator | Likely nothing to file: no service is outsourced (to confirm) | Possibly an outsourcing notice or approval if CBK sees it as the bank's service (docs/governance/approval-pack.md) |
 
 **Recommendation:** start with **referral**. It needs the least from the
 bank and from its regulator, and it tests whether its businesses take the
@@ -130,13 +130,13 @@ product up. Move a bank to **bundle** once take-up is shown.
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | reg 58 | reg 58 | Personal data processed lawfully, fairly and transparently; consent express, specific, separately obtained on its own form, withdrawable and recorded; a privacy notice is not consent |
 
-**[LR-04](law/LR-04.md) The Banking Act (Cap. 488).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-12-27, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1989/9/eng@2024-12-27).
+**[LR-04](../law/LR-04.md) The Banking Act (Cap. 488).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-12-27, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1989/9/eng@2024-12-27).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
