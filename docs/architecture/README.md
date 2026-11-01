@@ -7,7 +7,7 @@ law: LR-03
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056, FS-1068, FS-1070, FS-1072, FS-1077]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056, FS-1068, FS-1070, FS-1072, FS-1077, FS-1078]
 last_reviewed: 2026-11-01
 ---
 
@@ -478,8 +478,9 @@ against this paragraph.
   is re-verified (identity ID-12 to ID-14, financial-crime FC-02, FS-448).
   **Several providers behind each check** (FS-1077): direct sources such
   as NPDM and aggregators such as Prembly and Smile ID, routed per
-  institution and per check, a primary and a fallback; every result
-  names its provider (identity §5).
+  institution and per check, a primary and a fallback, and chained per
+  product, each step passing on only what the next needs (FS-1078);
+  every result names its provider (identity §5).
 - **Insights reads the three authorities and never writes;** every answer
   shows its definition and query (docs/modules/insights.md; FS-446,
   FS-043).

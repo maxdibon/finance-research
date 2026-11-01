@@ -10,7 +10,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite, decisioning]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028, FS-1070, FS-1077]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028, FS-1070, FS-1077, FS-1078]
 last_reviewed: 2026-11-01
 ---
 
@@ -127,25 +127,46 @@ mode, to Fineract.
 
 ```
   product: "open account" / "new borrower" / "new merchant"
-                       |
-                       v
-         checks the product requires (configured per product)
-                       |
-     +-----------+-----+------+------------+------------+
-     |           |            |            |            |
-   NPDM      documents    liveness +    phone        tax PIN /
-   lookup    checklist    face match    ownership    business reg.
-     |           |            |            |            |
-     +-----------+-----+------+------------+------------+
-                       |
-            every result logged: source, time, operator
-                       |
-          all mandatory checks passed? ---- no --> blocked, with
-                       |                           what is missing
-                      yes
-                       v
-       result written to the person's authority (core / Fineract /
-       Odoo); the register's data is not copied
+                               |
+                               v
+         the product's chain: its checks in order (FS-1078), each
+         with its own providers, a primary and a fallback (FS-1077)
+                               |
+                               v
+  +--------------------------------------------------------------------------+
+  | 1  PHONE        the number is live, registered to the name and ID number |
+  |                 given, and its SIM not changed of late (ID-05, ID-12)    |
+  |                 primary: the operator (Safaricom)   fallback: an         |
+  |                 aggregator                                               |
+  +--------------------------------------------------------------------------+
+                               |  passes on: the ID number, confirmed
+                               v
+  +--------------------------------------------------------------------------+
+  | 2  NATIONAL ID  the person on the register, alive; the register's photo  |
+  |                 (ID-01)                                                  |
+  |                 primary: NPDM                       fallback: an         |
+  |                 aggregator                                               |
+  +--------------------------------------------------------------------------+
+                               |  passes on: the register's photo
+                               v
+  +--------------------------------------------------------------------------+
+  | 3  LIVENESS     a live selfie, matched to the register's photo (ID-04)   |
+  |                 primary: an aggregator              fallback: another    |
+  +--------------------------------------------------------------------------+
+                               |
+              every step logged: provider, reference, result, time, cost
+                               |
+     a step answers "no match" ------> stopped; referred to compliance,
+                               |       never the manual route (ID-01)
+     no provider can answer --------> the manual route: the officer sees
+                               |       the original; a second approval
+                               v
+       all steps passed: the result written to the person's authority
+       (core / Fineract / Odoo); the register's data is not copied
+
+  other checks a chain may add as steps: the document checklist (ID-02),
+  the tax PIN (ID-06), a business's registration (ID-07), PEP and
+  sanctions screening (FC-05, FC-06)
 ```
 
 ### Providers: aggregators and direct sources
@@ -168,19 +189,26 @@ contract").
    a primary and a fallback. A direct source comes first where the
    institution, or Dibon for it, holds the agreement; an aggregator where
    not, or when the direct source is down.
-2. **Every result names its provider,** with the provider's reference,
+2. **Checks are chained, per product** (FS-1078): the steps in order,
+   each passing on only what the next needs, as the diagram above draws
+   the first chain: the operator confirms the phone number and the ID
+   number it is registered to; NPDM confirms that person and gives their
+   photo; liveness matches a selfie to it. A step that fails stops the
+   chain, so no later check is run or paid for. Handing one provider's
+   answer to another (the register's photo to an aggregator) is LQ-36.
+3. **Every result names its provider,** with the provider's reference,
    the time and the cost, on the record of the check (FS-584).
-3. **A fallback is a second request only when the first fails** or the
+4. **A fallback is a second request only when the first fails** or the
    provider is down; a person's details are never sent to two providers
    just to compare them (LQ-35). Providers are compared on the simulator
    (ID-20) and with team members' own details, by consent
    (delivery/prembly-production-test).
-4. **A provider joins once** its adapter passes the same contract tests
+5. **A provider joins once** its adapter passes the same contract tests
    as the others, against the simulator, and its terms pass our partner
    rules: where data is held, the breach notice, sub-processors
    (partners register). Each is named as a processor in the
    institution's data processing agreement and privacy notice (OB-COM-04).
-5. **Its cost is passed through,** per provider and per check, itemised
+6. **Its cost is passed through,** per provider and per check, itemised
    (FS-331).
 
 ### The identity model
