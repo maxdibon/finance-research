@@ -12,8 +12,8 @@ depends_on: [access-keycloak, event-bus-kafka]
 used_by: [approval-engine, lender-rules, end-of-day-runner, recon, lending-service, deposits-service, product-versions]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050, FS-1053, FS-1054, FS-1056, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050, FS-1053, FS-1054, FS-1056, FS-1058, FS-1069]
+last_reviewed: 2026-11-01
 ---
 
 # Kapu Core on Apache Fineract — component specification
@@ -112,6 +112,7 @@ FS-185. Groups (KC-01, later).
 | External ids on loans and transactions | Yes | Every record carries ours (§5) |
 | Close of business, business date | Yes | Run by the end-of-day runner (§7) |
 | External events to Kafka, in Avro | Yes | Into the event bus through an adapter (§5) |
+| Its collateral records | **No** | The lending service keeps the collateral register, one record per item (lending-service §5.2, FS-1069) |
 | Fineract's own maker-checker | **No** | The approval engine decides (KC-08); two approval records could disagree |
 | Its overdue-penalty step | **No**, for capped products | Default interest is posted by lender-rules, within the cap |
 | Savings, shares, tellers | No, in R1 | Roan Capital takes no deposits |
