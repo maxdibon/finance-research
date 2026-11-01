@@ -120,8 +120,8 @@ its money and its records; Dibon holds the platform. Read
   2026.10.15`, the release its content last changed in (FS-852): a new
   document says `released: unreleased`, as the templates do, and the
   release stamps it. Never type a release into it.
-- **The team's words** (`tools/dibon.js`; the guide is ways-of-working
-  §7 to §10, FS-865): when someone asks in plain
+- **The team's words** (`tools/dibon.js`; the guide is
+  docs/service-management/the-words.md, FS-865): when someone asks in plain
   sentences ("download, then mark answer 24 as answered"), use the words,
   say what you understood, and run them with `--yes` only after they have
   said yes in chat. Developers may use git directly, by ways-of-working §6.
@@ -137,7 +137,7 @@ its money and its records; Dibon holds the platform. Read
   repository, still mine), share (before the team, for review), release
   (the owner's, to the public). **When someone says "update", ask whether
   they mean download or upload**: never pick one. **What each word does on its
-  own** is in ways-of-working §7, "What each word does for you" (FS-922):
+  own** is in the-words §1, "What each word does for you" (FS-922):
   save keeps front matter and generated sections current, rebuilds the
   reader and reminds about a change note; no word updates this handover. The owner's "push"
   stays what it has been: main to GitHub.

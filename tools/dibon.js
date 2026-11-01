@@ -560,7 +560,7 @@ const word = {
       for (const e of d[2]) say(`  ${e}`);
       return;
     }
-    say('The team\'s words (docs/service-management/ways-of-working.md, §7 to §10):');
+    say('The team\'s words (docs/service-management/the-words.md):');
     for (const [w2, what] of WORDS) say(`  ${w2.padEnd(9)} ${what}`);
     say('Three rules: download first; a stop protects you; nothing is guessed, so say what you mean.');
   },

@@ -760,7 +760,7 @@ test('versions: a handover describing a release the changelog does not have fail
 });
 
 test('words: a word the tool knows with no section in the guide fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'service-management', 'ways-of-working.md'), (t) => t.replace('### discard\n', '### throw-away\n')));
+  const f = runWith((d) => patch(d, path.join('docs', 'service-management', 'the-words.md'), (t) => t.replace('### discard\n', '### throw-away\n')));
   assert.deepStrictEqual(names(f), ['words']);
 });
 
@@ -1339,7 +1339,7 @@ test('words: download brings two people\'s register rows together', () => {
   try {
     run(where, 'git', ['clone', '--quiet', '--bare', ROOT, shared]);
     run(where, 'git', ['clone', '--quiet', shared, at('setup')]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/citations.js', 'tools/docregister.js', 'tools/board.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(at('setup'), f));
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/citations.js', 'tools/docregister.js', 'tools/board.js', 'docs/service-management/ways-of-working.md', 'docs/service-management/the-words.md']) fs.copyFileSync(path.join(ROOT, f), path.join(at('setup'), f));
     run(at('setup'), 'git', ['add', '-A', 'tools', 'docs']);
     run(at('setup'), 'git', ['-c', 'user.name=Setup', '-c', 'user.email=s@example.test', '-c', 'core.hooksPath=/dev/null', 'commit', '-qm', 'FS-890: the tools under test']);
     run(at('setup'), 'git', ['push', '-q', 'origin', 'HEAD:main']);
@@ -1412,7 +1412,7 @@ test('words: join, leave and the board, in a pretend repository', () => {
   try {
     run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
     run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'tools/check.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'tools/check.js', 'docs/service-management/ways-of-working.md', 'docs/service-management/the-words.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
     for (const [k, v] of [['user.name', 'Lillian Test'], ['user.email', 'lillian@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
     run('git', ['add', '-A', 'tools', 'docs']);
     run('git', ['commit', '-qm', 'FS-891: the tools under test']);
@@ -1451,7 +1451,7 @@ test('words: save does the routine for you, in a pretend repository', () => {
   try {
     run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
     run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/board.js', 'tools/citations.js', 'tools/docregister.js', 'tools/site.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/board.js', 'tools/citations.js', 'tools/docregister.js', 'tools/site.js', 'docs/service-management/ways-of-working.md', 'docs/service-management/the-words.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
     for (const [k, v] of [['user.name', 'Betty Test'], ['user.email', 'betty@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
     run('git', ['add', '-A', 'tools', 'docs']);
     run('git', ['commit', '-qm', 'FS-922: the tools under test']);
@@ -1490,7 +1490,7 @@ test('words: session start and end keep a personal handover, in a pretend reposi
   try {
     run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
     run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'HANDOFF.md', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'HANDOFF.md', 'docs/service-management/ways-of-working.md', 'docs/service-management/the-words.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
     for (const [k, v] of [['user.name', 'Betty Test'], ['user.email', 'betty@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
     run('git', ['add', '-A', 'tools', 'docs', 'HANDOFF.md']);
     run('git', ['commit', '-qm', 'FS-931: the tools under test']);

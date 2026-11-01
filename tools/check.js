@@ -1676,7 +1676,7 @@ function checkVersions(root) {
 // FS-847 to FS-849: the guide has a section for every word the tool knows,
 // and no word the tool does not, so the two never drift apart.
 // FS-865: the guide is ways-of-working's §7 to §10; the words are §8.
-const GUIDE = path.join('docs', 'service-management', 'ways-of-working.md');
+const GUIDE = path.join('docs', 'service-management', 'the-words.md'); // FS-1053: was ways-of-working §7 to §10
 function checkWords(root) {
   const tool = path.join(__dirname, 'dibon.js'); // the words live beside the check
   if (!fs.existsSync(tool)) return [];
