@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-934, FS-935, FS-957, FS-981, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-934, FS-935, FS-957, FS-981, FS-1058, FS-1061]
+last_reviewed: 2026-11-01
 ---
 
 # Roan Capital · Motor Vehicle, the logbook loan · product version 1 · proposed
@@ -34,6 +34,15 @@ the vehicle tracking, chattels mortgage and valuation charges, and a
 sample one-month and multi-month calculation, so the fee split can be
 checked.
 
+**Since 21 October** (FS-1061; our dev lead's notes from Roan Capital,
+in the team's review of 29 October): the loan is up to 50% of the
+vehicle's *forced sale* value, and no more than the borrower's M-Pesa
+and bank statements support (A1); the 15% is a base rate of 5%, the
+cost of funds 2%, a risk premium of 3%, an administrative fee of 3% and a
+processing fee of 2% (A6; whether the two fees are interest or fees,
+LQ-33); vehicle tracking, the legal fee and the valuation are passed on
+to the borrower (A19). Each is put to Roan Capital to confirm.
+
 **First, the sale window** (FS-935, Critical). Roan Capital's ladder
 recovers or sells the vehicle between days 31 and 47. The regulations
 want thirty days' notice before movable security is sold (reg 30(4)), and
@@ -54,12 +63,12 @@ Published once approved.
 
 | Id | Term | Value | Source | Ask |
 |---|---|---|---|---|
-| A1 | Amount limits | Up to 50% of the vehicle's value; the smallest and largest loans in shillings | Roan Capital's weekly update, 21 October | Provide |
+| A1 | Amount limits | Up to 50% of the vehicle's forced sale value, and no more than the borrower's M-Pesa and bank statements show they can repay; the smallest and largest loans in shillings | Roan Capital's weekly update, 21 October; our team's notes from Roan Capital, October | Provide |
 | A2 | Term | 1 to 12 months, chosen for each loan | Roan Capital's weekly update, 21 October | Confirm |
 | A3 | Repayment frequency | Monthly, the first instalment a month after disbursement | Roan Capital's weekly update, 21 October | Confirm |
 | A4 | Interest method | Flat, on the gross principal | Roan Capital's weekly update, 21 October | Confirm |
 | A5 | Interest rate and its unit | 15% a month; CBK's approval of the pricing (reg 55) to record | Roan Capital's weekly update, 21 October | Confirm |
-| A6 | Fees | The 15% includes an admin fee of 2 to 3% and a processing fee of 2%. Are these charged within the rate, or as fees of their own? Either way each is disclosed in the agreement and the APR (reg 54(4)) | Roan Capital's weekly update, 21 October | Provide |
+| A6 | Fees | The 15% a month is a base rate of 5%, the cost of funds 2%, a risk premium of 3%, an administrative fee of 3% and a processing fee of 2%. Are the administrative and processing fees charged within the rate, or as fees of their own? Either way each is disclosed in the agreement and the APR (reg 54(4)) (LQ-33) | Roan Capital's weekly update, 21 October; our team's notes from Roan Capital, October | Provide |
 | A7 | Insurance | The vehicle's insurance: who holds it, whether Roan Capital is named on it, and whether any premium is charged through the loan. Parked on 21 October, with no owner yet | Roan Capital's weekly update, 21 October | Provide |
 | A8 | Default interest | Penalties "accruing throughout" the recovery ladder: the rate, its base and when it starts | Roan Capital's weekly update, 21 October | Provide |
 | A9 | Default period | For a loan longer than thirty days the regulations allow up to 90 days past due before a loan is non-performing (reg 57); 21 October agreed default the day after a missed payment. The agreement states the period (reg 57(3)) | The regulations; Roan Capital's weekly update, 21 October | Choose: 90 days / 30 days / Shorter (give the days) |
@@ -72,7 +81,7 @@ Published once approved.
 | A16 | Interest basis | 15% × the gross principal × the months in the term | Roan Capital's weekly update, 21 October | Confirm |
 | A17 | Tax on fees | Excise duty at 20% on each fee, not on interest; how it applies, with counsel (LQ-14) | The Excise Duty Act | — |
 | A18 | Who pays the rail's charges | The bank's charges on payouts and repayments | None yet | Choose: The borrower / Roan Capital |
-| A19 | Third-party costs | Vehicle tracking, the chattels mortgage's registration in the collateral registry, and the valuation: their amounts, and whether passed on at cost | Roan Capital's weekly update, 21 October | Provide |
+| A19 | Third-party costs | Vehicle tracking, the legal fee, the chattels mortgage's registration in the collateral registry, and the valuation, each passed on to the borrower: their amounts, and whether at cost | Roan Capital's weekly update, 21 October; our team's notes from Roan Capital, October | Provide |
 | A20 | Grace | None: default the day after a missed payment | Roan Capital's weekly update, 21 October | Confirm |
 | A21 | Collateral | The vehicle, by its logbook, registered as a security right in the collateral registry; up to 50% loan-to-value, on a valuation whose source is to be named | Roan Capital's weekly update, 21 October | Confirm |
 | A22 | Guarantors | Whether a guarantor is also required | None yet | Provide |

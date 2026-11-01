@@ -63,6 +63,15 @@ const GROUPS = {
   C: { file: 'C-how-it-runs', kicker: 'Operations', who: 'operations lead', title: 'Group C · How it runs',
     intro: 'This is how the product is operated on the platform. None of it is published.' },
 };
+// FS-1061: who answers each part, in the institution's own roles
+// (--who "A=CEO,B=loan officers,C=loan officers"), and where the file goes
+// back (--return 'upload it to the folder "Your answers"').
+for (const pair of opt('--who', '').split(',').filter(Boolean)) {
+  const [k, who] = pair.split('=').map((s) => s.trim());
+  if (!GROUPS[k] || !who) { console.error(`--who: "${pair}" is not <A|B|C>=<role>`); process.exit(1); }
+  GROUPS[k].who = who;
+}
+const returnTo = opt('--return', 'return the file itself to your Dibon delivery lead');
 const ASK_LABEL = { Confirm: 'Confirm', Choose: 'Choose one', Provide: 'Provide', Decide: 'Decide' };
 // The values the read-back keys on; the display text is free to change.
 const CONFIRM = [{ text: 'Confirmed', value: 'confirmed' }, { text: 'Not right: the correct value below', value: 'not-right' }];
@@ -208,7 +217,7 @@ const stem = `${inst.replace(/\s+/g, '-')}-${product.replace(/\s+/g, '-')}`;
         ds.li('**Provide** or **Decide:** type the answer.'),
         ...(agreedOn ? [ds.li(`**What you told us on ${agreedOn}:** choose "All as agreed" once for the whole list, or "Corrections below" and write each correction beside its item.`)] : []),
         ds.li('Unsure? Leave the field as it is, and we will go through it together.'),
-        ds.li('Save the document under its own name and return the file itself to your Dibon delivery lead. We read the answers from the fields, so please do not retype them elsewhere or turn the file into a PDF.'),
+        ds.li(`Save the document under its own name and ${returnTo}. We read the answers from the fields, so please do not retype them elsewhere or turn the file into a PDF.`),
       );
     }
     if (open.length) children.push(ds.h(agreedOn ? 'Needs your answer' : 'The questions'), new Table({ width: { size: ds.WIDTH, type: WidthType.DXA }, columnWidths: W, rows: [head(['Item', 'What we have', 'Your answer']), ...open.map(itemRow)] }));

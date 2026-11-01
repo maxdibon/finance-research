@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989, FS-1004, FS-1010, FS-1023, FS-1029, FS-1035, FS-1033, FS-1042, FS-1052, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989, FS-1004, FS-1010, FS-1023, FS-1029, FS-1035, FS-1033, FS-1042, FS-1052, FS-1058, FS-1061, FS-1066]
+last_reviewed: 2026-11-01
 ---
 
 # Legal questions
@@ -72,6 +72,8 @@ lost.
 | LQ-29 | When SME Recon writes a business's bank and mobile-money transactions into books it keeps on a service hosted outside Kenya (Zoho Books, QuickBooks Online), who is transferring the personal data in them out of Kenya, the business or Dibon, and on what basis? | modules/sme-recon §7 | Dibon; businesses | Data Protection Act (LR-17) | Open | The business chooses its books and instructs the transfer; Dibon acts as its processor under an agreement that says so; nothing written abroad beyond what the books need | FS-1033 |
 | LQ-30 | May Dibon keep client material and its own records in a cloud service outside Kenya (its Odoo on odoo.sh; its books on QuickBooks Online; its files in Google Workspace, and a client editing documents there with us): on what basis for the personal data in them, what its clients' agreements and NDAs allow, and must a company's accounting records be kept in Kenya? | rules, Dibon 10; FS-1035 | Dibon | Data Protection Act (LR-17); Companies Act (LR-34); Tax Procedures Act (LR-31) | Open | Recorded as an exception until Dibon's Odoo moves to OLP in Kenya (FS-1035) | FS-1035, FS-1042 |
 | LQ-31 | May an Odoo Enterprise database run beside production under the same subscription, as an upgrade's target or a staging copy, and may an old Enterprise database be kept running read-only, for look-ups through its retention period, once the subscription has ended after a port to another edition? | specs/back-office §9.4; FS-1052 | Dibon | Contract (the Odoo Enterprise Subscription Agreement) | Open | Assumed not: a target and a staging copy counted under the subscription until confirmed; an old Enterprise back office retired to its export and a database archive at sign-off, not kept running unlicensed | FS-1052, FS-036, FS-967 |
+| LQ-32 | May a lender screen its borrowers against PEP and sanctions lists through a provider that processes their names and identity numbers outside Kenya: on what lawful basis, and with what safeguards or proof to the Data Commissioner for the transfer; and does a screening provider abroad need registering as the lender's processor? | FS-1066 (a screening API suggested for Roan Capital) | Institutions | Data Protection Act s.48 (LR-17) | Open | Not chosen: until answered, screening by the interim question on the application form and the compliance officer's review; any provider preferred where it processes in Kenya | FS-1066, FS-340 |
+| LQ-33 | When a lender builds its administrative and processing fees into a monthly interest rate (Roan Capital's 15%: 5% base, 2% cost of funds, 3% risk premium, 3% administrative, 2% processing), are those parts interest or fees: for the cap on what a non-performing loan may recover (reg 29), the pricing model CBK approves (reg 59), the agreement's disclosure and the APR (reg 54(4)), and excise duty on fees under the Excise Duty Act? | FS-1061; Roan Capital's Motor Vehicle and Title Deed drafts, A6 | Institutions | Reg 29, reg 54(4), reg 59 (LR-03); the Excise Duty Act | Open | Each part disclosed on its own in the agreement and the APR whichever way it falls; the fees taxed as fees until counsel says otherwise; Roan Capital asked how it charges them (A6) | FS-1061, LQ-01, LQ-14 |
 
 ## Regulations cited
 
@@ -88,7 +90,7 @@ lost.
 | reg 39 | reg 39(3) | A receipt for every transaction, a free loan statement on request and a way to see it at any time (39(1)); errors corrected promptly (39(2)); a guarantor kept informed through periodic statements (39(3)) |
 | reg 42 | reg 42 | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
 | reg 47 | reg 47, reg 47(2) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
-| reg 54 | reg 54, reg 54(7) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
+| reg 54 | reg 54, reg 54(4), reg 54(7) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
 | reg 56 | reg 56, reg 56(3), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
 | reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |
 | reg 59 | reg 59 | A pricing model with clear parameters: its components and costs justified, rates that may vary with the borrower's creditworthiness (59(2)(c)), the criteria for non-performance, credit bureau scores, all-inclusive pricing except third-party costs (59(2)(f)), and the APR disclosed |
@@ -112,6 +114,7 @@ lost.
 | s. 25 | s. 25 | The principles of data protection: personal data processed lawfully, fairly and transparently, for explicit purposes, limited to what is necessary, accurate, kept no longer than needed, secure, and not transferred out of Kenya without safeguards |
 | s. 30 | s. 30 | No processing without a lawful basis: the person's consent for a stated purpose, or necessity for a contract, a legal obligation, vital interests, a public task or another ground the section lists |
 | s. 32 | s. 32 | Whoever relies on consent proves it was given for the purpose; consent can be withdrawn at any time; it is not freely given where a service is made to depend on consent to processing it does not need |
+| s. 48 | s. 48 | Personal data transferred out of Kenya only with proof of appropriate safeguards given to the Data Commissioner, or where the transfer is necessary on a ground the section lists |
 
 **[LR-23](law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).
 

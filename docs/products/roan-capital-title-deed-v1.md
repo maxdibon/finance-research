@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-934, FS-957, FS-959, FS-981, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-934, FS-957, FS-959, FS-981, FS-1058, FS-1061]
+last_reviewed: 2026-11-01
 ---
 
 # Roan Capital · Title Deed, the land-secured loan · product version 1 · proposed
@@ -30,6 +30,14 @@ for every product: no grace, default the day after a missed payment; a
 due date on a holiday moves to the next working day; every amount to two
 decimal places; payouts by bank only, none from 23:00 to 04:00;
 restructuring at 365 days, earlier by exception.
+
+**Since 21 October** (FS-1061; our dev lead's notes from Roan Capital,
+in the team's review of 29 October): the 15% is a base rate of 5%, the
+cost of funds 2%, a risk premium of 3%, an administrative fee of 3% and a
+processing fee of 2% (A6; whether the two fees are interest or fees,
+LQ-33); the legal fee, the land's valuation and the costs of the charge
+are passed on to the borrower (A19). Each is put to Roan Capital to
+confirm.
 
 **Recovering land** is under the Land Act (LR-47), not the lender
 regulations' own steps (reg 30(3)). The charge is registered against the
@@ -59,7 +67,7 @@ Published once approved.
 | A3 | Repayment frequency | Monthly, the first instalment a month after disbursement | Roan Capital's weekly update, 21 October | Confirm |
 | A4 | Interest method | Flat, on the gross principal | Roan Capital's weekly update, 21 October | Confirm |
 | A5 | Interest rate and its unit | 15% a month; CBK's approval of the pricing (reg 55) to record | Roan Capital's weekly update, 21 October | Confirm |
-| A6 | Fees | The 15% includes an admin fee of 2 to 3% and a processing fee of 2%. Are these charged within the rate, or as fees of their own? Either way each is disclosed in the agreement and the APR (reg 54(4)) | Roan Capital's weekly update, 21 October | Provide |
+| A6 | Fees | The 15% a month is a base rate of 5%, the cost of funds 2%, a risk premium of 3%, an administrative fee of 3% and a processing fee of 2%. Are the administrative and processing fees charged within the rate, or as fees of their own? Either way each is disclosed in the agreement and the APR (reg 54(4)) (LQ-33) | Roan Capital's weekly update, 21 October; our team's notes from Roan Capital, October | Provide |
 | A7 | Insurance | Any cover required on the property or the borrower's life, and who pays for it. Parked on 21 October, with no owner yet | Roan Capital's weekly update, 21 October | Provide |
 | A8 | Default interest | The rate on overdue instalments, its base and when it starts | None yet | Provide |
 | A9 | Default period | For a loan longer than thirty days the regulations allow up to 90 days past due before a loan is non-performing (reg 57); 21 October agreed default the day after a missed payment. The agreement states the period (reg 57(3)) | The regulations; Roan Capital's weekly update, 21 October | Choose: 90 days / 30 days / Shorter (give the days) |
@@ -72,7 +80,7 @@ Published once approved.
 | A16 | Interest basis | 15% × the gross principal × the months in the term | Roan Capital's weekly update, 21 October | Confirm |
 | A17 | Tax on fees | Excise duty at 20% on each fee, not on interest; how it applies, with counsel (LQ-14) | The Excise Duty Act | — |
 | A18 | Who pays the rail's charges | The bank's charges on payouts and repayments | None yet | Choose: The borrower / Roan Capital |
-| A19 | Third-party costs | The valuation, the official search, registering the charge and its stamp duty: their amounts, and whether passed on at cost | Dibon's proposal | Provide |
+| A19 | Third-party costs | The legal fee, the valuation, the official search, registering the charge and its stamp duty, each passed on to the borrower: their amounts, and whether at cost | Dibon's proposal; our team's notes from Roan Capital, October | Provide |
 | A20 | Grace | None: default the day after a missed payment | Roan Capital's weekly update, 21 October | Confirm |
 | A21 | Collateral | A charge over the land in the prescribed form, registered against its title: holding the title deed alone is only a lien, enforced by a court (Land Act s.79); the loan-to-value on the valuation, and whose valuation | Roan Capital's weekly update, 21 October | Provide |
 | A22 | Guarantors | Whether a guarantor is also required; a spouse's assent where the land is a matrimonial home (Land Act s.79) | None yet | Provide |
