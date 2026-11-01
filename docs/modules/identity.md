@@ -127,42 +127,60 @@ mode, to Fineract.
 
 ```
   product: "open account" / "new borrower" / "new merchant"
-                               |
-                               v
-         the product's chain: its checks in order (FS-1078), each
-         with its own providers, a primary and a fallback (FS-1077)
-                               |
-                               v
-  +--------------------------------------------------------------------------+
-  | 1  PHONE        the number is live, registered to the name and ID number |
-  |                 given, and its SIM not changed of late (ID-05, ID-12)    |
-  |                 primary: the operator (Safaricom)   fallback: an         |
-  |                 aggregator                                               |
-  +--------------------------------------------------------------------------+
-                               |  passes on: the ID number, confirmed
-                               v
-  +--------------------------------------------------------------------------+
-  | 2  NATIONAL ID  the person on the register, alive; the register's photo  |
-  |                 (ID-01)                                                  |
-  |                 primary: NPDM                       fallback: an         |
-  |                 aggregator                                               |
-  +--------------------------------------------------------------------------+
-                               |  passes on: the register's photo
-                               v
-  +--------------------------------------------------------------------------+
-  | 3  LIVENESS     a live selfie, matched to the register's photo (ID-04)   |
-  |                 primary: an aggregator              fallback: another    |
-  +--------------------------------------------------------------------------+
-                               |
-              every step logged: provider, reference, result, time, cost
-                               |
-     a step answers "no match" ------> stopped; referred to compliance,
-                               |       never the manual route (ID-01)
-     no provider can answer --------> the manual route: the officer sees
-                               |       the original; a second approval
-                               v
-       all steps passed: the result written to the person's authority
-       (core / Fineract / Odoo); the register's data is not copied
+                                       |
+                                       v
+         the product's chain (FS-1078): each step asks its primary first,
+         and its fallback only if the primary is down or cannot answer (FS-1077)
+                                       |
+                                       v
+  STEP 1  PHONE: the number is live, registered to the ID number given, SIM unchanged
+  +-----------------------------+              +-----------------------------+
+  | SAFARICOM                   |              | SMILE ID                    |
+  | the operator's own records  | down, or no  | the number matched to the   |
+  | (ID-05, ID-12)              | answer ----->| ID number (Prembly gives    |
+  | [direct]                    |              | the carrier only)           |
+  |                             |              | [aggregator]                |
+  +-----------------------------+              +-----------------------------+
+                 |                                            |
+                 +---------------------+----------------------+
+                                       |  passes on: the ID number, confirmed
+                                       v
+  STEP 2  NATIONAL ID: the person on the register, alive; their photo
+  +-----------------------------+              +-----------------------------+
+  | NPDM, formerly IPRS         |              | PREMBLY or SMILE ID         |
+  | the national register       | down, or no  | the register, through the   |
+  | (ID-01)                     | answer ----->| aggregator's own access     |
+  | [direct]                    |              | [aggregator]                |
+  +-----------------------------+              +-----------------------------+
+                 |                                            |
+                 +---------------------+----------------------+
+                                       |  passes on: the register's photo
+                                       v
+  STEP 3  LIVENESS: a live selfie, matched to the register's photo
+  +-----------------------------+              +-----------------------------+
+  | PREMBLY or SMILE ID         |              | THE OTHER ONE               |
+  | selfie and liveness         | down, or no  | selfie and liveness         |
+  | (ID-04)                     | answer ----->|                             |
+  | [aggregator]                |              | [aggregator]                |
+  +-----------------------------+              +-----------------------------+
+                 |                                            |
+                 +---------------------+----------------------+
+                                       |
+                                       v
+                   all three passed: verified; the result written to the
+                   person's authority (core / Fineract / Odoo); the
+                   register's data is not copied
+
+  at any step:  "no match"            --> the chain stops; referred to
+                                          compliance, never the manual route
+                both providers down,  --> the manual route: the officer sees
+                or neither covers it      the original; a second approval (ID-01)
+
+  every attempt logged: the step, the provider, its reference, the result,
+  the time and the cost, the fallback's included
+
+  which aggregator is the primary and which the fallback is set per
+  institution and per check at onboarding (OB-COM-27); drawn as an example
 
   other checks a chain may add as steps: the document checklist (ID-02),
   the tax PIN (ID-06), a business's registration (ID-07), PEP and
