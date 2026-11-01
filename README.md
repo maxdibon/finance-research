@@ -116,6 +116,27 @@ code/lender-rules/   the vocabulary's schema and rules across terms: the first
 .githooks/           pre-commit: runs the checks
 ```
 
+## The tools
+
+FS-1053. Each tool, and what it is for: `tools/check.js` and its tests; `tools/site.js`, the reader;
+  `tools/assemble.js`, the Master; `tools/products/`, product
+  questionnaires built and read back (the builder needs the docx package
+  via DOCX_MODULE); `tools/originals.js`, originals kept and verified;
+  `tools/cut.js`, releases; `tools/release.js`, which release a reader
+  is reading; `tools/dibon.js` (with `dibon` and `dibon.cmd` at the
+  root), the team's words; `tools/register.js`, the review register across
+  REVIEW.md and review/, and `tidy`, which files each row by its status
+  (FS-866); `tools/citations.js`, each document's "Regulations cited"
+  from the instrument cards in docs/law/, and `--external` for a Word or
+  PDF document (FS-868), `--data` for a Word document's text;
+  `tools/regulations-page.py`, which gives a Word document its page of
+  regulations cited, tracked when the document is (FS-874); `tools/paths.js`, what a path written as plain
+  text means, for the reader and the links check (FS-856);
+  `tools/docregister.js`, the one reader of the document register, by its
+  header, and the maker of each customer's table of documents (FS-857);
+  `tools/board.js`, the Board, from the register and the branches, and
+  what GitHub last said is in review (FS-891).
+
 ## Checks
 
 ```bash

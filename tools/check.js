@@ -486,26 +486,37 @@ function checkCopy(root) {
 // A register row marked [decision] has an entry in docs/decisions.md, and
 // every entry there belongs to a marked row that was decided (FS-353).
 const DECISIONS = path.join('docs', 'decisions.md');
+// FS-1053: the entries live in docs/decisions/, a file for each hundred ids,
+// as the register's closed rows do; docs/decisions.md is their index.
+const DECISION_PARTS = path.join('docs', 'decisions');
+function decisionFiles(root) {
+  const dir = path.join(root, DECISION_PARTS);
+  const parts = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => /^\d+-\d+\.md$/.test(f))
+    .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)).map((f) => path.join(DECISION_PARTS, f)) : [];
+  return [DECISIONS, ...parts];
+}
 
 function checkDecisions(root) {
   const failures = [];
   const rows = parseRegister(root);
   const byId = new Map(rows.map((r) => [r.id, r]));
   const entries = new Map();
-  read(root, DECISIONS).split('\n').forEach((text, i) => {
-    if (!text.startsWith('## ')) return;
-    for (const m of text.matchAll(/FS-\d{3,4}/g)) entries.set(m[0], i + 1);
-  });
+  for (const file of decisionFiles(root)) {
+    read(root, file).split('\n').forEach((text, i) => {
+      if (!text.startsWith('## ')) return;
+      for (const m of text.matchAll(/FS-\d{3,4}/g)) entries.set(m[0], { file, line: i + 1 });
+    });
+  }
   for (const r of rows) {
     if (r.notes.includes('[decision]') && !entries.has(r.id)) {
-      failures.push(fail('decisions', r.file, r.line, `${r.id} is marked [decision] but has no entry in docs/decisions.md`));
+      failures.push(fail('decisions', r.file, r.line, `${r.id} is marked [decision] but has no entry in docs/decisions/`));
     }
   }
-  for (const [id, line] of entries) {
+  for (const [id, { file, line }] of entries) {
     const r = byId.get(id);
     if (!r) continue; // review-ids reports unknown ids
-    if (!r.notes.includes('[decision]')) failures.push(fail('decisions', DECISIONS, line, `${id} has an entry, but its register row is not marked [decision]`));
-    if (!['DECIDED', 'ANSWERED'].includes(r.status)) failures.push(fail('decisions', DECISIONS, line, `${id} has an entry but is ${r.status} in the register`));
+    if (!r.notes.includes('[decision]')) failures.push(fail('decisions', file, line, `${id} has an entry, but its register row is not marked [decision]`));
+    if (!['DECIDED', 'ANSWERED'].includes(r.status)) failures.push(fail('decisions', file, line, `${id} has an entry but is ${r.status} in the register`));
   }
   return failures;
 }
@@ -523,52 +534,55 @@ const REQUIRE_RE = /(docs\/[\w./-]+\.md)(?: §(\d+(?:\.\d+)?))?(?: "([^"]+)")?|\
 function checkObligations(root) {
   const failures = [];
   const known = new Set(moduleFiles(root).flatMap((f) => capabilityRows(read(root, f)).map((r) => r.id)));
-  const lines = read(root, DECISIONS).split('\n');
   const entries = [];
-  let cur = null;
-  lines.forEach((t, i) => {
-    if (t.startsWith('## ')) {
-      const m = t.match(/FS-(\d{3,4})/);
-      cur = m ? { id: m[0], n: Number(m[1]), line: i + 1, req: null } : null;
-      if (cur) entries.push(cur);
-      return;
-    }
-    // FS-896: an entry a later decision replaced keeps its text and stops
-    // requiring what it once did; the later entry must exist.
-    const s = t.match(/^- \*\*Superseded by:\*\* (FS-\d{3,4})\b/);
-    if (s && cur) cur.supersededBy = { id: s[1], line: i + 1 };
-    const r = t.match(/^- \*\*Requires:\*\* (.*)$/);
-    if (r && cur) {
-      let text = r[1];
-      for (let j = i + 1; j < lines.length && /^ {2}\S/.test(lines[j]); j++) text += ` ${lines[j].trim()}`;
-      cur.req = { text, line: i + 1 };
-    }
-  });
+  for (const dfile of decisionFiles(root)) {
+    const lines = read(root, dfile).split('\n');
+    let cur = null;
+    lines.forEach((t, i) => {
+      if (t.startsWith('## ')) {
+        const m = t.match(/FS-(\d{3,4})/);
+        cur = m ? { id: m[0], n: Number(m[1]), file: dfile, line: i + 1, req: null } : null;
+        if (cur) entries.push(cur);
+        return;
+      }
+      // FS-896: an entry a later decision replaced keeps its text and stops
+      // requiring what it once did; the later entry must exist.
+      const s = t.match(/^- \*\*Superseded by:\*\* (FS-\d{3,4})\b/);
+      if (s && cur) cur.supersededBy = { id: s[1], line: i + 1 };
+      const r = t.match(/^- \*\*Requires:\*\* (.*)$/);
+      if (r && cur) {
+        let text = r[1];
+        for (let j = i + 1; j < lines.length && /^ {2}\S/.test(lines[j]); j++) text += ` ${lines[j].trim()}`;
+        cur.req = { text, line: i + 1 };
+      }
+    });
+  }
   const entryIds = new Set(entries.map((e) => e.id));
   for (const e of entries) {
+    const at = (line, msg) => failures.push(fail('obligations', e.file, line, msg));
     if (e.supersededBy) {
-      if (!entryIds.has(e.supersededBy.id)) failures.push(fail('obligations', DECISIONS, e.supersededBy.line, `${e.id} is superseded by ${e.supersededBy.id}, which has no entry`));
+      if (!entryIds.has(e.supersededBy.id)) at(e.supersededBy.line, `${e.id} is superseded by ${e.supersededBy.id}, which has no entry`);
       continue;
     }
     if (!e.req) {
-      if (e.n >= OBLIGATIONS_FROM) failures.push(fail('obligations', DECISIONS, e.line, `${e.id} has no "Requires:" line; name what the decision requires to exist, or "nothing"`));
+      if (e.n >= OBLIGATIONS_FROM) at(e.line, `${e.id} has no "Requires:" line; name what the decision requires to exist, or "nothing"`);
       continue;
     }
     const { text, line } = e.req;
     if (/^nothing\b/.test(text)) continue;
     const rest = text.replace(REQUIRE_RE, '').replace(/[\s,;.]+/g, '');
-    if (rest) failures.push(fail('obligations', DECISIONS, line, `${e.id} "Requires:" has items not understood: ${rest.slice(0, 60)}`));
+    if (rest) at(line, `${e.id} "Requires:" has items not understood: ${rest.slice(0, 60)}`);
     for (const m of text.matchAll(REQUIRE_RE)) {
       const [, file, section, quote, id] = m;
       if (id) {
-        if (!known.has(id)) failures.push(fail('obligations', DECISIONS, line, `${e.id} requires ${id}, which no module defines`));
+        if (!known.has(id)) at(line, `${e.id} requires ${id}, which no module defines`);
         continue;
       }
       const abs = path.join(root, ...file.split('/'));
-      if (!fs.existsSync(abs)) { failures.push(fail('obligations', DECISIONS, line, `${e.id} requires ${file}, which does not exist`)); continue; }
+      if (!fs.existsSync(abs)) { at(line, `${e.id} requires ${file}, which does not exist`); continue; }
       const body = fs.readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
-      if (section && !new RegExp(`^#{2,3} ${section.replace('.', '\\.')} · `, 'm').test(body)) failures.push(fail('obligations', DECISIONS, line, `${e.id} requires ${file} §${section}, which has no such section`));
-      if (quote && !body.includes(quote)) failures.push(fail('obligations', DECISIONS, line, `${e.id} requires ${file} to say "${quote}", and it does not`));
+      if (section && !new RegExp(`^#{2,3} ${section.replace('.', '\\.')} · `, 'm').test(body)) at(line, `${e.id} requires ${file} §${section}, which has no such section`);
+      if (quote && !body.includes(quote)) at(line, `${e.id} requires ${file} to say "${quote}", and it does not`);
     }
   }
   return failures;
@@ -1032,6 +1046,10 @@ function checkOverview(root, files) {
   // customers check holds to link every one (FS-720).
   if (links.includes('docs/customers.md') && fs.existsSync(path.join(root, CUSTOMERS))) {
     for (const m of read(root, CUSTOMERS).matchAll(/\]\((customers\/[^)\s#]+\.md)\)/g)) links.push(`docs/${m[1]}`);
+  }
+  // FS-1053: so is each file of decisions, through its index.
+  if (links.includes('docs/decisions.md') && fs.existsSync(path.join(root, DECISIONS))) {
+    for (const m of read(root, DECISIONS).matchAll(/\]\((decisions\/[^)\s#]+\.md)\)/g)) links.push(`docs/${m[1]}`);
   }
   return files
     .map((f) => f.split(path.sep).join('/'))
@@ -1658,7 +1676,7 @@ function checkVersions(root) {
 // FS-847 to FS-849: the guide has a section for every word the tool knows,
 // and no word the tool does not, so the two never drift apart.
 // FS-865: the guide is ways-of-working's §7 to §10; the words are §8.
-const GUIDE = path.join('docs', 'service-management', 'ways-of-working.md');
+const GUIDE = path.join('docs', 'service-management', 'the-words.md'); // FS-1053: was ways-of-working §7 to §10
 function checkWords(root) {
   const tool = path.join(__dirname, 'dibon.js'); // the words live beside the check
   if (!fs.existsSync(tool)) return [];

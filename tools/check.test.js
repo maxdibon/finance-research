@@ -33,6 +33,14 @@ function patch(dir, rel, fn) {
   fs.writeFileSync(p, fn(fs.readFileSync(p, 'utf8').replace(/\r\n/g, '\n')));
 }
 
+// FS-1053: decisions live in an index and a file per hundred ids; an edit
+// that names an entry's text lands in whichever file holds it.
+function patchDecisions(dir, fn) {
+  const parts = path.join(dir, 'docs', 'decisions');
+  const files = [path.join('docs', 'decisions.md'), ...(fs.existsSync(parts) ? fs.readdirSync(parts).map((f) => path.join('docs', 'decisions', f)) : [])];
+  for (const f of files) patch(dir, f, fn);
+}
+
 function names(failures) {
   return [...new Set(failures.map((f) => f.check))].sort();
 }
@@ -363,7 +371,7 @@ test('claims: a v1 claim that does not cite the owner\'s decision fails', () => 
 });
 
 test('decisions: a row marked [decision] with no entry fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'decisions.md'), (t) => t.replace('## FS-230 · Superset for dashboards', '## Superset for dashboards')));
+  const f = runWith((d) => patchDecisions(d, (t) => t.replace('## FS-230 · Superset for dashboards', '## Superset for dashboards')));
   assert.deepStrictEqual(names(f), ['decisions']);
 });
 
@@ -752,7 +760,7 @@ test('versions: a handover describing a release the changelog does not have fail
 });
 
 test('words: a word the tool knows with no section in the guide fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'service-management', 'ways-of-working.md'), (t) => t.replace('### discard\n', '### throw-away\n')));
+  const f = runWith((d) => patch(d, path.join('docs', 'service-management', 'the-words.md'), (t) => t.replace('### discard\n', '### throw-away\n')));
   assert.deepStrictEqual(names(f), ['words']);
 });
 
@@ -909,22 +917,21 @@ test('scope: a capability moved into phase 1 past the cap fails', () => {
 const DECISIONS = path.join('docs', 'decisions.md');
 
 test('obligations: a decision from FS-490 on without a Requires line fails', () => {
-  const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace(/^- \*\*Requires:\*\* docs\/delivery-plan\.md "v1 cap:"\.\n/m, '')));
+  const f = runWith((d) => patchDecisions(d, (t) => t.replace(/^- \*\*Requires:\*\* docs\/delivery-plan\.md "v1 cap:"\.\n/m, '')));
   assert.deepStrictEqual(names(f), ['obligations']);
 });
 
 // FS-896: a superseded entry keeps its text and requires nothing more,
 // but the entry that superseded it must exist.
 test('obligations: a superseded entry requires nothing, and its successor must exist', () => {
-  const D = path.join('docs', 'decisions.md');
-  const gone = (d) => patch(d, D, (t) => t.replace('- **Superseded by:** FS-896:', '- **Superseded by:** FS-897:'));
+  const gone = (d) => patchDecisions(d, (t) => t.replace('- **Superseded by:** FS-896:', '- **Superseded by:** FS-897:'));
   assert.deepStrictEqual(names(runWith(gone)), ['obligations']);
-  const unmarked = (d) => patch(d, D, (t) => t.replace(/^- \*\*Superseded by:\*\* FS-896:.*\n/m, '- **Requires:** docs/specs/gitlab-was-here.md.\n'));
+  const unmarked = (d) => patchDecisions(d, (t) => t.replace(/^- \*\*Superseded by:\*\* FS-896:.*\n/m, '- **Requires:** docs/specs/gitlab-was-here.md.\n'));
   assert.ok(names(runWith(unmarked)).includes('obligations'));
 });
 
 test('obligations: a required file that does not exist fails', () => {
-  const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace('docs/operating-model.md "Runbooks to write first"', 'docs/specs/recovery.md')));
+  const f = runWith((d) => patchDecisions(d, (t) => t.replace('docs/operating-model.md "Runbooks to write first"', 'docs/specs/recovery.md')));
   // The missing path also trips the links check (FS-627).
   assert.deepStrictEqual(names(f), ['links', 'obligations']);
 });
@@ -935,12 +942,12 @@ test('obligations: required text the file no longer says fails', () => {
 });
 
 test('obligations: a required section the file does not have fails', () => {
-  const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace('docs/architecture/README.md §9 "an isolated', 'docs/architecture/README.md §19 "an isolated')));
+  const f = runWith((d) => patchDecisions(d, (t) => t.replace('docs/architecture/README.md §9 "an isolated', 'docs/architecture/README.md §19 "an isolated')));
   assert.deepStrictEqual(names(f), ['obligations']);
 });
 
 test('obligations: an item the check cannot read fails rather than passing', () => {
-  const f = runWith((d) => patch(d, DECISIONS, (t) => t.replace('AC-14, AC-15, AC-16, SE-26;', 'AC-14, AC-15, AC-16, SE-26, the recovery screens;')));
+  const f = runWith((d) => patchDecisions(d, (t) => t.replace('AC-14, AC-15, AC-16, SE-26;', 'AC-14, AC-15, AC-16, SE-26, the recovery screens;')));
   assert.deepStrictEqual(names(f), ['obligations']);
 });
 
@@ -1332,7 +1339,7 @@ test('words: download brings two people\'s register rows together', () => {
   try {
     run(where, 'git', ['clone', '--quiet', '--bare', ROOT, shared]);
     run(where, 'git', ['clone', '--quiet', shared, at('setup')]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/citations.js', 'tools/docregister.js', 'tools/board.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(at('setup'), f));
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/citations.js', 'tools/docregister.js', 'tools/board.js', 'docs/service-management/ways-of-working.md', 'docs/service-management/the-words.md']) fs.copyFileSync(path.join(ROOT, f), path.join(at('setup'), f));
     run(at('setup'), 'git', ['add', '-A', 'tools', 'docs']);
     run(at('setup'), 'git', ['-c', 'user.name=Setup', '-c', 'user.email=s@example.test', '-c', 'core.hooksPath=/dev/null', 'commit', '-qm', 'FS-890: the tools under test']);
     run(at('setup'), 'git', ['push', '-q', 'origin', 'HEAD:main']);
@@ -1405,7 +1412,7 @@ test('words: join, leave and the board, in a pretend repository', () => {
   try {
     run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
     run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'tools/check.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'tools/check.js', 'docs/service-management/ways-of-working.md', 'docs/service-management/the-words.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
     for (const [k, v] of [['user.name', 'Lillian Test'], ['user.email', 'lillian@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
     run('git', ['add', '-A', 'tools', 'docs']);
     run('git', ['commit', '-qm', 'FS-891: the tools under test']);
@@ -1444,7 +1451,7 @@ test('words: save does the routine for you, in a pretend repository', () => {
   try {
     run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
     run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/board.js', 'tools/citations.js', 'tools/docregister.js', 'tools/site.js', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/check.js', 'tools/board.js', 'tools/citations.js', 'tools/docregister.js', 'tools/site.js', 'docs/service-management/ways-of-working.md', 'docs/service-management/the-words.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
     for (const [k, v] of [['user.name', 'Betty Test'], ['user.email', 'betty@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
     run('git', ['add', '-A', 'tools', 'docs']);
     run('git', ['commit', '-qm', 'FS-922: the tools under test']);
@@ -1483,7 +1490,7 @@ test('words: session start and end keep a personal handover, in a pretend reposi
   try {
     run('git', ['clone', '--quiet', '--bare', ROOT, path.join(where, 'shared.git')]);
     run('git', ['clone', '--quiet', path.join(where, 'shared.git'), work]);
-    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'HANDOFF.md', 'docs/service-management/ways-of-working.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
+    for (const f of ['tools/dibon.js', 'tools/register.js', 'tools/board.js', 'HANDOFF.md', 'docs/service-management/ways-of-working.md', 'docs/service-management/the-words.md']) fs.copyFileSync(path.join(ROOT, f), path.join(work, f));
     for (const [k, v] of [['user.name', 'Betty Test'], ['user.email', 'betty@example.test'], ['core.hooksPath', '/dev/null']]) run('git', ['config', k, v]);
     run('git', ['add', '-A', 'tools', 'docs', 'HANDOFF.md']);
     run('git', ['commit', '-qm', 'FS-931: the tools under test']);
@@ -1495,7 +1502,8 @@ test('words: session start and end keep a personal handover, in a pretend reposi
     const mine = fs.readFileSync(path.join(work, 'handoffs', 'bflorah.md'), 'utf8');
     assert.match(mine, /^# Betty · personal handover/m);
     assert.match(mine, /^## Preferences$/m);
-    assert.ok(mine.includes(`| ${id} | Betty has a thing to do |`));
+    // FS-1053: Critical, High and waiting rows are listed; a new Medium row is counted.
+    assert.ok(id && /And \d+ more, Medium or Low/.test(mine), mine);
     fs.writeFileSync(path.join(work, 'handoffs', 'bflorah.md'), mine.replace('To be written at the end of the first session.', 'Halfway through the thing.'));
     run('git', ['add', '-A']);
     run('git', ['commit', '-qm', `${id}: the thing, halfway`]);

@@ -1,16 +1,16 @@
 ---
 id: overview
-name: Dibon financial services — the portfolio
+name: Overview — what we offer, and where everything is
 kind: overview
 status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973, FS-1006, FS-1012, FS-1021, FS-1032, FS-1037, FS-1047, FS-1045, FS-1050]
+review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973, FS-1006, FS-1012, FS-1021, FS-1032, FS-1037, FS-1047, FS-1045, FS-1050, FS-1053]
 last_reviewed: 2026-10-30
 ---
 
-# Dibon financial services — the portfolio
+# Overview — what we offer, and where everything is
 
 **This page tells the story and links to everything else.** It restates
 nothing. What each product does is in its module; who holds which record is
@@ -142,6 +142,17 @@ what each person goes through is in [the journeys](journeys/README.md).
 | What changed, release by release, and each document's status | [the changelog](../CHANGELOG.md); in the reader, "Documents by status" and "Unreleased" |
 | What changed, for readers outside Dibon | [the release notes](marketing/release-notes.md) |
 | What a product does, and what is built | its module, §3 |
+| What an id means, where its row lives, and how the next is taken | [ids.md](ids.md) |
+
+**Products and the market**
+
+| If you want | Read |
+|---|---|
+| Each institution's products, as product version documents, drafts included; the kinds of loan we can describe; briefs on products hard to do alone | [products/](products/README.md), with [loan-kinds.md](products/loan-kinds.md) and [the briefs](products/briefs/README.md) |
+| What eighteen of Kenya's institutions sell, from tier 1 banks to Saccos and digital lenders, against what we support | [product-landscape.md](product-landscape.md) |
+| Every app and channel, who uses it, and one way in for people with several roles | [channels.md](channels.md) |
+| Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |
+| Which partners we are talking to | [partners.md](partners.md) |
 
 **Design and build**
 
@@ -153,24 +164,20 @@ what each person goes through is in [the journeys](journeys/README.md).
 | What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
 | How it should feel to use, and how we make it intuitive | [experience.md](experience.md) |
 | How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](testing.md) |
+| Reviews: OLP as it stands (26 October 2026), what we need from it being the [OLP spec](specs/olp.md); the architecture, its databases and namespaces counted (27 October); the specs against their template (29 October) | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [reviews/architecture-2026-10-27.md](reviews/architecture-2026-10-27.md); [reviews/specs-2026-10-29.md](reviews/specs-2026-10-29.md) |
 
 **Customers and delivery**
 
 | If you want | Read |
 |---|---|
 | Who our customers are, and what we are building for each | [customers.md](customers.md), with each customer's delivery map linked from its row |
-| Every document we hold with a party: received, sent or worked on, by DR id | [document-register.md](document-register.md) |
 | What we build next, release by release | [delivery-plan.md](delivery-plan.md) |
 | The MVP day, 30 October 2026: the goal, the plan and who does what | [mvp-day.md](mvp-day.md) |
-| What eighteen of Kenya's institutions sell, from tier 1 banks to Saccos and digital lenders, against what we support | [product-landscape.md](product-landscape.md) |
-| Every app and channel, who uses it, and one way in for people with several roles | [channels.md](channels.md) |
-| Starter templates for onboarding a business or a partner, and where every document is kept and seen | [templates/onboarding-pack.md](templates/onboarding-pack.md) |
-| OLP, Dibon's Odoo platform, reviewed as it stands (26 October 2026); what Financial Services needs from it is the OLP spec | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [specs/olp.md](specs/olp.md) |
-| The architecture reviewed (27 October 2026): its databases and namespaces counted, eight findings | [reviews/architecture-2026-10-27.md](reviews/architecture-2026-10-27.md) |
-| The specs reviewed (29 October 2026): each against the template's writing rules, ten findings, the stale references corrected | [reviews/specs-2026-10-29.md](reviews/specs-2026-10-29.md) |
 | What a customer and each product need to go live | [onboarding.md](onboarding.md) |
-| Which partners we are talking to | [partners.md](partners.md) |
-| Which competitors we meet, and what we learn from each | [competitors.md](competitors.md) |
+| Starter templates for onboarding a business or a partner, and where every document is kept and seen | [templates/onboarding-pack.md](templates/onboarding-pack.md) |
+| Every document we hold with a party: received, sent or worked on, by DR id; our numbered documents and who received them | [document-register.md](document-register.md) |
+| What an institution does on the platform, who does it and when: the handbook template | [handbook/](handbook/README.md) |
+| How people learn it: manuals and training, by role | [training/](training/README.md) |
 | Who keeps our commitments, and whom we hire next | [operating-model.md](operating-model.md) |
 
 **Running the service**
@@ -181,10 +188,6 @@ what each person goes through is in [the journeys](journeys/README.md).
 | Every deployment, what runs in each, its continuity and its exit | [deployments/README.md](deployments/README.md) |
 | Each component's settings: the baseline every deployment follows, mandatory, default or its own | [settings/README.md](settings/README.md) |
 | The steps for what goes wrong, and for what we do rarely | [runbooks/README.md](runbooks/README.md) |
-| What an institution does on the platform, who does it and when: the handbook template | [handbook/](handbook/README.md) |
-| Each institution's products, as product version documents, drafts included | [products/](products/README.md) |
-| How people learn it: manuals and training, by role | [training/](training/README.md) |
-| How our printed documents look: tokens, components, templates and a little whimsy | [design-system.md](design-system.md) |
 | How the service and the company keep going when something fails | [business-continuity.md](business-continuity.md) |
 
 **Law and assurance**
@@ -209,14 +212,12 @@ what each person goes through is in [the journeys](journeys/README.md).
 | Every word of the two-page bank channel proposal | [marketing/bank-channel-proposal.md](marketing/bank-channel-proposal.md) |
 | How banks can offer SME Recon and the business suite to their customers | [bank-channel.md](bank-channel.md) |
 | Drafts to partners, operators and regulators | [outreach](outreach/README.md) |
+| How our documents look: tokens, components, templates, numbers and a little whimsy | [design-system.md](design-system.md) |
 | How big each market segment is | business/market-sizing.xlsx |
 
 **The register and the reader**
 
 | If you want | Read |
 |---|---|
-| Everything still open | [REVIEW.md](../REVIEW.md) |
+| Everything still open, and what waits on a decision | [REVIEW.md](../REVIEW.md); in the reader, the Review page leads with what waits on the owner |
 | All of it as linked pages, every id a link | build/site/index.html, rebuilt on every commit (FS-567); to build it yourself, README "Reading the documents" (FS-631) |
-
-Packs for each buyer type will sit in packs/ and will list modules rather
-than copy them.

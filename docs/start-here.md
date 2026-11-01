@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781, FS-855, FS-896, FS-973, FS-981]
-last_reviewed: 2026-10-27
+review_ids: [FS-492, FS-534, FS-537, FS-631, FS-637, FS-660, FS-714, FS-719, FS-744, FS-745, FS-753, FS-781, FS-855, FS-896, FS-973, FS-981, FS-1053]
+last_reviewed: 2026-10-30
 ---
 
 # Start here
@@ -81,6 +81,25 @@ decisions follow from it.
   also available by voice or as numbers (omni-channel, FS-637).
 - **Delightful to use.** The right thing is the easy thing; we draw,
   test with real people, and measure (docs/experience.md, FS-660).
+
+## Where each kind of fact lives
+
+Each fact has one home; everywhere else links to it (FS-1053). When two
+pages seem to say the same thing, the home wins and the other is fixed.
+
+| The fact | Its home |
+|---|---|
+| What a product does, and what is built | Its module, §3 ([the modules](overview.md#the-modules)) |
+| How a component is built or run | Its spec ([specs](specs/README.md)) |
+| What a setting should be, everywhere | The component's baseline ([settings](settings/README.md)) |
+| What runs where, and its continuity | The deployment ([deployments](deployments/README.md)) |
+| What a person goes through | The journey ([journeys](journeys/README.md)) |
+| A customer's requirements, answers and documents | Its customer page ([customers](customers.md)) |
+| A product's terms | Its product version ([products](products/README.md)) |
+| Why we decided | [decisions.md](decisions.md), under the row's id |
+| What is still open | [REVIEW.md](../REVIEW.md) |
+| What a law requires | Its card ([law](law/README.md)) |
+| What an id means | [ids.md](ids.md) |
 
 ## Words you will meet
 

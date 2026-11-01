@@ -474,12 +474,18 @@ blockquote{border-left:3px solid var(--line);margin:12px 0;padding:2px 14px}bloc
 #q{width:100%;max-width:520px;padding:8px 10px;font-size:15px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px}
 #hits div{padding:4px 0;border-bottom:1px solid var(--line)}
 .reader{margin:0;padding:6px 16px;background:var(--planned-bg);color:var(--planned);font-size:13px}#hits small{color:var(--muted)}
+.foot{margin:2rem auto 1rem;max-width:72rem;padding:0 16px;color:var(--muted);font-size:13px}
 @media (max-width:640px){main{padding:12px 16px}table{font-size:13px}}
 `;
 
-const NAV = [['index.html', 'Search'], ['README.html', 'README'], ['docs/start-here.html', 'Start here'], ['docs/overview.html', 'Overview'],
-  ['docs/journeys/README.html', 'Journeys'], ['docs/specs/README.html', 'Specs'], ['docs/customers/roan-capital.html', 'Roan Capital'],
-  ['docs/delivery-plan.html', 'Delivery plan'], ['docs/mvp-day.html', 'MVP day'], ['REVIEW.html', 'Review'], ['board.html', 'Board'], ['HANDOFF.html', 'Handoff']];
+// FS-1053: the top bar by what readers look for; one customer is never a
+// tab of its own, and pages for people working in the repository go to the
+// foot of every page.
+const NAV = [['docs/start-here.html', 'Start here'], ['docs/overview.html', 'Overview'], ['docs/products/README.html', 'Products'],
+  ['docs/customers.html', 'Customers'], ['docs/delivery-plan.html', 'Delivery plan'], ['docs/mvp-day.html', 'MVP day'], ['docs/architecture/README.html', 'Architecture'],
+  ['docs/specs/README.html', 'Specs'], ['docs/journeys/README.html', 'Journeys'], ['docs/service-management/README.html', 'Running the service'],
+  ['docs/regulation.html', 'Law'], ['REVIEW.html', 'Review'], ['board.html', 'Board'], ['index.html', 'Search']];
+const FOOT = [['README.html', 'README: the repository'], ['HANDOFF.html', 'Handoff'], ['CHANGELOG.html', 'Changelog'], ['status.html', 'Documents by status'], ['unreleased.html', 'Unreleased']];
 
 // FS-891: the board, from the register and the branches (tools/board.js):
 // a card per row, in four columns, filtered by person on the page.
@@ -525,7 +531,7 @@ function shell(title, page, content, note = '') {
   const links = NAV.map(([p, t]) => `<a href="${relHref(page, p)}">${t}</a>`).join('');
   const rel = RELEASE ? `<a class="rel" href="${relHref(page, 'unreleased.html')}">${html(RELEASE)}</a>` : '';
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${html(title)}</title><style>${STYLE}</style></head><body><header><b>Dibon FS</b>${links}${rel}</header>${note ? `<p class="reader">${note}</p>` : ''}<main>${content}</main></body></html>\n`;
+<title>${html(title)}</title><style>${STYLE}</style></head><body><header><b>Dibon FS</b>${links}${rel}</header>${note ? `<p class="reader">${note}</p>` : ''}<main>${content}</main><footer class="foot">${FOOT.map(([p, t]) => `<a href="${relHref(page, p)}">${t}</a>`).join(' · ')}</footer></body></html>\n`;
 }
 
 // The one failure a reader may skip: the protected-names list, which is never
@@ -552,7 +558,23 @@ function reviewBody(body, team = new Map()) {
   const tally = (list, i) => list.reduce((m, c) => { m[c[i]] = (m[c[i]] || 0) + 1; return m; }, {});
   const byCrit = tally(open, 4);
   const byStatus = tally(rows.filter((c) => c[3] !== 'OPEN'), 3);
+  // FS-1053: what waits on the owner's word first: an open row of his whose
+  // latest entry is a proposal, or whose point is a decision to make.
+  const DATED = /\*\*(\d{4}-\d{2}-\d{2})[^*]*:\*\*/g;
+  const latest = (notes) => { const m = [...notes.matchAll(DATED)]; return m.length ? { date: m[m.length - 1][1], text: notes.slice(m[m.length - 1].index) } : { date: '', text: notes }; };
+  const waiting = open.filter((c) => /\bEric\b/.test(c[5]) && (/proposal in chat/i.test(latest(c[6]).text) || /^Decide\b/.test(c[2])))
+    .sort((a, b) => latest(b[6]).date.localeCompare(latest(a[6]).date));
   const summary = [
+    ...(waiting.length ? [
+      '## Waiting on Eric\'s word',
+      '',
+      `${waiting.length} open rows whose latest entry is a proposal, or whose point is a decision to make, newest first.`,
+      '',
+      '| Id | Point | Since |',
+      '|---|---|---|',
+      ...waiting.map((c) => `| ${c[0]} | ${c[2]} | ${latest(c[6]).date || '—'} |`),
+      '',
+    ] : []),
     '## Open, by criticality',
     '',
     `${open.length} open: ${CRITICALITY_ORDER.map((k) => `${byCrit[k] || 0} ${k}`).join(', ')}. Closed: ${Object.entries(byStatus).map(([k, n]) => `${n} ${k.toLowerCase()}`).join(', ')}.`,
@@ -567,8 +589,22 @@ function reviewBody(body, team = new Map()) {
   ];
   const end = at + 2 + lines.slice(at + 2).findIndex((l) => !/^\| FS-\d{3,4} \|/.test(l));
   const table = lines.slice(at + 2, end < at + 2 ? lines.length : end);
-  const hundreds = [...new Set(table.map((l) => Math.floor(+l.slice(5, 8) / 100)))];
-  const grouped = hundreds.flatMap((h) => [`### FS-${String(Math.max(1, h * 100)).padStart(3, '0')} to FS-${String(h * 100 + 99).padStart(3, '0')}`, '', lines[at], lines[at + 1], ...table.filter((l) => Math.floor(+l.slice(5, 8) / 100) === h), '']);
+  // FS-1053: four-digit ids grouped by their own hundred (1000 to 1099).
+  const num = (l) => Number((l.match(/^\| FS-(\d{3,4}) \|/) || [])[1]);
+  // FS-1053: a long note shows its first part and its latest entry; the
+  // full text stays in REVIEW.md, the record.
+  const fold = (l) => {
+    const c = l.split('|');
+    const notes = c[c.length - 2];
+    const m = [...notes.matchAll(DATED)];
+    if (notes.length <= 600 || m.length < 2) return l;
+    const head = notes.slice(0, m[0].index).trimEnd();
+    const tail = notes.slice(m[m.length - 1].index);
+    c[c.length - 2] = `${head} *(${m.length - 1} earlier ${m.length - 1 === 1 ? 'entry' : 'entries'} in REVIEW.md)* ${tail}`;
+    return c.join('|');
+  };
+  const hundreds = [...new Set(table.map((l) => Math.floor(num(l) / 100)))];
+  const grouped = hundreds.flatMap((h) => [`### FS-${String(Math.max(1, h * 100)).padStart(3, '0')} to FS-${String(h * 100 + 99).padStart(3, '0')}`, '', lines[at], lines[at + 1], ...table.filter((l) => Math.floor(num(l) / 100) === h).map(fold), '']);
   return [...lines.slice(0, at), ...summary, ...grouped, ...lines.slice(end < at + 2 ? lines.length : end)].join('\n');
 }
 
@@ -671,15 +707,22 @@ q.addEventListener('input',show);</script>`;
   // FS-839: every document that is not living, by status, so a version's
   // drafts are one page away.
   const byStatus = new Map();
+  // FS-1053: a document not reviewed in 60 days is listed first, oldest
+  // first, so nothing goes stale unseen.
+  const STALE_DAYS = 60;
+  const today = Date.now();
+  const stale = [];
   for (const p of pages) {
     const fields = frontMatter(read(root, p.f)).fields;
+    const reviewed = Date.parse(fields.last_reviewed || '');
+    if (!p.f.includes('/_') && reviewed && (today - reviewed) / 86400000 > STALE_DAYS) stale.push({ p, reviewed, on: fields.last_reviewed });
     if (!fields.status || fields.status === 'living' || p.f.includes('/_')) continue;
     if (!byStatus.has(fields.status)) byStatus.set(fields.status, []);
     byStatus.get(fields.status).push(`<li><a href="${p.page}">${html(p.title)}</a> <small>${html(fields.kind || '')}</small></li>`);
   }
   const order = ['draft', 'awaiting-approval', 'awaiting-cbk', 'sent', 'answered', 'agreed', 'validated', 'building', 'built', 'tested', 'active', 'superseded', 'withdrawn', 'retired'];
   const sts = [...byStatus.keys()].sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
-  const statusPage = `<h1>Documents by status</h1><p class="meta">Every document that is not a living register or index, by its status (FS-839). Versions are in <a href="CHANGELOG.html">the changelog</a>.</p>${sts.map((s) => `<h2>${html(s)} (${byStatus.get(s).length})</h2><ul>${byStatus.get(s).join('')}</ul>`).join('')}`;
+  const statusPage = `<h1>Documents by status</h1><p class="meta">Every document that is not a living register or index, by its status (FS-839). Versions are in <a href="CHANGELOG.html">the changelog</a>.</p><h2>Not reviewed in ${STALE_DAYS} days (${stale.length})</h2>${stale.length ? `<ul>${stale.sort((a, b) => a.reviewed - b.reviewed).map((s) => `<li><a href="${s.p.page}">${html(s.p.title)}</a> <small>last reviewed ${html(s.on)}</small></li>`).join('')}</ul>` : '<p>None.</p>'}${sts.map((s) => `<h2>${html(s)} (${byStatus.get(s).length})</h2><ul>${byStatus.get(s).join('')}</ul>`).join('')}`;
   fs.writeFileSync(path.join(outDir, 'status.html'), shell('Documents by status', 'status.html', statusPage, note));
   // FS-856: a page for each folder in docs/ with no README, listing what it
   // holds, so a folder named in a document opens somewhere useful.
