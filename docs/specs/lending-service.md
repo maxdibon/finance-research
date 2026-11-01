@@ -12,7 +12,7 @@ depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, dep
 used_by: [staff-workspace, kapu-console, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070]
+review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070, FS-1071]
 last_reviewed: 2026-11-01
 ---
 
@@ -230,6 +230,37 @@ handover signed, or to someone they authorised in Odoo Sign (T39), with
 a code to the borrower's phone at the handover (T40). The officer who
 keeps it is named by the institution.
 
+**The vehicle's whereabouts** (FS-1071), in two stages, treated apart:
+
+- **While the loan is live, and up to repossession: where it is.** No
+  live location is held, by us or the institution: the tracker's stream
+  stays with its provider, as a borrower's movements are personal data
+  and holding them is monitoring the loan does not need (privacy PR-22).
+  The tracker's alerts (a red zone, the vehicle untraceable) are logged
+  as now, and may open a recovery (MF-04). **A location is looked up only
+  once a recovery case is open,** through the provider's portal, or its
+  API once there is one (MF-31); each lookup recorded against the loan,
+  with who, when and why. The tracker, and when its location is used,
+  are named in the security agreement and the privacy notice. Whether
+  this is the right basis, and whether a lookup before default could
+  ever be allowed, is LQ-34; until it is answered, this is the design.
+- **From repossession: where it is kept.** A **possession log** for the
+  vehicle, beside the custody log for its papers: appended, never
+  edited, from the day it is taken to its sale or its return.
+
+| Entry | What is recorded |
+|---|---|
+| Taken | When, and where from; the auctioneer and their licence; the basis: the agreement's consent, no objection, or a court order for hire purchase past two-thirds (lender-rules §2.11 step 3) |
+| Inventory and condition | The auctioneer's inventory; photos, mileage, keys and damage, filed in the vault |
+| Personal effects | What was in the vehicle, and when and to whom it was returned; never the borrower's essential effects (reg 30(1)(k)) |
+| Where it is kept | The yard and its address, who holds it, its reference there, and whether it is insured while stored |
+| Each move | Yard to yard, or to the sale's venue: when, who moved it, and why |
+| Costs | Towing, storage and the auctioneer's charges, each with its evidence: recovery costs, within the arrears cap (lender-rules §2.1) |
+| Out | Back to the borrower on redemption (MPSR Act s.69), or to the buyer on the sale, against their signature; the record then Released or Sold |
+
+The yard's address is the institution's business record; the borrower's
+whereabouts are the sensitive part, and are never kept on the record.
+
 **The register** (MF-15): every item, by state, with its loans, value
 and loan-to-value now, registrations and their expiry, insurance expiry,
 where its originals are, and its overdue steps; filtered by what expires
@@ -251,7 +282,8 @@ the Title Deed product's ladder; lender-rules does not yet specify them
   repayments, arrears, tasks; each command accepted, refused with a
   reason, or sent to the approval engine.
 - **Collateral** (§5.2): the record and its checklist; a step completed
-  with its evidence's vault link; a custody movement; a release, sent to
+  with its evidence's vault link; a custody movement; a possession log
+  entry; a location lookup, with its reason, allowed only in recovery; a release, sent to
   the approval engine; the register, filtered and exported.
 - **Products:** lender rules' endpoints, including the
   draft, validate, preview, adopt and submit calls the Products screen
@@ -271,6 +303,7 @@ against the person; no Dibon identity holds a product role (AC-09).
 |---|---|---|---|
 | Applications, collateral records and their evidence, overrides | Confidential | Seven years after the loan ends | Borrowers', guarantors' |
 | The custody log | Confidential | Seven years after release; twelve from default if the loan went to recovery (DT-21) | Borrowers', and whoever collected for them |
+| The possession log, and each location lookup with its reason | Confidential | As the custody log | Borrowers'; the lookups name who made them |
 | The outbox | Confidential | Until published, then 30 days | As the change |
 
 The loan itself, its schedule and balances are the core's; this service
@@ -306,6 +339,8 @@ on any write the core received that this service did not make (F15).
 | A7 | A loan settled and reconciled, the hold passed | One person releases the original logbook | It is refused until a second person approves | §5.2 rule 5, MD-06 |
 | A8 | A collateral item in Fineract and in this service | The design is checked | Only this service holds it | §5.2 rule 2 |
 | A9 | A notice expiring in six months on a live loan | The night's checks run | A warning is raised to its owner | MF-03, MPSR Act s.30 |
+| A10 | A secured loan with no recovery case open | An officer asks for the vehicle's location | It is refused, and the attempt recorded | §5.2, LQ-34 |
+| A11 | A repossessed vehicle | It is moved from the yard to the sale's venue | The move is recorded, with who and why, before the sale can be marked done | §5.2 |
 
 ## 12 · Open questions
 
@@ -324,6 +359,12 @@ on any write the core received that this service did not make (F15).
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 30 | reg 30(1)(k) | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
+
 **[LR-23](../law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
@@ -331,6 +372,7 @@ on any write the core received that this service did not make (F15).
 | s. 30 | s. 30 | A registered notice is effective for the period the registrant states, at most ten years; it can be extended only within the six months before it expires, by an amendment notice |
 | s. 31 | s. 31(2) | The Registrar sends the registrant a copy of each registered notice; the registrant sends it to the grantor within ten working days (31(2)), and failing to is an offence (31(3)) |
 | s. 33 | s. 33 | The secured creditor registers an amendment or cancellation notice where a notice exceeds what the grantor authorised, collateral is released, or the security right is extinguished; free of charge, and within ten working days of the grantor's request, or the grantor may go to the Registrar |
+| s. 69 | s. 69 | Anyone affected may redeem the collateral by paying the secured obligation in full with the reasonable cost of enforcement, until it is sold or otherwise disposed of |
 
 **[LR-47](../law/LR-47.md) The Land Act (Cap. 280), formerly No. 6 of 2012.** Regulator: None: the courts apply it; the National Land Commission for public land. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2012/6/eng@2025-11-04).
 

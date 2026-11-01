@@ -7,8 +7,8 @@ law: LR-17
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532, FS-582, FS-591, FS-620, FS-689, FS-763, FS-768, FS-769, FS-995, FS-1004, FS-1018]
-last_reviewed: 2026-10-27
+review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532, FS-582, FS-591, FS-620, FS-689, FS-763, FS-768, FS-769, FS-995, FS-1004, FS-1018, FS-1071]
+last_reviewed: 2026-11-01
 ---
 
 # Privacy register — what personal data we process, why, and for how long
@@ -83,6 +83,7 @@ officer and the institution (FS-063).
 | PR-19 | Complaints: the register, its clocks, the evidence gathered and the outcome | mfi MF-28; business-suite BS-01; JN-08 | Borrowers, guarantors, payers, anyone who complains; staff complained about | Confidential; Restricted where it alleges fraud or concerns a member of staff (the helpdesk's restricted team) | Legal obligation (lender regulations reg 40, LR-03) | 7 years after closing (documents DT-26, proposed) | Not needed | No |
 | PR-20 | Staff accounts: identity, roles, authenticators and the history of every grant and exit, for an institution's staff and Dibon's engineers; a staff member's link, by ID number, to their own customer identity, used only to stop them deciding their own requests (FS-1018) | access AC-01, AC-02, AC-09, AC-16; business-suite BS-12; platform-security SE-26; JN-18 | Institutions' staff; Dibon's staff | Confidential | Contract (employment); legitimate interest (security); legal obligation (who approved what, kept with the records it touched) | The account while employed; its grants and exits 7 years after leaving, with the audit trail (proposed) | Not needed | No |
 | PR-21 | Partner data: what a partner holds about a borrower and shares, with the borrower's consent, for a credit decision: a distributor's record of a retailer's purchases, a mobile operator's scores | lending-service §5; mfi MF-42 | Borrowers and applicants who buy from or subscribe to a partner | Confidential; raw files never past the intake | The person's consent, recorded before any of their data is used, given for each partner apart unless the institution sets it once for partners named then, never future ones (FS-1004; LQ-22), and the data-sharing agreement with the partner | Raw files as the data-sharing agreement says, at most 90 days; the metrics with the loan file, as PR-18 | Needed with PR-18 (profiling on data from a third party) | No |
+| PR-22 | A vehicle's location from its tracker, and where a repossessed vehicle is kept | lending-service §5.2; lender-rules §2.11 | Borrowers, and whoever drives the vehicle | Confidential (location) | Open: the security agreement's consent, the contract or legitimate interest (LQ-34) | No live location held; each lookup, made only in recovery, kept with the possession log | Needed (location; LQ-34) | No |
 
 ## Open
 

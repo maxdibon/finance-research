@@ -12,8 +12,8 @@ depends_on: [kapu-core-fineract, messaging, event-bus-kafka, product-versions]
 used_by: [end-of-day-runner, recon, lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896, FS-983, FS-978, FS-981, FS-989, FS-991, FS-1004, FS-1054, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-492, FS-531, FS-565, FS-625, FS-627, FS-629, FS-648, FS-667, FS-744, FS-763, FS-764, FS-792, FS-793, FS-796, FS-802, FS-805, FS-808, FS-807, FS-811, FS-814, FS-815, FS-816, FS-817, FS-823, FS-825, FS-830, FS-899, FS-896, FS-983, FS-978, FS-981, FS-989, FS-991, FS-1004, FS-1054, FS-1058, FS-1071]
+last_reviewed: 2026-11-01
 ---
 
 # Lender rules — build specification
@@ -507,7 +507,10 @@ each with its evidence in the collateral record (MF-03, MF-04):
    seven-day notice to redeem; removal only after it expires; who, where,
    the basis (the agreement's consent, or no objection) and the
    auctioneer recorded. A hire-purchase product with two-thirds paid
-   needs a recorded court order.
+   needs a recorded court order. From removal, where the vehicle is
+   kept, its condition and each move are the collateral record's
+   possession log (lending-service §5.2, FS-1071); a location lookup
+   through the tracker only once this case is open (LQ-34).
 4. **Advertisement and sale:** the advertisement within seven days of
    removal and seven to fourteen days before the sale date; the auction
    between 10.00 and 18.00. The service schedules back from the sale
