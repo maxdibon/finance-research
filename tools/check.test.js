@@ -917,7 +917,7 @@ test('scope: a capability moved into phase 1 past the cap fails', () => {
 const DECISIONS = path.join('docs', 'decisions.md');
 
 test('obligations: a decision from FS-490 on without a Requires line fails', () => {
-  const f = runWith((d) => patchDecisions(d, (t) => t.replace(/^- \*\*Requires:\*\* docs\/delivery-plan\.md "v1 cap:"\.\n/m, '')));
+  const f = runWith((d) => patchDecisions(d, (t) => t.replace(/^- \*\*Requires:\*\* docs\/delivery\/delivery-plan\.md "v1 cap:"\.\n/m, '')));
   assert.deepStrictEqual(names(f), ['obligations']);
 });
 
@@ -1112,7 +1112,7 @@ test('overview: a document inside a linked folder passes', () => {
 });
 
 test('overview: removing a direct link fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'overview.md'), (t) => t.replace('[testing.md](testing.md)', 'testing.md')));
+  const f = runWith((d) => patch(d, path.join('docs', 'overview.md'), (t) => t.replace('[testing.md](delivery/testing.md)', 'testing.md')));
   assert.deepStrictEqual(names(f), ['overview']);
 });
 
@@ -1200,7 +1200,7 @@ test('site: a diagram is drawn with box lines, names in bold; alerts become call
     const { outDir } = buildSite(dir);
     const spec = fs.readFileSync(path.join(outDir, 'docs', 'specs', 'approval-engine.html'), 'utf8');
     assert.match(spec, /<pre class="diagram">[\s\S]*┌─+┐[\s\S]*<span class="bn">APPROVAL ENGINE<\/span>[\s\S]*<span class="tg">\[kapu_service\]<\/span>/);
-    assert.match(fs.readFileSync(path.join(outDir, 'docs', 'testing.html'), 'utf8'), /<div class="alert alert-warning"><b>Warning<\/b><p>Nothing here is built\.<\/p><\/div>/);
+    assert.match(fs.readFileSync(path.join(outDir, 'docs', 'delivery', 'testing.html'), 'utf8'), /<div class="alert alert-warning"><b>Warning<\/b><p>Nothing here is built\.<\/p><\/div>/);
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }
