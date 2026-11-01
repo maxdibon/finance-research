@@ -2,12 +2,12 @@
 id: architecture
 name: Platform architecture — who holds what
 kind: architecture
-status: draft
+status: agreed
 law: LR-03
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056, FS-1068]
 last_reviewed: 2026-11-01
 ---
 
@@ -16,6 +16,11 @@ last_reviewed: 2026-11-01
 **Status: designed.** This document describes how the portfolio is meant to
 divide responsibility. It does not say what is built. Each module's §3
 carries that, with evidence.
+
+**Agreed** by the solution architect on 1 November 2026 (FS-1068). From
+then on it changes only by architecture review (ways-of-working §3): a
+register row and a decision, never in passing. What is still proposed
+says so where it stands (§9, FS-1036).
 
 **This file owns the division of labour (FS-025).** Modules link here and
 list only the rows that apply to them. They do not restate the rules. Where
@@ -38,18 +43,28 @@ views beside them:
 | [technology.md](technology.md) | Every component we run, by class: its licence, who governs it, the alternatives, our verdict |
 | [flows.md](flows.md) | How the components work together, one question at a time: first, a request coming in through the edge |
 
+**Beside it, elsewhere:** [the decisions](../decisions.md), the record
+of architecture decisions, by hundreds; [the architecture
+reviews](../reviews/architecture-2026-10-27.md); [the
+specs](../specs/README.md), how each component is built and run;
+[the settings](../settings/README.md), each component's baseline;
+[the deployments](../deployments/README.md), each deployment's own
+values and continuity; [the runbooks](../runbooks/README.md);
+[channels](../channels.md), every app and channel by person.
+
 **Who reads it, for what:**
 
 | Reader | Start with |
 |---|---|
 | A regulator, an auditor or an institution's risk team | §3, §2, §7, [constraints](constraints.md), [deployment](deployment.md), [risks](risks.md) |
-| An institution's IT team | [Context](context.md), §4, §5, [instance](instance.md), [deployment](deployment.md), §9 |
-| A builder | §2, §6, [interfaces](interfaces.md), [runtime](runtime.md), then the [specs](../specs/README.md) |
-| Security | §7, §9, [deployment](deployment.md), platform-security |
-| Operations | [Deployment](deployment.md), [quality](quality.md), [service management](../service-management/README.md) |
+| An institution's IT team | [Context](context.md), §4, §5, [instance](instance.md), [deployment](deployment.md), §9, then its own deployment's file in [the deployments](../deployments/README.md) |
+| A builder | §2, §6, [interfaces](interfaces.md), [runtime](runtime.md), [flows](flows.md), then the [specs](../specs/README.md) and each component's [settings](../settings/README.md) |
+| Security | §7, §9, [deployment](deployment.md), platform-security, the [settings](../settings/README.md) marked Mandatory |
+| Operations | [Deployment](deployment.md), [quality](quality.md), [the deployments](../deployments/README.md), [the runbooks](../runbooks/README.md), [service management](../service-management/README.md) |
+| Whoever changes it | ways-of-working §3, then [the decisions](../decisions.md) and the latest [review](../reviews/architecture-2026-10-27.md) |
 
-The rationale behind each rule is in [decisions.md](../decisions.md), the
-record of architecture decisions.
+The rationale behind each rule is in [the decisions](../decisions.md): its
+index, with the entries by hundreds in docs/decisions/.
 
 ---
 
@@ -57,7 +72,7 @@ record of architecture decisions.
 
 | Layer | Contents |
 |---|---|
-| **Channels** | omni-channel — mobile apps, internet banking, USSD, the field-officer app |
+| **Channels** | omni-channel — mobile apps, internet banking, USSD, the field-officer app; every one, by person, in [channels](../channels.md) |
 | **Products** | collect · gateway · escrow · core (Kapu Core: hosted core banking on Apache Fineract) · mfi and sacco (deposit-taking and credit-only), both run by the lending service, with the deposits service where a Sacco takes deposits · sme-recon (wrappers for a business's own Odoo, Zoho or QuickBooks Online, SR-15) · business-suite (Odoo or Zoho, implemented by Dibon) |
 | **Shared services** | the lending service and the deposits service, the only writers to the core, through the core adapter · recon-observability · mandates (signing and debit, run by the approval engine) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification, and the document vault) · messaging (SMS, WhatsApp, app; Telegram later; transactional and campaigns; Flowza for conversations) · rails · insights · financial-crime (fraud, AML/CFT, transaction rules, reporting) · decisioning (appraisal, scores, risk classes) · the back-office gateway · the end-of-day runner · platform-security |
 | **Systems of record** | the institution's core, or Kapu Core · Odoo · recon engine — §2 |
@@ -87,6 +102,14 @@ record of architecture decisions.
  | (Fineract)       |   |                   |   |                    |
  +------------------+   +-------------------+   +--------------------+
 ```
+
+**How people reach it, and who they are.** Every app and channel, who
+each is for and how they sign in, is in [channels](../channels.md); a
+person with several roles signs in once and works in a profile for each
+(channels §2). Who someone is, and what they may do, is [the identity
+model](../modules/identity.md) (identity §5, "The identity model",
+FS-1028): one identity per person per institution, each role a profile
+granted by its owner, signed in through access (access-keycloak §3).
 
 ---
 
@@ -139,6 +162,8 @@ customer: its contract, users, tickets and invoices.
 | A bank's customers, a Sacco's members, a collector's end users | The institution's core, or Kapu Core in native mode |
 | An SME's customers and suppliers | The SME's ERP |
 | Parties in a product with no core — escrow parties, merchants, Dibon's own contacts | Odoo |
+| A lending partner — a distributor, a dealer, a school | In two places, joined by our reference: the company, its people and agreements in Odoo; what touches money (its settlement accounts, exposure cap, first-loss share, status) in the lending service (lending-partners, "One partner, in two places") |
+| A borrower's tie to a partner — a retailer to its distributor | The lending service: a record of its own, with its own limit (FS-1000) |
 
 Collect, Sacco and MFI already work this way. In native mode, Kapu Core is
 the core and holds the members.
@@ -330,7 +355,8 @@ deposits but has no loan module, so loans go to Kapu Core and deposits
 stay in the core. That splits the funds ledger across two systems, and
 recon then has to tie them together (FS-066). Kapu Core already offers
 this to lenders (docs/modules/core.md §2), so the design is owed before
-the first such customer signs.
+the first such customer signs; FS-066 is its row, and it is decided
+there, not here in passing (FS-1068).
 
 The same pattern applies to ERPs: sme-recon has **one interface and one
 implementation per ERP** — Odoo first, then Zoho and QuickBooks Online
