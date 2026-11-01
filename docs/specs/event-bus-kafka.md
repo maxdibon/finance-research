@@ -8,10 +8,10 @@ released: 2026.10.15
 release: R1
 implements: [recon-observability]
 depends_on: [observability-grafana]
-used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, messaging, recon, back-office]
+used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, messaging, recon, back-office, vault]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970, FS-1053, FS-1057, FS-1054, FS-1069]
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970, FS-1053, FS-1057, FS-1054, FS-1069, FS-1070]
 last_reviewed: 2026-11-01
 ---
 
@@ -76,7 +76,7 @@ shared with institutions' own systems.
 [approval-engine](approval-engine.md), [lender-rules](lender-rules.md),
 [kapu-core-fineract](kapu-core-fineract.md),
 [end-of-day-runner](end-of-day-runner.md), [messaging](messaging.md),
-[recon](recon.md) and [back-office](back-office.md); the rules every event follows are also in
+[recon](recon.md), [back-office](back-office.md) and [vault](vault.md); the rules every event follows are also in
 [interfaces](../architecture/interfaces.md).
 
 ## 2 · Version and hosting
@@ -167,6 +167,7 @@ the domain comes from the rule set the loan's product version names
 | sacco (R4) | The same names as `kapu.mfi` for the same facts, and Sacco rules' own, specified with them | The lending service, for a product under Sacco rules; Sacco rules | Messaging, recon, insights |
 | core | `kapu.core.loan.approved`, `.loan.disbursed`, `.repayment.posted`, `.transaction.reversed`, `.loan.closed`, `.checkpoint` | Kapu Core, through the adapter (kapu-core-fineract §5) | Recon, lender rules |
 | core (the close) | `kapu.core.eod.checked`, `.held`, `.released`, `.closed`, `.failed`, `.reported` | End-of-day runner | Observability, recon |
+| vault | `kapu.vault.document.stored`, `.document.rejected`, `.document.superseded`, `.hold.placed`, `.hold.lifted`, `.document.deleted`, `.export.sent` | The vault (FS-1070) | The lending service, recon, insights |
 | rails | `kapu.rails.payment.received`, `.payout.sent`, `.payout.confirmed`, `.payout.failed`, `.payout.unknown`, `.payout.cancelled`, `.payout.returned`, `.recall.completed`, `.reversal.completed` | Rails | The lending service, recon, messaging (T45 to T47) |
 | recon | `kapu.recon.break.opened`, `.break.cleared`, `.break.escalated`, `.ledger.disagreed`, `.completeness.failed`, `.source.silent`, `.cycle.closed`, `.action.taken`, `.exception.opened`, `.exception.resolved` | Recon | Odoo (tickets), the service desk, observability, the end-of-day runner, insights |
 | collect | `kapu.collect.payment.unplaced`, `.payment.still_unplaced`, `.payment.returned`, `.deposit.posted`, `.deposit.refused` | Collect | Messaging (T28 to T30, T43, T44) |

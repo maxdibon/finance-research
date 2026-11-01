@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053]
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053, FS-1070]
 last_reviewed: 2026-11-01
 ---
 
@@ -96,6 +96,7 @@ By layer, as [the instance](../architecture/instance.md) is drawn (FS-1053).
 | [event-bus-kafka](event-bus-kafka.md) | Component | Kafka as the event bus: the CloudEvents envelope, signing and the audit chain, one catalogue of event names, delivery rules | recon-observability | R1 |
 | [messaging](messaging.md) | Build | The messaging service and the R1 template catalogue: what each event sends, to whom, with which fields, and who approves the words | messaging | R1 |
 | [observability-grafana](observability-grafana.md) | Component | Grafana and its stack: metrics, logs, dashboards, alerts, and the on-call rota that takes a phone call | recon-observability | R1 |
+| [vault](vault.md) | Build | The document vault: every document carrying personal data, one vault per institution; checked and scanned on arrival, never changed, encrypted under the institution's keys, every read logged, out only by link, deleted when its retention ends | identity | R1 |
 
 **Our own tools:** how we work.
 
@@ -104,7 +105,7 @@ By layer, as [the instance](../architecture/instance.md) is drawn (FS-1053).
 | [github](github.md) | Component | GitHub: the organisation, teams and roles, rulesets on main, code owners, push rulesets, Actions with runners in Kenya, secrets from OpenBao, deploys by pull request and the change calendar, planning in Projects; plans checked | platform-security | R1 |
 | [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
 
-**To write, in the order R1 needs them:** rails (M-Pesa and bank instructions, their lifecycle and signing); customer pages (consents, signing, statements, without the app); the vault (signed documents and their evidence, identity ID-15); odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries).
+**To write, in the order R1 needs them:** rails (M-Pesa and bank instructions, their lifecycle and signing); customer pages (consents, signing, statements, without the app); odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries).
 
 ## How they connect
 
@@ -188,7 +189,7 @@ its id is how the component is named wherever a name is an identifier
 | CORE ADAPTER | One interface to the core: Kapu Core, or the institution's own | `[kapu_service]` | `core-adapter` | [lending-service](lending-service.md) |
 | KAPU CONSOLE | Approvals, the read-only fallback, products read-only, outside Odoo | `[kapu_service]` | `kapu-console` | [kapu-console](kapu-console.md) |
 | CUSTOMER PAGES | Borrowers' and members' own pages: consents, signing, statements | `[kapu_service]` | `customer-pages` | to write |
-| VAULT | Signed documents and their evidence | `[kapu_service]` | `vault` | to write |
+| VAULT | Keeps every document carrying personal data: signed documents and their evidence | `[kapu_service]` | `vault` | [vault](vault.md) |
 | KAPU CORE | The ledger: clients, loans, the general ledger, close of business | `[apache_fineract]` | `fineract` | [kapu-core-fineract](kapu-core-fineract.md) |
 | END-OF-DAY RUNNER | Closes the business day: checks, runs, watches, escalates | `[kapu_service]` | `end-of-day-runner` | [end-of-day-runner](end-of-day-runner.md) |
 | OBSERVABILITY | Metrics, logs, traces, dashboards and alert rules | `[grafana]` | `grafana` | [observability-grafana](observability-grafana.md) |
@@ -206,6 +207,9 @@ its id is how the component is named wherever a name is an identifier
 | OTHER BACK OFFICE | Any ERP or tool behind the gateway but Odoo: a candidate edition, or a second product in a composite one | `[erp]` | — (each edition its product's) | [back-office](back-office.md) |
 | OLP | Runs Odoo sites: provisioning, add-ons, staging, backups, upgrades; Dibon's, with its own roadmap | `[olp]` | `olp` | [olp](olp.md) |
 | DATABASE | PostgreSQL, one per service | `[postgresql]` | `postgresql` | — |
+| OBJECT STORAGE | Keeps the vault's files and Odoo's filestore, versioned, locked and replicated | `[ceph_or_blob]` | `object-storage` | [vault](vault.md) §9 |
+| OPENBAO | Keeps every key and secret; signs and wraps inside it | `[openbao]` | `openbao` | — |
+| SCANNER | Scans every upload for malware, a separate service | `[clamav]` | `clamav` | [vault](vault.md) |
 | M-PESA | Safaricom's mobile money | `[rail]` | — (not ours) | — |
 | BANKS | The institution's banks | `[rail]` | — (not ours) | — |
 | TWILIO | Places the on-call phone calls and SMS | `[partner]` | — (not ours) | — |
