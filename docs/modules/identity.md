@@ -10,7 +10,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite, decisioning]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028, FS-1070]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028, FS-1070, FS-1077, FS-1078]
 last_reviewed: 2026-11-01
 ---
 
@@ -127,26 +127,107 @@ mode, to Fineract.
 
 ```
   product: "open account" / "new borrower" / "new merchant"
-                       |
-                       v
-         checks the product requires (configured per product)
-                       |
-     +-----------+-----+------+------------+------------+
-     |           |            |            |            |
-   NPDM      documents    liveness +    phone        tax PIN /
-   lookup    checklist    face match    ownership    business reg.
-     |           |            |            |            |
-     +-----------+-----+------+------------+------------+
-                       |
-            every result logged: source, time, operator
-                       |
-          all mandatory checks passed? ---- no --> blocked, with
-                       |                           what is missing
-                      yes
-                       v
-       result written to the person's authority (core / Fineract /
-       Odoo); the register's data is not copied
+                                       |
+                                       v
+         the product's chain (FS-1078): each step asks its primary first,
+         and its fallback only if the primary is down or cannot answer (FS-1077)
+                                       |
+                                       v
+  STEP 1  PHONE: the number is live, registered to the ID number given, SIM unchanged
+  +-----------------------------+              +-----------------------------+
+  | SAFARICOM                   |              | SMILE ID                    |
+  | the operator's own records  | down, or no  | the number matched to the   |
+  | (ID-05, ID-12)              | answer ----->| ID number (Prembly gives    |
+  | [direct]                    |              | the carrier only)           |
+  |                             |              | [aggregator]                |
+  +-----------------------------+              +-----------------------------+
+                 |                                            |
+                 +---------------------+----------------------+
+                                       |  passes on: the ID number, confirmed
+                                       v
+  STEP 2  NATIONAL ID: the person on the register, alive; their photo
+  +-----------------------------+              +-----------------------------+
+  | NPDM, formerly IPRS         |              | PREMBLY or SMILE ID         |
+  | the national register       | down, or no  | the register, through the   |
+  | (ID-01)                     | answer ----->| aggregator's own access     |
+  | [direct]                    |              | [aggregator]                |
+  +-----------------------------+              +-----------------------------+
+                 |                                            |
+                 +---------------------+----------------------+
+                                       |  passes on: the register's photo
+                                       v
+  STEP 3  LIVENESS: a live selfie, matched to the register's photo
+  +-----------------------------+              +-----------------------------+
+  | PREMBLY or SMILE ID         |              | THE OTHER ONE               |
+  | selfie and liveness         | down, or no  | selfie and liveness         |
+  | (ID-04)                     | answer ----->|                             |
+  | [aggregator]                |              | [aggregator]                |
+  +-----------------------------+              +-----------------------------+
+                 |                                            |
+                 +---------------------+----------------------+
+                                       |
+                                       v
+                   all three passed: verified; the result written to the
+                   person's authority (core / Fineract / Odoo); the
+                   register's data is not copied
+
+  at any step:  "no match"            --> the chain stops; referred to
+                                          compliance, never the manual route
+                both providers down,  --> the manual route: the officer sees
+                or neither covers it      the original; a second approval (ID-01)
+
+  every attempt logged: the step, the provider, its reference, the result,
+  the time and the cost, the fallback's included
+
+  which aggregator is the primary and which the fallback is set per
+  institution and per check at onboarding (OB-COM-27); drawn as an example
+
+  other checks a chain may add as steps: the document checklist (ID-02),
+  the tax PIN (ID-06), a business's registration (ID-07), PEP and
+  sanctions screening (FC-05, FC-06)
 ```
+
+### Providers: aggregators and direct sources
+
+FS-1077. **Each check is one contract in our words, and each provider an
+adapter behind it,** so a provider is added, changed or dropped without
+the products noticing (architecture §6, "replaceable behind a stable
+contract").
+
+| Check | Direct sources | Aggregators that document it |
+|---|---|---|
+| National ID, passport, alien ID (ID-01) | NPDM, formerly IPRS (PT-29), by its agreement (FS-202) | Prembly (PT-53), Smile ID (PT-30), MetaMap (PT-33, national ID only) |
+| Liveness and face match (ID-04) | None | Prembly, Smile ID, MetaMap |
+| Phone number (ID-05) | The operators: the registered name, or Safaricom Hakikisha | Smile ID matches a number to a national ID; Prembly returns the carrier only |
+| KRA PIN and tax compliance (ID-06) | KRA GavaConnect (PT-35) | Prembly; Smile ID (the PIN from an ID number only) |
+| A business's registration (ID-07) | The business registry, where it offers an API (FS-205) | Prembly, Smile ID |
+| PEP and sanctions (financial-crime FC-05, FC-06) | Published lists | Prembly, Smile ID |
+
+1. **Routed per institution and per check,** set at onboarding (OB-COM-27):
+   a primary and a fallback. A direct source comes first where the
+   institution, or Dibon for it, holds the agreement; an aggregator where
+   not, or when the direct source is down.
+2. **Checks are chained, per product** (FS-1078): the steps in order,
+   each passing on only what the next needs, as the diagram above draws
+   the first chain: the operator confirms the phone number and the ID
+   number it is registered to; NPDM confirms that person and gives their
+   photo; liveness matches a selfie to it. A step that fails stops the
+   chain, so no later check is run or paid for. Handing one provider's
+   answer to another (the register's photo to an aggregator) is LQ-36.
+3. **Every result names its provider,** with the provider's reference,
+   the time and the cost, on the record of the check (FS-584).
+4. **A fallback is a second request only when the first fails** or the
+   provider is down; a person's details are never sent to two providers
+   just to compare them (LQ-35). Providers are compared on the simulator
+   (ID-20) and with team members' own details, by consent
+   (delivery/prembly-production-test).
+5. **A provider joins once** its adapter passes the same contract tests
+   as the others, against the simulator, and its terms pass our partner
+   rules: where data is held, the breach notice, sub-processors
+   (partners register). Each is named as a processor in the
+   institution's data processing agreement and privacy notice (OB-COM-04).
+6. **Its cost is passed through,** per provider and per check, itemised
+   (FS-331).
 
 ### The identity model
 
@@ -283,7 +364,7 @@ profile's documents in ID-27.
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
 | NPDM, formerly IPRS (Kenya) | read | API | Designed (ID-01). Direct access by MOU — partners PT-29, FS-202 |
-| Liveness and face-match vendor | read | API or SDK | Planned (ID-04) — partners.md SD-11 |
+| Identity aggregators: Prembly, Smile ID, MetaMap and others | read | API, or SDK for liveness | Planned (ID-01, ID-04 to ID-07): several behind one check, §5 "Providers" (FS-1077); partners PT-30, PT-33, PT-53; SD-11 |
 | Mobile-network operators (Safaricom, Airtel) | read | the operator's name for the number | Built (ID-05) at Onit Bank, under its agreements; a new customer needs its own or Dibon's — compliance LC-13 |
 | Safaricom Hakikisha | read | Daraja API | Planned (ID-05) — rails RL-21 |
 | Operators' SIM-swap and IMSI checks | read | operator API | Planned (ID-12, ID-13) — rails RL-22; compliance LC-13 |
