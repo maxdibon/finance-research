@@ -27,7 +27,7 @@ in the build.
    each capability's status is in its module and changes there.
    `node tools/check.js --counts` prints each journey's statuses, computed.
 3. **A journey has a release.** For R1, every capability cited in §2 or §3
-   must be in R1 (docs/delivery-plan.md, "R1 in detail") and in phase 1;
+   must be in R1 (docs/delivery/delivery-plan.md, "R1 in detail") and in phase 1;
    for R2 to R5, in phase 1. Anything else must be cited in §4 Gaps, with
    what happens in its absence. A journey in `phase 2` has no release
    rule.
@@ -53,7 +53,7 @@ in the build.
 (not enforced by the tool): does it solve the whole problem, not one
 screen? Is it joined up across the channels the person uses? Is it as
 simple as it can be? Can everyone use it, including those who do not
-read easily (docs/experience.md)? Has it been tried with real people? Is
+read easily (docs/company/experience.md)? Has it been tried with real people? Is
 it tested end to end?
 
 Copy [_template.md](_template.md) and keep every heading.

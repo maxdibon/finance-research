@@ -81,7 +81,7 @@ Wazuh, until a client asks for it (FS-712).
 depends on [access-keycloak](access-keycloak.md) and
 [observability-grafana](observability-grafana.md); used by none yet;
 technology register [Security](../architecture/technology.md); the
-lost-laptop runbook in [the operating model](../operating-model.md).
+lost-laptop runbook in [the operating model](../company/operating-model.md).
 
 ## 2 · The rule: no customer data on a device
 

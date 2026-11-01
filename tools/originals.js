@@ -76,7 +76,7 @@ function verify(dir) {
   // Against the document register (FS-835), for a party in this repository's
   // clients/: every kept file has its row, and every row its kept file.
   const repo = path.join(__dirname, '..');
-  const register = path.join(repo, 'docs', 'document-register.md');
+  const register = path.join(repo, 'docs', 'governance', 'document-register.md');
   const rel = path.relative(repo, path.resolve(dir)).split(path.sep).join('/');
   if (fs.existsSync(register) && rel.startsWith('clients/')) {
     // By the register's header (tools/docregister.js, FS-857).

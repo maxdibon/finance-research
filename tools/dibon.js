@@ -538,10 +538,10 @@ function tooMany() {
 // customer's own table of documents, on its delivery map, follows.
 function registerRow(o, customer) {
   const reg = require('./docregister');
-  const t = read('docs/document-register.md');
+  const t = read('docs/governance/document-register.md');
   const ids = reg.parse(t).rows.map((r) => +r.id.slice(3));
   const id = `DR-${String(Math.max(...ids) + 1).padStart(3, '0')}`;
-  write('docs/document-register.md', `${t.trimEnd()}\n${reg.row({ ...o, id })}\n`);
+  write('docs/governance/document-register.md', `${t.trimEnd()}\n${reg.row({ ...o, id })}\n`);
   if (customer && fs.existsSync(path.join(ROOT, 'docs', 'customers', `${customer}.md`))) reg.refresh(ROOT, customer);
   return id;
 }
@@ -796,7 +796,7 @@ const word = {
     if (!row) stop('Start the work first (dibon start "…"), so the document has its register row.');
     const { sha256, add } = require('./originals');
     const print = sha256(file).slice(0, 12);
-    const known = read('docs/document-register.md').split('\n').find((l) => l.includes(`\`${print}\``));
+    const known = read('docs/governance/document-register.md').split('\n').find((l) => l.includes(`\`${print}\``));
     if (known) stop(`Already kept: ${known.split(' | ')[0].slice(2)} has the same fingerprint. Nothing to do.`);
     const title = flag('--title') || path.basename(file).replace(/\.[^.]+$/, '');
     if (!await ask(`Keep "${path.basename(file)}" from ${who} as an original (moved into clients/${from}/originals/, read-only), and register it?`)) return say('Not kept.');

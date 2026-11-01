@@ -15,7 +15,7 @@ last_reviewed: 2026-10-23
 **What this tracks:** every Kenyan law and regulation that applies to the
 financial services we build, which version we hold, and what in the
 platform it drives (FS-429). Dibon's own licences and certifications are in
-docs/compliance.md; this register is the law behind them and behind our
+docs/governance/compliance.md; this register is the law behind them and behind our
 customers' obligations.
 
 ## How a law gets in

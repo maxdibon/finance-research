@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-915, FS-916, FS-917, FS-918, FS-919]
-last_reviewed: 2026-10-22
+review_ids: [FS-915, FS-916, FS-917, FS-918, FS-919, FS-1053]
+last_reviewed: 2026-11-01
 ---
 
 # Lofty Corban · delivery map
@@ -19,6 +19,19 @@ Insurance Regulatory Authority. The source so far is the introduction
 and reconciliation demo of 14 October 2026; the notes are held in
 clients/lofty-corban/ outside git. Statuses are not repeated here: each
 capability's status is in its module.
+
+**At a glance** (FS-1053)
+
+| | |
+|---|---|
+| Customer | CU-05, a fund manager; in discussion |
+| What we deliver | Reconciliation & Observability first, then approval chains and messaging (§1) |
+| Its products | None yet (§5) |
+| Where it runs | Not yet decided |
+| Now | Waiting on its answers after the demo of 14 October |
+| Waiting on it | 7 open answers (§4) |
+| Waiting on us | None |
+| Its last release | 2026.10.22 (§8) |
 
 ## 1 · The engagement
 
@@ -69,6 +82,10 @@ Corban is working towards.
 
 ### Open
 
+By who answers (FS-1053); the numbers never change.
+
+**For Lofty Corban:**
+
 | # | Question | Raised | Status |
 |---|---|---|---|
 | 1 | How does UnitMaster take a credit to a customer's account: an API, a file, or by hand? And does it give us its ledger (balances and postings) to reconcile against? | 2026-10-22 | Open |
@@ -93,7 +110,7 @@ None: it is not a lender, and its funds are products of its own.
 Its documents are held in clients/lofty-corban/ until Dibon's Odoo
 Documents holds them (rules, Dibon 10). The table is generated (FS-857).
 
-*Generated from the [document register](../document-register.md) by tools/docregister.js: edit the register, never this table.*
+*Generated from the [document register](../governance/document-register.md) by tools/docregister.js: edit the register, never this table.*
 
 No documents registered yet.
 

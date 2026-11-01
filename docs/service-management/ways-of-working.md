@@ -37,13 +37,13 @@ holder of a role, the role's deputy approves.
 
 | Role | Accountable for | Approves | Held today by | Deputy |
 |---|---|---|---|---|
-| **Team lead** | Direction, money, what we promise customers; chairs the weekly meeting | Decisions that cost something (docs/decisions.md); scope and releases (docs/delivery-plan.md) | The CTIO | The CEO |
+| **Team lead** | Direction, money, what we promise customers; chairs the weekly meeting | Decisions that cost something (docs/decisions.md); scope and releases (docs/delivery/delivery-plan.md) | The CTIO | The CEO |
 | **Solution architect** | How the platform fits together | docs/architecture/, docs/specs/, the technology register, interfaces | The CTIO | The dev lead |
 | **Security lead** | Security controls, keys, access, the edge | docs/modules/platform-security.md, the endpoints and access specs; every spec's Threats section; any change to a security control | The CTIO | The ops lead |
-| **Compliance and risk officer** | The law, privacy, our duties to regulators; data protection officer if the Act requires one | docs/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Vacant: the CTIO until Cage joins | The CEO while the CTIO holds it; then the CTIO |
+| **Compliance and risk officer** | The law, privacy, our duties to regulators; data protection officer if the Act requires one | docs/governance/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Vacant: the CTIO until Cage joins | The CEO while the CTIO holds it; then the CTIO |
 | **Product owner**, one per product | What a product does, and in which phase; as ITIL's service owner, that it meets what was agreed | Its module in docs/modules/, its journeys | Kapu MFI: the CTIO until named | The dev lead |
 | **Delivery lead** | Each customer's delivery | docs/customers/, customers.md, onboarding.md, the delivery plan's dates, training | The project manager | The admin |
-| **Engineering lead** | How code is built and tested | The code repository; docs/testing.md; each build spec's tests | The dev lead | An engineer (Gasine) |
+| **Engineering lead** | How code is built and tested | The code repository; docs/delivery/testing.md; each build spec's tests | The dev lead | An engineer (Gasine) |
 | **Operations lead** | Running the platform; the change authority for normal changes | docs/service-management/, operating-model.md, deployment and runbooks; normal changes (§4) | The ops lead | The CI/CD engineer |
 | **Odoo lead** | The Odoo platform and its set-up, for Dibon and for each customer (FS-902) | docs/modules/business-suite.md; each customer's Odoo configuration and its data migration | The Odoo lead | An Odoo engineer (Daniel) |
 | **Commercial lead** | What we sell, and to whom | docs/marketing/, partners.md, competitors.md | The CEO | The CTIO |
@@ -149,7 +149,7 @@ protected main branch. Nobody pushes to main.
 |---|---|---|
 | Architecture | docs/architecture/, docs/specs/, docs/decisions.md | Solution architect |
 | Security | docs/modules/platform-security.md, docs/specs/endpoints.md, docs/specs/access-keycloak.md | Security lead |
-| Compliance | docs/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Compliance and risk officer |
+| Compliance | docs/governance/regulation.md, compliance.md, privacy.md, rules.md, legal-questions.md, documents.md | Compliance and risk officer |
 | Products | docs/modules/, docs/journeys/ | Product owner |
 | Delivery | docs/customers/, customers.md, onboarding.md, delivery-plan.md, docs/training/; the-words.md, with the operations lead (GitHub names owners by file) | Delivery lead |
 | Operations | docs/service-management/, operating-model.md, business-continuity.md | Operations lead |

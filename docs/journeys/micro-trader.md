@@ -95,7 +95,7 @@ an institution can add. Every step must work without reading words.
 |---|---|---|---|
 | A spoken confirmation of each payment, sent to him (step 4) | Not a capability; the voice line (OC-22) answers calls only | The amount as numbers by SMS; the total on the voice line | Add outbound voice confirmations to omni-channel beside OC-22, phase 2 (FS-637) |
 | Every channel but voice assumes reading: USSD menus (OC-03), the app (OC-01), links | phase 1 and 2, as designed | An officer or family member reads for him | The principle "nothing needs reading" (omni-channel §1, FS-637), applied as each channel is drawn |
-| A product sold to a single trader directly | Not offered: Dibon sells to institutions and businesses | Pochi la Biashara in his own name, from Safaricom | Reach traders through banks, Saccos and suppliers (docs/bank-channel.md) |
+| A product sold to a single trader directly | Not offered: Dibon sells to institutions and businesses | Pochi la Biashara in his own name, from Safaricom | Reach traders through banks, Saccos and suppliers (docs/market/bank-channel.md) |
 
 ## 5 · Open questions
 

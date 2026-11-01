@@ -25,7 +25,7 @@ template names no customer; customers and their delivery maps are in
 docs/customers.md.
 
 **Partner onboarding** (banks, registries, bureaus) is tracked separately,
-in docs/partners.md, under each partner's next step.
+in docs/market/partners.md, under each partner's next step.
 
 ## Common to every customer
 
@@ -45,7 +45,7 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-12 | Data for migration, and opening balances it will sign off | Customer's finance lead | Every product that holds records |
 | OB-COM-13 | Named contacts for operations, finance, IT, compliance, security and incidents, an escalation path, and the channel we use for incident notices (platform-security §3) | Customer's sponsor | Support; FS-478 |
 | OB-COM-14 | Go-live sign-off after a first full cycle reconciles | Customer's sponsor | recon-observability |
-| OB-COM-15 | The regulator's approval of the arrangement, where one applies: CBK approval for a bank's material outsourcing, 30 days' notice to CBK for a PSP, SASRA's vendor terms for a Sacco. Dibon supplies the due-diligence pack. What goes in it: docs/approval-pack.md | Customer's compliance lead | docs/compliance.md LC-05, LC-08; FS-368, FS-370; FS-440 |
+| OB-COM-15 | The regulator's approval of the arrangement, where one applies: CBK approval for a bank's material outsourcing, 30 days' notice to CBK for a PSP, SASRA's vendor terms for a Sacco. Dibon supplies the due-diligence pack. What goes in it: docs/governance/approval-pack.md | Customer's compliance lead | docs/governance/compliance.md LC-05, LC-08; FS-368, FS-370; FS-440 |
 | OB-COM-16 | Its money laundering reporting officer, its goAML registration with the FRC, and its risk appetite: screening lists, thresholds for holds and alerts | Customer's reporting officer | financial-crime FC-05 to FC-11; FS-431 |
 | OB-COM-17 | Approvers' work email addresses, and which approvals may be acted on from Outlook or Gmail | Customer's operations lead | mandates MD-18; FS-449 |
 | OB-COM-18 | The operator agreements for the SIM-change, IMSI and name checks with Safaricom, Airtel and Telkom: the institution's own, or Dibon's; and the limit and holding period after a SIM change | Customer's compliance lead | identity ID-12 to ID-14, financial-crime FC-02; compliance LC-13; FS-448 |
@@ -54,13 +54,13 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-21 | For each core banking system we integrate with and each rail: its end-of-day window, what happens to postings during it, its cut-off and value dating, its statement day, and the status and statement interfaces it offers (a status query, intraday reports such as MT942 or CAMT.052, transaction enquiry, end-of-day statements), so reconciliation knows what is in transit and how to chase it (docs/architecture/README.md §10) | Customer's IT lead | recon-observability RO-04, RO-07; FS-630, FS-635 |
 | OB-COM-22 | Dibon engineers' access: who approves a grant for the institution, its VPN or bastion, the contact who can switch Dibon's access off at any hour; it receives the list of Dibon engineers who may ask for access, with their vetting (docs/architecture/README.md §9) | Customer's IT lead and security contact | platform-security SE-26; FS-645 |
 | OB-COM-23 | Its fallback runbook for when the platform is down (docs/architecture/README.md §3; handbook HB-70 to HB-78): who operates its M-Pesa business portal and internet banking, under its own two-person control; its manual approval form; its counter procedure; who decides to enter and leave safe mode; M-Pesa's validation fallback set to complete | Customer's operations lead | platform-security SE-24; FS-661 |
-| OB-COM-24 | It agrees our rules for institutions (docs/rules.md §2): named users with two authenticators, our device minimum, leavers removed the same day and a quarterly access review it signs, no customer data sent to our desk, test data in training, its regulator duties its own | Customer's operations lead and its compliance lead | FS-713, FS-714 |
+| OB-COM-24 | It agrees our rules for institutions (docs/governance/rules.md §2): named users with two authenticators, our device minimum, leavers removed the same day and a quarterly access review it signs, no customer data sent to our desk, test data in training, its regulator duties its own | Customer's operations lead and its compliance lead | FS-713, FS-714 |
 | OB-COM-25 | Its handbook: the template (docs/handbook/) filled from its delivery file, starting with its position-to-roles table (HB-10), and adopted | Customer's operations lead | FS-770, FS-771 |
-| OB-COM-26 | **When does a customer stop being its customer?** The period with no live loan, deposit account, share or guarantee after which the relationship has ended (proposed: one year). Identity and KYC documents are kept seven years from that end, then deleted | Customer's compliance lead | lending-service rule 9; vault §3; docs/documents.md, clock R; Data Protection Act s.39; FS-1073 |
+| OB-COM-26 | **When does a customer stop being its customer?** The period with no live loan, deposit account, share or guarantee after which the relationship has ended (proposed: one year). Identity and KYC documents are kept seven years from that end, then deleted | Customer's compliance lead | lending-service rule 9; vault §3; docs/governance/documents.md, clock R; Data Protection Act s.39; FS-1073 |
 
 ## Kapu Collect
 
-Module: [collect](modules/collect.md)
+Module: [collect](../modules/collect.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -72,7 +72,7 @@ Module: [collect](modules/collect.md)
 
 ## Kapu Pay Gateway
 
-Module: [gateway](modules/gateway.md)
+Module: [gateway](../modules/gateway.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -83,7 +83,7 @@ Module: [gateway](modules/gateway.md)
 
 ## Kapu Escrow
 
-Module: [escrow](modules/escrow.md)
+Module: [escrow](../modules/escrow.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -94,7 +94,7 @@ Module: [escrow](modules/escrow.md)
 
 ## Kapu Core
 
-Module: [core](modules/core.md)
+Module: [core](../modules/core.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -106,7 +106,7 @@ Module: [core](modules/core.md)
 
 ## Kapu MFI
 
-Module: [mfi](modules/mfi.md)
+Module: [mfi](../modules/mfi.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -122,7 +122,7 @@ Module: [mfi](modules/mfi.md)
 
 ## Kapu Sacco
 
-Module: [sacco](modules/sacco.md)
+Module: [sacco](../modules/sacco.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -133,7 +133,7 @@ Module: [sacco](modules/sacco.md)
 
 ## Reconciliation & Observability
 
-Module: [recon-observability](modules/recon-observability.md)
+Module: [recon-observability](../modules/recon-observability.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -145,7 +145,7 @@ Module: [recon-observability](modules/recon-observability.md)
 
 ## SME Reconciliation
 
-Module: [sme-recon](modules/sme-recon.md)
+Module: [sme-recon](../modules/sme-recon.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -154,7 +154,7 @@ Module: [sme-recon](modules/sme-recon.md)
 
 ## Omni-channel banking
 
-Module: [omni-channel](modules/omni-channel.md)
+Module: [omni-channel](../modules/omni-channel.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -166,7 +166,7 @@ Module: [omni-channel](modules/omni-channel.md)
 
 ## Business suite
 
-Module: [business-suite](modules/business-suite.md)
+Module: [business-suite](../modules/business-suite.md)
 
 | Id | What we need | From | Why |
 |---|---|---|---|
@@ -179,14 +179,14 @@ Module: [business-suite](modules/business-suite.md)
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | reg 29 | reg 29 | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
 | reg 55 | reg 55 | Pricing parameters and credit terms change only with the Central Bank's prior written approval, after thirty days' notice to the customer and the customer's acceptance |
 
-**[LR-17](law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+**[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|

@@ -93,7 +93,7 @@ review's reading of the handbook, not of OLP's code.
 | N3 | A hook before promoting an upgraded or staged copy, so back-office §10's contract tests run on it, and promotion waits for them | Must | Every site the back-office gateway serves | Gap (G3) |
 | N4 | Sign-in to OLP through Keycloak; hardware keys for anyone with server or restore rights (SE-26) | Must | Dibon's engineers | Gap (G4) |
 | N5 | SSH keys held in OpenBao, used through the bastion, every session recorded | Must | Every managed server | Not stated (G5) |
-| N6 | Backups encrypted, held in Kenya at two sites, never over FTP, kept as docs/documents.md says | Must | Institutions; Should for SMEs | Not stated (G6) |
+| N6 | Backups encrypted, held in Kenya at two sites, never over FTP, kept as docs/governance/documents.md says | Must | Institutions; Should for SMEs | Not stated (G6) |
 | N7 | Infrastructure code that runs on OpenTofu (FS-932) | Should | Every server OLP builds | Gap (G7) |
 | N8 | Alerts on by default for Financial Services' sites, and sent to our observability by webhook | Should | Every site | Partly: alerts are opt-in; webhooks exist |
 | N9 | Add-ons deployed from main after review, to staging first, never from any push | Should | Every site with our modules | Partly: a webhook syncs a branch |
@@ -124,7 +124,7 @@ institution's data, and SMEs' sites on it are classed by what they hold.
 
 | What | Class | Kept | Personal data |
 |---|---|---|---|
-| Each site's Odoo database and files | As the site's owner classes them | As docs/documents.md says, for Financial Services' sites | The SME's staff, customers and contacts |
+| Each site's Odoo database and files | As the site's owner classes them | As docs/governance/documents.md says, for Financial Services' sites | The SME's staff, customers and contacts |
 | Backups | As the site | By policy (N6) | As the site |
 | OLP's own records: members, roles, audit | Confidential | OLP's own policy | Dibon's and customers' users |
 

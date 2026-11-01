@@ -70,7 +70,7 @@ function cardsRaw(root) {
 // The law register's rows: id → { instrument, asAt, url }.
 function registerRaw(root) {
   const out = new Map();
-  for (const l of read(root, 'docs/regulation.md').split('\n')) {
+  for (const l of read(root, 'docs/governance/regulation.md').split('\n')) {
     const c = cells(l);
     if (!/^LR-\d{2}$/.test(c[0] || '')) continue;
     const m = (c[2] || '').match(/\]\((https:[^)]+)\)/);
@@ -108,7 +108,7 @@ const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const memo = new Map();
 function stampOf(root) {
   const dir = path.join(root, LAW_DIR);
-  const files = [...(fs.existsSync(dir) ? fs.readdirSync(dir).map((f) => path.join(dir, f)) : []), path.join(root, 'docs', 'regulation.md')];
+  const files = [...(fs.existsSync(dir) ? fs.readdirSync(dir).map((f) => path.join(dir, f)) : []), path.join(root, 'docs', 'governance', 'regulation.md')];
   return files.map((f) => { try { const s = fs.statSync(f); return `${s.mtimeMs}:${s.size}`; } catch { return '-'; } }).join(',');
 }
 // The three together, the files' timestamps read once.

@@ -88,9 +88,9 @@ we promise the same things:
 | GOV.UK Service Standard | The questions each journey is checked against (docs/journeys/README.md) |
 | ISO 24495-1, plain language | Every word on a screen, in a template, in a manual |
 | WCAG 2.2, level AA | Every web page |
-| Kenya's draft Financial Consumer Protection Framework (docs/regulation.md) | Fair treatment: disclosure, complaints, statements |
+| Kenya's draft Financial Consumer Protection Framework (docs/governance/regulation.md) | Fair treatment: disclosure, complaints, statements |
 | Data Protection Act: privacy by design | Each journey collects only what each step needs (its "Data" line) |
-| Behaviour-driven tests (Gherkin) | Journeys as executable scenarios (docs/testing.md §1) |
+| Behaviour-driven tests (Gherkin) | Journeys as executable scenarios (docs/delivery/testing.md §1) |
 
 ## 5 · Training
 
@@ -100,7 +100,7 @@ redesign.
 
 ## 6 · Open
 
-- **No designer on the team today** (docs/operating-model.md). Proposed:
+- **No designer on the team today** (docs/company/operating-model.md). Proposed:
   contract a product designer before the first screens are drawn
   (omni-channel, the approval console, the customer pages).
 - The design system's base: proposed, a small set of our own components
@@ -110,7 +110,7 @@ redesign.
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|

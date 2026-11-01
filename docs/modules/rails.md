@@ -210,7 +210,7 @@ FS-056, FS-088, FS-127, FS-208, FS-209, FS-210.
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — §4.
 - Prospect reconciliation prototype, Aug 2026 — Transaction Trace.
   *Derived, not reproduced.*
-- docs/outreach/api-requests.md; docs/partners.md.
+- docs/outreach/api-requests.md; docs/market/partners.md.
 - docs/architecture/README.md §2, §3, §5.
 
 ## Regulations cited

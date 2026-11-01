@@ -323,9 +323,9 @@ function checkDiagrams(root, files) {
 }
 
 // ── partners ─────────────────────────────────────────────────────────────
-// docs/partners.md: candidates have a stage from the vocabulary; decisions
+// docs/market/partners.md: candidates have a stage from the vocabulary; decisions
 // name only candidates, criteria and decisions that exist.
-const PARTNERS_FILE = path.join('docs', 'partners.md');
+const PARTNERS_FILE = path.join('docs', 'market', 'partners.md');
 const STAGES = ['Candidate', 'Contacted', 'In discussion', 'Onboarding', 'Live',
   'Unconfirmed', 'Parked', 'Declined'];
 const DECISION_STATUSES = ['OPEN', 'DECIDED', 'PARKED'];
@@ -401,7 +401,7 @@ function checkPublic(root) {
 // FS-353). The products are read from the PDF's own list, so a product added
 // to the portfolio without a checklist fails here.
 const PAGES_REST = path.join('design', 'portfolio-pdf', 'pages-rest.js');
-const ONBOARDING = path.join('docs', 'onboarding.md');
+const ONBOARDING = path.join('docs', 'delivery', 'onboarding.md');
 
 function portfolioProducts(root) {
   const m = read(root, PAGES_REST).match(/const products = \[([\s\S]*?)\];/);
@@ -415,7 +415,7 @@ function checkOnboarding(root) {
   const failures = [];
   const linked = new Map();
   read(root, ONBOARDING).split('\n').forEach((text, i) => {
-    const m = text.match(/^Module: \[[^\]]+\]\(modules\/([a-z-]+)\.md\)/);
+    const m = text.match(/^Module: \[[^\]]+\]\((?:\.\.\/)?modules\/([a-z-]+)\.md\)/);
     if (!m) return;
     linked.set(m[1], i + 1);
     if (!fs.existsSync(path.join(root, 'docs', 'modules', `${m[1]}.md`))) {
@@ -638,7 +638,7 @@ function checkCustomers(root) {
 // ── assurance ────────────────────────────────────────────────────────────
 // Assurance work is never for a customer (FS-440): an engagement that names
 // an institution in docs/customers.md fails unless it was declined.
-const ASSURANCE = path.join('docs', 'assurance.md');
+const ASSURANCE = path.join('docs', 'market', 'assurance.md');
 const ENGAGEMENT_DECISIONS = ['Accepted', 'Declined (conflict)', 'Declined (other)'];
 
 function checkAssurance(root) {
@@ -667,7 +667,7 @@ function checkAssurance(root) {
 // is the one in "As at", and every LR id cited anywhere is in the register.
 // The texts themselves are kept out of git, so local copies are matched to
 // the register only where the folder exists.
-const REGULATION = path.join('docs', 'regulation.md');
+const REGULATION = path.join('docs', 'governance', 'regulation.md');
 const LAW_DIR = path.join('sources', 'regulation', 'ke');
 const TESTS = ['Institution', 'Payments', 'Obligation', 'Source', 'Dibon'];
 const DEPTHS = ['Deep', 'Targeted', 'Line', 'Unread'];
@@ -677,12 +677,12 @@ function knownIds(root) {
   const ids = new Set(moduleFiles(root).flatMap((f) => capabilityRows(read(root, f)).map((r) => r.id)));
   const rowIds = (rel, re) => fs.existsSync(path.join(root, rel))
     ? read(root, rel).split('\n').map((l) => (l.match(re) || [])[1]).filter(Boolean) : [];
-  rowIds(path.join('docs', 'compliance.md'), /^\| (LC-\d{2}) \|/).forEach((id) => ids.add(id));
-  rowIds(path.join('docs', 'onboarding.md'), /^\| (OB-[A-Z]{2,3}-\d{2}) \|/).forEach((id) => ids.add(id));
+  rowIds(path.join('docs', 'governance', 'compliance.md'), /^\| (LC-\d{2}) \|/).forEach((id) => ids.add(id));
+  rowIds(path.join('docs', 'delivery', 'onboarding.md'), /^\| (OB-[A-Z]{2,3}-\d{2}) \|/).forEach((id) => ids.add(id));
   rowIds(REGULATION, /^\| (LR-\d{2}) \|/).forEach((id) => ids.add(id));
-  rowIds(path.join('docs', 'documents.md'), /^\| (DT-\d{2}) \|/).forEach((id) => ids.add(id)); // FS-538
+  rowIds(path.join('docs', 'governance', 'documents.md'), /^\| (DT-\d{2}) \|/).forEach((id) => ids.add(id)); // FS-538
   // FS-873: a law may shape a partner decision, as the Advocates Act does SD-12.
-  rowIds(path.join('docs', 'partners.md'), /^\| ((?:SD|PT)-\d{2}) \|/).forEach((id) => ids.add(id));
+  rowIds(path.join('docs', 'market', 'partners.md'), /^\| ((?:SD|PT)-\d{2}) \|/).forEach((id) => ids.add(id));
   return ids;
 }
 
@@ -802,7 +802,7 @@ function checkDependencies(root) {
 // v1 is capped (FS-490): the number of phase-1 capabilities across the
 // modules may not exceed the cap the delivery plan states. Raising it is a
 // decision recorded on that line.
-const DELIVERY = path.join('docs', 'delivery-plan.md');
+const DELIVERY = path.join('docs', 'delivery', 'delivery-plan.md');
 
 function checkScope(root) {
   if (!fs.existsSync(path.join(root, DELIVERY))) return [fail('scope', DELIVERY, 0, 'delivery plan missing')];
@@ -1176,7 +1176,7 @@ function checkSpecs(root) {
     const status = (text.match(/^status: *(\S+)/m) || [])[1];
     if (!SPEC_STATUSES.includes(status)) at(1, `status "${status || ''}" is not one of ${SPEC_STATUSES.join(', ')}`);
     for (const s of SPEC_SECTIONS) if (!got.some((h) => h.replace(/^\d+ · /, '') === s)) at(0, `no "${s}" section`);
-    // Every test has an id, so the code can be tagged with it (docs/testing.md).
+    // Every test has an id, so the code can be tagged with it (docs/delivery/testing.md).
     const testsBody = (text.split(new RegExp(`^## ${n - 1} · .*$`, 'm'))[1] || '').split(/^## /m)[0];
     const testIds = testsBody.split('\n').filter((l) => l.startsWith('|')).map((l) => l.split('|')[1].trim())
       .filter((c) => c && !/^-+$/.test(c) && c !== '#');
@@ -1697,7 +1697,7 @@ function checkWords(root) {
 // kind and a status that kind allows, a date, a location outside git, and a
 // fingerprint where the document is an original or a record; every DR id
 // cited anywhere in docs/ exists.
-const DOC_REGISTER = path.join('docs', 'document-register.md');
+const DOC_REGISTER = path.join('docs', 'governance', 'document-register.md');
 const DOC_STATUSES = {
   Original: ['kept', 'to keep'],
   Record: ['kept', 'to keep'],
@@ -1882,19 +1882,39 @@ function checkReviewed(root, files) {
   const docs = files.filter((f) => f.split(path.sep)[0] === 'docs' && f.endsWith('.md'));
   // The date of each file's latest change of substance: a change only to
   // its status, version, last_reviewed or released line is metadata, not
-  // content, and asks for no review (FS-838, FS-852).
+  // content, and asks for no review (FS-838, FS-852). Nor does a change
+  // only to where a link or a path points, as when a document moves
+  // (FS-1053): each change's removed and added lines are compared with
+  // their targets taken out. A file's history under its old path counts
+  // as its own (tools/moved.json).
   const changed = new Map();
   const META = /^[+-](?:status|version|last_reviewed|released):/;
+  const movedTo = fs.existsSync(path.join(root, 'tools', 'moved.json')) ? JSON.parse(read(root, path.join('tools', 'moved.json'))) : {};
+  const bare = (l) => l.slice(1).replace(/\]\([^)]*\)/g, ']()').replace(/(?:\.\.\/)*(?:docs\/)?[\w-]+(?:\/[\w-]+)*\.(?:md|html)\b/g, '·');
   const scan = (out, dateOf) => {
     let date = null;
     let file = null;
+    let gone = [];
+    let come = [];
+    const settle = () => {
+      if (file && !changed.has(file) && (gone.length || come.length)) {
+        const a = gone.map(bare).sort().join('\n');
+        const b = come.map(bare).sort().join('\n');
+        if (a !== b) changed.set(file, dateOf(date));
+      }
+      gone = [];
+      come = [];
+    };
     for (const line of out.split('\n')) {
-      if (line.startsWith('\0')) { date = line.slice(1); continue; }
+      if (line.startsWith('\0')) { settle(); date = line.slice(1); continue; }
       const d = line.match(/^diff --git a\/.* b\/(.*)$/);
-      if (d) { file = d[1].replace(/^"|"$/g, ''); continue; }
+      if (d) { settle(); file = d[1].replace(/^"|"$/g, ''); file = movedTo[file] || file; continue; }
       if (!file || changed.has(file) || /^(\+\+\+|---) /.test(line)) continue;
-      if (/^[+-]/.test(line) && !META.test(line)) changed.set(file, dateOf(date));
+      if (META.test(line)) continue;
+      if (line.startsWith('-')) gone.push(line);
+      else if (line.startsWith('+')) come.push(line);
     }
+    settle();
   };
   const today = localDate();
   // Uncommitted first (they are the latest), then history, newest first.

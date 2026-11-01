@@ -29,7 +29,7 @@ or licensed. No licence for penetration testers was found (FS-438).
 **What it is not:** a statutory financial audit, which needs an
 ICPAK-licensed firm approved by CBK or SASRA; an ISO certification, which
 needs a KENAS-accredited body; a data protection compliance audit, until
-ODPC accredits us (docs/compliance.md LC-14); or an audit of critical
+ODPC accredits us (docs/governance/compliance.md LC-14); or an audit of critical
 information infrastructure, which only the national coordination
 committee's appointed auditors may do. We refer those to licensed firms.
 
@@ -64,14 +64,14 @@ Declined (conflict), Declined (other).
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-**[LR-14](law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
+**[LR-14](../law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | reg 11 | reg 11(d) | Internal controls against money laundering, terrorism financing and proliferation financing, sized to the business: compliance arrangements with a reporting officer, staff screening and training, an independent audit function to test the system (11(d)), and risk assessment |
 | reg 43 | reg 43 | An independent audit function checks the institution's compliance with the Act and these Regulations |
 
-**[LR-20](law/LR-20.md) The Computer Misuse and Cybercrimes Act (Cap. 79C).** Regulator: The National Computer and Cybercrimes Co-ordination Committee; offences go to the courts. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2018/5/eng@2025-11-04).
+**[LR-20](../law/LR-20.md) The Computer Misuse and Cybercrimes Act (Cap. 79C).** Regulator: The National Computer and Cybercrimes Co-ordination Committee; offences go to the courts. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2018/5/eng@2025-11-04).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|

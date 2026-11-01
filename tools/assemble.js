@@ -8,7 +8,7 @@
 // git ignores. It refuses to build while any check fails, so a Master that
 // exists is one whose sources passed. Registers are published as counts
 // computed from the source, not restated (building-a-master §5). The
-// exception is docs/partners.md, included in full because it is short and
+// exception is docs/market/partners.md, included in full because it is short and
 // generated output cannot drift from it.
 
 'use strict';
@@ -117,12 +117,14 @@ function assemble(root, outFile = path.join(root, 'build', 'master.md')) {
     { rel: path.join('docs', 'decisions.md') },
     // FS-1053: the entries, a file per hundred ids, in order.
     ...(fs.existsSync(path.join(root, 'docs', 'decisions')) ? fs.readdirSync(path.join(root, 'docs', 'decisions')).filter((x) => /^\d+-\d+\.md$/.test(x)).sort((x, y) => parseInt(x, 10) - parseInt(y, 10)).map((x) => ({ rel: path.join('docs', 'decisions', x) })) : []),
-    { rel: path.join('docs', 'partners.md') },
+    { rel: path.join('docs', 'market', 'partners.md') },
     // Every other register and plan in docs/ (FS-480): the Master holds all
     // of it. Outreach drafts and marketing copy are outward, not the design.
     ...fs.readdirSync(path.join(root, 'docs')).filter((f) => f.endsWith('.md')
       && !['overview.md', 'architecture.md', 'decisions.md', 'partners.md'].includes(f)).sort()
       .map((f) => ({ rel: path.join('docs', f) })),
+    // FS-1053: the registers and plans that were loose in docs/, by folder.
+    ...['market', 'governance', 'delivery', 'company'].flatMap(folder).filter((d) => !d.rel.endsWith(path.join('market', 'partners.md'))),
     ...folder('service-management'),
     ...folder('training'),
     ...(fs.existsSync(path.join(root, 'docs', 'customers')) ? fs.readdirSync(path.join(root, 'docs', 'customers'))

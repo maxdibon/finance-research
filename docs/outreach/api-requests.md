@@ -26,7 +26,7 @@ the detailed questions live in one place.
   relationship manager is the right first contact.
 - **For M-Pesa, merge the six GateKeepr clarifications** prepared on 23 Sep
   (FS-128), so one meeting covers both.
-- **After sending,** move the partner's stage in docs/partners.md to
+- **After sending,** move the partner's stage in docs/market/partners.md to
   Contacted, with the date.
 
 ---

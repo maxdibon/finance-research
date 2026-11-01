@@ -30,7 +30,7 @@ release that needs it.
 |---|---|---|---|
 | **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 103 capabilities from the map (1 Built, 38 Designed, 64 Planned), plus 30 further platform, security and testing capabilities (computed 2026-10-14, FS-808) |
 | **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); for a microfinance bank, rails through a larger bank and its settlement account's float (RL-27, RO-09; FS-585); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability; the companion ledger for deposits and bank transfers, expected payments (RO-03), duplicate detection (RO-11), matching by leg against the rails' tariffs, change-data capture from the bank's own core, and the load test before a bank of scale (FS-793); Roan Capital's public pages, its website with the "Request a loan" form, the calculator and its published products (BS-20), since it has no website yet (FS-808) | Mostly Built or Designed: the Onit record |
-| **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
+| **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/market/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
 | **R4 · Saccos and Kapu Core** | The first Sacco or core customer signs | Kapu Sacco, Kapu Core, member apps and USSD, the field-officer app | Sacco, Core and omni-channel phase-1 rows |
 | **R5 · The rest of v1** | After R1, in the order sales ask | Escrow, CRB, financial crime beyond R1, insights, the remaining platform services | What is left of phase 1 |
 
@@ -95,8 +95,8 @@ the check keeps the two in step):
   tier).
 
 **Build specifications** for R1 live in docs/specs/: the lender rules
-([specs/lender-rules.md](specs/lender-rules.md)) and the approval engine
-([specs/approval-engine.md](specs/approval-engine.md)); the sanctions
+([specs/lender-rules.md](../specs/lender-rules.md)) and the approval engine
+([specs/approval-engine.md](../specs/approval-engine.md)); the sanctions
 adapter, the M-Pesa port, the API contracts, decisioning (FS-582) and
 the payout instruction path with its security (FS-586, FS-588) are to
 follow (FS-492,
@@ -118,7 +118,7 @@ FS-495).
   advance, FS-775), SE-26 (privileged access), SE-27 (ID numbers and other Restricted fields encrypted one by
   one, FS-638).
 - **Testing:** ID-20 (the identity simulator), so every R1 journey's
-  failures can be tested (docs/testing.md).
+  failures can be tested (docs/delivery/testing.md).
 
 The rest of the security baseline (SE-03, SE-06, SE-07, SE-13 managed
 detection, our rota watching until then, SE-14 for institutions'
@@ -140,13 +140,13 @@ phase 1 across the modules and fails when it exceeds the cap.
 ## Definition of done, for every release
 
 1. Each capability in scope is **Built**: code complete, every acceptance
-   item that covers it passing in the coverage matrix (docs/testing.md),
+   item that covers it passing in the coverage matrix (docs/delivery/testing.md),
    its module row updated with the evidence.
 2. The security minimum is in place and a penetration test has passed
    (SE-17).
-3. The customer's onboarding checklist is complete (docs/onboarding.md).
+3. The customer's onboarding checklist is complete (docs/delivery/onboarding.md).
 4. The approval pack items the customer's regulator needs are Ready
-   (docs/approval-pack.md).
+   (docs/governance/approval-pack.md).
 5. The customer has signed acceptance (user acceptance testing), and the
    first full cycle reconciles (OB-COM-14).
 6. Restore and failover have been tested once against the recovery
@@ -159,7 +159,7 @@ Four people lead the build (FS-477):
 | Who | Owns in R1 |
 |---|---|
 | The system developer | Kapu Core and Kapu MFI on Fineract: products, schedules, charges, the lender rules (MF-21 to MF-26), restructuring (MF-09), loan agreements (MF-34), loan officers (MF-35), disbursement and repayment on M-Pesa and bank transfer, reusing the M-Pesa code that ran at Onit Bank (rails RL-03) |
-| An Odoo engineer | Everything Odoo does for Roan Capital: leads entered by staff (BS-01; the public "Request a loan" page and calculator follow in R2, with its website: RC-28, RC-29, FS-808), documents, the service desk (docs/operating-model.md) |
+| An Odoo engineer | Everything Odoo does for Roan Capital: leads entered by staff (BS-01; the public "Request a loan" page and calculator follow in R2, with its website: RC-28, RC-29, FS-808), documents, the service desk (docs/company/operating-model.md) |
 | A DevSecOps engineer | The platform: Kubernetes, Keycloak (AC-01, AC-02, AC-08), OpenBao, the document vault (ID-15), the build pipeline, backups and the security minimum (SE rows above) |
 | The CTIO | Architecture and reviews; the approval engine's design (MD-01 to MD-18); security lead; Roan Capital's acceptance with the project manager |
 
@@ -203,7 +203,7 @@ not:
    screening and records, the rest of the security minimum, the
    penetration test, a restore test, user acceptance and go-live.
 
-**Where this team is thin** (docs/operating-model.md):
+**Where this team is thin** (docs/company/operating-model.md):
 
 - **Testing:** no test engineer. Each person writes the automated tests
   for what they build, and the definition of done refuses work without

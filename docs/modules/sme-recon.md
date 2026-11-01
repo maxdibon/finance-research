@@ -28,7 +28,7 @@ then Zoho, as we are a Zoho partner, and QuickBooks Online, then others
 own reconciliation, not in a second tool. **Dibon will be the first
 customer** (FS-033): our own accounts at NCBA, KCB, M-Pesa, Airtel Money
 and T-Kash, reconciled into our own Odoo (FS-125). Banks may also offer
-it to their SME customers (docs/bank-channel.md).
+it to their SME customers (docs/market/bank-channel.md).
 
 ## 2 · Who it is for
 
@@ -37,7 +37,7 @@ Fintechs that need the same for their operating accounts. Dibon first.
 SMEs reached through their bank: a bank, microfinance bank or Sacco
 offers SME Recon to its business customers, by referral first and as a
 bundle once take-up is shown, with the business's books staying its own
-(docs/bank-channel.md; FS-439, FS-441). KCB and National Bank of Kenya,
+(docs/market/bank-channel.md; FS-439, FS-441). KCB and National Bank of Kenya,
 current customers, are the first candidates (CU-03, CU-04).
 
 **The problem, concretely:** the accountant downloads statements from
@@ -88,7 +88,7 @@ card feeds), mandates (approval of payments, SR-11), messaging, gateway
 **Used by:** business-suite (statement feeds into accounting), insights
 (its metrics), mfi (confirmed invoices for LPO and invoice financing,
 MF-32) and identity (statements from source, with consent, ID-18). Otherwise it is the product an SME buys, directly
-or through its bank (docs/bank-channel.md).
+or through its bank (docs/market/bank-channel.md).
 
 **Who holds which record** (docs/architecture/README.md §2):
 
@@ -232,4 +232,4 @@ FS-037, FS-127, FS-130, FS-131, FS-133, FS-134, FS-135.
 - docs/modules/recon-observability.md §4 (institution and SME compared).
 - docs/outreach/api-requests.md (feeds requested for Dibon's own
   accounts).
-- docs/bank-channel.md (banks offering SME Recon to their SME customers).
+- docs/market/bank-channel.md (banks offering SME Recon to their SME customers).

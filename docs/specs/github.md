@@ -94,7 +94,7 @@ path is [flows](../architecture/flows.md) §4.
   GitLab Premium, at $29 (FS-896).
 - **Code and documents live outside Kenya,** on GitHub's servers, as they
   would on GitLab.com (FS-864). They hold no customer data, and the rules
-  keep it so ([rules](../rules.md) §1): no personal data, no client
+  keep it so ([rules](../governance/rules.md) §1): no personal data, no client
   material, no secrets in a repository, an issue or a comment. A
   customer's confidential detail is referred to, not copied: client
   material lives in Dibon's Odoo Documents, in Kenya (rules, Dibon 10;
@@ -400,7 +400,7 @@ our evidence (§14):
 | # | Check | Pass |
 |---|---|---|
 | H1 | The author approves their own pull request | Not possible |
-| H2 | A pull request touching docs/regulation.md without the compliance team's approval | Cannot merge |
+| H2 | A pull request touching docs/governance/regulation.md without the compliance team's approval | Cannot merge |
 | H3 | A push to main | Refused |
 | H4 | A deploy pull request inside a blackout, not labelled `emergency` | Its check fails; cannot merge |
 | H5 | A deploy pull request without the operations lead's approval | Cannot merge |

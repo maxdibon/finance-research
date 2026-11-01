@@ -70,9 +70,9 @@ officer and the institution (FS-063).
 | PR-06 | Phone-number and SIM checks: operator name match, IMSI binding | identity ID-05, ID-12 to ID-14; rails RL-22 | Customers, members | Confidential | Legal obligation and legitimate interest (fraud prevention) | Open (FS-063) | Needed | No |
 | PR-07 | Messages: one-time codes, reminders, receipts, campaigns | messaging | Customers, members | Confidential (phone numbers, message content) | Contract; consent for marketing (messaging MS-11) | Open (FS-063) | Not needed | No |
 | PR-08 | Field captures: visits, photos of collateral, location | omni-channel OC-17 to OC-19 | Borrowers, members, field officers | Confidential (location, photos) | Contract; legitimate interest (verifying collateral) | Open (FS-063) | Needed (location) | No |
-| PR-09 | Bank channel: a business's reconciled cash flow shared with its bank | sme-recon; docs/bank-channel.md | SME owners and their counterparties | Confidential | Consent, separate and per purpose | Until consent is withdrawn | Needed | No |
+| PR-09 | Bank channel: a business's reconciled cash flow shared with its bank | sme-recon; docs/market/bank-channel.md | SME owners and their counterparties | Confidential | Consent, separate and per purpose | Until consent is withdrawn | Needed | No |
 | PR-10 | Analysis and AI questions over governed metrics | insights | Customers, members, staff | As the source; Restricted never reaches a model (IN-10) | Legitimate interest (running the institution) | As the source | Needed (models) | Only a hosted model, for data classes allowed to leave (IN-08) |
-| PR-11 | Service desk requests and the AI agent | docs/operating-model.md; business-suite BS-01 | Customers' staff, members | Confidential | Contract | Open (FS-063) | Needed (AI agent) | Depends on the model chosen (FS-476) |
+| PR-11 | Service desk requests and the AI agent | docs/company/operating-model.md; business-suite BS-01 | Customers' staff, members | Confidential | Contract | Open (FS-063) | Needed (AI agent) | Depends on the model chosen (FS-476) |
 | PR-12 | Dibon's own data: staff and payroll, leads, customers' contacts | business-suite BS-01, BS-12 (for Dibon) | Staff, prospects, contacts | Confidential | Contract; legitimate interest (sales) | Open (FS-063) | Not needed | No |
 | PR-13 | Security events, access logs and endpoint telemetry | access AC-11; platform-security SE-13, SE-18 | Staff, customers' users | Confidential | Legitimate interest and legal obligation (security) | Open (FS-063) | Not needed | Telemetry to the managed-detection service: where it is processed is to confirm (Liquid list, item 9) |
 | PR-14 | Signed transaction events for traceability, and the audit trail across modules built from them, actions outside transactions included (sign-ins, role changes, document views) | recon-observability RO-23 to RO-25, RO-27 | Payers and payees; staff, whose actions it records | Confidential; never Restricted values in an event | Legal obligation (records) | 7 years, as PR-02 | Covered by PR-02 | No |
@@ -87,20 +87,20 @@ officer and the institution (FS-063).
 
 ## Open
 
-- Retention periods per document are now proposed in docs/documents.md
+- Retention periods per document are now proposed in docs/governance/documents.md
   (FS-537); rows here still marked open follow it once confirmed.
 - Retention periods marked open (FS-063), with the compliance and risk
   officer.
 - An impact-assessment template, and the assessments marked Needed, before
   each goes live: PR-01, PR-02 and PR-05 first, because Roan Capital's
-  release depends on them (docs/delivery-plan.md R1).
+  release depends on them (docs/delivery/delivery-plan.md R1).
 - The time to answer a rights request, from the regulations (LR-18).
 
 ## Regulations cited
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
@@ -108,19 +108,19 @@ officer and the institution (FS-063).
 | reg 40 | reg 40 | A complaints mechanism made known to customers; acknowledgement within seven days where a complaint cannot be dealt with promptly; an oral complaint unresolved after forty-eight hours confirmed in writing; resolution within thirty days |
 | reg 58 | reg 58 | Personal data processed lawfully, fairly and transparently; consent express, specific, separately obtained on its own form, withdrawable and recorded; a privacy notice is not consent |
 
-**[LR-11](law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
+**[LR-11](../law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 26 | s. 26 | The Central Bank, settlement system participants and the operators of payment systems keep every record from operating a payment system or issuing a payment instrument for seven years from the record's date; electronic records suffice |
 
-**[LR-13](law/LR-13.md) The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A).** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2009/9/eng@2025-11-04).
+**[LR-13](../law/LR-13.md) The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A).** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2009/9/eng@2025-11-04).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 46 | s. 46 | A reporting institution keeps records of every transaction and of the evidence of each customer's identity, in the account holder's correct name, for at least seven years from the transaction or the end of the relationship, or longer where the Centre asks (46(4)) |
 
-**[LR-17](law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+**[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
@@ -131,7 +131,7 @@ officer and the institution (FS-063).
 | s. 43 | s. 43(3) | A breach with a real risk of harm notified to the Data Commissioner within seventy-two hours, and to the person affected; a processor tells the controller within forty-eight hours where practicable (43(3)) |
 | s. 48 | s. 48 | Personal data transferred out of Kenya only with proof of appropriate safeguards given to the Data Commissioner, or where the transfer is necessary on a ground the section lists |
 
-**[LR-18](law/LR-18.md) The Data Protection (General) Regulations, 2021, Legal Notice No. 263 of 2021.** Regulator: Office of the Data Protection Commissioner. Made under: The Data Protection Act (Cap. 411C). In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2021/263/eng@2022-12-31).
+**[LR-18](../law/LR-18.md) The Data Protection (General) Regulations, 2021, Legal Notice No. 263 of 2021.** Regulator: Office of the Data Protection Commissioner. Made under: The Data Protection Act (Cap. 411C). In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2021/263/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|

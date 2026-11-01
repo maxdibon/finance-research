@@ -354,7 +354,7 @@ target, and day 25; an overdue event on any breach. The record holds
 outcome.
 
 **Where enforced.** Complaints live in Odoo's service desk
-(docs/operating-model.md); the service computes the clocks from desk
+(docs/company/operating-model.md); the service computes the clocks from desk
 events, unless the desk's own service-level settings can carry them (to
 confirm with the Odoo engineer).
 
@@ -587,7 +587,7 @@ exception to the accountant's queue (MF-12).
 
 | What | Class | Kept | Personal data |
 |---|---|---|---|
-| Cap episodes, classifications, collection stages | Confidential | Seven years after the loan closes (docs/documents.md) | A borrower's repayment conduct (docs/privacy.md) |
+| Cap episodes, classifications, collection stages | Confidential | Seven years after the loan closes (docs/governance/documents.md) | A borrower's repayment conduct (docs/governance/privacy.md) |
 | CBK approvals, variation notices and acceptances | Confidential | Seven years after the product or loan ends | Acceptances are the borrower's |
 | Complaints clocks | Confidential | With the complaint | The complainant's |
 
@@ -653,7 +653,7 @@ exception to the accountant's queue (MF-12).
 
 ## 9 · Open questions
 
-**For counsel** (docs/legal-questions.md, with what is designed
+**For counsel** (docs/governance/legal-questions.md, with what is designed
 meanwhile):
 
 1. What counts within reg 29's cap, and on which principal: LQ-01.

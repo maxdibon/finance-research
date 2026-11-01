@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046]
-last_reviewed: 2026-10-28
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1074]
+last_reviewed: 2026-11-01
 ---
 
 # The MVP sandbox
@@ -25,7 +25,7 @@ code/platform/azure-sandbox; what it makes is in that README.
 | Sites | One: public Azure, South Africa North; Azure has no region in Kenya, so nothing real goes here |
 | Who runs it | Dibon's platform workstream; each person their own group |
 | Availability | None: rebuilt from code; personal and workstream groups removed at the end of the day |
-| Release | The MVP day, Friday 30 October (FS-962) |
+| Release | The MVP day, Tuesday 3 November (FS-962, FS-1074) |
 | Go-live | Not applicable |
 
 ## 2 · Components
@@ -118,7 +118,7 @@ FS-1046. What the sandbox sets; made-up data only, nothing secret here.
 
 ## 4 · Diagrams
 
-The MVP day's own (docs/mvp-day.md): GitHub, then the sandbox and its
+The MVP day's own (docs/delivery/mvp-day.md): GitHub, then the sandbox and its
 cluster, Flux, Kapu Core and Biashara, the payout by bank, the
 walk-through, with Keycloak and Odoo beside.
 

@@ -14,7 +14,7 @@ last_reviewed: 2026-10-12
 
 Drafts that follow the partner research of 2026-10-03 (FS-380 to
 FS-388). Fill the brackets and send from your own address; names of the
-people you write to stay out of this file. Log each one in docs/partners.md
+people you write to stay out of this file. Log each one in docs/market/partners.md
 under the partner's last event.
 
 ## 1 · A banking-as-a-service bank: Collect and Escrow partner

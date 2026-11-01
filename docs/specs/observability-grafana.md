@@ -240,5 +240,5 @@ to add it:
 
 1. The on-call option: A, B or C (§5). Proposed: A.
 2. A Twilio account, and the cost of calls and SMS to Kenyan numbers.
-3. The rota: three engineers today (docs/operating-model.md).
+3. The rota: three engineers today (docs/company/operating-model.md).
 4. A status page (§3): whether to offer one, and with which tool.

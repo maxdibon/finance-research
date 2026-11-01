@@ -1,7 +1,7 @@
 // Paths written as plain text in a document, and what each one means
 // (FS-856). The reader links them and the links check checks them, both
 // from here, so they never disagree. The Markdown stays plain: we write
-// "docs/regulation.md, compliance.md, privacy.md", and the short names
+// "docs/governance/regulation.md, compliance.md, privacy.md", and the short names
 // after the first path mean the same folder.
 //
 // A name.md resolves to, in order: the folder last named on the same line

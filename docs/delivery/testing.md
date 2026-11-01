@@ -27,7 +27,7 @@ is evidence; a test is the evidence for Built.
 
 | Link | Where it is kept | Who writes it |
 |---|---|---|
-| The law and the requirement | docs/regulation.md; the customer's delivery map | Here |
+| The law and the requirement | docs/governance/regulation.md; the customer's delivery map | Here |
 | The capability | Its module's §3 | Here |
 | **Acceptance items** | The build specs' "Acceptance tests" tables (`lender-rules A5`) and the component specs' "Checks before the build" (`kapu-core-fineract F3`), run on a working instance before the build relies on them; every step and §3 row of a journey (`JN-02 2.4`, `JN-02 3a`) | Here, with the spec or the journey |
 | **The tests** | The code repository, beside the code they test | The person who builds the code |
@@ -99,7 +99,7 @@ makes up the people it answers for.
    each R1 journey, its steps and its §3 rows, in a staging instance with
    synthetic data.
 2. **Tracked in Odoo Project,** where the customer's onboarding progress
-   is already tracked (docs/onboarding.md): one task per journey row,
+   is already tracked (docs/delivery/onboarding.md): one task per journey row,
    passed or failed, with the date and who ran it. A failure is a ticket
    in the helpdesk, linked to the task.
 3. **Sign-off** is the customer's written acceptance against that list:
@@ -107,7 +107,7 @@ makes up the people it answers for.
 
 ## 5 · Who tests
 
-There is no test engineer yet (docs/delivery-plan.md, the team). Each
+There is no test engineer yet (docs/delivery/delivery-plan.md, the team). Each
 person writes the tests for what they build, a second person reviews
 them with the code, and the definition of done refuses work without
 them. The journeys are written here, before the build, so the end-to-end

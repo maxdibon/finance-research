@@ -19,7 +19,7 @@ ID-15) takes its retention clock and data class from this table, and each
 product's document checklist (ID-02) draws from it. It answers FS-063,
 which left retention periods open.
 
-**Read from the law texts we hold** (docs/regulation.md). A period marked
+**Read from the law texts we hold** (docs/governance/regulation.md). A period marked
 *proposed* has no source in those texts; it is our recommendation, for the
 compliance and risk officer to confirm with the institution.
 
@@ -143,13 +143,13 @@ of employment.
 - **The joint Financial Consumer Protection Framework** is a draft
   (March 2026): regulators may prescribe retention later. To watch.
 
-Regulators' guidelines are listed in docs/regulation.md.
+Regulators' guidelines are listed in docs/governance/regulation.md.
 
 ## Regulations cited
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-**[LR-03](law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
@@ -166,26 +166,26 @@ Regulators' guidelines are listed in docs/regulation.md.
 | reg 59 | reg 59 | A pricing model with clear parameters: its components and costs justified, rates that may vary with the borrower's creditworthiness (59(2)(c)), the criteria for non-performance, credit bureau scores, all-inclusive pricing except third-party costs (59(2)(f)), and the APR disclosed |
 | reg 64 | reg 64 | Compliance with the Proceeds of Crime and Anti-Money Laundering Act and the Prevention of Terrorism Act, on pain of the Central Bank's penalties |
 
-**[LR-06](law/LR-06.md) The Banking (Credit Reference Bureau) Regulations, 2020, Legal Notice No. 55 of 2020.** Regulator: Central Bank of Kenya. Made under: The Banking Act (Cap. 488), with the Microfinance Act and the Central Bank of Kenya Act. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2020/55/eng@2022-12-31).
+**[LR-06](../law/LR-06.md) The Banking (Credit Reference Bureau) Regulations, 2020, Legal Notice No. 55 of 2020.** Regulator: Central Bank of Kenya. Made under: The Banking Act (Cap. 488), with the Microfinance Act and the Central Bank of Kenya Act. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2020/55/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | reg 67 | reg 67(2) | A notice to a customer served by registered post, email, text message to the registered number, or delivery against acknowledgement; a record of every notice served kept for at least seven years (67(2)) |
 
-**[LR-12](law/LR-12.md) The National Payment System Regulations, 2014, Legal Notice No. 109 of 2014.** Regulator: Central Bank of Kenya. Made under: The National Payment System Act (Cap. 491A). In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2014/109/eng@2022-12-31).
+**[LR-12](../law/LR-12.md) The National Payment System Regulations, 2014, Legal Notice No. 109 of 2014.** Regulator: Central Bank of Kenya. Made under: The National Payment System Act (Cap. 491A). In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2014/109/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | reg 29 | reg 29(1)(b) | A payment service provider keeps an accurate, fully accessible audit trail of every transaction, and records of every electronic transfer for at least seven years (29(1)(b)); monthly returns to the Central Bank |
 
-**[LR-13](law/LR-13.md) The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A).** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2009/9/eng@2025-11-04).
+**[LR-13](../law/LR-13.md) The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A).** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2009/9/eng@2025-11-04).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 44 | s. 44(5) | Complex, unusual, suspicious or large transactions monitored and suspicions reported to the Centre; the findings kept for at least seven years and made available to the Centre, the supervisor and auditors (44(5)); cash transactions above the prescribed amount reported in all cases |
 | s. 46 | s. 46, s. 46(4) | A reporting institution keeps records of every transaction and of the evidence of each customer's identity, in the account holder's correct name, for at least seven years from the transaction or the end of the relationship, or longer where the Centre asks (46(4)) |
 
-**[LR-14](law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
+**[LR-14](../law/LR-14.md) The Proceeds of Crime and Anti-Money Laundering Regulations, 2023, Legal Notice No. 153 of 2023.** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A). In force: Yes. Version read: as at 2023-11-17, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2023/153/eng@2023-11-17).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
@@ -194,20 +194,20 @@ Regulators' guidelines are listed in docs/regulation.md.
 | reg 43 | reg 43 | An independent audit function checks the institution's compliance with the Act and these Regulations |
 | reg 44 | reg 44 | An annual compliance report to the Centre by 31 January, on the Act, the Regulations and the institution's own rules |
 
-**[LR-17](law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+**[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 32 | s. 32 | Whoever relies on consent proves it was given for the purpose; consent can be withdrawn at any time; it is not freely given where a service is made to depend on consent to processing it does not need |
 | s. 39 | s. 39 | Personal data kept only as long as needed for its purpose, unless the law, a lawful purpose or the person's consent requires longer; then deleted, erased, anonymised or pseudonymised |
 
-**[LR-21](law/LR-21.md) The Kenya Information and Communications Act (Cap. 411A).** Regulator: Communications Authority of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1998/2/eng@2022-12-31).
+**[LR-21](../law/LR-21.md) The Kenya Information and Communications Act (Cap. 411A).** Regulator: Communications Authority of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1998/2/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 83H | s. 83H | Where the law requires records kept for a period, keeping them electronically satisfies it, if they stay accessible, are kept in their original format or one shown to be accurate, and show their origin, destination and dates |
 
-**[LR-30](law/LR-30.md) The Employment Act (Cap. 226).** Regulator: The Ministry responsible for labour; disputes go to the Employment and Labour Relations Court. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-04-26, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2007/11/eng@2024-04-26).
+**[LR-30](../law/LR-30.md) The Employment Act (Cap. 226).** Regulator: The Ministry responsible for labour; disputes go to the Employment and Labour Relations Court. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-04-26, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2007/11/eng@2024-04-26).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
@@ -215,20 +215,20 @@ Regulators' guidelines are listed in docs/regulation.md.
 | s. 19 | s. 19(1)(g) | Deductions from wages only those the section allows, among them one the employee asks for in writing (19(1)(g)); all deductions together no more than two-thirds of wages (19(3)); a deduction paid over as the law or agreement requires, failing which an offence (19(5)) |
 | s. 79 | s. 79 | A register of employees, with each one's name, age, sex, occupation, start date, nationality and education, and an annual return of employees by 31 January |
 
-**[LR-31](law/LR-31.md) The Tax Procedures Act (Cap. 469B).** Regulator: Kenya Revenue Authority. Made under: An Act of Parliament. In force: Yes. Version read: as at 2026-09-01, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2015/29/eng@2026-09-01).
+**[LR-31](../law/LR-31.md) The Tax Procedures Act (Cap. 469B).** Regulator: Kenya Revenue Authority. Made under: An Act of Parliament. In force: Yes. Version read: as at 2026-09-01, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2015/29/eng@2026-09-01).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 23 | s. 23(1)(c) | Documents required under a tax law kept in an official language, so tax can be ascertained, for five years from the end of the period they relate to (23(1)(c)) |
 
-**[LR-32](law/LR-32.md) The Limitation of Actions Act (Cap. 22).** Regulator: None: the courts apply it. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1968/21/eng@2022-12-31).
+**[LR-32](../law/LR-32.md) The Limitation of Actions Act (Cap. 22).** Regulator: None: the courts apply it. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1968/21/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 4 | s. 4(4) | Claims in contract or tort brought within six years of the cause of action; a claim on a judgment within twelve years of it (4(4)) |
 | s. 19 | s. 19(1) | A claim for a principal sum secured by a mortgage of land or movable property, or for the proceeds of selling land, brought within twelve years of the right accruing (19(1)) |
 
-**[LR-33](law/LR-33.md) The Microfinance (Deposit-Taking Microfinance Institutions) Regulations, Legal Notice No. 58 of 2008.** Regulator: Central Bank of Kenya. Made under: The Microfinance Act (Cap. 493C). In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2008/58/eng@2022-12-31).
+**[LR-33](../law/LR-33.md) The Microfinance (Deposit-Taking Microfinance Institutions) Regulations, Legal Notice No. 58 of 2008.** Regulator: Central Bank of Kenya. Made under: The Microfinance Act (Cap. 493C). In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2008/58/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|

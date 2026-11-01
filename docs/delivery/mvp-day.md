@@ -1,19 +1,20 @@
 ---
 id: mvp-day
-name: MVP day — Roan Capital's MVP set up, 30 October 2026
+name: MVP day — Roan Capital's MVP set up, 3 November 2026
 kind: plan
 status: living
 released: unreleased
 owner: Project manager
 classification: Internal
-review_ids: [FS-925, FS-928, FS-929, FS-930, FS-931, FS-938, FS-950, FS-951, FS-952, FS-953, FS-954, FS-955, FS-956, FS-960, FS-962]
-last_reviewed: 2026-10-23
+review_ids: [FS-925, FS-928, FS-929, FS-930, FS-931, FS-938, FS-950, FS-951, FS-952, FS-953, FS-954, FS-955, FS-956, FS-960, FS-962, FS-1074]
+last_reviewed: 2026-11-01
 ---
 
-# MVP day · Friday 30 October 2026 · 12:00 to 16:00 · in person
+# MVP day · Tuesday 3 November 2026 · 12:00 to 16:00 · in person
 
-**Moved** from Friday 23 October, when it could not be run (FS-962).
-The week between is for what can be done before the day: the GitHub
+**Moved** from Friday 23 October, when it could not be run (FS-962),
+then from Friday 30 October, when it was not held (FS-1074). The days
+between is for what can be done before the day: the GitHub
 organisation, the Azure subscription and the Odoo Enterprise modules.
 
 **One goal:** Roan Capital's MVP set up on Azure, and one loan walked from
@@ -31,7 +32,7 @@ is the same plan, laid out for printing.
 2. **Lead:** a made-up lead in Odoo CRM, keyed into Kapu Core as the
    borrower.
 3. **Apply:** for Roan Capital's Biashara loan
-   ([its product document](products/roan-capital-30-day-loan-v1.md)).
+   ([its product document](../products/roan-capital-30-day-loan-v1.md)).
 4. **Approve:** by someone else: maker and checker.
 5. **Sign:** the agreement and its key facts in Odoo Sign, by borrower
    and guarantor.
@@ -107,7 +108,7 @@ group first, then moves into `rg-mvp`.
 ## Terms we all use
 
 - **download, new, save, upload, share, join, resume, release:** the
-  words ([ways of working](service-management/ways-of-working.md) §7).
+  words ([ways of working](../service-management/ways-of-working.md) §7).
 - **Planned, Designed, Built, Live:** today moves real capabilities
   towards Built.
 - **FS** register rows; **CU** customers; **RC, LF** their requirements;

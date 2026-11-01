@@ -67,5 +67,5 @@ copying the bank's cash-management or API team where there is one.
 > [Phone] · [Email]
 
 **After the reply:** each bank's answers go into the partners register
-(docs/partners.md) under that bank, and the channel chosen per bank into
+(docs/market/partners.md) under that bank, and the channel chosen per bank into
 rails RL-07.

@@ -482,9 +482,9 @@ blockquote{border-left:3px solid var(--line);margin:12px 0;padding:2px 14px}bloc
 // tab of its own, and pages for people working in the repository go to the
 // foot of every page.
 const NAV = [['docs/start-here.html', 'Start here'], ['docs/overview.html', 'Overview'], ['docs/products/README.html', 'Products'],
-  ['docs/customers.html', 'Customers'], ['docs/delivery-plan.html', 'Delivery plan'], ['docs/mvp-day.html', 'MVP day'], ['docs/architecture/README.html', 'Architecture'],
+  ['docs/customers.html', 'Customers'], ['docs/delivery/delivery-plan.html', 'Delivery plan'], ['docs/delivery/mvp-day.html', 'MVP day'], ['docs/architecture/README.html', 'Architecture'],
   ['docs/specs/README.html', 'Specs'], ['docs/journeys/README.html', 'Journeys'], ['docs/service-management/README.html', 'Running the service'],
-  ['docs/regulation.html', 'Law'], ['REVIEW.html', 'Review'], ['board.html', 'Board'], ['index.html', 'Search']];
+  ['docs/governance/regulation.html', 'Law'], ['REVIEW.html', 'Review'], ['board.html', 'Board'], ['index.html', 'Search']];
 const FOOT = [['README.html', 'README: the repository'], ['HANDOFF.html', 'Handoff'], ['CHANGELOG.html', 'Changelog'], ['status.html', 'Documents by status'], ['unreleased.html', 'Unreleased']];
 
 // FS-891: the board, from the register and the branches (tools/board.js):
@@ -753,6 +753,16 @@ q.addEventListener('input',show);</script>`;
     + `<h2>Documents changed since ${html(rel.tag ? rel.tag.slice(5) : 'the release')} (${changedPages.length})</h2>${changedPages.length ? `<ul>${changedPages.map((f) => `<li>${idx.docs.has(f) ? `<a href="${pageOf(f)}">${html(f)}</a>` : html(f)}</li>`).join('')}</ul>` : '<p>None.</p>'}`;
   fs.writeFileSync(path.join(outDir, 'unreleased.html'), shell('Unreleased', 'unreleased.html', unreleased, note));
   fs.writeFileSync(path.join(outDir, 'board.html'), shell('Board', 'board.html', boardPage(root, require('./register').team(root)), note));
+  // FS-1053: a document that moved leaves a page at its old address that
+  // sends the reader on, so a link kept from before still lands.
+  const movedFile = path.join(root, 'tools', 'moved.json');
+  for (const [from, to] of Object.entries(fs.existsSync(movedFile) ? JSON.parse(read(root, path.join('tools', 'moved.json'))) : {})) {
+    const page = pageOf(from);
+    if (fs.existsSync(path.join(outDir, page))) continue;
+    const href = relHref(page, pageOf(to));
+    fs.mkdirSync(path.dirname(path.join(outDir, page)), { recursive: true });
+    fs.writeFileSync(path.join(outDir, page), `<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${html(href)}"><title>Moved</title><p>Moved to <a href="${html(href)}">${html(to)}</a>.</p>`);
+  }
   return { outDir, pages: pages.length, ids: defs.size, reader: Boolean(note) };
 }
 

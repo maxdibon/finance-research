@@ -141,20 +141,20 @@ Statuses: **OPEN** · **DECIDED** (recorded in docs/decisions.md) ·
 | C13 | Sender ID per institution | Each institution messages under its own name (messaging MS-03) |
 | C14 | Current, published work on CBK, payments and lending regulation | The questions are new (lender regulations, NPS Bill 2026); a firm that is already writing on them is already reading them |
 | C15 | Conflicts: acts for a competitor, or for Safaricom or a bank on the other side | A conflict surfaces when we most need the advice |
-| C17 | Accepts our partner rules (docs/rules.md §3): a processing agreement first, data in Kenya or a named transfer, only what each call needs, no standing access, a breach told within 24 hours, yearly evidence, sub-processors named, data returned or deleted at exit, terms an institution must accept known before we sign | Their failure becomes ours: the institution and its regulator hold us to account (FS-713) |
+| C17 | Accepts our partner rules (docs/governance/rules.md §3): a processing agreement first, data in Kenya or a named transfer, only what each call needs, no standing access, a breach told within 24 hours, yearly evidence, sub-processors named, data returned or deleted at exit, terms an institution must accept known before we sign | Their failure becomes ours: the institution and its regulator hold us to account (FS-713) |
 | C16 | Fees suited to the matter | A small lender's licence application cannot carry a top-tier rate |
 
 ## Regulations cited
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-**[LR-11](law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
+**[LR-11](../law/LR-11.md) The National Payment System Act (Cap. 491A).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2011/39/eng@2025-11-04).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | s. 2 | s. 2 | Its definitions; a "payment service provider" includes whoever provides services for sending, receiving, storing or processing payments electronically, and any person that processes or stores data on behalf of such a provider or its users |
 
-**[LR-40](law/LR-40.md) The Advocates Act (Cap. 16).** Regulator: The Law Society of Kenya and the Advocates Disciplinary Tribunal; offences go to the courts. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-04-26, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1989/18/eng@2024-04-26).
+**[LR-40](../law/LR-40.md) The Advocates Act (Cap. 16).** Regulator: The Law Society of Kenya and the Advocates Disciplinary Tribunal; offences go to the courts. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-04-26, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1989/18/eng@2024-04-26).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|

@@ -24,8 +24,8 @@ draft risk guidelines expect one from banks' providers.
 
 **Each deployment's own continuity** (FS-1037): its recovery
 objectives, backups, tests, runbooks and who is called are its §5 in
-[deployments](deployments/README.md); the steps are
-[the runbooks](runbooks/README.md). This plan is the company's.
+[deployments](../deployments/README.md); the steps are
+[the runbooks](../runbooks/README.md). This plan is the company's.
 
 ## Business impact
 
@@ -44,7 +44,7 @@ objectives, backups, tests, runbooks and who is called are its §5 in
 | Role | Deputy | Until |
 |---|---|---|
 | CTIO (architect, build lead) | The system developer | Permanent |
-| Security lead (today the CTIO) | The most senior DevSecOps engineer | A security engineer is hired (docs/operating-model.md) |
+| Security lead (today the CTIO) | The most senior DevSecOps engineer | A security engineer is hired (docs/company/operating-model.md) |
 | DevSecOps on call | The next person in the rota, then the CTIO | The rota reaches five |
 | Project manager | The administrator | Permanent |
 | Compliance and risk officer | The CTIO | The officer is hired |
@@ -106,7 +106,7 @@ Templates for each are written before they are needed.
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-**[LR-17](law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+**[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|

@@ -12,7 +12,7 @@ sources/confidential/
 sources/gatekeepr/
 
 # Vendors' published material (FS-508): copyrighted, fetched again from
-# the vendor, and only summarised in docs/competitors.md.
+# the vendor, and only summarised in docs/market/competitors.md.
 sources/market/
 
 # The owner's handwritten design notes, photographed (FS-790): the source of the

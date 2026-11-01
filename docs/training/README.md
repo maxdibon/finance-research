@@ -17,7 +17,7 @@ Manuals are short, task-based and built from the journeys: each step a
 person takes becomes a task card. They say *how* on the screen; the
 institution's [handbook](../handbook/README.md) says *what and when*, and
 each task card links to the procedure it serves (FS-771). What the design can make obvious needs
-no manual (docs/experience.md).
+no manual (docs/company/experience.md).
 
 ## The manuals
 
@@ -33,7 +33,7 @@ no manual (docs/experience.md).
 | The service desk | Request types, the access runbooks (FS-505) | With the desk's configuration |
 
 Borrowers, guarantors and members get no manual: their pages, messages
-and the voice line explain themselves (docs/experience.md §1).
+and the voice line explain themselves (docs/company/experience.md §1).
 
 ## How a manual is written
 
@@ -51,7 +51,7 @@ and the voice line explain themselves (docs/experience.md §1).
 
 | When | What |
 |---|---|
-| Before go-live | User acceptance with the institution's people doubles as their training (docs/testing.md §4) |
+| Before go-live | User acceptance with the institution's people doubles as their training (docs/delivery/testing.md §4) |
 | Each release | The tasks that changed |
 | Twice a year | A session for each institution, as every support tier promises |
 | A new joiner | Their role's manual, assigned when they join in Odoo (handbook HB-20) |

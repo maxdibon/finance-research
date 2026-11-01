@@ -120,7 +120,7 @@ it lives in is behind [back-office](back-office.md); journeys
    a version Dibon drafts arrives as *proposed*, and only the
    institution's product owner adopts it (FS-981).
 10. **In Roan Capital's words, English and Swahili** (OC-14), to the
-   experience principles (docs/experience.md): the right thing is the
+   experience principles (docs/company/experience.md): the right thing is the
    easy thing.
 
 ## 4 · Screens in R1

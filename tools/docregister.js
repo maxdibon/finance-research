@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// The document register's table (docs/document-register.md; FS-835,
+// The document register's table (docs/governance/document-register.md; FS-835,
 // FS-857), read by its header, so a column added or moved changes this file
 // only, and an older register (at an earlier release's tag) still reads.
 // Every tool that reads or writes the register comes here.
@@ -47,12 +47,20 @@ function parse(text) {
 const row = (o) => `| ${COLUMNS.map(([k]) => String(o[k] ?? '—').replace(/\|/g, '/')).join(' | ')} |`;
 
 // ── each customer's documents ────────────────────────────────────────────
-const MARK = '*Generated from the [document register](../document-register.md) by tools/docregister.js: edit the register, never this table.*';
+const MARK = '*Generated from the [document register](../governance/document-register.md) by tools/docregister.js: edit the register, never this table.*';
 const SHOWN = [['id', 'Id'], ['title', 'Title'], ['summary', 'Summary'], ['kind', 'Kind'], ['status', 'Status'], ['date', 'Date'], ['from', 'From']];
+// FS-1053: the documents in force first; those replaced or withdrawn
+// after, in a table of their own under EARLIER, so the page leads with
+// what is current.
+const EARLIER = '**Earlier versions,** replaced or withdrawn';
+const GONE = ['superseded', 'withdrawn'];
 function table(registerText, party) {
   const mine = parse(registerText).rows.filter((r) => r.party === party);
   if (!mine.length) return 'No documents registered yet.';
-  return [`| ${SHOWN.map(([, n]) => n).join(' | ')} |`, `|${SHOWN.map(() => '---').join('|')}|`, ...mine.map((r) => `| ${SHOWN.map(([k]) => r[k] || '—').join(' | ')} |`)].join('\n');
+  const rows = (list) => [`| ${SHOWN.map(([, n]) => n).join(' | ')} |`, `|${SHOWN.map(() => '---').join('|')}|`, ...list.map((r) => `| ${SHOWN.map(([k]) => r[k] || '—').join(' | ')} |`)].join('\n');
+  const now = mine.filter((r) => !GONE.includes(r.status));
+  const then = mine.filter((r) => GONE.includes(r.status));
+  return [now.length ? rows(now) : 'Nothing in force.', ...(then.length ? [`${EARLIER} (${then.length}):`, rows(then)] : [])].join('\n\n');
 }
 // The party a customer page is for: its front matter's name, before " —".
 const partyOf = (page) => (norm(page).match(/^name: *(.+?) —/m) || [])[1];
@@ -63,7 +71,9 @@ function block(page) {
   const at = t.indexOf(`${MARK}\n\n`);
   if (at < 0) return null;
   const from = at + MARK.length + 2;
-  const end = t.indexOf('\n\n', from);
+  let end = t.indexOf('\n\n', from);
+  // The earlier versions' line and table belong to the block too.
+  if (end >= 0 && t.startsWith(`\n\n${EARLIER}`, end)) end = t.indexOf('\n\n', t.indexOf('\n\n', end + 2) + 2);
   return { from, to: end < 0 ? t.length : end, text: t.slice(from, end < 0 ? t.length : end) };
 }
 // Refreshes one customer page in place; true when it changed.
@@ -72,7 +82,7 @@ function refresh(root, id) {
   const raw = fs.readFileSync(p, 'utf8');
   const b = block(raw);
   if (!b) return false;
-  const want = table(fs.readFileSync(path.join(root, 'docs', 'document-register.md'), 'utf8'), partyOf(raw));
+  const want = table(fs.readFileSync(path.join(root, 'docs', 'governance', 'document-register.md'), 'utf8'), partyOf(raw));
   if (b.text === want) return false;
   const t = norm(raw);
   const out = t.slice(0, b.from) + want + t.slice(b.to);

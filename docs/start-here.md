@@ -34,7 +34,7 @@ decisions follow from it.
 
 1. Read [overview.md](overview.md), then
    [architecture.md](architecture/README.md) §2, §3 and §6.
-2. Read [delivery-plan.md](delivery-plan.md): what we build now (R1,
+2. Read [delivery-plan.md](delivery/delivery-plan.md): what we build now (R1,
    Roan Capital's pilot), the v1 rule, and the definition of done.
 3. Read [customers.md](customers.md) and the delivery map in
    [customers/roan-capital.md](customers/roan-capital.md).
@@ -47,12 +47,12 @@ decisions follow from it.
 
 | Role | Read next | Why |
 |---|---|---|
-| Builder (developer, Odoo engineer) | The modules R1 touches: [mfi](modules/mfi.md), [mandates](modules/mandates.md), [identity](modules/identity.md), [core](modules/core.md), [access](modules/access.md), [platform-security](modules/platform-security.md); then the build specs in [specs/](specs/README.md), the [journeys](journeys/README.md) and [testing.md](testing.md) | Each module's §3 is the list of capabilities, with status and phase; a spec says how one is built; a journey is what a person goes through, and each of its steps and failures is an acceptance item to test |
-| DevSecOps | [platform-security](modules/platform-security.md) (recovery tiers, incident commitments), [business-continuity.md](business-continuity.md), [operating-model.md](operating-model.md) | The commitments we make to customers are kept by the rota |
-| Customer experience and project management | [onboarding.md](onboarding.md), [customers.md](customers.md), [approval-pack.md](approval-pack.md) | What a customer needs to go live, and what it files with its regulator |
-| Odoo implementation | [business-suite](modules/business-suite.md), [sme-recon](modules/sme-recon.md), [bank-channel.md](bank-channel.md) | SME Recon and the bank channel are R3 |
-| Compliance and risk | [rules.md](rules.md), [legal-questions.md](legal-questions.md), [regulation.md](regulation.md), [compliance.md](compliance.md), [privacy.md](privacy.md), [financial-crime](modules/financial-crime.md), [assurance.md](assurance.md) | The law register, our own licences, and what the institution cannot hand to us |
-| Sales and partnerships | [marketing/portfolio.md](marketing/portfolio.md), [partners.md](partners.md), [competitors.md](competitors.md) | What we say outside, and to whom |
+| Builder (developer, Odoo engineer) | The modules R1 touches: [mfi](modules/mfi.md), [mandates](modules/mandates.md), [identity](modules/identity.md), [core](modules/core.md), [access](modules/access.md), [platform-security](modules/platform-security.md); then the build specs in [specs/](specs/README.md), the [journeys](journeys/README.md) and [testing.md](delivery/testing.md) | Each module's §3 is the list of capabilities, with status and phase; a spec says how one is built; a journey is what a person goes through, and each of its steps and failures is an acceptance item to test |
+| DevSecOps | [platform-security](modules/platform-security.md) (recovery tiers, incident commitments), [business-continuity.md](governance/business-continuity.md), [operating-model.md](company/operating-model.md) | The commitments we make to customers are kept by the rota |
+| Customer experience and project management | [onboarding.md](delivery/onboarding.md), [customers.md](customers.md), [approval-pack.md](governance/approval-pack.md) | What a customer needs to go live, and what it files with its regulator |
+| Odoo implementation | [business-suite](modules/business-suite.md), [sme-recon](modules/sme-recon.md), [bank-channel.md](market/bank-channel.md) | SME Recon and the bank channel are R3 |
+| Compliance and risk | [rules.md](governance/rules.md), [legal-questions.md](governance/legal-questions.md), [regulation.md](governance/regulation.md), [compliance.md](governance/compliance.md), [privacy.md](governance/privacy.md), [financial-crime](modules/financial-crime.md), [assurance.md](market/assurance.md) | The law register, our own licences, and what the institution cannot hand to us |
+| Sales and partnerships | [marketing/portfolio.md](marketing/portfolio.md), [partners.md](market/partners.md), [competitors.md](market/competitors.md) | What we say outside, and to whom |
 
 ## The rules that matter most
 
@@ -80,7 +80,7 @@ decisions follow from it.
 - **Nothing needs reading.** Anything a person must confirm or be told is
   also available by voice or as numbers (omni-channel, FS-637).
 - **Delightful to use.** The right thing is the easy thing; we draw,
-  test with real people, and measure (docs/experience.md, FS-660).
+  test with real people, and measure (docs/company/experience.md, FS-660).
 
 ## Where each kind of fact lives
 
@@ -166,8 +166,8 @@ approves the document.
 
 | What | Statuses, in order | Kinds, and examples |
 |---|---|---|
-| Documents kept current | **living** (kept true as things change; never finished) | Kinds: `register`, `index`, `overview`, `plan`, `delivery`, `product`, `shared-service`, `channel`, `checklist`, `guide`, `service`, `law`. E.g. docs/delivery-plan.md, docs/document-register.md, this page |
-| Documents that are agreed | **draft** (read it, but do not rely on it yet) · **agreed** (the approving role's go, its code owner in ways-of-working.md §2) · **superseded** (replaced by a later document it names; kept for the record) | Kinds: `architecture`, `policy`, `handbook`, `manual`, `partner-model`, `marketing`, `review` (a component reviewed at a date, superseded by the next review, FS-973). E.g. docs/rules.md (agreed), docs/architecture/README.md (draft) |
+| Documents kept current | **living** (kept true as things change; never finished) | Kinds: `register`, `index`, `overview`, `plan`, `delivery`, `product`, `shared-service`, `channel`, `checklist`, `guide`, `service`, `law`. E.g. docs/delivery/delivery-plan.md, docs/governance/document-register.md, this page |
+| Documents that are agreed | **draft** (read it, but do not rely on it yet) · **agreed** (the approving role's go, its code owner in ways-of-working.md §2) · **superseded** (replaced by a later document it names; kept for the record) | Kinds: `architecture`, `policy`, `handbook`, `manual`, `partner-model`, `marketing`, `review` (a component reviewed at a date, superseded by the next review, FS-973). E.g. docs/governance/rules.md (agreed), docs/architecture/README.md (draft) |
 | Outreach letters | **draft** · **sent** (it keeps its own version, as it travels alone) · **answered** (the answer recorded where it belongs) · **withdrawn** (not sent after all, or taken back) | E.g. docs/outreach/liquid-partner-request.md (draft), docs/outreach/api-requests.md (withdrawn) |
 | Product versions | **proposed** (drafted by Dibon, for the institution to adopt or reject; FS-981) · **draft** (the institution's own, written or adopted by it; private) · **awaiting-approval** (the institution's own) · **awaiting-cbk** (the Central Bank of Kenya's, where the law asks; still private) · **active** (loans are written on it, and its terms are public: decisions, FS-803) · **retired** (no new loans; the loans made under it keep its terms) | E.g. docs/products/roan-capital-30-day-loan-v1.md (draft) |
 | Specs | **draft** · **agreed** (the owner's go; from then on changed only through change enablement) · **building** (code is being written against it) · **built** (its acceptance tests pass) | E.g. docs/specs/lender-rules.md (draft) |

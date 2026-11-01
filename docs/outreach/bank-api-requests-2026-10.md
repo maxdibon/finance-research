@@ -48,7 +48,7 @@ every letter.
   which writes to NCBA separately under its own relationship
   ([bank-access-request.md](bank-access-request.md)). The letter does not
   name it.
-- **After sending:** each bank's stage in [partners](../partners.md) moves
+- **After sending:** each bank's stage in [partners](../market/partners.md) moves
   to Contacted, with the date; each answer goes under that bank, and the
   channel chosen into rails RL-07.
 

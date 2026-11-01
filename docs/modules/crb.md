@@ -196,7 +196,7 @@ FS-004, FS-187, FS-188, FS-189, FS-191.
 ## 12 · Sources
 
 - REVIEW.md FS-004, FS-005, FS-019, FS-020, FS-022, FS-447.
-- docs/regulation.md LR-03 (reg 33), LR-06 (reg 2).
+- docs/governance/regulation.md LR-03 (reg 33), LR-06 (reg 2).
 - Kapu Pay MFI PRD section, Draft v0.2, Jun 2026 — §6 (CRB as fast-follow).
 - docs/modules/mfi.md MF-19, docs/modules/sacco.md SC-18.
 - GateKeepr STANDARDS.md §6.1 (the reason exists before the lookup) —
