@@ -1502,7 +1502,8 @@ test('words: session start and end keep a personal handover, in a pretend reposi
     const mine = fs.readFileSync(path.join(work, 'handoffs', 'bflorah.md'), 'utf8');
     assert.match(mine, /^# Betty · personal handover/m);
     assert.match(mine, /^## Preferences$/m);
-    assert.ok(mine.includes(`| ${id} | Betty has a thing to do |`));
+    // FS-1053: Critical, High and waiting rows are listed; a new Medium row is counted.
+    assert.ok(id && /And \d+ more, Medium or Low/.test(mine), mine);
     fs.writeFileSync(path.join(work, 'handoffs', 'bflorah.md'), mine.replace('To be written at the end of the first session.', 'Halfway through the thing.'));
     run('git', ['add', '-A']);
     run('git', ['commit', '-qm', `${id}: the thing, halfway`]);

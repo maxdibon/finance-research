@@ -239,6 +239,13 @@ To be written at the end of the first session.
   const order = ['Critical', 'High', 'Medium', 'Low'];
   mine.sort((a, b) => order.indexOf(a.criticality) - order.indexOf(b.criticality) || a.n - b.n);
   const cell = (s) => s.replace(/\|/g, '/').replace(/\*\*/g, '').slice(0, 110);
+  // FS-1053: what needs the person now: Critical and High, and anything
+  // waiting on their word (a proposal in chat, a decision to make); the rest
+  // counted, on the Board and the Review page.
+  const latest = (n) => { const m = [...(n || '').matchAll(/\*\*\d{4}-\d{2}-\d{2}[^*]*:\*\*/g)]; return m.length ? n.slice(m[m.length - 1].index) : (n || ''); };
+  const waits = (r) => /proposal in chat/i.test(latest(r.notes)) || /^Decide\b/.test(r.point);
+  const shown = mine.filter((r) => ['Critical', 'High'].includes(r.criticality) || waits(r));
+  const rest = mine.length - shown.length;
   const work = started();
   const claudes = started('claude');
   const gen = [
@@ -246,9 +253,10 @@ To be written at the end of the first session.
     '',
     '*Made by dibon session start and end, from the register and the branches: never edit it by hand.*',
     '',
-    `### Rows with ${me} (${mine.length})`,
+    `### Rows with ${me}: Critical, High, and waiting on ${me}'s word (${shown.length} of ${mine.length})`,
     '',
-    ...(mine.length ? ['| Row | Point | Criticality |', '|---|---|---|', ...mine.map((r) => `| ${r.id} | ${cell(r.point)} | ${r.criticality} |`)] : ['None.']),
+    ...(shown.length ? ['| Row | Point | Criticality |', '|---|---|---|', ...shown.map((r) => `| ${r.id} | ${cell(r.point)} | ${r.criticality}${waits(r) ? ', waiting' : ''} |`)] : ['None.']),
+    ...(rest ? ['', `And ${rest} more, Medium or Low: the Board, filtered by name, or the Review page.`] : []),
     '',
     '### Work started',
     '',
@@ -950,9 +958,12 @@ const word = {
       const below = team.split('\n---\n').slice(1).join('\n---\n') || team;
       const out = path.join(ROOT, 'build', 'session', `${handle}.md`);
       fs.mkdirSync(path.dirname(out), { recursive: true });
-      fs.writeFileSync(out, `${below.trim()}\n\n---\n\n${read(file).trim()}\n`);
-      say(`Your session, ${me}: the team's handover, then yours (${file}), together in build/session/${handle}.md.`);
-      say('Paste it into a new session, or tell your Claude: read HANDOFF.md, then ' + file + '.');
+      // FS-1053: the traps, which were the handoff's own section, come with it.
+      const trapsFile = 'docs/service-management/traps.md';
+      const traps = fs.existsSync(path.join(ROOT, trapsFile)) ? read(trapsFile).replace(/^---\n[\s\S]*?\n---\n/, '').trim() : '';
+      fs.writeFileSync(out, `${below.trim()}\n\n---\n\n${traps ? `${traps}\n\n---\n\n` : ''}${read(file).trim()}\n`);
+      say(`Your session, ${me}: the team's handover, the traps, then yours (${file}), together in build/session/${handle}.md.`);
+      say('Paste it into a new session, or tell your Claude: read HANDOFF.md, docs/service-management/traps.md, then ' + file + '.');
       return word.status();
     }
     const u = unsaved().filter((x) => x.code !== '??' && x.file !== file);
