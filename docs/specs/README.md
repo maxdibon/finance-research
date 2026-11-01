@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053]
+last_reviewed: 2026-11-01
 ---
 
 # Specifications
@@ -58,30 +58,53 @@ the component (`access-keycloak`); the component's id does not.
 
 ## The specs
 
+By layer, as [the instance](../architecture/instance.md) is drawn (FS-1053).
+
+**Lending:** what a loan is and how it is decided.
+
 | Spec | Type | What it covers | Implements | Release |
 |---|---|---|---|---|
-| [approval-engine](approval-engine.md) | Build | Approval chains, decisions, step-up, and the hand-off to Fineract | mandates | R1 |
-| [lender-rules](lender-rules.md) | Build | The CBK lender regulations applied to each loan: the arrears cap, repayment order, pricing, classification, conduct | mfi | R1 |
-| [product-versions](product-versions.md) | Build | The product version: every term of a product in one signed document, in a vocabulary; drafted by the institution, approved by two, applied to the core; what every system prices from | mfi, sacco | R1 |
-| [kapu-core-fineract](kapu-core-fineract.md) | Component | Apache Fineract as Kapu Core: version, features, settings, contracts, restructuring, end of day | core | R1 |
-| [end-of-day-runner](end-of-day-runner.md) | Build | The nightly close: checks first, then Fineract's close of business, then ours, watched and escalated | core, recon-observability | R1 |
-| [observability-grafana](observability-grafana.md) | Component | Grafana and its stack: metrics, logs, dashboards, alerts, and the on-call rota that takes a phone call | recon-observability | R1 |
-| [messaging](messaging.md) | Build | The messaging service and the R1 template catalogue: what each event sends, to whom, with which fields, and who approves the words | messaging | R1 |
-| [event-bus-kafka](event-bus-kafka.md) | Component | Kafka as the event bus: the CloudEvents envelope, signing and the audit chain, one catalogue of event names, delivery rules | recon-observability | R1 |
-| [access-keycloak](access-keycloak.md) | Component | Keycloak as access: four realms, levels of authentication and step-up, roles granted by mandate, sign-in for every service | access | R1 |
-| [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
-| [github](github.md) | Component | GitHub: the organisation, teams and roles, rulesets on main, code owners, push rulesets, Actions with runners in Kenya, secrets from OpenBao, deploys by pull request and the change calendar, planning in Projects; plans checked | platform-security | R1 |
-| [recon](recon.md) | Build | The reconciliation platform: every movement accounted for by count and amount, tracing, auto-correction, and three ledgers that must agree (the master, a shadow, an independent companion) | recon-observability | R1 |
-| [back-office](back-office.md) | Build | The back office behind one interface: the jobs our services ask of the ERP, one adapter per ERP, the contract tests, how an institution is ported from one ERP to another, and how more than one edition or version runs | business-suite | R1 |
-| [staff-workspace](staff-workspace.md) | Build | The staff workspace: an institution's staff do their daily lending in our screens inside Odoo, over the lending service; Fineract stays the core, the approval engine decides | business-suite | R1 |
 | [lending-service](lending-service.md) | Build | The Kapu lending service: one thin service for MFI and Sacco; what Fineract, Odoo and this service each do; the only writer to the core, through the core adapter; each regulator's rules beside it | mfi, sacco | R1 |
+| [product-versions](product-versions.md) | Build | The product version: every term of a product in one signed document, in a vocabulary; drafted by the institution, approved by two, applied to the core; what every system prices from | mfi, sacco | R1 |
+| [lender-rules](lender-rules.md) | Build | The CBK lender regulations applied to each loan: the arrears cap, repayment order, pricing, classification, conduct | mfi | R1 |
+| [approval-engine](approval-engine.md) | Build | Approval chains, decisions, step-up, and the hand-off to Fineract | mandates | R1 |
 | [lending-partners](lending-partners.md) | Build | Partners: the record in two places, relationships with their own limits, the lifecycle, one intake for their data with a consent gate, signed events back; inside the lending service | mfi | phase 2 |
 | [deposits-service](deposits-service.md) | Build | The Kapu deposits service: deposit accounts in native mode, each deposit regulator's rules beside it; designed now, built for the first native deposit-taker | core, sacco | R4 |
 | [kapu-console](kapu-console.md) | Build | The Kapu Console: approvals, the read-only fallback and products read-only, outside Odoo | mandates | R1 |
+| [staff-workspace](staff-workspace.md) | Build | The staff workspace: an institution's staff do their daily lending in our screens inside Odoo, over the lending service; Fineract stays the core, the approval engine decides | business-suite | R1 |
+
+**The ledger and the night:** what is recorded, closed and proved.
+
+| Spec | Type | What it covers | Implements | Release |
+|---|---|---|---|---|
+| [kapu-core-fineract](kapu-core-fineract.md) | Component | Apache Fineract as Kapu Core: version, features, settings, contracts, restructuring, end of day | core | R1 |
+| [end-of-day-runner](end-of-day-runner.md) | Build | The nightly close: checks first, then Fineract's close of business, then ours, watched and escalated | core, recon-observability | R1 |
+| [recon](recon.md) | Build | The reconciliation platform: every movement accounted for by count and amount, tracing, auto-correction, and three ledgers that must agree (the master, a shadow, an independent companion) | recon-observability | R1 |
+
+**The back office:** the ERP behind its gateway.
+
+| Spec | Type | What it covers | Implements | Release |
+|---|---|---|---|---|
+| [back-office](back-office.md) | Build | The back office behind one interface: the jobs our services ask of the ERP, one adapter per ERP, the contract tests, how an institution is ported from one ERP to another, and how more than one edition or version runs | business-suite | R1 |
 | [olp](olp.md) | Component | OLP, Dibon's Odoo platform, as Financial Services uses it: which sites run on it, and what Financial Services needs from it (N1 to N14); OLP's own design is OLP's | business-suite | R2 |
 
-**To write, in the order R1 needs them:** odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries);
-rails (M-Pesa and bank instructions, their lifecycle and signing).
+**The platform:** what every service stands on.
+
+| Spec | Type | What it covers | Implements | Release |
+|---|---|---|---|---|
+| [access-keycloak](access-keycloak.md) | Component | Keycloak as access: four realms, levels of authentication and step-up, roles granted by mandate, sign-in for every service | access | R1 |
+| [event-bus-kafka](event-bus-kafka.md) | Component | Kafka as the event bus: the CloudEvents envelope, signing and the audit chain, one catalogue of event names, delivery rules | recon-observability | R1 |
+| [messaging](messaging.md) | Build | The messaging service and the R1 template catalogue: what each event sends, to whom, with which fields, and who approves the words | messaging | R1 |
+| [observability-grafana](observability-grafana.md) | Component | Grafana and its stack: metrics, logs, dashboards, alerts, and the on-call rota that takes a phone call | recon-observability | R1 |
+
+**Our own tools:** how we work.
+
+| Spec | Type | What it covers | Implements | Release |
+|---|---|---|---|---|
+| [github](github.md) | Component | GitHub: the organisation, teams and roles, rulesets on main, code owners, push rulesets, Actions with runners in Kenya, secrets from OpenBao, deploys by pull request and the change calendar, planning in Projects; plans checked | platform-security | R1 |
+| [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
+
+**To write, in the order R1 needs them:** rails (M-Pesa and bank instructions, their lifecycle and signing); customer pages (consents, signing, statements, without the app); the vault (signed documents and their evidence, identity ID-15); odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries).
 
 ## How they connect
 
