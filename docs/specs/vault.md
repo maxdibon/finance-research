@@ -12,7 +12,7 @@ depends_on: [access-keycloak, event-bus-kafka]
 used_by: [lending-service, back-office, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-491, FS-500, FS-525, FS-527, FS-532, FS-537, FS-1022, FS-1069, FS-1070, FS-1071, FS-1072]
+review_ids: [FS-491, FS-500, FS-525, FS-527, FS-532, FS-537, FS-1022, FS-1069, FS-1070, FS-1071, FS-1072, FS-1073]
 last_reviewed: 2026-11-01
 ---
 
@@ -161,8 +161,8 @@ started, and the document is kept.
 | D | The document's own date | It knows: the date is on the record |
 | T | The transaction, or the loan's closing | `kapu.core.loan.closed` on the bus |
 | E | The end of employment | `kapu.backoffice.staff.left`, from the staff records in the back office |
-| R | The end of the customer relationship | **No event yet** (§13, question 3) |
-| Twelve years from default | A secured loan written off or sent to recovery (docs/documents.md) | `kapu.mfi.collateral.recovery.opened`; a write-off has no event yet (§13, question 3) |
+| R | The end of the customer relationship: nothing live for the period the institution set at onboarding (OB-COM-26) | `kapu.mfi.relationship.ended` (or `kapu.sacco`), from the lending service; `.relationship.resumed` stops the clock if they return (lending-service rule 9, FS-1073) |
+| Twelve years from default | A secured loan written off or sent to recovery (docs/documents.md) | `kapu.mfi.collateral.recovery.opened`, or `kapu.core.loan.written_off` |
 
 ## 4 · States
 
@@ -301,15 +301,6 @@ events: they go to the access log (§7).
    is the vault's own, and weaker (a question for Liquid, FS-048).
 2. **How long a link lives:** proposed 15 minutes and one use; the
    quarantine's 7 days likewise proposed.
-3. **Who says a customer relationship has ended?** Most identity and
-   KYC documents are kept seven years from the end of the relationship
-   (clock R), but nothing in the design announces that end: a customer
-   may close their last loan and come back next year. Proposed: the
-   relationship ends when the person has had no live loan, account or
-   guarantee for a period the institution sets (a year, say), declared
-   by the lending service as an event; until then the clock does not
-   start. The same for a write-off, which needs its own event before
-   the twelve-year clock can start.
 
 ## Regulations cited
 
