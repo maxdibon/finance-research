@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033]
-last_reviewed: 2026-10-27
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056]
+last_reviewed: 2026-11-01
 ---
 
 # Platform architecture — who holds what
@@ -58,8 +58,8 @@ record of architecture decisions.
 | Layer | Contents |
 |---|---|
 | **Channels** | omni-channel — mobile apps, internet banking, USSD, the field-officer app |
-| **Products** | collect · gateway · escrow · core (Kapu Core: hosted core banking on Apache Fineract) · mfi · sacco (deposit-taking and credit-only) · sme-recon (Odoo / Zoho wrapper) · business-suite (Odoo or Zoho, implemented by Dibon) |
-| **Shared services** | recon-observability · mandates (signing and debit) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification) · messaging (SMS, WhatsApp, Telegram, app; transactional and campaigns) · rails · insights · financial-crime (fraud, AML/CFT, transaction rules, reporting) · decisioning (appraisal, scores, risk classes) · platform-security |
+| **Products** | collect · gateway · escrow · core (Kapu Core: hosted core banking on Apache Fineract) · mfi and sacco (deposit-taking and credit-only), both run by the lending service, with the deposits service where a Sacco takes deposits · sme-recon (wrappers for a business's own Odoo, Zoho or QuickBooks Online, SR-15) · business-suite (Odoo or Zoho, implemented by Dibon) |
+| **Shared services** | the lending service and the deposits service, the only writers to the core, through the core adapter · recon-observability · mandates (signing and debit, run by the approval engine) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification, and the document vault) · messaging (SMS, WhatsApp, app; Telegram later; transactional and campaigns; Flowza for conversations) · rails · insights · financial-crime (fraud, AML/CFT, transaction rules, reporting) · decisioning (appraisal, scores, risk classes) · the back-office gateway · the end-of-day runner · platform-security |
 | **Systems of record** | the institution's core, or Kapu Core · Odoo · recon engine — §2 |
 
 ```
@@ -74,9 +74,10 @@ record of architecture decisions.
  +--------------------------------------------------------------------+
                                   |
  +--------------------------------------------------------------------+
- | SHARED       recon-observability . mandates . crb . access .       |
- | SERVICES     identity . messaging . rails . insights .             |
- |              financial-crime . decisioning . platform-security     |
+ | SHARED       lending . deposits . recon-observability . mandates . |
+ | SERVICES     crb . access . identity . messaging . rails .         |
+ |              insights . financial-crime . decisioning .            |
+ |              back-office gateway . end-of-day . platform-security  |
  +--------------------------------------------------------------------+
           |                       |                        |
  +------------------+   +-------------------+   +--------------------+
@@ -95,52 +96,13 @@ FS-984. People sign in through access; staff work in the staff workspace
 inside Odoo, or the Kapu Console when Odoo is down; borrowers and members
 on their own pages. Every screen asks the lending service, or the
 deposits service, as the person; those two alone write to the core,
-through one adapter; decisions are the approval engine's; Odoo is reached
-through the back-office gateway; every change goes on the event bus, and
-recon, observability and the vault check and keep it
-(docs/specs/lending-service.md, deposits-service.md, kapu-console.md,
-staff-workspace.md, back-office.md).
-
-```
-  PEOPLE      Institution staff        Borrowers, guarantors, members         Dibon engineers
-                     |                              |                                 |
-            +--------v------------------------------v---------------------------------v----------+
-  SIGN-IN   | ACCESS                                                                             |
-            | signs in, steps up: staff by password and key; customers by a code to              |
-            | their phone; Dibon's engineers by hardware keys, never into a product              |
-            | [keycloak]                                                                         |
-            +------------------------------------------------------------------------------------+
-                    |                  |                   |                          |
-            +-------v--------+ +-------v--------+ +--------v--------+        +--------v--------+
-  SCREENS   | STAFF WORKSPACE| | KAPU CONSOLE   | | CUSTOMER PAGES  |        | OBSERVABILITY   |
-            | daily lending, | | approvals,     | | consents, sign, |        | dashboards,     |
-            | tasks, products| | fallback views | | statements      |        | on-call         |
-            | [odoo]         | | [kapu_service] | | [kapu_service]  |        | [grafana]       |
-            +-------+--------+ +-------+--------+ +--------+--------+        +--------+--------+
-                    | as the person    |                   | as the person     never a product
-                    +------------------+-------------------+
-                                       v
-            +--------------------------v--------------------------------+   +----------------------+
-  CORE      | LENDING SERVICE                                           |   | DEPOSITS SERVICE     |
-  SERVICES  | lends: loans, collateral, guarantors, product versions;   |<--| keeps accounts;      |
-            | LENDER RULES and SACCO RULES beside it                    |   | regulators' rules    |
-            | [kapu_service]                                            |   | [kapu_service]       |
-            +-----------------------------------------------------------+   +------------+---------+
-                     | decisions    | payouts   | messages         |  |                  |
-                     |              |           |                  |  +--- postings -----+
-                     v              v           v                  v signatures          v
-            +-----------------+ +-------+ +-----------+ +---------------------+ +------------------+
-  SERVICES  | APPROVAL ENGINE | | RAILS | | MESSAGING | | BACK-OFFICE GATEWAY | | CORE ADAPTER     |
-            | decides         | | pays  | | sends     | | translates, to ODOO | | posts, to KAPU   |
-            | [kapu_service]  | |       | |           | | [kapu_service]      | | CORE or theirs   |
-            +-----------------+ +-------+ +-----------+ +---------------------+ +------------------+
-  EVENTS    ===== EVENT BUS [kafka]: every change, signed, in order ==============================
-                 |                          |                             |
-            +----v-------------+  +---------v----------+  +---------------v--+
-  CHECKS    | RECONCILIATION   |  | OBSERVABILITY      |  | VAULT            |
-            | three ledgers    |  | metrics, alerts    |  | signed records   |
-            +------------------+  +--------------------+  +------------------+
-```
+through the core adapter; decisions are the approval engine's; Odoo is
+reached through the back-office gateway; every change goes on the event
+bus, and recon, observability and the vault check and keep it. **The
+picture is drawn twice, and kept in those two places only** (FS-1053):
+[the instance](instance.md), box by box as R1 deploys it, and the
+[lending service](../specs/lending-service.md) §1, from the lending
+service's side.
 
 ## 2 · Three authorities
 
@@ -214,22 +176,37 @@ who owns an account.
 ### Every store: what it holds, and how it is protected
 
 The three authorities above, and every other store, in one place
-(FS-636). **The baseline for every store:** inside the institution's own
+(FS-636). **These are the stores [the instance](instance.md) counts**,
+in "Stores and namespaces": that page says where each runs, this table
+what each holds and how it is protected. A store added to one is added
+to the other in the same pass (FS-1053).
+
+**The baseline for every store:** inside the institution's own
 instance (FS-491); reached only through its service's API; encrypted at
-rest (platform-security SE-08) and in transit (SE-05, SE-09); backed up
-to two Kenyan sites (SE-10); retention set by docs/documents.md and
-docs/privacy.md. The last column adds what goes beyond it.
+rest (platform-security SE-08; for the databases, how is still to be
+decided, as community PostgreSQL has no encryption of its own, FS-1051)
+and in transit (SE-05, SE-09); backed up to two Kenyan sites (SE-10);
+retention set by docs/documents.md and docs/privacy.md. The last column
+adds what goes beyond it.
 
 | Store | Holds | Never holds | Class | Beyond the baseline |
 |---|---|---|---|---|
-| Funds ledger (the core, or Kapu Core) | Accounts, balances, postings, loans; in native mode, the institution's customers and their KYC | Contact details beyond its need, tickets, matching state | Confidential; ID numbers Restricted | One writer, the product's service account (docs/specs/kapu-core-fineract.md §8); ID numbers encrypted field by field (SE-27, in R1) |
-| Odoo | Parties no core holds, obligations, tickets, contract records, HR | Balances, rail events, documents with personal data | Confidential | Staff sign in through Keycloak (AC-02) |
-| Recon engine | Rail and bank events, statements, matches, exceptions | Parties, obligations | Confidential | Append-only; each role sees only its fields (RO-19) |
+| Funds ledger (the core, or Kapu Core) | Accounts, balances, postings, loans; in native mode, the institution's customers and their KYC | Contact details beyond its need, tickets, matching state | Confidential; ID numbers Restricted | Written only by the lending service, and in native mode the deposits service, through the core adapter; no staff role can move a loan (kapu-core-fineract §4, §5; FS-1056); ID numbers encrypted field by field (SE-27, in R1) |
+| Odoo | Parties no core holds, obligations, tickets, contract records, HR | Balances, rail events, documents with personal data | Confidential | Staff sign in through Keycloak (AC-02); reached by our services only through the back-office gateway (§8) |
+| Recon engine | Rail and bank events, statements, matches, exceptions; the shadow ledger, in memory, rebuilt from the bus | Parties, obligations | Confidential | Append-only; each role sees only its fields (RO-19) |
+| Companion ledger (recon) | Its own postings and totals, computed from the rail events and the product's terms | Anything copied from the master | Confidential | Its own database, apart from recon's; account references only (recon §11, FS-793) |
 | Keycloak (access) | Logins, hashed credentials, roles, devices, step-ups | KYC, balances | Restricted | Security events kept (SE-18); engineers on hardware keys (SE-26) |
+| Lending service | Applications, collateral records and their evidence, overrides, product versions, partners | The loan, its schedule and balances, which are the core's | Confidential | Its events from an outbox (lending-service §8) |
+| Deposits service | Account records beyond the core's, in native mode | Balances, which are the core's | Confidential | As the regulator requires, then seven years (deposits-service §7) |
+| Lender rules | Cap episodes, classifications, collection stages; CBK approvals, variation notices and acceptances; complaints clocks | The loan, which it reads | Confidential | Recomputed independently by the companion (lender-rules §5) |
+| Back-office gateway | The reference map (our reference, the ERP's id, the edition); the outbox and the delivery queue | The ERP's records | Confidential | Identifiers only (back-office §6) |
+| End-of-day runner | Each night's record: every check's result, step times, holds, notices; overrides, with both reasons | Postings, which are the core's | Internal; overrides Confidential | Seven years, as evidence of the close (end-of-day-runner §9) |
 | Document vault (identity) | Every document carrying personal data; verification evidence | Balances | Confidential; ID images Restricted | Reached only by links on our own network (§7); a bulk export needs its own permission |
+| Object storage | The vault's files, and Odoo's filestore | Anything not reached through the vault or Odoo | As its files | Reached only by the vault and Odoo, never directly |
 | Approval engine | Requests, decisions, mandate rules | The subject's record, which it refers to by id | Confidential | Every decision re-authenticated (mandates MD-10); append-only |
 | Decisioning | The decision record: inputs, version and score at the time | The customer file | Confidential | Profiling under privacy PR-18 |
-| Messaging | What was sent, to which number, delivery, preferences, quiet hours | Documents, balances, ID numbers (§7) | Confidential | Templates approved before use |
+| Messaging | What was sent, to whom, from which template and version, and its delivery; one-time codes as hashes only | Documents, balances, ID numbers (§7); consent and channel choices, which are Odoo's (MS-11) | Confidential | Templates approved before use |
+| Flowza | Two-way conversations, each linked to its Helpdesk ticket | Templates, consent and the message log, which are messaging's | Confidential | Hosted in Kenya per institution before customers' data passes through it (messaging §5, FS-664 to FS-666) |
 | Financial crime | Screening results, cases, draft reports | The decision to file, which is the institution's | Confidential | Cases seen only by the institution's reporting roles |
 | Rails | Instructions and normalised rail events | Credentials | Confidential | Instructions signed, with their content hash (RL-01); credentials in OpenBao (RL-12) |
 | Event bus | Events in transit, kept for replay | Anything not in an event | Confidential | Every event signed (RO-23) |
@@ -388,34 +365,37 @@ Matching rules that hold on every rail:
 ## 6 · Shared services and the bus
 
 ```
-  PRODUCTS AND CHANNELS
-  collect . gateway . escrow . core . mfi . sacco . sme-recon . business-suite . omni-channel
-        |  requests (API, synchronous)               ^  every state change, a signed event
+  CHANNELS AND PRODUCTS (§1)
+        |  requests (API, synchronous)               ^  every state change, once, a signed event
         v                                            |  (traceability)
   +------------------------------------------------------------------------------------------------+
-  |                             EVENT BUS: Kafka, CloudEvents envelopes                            |
+  |                            EVENT BUS: Kafka, CloudEvents envelopes                             |
   +------------------------------------------------------------------------------------------------+
-             |                        |                        |                        |
-  +---------------------+  +---------------------+  +---------------------+  +---------------------+
-  | MANDATES            |  | IDENTITY            |  | MESSAGING           |  | RAILS               |
-  | approvals, quorum,  |  | KYC, NPDM, BRS,     |  | SMS, WhatsApp,      |  | M-Pesa, Airtel,     |
-  | approval by email,  |  | SIM binding, tiers, |  | email, one-time     |  | T-Kash, banks;      |
-  | debit mandates      |  | the document vault  |  | codes, quiet hours  |  | one instruction     |
-  |                     |  |                     |  |                     |  | per payout          |
-  +---------------------+  +---------------------+  +---------------------+  +---------------------+
-             |                        |                        |                        |
-  +---------------------+  +---------------------+  +---------------------+  +---------------------+
-  | FINANCIAL CRIME     |  | RECON-OBSERVABILITY |  | DECISIONING         |  | CRB                 |
-  | screening, the      |  | matching, traces,   |  | appraisal, scores,  |  | bureau lookups and  |
-  | transaction rules,  |  | float, monitoring   |  | risk classes; rules |  | submissions         |
-  | cases, reports      |  |                     |  | now, models later   |  |                     |
-  +---------------------+  +---------------------+  +---------------------+  +---------------------+
-             |                        |                        |                        |
+                 |                               |                               |
+  +------------------------------+ +------------------------------+ +------------------------------+
+  | LENDING AND DEPOSITS         | | DECISIONS                    | | MONEY AND MESSAGES           |
+  | lending service: loans,      | | approval engine: approvals,  | | rails: M-Pesa, Airtel,       |
+  | collateral, product          | | quorum, mandates; never by   | | T-Kash, banks; one           |
+  | versions, partners; lender   | | reply                        | | instruction per payout       |
+  | rules beside it              | | decisioning: appraisal,      | | messaging: SMS, WhatsApp,    |
+  | deposits service: accounts   | | scores, risk classes         | | email, one-time codes,       |
+  | core adapter: the only way   | | financial crime: screening,  | | quiet hours                  |
+  | to the core                  | | rules, cases, reports        | | Flowza: conversations,       |
+  |                              | | crb: lookups, submissions    | | through messaging            |
+  +------------------------------+ +------------------------------+ +------------------------------+
+  +------------------------------+ +------------------------------+ +------------------------------+
+  | PEOPLE AND DOCUMENTS         | | BACK OFFICE AND THE NIGHT    | | CHECKS                       |
+  | access: every login, role    | | back-office gateway: the     | | reconciliation: matches;     |
+  | and step-up [keycloak]       | | ERP's jobs, one adapter      | | the shadow and the           |
+  | identity: KYC, NPDM, BRS,    | | per ERP (§8)                 | | companion (§2)               |
+  | SIM binding, tiers           | | end-of-day runner: closes    | | observability: metrics,      |
+  | vault: documents with        | | the day, holds it if a       | | logs, traces [grafana]       |
+  | personal data, signed        | | check fails                  | | insights: reads, never       |
+  |                              | |                              | | writes                       |
+  +------------------------------+ +------------------------------+ +------------------------------+
   +------------------------------------------------------------------------------------------------+
-  | access (Keycloak): every login, role and step-up                                               |
   | OpenBao: every key and secret; signing keys used inside it, never exported                     |
   | platform security: every layer, from the perimeter to the database                             |
-  | insights: reads the three authorities and the bus; never writes                                |
   +------------------------------------------------------------------------------------------------+
 ```
 
@@ -550,7 +530,7 @@ logs or samples.
 
 ---
 
-## 8 · Odoo, at least cost to the customer
+## 8 · The back office: replaceable, Odoo Enterprise for now
 
 **The ERP is replaceable** (FS-970). Odoo Enterprise is the back office
 today, and stays so for now; Odoo Community with OCA's modules, ERPNext
@@ -562,8 +542,9 @@ documents are in the vault too, and everything exports
 (docs/specs/back-office.md). Porting an institution, or supporting a
 second ERP, is a new adapter, not a rewrite.
 
-Assume Odoo Enterprise, since we are integration partners (FS-026). The cost
-of an Odoo deployment is internal users, so external people stay external:
+**At least cost to the customer.** Assume Odoo Enterprise, since we are
+integration partners (FS-026). The cost of an Odoo deployment is internal
+users, so external people stay external:
 
 - **Portal users** for members, borrowers, partners and merchants who view
   statements, invoices and tickets.
@@ -591,7 +572,12 @@ business suite use, by edition, from Odoo's editions page (read
 | Payroll | Employers' payroll (BS-19) | Enterprise only |
 | CRM, Project, Calendar, Employees, Website | Leads, user acceptance, change windows, HR records, public pages | Both |
 
-Dibon's own Odoo and every institution's Odoo run Enterprise. Community
+Dibon's own Odoo and every institution's Odoo run Enterprise. **An
+institution's Odoo runs in its own instance** (§9), never in someone
+else's cloud (back-office, "Choosing a candidate"). **Dibon's own Odoo
+runs on odoo.sh**, Odoo SA's cloud, outside Kenya: a recorded exception
+while FS-1035 is open, with the proposal to move it to OLP, Dibon's own
+platform for Odoo, in Kenya, before Dibon's books move into it (FS-1034). Community
 appears in two places only: an SME on the business suite that will not
 pay for Enterprise gets Community without the Enterprise-only apps, or
 Zoho; and the licence rule (§6.1) lists it as LGPL software used
@@ -612,7 +598,14 @@ its data class.** Today the known candidate is insights' model (FS-043).
 Whether Liquid's Stack offers a hosted model service or GPU capacity is a
 question for Liquid (FS-048).
 
----
+**Where each deployment is written down.** [Deployment](deployment.md)
+holds the sites, the fleet, continuity and exit; [the
+deployments](../deployments/README.md) hold one file per deployment,
+with a file per component beside it, against the component's
+[settings baseline](../settings/README.md) (FS-1037, FS-1050). Two
+choices are open: who provides site B, which Roan Capital's warm standby
+needs before its go-live (FS-775, deployment §1); and the cluster per
+institution, below (FS-1036).
 
 **Tenancy: an isolated instance per institution** (FS-491). Each
 institution runs in its own instance: its own namespace and cluster
