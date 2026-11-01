@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794, FS-802, FS-808, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794, FS-802, FS-808, FS-1058, FS-1073]
+last_reviewed: 2026-11-01
 ---
 
 # Customer onboarding checklists
@@ -56,6 +56,7 @@ in docs/partners.md, under each partner's next step.
 | OB-COM-23 | Its fallback runbook for when the platform is down (docs/architecture/README.md §3; handbook HB-70 to HB-78): who operates its M-Pesa business portal and internet banking, under its own two-person control; its manual approval form; its counter procedure; who decides to enter and leave safe mode; M-Pesa's validation fallback set to complete | Customer's operations lead | platform-security SE-24; FS-661 |
 | OB-COM-24 | It agrees our rules for institutions (docs/rules.md §2): named users with two authenticators, our device minimum, leavers removed the same day and a quarterly access review it signs, no customer data sent to our desk, test data in training, its regulator duties its own | Customer's operations lead and its compliance lead | FS-713, FS-714 |
 | OB-COM-25 | Its handbook: the template (docs/handbook/) filled from its delivery file, starting with its position-to-roles table (HB-10), and adopted | Customer's operations lead | FS-770, FS-771 |
+| OB-COM-26 | **When does a customer stop being its customer?** The period with no live loan, deposit account, share or guarantee after which the relationship has ended (proposed: one year). Identity and KYC documents are kept seven years from that end, then deleted | Customer's compliance lead | lending-service rule 9; vault §3; docs/documents.md, clock R; Data Protection Act s.39; FS-1073 |
 
 ## Kapu Collect
 
@@ -184,3 +185,9 @@ Module: [business-suite](modules/business-suite.md)
 |---|---|---|
 | reg 29 | reg 29 | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
 | reg 55 | reg 55 | Pricing parameters and credit terms change only with the Central Bank's prior written approval, after thirty days' notice to the customer and the customer's acceptance |
+
+**[LR-17](law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 39 | s. 39 | Personal data kept only as long as needed for its purpose, unless the law, a lawful purpose or the person's consent requires longer; then deleted, erased, anonymised or pseudonymised |

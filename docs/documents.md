@@ -7,8 +7,8 @@ law: mixed
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-063, FS-527, FS-532, FS-537, FS-538, FS-591, FS-1024]
-last_reviewed: 2026-10-27
+review_ids: [FS-063, FS-527, FS-532, FS-537, FS-538, FS-591, FS-1024, FS-1073]
+last_reviewed: 2026-11-01
 ---
 
 # Document catalogue
@@ -51,7 +51,7 @@ the portal, an API or SFTP, never as an attachment.
 
 ## The catalogue
 
-Clock: **R** from the end of the relationship, **T** from the transaction
+Clock: **R** from the end of the relationship (nothing live for the period the institution set at onboarding, OB-COM-26; lending-service rule 9, FS-1073), **T** from the transaction
 or the loan's closure, **D** from the document's date, **E** from the end
 of employment.
 
