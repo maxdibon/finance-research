@@ -6,16 +6,29 @@ status: living
 released: unreleased
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-837, FS-838, FS-845]
-last_reviewed: 2026-10-21
+review_ids: [FS-837, FS-838, FS-845, FS-1053]
+last_reviewed: 2026-11-01
 ---
 
 # Customer name · delivery map
 
 What we are delivering to one customer, against what it asked for, and
 where it stands. Every customer page has these eight sections, in this
-order; the check holds the headings (FS-837). Customers.md links each
-page from its row (CU id).
+order, after a short "At a glance"; the check holds the headings
+(FS-837). Customers.md links each page from its row (CU id).
+
+**At a glance** (FS-1053)
+
+| | |
+|---|---|
+| Customer | Its CU id, what it is, and its stage (customers.md) |
+| What we deliver | The products, and the release they come in (delivery-plan) |
+| Its products | Its product versions and their status (§5) |
+| Where it runs | Its deployment, and its availability model (docs/deployments/) |
+| Now | What is happening this week, in a line |
+| Waiting on it | How many open answers are its to give (§4) |
+| Waiting on us | How many are ours, or counsel's |
+| Its last release | The newest entry in §8 |
 
 ## 1 · The engagement
 
@@ -37,6 +50,13 @@ where it goes instead.
 
 ### Open
 
+By who answers (FS-1053): the customer's senior management, the
+customer, then us (with counsel where it is a reading of the law). Each
+group a table of its own, under its name in bold; the numbers never
+change.
+
+**For the customer:**
+
 | # | Question | Raised | Status |
 |---|---|---|---|
 
@@ -52,7 +72,9 @@ Its product version documents (docs/products/), by status.
 ## 6 · Documents
 
 Where its documents are held, then the table: every document registered
-for it in the document register, generated (FS-857). Register a
+for it in the document register, generated (FS-857); those in force
+first, and those replaced or withdrawn after, under "Earlier versions"
+(FS-1053). Register a
 document there, or with dibon received or dibon meeting, never here.
 
 *Generated from the [document register](../governance/document-register.md) by tools/docregister.js: edit the register, never this table.*

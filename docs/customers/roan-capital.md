@@ -7,7 +7,7 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965, FS-978, FS-979, FS-981, FS-982, FS-1050, FS-1058]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965, FS-978, FS-979, FS-981, FS-982, FS-1050, FS-1058, FS-1053]
 last_reviewed: 2026-11-01
 ---
 
@@ -19,6 +19,19 @@ source is Roan Capital's *Business Requirement Document*, v1.0, 20 Aug
 2026, held in clients/roan-capital/ outside git; section numbers below are
 that document's. Statuses are not repeated here: each capability's status
 is in its module, so it changes in one place.
+
+**At a glance** (FS-1053)
+
+| | |
+|---|---|
+| Customer | CU-01, a microfinance lender; in delivery |
+| What we deliver | Kapu MFI on Kapu Core, in R1 ([delivery plan](../delivery/delivery-plan.md)) |
+| Its products | The 30-day loan (Biashara), Motor Vehicle and Title Deed: drafts, the last two proposed by us (§5) |
+| Where it runs | [Its production deployment](../deployments/roan-capital-production.md): warm standby |
+| Now | Our team's review of the pack for Roan Capital taken in (FS-1061 to FS-1067); the MVP day, Tuesday 3 November (FS-1074) |
+| Waiting on it | 33 open answers: 2 for its senior management, 31 for its team (§4) |
+| Waiting on us | 4, with counsel where it is a reading of the law (§4) |
+| Its last release | 2026.10.15 (§8); the notes since wait for its next |
 
 ## 1 · The engagement
 
@@ -168,11 +181,19 @@ choice (MF-04, FS-619).
 
 ### Open
 
+By who answers (FS-1053); the numbers never change.
+
+**For Roan Capital's senior management** (FS-827):
+
 | # | Question | Raised | Status |
 |---|---|---|---|
-| 1 | Remove the prototype's public demo panel (accounts, a shared password, a fixed 2FA code) before anyone outside the team sees it | FS-395 | Open |
 | 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules. Every non-deposit-taking lender must now be licensed or registered with CBK, applying by about 29 Mar 2027 (NDTCP Regulations 2026, FS-423) | FS-400, FS-423, FS-827 | Open, for a senior management meeting, not an operational one (owner, 2026-10-14). The owner understands Roan Capital has applied and has not yet been licensed: to confirm there |
-| 3 | 1% a day default interest: within the in duplum rule? | FS-400 | Answered for the cap: reg 29 of the lender regulations stops recoverable interest at the principal owing, enforced by MF-21. Whether the rate itself fits the pricing and disclosure rules (RC-37) is open |
+| 30 | CBK must be told thirty days before a new delivery channel rolls out (reg 27(1)), with the mobile-money number used for payouts and repayments, any app, and the bank accounts (27(2)). The platform is that channel: who notifies CBK, and by when before go-live? | FS-830 | Open, for senior management (FS-827) |
+
+**For Roan Capital:**
+
+| # | Question | Raised | Status |
+|---|---|---|---|
 | 4 | The interest rate's unit | FS-395 | Open |
 | 6 | Disbursement banks: NCBA only, or NCBA and Access Bank? (RC-18) | FS-395 | Open |
 | 9 | Will Roan Capital be named as a reference once live? | FS-401 | Open |
@@ -195,9 +216,6 @@ choice (MF-04, FS-619).
 | 27 | Its fallback runbook for an outage (JN-19; onboarding OB-COM-23): who decides to enter and leave safe mode; who may pay out by hand, and within what limit; its manual approval form; whom we call first and second; the names and limits in handbook §7 | FS-773, FS-775 | Open. Its availability model is settled: warm standby (owner, 2026-10-12, FS-775) |
 | 28 | The approval chain: the requirement document has the Credit Officer, then the Business Credit Committee (three of three, unanimous), then the Head Office Committee above a threshold (RC-12); the prototype has the Credit Manager, then Head Office, then the CEO, for every loan. Which is Roan Capital's? Both are configuration | FS-807, FS-811 | Open. The application form's approval block has the Credit Manager, Head Office and the CEO (FS-831); to confirm, with the order and any thresholds |
 | 29 | The product's terms as the prototype sets them (1% a day flat interest, 14- and 30-day terms, daily instalments, default interest on overdue instalments, the fees by amount): are they Roan Capital's, and has CBK approved this pricing (reg 55)? And its "minimum 14 days' interest on prepayment", which the regulations appear to forbid (reg 56(3), (4); LQ-13) | FS-807 | Open. Partly (2026-10-15, FS-831): the application form states 1% a day, two weeks or one month, daily instalments, default interest until arrears clear, and the fees; its note on prepayments within two weeks meets reg 54(4)(h) and LQ-13 (product draft); CBK's approval of the pricing is for senior management (FS-827) |
-| 30 | CBK must be told thirty days before a new delivery channel rolls out (reg 27(1)), with the mobile-money number used for payouts and repayments, any app, and the bank accounts (27(2)). The platform is that channel: who notifies CBK, and by when before go-live? | FS-830 | Open, for senior management (FS-827) |
-| 31 | A reading we are confirming: whether a restructure the borrower asks for must still wait the thirty days' notice that reg 54(7) gives for any change to a loan agreement (the power to restructure is reg 28(3)). We will confirm it before anything is built on it; does your counsel have a view? | FS-876 (LQ-06) | Open |
-| 32 | A reading we are confirming: which regulation sets how often guarantors receive statements. We cite reg 47(2); reg 39(3) may be the right one. We will confirm it before anything is built on it; does your counsel have a view? | FS-876 (LQ-16) | Open |
 | 33 | Your staff found the Mifos screens hard to use. We propose screens of our own in Odoo for daily lending (FS-965): which tasks were hardest? May we watch two or three staff at their desks, on 29 October or soon after? | FS-965 | Open, for 29 October |
 | 34 | Would licence cost lead you to a lower-cost edition of Odoo (Community, supported by us rather than Odoo), knowing the trade-offs? | FS-967 | Open, for 29 October |
 | 35 | Your staff, by job title, and how many; we fold the eight positions to fit (FS-982) | FS-982 | Open, for 29 October |
@@ -207,6 +225,15 @@ choice (MF-04, FS-619).
 | 39 | Your product owner, and the two people who approve a product version; and your agreement that you are accountable for your products and for CBK's approval of them, our rules stopping only what the law forbids (FS-978) | FS-978, FS-981 | Open, for 29 October |
 | 40 | Who approves when the CEO is away? | FS-982, FS-898 | Open, for 29 October |
 | 41 | Who is your external auditor, for a read-only account? | FS-982 | Open, for 29 October |
+
+**For us,** with counsel where it is a reading of the law:
+
+| # | Question | Raised | Status |
+|---|---|---|---|
+| 1 | Remove the prototype's public demo panel (accounts, a shared password, a fixed 2FA code) before anyone outside the team sees it | FS-395 | Open |
+| 3 | 1% a day default interest: within the in duplum rule? | FS-400 | Answered for the cap: reg 29 of the lender regulations stops recoverable interest at the principal owing, enforced by MF-21. Whether the rate itself fits the pricing and disclosure rules (RC-37) is open |
+| 31 | A reading we are confirming: whether a restructure the borrower asks for must still wait the thirty days' notice that reg 54(7) gives for any change to a loan agreement (the power to restructure is reg 28(3)). We will confirm it before anything is built on it; does your counsel have a view? | FS-876 (LQ-06) | Open |
+| 32 | A reading we are confirming: which regulation sets how often guarantors receive statements. We cite reg 47(2); reg 39(3) may be the right one. We will confirm it before anything is built on it; does your counsel have a view? | FS-876 (LQ-16) | Open |
 
 ### Answered
 
@@ -255,18 +282,34 @@ product drafts themselves are in docs/products/ by exception (FS-806).
 | DR-007 | Loan application form | Roan Capital's loan application form, exactly as received; our versions 0.1 and 0.2 start from it | Original | kept | 2026-10-15 | Roan Capital |
 | DR-008 | Kickoff summary and next steps, the email as sent (7 September 2026) | Our email after the kickoff: what was agreed, and the next steps | Record | to keep | 2026-09-07 | Dibon |
 | DR-009 | Review of the requirement document and the back office | Our own reading of the requirement document, and what the back office needs | Working | internal | 2026-10-03 | Dibon |
-| DR-010 | Mutual NDA, corrected draft | A corrected NDA we drafted; withdrawn, as the executed NDA stands | Working | withdrawn | 2026-10-12 | Dibon |
 | DR-011 | NDA changes, internal note | Our note on the changes the NDA would have needed | Working | internal | 2026-10-12 | Dibon |
-| DR-012 | 30-day loan questionnaire A, product terms | Questions for Roan Capital on the 30-day loan's terms: amounts, term, pricing | Working | superseded | 2026-10-15 | Dibon |
-| DR-013 | 30-day loan questionnaire B, eligibility and limits | Questions for Roan Capital on who may borrow, and how much | Working | superseded | 2026-10-15 | Dibon |
-| DR-014 | 30-day loan questionnaire C, how it runs | Questions for Roan Capital on how the loan runs from day to day | Working | superseded | 2026-10-15 | Dibon |
 | DR-015 | Product and operations meeting, agenda (15 October 2026) | The agenda for the product and operations meeting of 15 October | Working | draft | 2026-10-15 | Dibon |
 | DR-016 | Product and operations meeting, our record (15 October 2026) | What was said and agreed at the 15 October meeting, kept for us | Working | internal | 2026-10-15 | Dibon |
 | DR-017 | Loan application form, in our format, from DR-007 | The application form in our format, word for word as received | Working | draft | 2026-10-15 | Dibon |
-| DR-018 | Loan application form, suggested changes tracked, from DR-017 | The form with our 28 suggested changes tracked, each with its reason and the regulation behind it | Working | superseded | 2026-10-15 | Dibon |
-| DR-019 | Loan application form, schedule of v0.2's changes | The 28 changes in version 0.2 in one table, for Roan Capital to accept or decline | Working | superseded | 2026-10-15 | Dibon |
 | DR-037 | Loan application form, v0.2 with a page of the regulations cited, tracked, from DR-018 | The form with our 28 suggested changes, and a last page listing each regulation cited with what each provision requires; two readings marked as being confirmed | Working | draft | 2026-10-16 | Dibon |
 | DR-038 | Loan application form, schedule of v0.3's changes | The 28 changes in one table, for Roan Capital to accept or decline, and the page of regulations cited | Working | draft | 2026-10-16 | Dibon |
+| DR-051 | Roles, approvals and going live (DC-FS-QN-004) | The open questions on who does what, who approves, outages, and what CBK needs before go-live, in six sections by who answers, and a last page of the regulations cited; v0.2 with what we already have under each question it applies to; v0.3 after the team's review: what Lillian's answers give us, Roan Capital's three roles, the meeting of 2 November | Working | draft | 2026-10-30 | Dibon |
+| DR-052 | Fallback for a platform outage, template (DC-FS-TM-002) | A starter for Roan Capital's own procedure in an outage, in the plain look, for it to adopt; v0.2 after the team's review: missed M-Pesa notices recovered, waiting payouts held until hand payouts are matched | Working | draft | 2026-10-30 | Dibon |
+| DR-053 | Email, documents for 29 October | Our draft covering email for the pack above; not sent. v0.2 counts five documents; v0.3 shares them in a Google Drive folder Roan Capital edits (FS-1042); v0.4 without the set-up note, ready to paste; v0.5 for five files, a questionnaire per product; v0.5 also as a Word file, for the team to comment on in Drive; v0.6 for after the meeting of 29 October; v0.7 after the team's review: before the meeting of 2 November, the demo panel taken out, the questionnaires' steps numbered | Working | draft | 2026-10-30 | Dibon |
+| DR-054 | Team review request, the pack for 29 October | Our internal request to the team to review the pack before it goes to Roan Capital, the pack in a restricted Google Drive folder; v0.4 without the set-up note, the team already able to open the folder, Suggesting mode: the delivery lead the whole pack; the dev lead, with the CI/CD engineer shadowing, the worksheet and the questionnaires; the CEO the regulations pages; the ops lead the fallback template; by Wednesday 28 October at noon; not sent; v0.5 for five files; v0.6 with every file a Word file; v0.7 in plain text for pasting into Gmail, six files listed, due 15:00 on the day; v0.8 with who reviews what as a table; v0.9 retimed: review by 14:00 on 29 October, the pack to go after the meeting | Working | internal | 2026-10-29 | Dibon |
+| DR-055 | Drive set-up for 29 October, Eric's checklist | The steps to set up, run and close the two Drive folders: before the team's review, after it, and after Roan Capital answers; v0.2 for five files; v0.3 with every file uploaded as Word, and Roan Capital's clean copies rebuilt from their sources; v0.4 retimed to 29 October | Working | internal | 2026-10-29 | Dibon |
+| DR-056 | 30-day loan (Biashara) questionnaire, parts A to C in one (DC-FS-QN-001) | The questions on the product's terms, eligibility and limits, and how it runs, a part and a page each, a form field for each answer, built from the product's draft, and a last page of the regulations cited; v0.5 with what Roan Capital agreed on 21 October shown as what we have | Working | draft | 2026-10-28 | Dibon |
+| DR-057 | Motor Vehicle questionnaire, parts A to C in one (DC-FS-QN-002) | As DR-056, for Motor Vehicle; v0.3 after the team's review: what 21 October told us set apart, as DR-059; Lillian's figures to confirm; parts addressed to the CEO and loan officers | Working | draft | 2026-10-30 | Dibon |
+| DR-058 | Title Deed questionnaire, parts A to C in one (DC-FS-QN-003) | As DR-056, for Title Deed; v0.3 after the team's review, as DR-057 | Working | draft | 2026-10-30 | Dibon |
+| DR-059 | 30-day loan (Biashara) questionnaire, what needs an answer set apart from what 21 October told us (DC-FS-QN-001) | Each part opens with what needs an answer; what Roan Capital told us on 21 October follows, confirmed with one answer, a correction beside each item; settled last; a count of each on the first page; a last page of the regulations cited. For Eric's review; v0.7 after the team's review: parts addressed to the CEO and loan officers, answers uploaded to "Your answers" | Working | draft | 2026-10-30 | Dibon |
+| DR-060 | Team review (internal), the reviewed pack | The six files as the team left them on 29 October, with their comments and Lillian's edits, and Lillian's roles reference, as Eric downloaded them in one archive; our working record of the review, never sent | Working | internal | 2026-10-29 | Dibon |
+| DR-061 | Roles and authentication, kick-off reference | Our dev lead's reference of the roles, approval flow, sign-in and password reset discussed with Roan Capital before 29 October, held inside DR-060; differs from our access design in four places (FS-1063) | Working | shared | 2026-10-29 | Dibon |
+
+**Earlier versions,** replaced or withdrawn (18):
+
+| Id | Title | Summary | Kind | Status | Date | From |
+|---|---|---|---|---|---|---|
+| DR-010 | Mutual NDA, corrected draft | A corrected NDA we drafted; withdrawn, as the executed NDA stands | Working | withdrawn | 2026-10-12 | Dibon |
+| DR-012 | 30-day loan questionnaire A, product terms | Questions for Roan Capital on the 30-day loan's terms: amounts, term, pricing | Working | superseded | 2026-10-15 | Dibon |
+| DR-013 | 30-day loan questionnaire B, eligibility and limits | Questions for Roan Capital on who may borrow, and how much | Working | superseded | 2026-10-15 | Dibon |
+| DR-014 | 30-day loan questionnaire C, how it runs | Questions for Roan Capital on how the loan runs from day to day | Working | superseded | 2026-10-15 | Dibon |
+| DR-018 | Loan application form, suggested changes tracked, from DR-017 | The form with our 28 suggested changes tracked, each with its reason and the regulation behind it | Working | superseded | 2026-10-15 | Dibon |
+| DR-019 | Loan application form, schedule of v0.2's changes | The 28 changes in version 0.2 in one table, for Roan Capital to accept or decline | Working | superseded | 2026-10-15 | Dibon |
 | DR-039 | 30-day loan questionnaire A, product terms, with the regulations cited | Questions on the 30-day loan's terms, and a last page listing the regulations they rest on, two readings marked as being confirmed | Working | superseded | 2026-10-16 | Dibon |
 | DR-040 | 30-day loan questionnaire B, eligibility and limits, with the regulations cited | Questions on who may borrow and how much, and a last page listing the regulations they rest on | Working | superseded | 2026-10-16 | Dibon |
 | DR-041 | 30-day loan questionnaire C, how it runs, with the regulations cited | Questions on how the loan runs from day to day, and a last page listing the regulation it rests on | Working | superseded | 2026-10-16 | Dibon |
@@ -279,17 +322,6 @@ product drafts themselves are in docs/products/ by exception (FS-806).
 | DR-048 | Title Deed questionnaire A, product terms (DC-FS-QN-003) | Questions on the product's terms, for its product owner, a form field for each answer, built from the product's draft, and a last page of the regulations cited | Working | superseded | 2026-10-27 | Dibon |
 | DR-049 | Title Deed questionnaire B, eligibility and limits (DC-FS-QN-003) | Questions on who may borrow and how much, for its credit lead, a form field for each answer, built from the product's draft, and a last page of the regulations cited | Working | superseded | 2026-10-27 | Dibon |
 | DR-050 | Title Deed questionnaire C, how it runs (DC-FS-QN-003) | Questions on how the loan runs day to day, for its operations lead, a form field for each answer, built from the product's draft, and a last page of the regulations cited | Working | superseded | 2026-10-27 | Dibon |
-| DR-051 | Roles, approvals and going live (DC-FS-QN-004) | The open questions on who does what, who approves, outages, and what CBK needs before go-live, in six sections by who answers, and a last page of the regulations cited; v0.2 with what we already have under each question it applies to; v0.3 after the team's review: what Lillian's answers give us, Roan Capital's three roles, the meeting of 2 November | Working | draft | 2026-10-30 | Dibon |
-| DR-052 | Fallback for a platform outage, template (DC-FS-TM-002) | A starter for Roan Capital's own procedure in an outage, in the plain look, for it to adopt; v0.2 after the team's review: missed M-Pesa notices recovered, waiting payouts held until hand payouts are matched | Working | draft | 2026-10-30 | Dibon |
-| DR-053 | Email, documents for 29 October | Our draft covering email for the pack above; not sent. v0.2 counts five documents; v0.3 shares them in a Google Drive folder Roan Capital edits (FS-1042); v0.4 without the set-up note, ready to paste; v0.5 for five files, a questionnaire per product; v0.5 also as a Word file, for the team to comment on in Drive; v0.6 for after the meeting of 29 October; v0.7 after the team's review: before the meeting of 2 November, the demo panel taken out, the questionnaires' steps numbered | Working | draft | 2026-10-30 | Dibon |
-| DR-054 | Team review request, the pack for 29 October | Our internal request to the team to review the pack before it goes to Roan Capital, the pack in a restricted Google Drive folder; v0.4 without the set-up note, the team already able to open the folder, Suggesting mode: the delivery lead the whole pack; the dev lead, with the CI/CD engineer shadowing, the worksheet and the questionnaires; the CEO the regulations pages; the ops lead the fallback template; by Wednesday 28 October at noon; not sent; v0.5 for five files; v0.6 with every file a Word file; v0.7 in plain text for pasting into Gmail, six files listed, due 15:00 on the day; v0.8 with who reviews what as a table; v0.9 retimed: review by 14:00 on 29 October, the pack to go after the meeting | Working | internal | 2026-10-29 | Dibon |
-| DR-055 | Drive set-up for 29 October, Eric's checklist | The steps to set up, run and close the two Drive folders: before the team's review, after it, and after Roan Capital answers; v0.2 for five files; v0.3 with every file uploaded as Word, and Roan Capital's clean copies rebuilt from their sources; v0.4 retimed to 29 October | Working | internal | 2026-10-29 | Dibon |
-| DR-056 | 30-day loan (Biashara) questionnaire, parts A to C in one (DC-FS-QN-001) | The questions on the product's terms, eligibility and limits, and how it runs, a part and a page each, a form field for each answer, built from the product's draft, and a last page of the regulations cited; v0.5 with what Roan Capital agreed on 21 October shown as what we have | Working | draft | 2026-10-28 | Dibon |
-| DR-057 | Motor Vehicle questionnaire, parts A to C in one (DC-FS-QN-002) | As DR-056, for Motor Vehicle; v0.3 after the team's review: what 21 October told us set apart, as DR-059; Lillian's figures to confirm; parts addressed to the CEO and loan officers | Working | draft | 2026-10-30 | Dibon |
-| DR-058 | Title Deed questionnaire, parts A to C in one (DC-FS-QN-003) | As DR-056, for Title Deed; v0.3 after the team's review, as DR-057 | Working | draft | 2026-10-30 | Dibon |
-| DR-059 | 30-day loan (Biashara) questionnaire, what needs an answer set apart from what 21 October told us (DC-FS-QN-001) | Each part opens with what needs an answer; what Roan Capital told us on 21 October follows, confirmed with one answer, a correction beside each item; settled last; a count of each on the first page; a last page of the regulations cited. For Eric's review; v0.7 after the team's review: parts addressed to the CEO and loan officers, answers uploaded to "Your answers" | Working | draft | 2026-10-30 | Dibon |
-| DR-060 | Team review (internal), the reviewed pack | The six files as the team left them on 29 October, with their comments and Lillian's edits, and Lillian's roles reference, as Eric downloaded them in one archive; our working record of the review, never sent | Working | internal | 2026-10-29 | Dibon |
-| DR-061 | Roles and authentication, kick-off reference | Our dev lead's reference of the roles, approval flow, sign-in and password reset discussed with Roan Capital before 29 October, held inside DR-060; differs from our access design in four places (FS-1063) | Working | shared | 2026-10-29 | Dibon |
 
 - Capability statuses: the modules named in §2.
 - Decisions: FS-399 to FS-403, FS-414, FS-431, FS-435 and FS-453 in
