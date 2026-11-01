@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1075, FS-1076, FS-340, FS-204, FS-205, FS-202, FS-1066, FS-570, FS-331, FS-762]
+review_ids: [FS-1075, FS-1076, FS-340, FS-204, FS-205, FS-202, FS-1066, FS-570, FS-331, FS-762, FS-1077]
 last_reviewed: 2026-11-01
 ---
 
@@ -17,7 +17,8 @@ What we test against Prembly's production service this week, with whose
 details, what we record, and which open items each result settles
 (FS-1075, FS-1076). Lillian's Postman collection, built against
 Prembly's sandbox, is the starting point. §5 compares Smile ID, from its
-documentation, so the choice of an identity vendor (FS-340) rests on both.
+documentation, so the order of providers for each check (FS-340,
+FS-1077) rests on both.
 
 **Led by** Lillian, with Eric; testers are team members who volunteer
 their own details.
@@ -119,12 +120,14 @@ stronger identity specialist: certified, with documented AML screening
 and a phone check that binds a number to an ID. Neither yet shows where
 Kenyan data stays, which our partner rules require.
 
-**Proposed:** run this week's Prembly tests as planned; ask Smile ID
-for sandbox access and run P1, P3, P4, P6, P9 and P10 against it the
-same way, then decide FS-340 on both results and both answers on data
-location. A split is possible: identity from one, the bureaus and
-statements from the other, behind identity's one interface (architecture
-§6, "replaceable behind a stable contract").
+**Both, by design** (FS-1077): identity supports several aggregators
+and direct sources such as NPDM behind each check (identity §5,
+"Providers"), so the question is which goes first for each check, and
+which is the fallback, not which one we choose. **Proposed:** run this
+week's Prembly tests as planned; ask Smile ID for sandbox access and run
+P1, P3, P4, P6, P9 and P10 against it the same way; then set each
+check's primary and fallback (FS-340) on both results and both answers
+on data location.
 
 ## 6 · Results
 

@@ -7,7 +7,7 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794, FS-802, FS-808, FS-1058, FS-1073]
+review_ids: [FS-339, FS-343, FS-435, FS-448, FS-449, FS-450, FS-453, FS-591, FS-620, FS-630, FS-633, FS-635, FS-645, FS-661, FS-714, FS-771, FS-775, FS-794, FS-802, FS-808, FS-1058, FS-1073, FS-1077]
 last_reviewed: 2026-11-01
 ---
 
@@ -57,6 +57,7 @@ in docs/market/partners.md, under each partner's next step.
 | OB-COM-24 | It agrees our rules for institutions (docs/governance/rules.md §2): named users with two authenticators, our device minimum, leavers removed the same day and a quarterly access review it signs, no customer data sent to our desk, test data in training, its regulator duties its own | Customer's operations lead and its compliance lead | FS-713, FS-714 |
 | OB-COM-25 | Its handbook: the template (docs/handbook/) filled from its delivery file, starting with its position-to-roles table (HB-10), and adopted | Customer's operations lead | FS-770, FS-771 |
 | OB-COM-26 | **When does a customer stop being its customer?** The period with no live loan, deposit account, share or guarantee after which the relationship has ended (proposed: one year). Identity and KYC documents are kept seven years from that end, then deleted | Customer's compliance lead | lending-service rule 9; vault §3; docs/governance/documents.md, clock R; Data Protection Act s.39; FS-1073 |
+| OB-COM-27 | **Which providers its identity checks go through:** its own agreement with NPDM, KRA or the business registry, or ours; which aggregators (Prembly, Smile ID or others) for the rest and as fallback; its written consent to each as a processor | Customer's compliance lead | identity §5, "Providers"; FS-202, FS-1077 |
 
 ## Kapu Collect
 

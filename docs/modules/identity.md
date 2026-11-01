@@ -10,7 +10,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite, decisioning]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028, FS-1070]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028, FS-1070, FS-1077]
 last_reviewed: 2026-11-01
 ---
 
@@ -148,6 +148,41 @@ mode, to Fineract.
        Odoo); the register's data is not copied
 ```
 
+### Providers: aggregators and direct sources
+
+FS-1077. **Each check is one contract in our words, and each provider an
+adapter behind it,** so a provider is added, changed or dropped without
+the products noticing (architecture §6, "replaceable behind a stable
+contract").
+
+| Check | Direct sources | Aggregators that document it |
+|---|---|---|
+| National ID, passport, alien ID (ID-01) | NPDM, formerly IPRS (PT-29), by its agreement (FS-202) | Prembly (PT-53), Smile ID (PT-30), MetaMap (PT-33, national ID only) |
+| Liveness and face match (ID-04) | None | Prembly, Smile ID, MetaMap |
+| Phone number (ID-05) | The operators: the registered name, or Safaricom Hakikisha | Smile ID matches a number to a national ID; Prembly returns the carrier only |
+| KRA PIN and tax compliance (ID-06) | KRA GavaConnect (PT-35) | Prembly; Smile ID (the PIN from an ID number only) |
+| A business's registration (ID-07) | The business registry, where it offers an API (FS-205) | Prembly, Smile ID |
+| PEP and sanctions (financial-crime FC-05, FC-06) | Published lists | Prembly, Smile ID |
+
+1. **Routed per institution and per check,** set at onboarding (OB-COM-27):
+   a primary and a fallback. A direct source comes first where the
+   institution, or Dibon for it, holds the agreement; an aggregator where
+   not, or when the direct source is down.
+2. **Every result names its provider,** with the provider's reference,
+   the time and the cost, on the record of the check (FS-584).
+3. **A fallback is a second request only when the first fails** or the
+   provider is down; a person's details are never sent to two providers
+   just to compare them (LQ-35). Providers are compared on the simulator
+   (ID-20) and with team members' own details, by consent
+   (delivery/prembly-production-test).
+4. **A provider joins once** its adapter passes the same contract tests
+   as the others, against the simulator, and its terms pass our partner
+   rules: where data is held, the breach notice, sub-processors
+   (partners register). Each is named as a processor in the
+   institution's data processing agreement and privacy notice (OB-COM-04).
+5. **Its cost is passed through,** per provider and per check, itemised
+   (FS-331).
+
 ### The identity model
 
 FS-1018, FS-1028. Who someone is, and what they may do, in four parts:
@@ -283,7 +318,7 @@ profile's documents in ID-27.
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
 | NPDM, formerly IPRS (Kenya) | read | API | Designed (ID-01). Direct access by MOU — partners PT-29, FS-202 |
-| Liveness and face-match vendor | read | API or SDK | Planned (ID-04) — partners.md SD-11 |
+| Identity aggregators: Prembly, Smile ID, MetaMap and others | read | API, or SDK for liveness | Planned (ID-01, ID-04 to ID-07): several behind one check, §5 "Providers" (FS-1077); partners PT-30, PT-33, PT-53; SD-11 |
 | Mobile-network operators (Safaricom, Airtel) | read | the operator's name for the number | Built (ID-05) at Onit Bank, under its agreements; a new customer needs its own or Dibon's — compliance LC-13 |
 | Safaricom Hakikisha | read | Daraja API | Planned (ID-05) — rails RL-21 |
 | Operators' SIM-swap and IMSI checks | read | operator API | Planned (ID-12, ID-13) — rails RL-22; compliance LC-13 |
