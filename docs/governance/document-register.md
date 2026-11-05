@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-834, FS-835, FS-857, FS-874, FS-1026, FS-1039, FS-1043, FS-1044, FS-1049, FS-1061, FS-1063]
-last_reviewed: 2026-11-01
+review_ids: [FS-834, FS-835, FS-857, FS-874, FS-1026, FS-1039, FS-1043, FS-1044, FS-1049, FS-1061, FS-1063, FS-1080]
+last_reviewed: 2026-11-05
 ---
 
 # Document register
@@ -132,3 +132,5 @@ CRM opportunity).
 |---|---|---|---|---|---|---|---|
 | DC-FS-DK-001 | 1.0 | SBM Bank | Its team at the meeting of 22 October (to confirm: shown, or also sent) | 2026-10-22 | Presented; sending to confirm | No | — |
 | DC-FS-PF-001 | 1.2 | SBM Bank | To confirm | To confirm | To confirm | To confirm | — |
+| DR-062 | Roan Capital | CBK, policies and documents to be submitted | The Central Bank of Kenya's list (Bank Supervision Department, September 2026) of what Roan Capital submits: the channel or platform agreement, its data protection policy and ODPC certificate, a credit, ethics and market conduct policy, and an ICT policy with a system description, independent assurance and two diagrams; due 6 November at 14:00 | Original | — | kept | 2026-11-05 | Roan Capital, through Eric | `clients/roan-capital/originals/` | `baf1c99bcec3` | FS-1080 |
+| DR-063 | Roan Capital | ICT policy, with the system description and diagrams | Our draft of Roan Capital's ICT policy for CBK: the fourteen areas CBK lists, roles, third parties; annexes for the system description, the systems architecture and data flow diagrams, and the plan for independent assurance; what needs a decision marked "To confirm". For the team's review | Working | 0.1 | draft | 2026-11-05 | Dibon | `clients/roan-capital/working/` | — | FS-1080 |
