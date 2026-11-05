@@ -25,6 +25,7 @@ confirm]". Built with `tools/policies/build.js`.
 | `institution`, `institution_legal`, `number`, `version`, `date`, `owner` | As in the ICT policy template |
 | `route` | A licence (reg 6) or a registration (reg 9) |
 | `s_` keys | Each item's status, as the table's last column names them |
+| A table's widths | `<!-- widths: 46, 22, 32 -->` on the line before a table sets its columns' shares, in percent |
 
 <!-- document -->
 # Submission Index
@@ -37,6 +38,7 @@ confirm]". Built with `tools/policies/build.js`.
 
 {{institution_legal}} submits the documents marked enclosed, as the Central Bank of Kenya asked, ahead of its application for {{route}} under the Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026. The rest follow with the application.
 
+<!-- widths: 46, 22, 32 -->
 | Item | Document | Status |
 |---|---|---|
 | ICT policy, with the description of the ICT system, the systems architecture and data flow diagrams, and the plan for independent assurance | {{n_ict}} | {{s_ict}} |

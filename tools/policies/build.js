@@ -10,7 +10,8 @@
 // "# " the title, "## " a section, "### " a subsection, "- " a bullet, "| " a
 // table, a blank line ends a paragraph; <!-- landscape --> and <!-- portrait -->
 // start a section of that orientation; <!-- image: name, caption --> places
-// the values' assets/<name>.png; {{key}} is the value of that key, or
+// the values' assets/<name>.png; <!-- widths: 46, 22, 32 --> sets the next
+// table's columns' shares, in percent; {{key}} is the value of that key, or
 // "[To confirm: key]" when the values do not give it.
 
 const fs = require('fs');
@@ -47,6 +48,7 @@ let cur = { orientation: 'portrait', children: [] };
 let para = [];
 let bullet = null; // a bullet's text, continued by the indented lines under it
 let rows = [];
+let widths = null; // <!-- widths: 50, 22, 28 --> before a table: its columns' shares, in percent
 let title = '';
 const flushPara = () => {
   if (bullet !== null) { cur.children.push(t.li(plain(bullet))); bullet = null; }
@@ -55,9 +57,16 @@ const flushPara = () => {
 const flushTable = () => {
   if (!rows.length) return;
   const cells = rows.filter((r) => !/^\|\s*-/.test(r)).map((r) => r.replace(/^\||\|$/g, '').split('|').map((c) => plain(c.trim())));
-  cur.children.push(t.table(cells, null, cur.orientation === 'landscape' ? t.LANDSCAPE_WIDTH : t.WIDTH));
+  const total = cur.orientation === 'landscape' ? t.LANDSCAPE_WIDTH : t.WIDTH;
+  let w = null;
+  if (widths && widths.length === cells[0].length) {
+    w = widths.map((x) => Math.floor((x / 100) * total));
+    w[w.length - 1] += total - w.reduce((s, x) => s + x, 0);
+  }
+  cur.children.push(t.table(cells, w, total));
   cur.children.push(t.p('', { after: 60 }));
   rows = [];
+  widths = null;
 };
 const flush = () => { flushPara(); flushTable(); };
 for (const raw of lines) {
@@ -73,6 +82,8 @@ for (const raw of lines) {
     if (im[2]) cur.children.push(t.p(im[2], { italics: true, size: 18 }));
     continue;
   }
+  const wm = line.match(/^<!-- widths: ([\d, ]+) -->$/);
+  if (wm) { flush(); widths = wm[1].split(',').map(Number); continue; }
   if (/^<!--/.test(line)) continue;
   if (line.startsWith('|')) { flushPara(); rows.push(line); continue; }
   flushTable();
