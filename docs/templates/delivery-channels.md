@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1095, FS-1097, FS-1100]
+review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103]
 last_reviewed: 2026-11-05
 ---
 
@@ -27,6 +27,7 @@ FS-1095). From the institution's deployment and our
 | `launch` | When the channels start, and how | A soft launch on 30 November 2026, the current process in parallel for about a month |
 | `paybill`, `bank` | Its collection paybill and its payout bank | Its own M-Pesa paybill; NCBA Bank |
 | `whatsapp` | Whether WhatsApp is used, and for what | To confirm |
+| `other_wallets` | Whether Airtel Money and T-Kash collect repayments | To confirm |
 
 <!-- document -->
 # Delivery Channels and Platforms
@@ -40,7 +41,7 @@ FS-1095). From the institution's deployment and our
 
 ## 1. Summary
 
-{{institution}} delivers its credit through a lending platform operated for it by {{provider}}: its staff work in web applications; borrowers and guarantors reach their own pages by secure links on their phones; repayments come through M-Pesa and payouts go through {{bank}}. The channels start with {{launch}}. This description is given to the Central Bank of Kenya with {{institution}}'s application, and as its notice of the channels thirty days before they are rolled out (reg 27).
+{{institution}} delivers its credit through a lending platform operated for it by {{provider}}: its staff work in web applications; borrowers and guarantors reach their own pages by secure links on their phones; repayments come through mobile money and payouts go through {{bank}}; every screen works in the common browsers (Chrome, Edge, Firefox, Safari) on computers and phones. The channels start with {{launch}}. This description is given to the Central Bank of Kenya with {{institution}}'s application, and as its notice of the channels thirty days before they are rolled out (reg 27).
 
 ## 2. The channels
 
@@ -49,10 +50,11 @@ FS-1095). From the institution's deployment and our
 | Staff workspace (web) | {{institution}}'s staff | Applications, collateral, documents, approvals, disbursements, collections, reports | Through the edge only; a password and an authenticator app or security key; each role sees only its work; every act recorded |
 | Kapu Console (web) | Approvers; staff when the back office is unavailable | Approvals, and read-only views | As the staff workspace; every approval re-authenticated |
 | Customer pages (web, on the customer's phone) | Borrowers and guarantors | Consent, the key facts and the agreement to read and sign, statements, documents, the amount to settle | Opened from a link, with a code from an authenticator app or by SMS to the phone bound at enrolment; each opening recorded |
-| SMS | Borrowers and guarantors | Reminders, receipts, one-time codes, links to their own pages; never a balance, a document or an ID number | Under {{institution}}'s registered sender ID, from approved templates, within quiet hours |
+| SMS | Borrowers and guarantors, on Safaricom, Airtel and Telkom | Reminders, receipts, one-time codes, links to their own pages; never a balance, a document or an ID number | Under {{institution}}'s registered sender ID, from approved templates, within quiet hours |
 | Email | Borrowers, guarantors and business customers who give an address | Notices and links to their own pages, never documents | From approved templates |
 | WhatsApp | {{whatsapp}} | Notifications and links only | Through the official WhatsApp Business service |
 | M-Pesa paybill | Borrowers | Repayments | {{paybill}}; each payment confirmed by Safaricom's authenticated callback and matched to the loan |
+| Airtel Money and T-Kash | Borrowers on Airtel and Telkom | Repayments | {{other_wallets}}; each payment confirmed by the operator's authenticated callback and matched to the loan |
 | Bank transfer | Borrowers, through {{institution}}'s staff | Payouts to the borrower's own account, and bank repayments | Through {{bank}}, under maker-checker: prepared by one person, released by another, only to the approved account for the approved amount |
 | The office | Borrowers, guarantors | Applications, collateral originals, collecting released documents | Identity checked against the record; originals kept in a locked cabinet, each movement recorded |
 

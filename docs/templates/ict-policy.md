@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099]
+review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103]
 last_reviewed: 2026-11-05
 ---
 
@@ -64,7 +64,7 @@ This policy sets how {{institution}} plans, builds, runs and protects the inform
 
 ## 2. Scope
 
-It covers the lending platform {{institution}} uses for digital credit (Annex A), which {{provider}} builds, hosts and operates for it under the services agreement; {{institution}}'s staff, their accounts and the devices they use to reach it; and the third parties connected to it: Safaricom (M-Pesa), {{bank}}, messaging providers and identity providers. It applies to every member of {{institution}}'s staff, its contractors, and the provider's staff when they work on {{institution}}'s systems.
+It covers the lending platform {{institution}} uses for digital credit (Annex A), which {{provider}} builds, hosts and operates for it under the services agreement; {{institution}}'s staff, their accounts and the devices they use to reach it; and the third parties connected to it: the mobile operators (Safaricom, Airtel and Telkom) and their mobile money, {{bank}}, messaging providers and identity providers. It applies to every member of {{institution}}'s staff, its contractors, and the provider's staff when they work on {{institution}}'s systems.
 
 ## 3. Principles
 
@@ -137,9 +137,10 @@ Dealt with means fixed, usually by installing the software maker's update, or, w
 
 - Use only your own named account, with your second factor; never share either.
 - Reach the platform only from {{devices}}.
-- **A phone used for work,** to reach the platform or to hold an authenticator app, is {{phones}}: a supported system with updates applied, a screen lock with a PIN or fingerprint, encrypted, never rooted or jailbroken. If it is lost or stolen, report it at once: its work apps are wiped remotely and its authenticator revoked, and a new one is registered after an identity check. A leaver's is removed on their last day.
+- **A phone used for work,** to reach the platform or to hold an authenticator app, is managed by who owns it and recorded in the device register: {{phones}}: a supported system with updates applied, a screen lock with a PIN or fingerprint, encrypted, never rooted or jailbroken. If it is lost or stolen, report it at once: its work apps are wiped remotely and its authenticator revoked, and a new one is registered after an identity check. A leaver's is removed on their last day.
 - Keep customer data on the platform. Do not download it to personal devices, or send documents, statements, balances or ID numbers by email, SMS or WhatsApp; the platform sends customers links to their own pages instead.
 - Report a suspected incident, a lost device or a suspicious message to the ICT and security contact at once.
+- **Staff work only on laptops {{provider}} issues and manages.** A personal laptop is used only by a temporary person on a short stay, in the browser only, its basics (a supported system with updates, disk encryption, antivirus) confirmed by their sponsor; a longer stay, or customer data day to day, needs one of the provider's laptops or a managed browser profile.
 - **Print customer data only when a task needs it:** a statement a borrower asks for, or a signed original the law requires. Every print job is held at the printer until its owner enters their PIN there, set on each device by {{print_setup}}; documents printed from the platform carry the name of the person who printed them and the time, and each print is recorded. Anything printed is collected at once, locked away when not in use, never taken home, and shredded when no longer needed.
 - **Original documents** held as security (logbooks, title deeds) are kept in a locked cabinet, and every movement in or out is recorded.
 
@@ -147,6 +148,7 @@ Dealt with means fixed, usually by installing the software maker's update, or, w
 
 ### 5.7 Application security
 
+- Every screen works in the current and previous versions of Chrome, Edge, Firefox and Safari, on computers and phones, and is tested in each before release; no control depends on one browser.
 - Web applications are tested against the OWASP Top 10 in the build pipeline; mobile applications, when used, are built and tested to OWASP MASVS level 2.
 - Every act that moves money, approves a request or reveals a person's details asks the user to authenticate again at that moment.
 - Screens show the least personal data needed; masked details are revealed only on request, and each reveal is recorded.
@@ -157,6 +159,7 @@ Dealt with means fixed, usually by installing the software maker's update, or, w
 
 - Staff reach the platform only through the edge, over HTTPS, signed in with two factors. Customers reach only their own pages, by a code from an authenticator app or, for those without one, a one-time code by SMS to their phone.
 - Administrative access to servers and databases is only through the bastion, against an approved ticket, for a limited time (four hours by default), with every session recorded. The provider's engineers sign in with hardware security keys and hold no standing access to {{institution}}'s data.
+- **Temporary people** (an auditor, a consultant, a contractor, temporary staff, an inspector) each have a named account with a sponsor on {{institution}}'s staff, who asks for it, vouches for the person and confirms when it ends, and approval by someone else; an end date on which it turns itself off; the least role (an auditor's is read-only; none may approve, pay out or change a product); an authenticator app; confidentiality signed first; the browser only, with no exports and identity numbers masked; and a place in each quarterly access review.
 - {{institution}} may switch off the provider's access at any time. Every grant of access is recorded and compared each month at the service review.
 - Connections to third parties use authenticated, encrypted channels; their credentials are held in the key management system, and source addresses are registered with the party where it allows.
 
@@ -224,7 +227,7 @@ Passwords are stored only as salted hashes by the sign-in service, never in clea
 ## 6. Third parties and outsourcing
 
 - The platform is provided by {{provider}} under a services agreement that keeps {{institution}}'s data in Kenya, forbids its use for any other purpose, allows subcontracting only with {{institution}}'s approval, gives the Central Bank of Kenya access, and sets how data is returned and erased if the agreement ends.
-- Every supplier that handles {{institution}}'s data is assessed before use and named in its register of processors: hosting ({{hosting}}), Safaricom (M-Pesa), {{bank}}, the SMS route, identity verification ({{identity_providers}}) and the managed security service ({{managed_security}}).
+- Every supplier that handles {{institution}}'s data is assessed before use and named in its register of processors: hosting ({{hosting}}), the mobile operators (Safaricom, Airtel, Telkom), {{bank}}, the SMS route, identity verification ({{identity_providers}}) and the managed security service ({{managed_security}}).
 
 ## 7. Exceptions, compliance and review
 
@@ -248,7 +251,7 @@ Passwords are stored only as salted hashes by the sign-in service, never in clea
 | Lending service | Applications, collateral, product versions; the CBK lender regulations applied to each loan | The provider's service |
 | Approval engine | Approval chains and committee decisions, with step-up at each | The provider's service |
 | Kapu Core | The loan ledger: loans, schedules, balances, postings, the end of day | Apache Fineract |
-| Rails | M-Pesa collections and payouts; bank statements | The provider's service, to Safaricom Daraja |
+| Rails | Mobile money collections and payouts (M-Pesa, and Airtel Money and T-Kash where used); bank statements | The provider's service, to each operator's interface |
 | Messaging | SMS, WhatsApp and email from approved templates, with consent and quiet hours | The provider's service |
 | Identity and document vault | Identity checks; documents with personal data, encrypted | The provider's service; encrypted object storage |
 | Reconciliation | Matches M-Pesa and bank transactions with the ledger; exceptions | The provider's service |
@@ -281,7 +284,7 @@ How data and requests flow from the front-end applications to the databases, one
 | 4 | Decision | The request; each decision | Re-authentication at each decision; no one decides two steps in a row |
 | 5 | Agreement signed | The agreement; the key facts | Read before signing; signed with a one-time code; the signed copy kept in the vault |
 | 6 | Disbursement | The payout instruction | Only the approved amount to the approved account, checked by its hash; a second person approves |
-| 7 | Repayment | The payment and its reference | From Safaricom's authenticated callback; matched to the loan; applied in the regulated order |
+| 7 | Repayment | The payment and its reference | From the mobile money operator's authenticated callback; matched to the loan; applied in the regulated order |
 | 8 | Checks and audit | Every change; statements | Each change signed and chained; money, ledger and statements compared every cycle |
 
 ## Annex D. Independent assurance

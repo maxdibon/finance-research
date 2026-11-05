@@ -11,7 +11,7 @@ depends_on: [messaging]
 used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging, endpoints, github, recon, back-office, staff-workspace, kapu-console, vault]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018, FS-1050, FS-1054, FS-1055, FS-1056, FS-1070, FS-1094]
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018, FS-1050, FS-1054, FS-1055, FS-1056, FS-1070, FS-1094, FS-1101]
 last_reviewed: 2026-11-05
 ---
 
@@ -231,6 +231,26 @@ their bound phone for those without one (S18); tokens of 5 minutes
   alert, like Fineract's (approval-engine §9). Every enabled staff user is
   also checked against a current employee record in Odoo; a user without
   one, or past its departure date, is an alert (FS-769).
+
+**Temporary people** (FS-1101): an external auditor, a consultant, a
+contractor, temporary staff, an intern, a regulator's inspector given
+access.
+
+- **A named account,** never shared, in the staff realm.
+- **A sponsor:** a member of the institution's staff who asks for the
+  access, vouches for the person, is the contact while it lasts, and
+  confirms when it ends; the institution's administrator approves, and
+  no one sponsors and approves the same account.
+- **An end date,** set when the account is made: on it the account turns
+  itself off (S35); an extension needs the sponsor and the approver again.
+- **The least role:** the auditor's role is read-only; no temporary
+  person approves, pays out or changes a product.
+- **An authenticator app,** as staff; **confidentiality signed first** (an
+  NDA, or the auditor's engagement terms).
+- **The browser only:** no bulk export, Restricted values masked, short
+  sessions; its device as endpoints §3 sets.
+- **Listed in each quarterly access review,** with its sponsor and its end
+  date.
 
 ## 7 · Contracts
 

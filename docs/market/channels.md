@@ -6,7 +6,7 @@ status: living
 released: unreleased
 owner: Product lead, channels
 classification: Internal
-review_ids: [FS-1012, FS-1013, FS-1014, FS-1015, FS-1016, FS-1017, FS-1018, FS-1022, FS-1058, FS-1094]
+review_ids: [FS-1012, FS-1013, FS-1014, FS-1015, FS-1016, FS-1017, FS-1018, FS-1022, FS-1058, FS-1094, FS-1102]
 last_reviewed: 2026-11-05
 ---
 
@@ -89,6 +89,12 @@ one can be approved on the other. A person who is both a customer and a
 field agent installs both apps,
 signed in with the same identity: the field app is a work tool on a
 managed device (OC-19), the customer app their own.
+
+**Every browser** (FS-1102): every screen works in the current and
+previous versions of Chrome, Edge, Firefox and Safari, on computers and
+phones, and is tested in each before release; customer pages also work
+on the light browsers common on low-cost phones. No control depends on
+one browser.
 
 ## 3 · Every channel, and where it stands
 

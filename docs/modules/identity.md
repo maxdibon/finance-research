@@ -10,7 +10,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite, decisioning]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028, FS-1070, FS-1077, FS-1078, FS-1094]
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028, FS-1070, FS-1077, FS-1078, FS-1094, FS-1103]
 last_reviewed: 2026-11-05
 ---
 
@@ -198,7 +198,7 @@ contract").
 |---|---|---|
 | National ID, passport, alien ID (ID-01) | NPDM, formerly IPRS (PT-29), by its agreement (FS-202) | Prembly (PT-53), Smile ID (PT-30), MetaMap (PT-33, national ID only) |
 | Liveness and face match (ID-04) | None | Prembly, Smile ID, MetaMap |
-| Phone number (ID-05) | The operators: the registered name, or Safaricom Hakikisha | Smile ID matches a number to a national ID; Prembly returns the carrier only |
+| Phone number (ID-05) | The customer's own operator, Safaricom, Airtel or Telkom: the registered name; or Safaricom Hakikisha (FS-1103) | Smile ID matches a number to a national ID; Prembly returns the carrier only |
 | KRA PIN and tax compliance (ID-06) | KRA GavaConnect (PT-35) | Prembly; Smile ID (the PIN from an ID number only) |
 | A business's registration (ID-07) | The business registry, where it offers an API (FS-205) | Prembly, Smile ID |
 | PEP and sanctions (financial-crime FC-05, FC-06) | Published lists | Prembly, Smile ID |
@@ -209,8 +209,9 @@ contract").
    not, or when the direct source is down.
 2. **Checks are chained, per product** (FS-1078): the steps in order,
    each passing on only what the next needs, as the diagram above draws
-   the first chain: the operator confirms the phone number and the ID
-   number it is registered to; NPDM confirms that person and gives their
+   the first chain: the customer's own operator (Safaricom, Airtel or
+   Telkom, FS-1103) confirms the phone number and the ID number it is
+   registered to; NPDM confirms that person and gives their
    photo; liveness matches a selfie to it. A step that fails stops the
    chain, so no later check is run or paid for. Handing one provider's
    answer to another (the register's photo to an aggregator) is LQ-36.
@@ -365,7 +366,7 @@ profile's documents in ID-27.
 |---|---|---|---|
 | NPDM, formerly IPRS (Kenya) | read | API | Designed (ID-01). Direct access by MOU — partners PT-29, FS-202 |
 | Identity aggregators: Prembly, Smile ID, MetaMap and others | read | API, or SDK for liveness | Planned (ID-01, ID-04 to ID-07): several behind one check, §5 "Providers" (FS-1077); partners PT-30, PT-33, PT-53; SD-11 |
-| Mobile-network operators (Safaricom, Airtel) | read | the operator's name for the number | Built (ID-05) at Onit Bank, under its agreements; a new customer needs its own or Dibon's — compliance LC-13 |
+| Mobile-network operators (Safaricom, Airtel, Telkom; FS-1103) | read | the operator's name for the number | Built (ID-05) at Onit Bank, under its agreements; a new customer needs its own or Dibon's — compliance LC-13 |
 | Safaricom Hakikisha | read | Daraja API | Planned (ID-05) — rails RL-21 |
 | Operators' SIM-swap and IMSI checks | read | operator API | Planned (ID-12, ID-13) — rails RL-22; compliance LC-13 |
 | One-time code by SMS | out | messaging | Planned (ID-11) |

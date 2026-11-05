@@ -12,7 +12,7 @@ depends_on: [access-keycloak, observability-grafana]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777, FS-896, FS-1054, FS-1100, FS-1099]
+review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777, FS-896, FS-1054, FS-1100, FS-1099, FS-1101, FS-1102]
 last_reviewed: 2026-11-05
 ---
 
@@ -112,8 +112,9 @@ A lost device is then a device to cut off, not data to recover.
 | Servers and Kubernetes nodes | Dibon, or the institution on its premises | Endpoint protection beside Falco: Falco for containers, the endpoint agent for the host; hardened to the CIS Benchmarks (SE-04) | Managed detection |
 | The key holders' offline laptop | Dibon | Never networked; kept in the safe; holds tools, never keys (deployment §4) | Its custody log |
 | The designated bank-file machine | The institution | Bank work only; encryption, updates, protection; no email or browsing (JN-13) | The institution, with our minimum agreed at onboarding |
-| Staff phones that reach the platform or hold an authenticator (FS-1099) | The institution's, or the staff member's own | Enrolled by us in device management: fully managed if the institution issues it; a work profile if it is the staff member's own, holding only the work apps (the authenticator, email, the browser for the platform), which we can wipe without touching the rest; a supported system with updates applied, a screen lock with a PIN or fingerprint, encrypted, never rooted or jailbroken. Lost: wiped remotely and its authenticator revoked at once, a new one registered after an identity check. A leaver's removed on their last day | Device management |
+| Staff phones that reach the platform or hold an authenticator (FS-1099) | The institution's, or the staff member's own: each phone by who owns it, so one institution may have both (FS-1101) | Enrolled by us in device management and recorded in the device register with its holder and mode: fully managed if the institution issues it (and wiped whole if lost, so personal data stays off it); a work profile if it is the staff member's own, holding only the work apps (the authenticator, email, the browser for the platform), which we can wipe without touching the rest; a supported system with updates applied, a screen lock with a PIN or fingerprint, encrypted, never rooted or jailbroken. Lost: wiped remotely and its authenticator revoked at once, a new one registered after an identity check. A leaver's removed on their last day | Device management |
 | Field officers' phones | The institution, enrolled by us | Android Enterprise; bound to the officer; wiped remotely (OC-19) | Device management |
+| Personal laptops (FS-1101) | A temporary person's own | Only for a short stay with limited access: in the browser only, under the temporary-access rules (access-keycloak §6), its basics (a supported system with updates, disk encryption, antivirus) confirmed by the sponsor; a longer stay, or customer data day to day, gets one of our laptops, or a managed browser profile (Chrome, Edge or Firefox under our management) that blocks downloads, copying and screenshots of work pages. Staff never work on a personal laptop | The sponsor; the platform's own controls |
 | The institution's other staff devices | The institution | Its own policy, with our minimum for any device that reaches the platform: a supported system, updated, encrypted, locked, protected | The institution |
 
 ## 4 · Two tiers

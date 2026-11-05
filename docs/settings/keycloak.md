@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Security lead
 classification: Internal
-review_ids: [FS-1050, FS-1055, FS-1056, FS-1094]
+review_ids: [FS-1050, FS-1055, FS-1056, FS-1094, FS-1101]
 last_reviewed: 2026-11-05
 ---
 
@@ -60,6 +60,7 @@ are its file, `deployments/<deployment>/keycloak.md`.
 | S32 | Staff roles | The positions, folded to the institution's staff; which roles each position holds | Per deployment | Its own organisation, within the separations the approval engine enforces (FS-982) | Realm configuration from git (the roles); the people and their grants stay in Keycloak, by the provisioning service | K7, K14 |
 | S33 | The institution's administrators | Two, named by role, who manage its users | Per deployment | No one administrator alone (JN-18) | Its decision, recorded; the grants by the provisioning service | K7 |
 | S34 | SMS sender | The institution's sender ID, through our messaging service | Per deployment | Customers know who is writing | Messaging's configuration, from git | K5 |
+| S35 | Temporary accounts | Each temporary person's account carries its sponsor and an end date, set when it is made; a daily job disables every account past its end date and raises an event; an extension is a new approval (access-keycloak §6, FS-1101) | Mandatory | No outsider keeps access past their work | The account's attributes; the daily job, from git | The disabled accounts' events |
 
 ## 3 · How it is applied
 
