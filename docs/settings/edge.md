@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Security lead
 classification: Internal
-review_ids: [FS-1050]
-last_reviewed: 2026-10-29
+review_ids: [FS-1050, FS-1093]
+last_reviewed: 2026-11-05
 ---
 
 # The edge · baseline settings
@@ -46,7 +46,7 @@ through the bastion.
 | S16 | Secrets | None of its own: certificates from cert-manager, the realms' public keys from Keycloak | Mandatory | Nothing to steal at the edge | Gateway resources | Configuration record |
 | S17 | Logging | Every decision (allowed, blocked, limited) logged and counted; no token, password or body in a log | Mandatory | An attack shows on a dashboard first (SE-18) | Gateway and firewall configuration, from git | Logs reach Loki without secrets |
 | S18 | Replicas | 2 at each active site | Default: 2 or more | A restart drops no traffic | Gateway resources; Kyverno | Configuration record |
-| S19 | Upstream protection | The hosting provider absorbs floods before they reach us | Per deployment | Its provider's service (SE-03) | The provider's contract | The provider's report |
+| S19 | Upstream protection | The hosting provider's managed firewall in front of the edge: from the internet only the edge's listeners are reachable, everything else closed; floods absorbed there (FS-1093) | Per deployment | Its provider's service (SE-03) | The provider's contract | The provider's report |
 | S20 | Host names | The institution's own names on the web listener | Per deployment | Its customers see its name | Gateway resources, from git | Certificates for each name |
 
 ## 3 · How it is applied

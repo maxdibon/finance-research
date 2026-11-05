@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1074]
-last_reviewed: 2026-11-01
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1074, FS-1079]
+last_reviewed: 2026-11-05
 ---
 
 # Deployments
@@ -24,7 +24,7 @@ instance in one environment, across its sites; a sandbox counts.
 | Deployment | Institution | Environment | Sites | Who runs it | Availability | Release | Status | Page |
 |---|---|---|---|---|---|---|---|---|
 | Roan Capital, production | Roan Capital (CU-01) | Production | Site A and site B, in Kenya; the provider to decide (FS-032, FS-775) | Dibon | Warm standby (RC-35) | R1 | Designed | [roan-capital-production.md](roan-capital-production.md) |
-| The MVP sandbox | None: made-up data only | Sandbox | Public Azure, South Africa North | Dibon's platform workstream | None: rebuilt from code | The MVP day (3 November) | Designed | [mvp-sandbox.md](mvp-sandbox.md) |
+| The MVP sandbox | None: made-up data only | Sandbox | Public Azure, South Africa North | Dibon's platform workstream | None: rebuilt from code | The MVP day (6 November) | Designed | [mvp-sandbox.md](mvp-sandbox.md) |
 
 **How a page is kept:**
 

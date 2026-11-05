@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Security lead
 classification: Internal
-review_ids: [FS-1050]
-last_reviewed: 2026-10-29
+review_ids: [FS-1050, FS-1093]
+last_reviewed: 2026-11-05
 ---
 
 # Roan Capital, production · the edge's settings
@@ -26,7 +26,7 @@ yet (baseline S05).
 | Id | Setting | This deployment | Decided by | Source | Status |
 |---|---|---|---|---|---|
 | S13 | The limits | Per route, sized to Roan Capital's volumes | Dibon | Architecture review A7 | To decide: its volumes, to ask (question 4.3 of Roles, approvals and going live) |
-| S19 | Upstream protection | Its hosting provider's flood protection | Dibon | SE-03 | To decide: the provider (FS-032, FS-775), to confirm with it |
+| S19 | Upstream protection | Liquid's managed firewall and flood protection, in front of the edge at both sites (FS-1093) | Dibon, with Liquid | SE-03 | The product and its terms to confirm with Liquid, in the hosting contract (FS-032, FS-775) |
 | S20 | Host names | Roan Capital's own names for its staff's screens and its customers' pages | Roan Capital | Its domain | To decide |
 
 ## 3 · Departures from a default

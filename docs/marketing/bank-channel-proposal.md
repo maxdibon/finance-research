@@ -6,7 +6,7 @@ status: draft
 released: 2026.10.15
 owner: Commercial lead
 classification: Public once approved
-last_reviewed: 2026-10-05
+last_reviewed: 2026-11-05
 ---
 
 # Bank channel proposal
@@ -20,7 +20,7 @@ the build; without one, the copy reads "your bank".
 
 **Title:** Your business customers' books, reconciled by your bank
 **Kicker:** A partnership proposal
-**Reference:** DC-FS-PR-001
+**Reference:** DC-FS-PR-BCH-001
 
 ## The opportunity
 

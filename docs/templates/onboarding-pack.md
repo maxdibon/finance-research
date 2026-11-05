@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Product lead, business suite
 classification: Internal
-review_ids: [FS-1019, FS-1021, FS-1022, FS-1024, FS-1025, FS-1026, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-1019, FS-1021, FS-1022, FS-1024, FS-1025, FS-1026, FS-1058, FS-1100]
+last_reviewed: 2026-11-05
 ---
 
 # Onboarding pack
@@ -19,7 +19,7 @@ wording below is starter wording, for counsel to finalise;** the
 institution's adopted version is its own, kept in its instance, never
 here. Business suite BS-25.
 
-**Its look and its ids** (FS-1024, FS-1025): the pack is DC-FS-TM-001
+**Its look and its ids** (FS-1024, FS-1025): the pack is DC-FS-TM-ONB-001
 (design-system §7). Each template, once the institution adopts it, is
 **the institution's document, in its look** (design-system §6, its
 theme), made in Word through the design system's agreement builder, no

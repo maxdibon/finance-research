@@ -1,7 +1,7 @@
 {
   "editions": {
     "full": {
-      "id": "DC-FS-PF-001",
+      "id": "DC-FS-PF-FUL-001",
       "title": "Dibon Financial Services Portfolio",
       "version": "1.2",
       "status": "issued",
@@ -11,7 +11,7 @@
         "integrations", "deployment", "service", "security", "roadmap", "working"]
     },
     "short": {
-      "id": "DC-FS-PF-002",
+      "id": "DC-FS-PF-OVR-002",
       "title": "Dibon Financial Services Overview",
       "version": "1.2",
       "status": "issued",

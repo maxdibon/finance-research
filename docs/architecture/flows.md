@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-695, FS-698, FS-699, FS-704, FS-706, FS-707, FS-896, FS-1053]
-last_reviewed: 2026-10-29
+review_ids: [FS-695, FS-698, FS-699, FS-704, FS-706, FS-707, FS-896, FS-1053, FS-1093]
+last_reviewed: 2026-11-05
 ---
 
 # Flows: how the components work together
@@ -42,7 +42,7 @@ bastion.
               v                         v                               v
   +----------------------------------------------------------------------------------------------+
   | PROVIDER PROTECTION                                                                          |
-  | absorbs floods before they reach us (SE-03)                                                  |
+  | a managed firewall: only the edge's listeners reachable; floods absorbed (SE-03)             |
   | [liquid]                                                                                     |
   +----------------------------------------------------------------------------------------------+
                             |

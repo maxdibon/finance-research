@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-934, FS-935, FS-957, FS-981, FS-1058, FS-1061]
-last_reviewed: 2026-11-01
+review_ids: [FS-934, FS-935, FS-957, FS-981, FS-1058, FS-1061, FS-1113]
+last_reviewed: 2026-11-05
 ---
 
 # Roan Capital · Motor Vehicle, the logbook loan · product version 1 · proposed
@@ -28,7 +28,7 @@ secured by the logbook. The 15% is made of a base rate, the cost of
 funds, an admin fee of 2 to 3% and a processing fee of 2%. Agreed for
 every product: no grace, default the day after a missed payment; a due
 date on a holiday moves to the next working day; every amount to two
-decimal places; payouts by bank only, none from 23:00 to 04:00;
+decimal places; payouts by bank only (M-Pesa payouts as well proposed, FS-1113), none from 23:00 to 04:00;
 restructuring at 365 days, earlier by exception. Roan Capital is to share
 the vehicle tracking, chattels mortgage and valuation charges, and a
 sample one-month and multi-month calculation, so the fee split can be

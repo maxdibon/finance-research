@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032, FS-1053, FS-1055, FS-1070]
-last_reviewed: 2026-11-01
+review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032, FS-1053, FS-1055, FS-1070, FS-1093, FS-1094]
+last_reviewed: 2026-11-05
 ---
 
 # One instance, as R1 deploys it
@@ -21,12 +21,16 @@ sites is in [deployment](deployment.md).
   PEOPLE      staff, in a browser       borrowers, by links and codes    the rails' callbacks
                           |                             |                             |
             +--------------------------------------------------------------------------------------+
+  PROVIDER  | PROVIDER   managed firewall: only the edge reachable; floods absorbed  [liquid]      |
+            +--------------------------------------------------------------------------------------+
+                                                        |
+            +--------------------------------------------------------------------------------------+
   EDGE      | EDGE   the only way in: firewall, gateway, rate limits  [envoy, coraza]              |
             +--------------------------------------------------------------------------------------+
                                                         |
             +--------------------------------------------------------------------------------------+
-  SIGN-IN   | ACCESS   staff by password and key; customers by a code to their                     |
-            | phone; four realms; step-up for every decision         [keycloak]                    |
+  SIGN-IN   | ACCESS   staff by password and key or app; customers by an app's code, or            |
+            | SMS to their phone; four realms; step-up for every decision   [keycloak]             |
             +--------------------------------------------------------------------------------------+
                           |                             |                             |
             +--------------------------+  +--------------------------+  +--------------------------+
@@ -82,6 +86,7 @@ Each layer asks only the one below it, as the arrows show; every change goes on 
 
 | Box | What it is | Spec or module |
 |---|---|---|
+| PROVIDER | The hosting provider's managed firewall and flood protection, in front of the edge: only the edge's listeners reachable from the internet (FS-1093) | platform-security SE-03 |
 | EDGE | The only way in: a web application firewall and an API gateway; how it works, [flows](flows.md) §1 | platform-security SE-01, SE-02 |
 | KAPU CONSOLE | Our operators' approvals, the read-only fallback, products read-only, outside Odoo | [kapu-console](../specs/kapu-console.md) |
 | STAFF WORKSPACE | Staff's screens for daily lending, inside Odoo | [staff-workspace](../specs/staff-workspace.md) |
