@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093, FS-1094, FS-1096, FS-1109, FS-1110, FS-1114]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093, FS-1094, FS-1096, FS-1109, FS-1110, FS-1114, FS-1115]
 last_reviewed: 2026-11-05
 ---
 
@@ -344,8 +344,10 @@ To size (architecture review A7), from: three or four staff; borrowers
 and loans a month, and messages a day, to ask Roan Capital. Until then,
 the replicas in §2 are the minimum each spec sets.
 
-## 11 · Exit
+## 11 · Exit: when the service ends
 
+What happens when Dibon's service to Roan Capital ends, for whatever
+reason: the contract terminated by either side, or not renewed.
 **Proposed, for the contract** (approval pack item 14):
 
 1. **Notice** as the contract says; Dibon confirms in writing what will
