@@ -49,7 +49,7 @@ module.exports = function institution(docx, theme = {}) {
     const n = rows[0].length;
     let w = widths;
     if (!w) {
-      const weight = rows[0].map((_, j) => Math.min(60, Math.max(10, ...rows.map((r) => String(r[j] || '').length))));
+      const weight = rows[0].map((_, j) => Math.min(60, Math.max(14, ...rows.map((r) => String(r[j] || '').length))));
       const sum = weight.reduce((a, b) => a + b, 0);
       w = weight.map((x) => Math.floor((x / sum) * total));
       w[n - 1] += total - w.reduce((a, b) => a + b, 0);

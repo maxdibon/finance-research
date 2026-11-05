@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1091, FS-1095]
+review_ids: [FS-1080, FS-1087, FS-1091, FS-1095, FS-1097]
 last_reviewed: 2026-11-05
 ---
 
@@ -34,8 +34,8 @@ for a licence (initial capital of twenty million shillings or more), reg
 
 | Asked for | Licence (reg 6(2)) | Registration (reg 9(3)) | Whose | Made from |
 |---|---|---|---|---|
-| Statements on complying with Part VII of the Consumer Protection Act and Part VI of the Competition Act | (f), (g) | (f), (g) | The institution | To write: a template each |
-| The delivery channels described | (l) | (q) | The institution, with us | market/channels; its deployment |
+| Statements on complying with Part VII of the Consumer Protection Act and Part VI of the Competition Act | (f), (g) | (f), (g) | The institution | [Statements](compliance-statements.md), template DC-FS-TM-006 |
+| The delivery channels described | (l) | (q) | The institution, with us | [Delivery channels](delivery-channels.md), template DC-FS-TM-007, which is also the notice reg 27 asks for |
 | Its products and their terms; its operations (loan sizes, rate ranges, classification, the non-performing period); its pricing parameters | (m), (p), (cc) | (j), (u) | The institution | Its product versions (docs/products/) |
 | Consumer protection policies, with the complaints redress | (o), (t) | (o) | The institution | Part C of the credit, ethics and conduct policy, to grow into its own template |
 | A code of conduct | (s) | (t) | The institution | Part B of the same policy |
@@ -48,6 +48,10 @@ for a licence (initial capital of twenty million shillings or more), reg
 Around the application, the Central Bank is told thirty days ahead of
 any third party investing in or financing the lender (reg 22(4)), of an
 outsourcing (reg 31), and of a new delivery channel (reg 27).
+
+**On top of what goes:** a [submission index](submission-index.md),
+template DC-FS-TM-008: every item above, enclosed now or to follow with
+the application.
 
 **Building one:**
 

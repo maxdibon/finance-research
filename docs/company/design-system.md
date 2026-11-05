@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-728, FS-781, FS-816, FS-817, FS-1024, FS-1025, FS-1026, FS-1039, FS-1087, FS-1091]
+review_ids: [FS-728, FS-781, FS-816, FS-817, FS-1024, FS-1025, FS-1026, FS-1039, FS-1087, FS-1091, FS-1097]
 last_reviewed: 2026-11-05
 ---
 
@@ -181,7 +181,7 @@ Services), a kind, and a serial:
 | Agreement, NDA | AG | |
 | Questionnaire | QN | |
 | Report, review, Product Understanding Document | RP | |
-| Template or pack we give an institution | TM | DC-FS-TM-001, the onboarding pack; TM-003 to TM-005, the CBK licence pack's policies (templates/cbk-licence-pack) |
+| Template or pack we give an institution | TM | DC-FS-TM-001, the onboarding pack; TM-003 to TM-008, the CBK licence pack's policies, statements, channels and index (templates/cbk-licence-pack) |
 
 - **The number is the document,** across its versions; a serial is never
   reused. **The version** follows it (`DC-FS-PF-001 v1.2`): major for a

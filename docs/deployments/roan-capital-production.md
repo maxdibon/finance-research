@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093, FS-1094]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093, FS-1094, FS-1096]
 last_reviewed: 2026-11-05
 ---
 
@@ -27,7 +27,7 @@ Written from the design (FS-1037); generated from the code once it exists
 | Who runs it | Dibon (architecture README §9) |
 | Availability | Warm standby, as its contract takes (RC-35; deployment §2) |
 | Release | R1 (delivery plan) |
-| Go-live | 30 November 2026 (FS-1088); waits on R1's build, site B (FS-775), the tests before go-live (ICT policy, Annex D), and CBK's thirty days' notice of the channel (open answer 30) |
+| Go-live | A soft launch on 30 November 2026, Roan Capital's current process run in parallel for about a month (FS-1088, FS-1096); waits on R1's build, site B (FS-775), the tests before go-live (ICT policy, Annex D), and CBK's thirty days' notice of the channel (open answer 30) |
 
 ## 2 · Components
 
