@@ -1,7 +1,7 @@
 # Dibon financial services — session handoff
 
     release: 2026.10.16 · minor
-    updated: 2026-10-28
+    updated: 2026-11-05
     the release is the documentation's, moved by each release (FS-842);
     this file has no version of its own
     purpose: hand this repository to a session that knows nothing about it;
@@ -270,9 +270,13 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   (FS-1029), from `briefs/_template.md`, which the check holds them to
   (FS-1031). **Who uses which app:** `docs/market/channels.md`. **Starter
   templates** for an institution's business customers and partners:
-  `docs/templates/` (FS-1021).
-- **Our documents' numbers** (`DC-FS-<kind>-<serial>`) are in
-  design-system §7, and who received each in the document register's
+  `docs/templates/` (FS-1021); there too, an institution's CBK licence
+  pack (`cbk-licence-pack.md` and its policies), built into Word in the
+  institution's look by `tools/policies/build.js` from a template and a
+  values file kept in `clients/<customer>/working/` (FS-1079).
+- **Our documents' numbers** (`DC-FS-<kind>-<type>-<serial>`, and an
+  institution's own, `<code>-<kind>-<type>-<serial>`) are in
+  design-system §7 (FS-1091, FS-1100), and who received each in the document register's
   distribution log (FS-1026): give anything sent outside a number, and
   log its sending.
 - **Deployments and running them:** `docs/deployments/`, a page per
@@ -358,14 +362,16 @@ register row.
   Word's `~WRL….tmp` files. Add the law register row before the check
   accepts the file.
 - **CBK and SASRA** allow `curl` with a browser user agent.
-- **PDFs** are read and rendered with `py` and PyMuPDF; Word through
-  PowerShell COM exports a .docx to PDF (no `python` or `pdftoppm` here).
+- **PDFs** are read and rendered with `py` and PyMuPDF, or Poppler's
+  `pdftoppm` where a person has unpacked it (not on PATH: their handover
+  says); Word through PowerShell COM exports a .docx to PDF (no `python`
+  or LibreOffice here).
 - **Close the browser pane when done.**
 
 ## Traps that have cost real time
 
 **Read [the traps](docs/service-management/traps.md) before your first
-edit** (FS-1053): 37 things that have cost a session real time, each
+edit** (FS-1053): 40 things that have cost a session real time, each
 with what to do instead. `dibon session start` hands them over with this
 page. When something costs you time, add it there, in the same pass.
 

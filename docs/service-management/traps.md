@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1053]
-last_reviewed: 2026-11-01
+review_ids: [FS-1053, FS-1118]
+last_reviewed: 2026-11-05
 ---
 
 # Traps
@@ -31,6 +31,16 @@ two: the trap, then what to do.
   row counts before and after.
 - **PowerShell variable names ignore case** (`$w` is `$W`), and
   PowerShell 5.1 garbles non-ASCII in file names: find them by wildcard.
+- **PowerShell 5.1 splits a here-string at its double quotes** when it
+  passes it to git: a commit message quoting "a phrase" becomes stray
+  pathspecs and nothing is committed. Write the message to a file and
+  `git commit -F` it (FS-1111).
+- **A register row tagged [decision] needs its entry in docs/decisions/,**
+  in the file for its hundred; the first id of a new hundred needs the
+  file and its row in docs/decisions.md's index (FS-1109).
+- **An environment variable set for a builder** (DOCX_MODULE) must be set
+  in the same PowerShell call as the build; a call chained after a
+  failure never sets it, and the build fails on the missing package.
 - **The phase-1 cap is full**; adding a capability trips scope,
   references, dependencies, customers and obligations at once.
 - **A break test goes stale** when the design catches up with it: run the

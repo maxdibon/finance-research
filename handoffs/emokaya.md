@@ -40,55 +40,64 @@ here.
 
 ## Where I left off
 
-As at 1 November 2026. Main pushed at fd0d561 (FS-1053's cleanup, the
-Roan review session's FS-1061 to FS-1067, the architecture brought up to
-the October design); `origin` is still github.com/eric-mokaya/finance.
+As at 5 November 2026. Main pushed with FS-1079 to FS-1117; `origin` is
+still github.com/eric-mokaya/finance.
 
-- **FS-1053, the documentation cleanup:** most of it on main (the
-  register's triage, the overview and top bar, docs/ids.md, decisions by
-  hundreds, the team's words and the traps on pages of their own, specs
-  by layer, the status page's unreviewed list). **Left:** the 26 root
-  files into folders, the customer template (Roan Capital and Lofty
-  Corban), trimming Roan Capital's working folder, and the MVP day page
-  archived once its outcomes are recorded. **The release waits for
-  FS-1053 to finish** (his word).
-- **The architecture README** (FS-1068): agreed, on his word as solution
-  architect; items 1 to 4 done. Left: item 5, §11 to the legal
-  questions, §12's sources, §6's documents bullet to the vault spec.
-  FS-066, the third ledger mode, proposed Medium.
-- **The collateral register** (FS-1069, High): no design of its own;
-  the requirements are in mfi MF-03, MF-04, MF-15, MF-30, and each spec
-  touches its part. Proposed in chat: a section of the lending service,
-  or a spec of its own.
-- **Roan Capital:** the team's review taken in (FS-1061 to FS-1067, by
-  the Roan review session). Wait for the team to finish before more
-  (his word); then FS-1040, FS-1042, FS-1049, the Biashara v0.6 layout
-  for the other questionnaires if he approves, clean copies, the
-  distribution log.
-- **Settings and deployments** (FS-1037, FS-1050): baselines for Keycloak,
-  Fineract, PostgreSQL, OpenBao and the edge, with Roan Capital's files;
-  the rest as each component is taken up (FS-1060).
-- **MVP day, 30 October:** its outcomes are still to be recorded, then
-  FS-928 to FS-930 and FS-938 to FS-951 closed.
-- **Waiting on his word:** FS-935 and FS-367 (Critical); FS-1036 (a
-  cluster per institution, five database clusters); FS-1038 (OpenBao's
-  unseal); FS-1051 (what encrypts the databases at rest); FS-1034 and
-  FS-1035 (Dibon's books and its Odoo off odoo.sh); FS-1059 (the apps'
-  framework, store name, channel API backend).
-- **Customers and partners:** SBM Bank (FS-911 to FS-913, FS-920); Lofty
-  Corban (CU-05, FS-918); Onit Bank (CU-02).
+- **Roan Capital's CBK resubmission, due Friday 6 November at 14:00**
+  (FS-1079 to FS-1117). Its first DCP submission was rejected; it is
+  going for a licence under Part II (FS-1098, FS-1107). Six documents and
+  two diagrams, built in its look from docs/templates/ and its values
+  (clients/roan-capital/working/cbk/values.json) by tools/policies/build.js;
+  the current versions in clients/roan-capital/working/, and copies in
+  its folder "For Roan Capital, CBK pack" to share. The cover note to its
+  CEO is v0.4 there; the Cc is still to fill.
+  **Next:** its answers to the note's eight questions, the M-Pesa payout
+  proposal (FS-1113, open answer 42: a B2C shortcode and its float, and
+  its products' payout terms) and the four proposals (cooling-off,
+  grace, cure, end of relationship); then the final rebuild that clears
+  every yellow "[To confirm]", and the folder refreshed. Ours, shown "to
+  follow, before launch": the hosting contract (Liquid), the identity
+  providers, the penetration test, the website's domain (FS-1105), the
+  Airtel Money and T-Kash dates.
+- **Decided on 5 November:** every rail and every bank, both ways
+  (FS-1108, FS-1109); WhatsApp out of R1 (FS-1110); Dibon the SMS
+  provider under its PRSP licence (FS-1111); M-Pesa payouts proposed to
+  Roan Capital (FS-1113); Tende Pay not for now, perhaps a competitor
+  (FS-1115).
+- **The services agreement** (being finalised; CBK receives it, reg
+  6(2)): it should carry the exit schedule (Roan Capital's deployment
+  §11), approval pack items 11 to 14 (CBK's access, reg 31(5)), the
+  processor terms the policies promise, and that a site's loss sits
+  outside the 99.9% (FS-1112, FS-1114, FS-1116). Roan Capital also owes
+  CBK thirty days' notice of the outsourcing (reg 31(3)).
+- **Soft launch 30 November,** Roan Capital's current process run beside
+  it for about a month; field visits by the browser route (FS-1106);
+  its first website, built by Dibon (FS-1105).
+- **The hackathon (MVP day) moved to Friday 6 November.** Its outcomes
+  then close FS-928 to FS-930 and FS-938 to FS-951, and the MVP day page
+  is archived; **the release waits for that** (FS-1053, his word).
+- **Prembly:** production tests this week, on the test plan (FS-1076);
+  several identity providers, chained (FS-1077, FS-1078). Lillian's
+  branch and row left as they are (his word).
+- **From before:** the architecture README's item 5 (FS-1068); the
+  settings baselines (FS-1037, FS-1050, FS-1060); waiting on his word,
+  FS-935 and FS-367 (Critical), FS-1036, FS-1038, FS-1051, FS-1034,
+  FS-1035, FS-1059; SBM Bank (FS-911 to FS-913, FS-920) and Lofty Corban
+  (CU-05, FS-918).
 - **On his machine:** Poppler for scanned PDFs, unpacked outside the
   repository and not on PATH; confidential scans rendered inside their
   folder and deleted after. No LibreOffice: Word files are rendered to PDF
   through Word itself, closing only the Word it started. The docx package
   for the builders: DOCX_MODULE pointing at another local project's copy
-  (E:/Agents/Claude/DialysisWater/node_modules/docx).
+  (E:/Agents/Claude/DialysisWater/node_modules/docx), set in the same
+  call as the build. Roan Capital's diagrams are SVG, drawn by a script
+  and shot to PNG with headless Edge.
 
 ## Generated
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric: Critical, High, and waiting on Eric's word (55 of 176)
+### Rows with Eric: Critical, High, and waiting on Eric's word (74 of 198)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -99,6 +108,7 @@ the October design); `origin` is still github.com/eric-mokaya/finance.
 | FS-735 | Roan Capital's contracted phase 1 is narrower than our R1: origination, KYC capture and digital onboarding, ap | Critical, waiting |
 | FS-736 | The emails speak of a platform shell and foundational setup under way, and the 3 Oct review found a prototype  | Critical |
 | FS-935 | Roan Capital's vehicle recovery ladder (a reminder on day 25, recovery or sale between days 31 and 47) against | Critical |
+| FS-1080 | CBK has asked Roan Capital to prepare and submit its policies and documents (CBK Bank Supervision Department's | Critical |
 | FS-016 | Compliance one-pager pricing: "Kshs 500,000 / USD 386.97" is off by 10×. At the rate the same sheet uses for O | High |
 | FS-049 | Odoo Sign is a simple electronic signature. Confirm which financial documents Kenyan law requires an advanced  | High |
 | FS-127 | Ask Safaricom whether a third party may operate on a client's shortcode with the client's consent (delegated a | High |
@@ -109,7 +119,6 @@ the October design); `origin` is still github.com/eric-mokaya/finance.
 | FS-363 | Start the certification and licence applications as soon as possible | High |
 | FS-564 | JN-03 findings: business-registry access (FS-205) blocks R1's business borrowers; statements from source (ID-1 | High, waiting |
 | FS-690 | R1 binds each customer to their SIM (ID-12) and sends codes, signing links and M-Pesa disbursements to that nu | High, waiting |
-| FS-737 | Roan Capital has agreed WhatsApp for remote loan processing, linked to the application system; our R1 left Wha | High, waiting |
 | FS-748 | Which internal, client and third-party policies do we still need? | High |
 | FS-786 | Is the virtual-accounts question an opportunity for us to run our core, for institutions without a capable pla | High, waiting |
 | FS-796 | Continue with the companion design for Roan Capital | High |
@@ -126,7 +135,7 @@ the October design); `origin` is still github.com/eric-mokaya/finance.
 | FS-929 | Work in the cloud, for visibility: each person deploys their components on Azure to test and check configurati | High |
 | FS-930 | Use GitHub's board (Projects) as part of the set-up, for the MVP day and after | High, waiting |
 | FS-934 | Roan Capital's three products, as locked on 21 October: Biashara (unsecured, KES 3,000 to 100,000, 14 or 30 da | High |
-| FS-950 | MVP day (30 October), Eric: The day's authority: decisions, reviews, merges, and a mock change advisory board | High |
+| FS-950 | MVP day (Friday 6 November), Eric: The day's authority: decisions, reviews, merges, and a mock change advisory | High |
 | FS-992 | A wallet product brings millions of accounts, tiny loans and savings round the clock: Fineract and the lending | High |
 | FS-993 | A wallet product needs the mobile operator's agreement: the product in its menu, the customer's data for limit | High |
 | FS-1035 | Dibon's own Odoo is hosted on odoo.sh: how do we reconcile that with our design (rule 10: client material in D | High, waiting |
@@ -139,6 +148,25 @@ the October design); `origin` is still github.com/eric-mokaya/finance.
 | FS-1063 | Roan Capital's people: three staff, its CEO and two loan officers, the CEO the platform's administrator; and t | High, waiting |
 | FS-1065 | After an outage, hold every payout that was waiting until the institution has entered its hand payouts and the | High |
 | FS-1069 | "I can't find info on the collateral register" | High |
+| FS-1070 | "Where's the document vault?" | High |
+| FS-1071 | How do we capture the physical location of the vehicle, particularly once we have claimed it for unpaid dues? | High |
+| FS-1075 | Prembly: a Postman collection from Lillian, and Prembly's Kenya brochure, added to sources/confidential/prembl | High |
+| FS-1076 | A test plan for Prembly in production this week; and Smile ID's online documentation reviewed, to compare with | High |
+| FS-1081 | The notes of our meeting with Roan Capital on 3 November (emailed 4 November): what they settle, and what they | High |
+| FS-1082 | Research CBK's rules on cooling-off periods and share them with Roan Capital (meeting of 3 November) | High |
+| FS-1083 | Give Roan Capital CBK-aligned definitions of default, non-performing loan, grace period and moratorium (meetin | High |
+| FS-1084 | Investor funds and a read-only investor portal for Roan Capital: capital locked for set periods (24 months, sa | High |
+| FS-1087 | Create templates and design systems for the documents (CBK's licence pack) | High |
+| FS-1089 | A standard for how fast security issues are fixed, and how long logs are kept, to include in the ICT policy | High |
+| FS-1090 | The security fix times in plain words, with examples; does the architecture already include Azure Firewall; do | High |
+| FS-1095 | What has CBK not asked for that we should include? We will soon begin the licence application, and this reques | High |
+| FS-1096 | 30 November is Roan Capital's soft launch, with the current process continuing in parallel for about a month:  | High |
+| FS-1097 | Go ahead with the recommendations for the soft introduction: an index of everything the application will carry | High |
+| FS-1099 | How do we protect other devices, such as phones? | High |
+| FS-1101 | A mixed case, the CEO's and CFO's phones issued by the company and the staff's their own; and how we handle co | High |
+| FS-1105 | Include delivering Roan Capital's website | High |
+| FS-1107 | Roan Capital is applying as a digital credit provider: its first submission was rejected, and what we are prep | High |
+| FS-1108 | The delivery channels document is too narrow, repayments by M-Pesa and payouts by NCBA: how do we include the  | High |
 | FS-819 | Do we store, for instance, all M-Pesa transactions in the companion? In the same database as Fineract? | Medium, waiting |
 | FS-820 | FS-791 is answered by FS-792, unless something is missing. FS-819's one copy of the M-Pesa records: is the gen | Medium, waiting |
 | FS-821 | Seven years at the scale target is large: how do we store it, like AWS S3's storage classes, to keep costs dow | Medium, waiting |
@@ -148,7 +176,7 @@ the October design); `origin` is still github.com/eric-mokaya/finance.
 | FS-424 | Should we consider SWIFT? Which other rails should we look at? | Low, waiting |
 | FS-513 | The Apr 2025 RFP notes asked for network devices (firewalls, switches) watched through SNMP and syslog, and fo | Low, waiting |
 
-And 121 more, Medium or Low: the Board, filtered by name, or the Review page.
+And 124 more, Medium or Low: the Board, filtered by name, or the Review page.
 
 ### Work started
 
@@ -156,4 +184,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-1068-architecture`: 2 saves, last 32 seconds ago, not uploaded; here now
+- `claude/emokaya/FS-1117-cover-note`: 1 save, last 16 minutes ago, not uploaded; here now, 4 files unsaved
