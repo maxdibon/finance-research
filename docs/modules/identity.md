@@ -135,11 +135,11 @@ mode, to Fineract.
                                        v
   STEP 1  PHONE: the number is live, registered to the ID number given, SIM unchanged
   +-----------------------------+              +-----------------------------+
-  | SAFARICOM                   |              | SMILE ID                    |
-  | the operator's own records  | down, or no  | the number matched to the   |
-  | (ID-05, ID-12)              | answer ----->| ID number (Prembly gives    |
-  | [direct]                    |              | the carrier only)           |
-  |                             |              | [aggregator]                |
+  | THE CUSTOMER'S OPERATOR     |              | SMILE ID                    |
+  | Safaricom, Airtel or Telkom | down, or no  | the number matched to the   |
+  | checks its own records      | answer ----->| ID number (Prembly gives    |
+  | (ID-05, ID-12)              |              | the carrier only)           |
+  | [direct]                    |              | [aggregator]                |
   +-----------------------------+              +-----------------------------+
                  |                                            |
                  +---------------------+----------------------+
