@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1091, FS-1095, FS-1097]
+review_ids: [FS-1080, FS-1087, FS-1091, FS-1095, FS-1097, FS-1098]
 last_reviewed: 2026-11-05
 ---
 
@@ -26,6 +26,17 @@ an institution's values and its theme make its own.
 | ii | A data protection policy, and the certificate of registration from the Office of the Data Protection Commissioner | The institution | [Data protection policy](data-protection-policy.md), template DC-FS-TM-004; **the certificate is its own registration** |
 | iii | A credit, code of ethics and market conduct policy | The institution | [Credit, code of ethics and market conduct policy](credit-conduct-policy.md), template DC-FS-TM-005 |
 | iv | An ICT policy covering fourteen areas, with a description of the ICT system, independent assurance on it, a systems architecture diagram and a data flow diagram | The institution, on the platform we run | [ICT policy](ict-policy.md), template DC-FS-TM-003, with the two diagrams as images and the plan for assurance in its Annex D |
+
+**Licence or registration** (FS-1098). A licence for a lender starting
+with initial capital of twenty million shillings or more (reg 6),
+decided within sixty days (reg 7); a registration otherwise (reg 9),
+granted once its documents are complete (reg 10). Both allow the same
+lending (reg 17). A registered lender must move to a licence once its
+capital, its borrowings or its loan book passes twenty million shillings
+(reg 11), so a lender that expects to grow past it soon may do better to
+apply for the licence at once. The fees, from the Regulations' Third
+Schedule: KES 100,000 to apply; KES 500,000 on a licence and each year;
+KES 250,000 on a registration and each year.
 
 **What the licence application adds** (FS-1095). CBK's first list is a
 start; the application itself carries what the regulations list: reg 6
@@ -90,7 +101,11 @@ go-live, the independent assurance itself (ICT policy, Annex D).
 | Provision | Cited here as | What it requires |
 |---|---|---|
 | reg 6 | reg 6, reg 6(2) | A licence, for a lender with initial capital of at least twenty million shillings, applied for in Form 1 with: its incorporation documents and registered address; its certificate of registration with the Data Commissioner; statements on complying with Part VII of the Consumer Protection Act and Part VI of the Competition Act; evidence and source of capital; its ICT system and delivery channels described; its products and their terms; the draft agreement with a delivery-channel provider; its consumer protection measures and complaints redress; its operations (loan sizes, interest rates, classification, the non-performing period); its funding and debt-to-equity ratio; its credit policy, code of conduct, consumer protection, anti-money laundering, data protection, ICT security and corporate governance policies; a sworn declaration on the source of funds; the fees; fit and proper forms for directors, the CEO, senior officers and significant shareholders, with certificates of good conduct, tax compliance certificates and credit reports; and its pricing parameters (6(2)(a) to (dd)) |
+| reg 7 | reg 7 | A licence application assessed on its information and documents, the suitability of those who will manage or control the lender, the source and evidence of its funds, and the public interest (7(1)); decided within sixty days (7(2)); valid until suspended or revoked (7(3)); the annual fee paid by 31 December (7(4)) |
 | reg 9 | reg 9, reg 9(3) | Registration, for a lender that does not meet the conditions for a licence, applied for in Form 2 with much the same as reg 6, the policies as briefs, and its business continuity plans (9(3)(v)) |
+| reg 10 | reg 10 | A certificate of registration granted once the documents are complete, permitting business under the Regulations save as excepted (10(1), 10(2)); valid until suspended or revoked; an annual fee by 31 December |
+| reg 11 | reg 11 | A registered lender applies for a licence once its capital, its borrowings or its loan book exceeds twenty million shillings (11(1)), or when the Central Bank directs (11(4)) |
+| reg 17 | reg 17 | What a lender may do: loans and credit, digital or not; asset finance; buy now pay later and stock now pay later as the Central Bank determines, not hire purchase; credit guarantees; pay as you go; peer-to-peer lending under collective investment schemes regulated under the Capital Markets Act, and other peer-to-peer lending the Central Bank approves (17(1)(g)) |
 | reg 22 | reg 22(4) | The Central Bank told at least thirty days before any agreement or arrangement with a third party to invest in the lender or finance its activities (22(4)); ten percent or more of its shares transferred only with the Central Bank's prior approval (22(5)) |
 | reg 27 | reg 27 | Thirty days' notice to the Central Bank before a new delivery channel rolls out, with the mobile money account, apps and bank accounts to be used; a way to opt out of marketing messages; channels that are available, safe, protected from fraud, easy to use and affordable |
 | reg 31 | reg 31 | Material services may be outsourced, but never the final decision to lend, management and control, the board's decisions, determining compliance with the law (31(1)(d)), or managing the loan book; the lender stays liable for its provider; the Central Bank told thirty days before, with the provider's background, owners and directors (31(3)); the contract gives the Central Bank oversight of, and access to, the provider's premises, books, records, systems and staff (31(5)) |
