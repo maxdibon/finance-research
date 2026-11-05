@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1092, FS-1100, FS-1103]
+review_ids: [FS-1080, FS-1087, FS-1092, FS-1100, FS-1103, FS-1108]
 last_reviewed: 2026-11-05
 ---
 
@@ -98,7 +98,7 @@ Every person may be told how their data is used, see it, object to its processin
 
 ## 8. Sharing
 
-- Personal data is shared only with those who need it for the purposes in section 4: licensed credit reference bureaus (reg 33), the Central Bank of Kenya and the Financial Reporting Centre as the law requires, the mobile money operators (Safaricom, Airtel, Telkom) and {{institution}}'s bank to move money, identity verification providers, and the processors named in {{institution}}'s register.
+- Personal data is shared only with those who need it for the purposes in section 4: licensed credit reference bureaus (reg 33), the Central Bank of Kenya and the Financial Reporting Centre as the law requires, the mobile money operators (Safaricom, Airtel, Telkom) and {{institution}}'s banks to move money, identity verification providers, and the processors named in {{institution}}'s register.
 - No personal data is shared with a borrower's contacts, employer or family to collect a debt, and nothing is posted to shame a borrower (reg 30).
 - Every processor works under a written agreement: only on {{institution}}'s instructions, data kept in Kenya, sub-processors only with approval, breaches reported within 48 hours, and data returned or erased when the agreement ends. Processors: {{provider}}; {{processors}}.
 
