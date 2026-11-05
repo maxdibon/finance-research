@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079, FS-1093]
 last_reviewed: 2026-11-05
 ---
 
@@ -32,6 +32,7 @@ code/platform/azure-sandbox; what it makes is in that README.
 
 | Component | Deployed | Version | Namespace | Database (cluster) | Replicas | Spec or module |
 |---|---|---|---|---|---|---|
+| PROVIDER | No: public Azure's basic network protection only; made-up data | — | — | — | — | platform-security SE-03 |
 | EDGE | No: the cluster's own ingress only | — | — | — | — | platform-security |
 | KAPU CONSOLE | No: after the MVP | — | — | — | — | kapu-console |
 | STAFF WORKSPACE | No: after the MVP | — | — | — | — | staff-workspace |

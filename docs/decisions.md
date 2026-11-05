@@ -6,7 +6,7 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-last_reviewed: 2026-11-01
+last_reviewed: 2026-11-05
 ---
 
 # Decisions — what each cost, and what was argued against it
@@ -52,4 +52,4 @@ check reads them all.
 | [700 to 799](decisions/700-799.md) | 8 | FS-703 to FS-799 |
 | [800 to 899](decisions/800-899.md) | 6 | FS-803 to FS-896 |
 | [900 to 999](decisions/900-999.md) | 15 | FS-900 to FS-996 |
-| [1000 to 1099](decisions/1000-1099.md) | 11 | FS-1004 to FS-1078 |
+| [1000 to 1099](decisions/1000-1099.md) | 12 | FS-1004 to FS-1093 |

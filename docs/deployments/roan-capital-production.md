@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093]
 last_reviewed: 2026-11-05
 ---
 
@@ -33,6 +33,7 @@ Written from the design (FS-1037); generated from the code once it exists
 
 | Component | Deployed | Version | Namespace | Database (cluster) | Replicas | Spec or module |
 |---|---|---|---|---|---|---|
+| PROVIDER | Yes, outside the cluster: Liquid's managed firewall and flood protection, at both sites; the product to confirm with Liquid | As the provider | — | — | — | platform-security SE-03 |
 | EDGE | Yes | As its spec | edge | — | 2 | platform-security SE-01, SE-02 |
 | KAPU CONSOLE | Yes | R1 | services | — | 2 | kapu-console |
 | STAFF WORKSPACE | Yes, inside Odoo | R1 | services | Back office: odoo | With Odoo | staff-workspace |

@@ -1303,7 +1303,9 @@ function checkDeployments(root) {
       if (seen.has(name)) failures.push(fail('deployments', file, r.line, `"${name}" listed twice`));
       seen.set(name, r);
       if (/^No\b/.test(deployed)) continue;
-      if (!namespaces.has(ns)) failures.push(fail('deployments', file, r.line, `${name}: namespace "${ns}" is not one the instance page names`));
+      // FS-1093: a box the provider runs, outside the cluster, has no namespace and says so.
+      const outside = ns === '—' && /outside the cluster/.test(deployed);
+      if (!outside && !namespaces.has(ns)) failures.push(fail('deployments', file, r.line, `${name}: namespace "${ns}" is not one the instance page names`));
       if (db !== '—') {
         for (const part of db.split(/,\s*/)) {
           const cl = part.split(':')[0].trim();

@@ -10,7 +10,7 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661, FS-698, FS-699, FS-701, FS-711, FS-712, FS-775, FS-777, FS-793, FS-896, FS-1089]
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661, FS-698, FS-699, FS-701, FS-711, FS-712, FS-775, FS-777, FS-793, FS-896, FS-1089, FS-1093]
 last_reviewed: 2026-11-05
 ---
 
@@ -58,7 +58,7 @@ not go live on less.
 |---|---|---|---|---|
 | SE-01 | A web application firewall in front of every public endpoint (Coraza with the OWASP core rule set, called by the edge proxy as an external processor; FS-699) | Planned | FS-459, FS-464 | 1 |
 | SE-02 | An API gateway (Envoy Gateway, decided by a trial against Apache APISIX, FS-698; docs/architecture/flows.md §1) with rate limits per client, and financial-grade API profiles through access (FAPI 2.0, AC-04) | Planned | FS-464 | 1 |
-| SE-03 | Protection from denial-of-service attacks upstream, from the hosting provider | Planned | FS-464. To confirm with Liquid (PT-01) | 1 |
+| SE-03 | In front of every instance, the hosting provider's managed firewall and its protection from denial-of-service attacks: from the internet, only the edge's listeners are reachable, everything else (administration included) closed there, floods absorbed there | Planned | FS-464, FS-1093. Liquid's service; the product to confirm with it (PT-01): Azure Firewall is not offered on Azure Stack Hub | 1 |
 | SE-04 | Kubernetes built and checked to the CIS Benchmarks (RKE2), the check run on every change | Planned | FS-461, FS-464 | 1 |
 | SE-05 | Network traffic denied by default between workloads (Cilium), each service with its own identity (SPIFFE/SPIRE), and encrypted between services | Planned | FS-464; the same identity signs traceability events (recon RO-23) | 1 |
 | SE-06 | Admission rules (Kyverno): only signed images from our registry, no privileged workloads | Planned | FS-464 | 1 |
@@ -169,7 +169,7 @@ own namespace, databases, keys and backups, built from the same code.
 ```
   internet
      |
-  [ DDoS scrubbing (provider) ]                        SE-03
+  [ Provider: managed firewall, flood protection ]   SE-03
      |
   [ WAF: Coraza + OWASP CRS ] -> [ API gateway ]       SE-01, SE-02
      |
@@ -241,7 +241,7 @@ the clock; Restricted values never enter one (architecture §7).
 
 | Rail / system | Direction | Feed | Status |
 |---|---|---|---|
-| Hosting provider's DDoS protection | in | network | Planned (SE-03) |
+| Hosting provider's managed firewall and DDoS protection | in | network | Planned (SE-03) |
 | Managed detection and response (Sophos, through Liquid) | out / in | log and endpoint telemetry; alerts back | Planned (SE-13) |
 | Device management (Intune, Android Enterprise) | in / out | device enrolment and policy | Planned (SE-14) |
 | Vulnerability feeds (CVE, EPSS, CISA KEV) | in | daily pull | Planned (SE-11) |

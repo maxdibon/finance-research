@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759, FS-792, FS-896, FS-932, FS-970, FS-1041, FS-1042]
-last_reviewed: 2026-10-28
+review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759, FS-792, FS-896, FS-932, FS-970, FS-1041, FS-1042, FS-1093]
+last_reviewed: 2026-11-05
 ---
 
 # Technology: the register of components we run
@@ -62,7 +62,7 @@ yet tried) · *Bought* (commercial, chosen with its supplier). All checked
 
 | Component | Role | Licence | Governed by | Verdict | Alternatives | Why |
 |---|---|---|---|---|---|---|
-| Provider protection | Absorbs floods upstream (SE-03) | Commercial | Liquid | Bought; to confirm with Liquid | — | Only the provider can absorb a flood before it reaches us |
+| Provider protection | A managed firewall in front of the edge, and flood protection (SE-03, FS-1093) | Commercial | Liquid | Bought; the product to confirm with Liquid (Azure Firewall is not offered on Azure Stack Hub) | — | Only the provider can absorb a flood before it reaches us |
 | Envoy Gateway and Envoy | The edge proxy and its control (SE-02) | Apache-2.0 | CNCF (Envoy, graduated) | Trial, the default | APISIX; Kong, out (its open-source edition stopped at 3.9.1 in March 2025) | The Kubernetes Gateway API; the same Envoy that Cilium runs; the CNCF default (FS-698) |
 | Coraza | Web application firewall, OWASP Core Rule Set v4 (SE-01) | Apache-2.0 | OWASP | Keep; called by Envoy as an external processor, measured in the trial | ModSecurity (OWASP, not built for Envoy); a provider's WAF in front, as an extra layer | The rule set is the asset; Coraza's own WASM filter warns of memory and speed issues (FS-699) |
 | Envoy's rate-limit service, with Valkey | Shared counts per client | Apache-2.0; BSD-3 | Envoy; Linux Foundation | Trial, with the gateway | Redis, now under AGPL, SSPL or its own licence | Valkey keeps a permissive licence |
@@ -166,6 +166,6 @@ and the rule that no customer data leaves our own systems.
 - Rekor v2 on its files backend: where the log's files live, so a
   checkpoint reaches its witnesses only once the files are at the second
   site (FS-700).
-- The provider protection's terms with Liquid (SE-03).
+- The provider protection's terms with Liquid: its managed firewall and flood protection (SE-03, FS-1093).
 - The collaboration tools above: chat, meetings, shared credentials, the
   mirror, and where email and files live (FS-759).
