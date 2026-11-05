@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1091, FS-1095, FS-1097, FS-1098]
+review_ids: [FS-1080, FS-1087, FS-1091, FS-1095, FS-1097, FS-1098, FS-1100]
 last_reviewed: 2026-11-05
 ---
 
@@ -23,9 +23,9 @@ an institution's values and its theme make its own.
 | # | CBK asks for | Whose | Made from |
 |---|---|---|---|
 | i | An agreement with a telecommunication or other service provider for the digital credit channel or platform | The institution and us | Our services agreement, with the clauses the [approval pack](../governance/approval-pack.md) lists (items 11 to 14); its paybill agreement with Safaricom may also count |
-| ii | A data protection policy, and the certificate of registration from the Office of the Data Protection Commissioner | The institution | [Data protection policy](data-protection-policy.md), template DC-FS-TM-004; **the certificate is its own registration** |
-| iii | A credit, code of ethics and market conduct policy | The institution | [Credit, code of ethics and market conduct policy](credit-conduct-policy.md), template DC-FS-TM-005 |
-| iv | An ICT policy covering fourteen areas, with a description of the ICT system, independent assurance on it, a systems architecture diagram and a data flow diagram | The institution, on the platform we run | [ICT policy](ict-policy.md), template DC-FS-TM-003, with the two diagrams as images and the plan for assurance in its Annex D |
+| ii | A data protection policy, and the certificate of registration from the Office of the Data Protection Commissioner | The institution | [Data protection policy](data-protection-policy.md), template DC-FS-TM-DPR-004; **the certificate is its own registration** |
+| iii | A credit, code of ethics and market conduct policy | The institution | [Credit, code of ethics and market conduct policy](credit-conduct-policy.md), template DC-FS-TM-CRD-005 |
+| iv | An ICT policy covering fourteen areas, with a description of the ICT system, independent assurance on it, a systems architecture diagram and a data flow diagram | The institution, on the platform we run | [ICT policy](ict-policy.md), template DC-FS-TM-ICT-003, with the two diagrams as images and the plan for assurance in its Annex D |
 
 **Licence or registration** (FS-1098). A licence for a lender starting
 with initial capital of twenty million shillings or more (reg 6),
@@ -45,8 +45,8 @@ for a licence (initial capital of twenty million shillings or more), reg
 
 | Asked for | Licence (reg 6(2)) | Registration (reg 9(3)) | Whose | Made from |
 |---|---|---|---|---|
-| Statements on complying with Part VII of the Consumer Protection Act and Part VI of the Competition Act | (f), (g) | (f), (g) | The institution | [Statements](compliance-statements.md), template DC-FS-TM-006 |
-| The delivery channels described | (l) | (q) | The institution, with us | [Delivery channels](delivery-channels.md), template DC-FS-TM-007, which is also the notice reg 27 asks for |
+| Statements on complying with Part VII of the Consumer Protection Act and Part VI of the Competition Act | (f), (g) | (f), (g) | The institution | [Statements](compliance-statements.md), template DC-FS-TM-CPC-006 |
+| The delivery channels described | (l) | (q) | The institution, with us | [Delivery channels](delivery-channels.md), template DC-FS-TM-CHN-007, which is also the notice reg 27 asks for |
 | Its products and their terms; its operations (loan sizes, rate ranges, classification, the non-performing period); its pricing parameters | (m), (p), (cc) | (j), (u) | The institution | Its product versions (docs/products/) |
 | Consumer protection policies, with the complaints redress | (o), (t) | (o) | The institution | Part C of the credit, ethics and conduct policy, to grow into its own template |
 | A code of conduct | (s) | (t) | The institution | Part B of the same policy |
@@ -61,7 +61,7 @@ any third party investing in or financing the lender (reg 22(4)), of an
 outsourcing (reg 31), and of a new delivery channel (reg 27).
 
 **On top of what goes:** a [submission index](submission-index.md),
-template DC-FS-TM-008: every item above, enclosed now or to follow with
+template DC-FS-TM-CBK-008: every item above, enclosed now or to follow with
 the application.
 
 **Building one:**
@@ -80,7 +80,7 @@ node tools/policies/build.js docs/templates/<template>.md <values.json> <out.doc
   `design/system/institution-docx.js`).
 - **Its numbers:** each policy carries the institution's own document
   number (`numbers` in the values, by template), never ours: its own
-  scheme, or its document code, POL and a serial, such as ROAN-POL-001
+  scheme, or its document code, POL and a serial, such as ROAN-POL-ICT-001
   (design-system §7; OB-COM-28).
 - **The diagrams** are images beside the values, `architecture.png` and
   `dataflow.png`, drawn for the institution from its deployment.

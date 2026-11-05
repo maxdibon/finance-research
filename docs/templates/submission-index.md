@@ -7,11 +7,11 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1095, FS-1097]
+review_ids: [FS-1095, FS-1097, FS-1100]
 last_reviewed: 2026-11-05
 ---
 
-# Submission index · template DC-FS-TM-008
+# Submission index · template DC-FS-TM-CBK-008
 
 A one-page index that goes on top of what a lender sends the Central
 Bank before its application: everything the regulations will ask for,

@@ -7,11 +7,11 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1095, FS-1097]
+review_ids: [FS-1095, FS-1097, FS-1100]
 last_reviewed: 2026-11-05
 ---
 
-# Delivery channels · template DC-FS-TM-007
+# Delivery channels · template DC-FS-TM-CHN-007
 
 The description of the channels and platforms a lender delivers its
 services through, which its licence or registration application carries
@@ -23,7 +23,7 @@ FS-1095). From the institution's deployment and our
 
 | Value | What it is | Roan Capital's |
 |---|---|---|
-| `institution`, `institution_legal`, `number`, `version`, `date`, `owner`, `approved_by`, `provider` | As in the ICT policy template | ROAN-DSC-001 |
+| `institution`, `institution_legal`, `number`, `version`, `date`, `owner`, `approved_by`, `provider` | As in the ICT policy template | ROAN-DSC-CHN-001 |
 | `launch` | When the channels start, and how | A soft launch on 30 November 2026, the current process in parallel for about a month |
 | `paybill`, `bank` | Its collection paybill and its payout bank | Its own M-Pesa paybill; NCBA Bank |
 | `whatsapp` | Whether WhatsApp is used, and for what | To confirm |

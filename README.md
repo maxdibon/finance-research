@@ -7,8 +7,8 @@ is one portfolio overview, built from modules, and buyer packs assembled
 from the same modules (FS-001).
 
 **Status:** the portfolio is issued in two editions built from the same
-Markdown: the full portfolio (DC-FS-PF-001) and a short overview
-(DC-FS-PF-002), each as a PDF and a web preview (FS-333, FS-352, FS-362). Designs still go to
+Markdown: the full portfolio (DC-FS-PF-FUL-001) and a short overview
+(DC-FS-PF-OVR-002), each as a PDF and a web preview (FS-333, FS-352, FS-362). Designs still go to
 Markdown or a preview before they reach the PDF (FS-009).
 
 ## Reading the documents

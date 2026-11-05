@@ -7,11 +7,11 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1092]
+review_ids: [FS-1080, FS-1087, FS-1092, FS-1100]
 last_reviewed: 2026-11-05
 ---
 
-# Data protection policy · template DC-FS-TM-004
+# Data protection policy · template DC-FS-TM-DPR-004
 
 The data protection policy CBK asks of a lender applying for its
 licence, to go with its certificate of registration from the Office of

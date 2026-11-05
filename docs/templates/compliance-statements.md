@@ -7,11 +7,11 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1095, FS-1097]
+review_ids: [FS-1095, FS-1097, FS-1100]
 last_reviewed: 2026-11-05
 ---
 
-# Statements on the Consumer Protection Act and the Competition Act · template DC-FS-TM-006
+# Statements on the Consumer Protection Act and the Competition Act · template DC-FS-TM-CPC-006
 
 The two statements a lender files with its licence or registration
 application: how it complies with Part VII of the Consumer Protection
@@ -23,7 +23,7 @@ our law register (FS-1097). Built with `tools/policies/build.js`.
 
 | Value | What it is | Roan Capital's |
 |---|---|---|
-| `institution`, `institution_legal`, `number`, `version`, `date`, `classification`, `owner`, `approved_by` | As in the ICT policy template | ROAN-STM-001 |
+| `institution`, `institution_legal`, `number`, `version`, `date`, `classification`, `owner`, `approved_by` | As in the ICT policy template | ROAN-STM-CPC-001 |
 | `insurance` | Whether any loan requires insurance, and of what | Comprehensive motor insurance noting Roan Capital's interest, for a logbook loan |
 
 <!-- document -->

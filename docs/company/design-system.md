@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-728, FS-781, FS-816, FS-817, FS-1024, FS-1025, FS-1026, FS-1039, FS-1087, FS-1091, FS-1097]
+review_ids: [FS-728, FS-781, FS-816, FS-817, FS-1024, FS-1025, FS-1026, FS-1039, FS-1087, FS-1091, FS-1097, FS-1100]
 last_reviewed: 2026-11-05
 ---
 
@@ -168,23 +168,46 @@ website and its apps; never whimsy in its documents.
 
 ## 7 · Numbers, versions, and who received what
 
-FS-1026. **Every document Dibon produces for someone outside has a
+FS-1026, FS-1100. **Every document Dibon produces for someone outside has a
 number,** as the portfolio's do: `DC-FS-` (Dibon Consulting, Financial
-Services), a kind, and a serial:
+Services), a kind, a type and a serial, so the number says what the
+document is (DC-FS-TM-ICT-003, the ICT policy template). The kinds:
 
 | Kind | Code | Example |
 |---|---|---|
-| Portfolio and its editions | PF | DC-FS-PF-001, the full portfolio |
+| Portfolio and its editions | PF | DC-FS-PF-FUL-001, the full portfolio |
 | Proposal, one-pager | PR | |
 | Deck, presentation | DK | |
 | Letter, request, checklist to a bank or partner | LT | |
 | Agreement, NDA | AG | |
 | Questionnaire | QN | |
 | Report, review, Product Understanding Document | RP | |
-| Template or pack we give an institution | TM | DC-FS-TM-001, the onboarding pack; TM-003 to TM-008, the CBK licence pack's policies, statements, channels and index (templates/cbk-licence-pack) |
+| Template or pack we give an institution | TM | DC-FS-TM-ONB-001, the onboarding pack; TM-003 to TM-008, the CBK licence pack's policies, statements, channels and index (templates/cbk-licence-pack) |
+
+**The types,** one list for our documents and for every institution's
+(FS-1100); a new kind of document takes a new code here first:
+
+| Type | The document |
+|---|---|
+| ICT | ICT policy |
+| DPR | Data protection policy |
+| CRD | Credit, code of ethics and market conduct policy |
+| CPC | Statements on the Consumer Protection Act and the Competition Act |
+| CHN | Delivery channels and platforms |
+| CBK | A submission to the Central Bank of Kenya, its index |
+| ONB | Onboarding pack |
+| FBK | Fallback for a platform outage |
+| PRD | A product's questionnaire |
+| ROL | Roles, approvals and going live |
+| FUL | The portfolio, full edition |
+| OVR | The portfolio's short overview |
+| BCH | The bank channel proposal |
+| MTG | A deck for a meeting |
+| BNK | Requests to banks |
 
 - **The number is the document,** across its versions; a serial is never
-  reused. **The version** follows it (`DC-FS-PF-001 v1.2`): major for a
+  reused. Numbers given before 5 November 2026 had no type; each keeps its
+  serial, so DC-FS-QN-001 is now DC-FS-QN-PRD-001. **The version** follows it (`DC-FS-PF-FUL-001 v1.2`): major for a
   new issue, minor for a change, a third place for a correction (FS-909).
 - **On the document:** the number and version in the footer band, beside
   what it is and when.
@@ -199,7 +222,8 @@ Services), a kind, and a serial:
 - **An institution's own documents** carry its own numbering, not ours:
   its own scheme where it has one, otherwise its document code (three to
   eight letters, unique across our customers, on its customer page), a
-  kind and a serial, such as ROAN-POL-001 for a policy (OB-COM-28, FS-1091).
+  kind, a type from the list above and a serial, such as ROAN-POL-ICT-001
+  for its ICT policy (OB-COM-28, FS-1091, FS-1100).
 
 ## 8 · Before it goes out
 

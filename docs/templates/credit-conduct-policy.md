@@ -7,11 +7,11 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1082, FS-1083, FS-1087]
+review_ids: [FS-1080, FS-1082, FS-1083, FS-1087, FS-1100]
 last_reviewed: 2026-11-05
 ---
 
-# Credit, code of ethics and market conduct policy · template DC-FS-TM-005
+# Credit, code of ethics and market conduct policy · template DC-FS-TM-CRD-005
 
 The credit, code of ethics and market conduct policy CBK asks of a
 lender applying for its licence (the [licence pack](cbk-licence-pack.md),

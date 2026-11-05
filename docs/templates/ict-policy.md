@@ -7,11 +7,11 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094]
+review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099]
 last_reviewed: 2026-11-05
 ---
 
-# ICT policy · template DC-FS-TM-003
+# ICT policy · template DC-FS-TM-ICT-003
 
 The ICT policy CBK asks of a lender applying for its licence, with the
 description of the ICT system, the systems architecture diagram, the
@@ -37,6 +37,7 @@ indented. The two diagrams are images beside the values:
 | `security_contact` | The position that holds ICT and security | To confirm |
 | `board_report` | How often the board hears of ICT risk | Every quarter |
 | `devices`, `endpoint_role` | The devices staff use, and who manages them | Laptops Dibon issues and manages; Dibon secures them |
+| `phones` | How staff phones are managed | Enrolled by Dibon: fully managed if issued, a work profile if personal; to confirm which |
 | `print_setup` | Who sets printing to wait for a PIN, and on what printer | Dibon's device management; the printer to confirm |
 | `perimeter`, `managed_security` | The hosting provider's firewall; the managed detection service | Azure Firewall; Liquid's managed security |
 | `sites`, `hosting`, `hosting_contract` | Where it runs, on whose infrastructure, and under what contract | Nairobi and Mombasa; Africa Data Centres and Liquid; to confirm |
@@ -136,6 +137,7 @@ Dealt with means fixed, usually by installing the software maker's update, or, w
 
 - Use only your own named account, with your second factor; never share either.
 - Reach the platform only from {{devices}}.
+- **A phone used for work,** to reach the platform or to hold an authenticator app, is {{phones}}: a supported system with updates applied, a screen lock with a PIN or fingerprint, encrypted, never rooted or jailbroken. If it is lost or stolen, report it at once: its work apps are wiped remotely and its authenticator revoked, and a new one is registered after an identity check. A leaver's is removed on their last day.
 - Keep customer data on the platform. Do not download it to personal devices, or send documents, statements, balances or ID numbers by email, SMS or WhatsApp; the platform sends customers links to their own pages instead.
 - Report a suspected incident, a lost device or a suspicious message to the ICT and security contact at once.
 - **Print customer data only when a task needs it:** a statement a borrower asks for, or a signed original the law requires. Every print job is held at the printer until its owner enters their PIN there, set on each device by {{print_setup}}; documents printed from the platform carry the name of the person who printed them and the time, and each print is recorded. Anything printed is collected at once, locked away when not in use, never taken home, and shredded when no longer needed.
