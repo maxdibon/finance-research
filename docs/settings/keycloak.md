@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Security lead
 classification: Internal
-review_ids: [FS-1050, FS-1055, FS-1056]
-last_reviewed: 2026-10-30
+review_ids: [FS-1050, FS-1055, FS-1056, FS-1094]
+last_reviewed: 2026-11-05
 ---
 
 # Keycloak · baseline settings
@@ -43,7 +43,7 @@ are its file, `deployments/<deployment>/keycloak.md`.
 | S15 | Staff sessions | 30 minutes idle; 10 hours at most | Default: idle 30 minutes or less, 10 hours or less | A working day, and no unattended session | Realm configuration from git | Nightly read-back |
 | S16 | Approver sessions | One per approver per client | Mandatory | An approval comes from one place at a time | Client settings, from git | Nightly read-back |
 | S17 | Brute force | Five wrong attempts lock for 15 minutes and raise a security event; twenty in a day lock until an administrator, with a second, unlocks after an identity check | Mandatory | Guessing stopped, and seen (AC-15) | Realm configuration from git | K4 |
-| S18 | Customer codes | 6 digits by SMS to the phone bound at enrolment; valid 5 minutes; three attempts, then 15 minutes locked | Mandatory | AC-13; the SIM binding (ID-12) | Our authenticator's configuration, from git | K5 |
+| S18 | Customer codes | A code from an authenticator app, offered at the first sign-in once an SMS code has proved the bound phone, and the default once registered (6 digits, 30 seconds, as S13); for those without one, 6 digits by SMS to the phone bound at enrolment, valid 5 minutes; three wrong attempts either way, then 15 minutes locked; a lost app removed only after the customer is verified again, never by recovery codes (FS-1094) | Mandatory | AC-13; the SIM binding (ID-12) | Our authenticator's configuration, from git | K5 |
 | S19 | Customer sessions | 15 minutes idle; 1 hour at most | Default: idle 15 minutes or less, 1 hour or less | A shared or lost phone | Realm configuration from git | Nightly read-back |
 | S20 | A changed SIM | Holds sign-in until the customer is verified again | Mandatory | SIM-swap fraud (ID-13) | Our authenticator | K5 |
 | S21 | Engineer sessions (`ops`) | 8 hours | Default: 8 hours or less | A shift, not a week | Realm configuration from git | Nightly read-back |

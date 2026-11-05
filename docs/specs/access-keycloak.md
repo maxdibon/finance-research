@@ -11,8 +11,8 @@ depends_on: [messaging]
 used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging, endpoints, github, recon, back-office, staff-workspace, kapu-console, vault]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018, FS-1050, FS-1054, FS-1055, FS-1056, FS-1070]
-last_reviewed: 2026-11-01
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018, FS-1050, FS-1054, FS-1055, FS-1056, FS-1070, FS-1094]
+last_reviewed: 2026-11-05
 ---
 
 # Access on Keycloak — component specification
@@ -35,7 +35,7 @@ person's identity and KYC stay with their authority (architecture §2).
 |---|---|---|
 | AC-01 | One identity provider for the platform | Yes |
 | AC-02 | Staff single sign-on for Odoo, Fineract, Grafana and our portals | Yes |
-| AC-03 | Customer login: in R1, borrowers and guarantors by a code to their bound phone | Yes, codes only; passkeys with the app (OC-01, phase 2) |
+| AC-03 | Customer login: in R1, borrowers and guarantors by a code from an authenticator app or, without one, by SMS to their bound phone (FS-1094) | Yes, codes only; passkeys with the app (OC-01, phase 2) |
 | AC-05 | Step-up at the act, by level of authentication | Yes |
 | AC-08 | Realms inside each institution's own instance | Yes |
 | AC-09 | Roles and groups, Keycloak their one authority; no Dibon role moves money | Yes |
@@ -63,8 +63,8 @@ directory (AC-07; banks, later), tokens for AI clients (AC-12).
   | [keycloak]                                                                               |
   |                                                                                          |
   | realm "staff"               realm "customers"            realm "ops"                     |
-  | password, an authenticator  a code to the bound phone,   hardware security keys          |
-  | app and a security key;     by SMS                       only; no product role,          |
+  | password, an authenticator  an app's code, or by SMS to  hardware security keys          |
+  | app and a security key;     the bound phone              only; no product role,          |
   | roles and groups                                         ever                            |
   +------------------------------------------------------------------------------------------+
           | step-up             | tokens              | sign-in             | sign-in
@@ -172,7 +172,8 @@ its file, `deployments/<deployment>/keycloak.md`. In short: every staff
 sign-in at level 2 (a password and a second factor), level 3 again for
 anything that moves money, approves, releases or grants a role
 (baseline S11, S12); both authenticators before first use (S13);
-customers by a code to their bound phone (S18); tokens of 5 minutes
+customers by a code from an authenticator app, or an SMS code to
+their bound phone for those without one (S18); tokens of 5 minutes
 (S22); the clients in the table below, and no others (S24).
 
 **Clients** (realm `staff` unless noted):

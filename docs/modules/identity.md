@@ -10,8 +10,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, financial-crime, sme-recon, mandates]
 consumed_by: [collect, gateway, mfi, sacco, escrow, crb, core, omni-channel, financial-crime, access, business-suite, decisioning]
-review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028, FS-1070, FS-1077, FS-1078]
-last_reviewed: 2026-11-01
+review_ids: [FS-088, FS-090, FS-098, FS-109, FS-193, FS-202, FS-203, FS-204, FS-205, FS-329, FS-340, FS-341, FS-382, FS-392, FS-415, FS-431, FS-448, FS-453, FS-500, FS-503, FS-514, FS-525, FS-528, FS-530, FS-532, FS-536, FS-537, FS-544, FS-549, FS-550, FS-551, FS-555, FS-556, FS-557, FS-560, FS-562, FS-565, FS-566, FS-568, FS-582, FS-591, FS-1008, FS-1018, FS-1020, FS-1022, FS-1028, FS-1070, FS-1077, FS-1078, FS-1094]
+last_reviewed: 2026-11-05
 ---
 
 # Identity verification — who a person or business really is
@@ -269,7 +269,7 @@ institution runs its own instance, and nothing joins the two.
    | realm for outside people  |  | realm for outside people  |
    |   one identity            |  |   one identity            |
    |   one credential: a code  |  |   one credential: a code  |
-   |     to the bound phone    |  |     to the bound phone    |
+   |     from an app, or SMS   |  |     from an app, or SMS   |
    |   its own KYC tier        |  |   its own KYC tier        |
    +---------------------------+  +---------------------------+
                   never joined: each institution's

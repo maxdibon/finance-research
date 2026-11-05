@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Product lead, channels
 classification: Internal
-review_ids: [FS-1012, FS-1013, FS-1014, FS-1015, FS-1016, FS-1017, FS-1018, FS-1022, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-1012, FS-1013, FS-1014, FS-1015, FS-1016, FS-1017, FS-1018, FS-1022, FS-1058, FS-1094]
+last_reviewed: 2026-11-05
 ---
 
 # Channels
@@ -94,7 +94,7 @@ managed device (OC-19), the customer app their own.
 
 | Channel | For | Signs in by | Status | When | Capabilities |
 |---|---|---|---|---|---|
-| Their own pages | Customers, guarantors | A code to the bound phone | Designed | R1 | MF-37, MF-38, ID-17 |
+| Their own pages | Customers, guarantors | A code from an authenticator app, or by SMS to the bound phone (FS-1094) | Designed | R1 | MF-37, MF-38, ID-17 |
 | SMS | Everyone outside: codes, receipts, reminders | — | Built (messaging) | R1 | MS-01, MF-13 |
 | WhatsApp | Notifications and links, with consent | — | Designed | R1 | OC-16 |
 | USSD | Customers on any phone | PIN, one-time code above limits | **Built** (ran a bank's digital lending) | R1 for repayments and balances; more in phase 2 | OC-03, OC-12 |

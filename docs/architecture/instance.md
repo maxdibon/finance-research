@@ -6,7 +6,7 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032, FS-1053, FS-1055, FS-1070, FS-1093]
+review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032, FS-1053, FS-1055, FS-1070, FS-1093, FS-1094]
 last_reviewed: 2026-11-05
 ---
 
@@ -29,8 +29,8 @@ sites is in [deployment](deployment.md).
             +--------------------------------------------------------------------------------------+
                                                         |
             +--------------------------------------------------------------------------------------+
-  SIGN-IN   | ACCESS   staff by password and key; customers by a code to their                     |
-            | phone; four realms; step-up for every decision         [keycloak]                    |
+  SIGN-IN   | ACCESS   staff by password and key or app; customers by an app's code, or            |
+            | SMS to their phone; four realms; step-up for every decision   [keycloak]             |
             +--------------------------------------------------------------------------------------+
                           |                             |                             |
             +--------------------------+  +--------------------------+  +--------------------------+

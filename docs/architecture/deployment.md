@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896, FS-1032, FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896, FS-1032, FS-1037, FS-1094]
+last_reviewed: 2026-11-05
 ---
 
 # Deployment: sites, the fleet, and what is central
@@ -306,7 +306,7 @@ The unlock is practised as training: docs/training/key-holder.md.
 | The five recovery key holders | Two hardware keys each, with OpenPGP, since their shares are encrypted to them | §4 |
 | The institution's approvers and administrators | An authenticator app (R1), and a security key or a passkey on their phone | AC-16; step-up at the act (AC-05) |
 | The institution's other staff | An authenticator app or a security key | Staff sign in at level 2 (access-keycloak §5) |
-| Borrowers, guarantors, members | Nothing: a code to their bound phone | access-keycloak §3 |
+| Borrowers, guarantors, members | Nothing: a code from an authenticator app, or by SMS to their bound phone (FS-1094) | access-keycloak §3 |
 
 **Which devices** (research on 2026-10-08; prices as listed that day):
 

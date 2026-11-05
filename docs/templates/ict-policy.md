@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092]
+review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094]
 last_reviewed: 2026-11-05
 ---
 
@@ -153,7 +153,7 @@ Dealt with means fixed, usually by installing the software maker's update, or, w
 
 ### 5.8 Network access and requirements
 
-- Staff reach the platform only through the edge, over HTTPS, signed in with two factors. Customers reach only their own pages, by a one-time code to their phone.
+- Staff reach the platform only through the edge, over HTTPS, signed in with two factors. Customers reach only their own pages, by a code from an authenticator app or, for those without one, a one-time code by SMS to their phone.
 - Administrative access to servers and databases is only through the bastion, against an approved ticket, for a limited time (four hours by default), with every session recorded. The provider's engineers sign in with hardware security keys and hold no standing access to {{institution}}'s data.
 - {{institution}} may switch off the provider's access at any time. Every grant of access is recorded and compared each month at the service review.
 - Connections to third parties use authenticated, encrypted channels; their credentials are held in the key management system, and source addresses are registered with the party where it allows.
@@ -162,9 +162,10 @@ Dealt with means fixed, usually by installing the software maker's update, or, w
 
 | | Staff (web) | Customers (mobile phone, web pages) |
 |---|---|---|
-| How they sign in | A password and a second factor (an authenticator app, or a security key or passkey), both registered before first use | No password: a 6-digit one-time code by SMS to the phone number bound at enrolment |
-| Strength | At least 12 characters; the last five may not be reused | A code valid for 5 minutes, used once |
+| How they sign in | A password and a second factor (an authenticator app, or a security key or passkey), both registered before first use | No password: a 6-digit code from an authenticator app, offered at the first sign-in and the default once registered; for those without a smartphone, a 6-digit one-time code by SMS to the phone number bound at enrolment |
+| Strength | At least 12 characters; the last five may not be reused | An app's code changes every 30 seconds and never travels by SMS, so a swapped SIM cannot catch it; an SMS code is valid for 5 minutes, used once |
 | Wrong attempts | Five lock the account for 15 minutes and raise an alert; twenty in a day lock it until an administrator, with a second, unlocks it after an identity check | Three lock sign-in for 15 minutes |
+| A lost phone or app | A lost authenticator is revoked at once, and a new one registered after an identity check | The app is removed, and a new one registered, only after the customer is verified again; there are no recovery codes |
 | Sessions | End after 30 minutes idle, and after 10 hours at most | End after 15 minutes idle, and after 1 hour at most |
 | At a decision | The second factor asked again for every approval | A new code to sign an agreement or consent |
 | A changed SIM card | — | Sign-in and money movements held until the customer is verified again |
@@ -272,7 +273,7 @@ How data and requests flow from the front-end applications to the databases, one
 <!-- portrait -->
 | # | Flow | Data | Protection |
 |---|---|---|---|
-| 1 | Sign-in | Credentials; one-time codes | Two factors for staff; a code to the bound phone for customers; lockouts; events logged |
+| 1 | Sign-in | Credentials; one-time codes | Two factors for staff; an authenticator app's code, or an SMS code to the bound phone, for customers; lockouts; events logged |
 | 2 | Application | The applicant's details; collateral | Entered as the signed-in staff member; Confidential; ID numbers encrypted field by field |
 | 3 | Identity and documents | ID numbers; documents; photos | Files scanned before storage; documents encrypted; each opening logged; checks through named providers |
 | 4 | Decision | The request; each decision | Re-authentication at each decision; no one decides two steps in a row |

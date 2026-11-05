@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093, FS-1094]
 last_reviewed: 2026-11-05
 ---
 
@@ -82,7 +82,7 @@ access; each kind of person reaches only their own screens.
          v                              v                     only; data never
   +---------------------------------------------------------+
   | ACCESS  staff realm: password and two-factor            |
-  |         customers realm: a code to the bound phone      |
+  |         customers realm: an app's code, or SMS          |
   +---------------------------------------------------------+
          |                  |                       |
          v                  v                       v
@@ -307,7 +307,7 @@ instance) and the warm standby's (deployment §2):
 | Who | What | How |
 |---|---|---|
 | Roan Capital's staff | The staff workspace, the Kapu Console where their role allows, Odoo | The `staff` realm, roles as customers/roan-capital §7, two-factor |
-| Borrowers and guarantors | Their own pages | The `customers` realm, a code to their bound phone (access-keycloak §3) |
+| Borrowers and guarantors | Their own pages | The `customers` realm, a code from an authenticator app, or by SMS to their bound phone for those without one (access-keycloak §3, FS-1094) |
 | Dibon's engineers | Platform tooling only, standing; anything else just in time | The `ops` realm, brokered from Dibon's own Keycloak; a ticket, through the bastion, 4 hours by default (architecture README §9) |
 | Roan Capital, over Dibon | May switch Dibon's broker off at any time | By contract (README §9) |
 
