@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1089]
+review_ids: [FS-1080, FS-1087, FS-1089, FS-1090]
 last_reviewed: 2026-11-05
 ---
 
@@ -97,17 +97,17 @@ It covers the lending platform {{institution}} uses for digital credit (Annex A)
 
 - A security baseline applies to every layer: the network edge, the cluster, the data, the backups and the devices that reach the platform. Each component has a written baseline of mandatory settings, applied to {{institution}}'s deployment and checked at every change.
 - The cluster is hardened to the CIS Benchmarks, checked on every change; no privileged workloads; runtime threat detection on every server.
-- Vulnerabilities are found by continuous scanning and fixed by priority, known-exploited ones first, within these times from confirmation:
+- **Security weaknesses are found and closed on a schedule.** A security weakness is a flaw someone could use to break in, take data or disrupt the service; most are found in the software the platform is built on, by scanning every day against public lists of known weaknesses, and some by testers or by {{institution}}'s staff. Each has a public rating of how serious it is, from low to critical, raised when criminals are known to be using it. Once a weakness is confirmed to affect the platform, it is dealt with within the time its seriousness sets:
 
-| Severity | Fixed or mitigated within |
-|---|---|
-| Critical, or known to be exploited, on anything facing the internet | 72 hours |
-| Critical, elsewhere | 7 days |
-| High | 30 days |
-| Medium | 90 days |
-| Low | 180 days, or the next scheduled release |
+| How serious | For example | Dealt with within |
+|---|---|---|
+| Critical, on anything reachable from the internet, or already being used by attackers | A flaw in the sign-in page that would let anyone in without a password | 72 hours |
+| Critical, elsewhere | The same kind of flaw in a database reachable only from inside the platform's network | 7 days |
+| High | A flaw that could let a signed-in member of staff see more than their role allows | 30 days |
+| Medium | A flaw that reveals some technical detail, but no customer data | 90 days |
+| Low | A cosmetic weakness, such as a missing security setting in a web page's header | 180 days, or the next planned release |
 
-The same times apply to findings from penetration tests and audits. A fix that cannot be made in time gets a compensating control, a risk accepted in writing by the provider's security lead, and {{institution}} told; it stays on the monthly service review until fixed. The times met are reported to {{institution}} every month.
+Dealt with means fixed, usually by installing the software maker's update, or, where no update exists yet, blocked another way within the same time: a feature switched off, a firewall rule added, or access narrowed. The same times apply to what penetration tests and audits find. If a time cannot be met, a temporary protection is put in place that day, the provider's security lead accepts the remaining risk in writing, and {{institution}} is told; the weakness stays on the monthly service review until it is closed. Each month {{institution}} receives a count of the weaknesses found and whether every time was met.
 
 ### 5.3 Network management security standards
 
