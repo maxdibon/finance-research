@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1074]
-last_reviewed: 2026-11-01
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079]
+last_reviewed: 2026-11-05
 ---
 
 # The MVP sandbox
@@ -25,7 +25,7 @@ code/platform/azure-sandbox; what it makes is in that README.
 | Sites | One: public Azure, South Africa North; Azure has no region in Kenya, so nothing real goes here |
 | Who runs it | Dibon's platform workstream; each person their own group |
 | Availability | None: rebuilt from code; personal and workstream groups removed at the end of the day |
-| Release | The MVP day, Tuesday 3 November (FS-962, FS-1074) |
+| Release | The MVP day, Friday 6 November (FS-962, FS-1074, FS-1079) |
 | Go-live | Not applicable |
 
 ## 2 · Components

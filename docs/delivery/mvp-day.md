@@ -1,19 +1,20 @@
 ---
 id: mvp-day
-name: MVP day — Roan Capital's MVP set up, 3 November 2026
+name: MVP day — Roan Capital's MVP set up, 6 November 2026
 kind: plan
 status: living
 released: unreleased
 owner: Project manager
 classification: Internal
-review_ids: [FS-925, FS-928, FS-929, FS-930, FS-931, FS-938, FS-950, FS-951, FS-952, FS-953, FS-954, FS-955, FS-956, FS-960, FS-962, FS-1074]
-last_reviewed: 2026-11-01
+review_ids: [FS-925, FS-928, FS-929, FS-930, FS-931, FS-938, FS-950, FS-951, FS-952, FS-953, FS-954, FS-955, FS-956, FS-960, FS-962, FS-1074, FS-1079]
+last_reviewed: 2026-11-05
 ---
 
-# MVP day · Tuesday 3 November 2026 · 12:00 to 16:00 · in person
+# MVP day · Friday 6 November 2026 · 12:00 to 16:00 · in person
 
 **Moved** from Friday 23 October, when it could not be run (FS-962),
-then from Friday 30 October, when it was not held (FS-1074). The days
+then from Friday 30 October, when it was not held (FS-1074), and from
+Tuesday 3 November to Friday 6 November (FS-1079). The days
 between is for what can be done before the day: the GitHub
 organisation, the Azure subscription and the Odoo Enterprise modules.
 
