@@ -7,7 +7,7 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965, FS-978, FS-979, FS-981, FS-982, FS-1050, FS-1058, FS-1053, FS-1079, FS-1091]
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965, FS-978, FS-979, FS-981, FS-982, FS-1050, FS-1058, FS-1053, FS-1079, FS-1091, FS-1098]
 last_reviewed: 2026-11-05
 ---
 
@@ -29,7 +29,7 @@ is in its module, so it changes in one place.
 | Its products | The 30-day loan (Biashara), Motor Vehicle and Title Deed: drafts, the last two proposed by us (§5) |
 | Where it runs | [Its production deployment](../deployments/roan-capital-production.md): warm standby |
 | Now | Our team's review of the pack for Roan Capital taken in (FS-1061 to FS-1067); the MVP day, Friday 6 November (FS-1079); CBK's list of policies and documents to submit (FS-1080) |
-| Waiting on it | 33 open answers: 2 for its senior management, 31 for its team (§4) |
+| Waiting on it | 32 open answers: 1 for its senior management, 31 for its team (§4) |
 | Waiting on us | 4, with counsel where it is a reading of the law (§4) |
 | Its last release | 2026.10.15 (§8); the notes since wait for its next |
 | Document code | ROAN, proposed; to agree with Roan Capital (FS-1091) |
@@ -188,7 +188,6 @@ By who answers (FS-1053); the numbers never change.
 
 | # | Question | Raised | Status |
 |---|---|---|---|
-| 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules. Every non-deposit-taking lender must now be licensed or registered with CBK, applying by about 29 Mar 2027 (NDTCP Regulations 2026, FS-423) | FS-400, FS-423, FS-827 | Open, for a senior management meeting, not an operational one (owner, 2026-10-14). The owner understands Roan Capital has applied and has not yet been licensed: to confirm there |
 | 30 | CBK must be told thirty days before a new delivery channel rolls out (reg 27(1)), with the mobile-money number used for payouts and repayments, any app, and the bank accounts (27(2)). The platform is that channel: who notifies CBK, and by when before go-live? | FS-830 | Open, for senior management (FS-827) |
 
 **For Roan Capital:**
@@ -240,6 +239,7 @@ By who answers (FS-1053); the numbers never change.
 
 | # | Question | Raised | Status |
 |---|---|---|---|
+| 2 | Under which licence does Roan Capital lend? It decides the interest and disclosure rules. Every non-deposit-taking lender must now be licensed or registered with CBK, applying by about 29 Mar 2027 (NDTCP Regulations 2026, FS-423) | FS-400, FS-423, FS-827 | Answered (2026-11-05, Eric): a licence under the lender regulations (reg 6), for a lender with initial capital of twenty million shillings or more; CBK's policies and documents asked first (FS-1080), the application to follow (FS-1098) |
 | 5 | BRS and land titles in the MVP, or phase 2? (RC-03, RC-08) | FS-413, FS-415, FS-581 | Answered: BRS in v1; land titles stored in the MVP, searches manual |
 | 7 | The role list (RC-34) | FS-395, FS-811 | Answered (2026-10-14): the prototype's eight, agreed by the owner; to confirm with Roan Capital, with the approval chain (answer 28) |
 | 8 | Approval chain and loan products | FS-399, FS-400 | Answered: both are configuration |
@@ -306,7 +306,7 @@ product drafts themselves are in docs/products/ by exception (FS-806).
 | DR-065 | Credit, code of ethics and market conduct policy | Our draft of Roan Capital's credit, code of ethics and market conduct policy for CBK, built from the template (templates/credit-conduct-policy): who may borrow, ability to repay, security, approval, pricing and disclosure, the cooling-off period, repayment and restructuring, definitions, collection, credit information; the code of ethics; market conduct. The cooling-off period and the definitions proposed, to confirm (FS-1082, FS-1083). v0.2: numbered ROAN-POL-003 (FS-1091). For the team's review | Working | draft | 2026-11-05 | Dibon |
 | DR-066 | Statements on the Consumer Protection Act and the Competition Act | Our draft of Roan Capital's statements for CBK, ROAN-STM-001, built from the template (templates/compliance-statements): how it meets Part VII of the Consumer Protection Act (credit agreements) and Part VI of the Competition Act (consumer welfare). For the team's review | Working | draft | 2026-11-05 | Dibon |
 | DR-067 | Delivery channels and platforms | Our draft of Roan Capital's description of its channels, ROAN-DSC-001, built from the template (templates/delivery-channels): each channel, who uses it, what for and how it is secured; also the substance of its notice to CBK of the channels (reg 27). For the team's review | Working | draft | 2026-11-05 | Dibon |
-| DR-068 | Submission index | Our draft of the index on top of Roan Capital's submission to CBK, ROAN-IDX-001, built from the template (templates/submission-index): everything the application will carry, enclosed now or to follow. For the team's review | Working | draft | 2026-11-05 | Dibon |
+| DR-068 | Submission index | Our draft of the index on top of Roan Capital's submission to CBK, ROAN-IDX-001, built from the template (templates/submission-index): everything the application will carry, enclosed now or to follow. v0.2: the route set, a licence (FS-1098). For the team's review | Working | draft | 2026-11-05 | Dibon |
 
 **Earlier versions,** replaced or withdrawn (18):
 
@@ -469,6 +469,7 @@ executed NDA (DR-001).
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
+| reg 6 | reg 6 | A licence, for a lender with initial capital of at least twenty million shillings, applied for in Form 1 with: its incorporation documents and registered address; its certificate of registration with the Data Commissioner; statements on complying with Part VII of the Consumer Protection Act and Part VI of the Competition Act; evidence and source of capital; its ICT system and delivery channels described; its products and their terms; the draft agreement with a delivery-channel provider; its consumer protection measures and complaints redress; its operations (loan sizes, interest rates, classification, the non-performing period); its funding and debt-to-equity ratio; its credit policy, code of conduct, consumer protection, anti-money laundering, data protection, ICT security and corporate governance policies; a sworn declaration on the source of funds; the fees; fit and proper forms for directors, the CEO, senior officers and significant shareholders, with certificates of good conduct, tax compliance certificates and credit reports; and its pricing parameters (6(2)(a) to (dd)) |
 | reg 27 | reg 27, reg 27(1) | Thirty days' notice to the Central Bank before a new delivery channel rolls out, with the mobile money account, apps and bank accounts to be used; a way to opt out of marketing messages; channels that are available, safe, protected from fraud, easy to use and affordable |
 | reg 28 | reg 28(3) | Applications considered under the credit policy, ability to repay assessed and no reckless lending (28(1)); a refusal given at once, with reasons (28(2)); a loan may be restructured on the borrower's request or with prior notice (28(3)) |
 | reg 29 | reg 29 | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
