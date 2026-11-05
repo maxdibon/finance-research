@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103]
+review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106]
 last_reviewed: 2026-11-05
 ---
 
@@ -142,6 +142,7 @@ Dealt with means fixed, usually by installing the software maker's update, or, w
 - Report a suspected incident, a lost device or a suspicious message to the ICT and security contact at once.
 - **Staff work only on laptops {{provider}} issues and manages.** A personal laptop is used only by a temporary person on a short stay, in the browser only, its basics (a supported system with updates, disk encryption, antivirus) confirmed by their sponsor; a longer stay, or customer data day to day, needs one of the provider's laptops or a managed browser profile.
 - **Print customer data only when a task needs it:** a statement a borrower asks for, or a signed original the law requires. Every print job is held at the printer until its owner enters their PIN there, set on each device by {{print_setup}}; documents printed from the platform carry the name of the person who printed them and the time, and each print is recorded. Anything printed is collected at once, locked away when not in use, never taken home, and shredded when no longer needed.
+- **On a visit to a customer,** notes go into the platform in the browser, and photos of premises, collateral or documents go only through the platform's secure upload, straight into the document vault: never kept in the phone's gallery, and never sent by a messaging app.
 - **Original documents** held as security (logbooks, title deeds) are kept in a locked cabinet, and every movement in or out is recorded.
 
 {{institution}} removes a leaver's access on their last day, reviews every account's access each quarter, trains staff in security when they join and every year, and uses test data, never customers' data, in training.

@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103, FS-1105]
+review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103, FS-1105, FS-1106]
 last_reviewed: 2026-11-05
 ---
 
@@ -27,6 +27,7 @@ FS-1095). From the institution's deployment and our
 | `launch` | When the channels start, and how | A soft launch on 30 November 2026, the current process in parallel for about a month |
 | `paybill`, `bank` | Its collection paybill and its payout bank | Its own M-Pesa paybill; NCBA Bank |
 | `whatsapp` | Whether WhatsApp is used, and for what | To confirm |
+| `field_visits` | How officers record a visit | On a work-profile phone, in the browser; photos through the secure upload link, into the vault |
 | `website` | Its website's address, and who builds and hosts it | Built by Dibon on Odoo Website, hosted in Kenya; the address to confirm |
 | `other_wallets` | Whether Airtel Money and T-Kash collect repayments | To confirm |
 
@@ -58,6 +59,7 @@ FS-1095). From the institution's deployment and our
 | M-Pesa paybill | Borrowers | Repayments | {{paybill}}; each payment confirmed by Safaricom's authenticated callback and matched to the loan |
 | Airtel Money and T-Kash | Borrowers on Airtel and Telkom | Repayments | {{other_wallets}}; each payment confirmed by the operator's authenticated callback and matched to the loan |
 | Bank transfer | Borrowers, through {{institution}}'s staff | Payouts to the borrower's own account, and bank repayments | Through {{bank}}, under maker-checker: prepared by one person, released by another, only to the approved account for the approved amount |
+| Field visits | Loan officers, at borrowers' business premises and homes | Seeing the business and the collateral; notes of the visit; photos of the premises, the collateral and documents | {{field_visits}} |
 | The office | Borrowers, guarantors | Applications, collateral originals, collecting released documents | Identity checked against the record; originals kept in a locked cabinet, each movement recorded |
 
 ## 3. What is not offered
