@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103, FS-1105, FS-1106, FS-1108, FS-1109]
+review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103, FS-1105, FS-1106, FS-1108, FS-1109, FS-1110]
 last_reviewed: 2026-11-05
 ---
 
@@ -26,8 +26,8 @@ FS-1095). From the institution's deployment and our
 | `institution`, `institution_legal`, `number`, `version`, `date`, `owner`, `approved_by`, `provider` | As in the ICT policy template | ROAN-DSC-CHN-001 |
 | `launch` | When the channels start, and how | A soft launch on 30 November 2026, the current process in parallel for about a month |
 | `mpesa`, `airtel`, `tkash`, `banks` | What is live at launch on each rail, both ways, and what follows | M-Pesa live both ways; Airtel Money and T-Kash both ways once integrated; NCBA Bank both ways, and further banks as accounts open |
-| `whatsapp` | Whether WhatsApp is used, and for what | To confirm |
 | `field_visits` | How officers record a visit | On a work-profile phone, in the browser; photos through the secure upload link, into the vault |
+| `not_offered` | The channels not used at launch. An institution that uses WhatsApp adds its row to the table: notifications and links only, through the official WhatsApp Business service | No WhatsApp, mobile app, USSD menu or agent network is used at launch. |
 | `website` | Its website's address, and who builds and hosts it | Built by Dibon on Odoo Website, hosted in Kenya; the address to confirm |
 
 <!-- document -->
@@ -54,7 +54,6 @@ FS-1095). From the institution's deployment and our
 | Customer pages (web, on the customer's phone) | Borrowers and guarantors | Consent, the key facts and the agreement to read and sign, statements, documents, the amount to settle | Opened from a link, with a code from an authenticator app or by SMS to the phone bound at enrolment; each opening recorded |
 | SMS | Borrowers and guarantors, on Safaricom, Airtel and Telkom | Reminders, receipts, one-time codes, links to their own pages; never a balance, a document or an ID number | Under {{institution}}'s registered sender ID, from approved templates, within quiet hours |
 | Email | Borrowers, guarantors and business customers who give an address | Notices and links to their own pages, never documents | From approved templates |
-| WhatsApp | {{whatsapp}} | Notifications and links only | Through the official WhatsApp Business service |
 | Mobile money | Borrowers | Both ways: repayments into {{institution}}'s own paybill or till; disbursements to the borrower's own wallet | Each payment confirmed by the operator's authenticated callback, or by a status query, and matched to the loan; each payout only to the approved number, for the approved amount, released by a second person |
 | Bank transfer | Borrowers and business borrowers | Both ways: disbursements to the borrower's own account; repayments by transfer into {{institution}}'s accounts | Through {{institution}}'s own banks, under maker-checker: prepared by one person, released by another, only to the approved account for the approved amount; every bank's statement reconciled |
 | Field visits | Loan officers, at borrowers' business premises and homes | Seeing the business and the collateral; notes of the visit; photos of the premises, the collateral and documents | {{field_visits}} |
@@ -75,7 +74,7 @@ The platform reaches every payment rail through one interface, with an adapter f
 
 ## 4. What is not offered
 
-No mobile app, USSD menu or agent network is used at launch. A new channel is added only after the Central Bank has had thirty days' notice of it.
+{{not_offered}} A new channel is added only after the Central Bank has had thirty days' notice of it.
 
 ## 5. Where it runs
 

@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093, FS-1094, FS-1096]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093, FS-1094, FS-1096, FS-1109, FS-1110]
 last_reviewed: 2026-11-05
 ---
 
@@ -159,7 +159,7 @@ it; nothing on the money path waits for a reader.
   RECONCILIATION         MESSAGING              BACK-OFFICE GATEWAY    OBSERVABILITY
   the ledger against     SMS under Roan         to ODOO: contacts,     metrics, logs,
   the rails; SHADOW      Capital's sender ID,   tickets, signing;      alerts, to the
-  and COMPANION          WhatsApp, email;       queued if Odoo is      fleet's Grafana
+  and COMPANION          and email;             queued if Odoo is      fleet's Grafana
   ledgers beside it      FLOWZA for replies     down
 ```
 
@@ -238,10 +238,10 @@ departures and exceptions in full.
 | ACCESS | All, in [its Keycloak settings](roan-capital-production/keycloak.md) | The baseline's, with five choices of its own (one set, one agreed, three to decide: its theme, its staff roles, its two administrators), no departures from a default, no exceptions | settings/keycloak | The baseline; Roan Capital for its choices | See the file |
 | RAILS | Payouts | By bank only: NCBA, released by Roan Capital's staff; no payout 23:00 to 04:00 | rails; RC-18, RC-21 | Roan Capital, 21 October | Agreed |
 | RAILS | A second bank | Access Bank, or NCBA only | open answer 6 | Roan Capital | To decide |
-| RAILS | Repayments | M-Pesa into Roan Capital's own paybill, its number in the generated record; Airtel Money or T-Kash if used | rails RL-03, RL-20; open answer 25 | Roan Capital | Agreed; Airtel to decide |
+| RAILS | Repayments and disbursements | Both ways on every rail (FS-1109): M-Pesa into Roan Capital's own paybill, its number in the generated record, and out by B2C; NCBA both ways; Airtel Money and T-Kash once integrated | rails RL-03, RL-20; open answer 25 | Roan Capital | Agreed; B2C, and the Airtel Money and T-Kash dates, to confirm |
 | MESSAGING | Sender | Roan Capital's own sender ID | messaging MS-03; DR-006 | Roan Capital, 9 October | Agreed; whitelisting pending |
 | MESSAGING | Reminders | Day 25 of a 30-day loan, then the collection ladder of each product | RC-20; the product versions | Roan Capital | Agreed; ladders to decide (FS-935) |
-| MESSAGING | WhatsApp | For remote loan processing; route direct or through a provider | FS-737, FS-161 | Dibon | To decide |
+| MESSAGING | WhatsApp | Not in R1: SMS and email only; remote loan processing by WhatsApp later, once Meta's policy for lenders is verified | FS-1110, FS-737, FS-161, FS-165 | Eric, 5 November | Decided: not in R1 |
 | END-OF-DAY RUNNER | The night | Checks at 21:00 and 23:45; held or unfinished at 03:00 is severity 1; the report at 06:00 | end-of-day-runner §3 | The spec | Set |
 | END-OF-DAY RUNNER | Who gets the morning report | Roan Capital's accountant and Dibon's operations; who else, and who deputises | open answer 24 | Roan Capital | To decide |
 | OBSERVABILITY | Alerts | The notification policy in Africa/Nairobi time; severities 1 and 2 to on-call, 3 and 4 to the helpdesk; R1's alert rules | observability-grafana §4 | The spec | Set |
@@ -259,7 +259,7 @@ components interact inside it is §2. As the instance's (architecture
 instance) and the warm standby's (deployment §2):
 
 ```
-   borrowers: links, codes, SMS, WhatsApp        Roan Capital's staff: browser
+   borrowers: links, codes, SMS, email           Roan Capital's staff: browser
                       |                                     |
                       v                                     v
    +----------------------------------------------------------------------+
@@ -269,10 +269,10 @@ instance) and the warm standby's (deployment §2):
    +-------+-----------------+--------------------+-----------------------+
            |                 |                    |
            v                 v                    v
-   M-Pesa: Roan        NCBA: payouts by      SMS: Roan Capital's
-   Capital's paybill   internet banking,     sender ID; WhatsApp
-   (repayments)        maker-checker;        (FS-737); email
-                       statements back
+   M-Pesa: Roan        NCBA: payouts and     SMS: Roan Capital's
+   Capital's paybill   repayments; maker-    sender ID; email
+   and B2C, both ways  checker; statements   (no WhatsApp in R1)
+                       back
 ```
 
 ## 5 · Integrations
@@ -280,11 +280,11 @@ instance) and the warm standby's (deployment §2):
 | Integration | What for | Whose agreement | Credentials | Status |
 |---|---|---|---|---|
 | M-Pesa, Daraja | Repayments into Roan Capital's paybill; callbacks, and transactions pulled for recon (RL-20) | Roan Capital's, with Safaricom | OpenBao, named when set up | To set up; site B's addresses registered too |
-| NCBA, internet banking | Payouts under maker-checker (RC-18); statements for recon (RC-19) | Roan Capital's | Roan Capital's own; none held by us | Agreed |
+| NCBA, internet banking | Payouts under maker-checker (RC-18), and repayments by transfer (FS-1109); statements for recon (RC-19) | Roan Capital's | Roan Capital's own; none held by us | Agreed |
 | Access Bank | As NCBA, if used | Roan Capital's | As NCBA | Open answer 6 |
-| Airtel Money | Repayments, if Roan Capital collects through it | Roan Capital's | OpenBao | Open answer 25 |
+| Airtel Money | Repayments and disbursements, once integrated (FS-1109) | Roan Capital's | OpenBao | Date to confirm |
 | SMS | Reminders, codes, receipts under Roan Capital's sender ID | Dibon's route; Roan Capital's sender ID (DR-005, DR-006) | OpenBao | Whitelisting requested 9 October |
-| WhatsApp | Remote loan processing (FS-737), notifications and links only | Meta, directly or through a provider (FS-161) | OpenBao | To decide |
+| WhatsApp | Not in R1 (FS-1110) | — | — | Later |
 | Email | Notices and signing links | Dibon's | OpenBao | To set up |
 | National ID register | Identity checks | To decide: Roan Capital's or Dibon's on its behalf (FS-202) | OpenBao | Open |
 | Business registry | Business borrowers | To confirm what is available (FS-205) | OpenBao | Open |
@@ -324,7 +324,7 @@ instance) and the warm standby's (deployment §2):
   in a third place in Kenya.
 - **What leaves Kenya:** only by name: detection telemetry to the managed
   security service (SE-13); notifications and links, never balances or
-  documents, through SMS, WhatsApp and email (deployment §1).
+  documents, through SMS and email (deployment §1); no WhatsApp in R1 (FS-1110).
 
 ## 9 · Licences and suppliers
 
@@ -332,10 +332,10 @@ instance) and the warm standby's (deployment §2):
 |---|---|---|---|---|
 | Odoo Enterprise | The back office and the staff workspace | One user per staff member: three or four (FS-982); count to confirm (FS-529) | To confirm: Roan Capital's subscription or Dibon's (FS-529) | To confirm |
 | Site A and site B | Hosting in Kenya | Liquid, or a second provider for site B | Dibon's | To decide (FS-032, FS-775) |
-| Safaricom | The paybill and Daraja | Roan Capital's own | Roan Capital's | Existing |
-| NCBA | Payouts and statements | Roan Capital's own | Roan Capital's | Existing |
+| Safaricom | The paybill, a B2C shortcode for disbursements (FS-1109), and Daraja | Roan Capital's own | Roan Capital's | Paybill existing; B2C to confirm |
+| NCBA | Payouts, repayments and statements | Roan Capital's own | Roan Capital's | Existing |
 | SMS route | Messages under Roan Capital's sender ID | Per message | Dibon's | To set up |
-| WhatsApp | Remote loan processing | Per conversation | To decide (FS-161) | To decide |
+| WhatsApp | Not in R1 (FS-1110) | — | — | — |
 | Managed security service | Round-the-clock detection | Per endpoint and server | Dibon's (SE-13) | To contract |
 
 ## 10 · Size

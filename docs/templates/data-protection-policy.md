@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1092, FS-1100, FS-1103, FS-1108]
+review_ids: [FS-1080, FS-1087, FS-1092, FS-1100, FS-1103, FS-1108, FS-1110]
 last_reviewed: 2026-11-05
 ---
 
@@ -29,6 +29,7 @@ controller with the Data Commissioner; no template stands in for it.
 | Value | What it is | Roan Capital's, for example |
 |---|---|---|
 | `institution`, `institution_legal`, `version`, `date`, `classification`, `owner`, `approved_by`, `provider` | As in the ICT policy template | |
+| `message_channels` | The messaging channels it uses with customers | SMS and email |
 | `privacy_lead` | The person or position responsible for data protection | To confirm |
 | `registration` | Its registration with the Data Commissioner: number and date | To confirm |
 | `relationship_end` | When a customer stops being its customer, for retention (OB-COM-26) | One year with nothing live, proposed |
@@ -104,7 +105,7 @@ Every person may be told how their data is used, see it, object to its processin
 
 ## 9. Transfers outside Kenya
 
-Personal data is kept in Kenya. It is transferred out of Kenya only where appropriate safeguards are proved (Data Protection Act s.48); notifications and links sent by SMS, WhatsApp and email carry no documents, balances or ID numbers.
+Personal data is kept in Kenya. It is transferred out of Kenya only where appropriate safeguards are proved (Data Protection Act s.48); notifications and links sent by {{message_channels}} carry no documents, balances or ID numbers.
 
 ## 10. Retention and deletion
 
