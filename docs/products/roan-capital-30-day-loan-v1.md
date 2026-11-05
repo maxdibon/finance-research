@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830, FS-934, FS-981, FS-1044, FS-1058, FS-1061]
-last_reviewed: 2026-11-01
+review_ids: [FS-800, FS-801, FS-802, FS-806, FS-807, FS-814, FS-815, FS-816, FS-817, FS-823, FS-826, FS-831, FS-830, FS-934, FS-981, FS-1044, FS-1058, FS-1061, FS-1113]
+last_reviewed: 2026-11-05
 ---
 
 # Roan Capital · Biashara, the 30-day loan · product version 1 · proposed
@@ -28,7 +28,7 @@ chattels held by the client and guarantors, with the Life Income Fund fee
 (A1 to A5, A7, A21, A22, as here). Agreed besides: no grace, default the
 day after a missed payment (A20); a due date on a holiday moves to the
 next working day (A11); every amount to two decimal places (A12, where we
-had instalments rounded up to the shilling); payouts by bank only, with a
+had instalments rounded up to the shilling); payouts by bank only (M-Pesa payouts as well proposed, FS-1113), with a
 cut-off from 23:00 to 04:00 (A18 becomes the bank's charges); restructuring
 at 365 days, earlier by exception (A23). Two answers want a second look
 before they are encoded: early repayment that "shortens the term at the
@@ -81,7 +81,7 @@ Published once approved.
 | A15 | Rate by risk class | One rate for every borrower | The prototype; the requirement document scores borrowers (RC-11) | Choose: One rate for every borrower / A rate by risk class (give the range) |
 | A16 | Interest basis | Flat on the principal, by days: 1% × principal × days in the term | The prototype | Confirm |
 | A17 | Tax on fees | Excise duty at 20% on each fee, not on interest or the insurance premium; how it applies to Roan Capital, with counsel (LQ-14) | The Excise Duty Act; not in the prototype | — |
-| A18 | Who pays the rail's charges | The bank's charges on payouts and repayments (payouts by bank only) | Roan Capital's weekly update, 21 October, for payouts by bank; who pays, none yet | Choose: The borrower / Roan Capital |
+| A18 | Who pays the rail's charges | The bank's charges on payouts and repayments (payouts by bank only) | Roan Capital's weekly update, 21 October, for payouts by bank; M-Pesa payouts as well proposed to Roan Capital (FS-1113, open answer 42); who pays, none yet | Choose: The borrower / Roan Capital |
 | A19 | Third-party costs | The chattels mortgage fee | The prototype | Choose: Roan Capital's own fee / The collateral registry's charge, passed on at cost |
 | A20 | Grace | None: default the day after a missed payment | Roan Capital's weekly update, 21 October | Confirm |
 | A21 | Collateral | Chattels: business and household items the borrower charges, each with its quantity and estimated value and where they are kept; vehicles by logbook (RC-08). The loan-to-value, which the form does not state | Roan Capital's weekly update, 21 October (chattels held by the client and guarantors); Roan Capital's application form | Provide |
