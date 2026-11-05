@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-728, FS-781, FS-816, FS-817, FS-1024, FS-1025, FS-1026, FS-1039, FS-1087]
+review_ids: [FS-728, FS-781, FS-816, FS-817, FS-1024, FS-1025, FS-1026, FS-1039, FS-1087, FS-1091]
 last_reviewed: 2026-11-05
 ---
 
@@ -196,7 +196,10 @@ Services), a kind, and a serial:
   version, the organisation, the recipient's role, the date, how it went,
   and whether it was a named copy. A person's name stays on the CRM
   opportunity, never in git (§1, principle 4).
-- **An institution's own documents** carry its own numbering, not ours.
+- **An institution's own documents** carry its own numbering, not ours:
+  its own scheme where it has one, otherwise its document code (three to
+  eight letters, unique across our customers, on its customer page), a
+  kind and a serial, such as ROAN-POL-001 for a policy (OB-COM-28, FS-1091).
 
 ## 8 · Before it goes out
 

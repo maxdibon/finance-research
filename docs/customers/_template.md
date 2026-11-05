@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-837, FS-838, FS-845, FS-1053]
-last_reviewed: 2026-11-01
+review_ids: [FS-837, FS-838, FS-845, FS-1053, FS-1091]
+last_reviewed: 2026-11-05
 ---
 
 # Customer name · delivery map
@@ -29,6 +29,7 @@ order, after a short "At a glance"; the check holds the headings
 | Waiting on it | How many open answers are its to give (§4) |
 | Waiting on us | How many are ours, or counsel's |
 | Its last release | The newest entry in §8 |
+| Document code | The code its own documents are numbered by (code, kind, serial), three to eight letters, unique across our customers; or its own numbering scheme (OB-COM-28, FS-1091) |
 
 ## 1 · The engagement
 

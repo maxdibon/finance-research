@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087]
+review_ids: [FS-1080, FS-1087, FS-1091]
 last_reviewed: 2026-11-05
 ---
 
@@ -42,8 +42,9 @@ node tools/policies/build.js docs/templates/<template>.md <values.json> <out.doc
   theme until it has one (design-system, "Whose look a document takes";
   `design/system/institution-docx.js`).
 - **Its numbers:** each policy carries the institution's own document
-  number (`numbers` in the values, by template), never ours: an
-  institution's own documents carry its own numbering (design-system §7).
+  number (`numbers` in the values, by template), never ours: its own
+  scheme, or its document code, POL and a serial, such as ROAN-POL-001
+  (design-system §7; OB-COM-28).
 - **The diagrams** are images beside the values, `architecture.png` and
   `dataflow.png`, drawn for the institution from its deployment.
 - **Each built document** is registered in the document register as our

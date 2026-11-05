@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087]
+review_ids: [FS-1080, FS-1087, FS-1092]
 last_reviewed: 2026-11-05
 ---
 
@@ -112,7 +112,7 @@ Personal data is kept only as long as its purpose and the law require (Data Prot
 
 ## 11. Security
 
-Personal data is protected as {{institution}}'s ICT policy sets: in Kenya, in {{institution}}'s own instance; encrypted in transit and at rest, government ID numbers field by field; access only by named accounts with two factors, by role, each opening of a document recorded; tested before go-live and every year.
+Personal data is protected as {{institution}}'s ICT policy sets: in Kenya, in {{institution}}'s own instance; encrypted in transit and at rest, government ID numbers field by field; access only by named accounts with two factors, by role, each opening of a document recorded; tested before go-live and every year. Customer data is printed only when a task needs it; every print job waits at the printer for its owner's PIN, printed pages are locked away and shredded when no longer needed, and original documents held as security are kept locked, each movement recorded.
 
 ## 12. Breaches
 

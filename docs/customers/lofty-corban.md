@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-915, FS-916, FS-917, FS-918, FS-919, FS-1053]
-last_reviewed: 2026-11-01
+review_ids: [FS-915, FS-916, FS-917, FS-918, FS-919, FS-1053, FS-1091]
+last_reviewed: 2026-11-05
 ---
 
 # Lofty Corban · delivery map
@@ -32,6 +32,7 @@ capability's status is in its module.
 | Waiting on it | 7 open answers (§4) |
 | Waiting on us | None |
 | Its last release | 2026.10.22 (§8) |
+| Document code | To agree (FS-1091) |
 
 ## 1 · The engagement
 
