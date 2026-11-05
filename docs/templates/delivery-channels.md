@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103]
+review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103, FS-1105]
 last_reviewed: 2026-11-05
 ---
 
@@ -27,6 +27,7 @@ FS-1095). From the institution's deployment and our
 | `launch` | When the channels start, and how | A soft launch on 30 November 2026, the current process in parallel for about a month |
 | `paybill`, `bank` | Its collection paybill and its payout bank | Its own M-Pesa paybill; NCBA Bank |
 | `whatsapp` | Whether WhatsApp is used, and for what | To confirm |
+| `website` | Its website's address, and who builds and hosts it | Built by Dibon on Odoo Website, hosted in Kenya; the address to confirm |
 | `other_wallets` | Whether Airtel Money and T-Kash collect repayments | To confirm |
 
 <!-- document -->
@@ -47,6 +48,7 @@ FS-1095). From the institution's deployment and our
 
 | Channel | Who uses it | What it is for | How it is secured |
 |---|---|---|---|
+| Website | Anyone | Who {{institution}} is and how to reach it; its products with their terms and key information documents; a loan calculator priced from the same product versions as live loans; a request form, with consent, that a credit officer follows up; complaints; the privacy notice; that it is regulated by the Central Bank of Kenya | {{website}}; behind the hosting provider's managed firewall, over HTTPS; the request form collects only what a first contact needs |
 | Staff workspace (web) | {{institution}}'s staff | Applications, collateral, documents, approvals, disbursements, collections, reports | Through the edge only; a password and an authenticator app or security key; each role sees only its work; every act recorded |
 | Kapu Console (web) | Approvers; staff when the back office is unavailable | Approvals, and read-only views | As the staff workspace; every approval re-authenticated |
 | Customer pages (web, on the customer's phone) | Borrowers and guarantors | Consent, the key facts and the agreement to read and sign, statements, documents, the amount to settle | Opened from a link, with a code from an authenticator app or by SMS to the phone bound at enrolment; each opening recorded |

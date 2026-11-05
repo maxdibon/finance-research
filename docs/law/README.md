@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-868, FS-870, FS-899, FS-900, FS-959]
-last_reviewed: 2026-10-23
+review_ids: [FS-868, FS-870, FS-899, FS-900, FS-959, FS-1104]
+last_reviewed: 2026-11-05
 ---
 
 # Instrument cards
@@ -69,3 +69,5 @@ document too.
 | [LR-42](LR-42.md) | Hire-Purchase Act (Cap. 507) | None: the courts apply it |
 | [LR-43](LR-43.md) | Auctioneers Rules (LN 120 of 1997) | The Auctioneers Licensing Board; a court where it directs otherwise |
 | [LR-47](LR-47.md) | Land Act (Cap. 280) | None: the courts apply it; the National Land Commission for public land |
+| [LR-48](LR-48.md) | Consumer Protection Act (Cap. 501) | None of its own: the courts, and the Kenya Consumers Protection Advisory Committee |
+| [LR-49](LR-49.md) | Competition Act (Cap. 504) | The Competition Authority of Kenya |

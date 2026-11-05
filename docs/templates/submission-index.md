@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1095, FS-1097, FS-1100]
+review_ids: [FS-1095, FS-1097, FS-1100, FS-1107]
 last_reviewed: 2026-11-05
 ---
 
@@ -24,6 +24,7 @@ confirm]". Built with `tools/policies/build.js`.
 |---|---|
 | `institution`, `institution_legal`, `number`, `version`, `date`, `owner` | As in the ICT policy template |
 | `route` | A licence (reg 6) or a registration (reg 9) |
+| `submission_context` | Why it submits now: as the Bank asked ahead of an application, or answering the Bank's list after a first submission |
 | `s_` keys | Each item's status, as the table's last column names them |
 | A table's widths | `<!-- widths: 46, 22, 32 -->` on the line before a table sets its columns' shares, in percent |
 
@@ -36,7 +37,7 @@ confirm]". Built with `tools/policies/build.js`.
 | Version | {{version}}, {{date}} |
 | Owner | {{owner}}, {{institution_legal}} |
 
-{{institution_legal}} submits the documents marked enclosed, as the Central Bank of Kenya asked, ahead of its application for {{route}} under the Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026. The rest follow with the application.
+{{institution_legal}} submits the documents marked enclosed {{submission_context}}, for {{route}} under the Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026. The rest follow with the completed application.
 
 <!-- widths: 46, 22, 32 -->
 | Item | Document | Status |

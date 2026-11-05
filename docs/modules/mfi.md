@@ -11,7 +11,7 @@ audience: [mfi]
 depends_on: [mandates, identity, rails, messaging, recon-observability, crb, financial-crime, access, collect, core, gateway, sme-recon, business-suite, escrow, decisioning]
 consumed_by: [omni-channel, insights, business-suite, sacco]
 review_ids: [FS-019, FS-020, FS-045, FS-088, FS-136, FS-137, FS-138, FS-139, FS-140, FS-141, FS-320, FS-354, FS-388, FS-400, FS-407, FS-423, FS-431, FS-435, FS-447, FS-453, FS-496, FS-499, FS-500, FS-522, FS-516, FS-517, FS-518, FS-519, FS-531, FS-532, FS-582, FS-581, FS-602, FS-618, FS-619, FS-625, FS-629, FS-764, FS-769, FS-812, FS-983, FS-989, FS-995, FS-996, FS-1069]
-last_reviewed: 2026-11-01
+last_reviewed: 2026-11-05
 ---
 
 # Kapu MFI
@@ -294,7 +294,7 @@ FS-088, FS-141.
 | reg 57 | reg 57 | A loan is non-performing when principal or interest is outstanding thirty days past due, for a loan of thirty days or less, or ninety days, for a longer one (57(1)); the credit policy (57(2)) and each loan agreement (57(3)) state the default period |
 | reg 59 | reg 59 | A pricing model with clear parameters: its components and costs justified, rates that may vary with the borrower's creditworthiness (59(2)(c)), the criteria for non-performance, credit bureau scores, all-inclusive pricing except third-party costs (59(2)(f)), and the APR disclosed |
 | reg 60 | reg 60 | Where artificial intelligence makes lending decisions: decisions explained, customers told they are dealing with a machine, human oversight kept, bias assessed, models robust and explainable, data protected |
-| reg 96 | reg 96 | A lender in business when the Regulations began applies within six months of publication and may continue meanwhile; one licensed under the Digital Credit Providers Regulations, 2022 is deemed licensed |
+| reg 96 | reg 96 | A lender in business when the Regulations began applies within six months of publication and may continue meanwhile (96(1), (2)); one licensed under the Digital Credit Providers Regulations, 2022 is deemed licensed (96(3), (4)); a licence application pending when they began is processed under Part II (licence) or Part III (registration) (96(6)) |
 
 **[LR-04](../law/LR-04.md) The Banking Act (Cap. 488).** Regulator: Central Bank of Kenya. Made under: An Act of Parliament. In force: Yes. Version read: as at 2024-12-27, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/1989/9/eng@2024-12-27).
 
