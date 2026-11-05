@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106]
+review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106, FS-1109]
 last_reviewed: 2026-11-05
 ---
 
@@ -222,7 +222,7 @@ Passwords are stored only as salted hashes by the sign-in service, never in clea
 
 - The platform runs at two sites in Kenya, {{sites}}, on {{hosting}} infrastructure ({{hosting_contract}}), the second a warm standby. Failover follows a written runbook, rehearsed before go-live and twice a year with {{institution}}.
 - A clean rebuild from code is possible at any time, never from a machine that was compromised; a ransomware recovery drill is held twice a year.
-- If the platform is unavailable, {{institution}} follows its own outage procedure: customers keep paying into its paybill; new payouts wait, or are made by hand under two-person control within set limits, and are entered and reconciled when the platform returns.
+- If the platform is unavailable, {{institution}} follows its own outage procedure: customers keep repaying by mobile money or bank transfer; new disbursements wait, or are made by hand under two-person control within set limits, and are entered and reconciled when the platform returns.
 - **Incidents:** the provider tells {{institution}} within 4 hours of confirming a significant incident (aiming for 1 hour), updates it every 4 hours, and sends a root-cause report within 5 working days; a personal data breach within 24 hours, so {{institution}} can notify the Data Commissioner within 72 hours.
 
 ## 6. Third parties and outsourcing

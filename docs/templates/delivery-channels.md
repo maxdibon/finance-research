@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103, FS-1105, FS-1106, FS-1108]
+review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103, FS-1105, FS-1106, FS-1108, FS-1109]
 last_reviewed: 2026-11-05
 ---
 
@@ -25,7 +25,7 @@ FS-1095). From the institution's deployment and our
 |---|---|---|
 | `institution`, `institution_legal`, `number`, `version`, `date`, `owner`, `approved_by`, `provider` | As in the ICT policy template | ROAN-DSC-CHN-001 |
 | `launch` | When the channels start, and how | A soft launch on 30 November 2026, the current process in parallel for about a month |
-| `mpesa`, `airtel`, `tkash`, `banks` | What is live at launch on each rail, and what follows | M-Pesa live; Airtel Money and T-Kash once integrated; NCBA Bank, and further banks as accounts open |
+| `mpesa`, `airtel`, `tkash`, `banks` | What is live at launch on each rail, both ways, and what follows | M-Pesa live both ways; Airtel Money and T-Kash both ways once integrated; NCBA Bank both ways, and further banks as accounts open |
 | `whatsapp` | Whether WhatsApp is used, and for what | To confirm |
 | `field_visits` | How officers record a visit | On a work-profile phone, in the browser; photos through the secure upload link, into the vault |
 | `website` | Its website's address, and who builds and hosts it | Built by Dibon on Odoo Website, hosted in Kenya; the address to confirm |
@@ -55,21 +55,21 @@ FS-1095). From the institution's deployment and our
 | SMS | Borrowers and guarantors, on Safaricom, Airtel and Telkom | Reminders, receipts, one-time codes, links to their own pages; never a balance, a document or an ID number | Under {{institution}}'s registered sender ID, from approved templates, within quiet hours |
 | Email | Borrowers, guarantors and business customers who give an address | Notices and links to their own pages, never documents | From approved templates |
 | WhatsApp | {{whatsapp}} | Notifications and links only | Through the official WhatsApp Business service |
-| Mobile money | Borrowers | Repayments into {{institution}}'s own paybill or till; payouts to the borrower's own wallet | Each payment confirmed by the operator's authenticated callback, or by a status query, and matched to the loan; each payout only to the approved number, for the approved amount, released by a second person |
-| Bank transfer | Borrowers and business borrowers | Payouts to the borrower's own account; repayments by transfer | Through {{institution}}'s own banks, under maker-checker: prepared by one person, released by another, only to the approved account for the approved amount; every bank's statement reconciled |
+| Mobile money | Borrowers | Both ways: repayments into {{institution}}'s own paybill or till; disbursements to the borrower's own wallet | Each payment confirmed by the operator's authenticated callback, or by a status query, and matched to the loan; each payout only to the approved number, for the approved amount, released by a second person |
+| Bank transfer | Borrowers and business borrowers | Both ways: disbursements to the borrower's own account; repayments by transfer into {{institution}}'s accounts | Through {{institution}}'s own banks, under maker-checker: prepared by one person, released by another, only to the approved account for the approved amount; every bank's statement reconciled |
 | Field visits | Loan officers, at borrowers' business premises and homes | Seeing the business and the collateral; notes of the visit; photos of the premises, the collateral and documents | {{field_visits}} |
 | The office | Borrowers, guarantors | Applications, collateral originals, collecting released documents | Identity checked against the record; originals kept in a locked cabinet, each movement recorded |
 
 ## 3. Payment rails, live and to come
 
-The platform reaches every payment rail through one interface, with an adapter for each operator and each bank, so a new rail or a new bank is added without changing how {{institution}}'s staff or customers work.
+The platform reaches every payment rail through one interface, with an adapter for each operator and each bank, so a new rail or a new bank is added without changing how {{institution}}'s staff or customers work. Every rail carries money both ways: a borrower may repay through any live rail, and be disbursed to through any live rail, to the wallet or account they nominated and {{institution}} approved.
 
 | Rail | What it carries | At launch |
 |---|---|---|
-| M-Pesa (Safaricom) | Repayments to {{institution}}'s paybill or till; payouts to wallets | {{mpesa}} |
+| M-Pesa (Safaricom) | Repayments to {{institution}}'s paybill or till; disbursements to wallets | {{mpesa}} |
 | Airtel Money (Airtel) | The same | {{airtel}} |
 | T-Kash (Telkom) | The same | {{tkash}} |
-| Bank transfers: EFT, RTGS and PesaLink | Payouts to bank accounts; repayments by transfer | {{banks}} |
+| Bank transfers: EFT, RTGS and PesaLink | Disbursements to bank accounts; repayments by transfer | {{banks}} |
 
 **Adding a rail or a bank.** Its integration is tested end to end and its first payments reconciled before customers see it; {{institution}} approves it; its credentials are held in the key management system; and the Central Bank of Kenya is told thirty days ahead where it counts as a new delivery channel (reg 27). {{institution}} may bank with several banks: each is connected the same way, its statements reconciled daily, and payouts sent through whichever the staff choose for each.
 
