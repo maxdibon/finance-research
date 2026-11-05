@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106, FS-1109, FS-1110, FS-1111]
+review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106, FS-1109, FS-1110, FS-1111, FS-1116]
 last_reviewed: 2026-11-05
 ---
 
@@ -229,7 +229,7 @@ Passwords are stored only as salted hashes by the sign-in service, never in clea
 
 ## 6. Third parties and outsourcing
 
-- The platform is provided by {{provider}} under a services agreement that keeps {{institution}}'s data in Kenya, forbids its use for any other purpose, allows subcontracting only with {{institution}}'s approval, gives the Central Bank of Kenya access, and sets how data is returned and erased if the agreement ends.
+- The platform is provided by {{provider}} under a services agreement that keeps {{institution}}'s data in Kenya, forbids its use for any other purpose, allows subcontracting only with {{institution}}'s approval, gives the Central Bank of Kenya access, and sets what happens if the agreement ends: the service continues through a handover, and {{institution}}'s data is returned to it and then erased.
 - Every supplier that handles {{institution}}'s data is assessed before use and named in its register of processors: hosting ({{hosting}}), the mobile operators (Safaricom, Airtel, Telkom), {{bank}}, SMS ({{sms_provider}}), identity verification ({{identity_providers}}) and the managed security service ({{managed_security}}).
 
 ## 7. Exceptions, compliance and review
