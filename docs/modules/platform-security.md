@@ -10,8 +10,8 @@ classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, recon-observability]
 consumed_by: []
-review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661, FS-698, FS-699, FS-701, FS-711, FS-712, FS-775, FS-777, FS-793, FS-896]
-last_reviewed: 2026-10-22
+review_ids: [FS-459, FS-460, FS-461, FS-462, FS-463, FS-464, FS-466, FS-468, FS-470, FS-471, FS-503, FS-588, FS-633, FS-636, FS-638, FS-639, FS-640, FS-645, FS-651, FS-655, FS-656, FS-661, FS-698, FS-699, FS-701, FS-711, FS-712, FS-775, FS-777, FS-793, FS-896, FS-1089]
+last_reviewed: 2026-11-05
 ---
 
 # Platform Security
@@ -66,10 +66,10 @@ not go live on less.
 | SE-08 | Disks encrypted on every node, databases encrypted at rest (PostgreSQL with transparent data encryption), keys in OpenBao and rotated on a schedule | Planned | FS-403, FS-464 | 1 |
 | SE-09 | TLS everywhere, with certificates issued and renewed automatically (cert-manager, OpenBao PKI) | Planned | FS-464 | 1 |
 | SE-10 | Backups of clusters, databases and the document vault (Velero for the clusters; CloudNativePG's Barman Cloud plugin for the databases, FS-699; identity ID-15) to object storage in Kenya and to a second Kenyan site, with an immutable copy; restores tested every quarter against recovery objectives per service | Planned | FS-464. The portfolio promises recovery tests twice a year; quarterly exceeds it | 1 |
-| SE-11 | Vulnerability management: images and dependencies scanned (Trivy, pinned by digest and mirrored in Harbor; OSV-Scanner; FS-699), a software bill of materials per release, fixes prioritised by CISA's known-exploited list, EPSS and CVSS v4 within set times | Planned | FS-462, FS-464 | 1 |
+| SE-11 | Vulnerability management: images and dependencies scanned (Trivy, pinned by digest and mirrored in Harbor; OSV-Scanner; FS-699), a software bill of materials per release, fixes prioritised by CISA's known-exploited list, EPSS and CVSS v4 within set times (§5, "Fixing security issues, and keeping logs") | Planned | FS-462, FS-464 | 1 |
 | SE-12 | A pipeline that refuses unsafe builds: secrets scanning (Gitleaks), static and dynamic testing (Opengrep, ZAP), signed images with build provenance (cosign, SLSA, recorded in Rekor), a private registry (Harbor); on GitHub, with runners in Kenya (FS-896); every step pinned to a commit or digest, never a tag, and images only from a project's own builds or ours, never Bitnami's (FS-699) | Planned | FS-462, FS-464 | 1 |
 | SE-13 | Round-the-clock detection and response: managed detection and response from a security operations centre (Sophos MDR through Liquid), fed by our logs and endpoint agents | Planned | FS-458, FS-464. To confirm terms with Liquid. R2: our rota watches until then (owner, 2026-10-12, FS-777) | 1 |
-| SE-14 | Endpoints: staff laptops and our servers with endpoint protection, disk encryption and device management (through Liquid: Sophos endpoint, Microsoft Intune; or our own tier where a client chooses it: Wazuh, Microsoft Defender Antivirus, Fleet; FS-712; docs/specs/endpoints.md); field devices enrolled with Android Enterprise (omni-channel OC-19) | Planned | FS-459, FS-464. R1 for Dibon's own devices; institutions' in R2 (owner, 2026-10-12, FS-777) | 1 |
+| SE-14 | Endpoints: staff laptops and our servers with endpoint protection, disk encryption and device management (through Liquid: Sophos endpoint, Microsoft Intune; or our own tier where a client chooses it: Wazuh, Microsoft Defender Antivirus, Fleet; FS-712; docs/specs/endpoints.md); field devices enrolled with Android Enterprise (omni-channel OC-19) | Planned | FS-459, FS-464. R1 for Dibon's own devices; institutions' in R2 (owner, 2026-10-12, FS-777), except Roan Capital's laptops, which Dibon manages from go-live (FS-1088) | 1 |
 | SE-15 | Mobile apps built and tested to OWASP MASVS level 2 (MobSF in the pipeline), with Play Integrity and App Attest | Planned | FS-462, FS-464. The field-officer app (OC-17) and member apps (OC-01) | 1 |
 | SE-16 | A threat model per product (STRIDE for security, LINDDUN for privacy), reviewed at each major change; the payment-instruction path first, written before it is built (rails RL-01, RL-07; FS-588) | Planned | FS-462, FS-464 | 1 |
 | SE-17 | An independent penetration test every year and before each customer's go-live, by a tester we do not otherwise use for assurance; the payment-instruction path always in scope (FS-588) | Planned | FS-464; approval pack item 8; assurance rule 1 | 1 |
@@ -196,6 +196,46 @@ guidance note and its draft risk guidelines (September 2026), CBK's
 guideline for payment service providers, SASRA's information-system
 guidelines, and the Computer Misuse and Cybercrimes Act with the critical
 information infrastructure regulations (law register LR-20).
+
+### Fixing security issues, and keeping logs
+
+FS-1089, proposed. The times SE-11 promises, and how long SE-18's logs
+are kept, as every institution's ICT policy states them.
+
+**Fix times,** from the moment an issue is confirmed, by severity (CVSS
+v4, raised where CISA's known-exploited list or a high EPSS score says
+it is being used):
+
+| Severity | Fixed or mitigated within |
+|---|---|
+| Critical, or known to be exploited, on anything facing the internet | 72 hours |
+| Critical, elsewhere | 7 days |
+| High | 30 days |
+| Medium | 90 days |
+| Low | 180 days, or the next scheduled release |
+
+- The same times apply to findings from penetration tests (SE-17) and
+  audits, and to the institution's own reports.
+- **A fix that cannot be made in time** gets a compensating control the
+  day the time runs out, a risk accepted in writing by the security
+  lead, and the institution told; it stays on the monthly service
+  review until fixed.
+- Every issue, its severity, its due date and when it was fixed are
+  recorded; the times met are reported to each institution every month.
+
+**How long logs are kept:**
+
+| Log | Searchable | Kept |
+|---|---|---|
+| Security events: sign-ins, failures, step-ups, administrative actions, role changes (SE-18) | 13 months | 7 years, in write-once storage |
+| Database audit: schema changes and writes outside a service's own account (SE-18) | 13 months | 7 years, in write-once storage |
+| The signed audit trail of every transaction (recon RO-24) | For its life | At least 7 years, as the transaction records |
+| Access grants and bastion sessions (SE-26) | 13 months | 7 years |
+| Application and platform logs | 13 months | 13 months |
+| Metrics; traces | 13 months; 30 days | The same |
+
+Logs are deleted at the end of their period, unless a legal hold stops
+the clock; Restricted values never enter one (architecture §7).
 
 ## 6 · Rails and integrations
 

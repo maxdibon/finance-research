@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087]
+review_ids: [FS-1080, FS-1087, FS-1089]
 last_reviewed: 2026-11-05
 ---
 
@@ -36,10 +36,11 @@ indented. The two diagrams are images beside the values:
 | `provider`, `provider_legal` | Dibon's short name, and its registered name as in the services agreement | Dibon; to confirm |
 | `security_contact` | The position that holds ICT and security | To confirm |
 | `board_report` | How often the board hears of ICT risk | Every quarter |
-| `devices`, `fix_times`, `log_retention` | Its devices; vulnerability fix times; security log retention | To confirm |
+| `devices`, `endpoint_role` | The devices staff use, and who manages them | Laptops Dibon issues and manages; Dibon secures them |
+| `perimeter`, `managed_security` | The hosting provider's firewall; the managed detection service | Azure Firewall; Liquid's managed security |
 | `sites`, `hosting`, `hosting_contract` | Where it runs, on whose infrastructure, and under what contract | Nairobi and Mombasa; Africa Data Centres and Liquid; to confirm |
 | `staff`, `bank`, `go_live` | Its staff; its payout bank; the go-live date | Three or four; NCBA Bank; to confirm |
-| `managed_security`, `identity_providers` | Detection and identity suppliers | To confirm |
+| `identity_providers` | Identity suppliers | To confirm |
 | `pen_tester`, `pen_test_date`, `it_audit` | The independent assurance | To confirm |
 
 <!-- document -->
@@ -79,7 +80,7 @@ It covers the lending platform {{institution}} uses for digital credit (Annex A)
 | Board of directors | Approves this policy and its changes; receives a report on ICT risk, incidents and the results of tests {{board_report}} |
 | {{owner}} | Accountable for this policy; the platform's administrator for {{institution}}; approves exceptions; signs the quarterly access review |
 | ICT and security contact ({{security_contact}}) | Day-to-day oversight of the platform; {{institution}}'s contact for incidents; keeps the register of staff access |
-| {{provider}}, the platform provider | Designs, builds, hosts, operates, monitors and secures the platform under the services agreement; reports incidents; gives the Central Bank of Kenya access to its premises, books, records, systems and staff as the agreement and the law require |
+| {{provider}}, the platform provider | Designs, builds, hosts, operates, monitors and secures the platform under the services agreement; {{endpoint_role}}; reports incidents; gives the Central Bank of Kenya access to its premises, books, records, systems and staff as the agreement and the law require |
 | Every member of staff | Follows this policy; protects their sign-in; reports a suspected incident at once |
 
 ## 5. Policy
@@ -96,11 +97,21 @@ It covers the lending platform {{institution}} uses for digital credit (Annex A)
 
 - A security baseline applies to every layer: the network edge, the cluster, the data, the backups and the devices that reach the platform. Each component has a written baseline of mandatory settings, applied to {{institution}}'s deployment and checked at every change.
 - The cluster is hardened to the CIS Benchmarks, checked on every change; no privileged workloads; runtime threat detection on every server.
-- Vulnerabilities are found by continuous scanning and fixed by priority, known-exploited ones first: {{fix_times}}.
+- Vulnerabilities are found by continuous scanning and fixed by priority, known-exploited ones first, within these times from confirmation:
+
+| Severity | Fixed or mitigated within |
+|---|---|
+| Critical, or known to be exploited, on anything facing the internet | 72 hours |
+| Critical, elsewhere | 7 days |
+| High | 30 days |
+| Medium | 90 days |
+| Low | 180 days, or the next scheduled release |
+
+The same times apply to findings from penetration tests and audits. A fix that cannot be made in time gets a compensating control, a risk accepted in writing by the provider's security lead, and {{institution}} told; it stays on the monthly service review until fixed. The times met are reported to {{institution}} every month.
 
 ### 5.3 Network management security standards
 
-- One way in: every request from the internet passes a web application firewall (with the OWASP core rule set) and an API gateway with rate limits. Protection from denial-of-service attacks is provided upstream by the hosting provider.
+- One way in: every request from the internet passes {{perimeter}}, then a web application firewall (with the OWASP core rule set) and an API gateway with rate limits. Protection from denial-of-service attacks is provided upstream by the hosting provider.
 - The network is divided into zones: the edge, the services, the data, and the bastion through which administrators reach anything inside. Traffic between workloads is denied unless explicitly allowed; each service has its own cryptographic identity, and traffic between services is encrypted.
 - Databases and internal services are never reachable from the internet. Outbound connections go only to named parties.
 
@@ -123,7 +134,7 @@ It covers the lending platform {{institution}} uses for digital credit (Annex A)
 ### 5.6 Information security guidelines
 
 - Use only your own named account, with your second factor; never share either.
-- Reach the platform only from a device that meets the minimum: {{devices}}.
+- Reach the platform only from {{devices}}.
 - Keep customer data on the platform. Do not download it to personal devices, or send documents, statements, balances or ID numbers by email, SMS or WhatsApp; the platform sends customers links to their own pages instead.
 - Report a suspected incident, a lost device or a suspicious message to the ICT and security contact at once.
 
@@ -161,7 +172,15 @@ Passwords are stored only as salted hashes by the sign-in service, never in clea
 
 - Recorded: every sign-in and failed attempt, every step-up, every administrative action and role change, every financial act and decision, every opening of a customer's document, and every database write not made by the component's own account.
 - Each change in the platform is a signed event, chained to the one before and anchored in an append-only log, so the trail of any transaction can be verified and cannot be altered unseen.
-- Logs are shipped to write-once storage in a separate domain. Transaction and audit records are kept at least seven years; {{log_retention}}. Restricted values never enter a log.
+- Logs are shipped to write-once storage in a separate domain and kept as follows; deleted at the end of their period unless a legal hold stops the clock. Restricted values never enter a log.
+
+| Log | Searchable | Kept |
+|---|---|---|
+| Security events: sign-ins, failures, step-ups, administrative actions, role changes | 13 months | 7 years, write-once |
+| Database audit: structure changes and writes outside a component's own account | 13 months | 7 years, write-once |
+| The signed audit trail of every transaction | For its life | At least 7 years |
+| Access grants and administrators' sessions | 13 months | 7 years |
+| Application and platform logs | 13 months | 13 months |
 
 ### 5.11 Application auditing and monitoring
 
