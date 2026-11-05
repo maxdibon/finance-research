@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1092, FS-1100, FS-1103, FS-1108, FS-1110]
+review_ids: [FS-1080, FS-1087, FS-1092, FS-1100, FS-1103, FS-1108, FS-1110, FS-1111]
 last_reviewed: 2026-11-05
 ---
 
@@ -34,7 +34,8 @@ controller with the Data Commissioner; no template stands in for it.
 | `registration` | Its registration with the Data Commissioner: number and date | To confirm |
 | `relationship_end` | When a customer stops being its customer, for retention (OB-COM-26) | One year with nothing live, proposed |
 | `contact` | Where customers write about their data | To confirm |
-| `processors` | Its processors, beyond the provider | To confirm |
+| `sms_provider` | Who carries its SMS to the mobile operators | Dibon itself, a licensed premium rate service provider |
+| `processors` | Its processors, beyond the provider and the SMS provider | To confirm |
 
 <!-- document -->
 # Data Protection Policy
@@ -101,7 +102,7 @@ Every person may be told how their data is used, see it, object to its processin
 
 - Personal data is shared only with those who need it for the purposes in section 4: licensed credit reference bureaus (reg 33), the Central Bank of Kenya and the Financial Reporting Centre as the law requires, the mobile money operators (Safaricom, Airtel, Telkom) and {{institution}}'s banks to move money, identity verification providers, and the processors named in {{institution}}'s register.
 - No personal data is shared with a borrower's contacts, employer or family to collect a debt, and nothing is posted to shame a borrower (reg 30).
-- Every processor works under a written agreement: only on {{institution}}'s instructions, data kept in Kenya, sub-processors only with approval, breaches reported within 48 hours, and data returned or erased when the agreement ends. Processors: {{provider}}; {{processors}}.
+- Every processor works under a written agreement: only on {{institution}}'s instructions, data kept in Kenya, sub-processors only with approval, breaches reported within 48 hours, and data returned or erased when the agreement ends. Processors: {{provider}}; for SMS, {{sms_provider}}; {{processors}}.
 
 ## 9. Transfers outside Kenya
 

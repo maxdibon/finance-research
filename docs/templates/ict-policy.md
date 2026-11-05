@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106, FS-1109, FS-1110]
+review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106, FS-1109, FS-1110, FS-1111]
 last_reviewed: 2026-11-05
 ---
 
@@ -39,6 +39,7 @@ indented. The two diagrams are images beside the values:
 | `devices`, `endpoint_role` | The devices staff use, and who manages them | Laptops Dibon issues and manages; Dibon secures them |
 | `phones` | How staff phones are managed | Enrolled by Dibon: fully managed if issued, a work profile if personal; to confirm which |
 | `print_setup` | Who sets printing to wait for a PIN, and on what printer | Dibon's device management; the printer to confirm |
+| `sms_provider` | Who carries its SMS to the mobile operators | Dibon itself, licensed by the Communications Authority of Kenya as a premium rate service provider, direct to Safaricom, Airtel and Telkom |
 | `message_channels` | The messaging channels it uses with customers | SMS and email |
 | `perimeter`, `managed_security` | The hosting provider's firewall; the managed detection service | Azure Firewall; Liquid's managed security |
 | `sites`, `hosting`, `hosting_contract` | Where it runs, on whose infrastructure, and under what contract | Nairobi and Mombasa; Africa Data Centres and Liquid; to confirm |
@@ -229,7 +230,7 @@ Passwords are stored only as salted hashes by the sign-in service, never in clea
 ## 6. Third parties and outsourcing
 
 - The platform is provided by {{provider}} under a services agreement that keeps {{institution}}'s data in Kenya, forbids its use for any other purpose, allows subcontracting only with {{institution}}'s approval, gives the Central Bank of Kenya access, and sets how data is returned and erased if the agreement ends.
-- Every supplier that handles {{institution}}'s data is assessed before use and named in its register of processors: hosting ({{hosting}}), the mobile operators (Safaricom, Airtel, Telkom), {{bank}}, the SMS route, identity verification ({{identity_providers}}) and the managed security service ({{managed_security}}).
+- Every supplier that handles {{institution}}'s data is assessed before use and named in its register of processors: hosting ({{hosting}}), the mobile operators (Safaricom, Airtel, Telkom), {{bank}}, SMS ({{sms_provider}}), identity verification ({{identity_providers}}) and the managed security service ({{managed_security}}).
 
 ## 7. Exceptions, compliance and review
 
@@ -254,7 +255,7 @@ Passwords are stored only as salted hashes by the sign-in service, never in clea
 | Approval engine | Approval chains and committee decisions, with step-up at each | The provider's service |
 | Kapu Core | The loan ledger: loans, schedules, balances, postings, the end of day | Apache Fineract |
 | Rails | Mobile money collections and payouts (M-Pesa, and Airtel Money and T-Kash where used); bank statements | The provider's service, to each operator's interface |
-| Messaging | {{message_channels}} from approved templates, with consent and quiet hours | The provider's service |
+| Messaging | {{message_channels}} from approved templates, with consent and quiet hours | The provider's service; SMS through {{sms_provider}} |
 | Identity and document vault | Identity checks; documents with personal data, encrypted | The provider's service; encrypted object storage |
 | Reconciliation | Matches M-Pesa and bank transactions with the ledger; exceptions | The provider's service |
 | Back office | Electronic signature, helpdesk, staff records | Odoo Enterprise |
