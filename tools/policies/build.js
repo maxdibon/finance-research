@@ -28,6 +28,8 @@ const values = JSON.parse(fs.readFileSync(valuesFile, 'utf8'));
 // Each document keeps its own version: "versions" by template id, else "version".
 const templateId = (fs.readFileSync(template, 'utf8').match(/^id: *(.+)$/m) || [])[1];
 if (values.versions && values.versions[templateId]) values.version = values.versions[templateId];
+// And its own number, in the institution's scheme (design-system §7): "numbers" by template id, else "number".
+if (values.numbers && values.numbers[templateId]) values.number = values.numbers[templateId];
 const theme = values.theme ? JSON.parse(fs.readFileSync(path.resolve(ROOT, values.theme), 'utf8')) : {};
 const t = require(path.join(ROOT, 'design', 'system', 'institution-docx.js'))(docx, theme);
 const assets = path.resolve(path.dirname(valuesFile), values.assets || '.');

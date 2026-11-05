@@ -40,6 +40,7 @@ controller with the Data Commissioner; no template stands in for it.
 
 | Document control | |
 |---|---|
+| Document number | {{number}} |
 | Version | {{version}}, draft for review, {{date}} |
 | Classification | {{classification}} |
 | Owner | {{owner}}, {{institution_legal}} |

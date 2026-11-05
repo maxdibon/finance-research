@@ -31,7 +31,7 @@ indented. The two diagrams are images beside the values:
 | Value | What it is | Roan Capital's, for example |
 |---|---|---|
 | `institution`, `institution_legal` | Its short and registered names | Roan Capital; Roan Capital Limited |
-| `version`, `date`, `classification` | This document's | 0.3; 5 November 2026; Confidential |
+| `number`, `version`, `date`, `classification` | This document's: its number in the institution's own scheme, never ours (design-system §7); `numbers` and `versions` give each template its own | RC-POL-001, to confirm; 0.3; 5 November 2026; Confidential |
 | `owner`, `approved_by` | Who owns it, and who approves it | Chief Executive Officer; the board of directors |
 | `provider`, `provider_legal` | Dibon's short name, and its registered name as in the services agreement | Dibon; to confirm |
 | `security_contact` | The position that holds ICT and security | To confirm |
@@ -47,6 +47,7 @@ indented. The two diagrams are images beside the values:
 
 | Document control | |
 |---|---|
+| Document number | {{number}} |
 | Version | {{version}}, draft for review, {{date}} |
 | Classification | {{classification}} |
 | Owner | {{owner}}, {{institution_legal}} |

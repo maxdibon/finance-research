@@ -41,6 +41,9 @@ node tools/policies/build.js docs/templates/<template>.md <values.json> <out.doc
   (`"theme": "design/system/themes/<institution>.json"`), or the plain
   theme until it has one (design-system, "Whose look a document takes";
   `design/system/institution-docx.js`).
+- **Its numbers:** each policy carries the institution's own document
+  number (`numbers` in the values, by template), never ours: an
+  institution's own documents carry its own numbering (design-system §7).
 - **The diagrams** are images beside the values, `architecture.png` and
   `dataflow.png`, drawn for the institution from its deployment.
 - **Each built document** is registered in the document register as our

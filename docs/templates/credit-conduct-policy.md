@@ -44,6 +44,7 @@ the institution's choice once CBK's rules are confirmed (FS-1082).
 
 | Document control | |
 |---|---|
+| Document number | {{number}} |
 | Version | {{version}}, draft for review, {{date}} |
 | Classification | {{classification}} |
 | Owner | {{owner}}, {{institution_legal}} |
