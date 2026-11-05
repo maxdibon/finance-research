@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046]
-last_reviewed: 2026-10-28
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1115]
+last_reviewed: 2026-11-05
 ---
 
 # The institution · the environment
@@ -105,7 +105,7 @@ leaves Kenya, the impact assessment's status.
 What it is sized for (staff, borrowers, loans a month, messages a day),
 and the size of each node pool and database.
 
-## 11 · Exit
+## 11 · Exit: when the service ends
 
 How the institution's data is returned and purged if it leaves, and what
 support it has through the handover.

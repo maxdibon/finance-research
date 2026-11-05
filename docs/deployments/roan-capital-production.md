@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093, FS-1094, FS-1096, FS-1109, FS-1110]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093, FS-1094, FS-1096, FS-1109, FS-1110, FS-1114, FS-1115]
 last_reviewed: 2026-11-05
 ---
 
@@ -344,14 +344,18 @@ To size (architecture review A7), from: three or four staff; borrowers
 and loans a month, and messages a day, to ask Roan Capital. Until then,
 the replicas in §2 are the minimum each spec sets.
 
-## 11 · Exit
+## 11 · Exit: when the service ends
 
+What happens when Dibon's service to Roan Capital ends, for whatever
+reason: the contract terminated by either side, or not renewed.
 **Proposed, for the contract** (approval pack item 14):
 
 1. **Notice** as the contract says; Dibon confirms in writing what will
    be returned and when.
-2. **Returned within 30 days:** the ledger (Fineract's database, and its
-   accounts, loans and transactions in open formats); every document in
+2. **Returned within 30 days,** readable by Roan Capital without our keys,
+   in open formats with each schema documented, and delivered over an
+   encrypted channel (FS-1114): the ledger (Fineract's database, and its
+   accounts, loans and transactions); every document in
    the vault with its evidence; Odoo's database and files; the audit
    trail; its configuration (products, mandates, roles) as data files.
 3. **Supported through the handover** for up to 90 days, the service

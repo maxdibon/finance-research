@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079, FS-1093]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079, FS-1093, FS-1115]
 last_reviewed: 2026-11-05
 ---
 
@@ -164,7 +164,7 @@ privacy, "In Kenya"). Nothing in the privacy register applies.
 
 One small cluster, sized for the day; each group's budget caps it.
 
-## 11 · Exit
+## 11 · Exit: when the service ends
 
 Nothing to return: `tofu destroy` removes everything.
 
