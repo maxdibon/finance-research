@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-728, FS-781, FS-816, FS-817, FS-1024, FS-1025, FS-1026, FS-1039]
-last_reviewed: 2026-10-27
+review_ids: [FS-728, FS-781, FS-816, FS-817, FS-1024, FS-1025, FS-1026, FS-1039, FS-1087]
+last_reviewed: 2026-11-05
 ---
 
 # Design system
@@ -159,6 +159,10 @@ typed freely at all.
 its own tokens: its logo, its colours mapped onto ours (its main colour
 for aubergine and plum, its accent for amber), its fonts where it has
 them. Money keeps its green, and contrast its rules, whatever the theme.
+**In code** (FS-1087): `design/system/institution-docx.js` gives an
+institution's Word documents the same components as ours with its
+tokens, from its theme file in `design/system/themes/`; `plain.json` is
+the plain look, the default until an institution gives us its own.
 Kept with the institution's configuration, used by every builder, its
 website and its apps; never whimsy in its documents.
 
@@ -177,7 +181,7 @@ Services), a kind, and a serial:
 | Agreement, NDA | AG | |
 | Questionnaire | QN | |
 | Report, review, Product Understanding Document | RP | |
-| Template or pack we give an institution | TM | DC-FS-TM-001, the onboarding pack |
+| Template or pack we give an institution | TM | DC-FS-TM-001, the onboarding pack; TM-003 to TM-005, the CBK licence pack's policies (templates/cbk-licence-pack) |
 
 - **The number is the document,** across its versions; a serial is never
   reused. **The version** follows it (`DC-FS-PF-001 v1.2`): major for a
