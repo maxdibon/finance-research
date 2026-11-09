@@ -8,11 +8,11 @@ law: LR-03
 released: unreleased
 release: R1
 implements: [mfi, sacco]
-depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, deposits-service, product-versions, vault]
+depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, deposits-service, product-versions, vault, transactions]
 used_by: [staff-workspace, kapu-console, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070, FS-1071, FS-1073, FS-1140, FS-1148]
+review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070, FS-1071, FS-1073, FS-1140, FS-1148, FS-1154]
 last_reviewed: 2026-11-09
 ---
 
@@ -77,7 +77,8 @@ the whole instance, in layers, is architecture/instance.md.
 [sacco](../modules/sacco.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
 [approval-engine](approval-engine.md), [lender-rules](lender-rules.md),
-[back-office](back-office.md), [deposits-service](deposits-service.md) and [vault](vault.md);
+[back-office](back-office.md), [deposits-service](deposits-service.md), [vault](vault.md) and
+[transactions](transactions.md), the model of every money movement it starts;
 used by [staff-workspace](staff-workspace.md) and
 [kapu-console](kapu-console.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md),
@@ -139,6 +140,14 @@ and shares (FS-985); this service lends against them, under Sacco rules.
    (vault §3). Anything new before then resets the count; anything new
    after it publishes `relationship.resumed`, which stops the clock
    until the next end. Checked each night, after the close.
+10. **Every money movement it starts is a transaction** on the one model
+    (transactions; FS-1154): it mints the txid for a payout, a refund, a
+    write-off and the parts of a repayment split across loans (transactions
+    rule 7); a payout names its source before approval and is approved by
+    its body's hash, one approval for a payout from or to several accounts
+    (rule 5); its charges, the excise duty on them and the amount type
+    follow the product version (rule 3, rule 8). The rails mint a
+    repayment that arrives from outside.
 
 ## 5 · Partners and collateral
 

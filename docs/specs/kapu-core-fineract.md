@@ -8,12 +8,12 @@ law: LR-03
 released: 2026.10.16
 release: R1
 implements: [core]
-depends_on: [access-keycloak, event-bus-kafka]
+depends_on: [access-keycloak, event-bus-kafka, transactions]
 used_by: [approval-engine, lender-rules, end-of-day-runner, recon, lending-service, deposits-service, product-versions]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050, FS-1053, FS-1054, FS-1056, FS-1058, FS-1069]
-last_reviewed: 2026-11-01
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050, FS-1053, FS-1054, FS-1056, FS-1058, FS-1069, FS-1154]
+last_reviewed: 2026-11-09
 ---
 
 # Kapu Core on Apache Fineract — component specification
@@ -79,7 +79,8 @@ FS-185. Groups (KC-01, later).
 ```
 
 **Related:** implements [core](../modules/core.md); depends on
-[access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by
+[access-keycloak](access-keycloak.md), [event-bus-kafka](event-bus-kafka.md) and
+[transactions](transactions.md), to whose fields its own are mapped (transaction-fields §4); used by
 [deposits-service](deposits-service.md), [lending-service](lending-service.md), [approval-engine](approval-engine.md), [lender-rules](lender-rules.md),
 [end-of-day-runner](end-of-day-runner.md) and [recon](recon.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md) and
@@ -150,9 +151,11 @@ approval engine's yes where one is needed):
 | Assign, reassign officers | `assignLoanOfficer`; `loans/loanreassignment` | Bulk: a second person (MF-35) |
 
 **External ids.** Each loan carries our application id as its external
-id; each transaction carries our own id (a repayment, the M-Pesa receipt
-number). Fineract accepts up to 100 characters, and a loan can be read by
-its external id. The approval request's id goes in the command's note;
+id; each transaction carries its txid as its external id, and its short
+reference as its receipt number (transactions rule 7; transaction-fields
+§4); a rail's own reference, such as the M-Pesa receipt, is kept with the
+transaction's other ids, never in Fineract's (FS-1154). Fineract accepts
+up to 100 characters, and a loan can be read by its external id. The approval request's id goes in the command's note;
 whether the approve command also takes an external id is in §12 (F9).
 
 **Events.** Fineract saves each event in the same database transaction as

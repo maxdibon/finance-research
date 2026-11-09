@@ -8,10 +8,10 @@ released: unreleased
 release: R1
 implements: [rails, recon-observability, core]
 depends_on: [event-bus-kafka]
-used_by: [recon]
+used_by: [recon, lending-service, deposits-service, approval-engine, kapu-core-fineract]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153, FS-1154]
 last_reviewed: 2026-11-09
 ---
 
@@ -84,9 +84,13 @@ reads them all and keeps the index that finds a transaction by any id.
 **Related:** implements [rails](../modules/rails.md),
 [recon-observability](../modules/recon-observability.md) and
 [core](../modules/core.md); depends on [event-bus-kafka](event-bus-kafka.md);
-used by [recon](recon.md), whose night checks run the link rules (§9);
-the other money specs adopt it when each is next revised (§12); journeys
-none yet.
+used by [recon](recon.md), whose night checks run the link rules (§9),
+[lending-service](lending-service.md) and
+[deposits-service](deposits-service.md), which mint and write
+transactions, [approval-engine](approval-engine.md), which approves their
+bodies, and [kapu-core-fineract](kapu-core-fineract.md), whose fields map to
+them; the rails spec, still to write, is written on it; journeys none
+yet.
 
 ## 2 · Concepts
 
@@ -467,9 +471,10 @@ it adds these:
 
 **For the owner:**
 
-1. **Adoption:** the lending service, deposits service, approval engine
-   and Kapu Core specs name this one in `depends_on` when each is next
-   revised, and the rails spec is written on it (recon has).
+1. **The rails spec,** still to write, is written on this one: the
+   adapters that mint money arriving, resolve aliases, confirm operators
+   and carry our ids to each rail (FS-1154; the other money specs have
+   adopted it).
 2. **How each operator confirms a number:** the query each offers over
    our connections (a portability or HLR lookup, or its own API), to
    confirm with each.

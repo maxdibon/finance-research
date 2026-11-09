@@ -7,12 +7,12 @@ status: draft
 released: unreleased
 release: R4
 implements: [core, sacco]
-depends_on: [kapu-core-fineract, approval-engine]
+depends_on: [kapu-core-fineract, approval-engine, transactions]
 used_by: [lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-066, FS-178, FS-179, FS-185, FS-985, FS-991, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-066, FS-178, FS-179, FS-185, FS-985, FS-991, FS-1058, FS-1154]
+last_reviewed: 2026-11-09
 ---
 
 # The Kapu deposits service — build specification
@@ -62,8 +62,9 @@ approvals around the core, not this service.
 
 **Related:** implements [core](../modules/core.md) and
 [sacco](../modules/sacco.md); depends on
-[kapu-core-fineract](kapu-core-fineract.md) and
-[approval-engine](approval-engine.md); used by
+[kapu-core-fineract](kapu-core-fineract.md),
+[approval-engine](approval-engine.md) and [transactions](transactions.md),
+the model of every movement it starts; used by
 [lending-service](lending-service.md); journeys
 [JN-10](../journeys/deposit.md), [JN-11](../journeys/transfer-out.md)
 and [JN-12](../journeys/transfer-in.md).
@@ -88,8 +89,10 @@ and [JN-12](../journeys/transfer-in.md).
 3. **The only writer of deposit postings,** through the core adapter;
    tellers' cash (KC-06) and mobile money (KC-09) post through it.
 4. **Money out is guarded:** step-up, limits by channel, the SIM-swap
-   check before money moves (OC-06), and the approval engine where the
-   product asks.
+   check before money moves (OC-06). Every movement out, and every
+   transfer, has an approval recorded by the approval engine: the
+   customer's own step-up for their instruction, and the product's chain
+   where it asks for more (transactions rule 2; FS-1152, FS-1154).
 5. **Every balance shown is a live read,** labelled with when it was
    fetched (OC-11).
 6. **Rules common to every deposit-taker:** dormant accounts and
@@ -97,6 +100,16 @@ and [JN-12](../journeys/transfer-in.md).
    monitoring (financial-crime), each from its law, to read and cite.
 7. **A higher tier than lending:** withdrawals and transfers run around
    the clock.
+8. **Every movement is a transaction** on the one model (transactions):
+   a deposit, a withdrawal to the holder, a payment to someone else
+   (screened for sanctions and limits first), a transfer between two
+   accounts with us, interest, a fee. It mints the txid for a request on
+   our channels, cash at a counter and each account's line in an
+   end-of-day run; the rails mint money arriving from outside; in the
+   split mode, the core adapter mints a posting made in the institution's
+   own core (transactions rule 7; FS-1128). A transfer to a loan is its
+   parent, the lending service's repayment its part (transactions W14,
+   W15).
 
 ## 4 · Savings products and their terms
 
