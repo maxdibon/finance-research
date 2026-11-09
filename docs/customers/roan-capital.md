@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965, FS-978, FS-979, FS-981, FS-982, FS-1050, FS-1058, FS-1053, FS-1079, FS-1091, FS-1098, FS-1110, FS-1113, FS-1114, FS-1115]
-last_reviewed: 2026-11-05
+review_ids: [FS-395, FS-397, FS-398, FS-399, FS-400, FS-401, FS-402, FS-403, FS-413, FS-414, FS-415, FS-423, FS-431, FS-435, FS-449, FS-453, FS-500, FS-516, FS-517, FS-531, FS-532, FS-533, FS-551, FS-556, FS-561, FS-562, FS-565, FS-570, FS-571, FS-574, FS-581, FS-582, FS-583, FS-586, FS-618, FS-619, FS-620, FS-622, FS-674, FS-680, FS-681, FS-755, FS-763, FS-765, FS-767, FS-768, FS-769, FS-773, FS-775, FS-793, FS-805, FS-806, FS-808, FS-811, FS-807, FS-812, FS-827, FS-831, FS-830, FS-835, FS-837, FS-838, FS-845, FS-903, FS-957, FS-965, FS-978, FS-979, FS-981, FS-982, FS-1050, FS-1058, FS-1053, FS-1079, FS-1091, FS-1098, FS-1110, FS-1113, FS-1114, FS-1115, FS-1132, FS-1133]
+last_reviewed: 2026-11-09
 ---
 
 # Roan Capital — delivery map
@@ -225,7 +225,6 @@ By who answers (FS-1053); the numbers never change.
 | 39 | Your product owner, and the two people who approve a product version; and your agreement that you are accountable for your products and for CBK's approval of them, our rules stopping only what the law forbids (FS-978) | FS-978, FS-981 | Open, for 29 October |
 | 40 | Who approves when the CEO is away? | FS-982, FS-898 | Open, for 29 October |
 | 41 | Who is your external auditor, for a read-only account? | FS-982 | Open, for 29 October |
-| 42 | Will you pay out by M-Pesa as well as by bank? If so: your B2C shortcode, the float you keep in it, and the change to the payout terms of your three products (A18) | FS-1113 | Open, for 6 November |
 | 43 | Do you take payments through Tende today, and for what? A channel in use is listed in your delivery channels document for CBK | FS-1114, FS-1115 | Settled by Dibon, 5 November: not for now; Tende Pay may be more a competitor than a channel |
 
 **For us,** with counsel where it is a reading of the law:
@@ -246,6 +245,7 @@ By who answers (FS-1053); the numbers never change.
 | 7 | The role list (RC-34) | FS-395, FS-811 | Answered (2026-10-14): the prototype's eight, agreed by the owner; to confirm with Roan Capital, with the approval chain (answer 28) |
 | 8 | Approval chain and loan products | FS-399, FS-400 | Answered: both are configuration |
 | 14 | Borrowers that are "statement-based entities" (RC-01): what are they, and how are they verified? | FS-618 | Answered (2026-10-10, FS-681): not a third kind of borrower; borrowers give a mix of individual KYC, KYB, and bank and mobile-money statements for both the individual and the business where applicable |
+| 42 | Will you pay out by M-Pesa as well as by bank? If so: your B2C shortcode, the float you keep in it, and the change to the payout terms of your three products (A18) | FS-1113 | Answered (2026-11-09, its answers to the CBK pack): no Safaricom shortcode of its own; repayments to its bank's paybill with its account number, payouts by bank. M-Pesa payouts wait for a B2C shortcode (FS-1133) |
 
 The document also needs editing: two sections numbered 2.2.2, no section
 1.3, exclusions referred to as §2.4 but numbered 2.3, assumption 4's text
@@ -309,6 +309,7 @@ product drafts themselves are in docs/products/ by exception (FS-806).
 | DR-066 | Statements on the Consumer Protection Act and the Competition Act | Our draft of Roan Capital's statements for CBK, ROAN-STM-CPC-001, built from the template (templates/compliance-statements): how it meets Part VII of the Consumer Protection Act (credit agreements) and Part VI of the Competition Act (consumer welfare). v0.2: numbered ROAN-STM-CPC-001 (FS-1100). For the team's review | Working | draft | 2026-11-05 | Dibon |
 | DR-067 | Delivery channels and platforms | Our draft of Roan Capital's description of its channels, ROAN-DSC-CHN-001, built from the template (templates/delivery-channels): each channel, who uses it, what for and how it is secured; also the substance of its notice to CBK of the channels (reg 27). v0.2: numbered ROAN-DSC-CHN-001 (FS-1100). v0.3: Airtel Money and T-Kash, every common browser (FS-1102, FS-1103). v0.4: the website as a channel (FS-1105). v0.5: field visits by the browser route; the website Dibon builds, Roan Capital having none (FS-1105, FS-1106). v0.6: the payment rails, live and to come, how one is added, and several banks (FS-1108). v0.7: every rail both ways, repayments and disbursements (FS-1109). v0.8: WhatsApp among the channels not offered at launch (FS-1110). v0.9: M-Pesa disbursements through its own B2C shortcode, proposed (FS-1113). For the team's review | Working | draft | 2026-11-05 | Dibon |
 | DR-068 | Submission index | Our draft of the index on top of Roan Capital's submission to CBK, ROAN-IDX-CBK-001, built from the template (templates/submission-index): everything the application will carry, enclosed now or to follow. v0.2: the route set, a licence (FS-1098). v0.3: numbered ROAN-IDX-CBK-001 (FS-1100). v0.4: a resubmission answering CBK's list, as a digital credit provider, for a licence under Part II (FS-1107). For the team's review | Working | draft | 2026-11-05 | Dibon |
+| DR-069 | Its answers to the CBK pack's yellow parts | Roan Capital's answers, document by document, to what the six documents of the CBK pack marked for it to fill in: document codes, approval, its domain, shortcodes, complaints contacts, its registration with the Data Commissioner, the address for data requests, retention, the board's review, an IT audit | Original | kept | 2026-11-09 | Roan Capital, through Eric |
 
 **Earlier versions,** replaced or withdrawn (18):
 

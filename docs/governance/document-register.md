@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-834, FS-835, FS-857, FS-874, FS-1026, FS-1039, FS-1043, FS-1044, FS-1049, FS-1061, FS-1063, FS-1080, FS-1100]
-last_reviewed: 2026-11-05
+review_ids: [FS-834, FS-835, FS-857, FS-874, FS-1026, FS-1039, FS-1043, FS-1044, FS-1049, FS-1061, FS-1063, FS-1080, FS-1100, FS-1132]
+last_reviewed: 2026-11-09
 ---
 
 # Document register
@@ -139,3 +139,4 @@ CRM opportunity).
 | DR-066 | Roan Capital | Statements on the Consumer Protection Act and the Competition Act | Our draft of Roan Capital's statements for CBK, ROAN-STM-CPC-001, built from the template (templates/compliance-statements): how it meets Part VII of the Consumer Protection Act (credit agreements) and Part VI of the Competition Act (consumer welfare). v0.2: numbered ROAN-STM-CPC-001 (FS-1100). For the team's review | Working | 0.2 | draft | 2026-11-05 | Dibon | `clients/roan-capital/working/` | — | FS-1097 |
 | DR-067 | Roan Capital | Delivery channels and platforms | Our draft of Roan Capital's description of its channels, ROAN-DSC-CHN-001, built from the template (templates/delivery-channels): each channel, who uses it, what for and how it is secured; also the substance of its notice to CBK of the channels (reg 27). v0.2: numbered ROAN-DSC-CHN-001 (FS-1100). v0.3: Airtel Money and T-Kash, every common browser (FS-1102, FS-1103). v0.4: the website as a channel (FS-1105). v0.5: field visits by the browser route; the website Dibon builds, Roan Capital having none (FS-1105, FS-1106). v0.6: the payment rails, live and to come, how one is added, and several banks (FS-1108). v0.7: every rail both ways, repayments and disbursements (FS-1109). v0.8: WhatsApp among the channels not offered at launch (FS-1110). v0.9: M-Pesa disbursements through its own B2C shortcode, proposed (FS-1113). For the team's review | Working | 0.9 | draft | 2026-11-05 | Dibon | `clients/roan-capital/working/` | — | FS-1097, FS-1108, FS-1109, FS-1110, FS-1113 |
 | DR-068 | Roan Capital | Submission index | Our draft of the index on top of Roan Capital's submission to CBK, ROAN-IDX-CBK-001, built from the template (templates/submission-index): everything the application will carry, enclosed now or to follow. v0.2: the route set, a licence (FS-1098). v0.3: numbered ROAN-IDX-CBK-001 (FS-1100). v0.4: a resubmission answering CBK's list, as a digital credit provider, for a licence under Part II (FS-1107). For the team's review | Working | 0.4 | draft | 2026-11-05 | Dibon | `clients/roan-capital/working/` | — | FS-1097 |
+| DR-069 | Roan Capital | Its answers to the CBK pack's yellow parts | Roan Capital's answers, document by document, to what the six documents of the CBK pack marked for it to fill in: document codes, approval, its domain, shortcodes, complaints contacts, its registration with the Data Commissioner, the address for data requests, retention, the board's review, an IT audit | Original | — | kept | 2026-11-09 | Roan Capital, through Eric | `clients/roan-capital/originals/` | `4d0d2e0e333d` | FS-1132 |
