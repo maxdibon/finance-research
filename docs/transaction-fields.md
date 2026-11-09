@@ -6,7 +6,7 @@ status: living
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1152]
 last_reviewed: 2026-11-09
 ---
 
@@ -201,6 +201,12 @@ return or cancellation it acts on.
 | WHLD | Withholding tax |
 | SAVG | A deposit to or withdrawal from savings |
 | ACCT | A transfer between two accounts of the same holder in the institution |
+| EDUC | School or tuition fees |
+| GDDS | Goods bought |
+| SCVE | Services bought |
+| SUPP | A supplier paid |
+| SALA | Salaries |
+| OTHR | Any other purpose, when the payer names none of these |
 
 **Alias types:** Mojaloop's party id types.
 

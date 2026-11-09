@@ -39,7 +39,7 @@ const INVERSE = { reverses: 'reversed_by', refunds: 'refunded_by', corrects: 'co
 // What each kind must link to (spec §4, the kinds).
 const MUST_LINK = { reversal: 'reverses', refund: 'refunds', adjustment: 'corrects' };
 // Money leaving, or a ledger entry changed by hand: approved before it moves.
-const NEEDS_APPROVAL = (t) => t.body.money.direction === 'out' || ['reversal', 'refund', 'write_off', 'adjustment'].includes(t.header.what.kind);
+const NEEDS_APPROVAL = (t) => t.body.money.direction === 'out' || ['transfer', 'reversal', 'refund', 'write_off', 'adjustment'].includes(t.header.what.kind);
 const MOVED = ['sent', 'settled'];
 
 const sum = (lines) => lines.reduce((n, l) => n + l.amount.minor, 0);
@@ -255,6 +255,8 @@ const RULES = [
       const passed = (c) => (t.footer.progress.checks || []).some((x) => x.check === c && x.result === 'pass' && x.at <= sent);
       if (d.alias && !passed('resolved_again')) return 'sent to an alias not resolved again before sending';
       if (d.address.kind === 'wallet') for (const c of ['operator', 'number_binding', 'sim_swap']) if (!passed(c)) return `sent to a wallet without a passed ${c} check`;
+      // FS-1152: money to someone else, at a customer's word, is screened first.
+      if (t.header.what.kind === 'payment') for (const c of ['sanctions', 'limits']) if (!passed(c)) return `a payment sent without a passed ${c} check`;
       return null;
     },
   },

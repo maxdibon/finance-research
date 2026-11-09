@@ -11,7 +11,7 @@ depends_on: [event-bus-kafka]
 used_by: [recon]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153]
 last_reviewed: 2026-11-09
 ---
 
@@ -23,8 +23,8 @@ reconciliation (FS-1119). It sets the transaction's shape (a header fixed
 at creation, a body fixed at approval, a footer only ever appended to),
 its kinds, its links, its ids and its versions, and the standards it uses.
 Each field is defined once in [the field dictionary](../transaction-fields.md);
-the typed form, the rules a schema cannot say and twelve worked
-transactions (W1 to W12) are in
+the typed form, the rules a schema cannot say and fifteen worked
+transactions (W1 to W15) are in
 [code/transactions](../../code/transactions/README.md). Decided by the
 owner in FS-1123 (decisions 1 to 4) and FS-1131 (5 to 10, with the amount
 type). Nothing is built: every behaviour here is **designed**.
@@ -101,13 +101,25 @@ none yet.
   an address (a phone number, a paybill and account reference). A phone
   number is a wallet's address and may be an alias; it is never an
   identity (ID-12).
-- **Allocation, split, many-to-one, batch** (FS-1124), kept apart: an
-  *allocation* is how one payment settles a loan's principal, interest and
-  fees, the footer's breakdown, never separate transactions; a *split* is
-  one payment for several obligations, a parent with its parts; *many
-  payments to one loan* are each linked to the loan's account, not to each
-  other; a *batch* is a container for a run, each item its own
-  transaction.
+- **Deposit, withdrawal, payment, transfer** (FS-1152), kept apart by
+  where the money goes: a *deposit* comes in to an account with us, from
+  anyone, the payer saying who; a *withdrawal* goes out to the account
+  holder themselves (their own wallet, bank or cash); a *payment* goes out
+  to someone else (a paybill, a till, another wallet, another bank); a
+  *transfer* stays within the institution's books, between any two of its
+  accounts, one person's or two.
+- **Allocation, split, many-to-one, batch** (FS-1124), kept apart, for any
+  account: an *allocation* is how what one transaction settled is shared
+  among the parts of what it pays (a loan's principal, interest, fees and
+  penalties; a member's deposits and shares), the footer's breakdown,
+  never separate transactions; a *split* is one movement for several
+  accounts or obligations (one paybill payment for two loans, an
+  employer's check-off for many members, one payout from two of the
+  institution's accounts), a parent with its parts; *many to one* is
+  several movements towards one account (a loan repaid in instalments, a
+  savings goal), each linked to that account, not to each other; a
+  *batch* is a container for a run (a month's interest, a payroll), each
+  item its own transaction.
 - **Source and destination** (FS-1150): every transaction moves money
   from one account to one account, as a rail does: its *source*, the
   account it leaves from, and its *destination*, where it lands. The payer
@@ -151,6 +163,9 @@ none yet.
    RO-24). Money going out, a reversal, a refund, a write-off and an
    adjustment are approved before they move; the engine's policy may
    grant an approval automatically, but the approval is always recorded.
+   A customer's own instruction (a payment, a withdrawal, a transfer) is
+   approved by the customer, stepped up (MD-10), and recorded by the
+   approval engine under the product's policy (FS-1152).
 3. **Money.** Every amount is an integer of the currency's minor units
    and an ISO 4217 code: `{minor: 250000, currency: "KES"}`. The `amount`
    is as instructed or as received; charges, the settled amount and the
@@ -169,7 +184,9 @@ none yet.
    operator is taken from the number's national destination code, as the
    Communications Authority assigns them (dictionary §3), and confirmed
    with that operator over our own connections to it, since a ported
-   number keeps its code (FS-1144). A different address or a failed check
+   number keeps its code (FS-1144). A payment, money to someone else at a
+   customer's word, is also screened before it goes: sanctions and the
+   customer's limits (FS-1152). A different address or a failed check
    holds the payout, and it goes only as a new transaction that
    `replaces` it, approved again (FS-1122).
 5. **Links point back; the target's footer records them.** A link sits in
@@ -298,8 +315,9 @@ order and author.
 | disbursement | out | Yes | `part_of`, when paid from or to more than one account | Lending service | W1, W7, W10 to W12 |
 | repayment | in; a part internal | No | `part_of`, when split | Rails on first sight; the lending service for the parts | W2 to W5 |
 | deposit | in | No | — | Deposits service, or the rails for money arriving | — |
-| withdrawal | out | Yes | — | Deposits service | — |
-| transfer | internal | Yes | its legs `part_of` it | Deposits service | — |
+| withdrawal | out, to the account holder | Yes, by the holder | — | Deposits service | — |
+| payment | out, to someone else | Yes, by the customer, screened | `part_of`, when to several payees | Deposits service | W13 |
+| transfer | internal, between two accounts with us | Yes, by the customer | its legs `part_of` it | Deposits service | W14, W15 |
 | interest | internal | No | `in_batch` | Deposits service, in the end-of-day run | W9 |
 | fee | internal | No | `fee_for`, where it is for one | The service of the account | — |
 | reversal | opposite to the original | Yes | `reverses`, exactly one | Whoever learns of it: the rails for a return | W8 |
@@ -316,8 +334,10 @@ order and author.
 | W3, W4 | Its two parts, KES 8,000 and KES 4,000, each allocated | Parts sum to the parent; allocation sums to what settled |
 | W5, W6 | A payment made twice; the duplicate refunded, reason DUPL | A refund approved before it moves; `refunded_by` on W5 |
 | W7, W8 | A bank payout returned for a closed account (AC04); its reversal | `returned` appended by the rail, then `reversed_by` on W7 |
-| W10 to W12 | A KES 100,000 loan paid from two of the institution's accounts: KES 60,000 from its B2C shortcode to the borrower's M-Pesa (W11), KES 40,000 from its bank to the borrower's bank (W12) | One parent and a part per account; each part its own source; one approval for the three; the parent settled once both parts have |
 | W9 | A month's interest on a deposit, withholding tax deducted, in the run's batch | Tax as its own line; one txid per account in a batch |
+| W10 to W12 | A KES 100,000 loan paid from two of the institution's accounts: KES 60,000 from its B2C shortcode to the borrower's M-Pesa (W11), KES 40,000 from its bank to the borrower's bank (W12) | One parent and a part per account; each part its own source; one approval for the three; the parent settled once both parts have |
+| W13 | A member pays a school's paybill KES 15,000 from savings, a KES 50 fee and its excise on top | A payment: the member's step-up its approval; the paybill and admission number an alias, resolved; sanctions and limits checked before it goes |
+| W14, W15 | KES 5,000 from the member's savings to their loan | A transfer within the books, its parent the deposits service's; the loan's repayment its part, allocated |
 
 ## 5 · States
 
@@ -440,6 +460,8 @@ it adds these:
 | A25 | A loan to be paid from two accounts | It is approved | One approval; W10, W11 and W12 carry its reference, each with its own hash; each part sent from its own source | rule 5 |
 | A26 | W12, the bank part, rejected | The night's checks run | W10 not settled; W12 replaced by a new part, approved, never edited | rule 5 |
 | A27 | A payout with no source | It is put for approval | Refused: the account it leaves from is named first | rule 5 |
+| A28 | W13 | Sanctions screening has not passed when it is about to be sent | Held; not sent | rule 4 |
+| A29 | W14 | The member approves it by step-up | The transfer and its loan part posted together; W14 settled once W15 has | rule 2, rule 5 |
 
 ## 12 · Open questions
 

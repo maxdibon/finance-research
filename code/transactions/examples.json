@@ -1,5 +1,5 @@
 {
- "description": "Worked transactions for docs/specs/transactions.md (FS-1131, FS-1137, FS-1144; grouped, FS-1149; sources and a two-account payout, FS-1150): W1 to W12, each with its position computed from its forward facts, are the instances the spec's tables show; each rule in rules.js has a case where the worked set does not break it and one where a change does. Generated, with hashes and check digits computed; fictional people, numbers and receipts.",
+ "description": "Worked transactions for docs/specs/transactions.md (FS-1131, FS-1137, FS-1144; grouped, FS-1149; sources and a two-account payout, FS-1150; a payment and a transfer, FS-1152): W1 to W15, each with its position computed from its forward facts, are the instances the spec's tables show; each rule in rules.js has a case where the worked set does not break it and one where a change does. Generated, with hashes and check digits computed; fictional people, numbers and receipts.",
  "worked": [
   {
    "id": "W1",
@@ -1724,6 +1724,438 @@
        "minor": 4000000,
        "currency": "KES"
       }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W13",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1c478-9800-700e-800e-000000000014",
+      "reference": "BATHZAM8044",
+      "idempotency_key": "pay-D00310-0001"
+     },
+     "what": {
+      "kind": "payment",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "deposit",
+       "id": "D00310"
+      }
+     },
+     "origin": {
+      "channel": "app",
+      "rail": "mpesa",
+      "created_at": "2026-11-10T08:00:00Z",
+      "initiated_by": {
+       "kind": "person",
+       "id": "cust-000123",
+       "role": "member"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 1500000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "out",
+      "charges": [
+       {
+        "line": 1,
+        "kind": "fee",
+        "code": "payment-fee",
+        "amount": {
+         "minor": 5000,
+         "currency": "KES"
+        },
+        "deducted": false
+       },
+       {
+        "line": 2,
+        "kind": "tax",
+        "code": "excise-duty",
+        "amount": {
+         "minor": 1000,
+         "currency": "KES"
+        },
+        "deducted": false,
+        "on": 1
+       }
+      ]
+     },
+     "parties": {
+      "payer": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "organisation",
+       "name": "Example School",
+       "country": "KE"
+      },
+      "source": {
+       "address": {
+        "kind": "shortcode",
+        "provider": "mpesa",
+        "shortcode": "600100"
+       }
+      },
+      "destination": {
+       "address": {
+        "kind": "shortcode",
+        "provider": "mpesa",
+        "shortcode": "400222"
+       },
+       "alias": {
+        "type": "BUSINESS",
+        "value": "400222",
+        "sub_id": "ADM-1234"
+       },
+       "resolution": {
+        "directory": "mpesa",
+        "name_returned": "EXAMPLE SCHOOL",
+        "name_match": "exact",
+        "resolved_by": {
+         "kind": "service",
+         "id": "rails"
+        },
+        "resolved_at": "2026-11-10T08:00:02Z"
+       }
+      }
+     },
+     "terms": {
+      "purpose": "EDUC"
+     }
+    },
+    "footer": {
+     "approval": {
+      "ref": "apr-001010",
+      "body_hash": "sha256:696f55399ea73fbccc12b5572d0f96b904dbe2c0c2605a961446adbdf3b4b722",
+      "at": "2026-11-10T08:00:20Z"
+     },
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-10T08:00:00Z",
+        "by": {
+         "kind": "person",
+         "id": "cust-000123",
+         "role": "member"
+        }
+       },
+       {
+        "status": "approved",
+        "at": "2026-11-10T08:00:20Z",
+        "by": {
+         "kind": "service",
+         "id": "approval-engine"
+        }
+       },
+       {
+        "status": "sent",
+        "at": "2026-11-10T08:00:22Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-10T08:00:30Z",
+        "by": {
+         "kind": "rail",
+         "id": "mpesa"
+        }
+       }
+      ],
+      "checks": [
+       {
+        "check": "resolved_again",
+        "result": "pass",
+        "at": "2026-11-10T08:00:21Z"
+       },
+       {
+        "check": "sanctions",
+        "result": "pass",
+        "at": "2026-11-10T08:00:21Z"
+       },
+       {
+        "check": "limits",
+        "result": "pass",
+        "at": "2026-11-10T08:00:21Z"
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 1500000,
+       "currency": "KES"
+      }
+     },
+     "ids": [
+      {
+       "issuer": "safaricom",
+       "scheme": "mpesa-receipt",
+       "value": "TKAEXAMPLE13",
+       "at": "2026-11-10T08:00:30Z"
+      }
+     ],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W14",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1c4af-8680-700f-800f-000000000015",
+      "reference": "TSAP0AYB156",
+      "idempotency_key": "xfer-D00310-L00042-0001"
+     },
+     "what": {
+      "kind": "transfer",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "deposit",
+       "id": "D00310"
+      }
+     },
+     "origin": {
+      "channel": "app",
+      "rail": "book",
+      "created_at": "2026-11-10T09:00:00Z",
+      "initiated_by": {
+       "kind": "person",
+       "id": "cust-000123",
+       "role": "member"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 500000,
+       "currency": "KES"
+      },
+      "amount_type": "send",
+      "direction": "internal",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "source": {
+       "address": {
+        "kind": "book",
+        "account": {
+         "kind": "deposit",
+         "id": "D00310"
+        }
+       }
+      },
+      "destination": {
+       "address": {
+        "kind": "book",
+        "account": {
+         "kind": "loan",
+         "id": "L00042"
+        }
+       }
+      }
+     },
+     "terms": {
+      "purpose": "LOAR"
+     }
+    },
+    "footer": {
+     "approval": {
+      "ref": "apr-001011",
+      "body_hash": "sha256:a1c936273d979873c11139c8eec27e27ed200aae6d3195f760f8e6dee50ff72b",
+      "at": "2026-11-10T09:00:10Z"
+     },
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-10T09:00:00Z",
+        "by": {
+         "kind": "person",
+         "id": "cust-000123",
+         "role": "member"
+        }
+       },
+       {
+        "status": "approved",
+        "at": "2026-11-10T09:00:10Z",
+        "by": {
+         "kind": "service",
+         "id": "approval-engine"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-10T09:00:12Z",
+        "by": {
+         "kind": "service",
+         "id": "deposits-service"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 500000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [
+      {
+       "rel": "has_part",
+       "txid": "01a1c4af-b178-7010-8010-000000000016",
+       "at": "2026-11-10T09:00:11Z"
+      }
+     ],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W15",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1c4af-b178-7010-8010-000000000016",
+      "reference": "99TV2B9F254",
+      "idempotency_key": "xfer-D00310-L00042-0001-loan"
+     },
+     "what": {
+      "kind": "repayment",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00042"
+      }
+     },
+     "origin": {
+      "channel": "app",
+      "rail": "book",
+      "created_at": "2026-11-10T09:00:11Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "lending-service"
+      }
+     },
+     "links": [
+      {
+       "rel": "part_of",
+       "txid": "01a1c4af-8680-700f-800f-000000000015"
+      }
+     ]
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 500000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "internal",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "LOAR"
+     }
+    },
+    "footer": {
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-10T09:00:11Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-10T09:00:11Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 500000,
+       "currency": "KES"
+      }
+     },
+     "books": {
+      "allocation": [
+       {
+        "part": "principal",
+        "amount": {
+         "minor": 500000,
+         "currency": "KES"
+        }
+       }
+      ],
+      "ledger_entries": [
+       {
+        "ledger": "fineract",
+        "ref": "je-L00042-x1",
+        "at": "2026-11-10T09:00:11Z"
+       }
+      ]
      },
      "ids": [],
      "linked_by": [],
