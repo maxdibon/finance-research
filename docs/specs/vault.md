@@ -12,8 +12,8 @@ depends_on: [access-keycloak, event-bus-kafka]
 used_by: [lending-service, back-office, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-491, FS-500, FS-525, FS-527, FS-532, FS-537, FS-1022, FS-1069, FS-1070, FS-1071, FS-1072, FS-1073]
-last_reviewed: 2026-11-01
+review_ids: [FS-491, FS-500, FS-525, FS-527, FS-532, FS-537, FS-1022, FS-1069, FS-1070, FS-1071, FS-1072, FS-1073, FS-1140, FS-1148]
+last_reviewed: 2026-11-09
 ---
 
 # The document vault — build specification
@@ -161,7 +161,7 @@ started, and the document is kept.
 | D | The document's own date | It knows: the date is on the record |
 | T | The transaction, or the loan's closing | `kapu.core.loan.closed` on the bus |
 | E | The end of employment | `kapu.backoffice.staff.left`, from the staff records in the back office |
-| R | The end of the customer relationship: nothing live for the period the institution set at onboarding (OB-COM-26) | `kapu.mfi.relationship.ended` (or `kapu.sacco`), from the lending service; `.relationship.resumed` stops the clock if they return (lending-service rule 9, FS-1073) |
+| R | The end of the customer relationship: nothing live and no application open, after any period the institution added at onboarding (OB-COM-26, FS-1140) | `kapu.mfi.relationship.ended` (or `kapu.sacco`), from the lending service; `.relationship.resumed` stops the clock if they return (lending-service rule 9, FS-1073) |
 | Twelve years from default | A secured loan written off or sent to recovery (docs/governance/documents.md) | `kapu.mfi.collateral.recovery.opened`, or `kapu.core.loan.written_off` |
 
 ## 4 · States

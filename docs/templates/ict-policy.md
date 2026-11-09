@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106, FS-1109, FS-1110, FS-1111, FS-1116, FS-1133, FS-1134, FS-1138, FS-1139]
+review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106, FS-1109, FS-1110, FS-1111, FS-1116, FS-1133, FS-1134, FS-1138, FS-1139, FS-1148]
 last_reviewed: 2026-11-09
 ---
 
@@ -32,12 +32,12 @@ indented. The two diagrams are images beside the values:
 |---|---|---|
 | `institution`, `institution_legal` | Its short and registered names | Roan Capital; Roan Capital Limited |
 | `number`, `version`, `date`, `classification` | This document's: its number in the institution's own scheme, never ours (design-system §7); `numbers` and `versions` give each template its own | RC-POL-001, to confirm; 0.3; 5 November 2026; Confidential |
-| `owner`, `approved_by` | Who owns it, and who approves it | Chief Executive Officer; the board of directors |
+| `owner`, `approved_by` | Who owns it, and who approves it: the board, the date added once it has approved, never left as a blank to fill (FS-1136) | Chief Executive Officer; the board of directors |
 | `provider`, `provider_legal` | Dibon's short name, and its registered name as in the services agreement | Dibon; to confirm |
-| `security_contact` | The position that holds ICT and security | To confirm |
+| `security_contact` | The position that holds ICT and security; it may be outsourced to Dibon under the services agreement, the institution keeping an accountable owner, since it stays liable and the Bank is told thirty days before (reg 31) | Dibon, under the services agreement, accountable to the Chief Executive Officer |
 | `board_report` | How often the board hears of ICT risk | Every quarter |
 | `devices`, `endpoint_role` | The devices staff use, and who manages them | Laptops Dibon issues and manages; Dibon secures them |
-| `phones` | How staff phones are managed | Enrolled by Dibon: fully managed if issued, a work profile if personal; to confirm which |
+| `phones` | How staff phones are managed: say both kinds, so the policy holds whichever the institution issues (FS-1139) | A company phone fully managed, or a member of staff's own with a work profile that can be wiped alone |
 | `print_setup` | Who sets printing to wait for a PIN, and on what printer | Dibon's device management; the printer to confirm |
 | `sms_provider` | Who carries its SMS to the mobile operators | Dibon itself, licensed by the Communications Authority of Kenya as a premium rate service provider, direct to Safaricom, Airtel and Telkom |
 | `message_channels` | The messaging channels it uses with customers | SMS and email |
@@ -45,7 +45,7 @@ indented. The two diagrams are images beside the values:
 | `sites`, `hosting`, `hosting_contract` | Where it runs, on whose infrastructure, and under what contract | Nairobi and Mombasa; Africa Data Centres and Liquid; to confirm |
 | `staff`, `bank`, `go_live` | Its staff; its payout bank; the go-live date | Three or four; NCBA Bank; to confirm |
 | `identity_providers` | Identity suppliers | To confirm |
-| `pen_tester`, `pen_test_date`, `it_audit` | The independent assurance | To confirm |
+| `pen_tester`, `pen_test_date`, `it_audit` | The independent assurance the Bank's list asks for: the independent tester, who also reviews the controls against the platform as built; a separate IT audit only if the Bank asks (FS-1134, LQ-39) | To confirm the tester and date; "The independent tester above; no separate IT audit unless the Central Bank of Kenya asks for one" |
 
 <!-- document -->
 # Information and Communication Technology (ICT) Policy
@@ -308,4 +308,8 @@ Each report goes to {{institution}}'s board, and to the Central Bank of Kenya on
 
 *Generated from the instrument cards in docs/law/ by tools/citations.js: edit the cards, never this section.*
 
-No provisions cited.
+**[LR-03](../law/LR-03.md) The Central Bank of Kenya (Non-Deposit Taking Credit Providers) Regulations, 2026, Legal Notice No. 191 of 2026.** Regulator: Central Bank of Kenya. Made under: The Central Bank of Kenya Act (Cap. 491), sections 33R, 57(3)(a), (aa) and 57(4); made by the Central Bank of Kenya on 4 September 2026. In force: Yes. A lender already in business applies for a licence or registration within six months of publication (reg 96). Version read: as at 2026-09-29, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2026/191/eng@2026-09-29).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 31 | reg 31 | Material services may be outsourced, but never the final decision to lend, management and control, the board's decisions, determining compliance with the law (31(1)(d)), or managing the loan book; the lender stays liable for its provider; the Central Bank told thirty days before, with the provider's background, owners and directors (31(3)); the contract gives the Central Bank oversight of, and access to, the provider's premises, books, records, systems and staff (31(5)) |

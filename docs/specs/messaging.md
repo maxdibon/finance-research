@@ -12,8 +12,8 @@ depends_on: [access-keycloak, event-bus-kafka, back-office]
 used_by: [access-keycloak, lender-rules, observability-grafana]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802, FS-970, FS-1053, FS-1054]
-last_reviewed: 2026-10-30
+review_ids: [FS-147, FS-153, FS-160, FS-163, FS-532, FS-565, FS-648, FS-663, FS-662, FS-667, FS-668, FS-674, FS-680, FS-684, FS-685, FS-763, FS-768, FS-782, FS-783, FS-784, FS-802, FS-970, FS-1053, FS-1054, FS-1147, FS-1148]
+last_reviewed: 2026-11-09
 ---
 
 # Messaging and its templates — build specification
@@ -136,6 +136,15 @@ refused at approval, not at sending.
 - **Overrides:** security messages go to every channel the person has;
   notices and collection messages always include a channel with delivery
   reports, SMS at least; marketing needs its own opt-in (MS-11).
+- **Marketing consent outlives the relationship** (FS-1147): it lasts
+  until withdrawn, not until the last loan closes. On
+  `relationship.ended`, only the person's name, contact details and
+  marketing preferences stay in the back office for marketing, apart from
+  the records the law requires, and they are deleted when consent is
+  withdrawn. Consent is asked again whenever contact details are updated,
+  at least every two years (reg 45); every marketing message says how to
+  stop it, and STOP ends it (MS-10; Data Protection (General) Regulations
+  reg 17).
 - **Quiet hours:** collection messages only in the window lender rules
   set (lender-rules §2.6), held until it opens, never dropped. Codes and
   security messages are never held.
@@ -306,7 +315,7 @@ refused it), `.opted_out`.
 | Templates, versions and their approvals | Internal | Always | — |
 | The message log: to whom, which template and version, when, status | Confidential | The institution's record period | Phone numbers, email addresses |
 | Message bodies | Confidential | Their retention period only (FS-063) | As the template's fields |
-| Consent and channel choices | Confidential | In Odoo (MS-11) | The person's |
+| Consent and channel choices | Confidential | In Odoo (MS-11); marketing consent, with the name and contact details it needs, until withdrawn, beyond the relationship (FS-1147) | The person's |
 | One-time codes | Restricted | Never: only their hashes | — |
 
 ## 8 · Quality and metrics
@@ -350,6 +359,8 @@ refused it), `.opted_out`.
 | M14 | The operator reports nothing | Status asked | "Handed to the operator", never "delivered" | MS-09 |
 | M15 | A payment from a number that is no customer's | Unplaced | T28 to the paying number; no account holder named | CO-21 |
 | M16 | Unclaimed at day 7 | Returned | T30 with the return's reference | CO-21 |
+| M17 | A former borrower who consented to marketing; `relationship.ended` published | A campaign | Sent, saying how to stop it | MS-11, FS-1147 |
+| M18 | A former borrower who never consented | A campaign | Not sent | MS-11, FS-1147 |
 
 ## 11 · Open questions
 
@@ -386,7 +397,14 @@ paybill or till and the reference in their text (gateway GW-16, FS-662).
 | reg 40 | reg 40, reg 40(4) | A complaints mechanism made known to customers; acknowledgement within seven days where a complaint cannot be dealt with promptly; an oral complaint unresolved after forty-eight hours confirmed in writing; resolution within thirty days |
 | reg 42 | reg 42(1), reg 42(3), reg 42(4) | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
 | reg 43 | reg 43 | Recovery expenses only those absolutely necessary, each itemised and justified to the borrower; a sale of a customer's or guarantor's property done transparently |
+| reg 45 | reg 45 | Customers' personal and contact records updated from time to time, and at least every two years (45(a)); reliable services, channels and customer-facing staff |
 | reg 47 | reg 47(2) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
 | reg 54 | reg 54(7) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
 | reg 55 | reg 55 | Pricing parameters and credit terms change only with the Central Bank's prior written approval, after thirty days' notice to the customer and the customer's acceptance |
 | reg 56 | reg 56(3), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
+
+**[LR-18](../law/LR-18.md) The Data Protection (General) Regulations, 2021, Legal Notice No. 263 of 2021.** Regulator: Office of the Data Protection Commissioner. Made under: The Data Protection Act (Cap. 411C). In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2021/263/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 17 | reg 17 | Each direct marketing message says prominently that the person may opt out, for example by a one-word reply to a text or a link in an email; preferences may be offered, but always with an option to opt out of everything |

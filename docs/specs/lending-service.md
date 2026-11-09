@@ -12,8 +12,8 @@ depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, dep
 used_by: [staff-workspace, kapu-console, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070, FS-1071, FS-1073]
-last_reviewed: 2026-11-01
+review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070, FS-1071, FS-1073, FS-1140, FS-1148]
+last_reviewed: 2026-11-09
 ---
 
 # The Kapu lending service — build specification
@@ -131,8 +131,9 @@ and shares (FS-985); this service lends against them, under Sacco rules.
    deposits and shares there, never from the core directly.
 9. **It says when a customer relationship ends** (FS-1073). A person or
    business with no live loan, deposit account, share or guarantee at
-   the institution for the period the institution set at onboarding
-   (OB-COM-26; one year proposed) is no longer its customer: this service
+   the institution, and no application open, is no longer its customer once
+   any period the institution added at onboarding has passed (OB-COM-26;
+   none by default, FS-1140): this service
    publishes `relationship.ended` with their reference, and the vault
    starts the seven-year clock on their identity and KYC documents
    (vault §3). Anything new before then resets the count; anything new
@@ -350,7 +351,7 @@ on any write the core received that this service did not make (F15).
 | A9 | A notice expiring in six months on a live loan | The night's checks run | A warning is raised to its owner | MF-03, MPSR Act s.30 |
 | A10 | A secured loan with no recovery case open | An officer asks for the vehicle's location | It is refused, and the attempt recorded | §5.2, LQ-34 |
 | A11 | A repossessed vehicle | It is moved from the yard to the sale's venue | The move is recorded, with who and why, before the sale can be marked done | §5.2 |
-| A12 | A borrower whose last loan closed a year ago, with no account, share or guarantee, at an institution that set one year | The night's check runs | `relationship.ended` is published with their reference, once | rule 9, OB-COM-26 |
+| A12 | A borrower whose last loan closed today, with no account, share, guarantee or open application, at an institution that added no period | The night's check runs | `relationship.ended` is published with their reference, once | rule 9, OB-COM-26 |
 | A13 | The same borrower takes a new loan two years later | The loan is opened | `relationship.resumed` is published, and the vault stops their documents' clock | rule 9, vault §3 |
 
 ## 12 · Open questions

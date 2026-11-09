@@ -843,6 +843,38 @@ test('originals: a kept file that is changed, made writable, or joined by an unr
   fs.rmSync(party, { recursive: true, force: true });
 });
 
+test('originals: a kept file in a subfolder passes, and an unrecorded one there fails (FS-1148)', () => {
+  const { verify, sha256 } = require(path.join(ROOT, 'tools', 'originals.js'));
+  const party = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-originals-'));
+  const sub = path.join(party, 'originals', 'drive-2026-11-05');
+  fs.mkdirSync(sub, { recursive: true });
+  const kept = path.join(sub, 'scope.docx');
+  fs.writeFileSync(kept, 'as found');
+  fs.chmodSync(kept, 0o444);
+  fs.writeFileSync(path.join(party, 'originals', 'MANIFEST.json'), JSON.stringify([{ file: 'drive-2026-11-05/scope.docx', sha256: sha256(kept), bytes: 8, received: '2026-11-05', from: 'A drive' }]));
+  assert.deepStrictEqual(verify(party).problems, []);
+  fs.writeFileSync(path.join(sub, 'stray.pdf'), 'x');
+  const problems = verify(party).problems.join('\n');
+  assert.match(problems, /drive-2026-11-05\/stray\.pdf: in originals\/ but not in the manifest/);
+  assert.doesNotMatch(problems, /scope\.docx/);
+  fs.chmodSync(kept, 0o644);
+  fs.rmSync(party, { recursive: true, force: true });
+});
+
+test('policies: a register id in an institution\'s values stops the build (FS-1148)', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fs-policies-'));
+  const tpl = path.join(dir, 'policy.md');
+  fs.writeFileSync(tpl, '---\nid: policy\n---\n<!-- document -->\n# A policy\n\nThe period: {{period}}.\n<!-- end -->\n');
+  const vals = path.join(dir, 'values.json');
+  fs.writeFileSync(vals, JSON.stringify({ period: '[To confirm: the period (FS-1082)]' }));
+  const run = require('child_process').spawnSync(process.execPath, [path.join(ROOT, 'tools', 'policies', 'build.js'), tpl, vals, path.join(dir, 'out.docx')],
+    { encoding: 'utf8', env: { ...process.env, DOCX_MODULE: path.join(dir, 'no-docx-here') } });
+  assert.strictEqual(run.status, 1);
+  assert.match(run.stderr, /register ids in the document: FS-1082/);
+  assert.ok(!fs.existsSync(path.join(dir, 'out.docx')));
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
 const REG = path.join('docs', 'governance', 'regulation.md');
 
 test('regulation: a Deep law that drives nothing fails', () => {

@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1091, FS-1095, FS-1097, FS-1098, FS-1100]
-last_reviewed: 2026-11-05
+review_ids: [FS-1080, FS-1087, FS-1091, FS-1095, FS-1097, FS-1098, FS-1100, FS-1136, FS-1148]
+last_reviewed: 2026-11-09
 ---
 
 # CBK licence pack
@@ -79,7 +79,7 @@ node tools/policies/build.js docs/templates/<template>.md <values.json> <out.doc
   theme until it has one (design-system, "Whose look a document takes";
   `design/system/institution-docx.js`).
 - **Its numbers:** each policy carries the institution's own document
-  number (`numbers` in the values, by template), never ours: its own
+  number (`numbers` in the values, by template; where it has no scheme, the codes we propose become its own, FS-1136), never ours: its own
   scheme, or its document code, POL and a serial, such as ROAN-POL-ICT-001
   (design-system §7; OB-COM-28).
 - **The diagrams** are images beside the values, `architecture.png` and
