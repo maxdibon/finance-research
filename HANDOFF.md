@@ -371,7 +371,7 @@ register row.
 ## Traps that have cost real time
 
 **Read [the traps](docs/service-management/traps.md) before your first
-edit** (FS-1053): 40 things that have cost a session real time, each
+edit** (FS-1053): 41 things that have cost a session real time, each
 with what to do instead. `dibon session start` hands them over with this
 page. When something costs you time, add it there, in the same pass.
 

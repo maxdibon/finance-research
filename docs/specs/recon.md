@@ -8,12 +8,12 @@ law: LR-03
 released: 2026.10.16
 release: R1
 implements: [recon-observability]
-depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine, back-office, product-versions]
+depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-keycloak, lender-rules, approval-engine, back-office, product-versions, transactions]
 used_by: [end-of-day-runner]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809, FS-970, FS-1053, FS-1058, FS-1054]
-last_reviewed: 2026-10-30
+review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809, FS-970, FS-1053, FS-1058, FS-1054, FS-1137]
+last_reviewed: 2026-11-09
 ---
 
 # Reconciliation platform — build specification
@@ -98,7 +98,7 @@ change-data capture (all R2); the extension catalogue (RO-28, phase 2).
 [JN-16](../journeys/unplaced-payment.md),
 [JN-17](../journeys/accountant-morning.md),
 [JN-10](../journeys/deposit.md), [JN-11](../journeys/transfer-out.md)
-and [JN-12](../journeys/transfer-in.md); its product terms come from [product-versions](product-versions.md).
+and [JN-12](../journeys/transfer-in.md); its product terms come from [product-versions](product-versions.md), and the shape and link rules of every transaction from [transactions](transactions.md).
 
 ## 2 · Concepts
 
@@ -346,6 +346,19 @@ and the law allow.
 | Bank transfer out, EFT or RTGS | Released the same business day if instructed before the cut-off (JN-11) | EFT the next business day; RTGS the same day | Owned by 10:00; an unreleased instruction lapses at the end of its day (JN-11) |
 | A ledger disagreement | — | — | Severity 2: acknowledged within 15 minutes, worked until explained (incident management) |
 
+**4.8 The transaction model's night checks** (FS-1137). Each night,
+after the cycle closes, recon runs the transactions spec's link rules
+(code/transactions/rules.js) over every transaction the day touched: each
+link's forward fact on its target's footer (`forward-links-recorded`),
+reversals and refunds within the original, a split's parts summing to
+their parent, and every link resolving to an earlier transaction of the
+same institution and currency. A failure is a break, its action from
+§4.7: a missing forward fact is question 4, a ticket to the service that
+created the link; reversals above the original are question 3, never
+corrected without the institution's approval. The same rules give each
+transaction its position (transactions §5), which recon's views show
+beside the status.
+
 ## 5 · Split transactions
 
 A payment's legs are computed by the companion before they are matched:
@@ -505,6 +518,7 @@ source, by its rhythm.
 | A19 | The companion starts on day 20 | It replays the archive | Every loan since go-live recomputed; breaks recorded, not raised, until day 25 | §3.1.6 |
 | A20 | An institution with its own core; a signed opening position at a cut-off, with two known open items | The comparison starts | Computed forward from the opening position; the two items open with owners; reports say "reconciled since" the cut-off | §3 rule 8 |
 | A21 | A product setting changed directly in Fineract | The night's comparison | A severity 2 break naming the setting and the document's value | §3.1.4 |
+| A22 | A refund created whose original's footer lacks `refunded_by` | The night's checks | A break, ticketed to the service that created the refund | §4.8 |
 
 ## 15 · Open questions
 

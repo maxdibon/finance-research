@@ -1468,6 +1468,124 @@ function checkProducts(root) {
   return out;
 }
 
+// ── transactions ─────────────────────────────────────────────────────────
+// FS-1131: the transaction model in three places held together, as the
+// product vocabulary is: the field dictionary (docs/transaction-fields.md),
+// the schema, rules and worked examples (code/transactions/), and the
+// spec's kinds (docs/specs/transactions.md §4). A field, a code or a kind
+// in one and not the others fails; the worked set is valid and breaks no
+// rule, and each rule's change breaks it.
+const TX_DIR = path.join('code', 'transactions');
+const TX_DICT = path.join('docs', 'transaction-fields.md');
+const TX_SPEC = path.join('docs', 'specs', 'transactions.md');
+function tablesOf(text) {
+  // Every table, by its header row's cells, with its rows' cells.
+  const out = [];
+  let cur = null;
+  text.split('\n').forEach((line, i) => {
+    if (!line.startsWith('|')) { cur = null; return; }
+    const cells = line.split('|').slice(1, -1).map((c) => c.trim());
+    if (!cur) { cur = { head: cells, rows: [] }; out.push(cur); return; }
+    if (cells.every((c) => /^-+$/.test(c))) return;
+    cur.rows.push({ cells, line: i + 1 });
+  });
+  return out;
+}
+function checkTransactions(root) {
+  if (!fs.existsSync(path.join(root, TX_DICT))) return [];
+  const { validate, subsetProblems } = require('./products/validate');
+  const out = [];
+  const at = (file, line, m) => out.push(fail('transactions', file, line, m));
+  const SCHEMA_FILE = path.join(TX_DIR, 'transaction.schema.json');
+  let schema;
+  let examples;
+  try { schema = JSON.parse(read(root, SCHEMA_FILE)); } catch (e) { at(SCHEMA_FILE, 0, `cannot be read: ${e.message}`); return out; }
+  try { examples = JSON.parse(read(root, path.join(TX_DIR, 'examples.json'))); } catch (e) { at(path.join(TX_DIR, 'examples.json'), 0, `cannot be read: ${e.message}`); return out; }
+  const { RULES, apply, position } = require(path.join(root, TX_DIR, 'rules.js'));
+  for (const m of subsetProblems(schema)) at(SCHEMA_FILE, 0, m);
+  const dict = read(root, TX_DICT);
+  const tables = tablesOf(dict);
+  const table = (first, second) => tables.find((t) => t.head[0] === first && (!second || t.head[1] === second));
+  const col = (t, i) => (t ? t.rows.map((r) => r.cells[i]) : []);
+  const same = (what, here, there, file) => {
+    for (const x of here.filter((v) => !there.includes(v))) at(file, 0, `${what} "${x}" is in the dictionary but not in the schema`);
+    for (const x of there.filter((v) => !here.includes(v))) at(file, 0, `${what} "${x}" is in the schema but not in the dictionary`);
+  };
+  // Ids: TF-01 onwards, in order, never repeated.
+  const blocks = table('Id', 'Block');
+  const fields = table('Id', 'Field');
+  if (!blocks || !fields) { at(TX_DICT, 0, 'no table of building blocks (| Id | Block |) or of fields (| Id | Field | Part |)'); return out; }
+  let n = 0;
+  for (const r of [...blocks.rows, ...fields.rows]) {
+    n += 1;
+    if (r.cells[0] !== `TF-${String(n).padStart(2, '0')}`) at(TX_DICT, r.line, `${r.cells[0]} out of sequence; TF-${String(n).padStart(2, '0')} expected`);
+    if (r.cells.some((c) => !c)) at(TX_DICT, r.line, `${r.cells[0]} has an empty cell: write — where nothing applies`);
+  }
+  // Building blocks are the schema's $defs; fields its parts' properties.
+  same('building block', col(blocks, 1), Object.keys(schema.$defs || {}), TX_DICT);
+  const parts = ['header', 'body', 'footer'];
+  const dictFields = fields.rows.map((r) => `${r.cells[2]}.${r.cells[1]}`);
+  const schemaFields = parts.flatMap((p) => Object.keys(((schema.properties || {})[p] || {}).properties || {}).map((f) => `${p}.${f}`));
+  same('field', dictFields, schemaFields, TX_DICT);
+  // The model's version, in the dictionary, the schema's id and its const.
+  const ver = (dict.match(/\*\*Model version: (\d+\.\d+)\.\*\*/) || [])[1];
+  const sv = ((((schema.properties || {}).header || {}).properties || {}).model_version || {}).const;
+  if (!ver) at(TX_DICT, 0, 'no "**Model version: X.Y.**" line');
+  else if (ver !== sv || !String(schema.$id || '').endsWith(`/${ver}`)) at(SCHEMA_FILE, 0, `the model version is ${ver} in the dictionary; the schema says ${sv} and ${schema.$id}`);
+  // Codes: each closed list in the dictionary is the schema's enum.
+  const d = schema.$defs || {};
+  const enumOf = (s) => (s && s.enum) || [];
+  same('status', col(table('Status'), 0), enumOf(d.status_entry && d.status_entry.properties.status), TX_DICT);
+  same('alias type', col(table('Type', 'What it is for us'), 0), enumOf(d.alias && d.alias.properties.type), TX_DICT);
+  same('identifier scheme', col(table('Scheme'), 0), enumOf(d.identifier && d.identifier.properties.scheme), TX_DICT);
+  same('link', col(table('Link'), 0), enumOf(d.link && d.link.properties.rel), TX_DICT);
+  same('forward fact', col(table('Link'), 1).filter((f) => !f.startsWith('(')), enumOf(d.linked_by && d.linked_by.properties.rel), TX_DICT);
+  const codes = new Set(tables.filter((t) => t.head[0] === 'Code').flatMap((t) => col(t, 0)));
+  // The spec's kinds are the schema's.
+  if (fs.existsSync(path.join(root, TX_SPEC))) {
+    const kinds = tablesOf(read(root, TX_SPEC)).find((t) => t.head[0] === 'Kind');
+    if (!kinds) at(TX_SPEC, 0, '§4 has no table of the kinds (| Kind |)');
+    else same('kind', col(kinds, 0), enumOf((((schema.properties || {}).header || {}).properties || {}).kind), TX_SPEC);
+  }
+  // Every component map names a field the dictionary has.
+  const maps = table('Component, version');
+  for (const r of maps ? maps.rows : []) {
+    const f = (r.cells[2].match(/`([a-z_]+\.[a-z_]+)/) || [])[1];
+    if (!f || !dictFields.includes(f)) at(TX_DICT, r.line, `${r.cells[0]} ${r.cells[1]}: "${r.cells[2]}" is not a field of the dictionary`);
+  }
+  // The worked set: valid, its codes listed, breaking no rule.
+  const worked = (examples.worked || []).map((w) => w.transaction);
+  (examples.worked || []).forEach((w) => {
+    for (const e of validate(schema, w.transaction)) at(path.join(TX_DIR, 'examples.json'), 0, `${w.id}: ${e}`);
+    const used = [w.transaction.body.purpose, ...w.transaction.footer.status_history.map((s) => s.reason), ...w.transaction.footer.changes.map((c) => c.reason)].filter(Boolean);
+    for (const c of used) if (!codes.has(c)) at(path.join(TX_DIR, 'examples.json'), 0, `${w.id}: code ${c} is not listed in the dictionary §3`);
+  });
+  for (const b of apply(worked)) at(path.join(TX_DIR, 'examples.json'), 0, `the worked set breaks ${b.id} (${b.source}): ${b.txid}: ${b.message}`);
+  // FS-1137: each worked transaction's position, as computed from its forward facts.
+  const byId = new Map(worked.map((t) => [t.header.txid, t]));
+  (examples.worked || []).forEach((w) => {
+    const p = position(w.transaction, byId);
+    if (w.position !== p) at(path.join(TX_DIR, 'examples.json'), 0, `${w.id}: its position is ${p}, not ${w.position}`);
+  });
+  // Each rule has a change that breaks it.
+  const ids = (examples.worked || []).map((w) => w.id);
+  for (const r of RULES) {
+    const c = (examples.cases || []).find((x) => x.rule === r.id);
+    if (!c) { at(path.join(TX_DIR, 'examples.json'), 0, `rule ${r.id} has no case`); continue; }
+    const set = Object.fromEntries(ids.map((id, i) => [id, JSON.parse(JSON.stringify(worked[i]))]));
+    for (const s of c.change) {
+      if (s.drop) { delete set[s.drop]; continue; }
+      const keys = s.path.split('.');
+      let o = set[s.tx];
+      for (const k of keys.slice(0, -1)) o = o && o[k];
+      if (!o) { at(path.join(TX_DIR, 'examples.json'), 0, `rule ${r.id}: ${s.tx}.${s.path} does not exist`); continue; }
+      if (s.remove) delete o[keys[keys.length - 1]]; else o[keys[keys.length - 1]] = s.set;
+    }
+    if (!apply(Object.values(set)).some((b) => b.id === r.id)) at(path.join(TX_DIR, 'examples.json'), 0, `rule ${r.id}: its case's change does not break it`);
+  }
+  return out;
+}
+
 // ── status ───────────────────────────────────────────────────────────────
 // FS-838, FS-839: every document under docs/ has a status its kind's
 // lifecycle allows. A version of the whole set is a snapshot; a document's
@@ -1987,6 +2105,7 @@ function runAll(root) {
     ...checkOverview(root, files),
     ...checkSpecs(root),
     ...checkProducts(root),
+    ...checkTransactions(root),
     ...checkBriefs(root),
     ...checkDeployments(root),
     ...checkRunbooks(root),

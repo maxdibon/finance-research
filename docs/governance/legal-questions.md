@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989, FS-1004, FS-1010, FS-1023, FS-1029, FS-1035, FS-1033, FS-1042, FS-1052, FS-1058, FS-1061, FS-1066, FS-1077, FS-1078, FS-1081, FS-1095, FS-1098]
-last_reviewed: 2026-11-05
+review_ids: [FS-400, FS-624, FS-673, FS-740, FS-742, FS-744, FS-762, FS-807, FS-814, FS-830, FS-899, FS-989, FS-1004, FS-1010, FS-1023, FS-1029, FS-1035, FS-1033, FS-1042, FS-1052, FS-1058, FS-1061, FS-1066, FS-1077, FS-1078, FS-1081, FS-1095, FS-1098, FS-1134, FS-1140]
+last_reviewed: 2026-11-09
 ---
 
 # Legal questions
@@ -79,6 +79,8 @@ lost.
 | LQ-36 | In a chain of identity checks, may what one provider returns be passed to the next: the ID number an operator confirms, to NPDM; the photo NPDM returns, a biometric, to an aggregator for face matching? Does NPDM's agreement allow its data to be passed on at all, and what basis covers biometric data at each step? | FS-1078; identity §5 | Institutions, Dibon | Data Protection Act: sensitive personal data, processors, onward disclosure (LR-17); NPDM's terms of access | Open | Each step passes on only what the next needs; the register's photo goes only to the liveness step's provider, named as a processor; where NPDM's terms forbid passing its photo on, liveness compares the selfie with the ID card's photo instead (document with face) | FS-1078 |
 | LQ-37 | May a lender deduct its administration and processing fees from the loan at payout (KES 95,000 paid out on a KES 100,000 loan, KES 110,000 repaid), and if so, on which figure are interest, the APR and the arrears cap (reg 29) reckoned: the principal written in the agreement, or what the borrower received? Is the model where every charge is loaded on the due date compliant too? | FS-1081; Roan Capital's meeting of 3 November; Motor Vehicle and Title Deed drafts | Institutions | Reg 29, reg 54, reg 59 (LR-03) | Open | Either model disclosed in full before signing, every charge itemised in the key facts and the APR on what the borrower actually receives; the cap on the agreement's principal until counsel says otherwise | FS-1081, LQ-33 |
 | LQ-38 | May a non-deposit-taking lender take money from investors into a pool, locked for a set period at a promised monthly or yearly yield, to lend from? Is that taking deposits (Banking Act, Microfinance Act), a collective investment scheme or a public offer (Capital Markets Act), or allowed borrowing, and what must the lender's licence, its disclosures and CBK be told? | FS-1084; Roan Capital's meeting of 3 November | Institutions | LR-03; the Banking Act; the Microfinance Act; the Capital Markets Act | Open | The regulations ask that the Central Bank be told at least thirty days before any third party invests in or finances the lender (reg 22(4)); they allow peer-to-peer lending under a collective investment scheme regulated under the Capital Markets Act, or as the Central Bank approves (reg 17), a route to weigh; and borrowings over twenty million shillings move a registered lender to a licence (reg 11). What they do not say is whether these terms are lawful as they stand. Nothing designed for investors until answered; the investor portal, if built, shows performance only and never borrowers' identities | FS-1084 |
+| LQ-39 | Does the Central Bank's requirement for "an independent assurance" on a lender's ICT system description call for an independent IT auditor's report, or are a penetration test and a review of controls against the system as built, by an independent tester, enough; and must it be in hand with the application, or before go-live? | FS-1134; the Central Bank's list of requirements (DR-062) | Institutions | The Central Bank's list of requirements for a licence application | Open | Annex D of the ICT policy: the penetration test and the review of controls by the independent tester, before go-live; no separate IT audit unless the Bank asks | FS-1134, FS-1080 |
+| LQ-40 | When does a lender's business relationship with a borrower end, from which the Proceeds of Crime and Anti-Money Laundering Act s.46(4) and its regulations' reg 42(1) count seven years: when the last loan or guarantee is repaid or written off and closed, or only after a period without one; and must the records then be deleted at seven years under the Data Protection Act s.39, unless another law or a dispute keeps them? | FS-1140; templates/data-protection-policy | Institutions | Proceeds of Crime and Anti-Money Laundering Act (LR-13); its Regulations, 2023 (LR-14); Data Protection Act (LR-17) | Open | The relationship ends when the last loan or guarantee is repaid or written off and closed, with no application open; seven years from then, twelve from default for a secured loan written off (FS-537, FS-538); a legal hold stops the clock | FS-1140, FS-537 |
 
 ## Regulations cited
 
@@ -96,7 +98,7 @@ lost.
 | reg 29 | reg 29 | What can be recovered on a non-performing loan is capped at the principal then owing, interest up to that principal, and reasonable recovery costs; the cap is measured from the last time the loan became non-performing (29(3)); interest under a court order after the order is outside it (29(4)) |
 | reg 30 | reg 30, reg 30(1)(l), reg 30(4) | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
 | reg 39 | reg 39(3) | A receipt for every transaction, a free loan statement on request and a way to see it at any time (39(1)); errors corrected promptly (39(2)); a guarantor kept informed through periodic statements (39(3)) |
-| reg 42 | reg 42 | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
+| reg 42 | reg 42, reg 42(1) | A guarantor's consent sought and obtained before the appointment; recourse to a guarantor only after non-judicial recovery from the borrower is exhausted, and after fourteen days' notice of the default |
 | reg 47 | reg 47, reg 47(2) | Product information fair, clear and current, and easily available at branches, websites and every channel (47(1)(d)); the lender says it is regulated by the Central Bank, and shows its company name |
 | reg 54 | reg 54, reg 54(4), reg 54(7) | At signing, the customer receives the agreement, the repayment schedule and the total cost of credit; the agreement states the loan, charges, rates, the APR, early repayment without charge (54(4)(h)) and more (54(4)); a variation needs thirty days' notice and the borrower's acceptance (54(7)) |
 | reg 56 | reg 56, reg 56(3), reg 56(4) | A repayment credited on the day it is paid, applied to due principal, then fees and charges, then interest; early repayment, in whole or part, without notice or penalty (56(3)), and no interest for the remaining term on full early repayment (56(4)) |
@@ -115,6 +117,12 @@ lost.
 |---|---|---|
 | s. 2 | s. 2 | Its definitions; a "payment service provider" includes whoever provides services for sending, receiving, storing or processing payments electronically, and any person that processes or stores data on behalf of such a provider or its users |
 
+**[LR-13](../law/LR-13.md) The Proceeds of Crime and Anti-Money Laundering Act (Cap. 59A).** Regulator: The Financial Reporting Centre, with each institution's supervisor. Made under: An Act of Parliament. In force: Yes. Version read: as at 2025-11-04, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2009/9/eng@2025-11-04).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| s. 46 | s. 46(4) | A reporting institution keeps records of every transaction and of the evidence of each customer's identity, in the account holder's correct name, for at least seven years from the transaction or the end of the relationship, or longer where the Centre asks (46(4)) |
+
 **[LR-17](../law/LR-17.md) The Data Protection Act (Cap. 411C).** Regulator: Office of the Data Protection Commissioner. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31).
 
 | Provision | Cited here as | What it requires |
@@ -123,6 +131,7 @@ lost.
 | s. 30 | s. 30 | No processing without a lawful basis: the person's consent for a stated purpose, or necessity for a contract, a legal obligation, vital interests, a public task or another ground the section lists |
 | s. 31 | s. 31 | An impact assessment before processing likely to put people's rights at high risk, describing the processing, its necessity, the risks and the safeguards |
 | s. 32 | s. 32 | Whoever relies on consent proves it was given for the purpose; consent can be withdrawn at any time; it is not freely given where a service is made to depend on consent to processing it does not need |
+| s. 39 | s. 39 | Personal data kept only as long as needed for its purpose, unless the law, a lawful purpose or the person's consent requires longer; then deleted, erased, anonymised or pseudonymised |
 | s. 48 | s. 48 | Personal data transferred out of Kenya only with proof of appropriate safeguards given to the Data Commissioner, or where the transfer is necessary on a ground the section lists |
 
 **[LR-23](../law/LR-23.md) The Movable Property Security Rights Act (Cap. 499A).** Regulator: The Registrar of security rights, who keeps the collateral registry. Made under: An Act of Parliament. In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/2017/13/eng@2022-12-31).

@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053, FS-1070]
-last_reviewed: 2026-11-01
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053, FS-1070, FS-1131]
+last_reviewed: 2026-11-09
 ---
 
 # Specifications
@@ -95,6 +95,7 @@ By layer, as [the instance](../architecture/instance.md) is drawn (FS-1053).
 | [access-keycloak](access-keycloak.md) | Component | Keycloak as access: four realms, levels of authentication and step-up, roles granted by mandate, sign-in for every service | access | R1 |
 | [event-bus-kafka](event-bus-kafka.md) | Component | Kafka as the event bus: the CloudEvents envelope, signing and the audit chain, one catalogue of event names, delivery rules | recon-observability | R1 |
 | [messaging](messaging.md) | Build | The messaging service and the R1 template catalogue: what each event sends, to whom, with which fields, and who approves the words | messaging | R1 |
+| [transactions](transactions.md) | Build | The transaction model: one money movement as every component means it; a header fixed at creation, a body fixed at approval, a footer only appended to; kinds, links, ids, aliases, versions and the standards they follow; its field dictionary and schema | rails, recon-observability, core | R1 |
 | [observability-grafana](observability-grafana.md) | Component | Grafana and its stack: metrics, logs, dashboards, alerts, and the on-call rota that takes a phone call | recon-observability | R1 |
 | [vault](vault.md) | Build | The document vault: every document carrying personal data, one vault per institution; checked and scanned on arrival, never changed, encrypted under the institution's keys, every read logged, out only by link, deleted when its retention ends | identity | R1 |
 
