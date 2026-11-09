@@ -1,141 +1,220 @@
 {
- "description": "Worked transactions for docs/specs/transactions.md (FS-1131, FS-1137, FS-1144): W1 to W9, each with its position computed from its forward facts, are the instances the spec's tables show; each rule in rules.js has a case where the worked set does not break it and one where a change does. Generated, with hashes and check symbols computed; fictional people, numbers and receipts.",
+ "description": "Worked transactions for docs/specs/transactions.md (FS-1131, FS-1137, FS-1144; grouped, FS-1149): W1 to W9, each with its position computed from its forward facts, are the instances the spec's tables show; each rule in rules.js has a case where the worked set does not break it and one where a change does. Generated, with hashes and check digits computed; fictional people, numbers and receipts.",
  "worked": [
   {
    "id": "W1",
    "position": "settled",
    "transaction": {
     "header": {
-     "txid": "01a1bf1b-4d80-7001-8001-000000000001",
-     "reference": "8YCC826SG20",
      "model_version": "1.0",
-     "kind": "disbursement",
-     "institution": "example-mfi",
-     "channel": "staff_workspace",
-     "rail": "mpesa",
-     "created_at": "2026-11-09T07:00:00Z",
-     "initiated_by": {
-      "kind": "service",
-      "id": "lending-service"
+     "id": {
+      "txid": "01a1bf1b-4d80-7001-8001-000000000001",
+      "reference": "8YCC826SG20",
+      "idempotency_key": "loan-L00042-disburse-1"
      },
-     "idempotency_key": "loan-L00042-disburse-1",
-     "links": [],
-     "account": {
-      "kind": "loan",
-      "id": "L00042"
-     }
+     "what": {
+      "kind": "disbursement",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00042"
+      }
+     },
+     "origin": {
+      "channel": "staff_workspace",
+      "rail": "mpesa",
+      "created_at": "2026-11-09T07:00:00Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "lending-service"
+      }
+     },
+     "links": []
     },
     "body": {
-     "charges": [
-      {
-       "line": 1,
-       "kind": "fee",
-       "code": "processing-fee",
-       "amount": {
-        "minor": 500000,
-        "currency": "KES"
-       },
-       "deducted": true
+     "money": {
+      "amount": {
+       "minor": 10000000,
+       "currency": "KES"
       },
-      {
-       "line": 2,
-       "kind": "tax",
-       "code": "excise-duty",
-       "amount": {
-        "minor": 100000,
-        "currency": "KES"
+      "amount_type": "send",
+      "direction": "out",
+      "charges": [
+       {
+        "line": 1,
+        "kind": "fee",
+        "code": "processing-fee",
+        "amount": {
+         "minor": 500000,
+         "currency": "KES"
+        },
+        "deducted": true
        },
-       "deducted": true,
-       "on": 1
+       {
+        "line": 2,
+        "kind": "tax",
+        "code": "excise-duty",
+        "amount": {
+         "minor": 100000,
+         "currency": "KES"
+        },
+        "deducted": true,
+        "on": 1
+       }
+      ]
+     },
+     "parties": {
+      "payer": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "destination": {
+       "address": {
+        "kind": "wallet",
+        "msisdn": "+254700000001",
+        "provider": "mpesa",
+        "network": "639-02"
+       },
+       "alias": {
+        "type": "MSISDN",
+        "value": "+254700000001"
+       },
+       "resolution": {
+        "directory": "mpesa",
+        "name_returned": "A BORROWER",
+        "name_match": "exact",
+        "resolved_by": {
+         "kind": "service",
+         "id": "rails"
+        },
+        "resolved_at": "2026-11-09T07:00:02Z"
+       }
       }
-     ],
-     "amount": {
-      "minor": 10000000,
-      "currency": "KES"
      },
-     "amount_type": "send",
-     "direction": "out",
-     "payer": {
-      "kind": "institution",
-      "ref": "example-mfi",
-      "name": "Example MFI",
-      "country": "KE"
-     },
-     "payee": {
-      "kind": "person",
-      "ref": "cust-000123",
-      "name": "A. Borrower",
-      "country": "KE"
-     },
-     "purpose": "LOAN",
-     "destination": {
-      "address": {
-       "kind": "wallet",
-       "msisdn": "+254700000001",
-       "provider": "mpesa",
-       "network": "639-02"
-      },
-      "alias": {
-       "type": "MSISDN",
-       "value": "+254700000001"
-      },
-      "resolution": {
-       "directory": "mpesa",
-       "name_returned": "A BORROWER",
-       "name_match": "exact",
-       "resolved_by": {
-        "kind": "service",
-        "id": "rails"
-       },
-       "resolved_at": "2026-11-09T07:00:02Z"
-      }
+     "terms": {
+      "purpose": "LOAN"
      }
     },
     "footer": {
-     "status_history": [
-      {
-       "status": "created",
-       "at": "2026-11-09T07:00:00Z",
-       "by": {
-        "kind": "service",
-        "id": "lending-service"
-       }
-      },
-      {
-       "status": "awaiting_approval",
-       "at": "2026-11-09T07:00:03Z",
-       "by": {
-        "kind": "service",
-        "id": "lending-service"
-       }
-      },
-      {
-       "status": "approved",
-       "at": "2026-11-09T07:40:00Z",
-       "by": {
-        "kind": "service",
-        "id": "approval-engine"
-       }
-      },
-      {
-       "status": "sent",
-       "at": "2026-11-09T07:40:07Z",
-       "by": {
-        "kind": "service",
-        "id": "rails"
-       }
-      },
-      {
-       "status": "settled",
-       "at": "2026-11-09T07:40:19Z",
-       "by": {
-        "kind": "rail",
-        "id": "mpesa"
+     "approval": {
+      "ref": "apr-000981",
+      "body_hash": "sha256:c82562e49501144abc06665df6e82333a71a7a871163c1a26212a8a1f63f9a42",
+      "at": "2026-11-09T07:40:00Z"
+     },
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-09T07:00:00Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
        },
-       "reported_at": "20261109104018"
+       {
+        "status": "awaiting_approval",
+        "at": "2026-11-09T07:00:03Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
+       },
+       {
+        "status": "approved",
+        "at": "2026-11-09T07:40:00Z",
+        "by": {
+         "kind": "service",
+         "id": "approval-engine"
+        }
+       },
+       {
+        "status": "sent",
+        "at": "2026-11-09T07:40:07Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-09T07:40:19Z",
+        "by": {
+         "kind": "rail",
+         "id": "mpesa"
+        },
+        "reported_at": "20261109104018"
+       }
+      ],
+      "checks": [
+       {
+        "check": "resolved_again",
+        "result": "pass",
+        "at": "2026-11-09T07:40:05Z"
+       },
+       {
+        "check": "operator",
+        "result": "pass",
+        "at": "2026-11-09T07:40:05Z",
+        "detail": "NDC 700 assigned to Safaricom; Safaricom confirmed the number is on its network"
+       },
+       {
+        "check": "number_binding",
+        "result": "pass",
+        "at": "2026-11-09T07:40:05Z"
+       },
+       {
+        "check": "sim_swap",
+        "result": "pass",
+        "at": "2026-11-09T07:40:06Z"
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 9400000,
+       "currency": "KES"
+      },
+      "rail_charges": [
+       {
+        "line": 1,
+        "kind": "rail",
+        "code": "mpesa-b2c",
+        "amount": {
+         "minor": 10800,
+         "currency": "KES"
+        },
+        "deducted": false
+       }
+      ],
+      "dates": {
+       "value_date": "2026-11-09",
+       "business_date": "2026-11-09",
+       "booked_at": "2026-11-09T07:40:21Z"
       }
-     ],
-     "external_ids": [
+     },
+     "books": {
+      "ledger_entries": [
+       {
+        "ledger": "fineract",
+        "ref": "je-88231",
+        "at": "2026-11-09T07:40:21Z"
+       }
+      ],
+      "recon": {
+       "match": "m-2026-11-09-0001",
+       "on": "reference",
+       "at": "2026-11-10T00:20:00Z"
+      }
+     },
+     "ids": [
       {
        "issuer": "safaricom",
        "scheme": "originator-conversation-id",
@@ -162,68 +241,7 @@
       }
      ],
      "linked_by": [],
-     "changes": [],
-     "approval": {
-      "ref": "apr-000981",
-      "body_hash": "sha256:7f4ef5b5af13c7db161b92c05942abdd026627c73fdc10885499a5d5ae71bacc",
-      "at": "2026-11-09T07:40:00Z"
-     },
-     "checks": [
-      {
-       "check": "resolved_again",
-       "result": "pass",
-       "at": "2026-11-09T07:40:05Z"
-      },
-      {
-       "check": "operator",
-       "result": "pass",
-       "at": "2026-11-09T07:40:05Z",
-       "detail": "NDC 700 assigned to Safaricom; Safaricom confirmed the number is on its network"
-      },
-      {
-       "check": "number_binding",
-       "result": "pass",
-       "at": "2026-11-09T07:40:05Z"
-      },
-      {
-       "check": "sim_swap",
-       "result": "pass",
-       "at": "2026-11-09T07:40:06Z"
-      }
-     ],
-     "settled": {
-      "minor": 9400000,
-      "currency": "KES"
-     },
-     "rail_charges": [
-      {
-       "line": 1,
-       "kind": "rail",
-       "code": "mpesa-b2c",
-       "amount": {
-        "minor": 10800,
-        "currency": "KES"
-       },
-       "deducted": false
-      }
-     ],
-     "dates": {
-      "value_date": "2026-11-09",
-      "business_date": "2026-11-09",
-      "booked_at": "2026-11-09T07:40:21Z"
-     },
-     "ledger_entries": [
-      {
-       "ledger": "fineract",
-       "ref": "je-88231",
-       "at": "2026-11-09T07:40:21Z"
-      }
-     ],
-     "recon": {
-      "match": "m-2026-11-09-0001",
-      "on": "reference",
-      "at": "2026-11-10T00:20:00Z"
-     }
+     "changes": []
     }
    }
   },
@@ -232,78 +250,102 @@
    "position": "settled",
    "transaction": {
     "header": {
-     "txid": "01a1bf96-e620-7002-8002-000000000002",
-     "reference": "QEWH92HWH59",
      "model_version": "1.0",
-     "kind": "repayment",
-     "institution": "example-mfi",
-     "channel": "rail",
-     "rail": "mpesa",
-     "created_at": "2026-11-09T09:15:00Z",
-     "initiated_by": {
-      "kind": "service",
-      "id": "rails"
+     "id": {
+      "txid": "01a1bf96-e620-7002-8002-000000000002",
+      "reference": "QEWH92HWH59",
+      "idempotency_key": "mpesa-TK9EXAMPLE2"
      },
-     "idempotency_key": "mpesa-TK9EXAMPLE2",
+     "what": {
+      "kind": "repayment",
+      "institution": "example-mfi"
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "mpesa",
+      "created_at": "2026-11-09T09:15:00Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "rails"
+      }
+     },
      "links": []
     },
     "body": {
-     "charges": [],
-     "amount": {
-      "minor": 1200000,
-      "currency": "KES"
-     },
-     "amount_type": "receive",
-     "direction": "in",
-     "payer": {
-      "kind": "person",
-      "ref": "cust-000123",
-      "name": "A. Borrower",
-      "country": "KE"
-     },
-     "payee": {
-      "kind": "institution",
-      "ref": "example-mfi",
-      "name": "Example MFI",
-      "country": "KE"
-     },
-     "purpose": "LOAR",
-     "destination": {
-      "address": {
-       "kind": "book",
-       "account": {
-        "kind": "ledger",
-        "id": "collections"
-       }
+     "money": {
+      "amount": {
+       "minor": 1200000,
+       "currency": "KES"
       },
-      "alias": {
-       "type": "BUSINESS",
-       "value": "400200",
-       "sub_id": "MULTI-0123"
+      "amount_type": "receive",
+      "direction": "in",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "destination": {
+       "address": {
+        "kind": "book",
+        "account": {
+         "kind": "ledger",
+         "id": "collections"
+        }
+       },
+       "alias": {
+        "type": "BUSINESS",
+        "value": "400200",
+        "sub_id": "MULTI-0123"
+       }
       }
+     },
+     "terms": {
+      "purpose": "LOAR"
      }
     },
     "footer": {
-     "status_history": [
-      {
-       "status": "created",
-       "at": "2026-11-09T09:15:00Z",
-       "by": {
-        "kind": "service",
-        "id": "rails"
-       }
-      },
-      {
-       "status": "settled",
-       "at": "2026-11-09T09:15:00Z",
-       "by": {
-        "kind": "rail",
-        "id": "mpesa"
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-09T09:15:00Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
        },
-       "reported_at": "20261109121459"
+       {
+        "status": "settled",
+        "at": "2026-11-09T09:15:00Z",
+        "by": {
+         "kind": "rail",
+         "id": "mpesa"
+        },
+        "reported_at": "20261109121459"
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 1200000,
+       "currency": "KES"
+      },
+      "dates": {
+       "value_date": "2026-11-09",
+       "business_date": "2026-11-09"
       }
-     ],
-     "external_ids": [
+     },
+     "ids": [
       {
        "issuer": "safaricom",
        "scheme": "mpesa-receipt",
@@ -323,15 +365,7 @@
        "at": "2026-11-09T09:15:01Z"
       }
      ],
-     "changes": [],
-     "settled": {
-      "minor": 1200000,
-      "currency": "KES"
-     },
-     "dates": {
-      "value_date": "2026-11-09",
-      "business_date": "2026-11-09"
-     }
+     "changes": []
     }
    }
   },
@@ -340,106 +374,124 @@
    "position": "settled",
    "transaction": {
     "header": {
-     "txid": "01a1bf96-ea08-7003-8003-000000000003",
-     "reference": "6XBPB3W0J03",
      "model_version": "1.0",
-     "kind": "repayment",
-     "institution": "example-mfi",
-     "channel": "rail",
-     "rail": "book",
-     "created_at": "2026-11-09T09:15:01Z",
-     "initiated_by": {
-      "kind": "service",
-      "id": "lending-service"
+     "id": {
+      "txid": "01a1bf96-ea08-7003-8003-000000000003",
+      "reference": "6XBPB3W0J03",
+      "idempotency_key": "mpesa-TK9EXAMPLE2-L00042"
      },
-     "idempotency_key": "mpesa-TK9EXAMPLE2-L00042",
+     "what": {
+      "kind": "repayment",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00042"
+      }
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "book",
+      "created_at": "2026-11-09T09:15:01Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "lending-service"
+      }
+     },
      "links": [
       {
        "rel": "part_of",
        "txid": "01a1bf96-e620-7002-8002-000000000002"
       }
-     ],
-     "account": {
-      "kind": "loan",
-      "id": "L00042"
-     }
+     ]
     },
     "body": {
-     "charges": [],
-     "amount": {
-      "minor": 800000,
-      "currency": "KES"
+     "money": {
+      "amount": {
+       "minor": 800000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "internal",
+      "charges": []
      },
-     "amount_type": "receive",
-     "direction": "internal",
-     "payer": {
-      "kind": "person",
-      "ref": "cust-000123",
-      "name": "A. Borrower",
-      "country": "KE"
+     "parties": {
+      "payer": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      }
      },
-     "payee": {
-      "kind": "institution",
-      "ref": "example-mfi",
-      "name": "Example MFI",
-      "country": "KE"
-     },
-     "purpose": "LOAR"
+     "terms": {
+      "purpose": "LOAR"
+     }
     },
     "footer": {
-     "status_history": [
-      {
-       "status": "created",
-       "at": "2026-11-09T09:15:01Z",
-       "by": {
-        "kind": "service",
-        "id": "lending-service"
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-09T09:15:01Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-09T09:15:01Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
        }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 800000,
+       "currency": "KES"
       },
-      {
-       "status": "settled",
-       "at": "2026-11-09T09:15:01Z",
-       "by": {
-        "kind": "service",
-        "id": "lending-service"
-       }
+      "dates": {
+       "value_date": "2026-11-09",
+       "business_date": "2026-11-09",
+       "booked_at": "2026-11-09T09:15:01Z"
       }
-     ],
-     "external_ids": [],
+     },
+     "books": {
+      "allocation": [
+       {
+        "part": "interest",
+        "amount": {
+         "minor": 150000,
+         "currency": "KES"
+        }
+       },
+       {
+        "part": "principal",
+        "amount": {
+         "minor": 650000,
+         "currency": "KES"
+        }
+       }
+      ],
+      "ledger_entries": [
+       {
+        "ledger": "fineract",
+        "ref": "je-L00042",
+        "at": "2026-11-09T09:15:01Z"
+       }
+      ]
+     },
+     "ids": [],
      "linked_by": [],
-     "changes": [],
-     "settled": {
-      "minor": 800000,
-      "currency": "KES"
-     },
-     "allocation": [
-      {
-       "part": "interest",
-       "amount": {
-        "minor": 150000,
-        "currency": "KES"
-       }
-      },
-      {
-       "part": "principal",
-       "amount": {
-        "minor": 650000,
-        "currency": "KES"
-       }
-      }
-     ],
-     "dates": {
-      "value_date": "2026-11-09",
-      "business_date": "2026-11-09",
-      "booked_at": "2026-11-09T09:15:01Z"
-     },
-     "ledger_entries": [
-      {
-       "ledger": "fineract",
-       "ref": "je-L00042",
-       "at": "2026-11-09T09:15:01Z"
-      }
-     ]
+     "changes": []
     }
    }
   },
@@ -448,106 +500,124 @@
    "position": "settled",
    "transaction": {
     "header": {
-     "txid": "01a1bf96-ea08-7004-8004-000000000004",
-     "reference": "NDVWD474M65",
      "model_version": "1.0",
-     "kind": "repayment",
-     "institution": "example-mfi",
-     "channel": "rail",
-     "rail": "book",
-     "created_at": "2026-11-09T09:15:01Z",
-     "initiated_by": {
-      "kind": "service",
-      "id": "lending-service"
+     "id": {
+      "txid": "01a1bf96-ea08-7004-8004-000000000004",
+      "reference": "NDVWD474M65",
+      "idempotency_key": "mpesa-TK9EXAMPLE2-L00057"
      },
-     "idempotency_key": "mpesa-TK9EXAMPLE2-L00057",
+     "what": {
+      "kind": "repayment",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00057"
+      }
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "book",
+      "created_at": "2026-11-09T09:15:01Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "lending-service"
+      }
+     },
      "links": [
       {
        "rel": "part_of",
        "txid": "01a1bf96-e620-7002-8002-000000000002"
       }
-     ],
-     "account": {
-      "kind": "loan",
-      "id": "L00057"
-     }
+     ]
     },
     "body": {
-     "charges": [],
-     "amount": {
-      "minor": 400000,
-      "currency": "KES"
+     "money": {
+      "amount": {
+       "minor": 400000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "internal",
+      "charges": []
      },
-     "amount_type": "receive",
-     "direction": "internal",
-     "payer": {
-      "kind": "person",
-      "ref": "cust-000123",
-      "name": "A. Borrower",
-      "country": "KE"
+     "parties": {
+      "payer": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      }
      },
-     "payee": {
-      "kind": "institution",
-      "ref": "example-mfi",
-      "name": "Example MFI",
-      "country": "KE"
-     },
-     "purpose": "LOAR"
+     "terms": {
+      "purpose": "LOAR"
+     }
     },
     "footer": {
-     "status_history": [
-      {
-       "status": "created",
-       "at": "2026-11-09T09:15:01Z",
-       "by": {
-        "kind": "service",
-        "id": "lending-service"
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-09T09:15:01Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-09T09:15:01Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
        }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 400000,
+       "currency": "KES"
       },
-      {
-       "status": "settled",
-       "at": "2026-11-09T09:15:01Z",
-       "by": {
-        "kind": "service",
-        "id": "lending-service"
-       }
+      "dates": {
+       "value_date": "2026-11-09",
+       "business_date": "2026-11-09",
+       "booked_at": "2026-11-09T09:15:01Z"
       }
-     ],
-     "external_ids": [],
+     },
+     "books": {
+      "allocation": [
+       {
+        "part": "interest",
+        "amount": {
+         "minor": 40000,
+         "currency": "KES"
+        }
+       },
+       {
+        "part": "principal",
+        "amount": {
+         "minor": 360000,
+         "currency": "KES"
+        }
+       }
+      ],
+      "ledger_entries": [
+       {
+        "ledger": "fineract",
+        "ref": "je-L00057",
+        "at": "2026-11-09T09:15:01Z"
+       }
+      ]
+     },
+     "ids": [],
      "linked_by": [],
-     "changes": [],
-     "settled": {
-      "minor": 400000,
-      "currency": "KES"
-     },
-     "allocation": [
-      {
-       "part": "interest",
-       "amount": {
-        "minor": 40000,
-        "currency": "KES"
-       }
-      },
-      {
-       "part": "principal",
-       "amount": {
-        "minor": 360000,
-        "currency": "KES"
-       }
-      }
-     ],
-     "dates": {
-      "value_date": "2026-11-09",
-      "business_date": "2026-11-09",
-      "booked_at": "2026-11-09T09:15:01Z"
-     },
-     "ledger_entries": [
-      {
-       "ledger": "fineract",
-       "ref": "je-L00057",
-       "at": "2026-11-09T09:15:01Z"
-      }
-     ]
+     "changes": []
     }
    }
   },
@@ -556,81 +626,105 @@
    "position": "refunded",
    "transaction": {
     "header": {
-     "txid": "01a1bf9b-7a00-7005-8005-000000000005",
-     "reference": "4XB1F4J7N32",
      "model_version": "1.0",
-     "kind": "repayment",
-     "institution": "example-mfi",
-     "channel": "rail",
-     "rail": "mpesa",
-     "created_at": "2026-11-09T09:20:00Z",
-     "initiated_by": {
-      "kind": "service",
-      "id": "rails"
+     "id": {
+      "txid": "01a1bf9b-7a00-7005-8005-000000000005",
+      "reference": "4XB1F4J7N32",
+      "idempotency_key": "mpesa-TK9EXAMPLE3"
      },
-     "idempotency_key": "mpesa-TK9EXAMPLE3",
-     "links": [],
-     "account": {
-      "kind": "loan",
-      "id": "L00042"
-     }
+     "what": {
+      "kind": "repayment",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00042"
+      }
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "mpesa",
+      "created_at": "2026-11-09T09:20:00Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "rails"
+      }
+     },
+     "links": []
     },
     "body": {
-     "charges": [],
-     "amount": {
-      "minor": 800000,
-      "currency": "KES"
-     },
-     "amount_type": "receive",
-     "direction": "in",
-     "payer": {
-      "kind": "person",
-      "ref": "cust-000123",
-      "name": "A. Borrower",
-      "country": "KE"
-     },
-     "payee": {
-      "kind": "institution",
-      "ref": "example-mfi",
-      "name": "Example MFI",
-      "country": "KE"
-     },
-     "purpose": "LOAR",
-     "destination": {
-      "address": {
-       "kind": "book",
-       "account": {
-        "kind": "loan",
-        "id": "L00042"
-       }
+     "money": {
+      "amount": {
+       "minor": 800000,
+       "currency": "KES"
       },
-      "alias": {
-       "type": "BUSINESS",
-       "value": "400200",
-       "sub_id": "L00042"
+      "amount_type": "receive",
+      "direction": "in",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "destination": {
+       "address": {
+        "kind": "book",
+        "account": {
+         "kind": "loan",
+         "id": "L00042"
+        }
+       },
+       "alias": {
+        "type": "BUSINESS",
+        "value": "400200",
+        "sub_id": "L00042"
+       }
       }
+     },
+     "terms": {
+      "purpose": "LOAR"
      }
     },
     "footer": {
-     "status_history": [
-      {
-       "status": "created",
-       "at": "2026-11-09T09:20:00Z",
-       "by": {
-        "kind": "service",
-        "id": "rails"
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-09T09:20:00Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-09T09:20:00Z",
+        "by": {
+         "kind": "rail",
+         "id": "mpesa"
+        }
        }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 800000,
+       "currency": "KES"
       },
-      {
-       "status": "settled",
-       "at": "2026-11-09T09:20:00Z",
-       "by": {
-        "kind": "rail",
-        "id": "mpesa"
-       }
+      "dates": {
+       "value_date": "2026-11-09",
+       "business_date": "2026-11-09"
       }
-     ],
-     "external_ids": [],
+     },
+     "ids": [],
      "linked_by": [
       {
        "rel": "refunded_by",
@@ -638,15 +732,7 @@
        "at": "2026-11-09T11:00:00Z"
       }
      ],
-     "changes": [],
-     "settled": {
-      "minor": 800000,
-      "currency": "KES"
-     },
-     "dates": {
-      "value_date": "2026-11-09",
-      "business_date": "2026-11-09"
-     }
+     "changes": []
     }
    }
   },
@@ -655,97 +741,151 @@
    "position": "settled",
    "transaction": {
     "header": {
-     "txid": "01a1bff7-0780-7006-8006-000000000006",
-     "reference": "KCV6G5XBP60",
      "model_version": "1.0",
-     "kind": "refund",
-     "institution": "example-mfi",
-     "channel": "staff_workspace",
-     "rail": "mpesa",
-     "created_at": "2026-11-09T11:00:00Z",
-     "initiated_by": {
-      "kind": "person",
-      "id": "u-0007",
-      "role": "loan-officer"
+     "id": {
+      "txid": "01a1bff7-0780-7006-8006-000000000006",
+      "reference": "KCV6G5XBP60",
+      "idempotency_key": "refund-TK9EXAMPLE3"
      },
-     "idempotency_key": "refund-TK9EXAMPLE3",
+     "what": {
+      "kind": "refund",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00042"
+      }
+     },
+     "origin": {
+      "channel": "staff_workspace",
+      "rail": "mpesa",
+      "created_at": "2026-11-09T11:00:00Z",
+      "initiated_by": {
+       "kind": "person",
+       "id": "u-0007",
+       "role": "loan-officer"
+      }
+     },
      "links": [
       {
        "rel": "refunds",
        "txid": "01a1bf9b-7a00-7005-8005-000000000005"
       }
-     ],
-     "account": {
-      "kind": "loan",
-      "id": "L00042"
-     }
+     ]
     },
     "body": {
-     "charges": [],
-     "amount": {
-      "minor": 800000,
-      "currency": "KES"
+     "money": {
+      "amount": {
+       "minor": 800000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "out",
+      "charges": []
      },
-     "amount_type": "receive",
-     "direction": "out",
-     "payer": {
-      "kind": "institution",
-      "ref": "example-mfi",
-      "name": "Example MFI",
-      "country": "KE"
-     },
-     "payee": {
-      "kind": "person",
-      "ref": "cust-000123",
-      "name": "A. Borrower",
-      "country": "KE"
-     },
-     "purpose": "LOAR",
-     "destination": {
-      "address": {
-       "kind": "wallet",
-       "msisdn": "+254700000001",
-       "provider": "mpesa"
+     "parties": {
+      "payer": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "destination": {
+       "address": {
+        "kind": "wallet",
+        "msisdn": "+254700000001",
+        "provider": "mpesa"
+       }
       }
+     },
+     "terms": {
+      "purpose": "LOAR"
      }
     },
     "footer": {
-     "status_history": [
-      {
-       "status": "created",
-       "at": "2026-11-09T11:00:00Z",
-       "by": {
-        "kind": "person",
-        "id": "u-0007",
-        "role": "loan-officer"
+     "approval": {
+      "ref": "apr-000990",
+      "body_hash": "sha256:d1f3b5d3c2e42728a4c402ec0e7cc36b84c5fb885d642a6ee1e9408640dfcb7c",
+      "at": "2026-11-09T11:30:00Z"
+     },
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-09T11:00:00Z",
+        "by": {
+         "kind": "person",
+         "id": "u-0007",
+         "role": "loan-officer"
+        }
+       },
+       {
+        "status": "approved",
+        "at": "2026-11-09T11:30:00Z",
+        "by": {
+         "kind": "service",
+         "id": "approval-engine"
+        }
+       },
+       {
+        "status": "sent",
+        "at": "2026-11-09T11:30:03Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-09T11:30:15Z",
+        "by": {
+         "kind": "rail",
+         "id": "mpesa"
+        }
        }
-      },
-      {
-       "status": "approved",
-       "at": "2026-11-09T11:30:00Z",
-       "by": {
-        "kind": "service",
-        "id": "approval-engine"
+      ],
+      "checks": [
+       {
+        "check": "operator",
+        "result": "pass",
+        "at": "2026-11-09T11:30:01Z"
+       },
+       {
+        "check": "number_binding",
+        "result": "pass",
+        "at": "2026-11-09T11:30:02Z"
+       },
+       {
+        "check": "sim_swap",
+        "result": "pass",
+        "at": "2026-11-09T11:30:02Z"
        }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 800000,
+       "currency": "KES"
       },
-      {
-       "status": "sent",
-       "at": "2026-11-09T11:30:03Z",
-       "by": {
-        "kind": "service",
-        "id": "rails"
-       }
-      },
-      {
-       "status": "settled",
-       "at": "2026-11-09T11:30:15Z",
-       "by": {
+      "rail_charges": [
+       {
+        "line": 1,
         "kind": "rail",
-        "id": "mpesa"
+        "code": "mpesa-b2c",
+        "amount": {
+         "minor": 10800,
+         "currency": "KES"
+        },
+        "deducted": false
        }
-      }
-     ],
-     "external_ids": [],
+      ]
+     },
+     "ids": [],
      "linked_by": [],
      "changes": [
       {
@@ -759,44 +899,6 @@
        "what": "refund of a duplicate payment requested",
        "note": "Paid twice within five minutes"
       }
-     ],
-     "approval": {
-      "ref": "apr-000990",
-      "body_hash": "sha256:310cd8de24c472a1631fa1350d0dffd6c00b9c4c182b892a780464fce8894728",
-      "at": "2026-11-09T11:30:00Z"
-     },
-     "checks": [
-      {
-       "check": "operator",
-       "result": "pass",
-       "at": "2026-11-09T11:30:01Z"
-      },
-      {
-       "check": "number_binding",
-       "result": "pass",
-       "at": "2026-11-09T11:30:02Z"
-      },
-      {
-       "check": "sim_swap",
-       "result": "pass",
-       "at": "2026-11-09T11:30:02Z"
-      }
-     ],
-     "settled": {
-      "minor": 800000,
-      "currency": "KES"
-     },
-     "rail_charges": [
-      {
-       "line": 1,
-       "kind": "rail",
-       "code": "mpesa-b2c",
-       "amount": {
-        "minor": 10800,
-        "currency": "KES"
-       },
-       "deducted": false
-      }
      ]
     }
    }
@@ -806,108 +908,133 @@
    "position": "reversed",
    "transaction": {
     "header": {
-     "txid": "01a1bf52-3c00-7007-8007-000000000007",
-     "reference": "2WBCJ57EQ66",
      "model_version": "1.0",
-     "kind": "disbursement",
-     "institution": "example-mfi",
-     "channel": "staff_workspace",
-     "rail": "eft",
-     "created_at": "2026-11-09T08:00:00Z",
-     "initiated_by": {
-      "kind": "service",
-      "id": "lending-service"
+     "id": {
+      "txid": "01a1bf52-3c00-7007-8007-000000000007",
+      "reference": "2WBCJ57EQ66",
+      "idempotency_key": "loan-L00061-disburse-1"
      },
-     "idempotency_key": "loan-L00061-disburse-1",
-     "links": [],
-     "account": {
-      "kind": "loan",
-      "id": "L00061"
-     }
+     "what": {
+      "kind": "disbursement",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00061"
+      }
+     },
+     "origin": {
+      "channel": "staff_workspace",
+      "rail": "eft",
+      "created_at": "2026-11-09T08:00:00Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "lending-service"
+      }
+     },
+     "links": []
     },
     "body": {
-     "charges": [],
-     "amount": {
-      "minor": 25000000,
-      "currency": "KES"
+     "money": {
+      "amount": {
+       "minor": 25000000,
+       "currency": "KES"
+      },
+      "amount_type": "send",
+      "direction": "out",
+      "charges": []
      },
-     "amount_type": "send",
-     "direction": "out",
-     "payer": {
-      "kind": "institution",
-      "ref": "example-mfi",
-      "name": "Example MFI",
-      "country": "KE"
-     },
-     "payee": {
-      "kind": "organisation",
-      "ref": "cust-000200",
-      "name": "Example Traders Ltd",
-      "identifiers": [
-       {
-        "scheme": "CINC",
-        "value": "PVT-EXAMPLE1",
-        "issuer": "KE"
-       }
-      ],
-      "country": "KE"
-     },
-     "purpose": "LOAN",
-     "destination": {
-      "address": {
-       "kind": "bank_account",
-       "bank_code": "01",
-       "branch_code": "100",
-       "account": "0000000001",
+     "parties": {
+      "payer": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
        "country": "KE"
+      },
+      "payee": {
+       "kind": "organisation",
+       "ref": "cust-000200",
+       "name": "Example Traders Ltd",
+       "identifiers": [
+        {
+         "scheme": "CINC",
+         "value": "PVT-EXAMPLE1",
+         "issuer": "KE"
+        }
+       ],
+       "country": "KE"
+      },
+      "destination": {
+       "address": {
+        "kind": "bank_account",
+        "bank_code": "01",
+        "branch_code": "100",
+        "account": "0000000001",
+        "country": "KE"
+       }
       }
+     },
+     "terms": {
+      "purpose": "LOAN"
      }
     },
     "footer": {
-     "status_history": [
-      {
-       "status": "created",
-       "at": "2026-11-09T08:00:00Z",
-       "by": {
-        "kind": "service",
-        "id": "lending-service"
-       }
-      },
-      {
-       "status": "approved",
-       "at": "2026-11-09T08:30:00Z",
-       "by": {
-        "kind": "service",
-        "id": "approval-engine"
-       }
-      },
-      {
-       "status": "sent",
-       "at": "2026-11-09T08:31:00Z",
-       "by": {
-        "kind": "service",
-        "id": "rails"
-       }
-      },
-      {
-       "status": "settled",
-       "at": "2026-11-09T10:00:00Z",
-       "by": {
-        "kind": "rail",
-        "id": "bank"
-       }
-      },
-      {
-       "status": "returned",
-       "at": "2026-11-10T07:00:00Z",
-       "by": {
-        "kind": "rail",
-        "id": "bank"
+     "approval": {
+      "ref": "apr-000985",
+      "body_hash": "sha256:bdab946d9b81f7abeba125763b005851d45aa7286c94c6dc01921c80f07c158e",
+      "at": "2026-11-09T08:30:00Z"
+     },
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-09T08:00:00Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
        },
-       "reason": "AC04"
+       {
+        "status": "approved",
+        "at": "2026-11-09T08:30:00Z",
+        "by": {
+         "kind": "service",
+         "id": "approval-engine"
+        }
+       },
+       {
+        "status": "sent",
+        "at": "2026-11-09T08:31:00Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-09T10:00:00Z",
+        "by": {
+         "kind": "rail",
+         "id": "bank"
+        }
+       },
+       {
+        "status": "returned",
+        "at": "2026-11-10T07:00:00Z",
+        "by": {
+         "kind": "rail",
+         "id": "bank"
+        },
+        "reason": "AC04"
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 25000000,
+       "currency": "KES"
       }
-     ],
-     "external_ids": [
+     },
+     "ids": [
       {
        "issuer": "bank",
        "scheme": "end-to-end-id",
@@ -922,16 +1049,7 @@
        "at": "2026-11-10T07:00:01Z"
       }
      ],
-     "changes": [],
-     "approval": {
-      "ref": "apr-000985",
-      "body_hash": "sha256:6a45874d63d3b97bb7848a5c5020592d7982bcfe2a39be8c198956f44d556789",
-      "at": "2026-11-09T08:30:00Z"
-     },
-     "settled": {
-      "minor": 25000000,
-      "currency": "KES"
-     }
+     "changes": []
     }
    }
   },
@@ -940,87 +1058,112 @@
    "position": "settled",
    "transaction": {
     "header": {
-     "txid": "01a1c441-ad68-7008-8008-000000000008",
-     "reference": "HCVHM6JJR49",
      "model_version": "1.0",
-     "kind": "reversal",
-     "institution": "example-mfi",
-     "channel": "rail",
-     "rail": "eft",
-     "created_at": "2026-11-10T07:00:01Z",
-     "initiated_by": {
-      "kind": "service",
-      "id": "rails"
+     "id": {
+      "txid": "01a1c441-ad68-7008-8008-000000000008",
+      "reference": "HCVHM6JJR49",
+      "idempotency_key": "return-2WBCJ57EQ66"
      },
-     "idempotency_key": "return-2WBCJ57EQ66",
+     "what": {
+      "kind": "reversal",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00061"
+      }
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "eft",
+      "created_at": "2026-11-10T07:00:01Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "rails"
+      }
+     },
      "links": [
       {
        "rel": "reverses",
        "txid": "01a1bf52-3c00-7007-8007-000000000007"
       }
-     ],
-     "account": {
-      "kind": "loan",
-      "id": "L00061"
-     }
+     ]
     },
     "body": {
-     "charges": [],
-     "amount": {
-      "minor": 25000000,
-      "currency": "KES"
+     "money": {
+      "amount": {
+       "minor": 25000000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "in",
+      "charges": []
      },
-     "amount_type": "receive",
-     "direction": "in",
-     "payer": {
-      "kind": "organisation",
-      "ref": "cust-000200",
-      "name": "Example Traders Ltd",
-      "identifiers": [
-       {
-        "scheme": "CINC",
-        "value": "PVT-EXAMPLE1",
-        "issuer": "KE"
-       }
-      ],
-      "country": "KE"
+     "parties": {
+      "payer": {
+       "kind": "organisation",
+       "ref": "cust-000200",
+       "name": "Example Traders Ltd",
+       "identifiers": [
+        {
+         "scheme": "CINC",
+         "value": "PVT-EXAMPLE1",
+         "issuer": "KE"
+        }
+       ],
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      }
      },
-     "payee": {
-      "kind": "institution",
-      "ref": "example-mfi",
-      "name": "Example MFI",
-      "country": "KE"
-     },
-     "purpose": "LOAN"
+     "terms": {
+      "purpose": "LOAN"
+     }
     },
     "footer": {
-     "status_history": [
-      {
-       "status": "created",
-       "at": "2026-11-10T07:00:01Z",
-       "by": {
-        "kind": "service",
-        "id": "rails"
+     "approval": {
+      "ref": "apr-000999",
+      "body_hash": "sha256:e1a6c2266d514e3ced041fcb1807f18c13412d41d5dbc99b2c16069007ab705d",
+      "at": "2026-11-10T07:10:00Z"
+     },
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-10T07:00:01Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "approved",
+        "at": "2026-11-10T07:10:00Z",
+        "by": {
+         "kind": "service",
+         "id": "approval-engine"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-10T07:10:01Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
        }
-      },
-      {
-       "status": "approved",
-       "at": "2026-11-10T07:10:00Z",
-       "by": {
-        "kind": "service",
-        "id": "approval-engine"
-       }
-      },
-      {
-       "status": "settled",
-       "at": "2026-11-10T07:10:01Z",
-       "by": {
-        "kind": "service",
-        "id": "lending-service"
-       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 25000000,
+       "currency": "KES"
       }
-     ],
-     "external_ids": [],
+     },
+     "ids": [],
      "linked_by": [],
      "changes": [
       {
@@ -1032,16 +1175,7 @@
        "reason": "AC04",
        "what": "payout returned by the bank: account closed"
       }
-     ],
-     "approval": {
-      "ref": "apr-000999",
-      "body_hash": "sha256:270be7cad6c36c2f96ce033df9e2d9ebc74907488bb205efc2a0e2d439762161",
-      "at": "2026-11-10T07:10:00Z"
-     },
-     "settled": {
-      "minor": 25000000,
-      "currency": "KES"
-     }
+     ]
     }
    }
   },
@@ -1050,94 +1184,110 @@
    "position": "settled",
    "transaction": {
     "header": {
-     "txid": "01a22e41-f808-700a-800a-000000000010",
-     "reference": "FBVWR78SV44",
      "model_version": "1.0",
-     "kind": "interest",
-     "institution": "example-mfi",
-     "channel": "end_of_day",
-     "rail": "book",
-     "created_at": "2026-11-30T21:00:05Z",
-     "initiated_by": {
-      "kind": "service",
-      "id": "deposits-service"
+     "id": {
+      "txid": "01a22e41-f808-700a-800a-000000000010",
+      "reference": "FBVWR78SV44",
+      "idempotency_key": "eod-2026-11-30-interest-D00310"
      },
-     "idempotency_key": "eod-2026-11-30-interest-D00310",
+     "what": {
+      "kind": "interest",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "deposit",
+       "id": "D00310"
+      }
+     },
+     "origin": {
+      "channel": "end_of_day",
+      "rail": "book",
+      "created_at": "2026-11-30T21:00:05Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "deposits-service"
+      }
+     },
      "links": [
       {
        "rel": "in_batch",
        "txid": "01a22e41-e480-7009-8009-000000000009"
       }
-     ],
-     "account": {
-      "kind": "deposit",
-      "id": "D00310"
-     }
+     ]
     },
     "body": {
-     "charges": [
-      {
-       "line": 1,
-       "kind": "tax",
-       "code": "withholding-tax",
-       "amount": {
-        "minor": 15000,
-        "currency": "KES"
-       },
-       "deducted": true
+     "money": {
+      "amount": {
+       "minor": 100000,
+       "currency": "KES"
+      },
+      "amount_type": "send",
+      "direction": "internal",
+      "charges": [
+       {
+        "line": 1,
+        "kind": "tax",
+        "code": "withholding-tax",
+        "amount": {
+         "minor": 15000,
+         "currency": "KES"
+        },
+        "deducted": true
+       }
+      ]
+     },
+     "parties": {
+      "payer": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
       }
-     ],
-     "amount": {
-      "minor": 100000,
-      "currency": "KES"
      },
-     "amount_type": "send",
-     "direction": "internal",
-     "payer": {
-      "kind": "institution",
-      "ref": "example-mfi",
-      "name": "Example MFI",
-      "country": "KE"
-     },
-     "payee": {
-      "kind": "person",
-      "ref": "cust-000123",
-      "name": "A. Borrower",
-      "country": "KE"
-     },
-     "purpose": "INTE"
+     "terms": {
+      "purpose": "INTE"
+     }
     },
     "footer": {
-     "status_history": [
-      {
-       "status": "created",
-       "at": "2026-11-30T21:00:05Z",
-       "by": {
-        "kind": "service",
-        "id": "deposits-service"
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-30T21:00:05Z",
+        "by": {
+         "kind": "service",
+         "id": "deposits-service"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-30T21:00:06Z",
+        "by": {
+         "kind": "service",
+         "id": "deposits-service"
+        }
        }
-      },
-      {
-       "status": "settled",
-       "at": "2026-11-30T21:00:06Z",
-       "by": {
-        "kind": "service",
-        "id": "deposits-service"
-       }
-      }
-     ],
-     "external_ids": [],
-     "linked_by": [],
-     "changes": [],
-     "settled": {
-      "minor": 85000,
-      "currency": "KES"
+      ]
      },
-     "dates": {
-      "value_date": "2026-11-30",
-      "business_date": "2026-11-30",
-      "booked_at": "2026-11-30T21:00:06Z"
-     }
+     "settlement": {
+      "settled": {
+       "minor": 85000,
+       "currency": "KES"
+      },
+      "dates": {
+       "value_date": "2026-11-30",
+       "business_date": "2026-11-30",
+       "booked_at": "2026-11-30T21:00:06Z"
+      }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
     }
    }
   }
@@ -1149,7 +1299,7 @@
    "change": [
     {
      "tx": "W1",
-     "path": "body.amount.minor",
+     "path": "body.money.amount.minor",
      "set": 10000100
     }
    ],
@@ -1161,7 +1311,7 @@
    "change": [
     {
      "tx": "W1",
-     "path": "header.reference",
+     "path": "header.id.reference",
      "set": "8YCC826SG21"
     }
    ],
@@ -1173,7 +1323,7 @@
    "change": [
     {
      "tx": "W6",
-     "path": "header.idempotency_key",
+     "path": "header.id.idempotency_key",
      "set": "mpesa-TK9EXAMPLE3"
     }
    ],
@@ -1212,13 +1362,13 @@
    "change": [
     {
      "tx": "W8",
-     "path": "body.direction",
+     "path": "body.money.direction",
      "set": "out"
     },
     {
      "tx": "W8",
      "path": "footer.approval.body_hash",
-     "set": "sha256:9a5840c65da9c05670c98d0d8b717e4e3bb9cb2193a4baddf934449e7af98ddb"
+     "set": "sha256:14bb738d4bda1863902b3bdd122e75f990b50f597a783437b5a033a9cb2539b1"
     }
    ],
    "change_breaks": true
@@ -1229,18 +1379,18 @@
    "change": [
     {
      "tx": "W6",
-     "path": "body.amount.minor",
+     "path": "body.money.amount.minor",
      "set": 900000
     },
     {
      "tx": "W6",
-     "path": "footer.settled.minor",
+     "path": "footer.settlement.settled.minor",
      "set": 900000
     },
     {
      "tx": "W6",
      "path": "footer.approval.body_hash",
-     "set": "sha256:7f84fa8baa5042b19df0fd03085e55eb382b09bf789e88ae70aaed83dd34a2b4"
+     "set": "sha256:2536bca4147a98072eafcc2de407b208909768d4b3937caa382880c710b37edc"
     }
    ],
    "change_breaks": true
@@ -1251,17 +1401,17 @@
    "change": [
     {
      "tx": "W4",
-     "path": "body.amount.minor",
+     "path": "body.money.amount.minor",
      "set": 300000
     },
     {
      "tx": "W4",
-     "path": "footer.settled.minor",
+     "path": "footer.settlement.settled.minor",
      "set": 300000
     },
     {
      "tx": "W4",
-     "path": "footer.allocation",
+     "path": "footer.books.allocation",
      "set": [
       {
        "part": "principal",
@@ -1293,13 +1443,13 @@
    "change": [
     {
      "tx": "W1",
-     "path": "body.charges.1.on",
+     "path": "body.money.charges.1.on",
      "set": 2
     },
     {
      "tx": "W1",
      "path": "footer.approval.body_hash",
-     "set": "sha256:69c1d56101abf4555becf6a566498ba6219cc8b22ded8ddbcd05e09342ef0f38"
+     "set": "sha256:9cb3f9589b80ab0bb11d0dd4725283aca283f6646e8aad4ab940bd73f41dc439"
     }
    ],
    "change_breaks": true
@@ -1310,7 +1460,7 @@
    "change": [
     {
      "tx": "W1",
-     "path": "footer.settled.minor",
+     "path": "footer.settlement.settled.minor",
      "set": 10000000
     }
    ],
@@ -1322,7 +1472,7 @@
    "change": [
     {
      "tx": "W3",
-     "path": "footer.allocation.1.amount.minor",
+     "path": "footer.books.allocation.1.amount.minor",
      "set": 100
     }
    ],
@@ -1334,7 +1484,7 @@
    "change": [
     {
      "tx": "W1",
-     "path": "footer.status_history.3.at",
+     "path": "footer.progress.status_history.3.at",
      "set": "2026-11-09T06:00:00Z"
     }
    ],
@@ -1358,7 +1508,7 @@
    "change": [
     {
      "tx": "W1",
-     "path": "footer.checks",
+     "path": "footer.progress.checks",
      "set": [
       {
        "check": "resolved_again",

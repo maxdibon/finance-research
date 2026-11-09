@@ -11,7 +11,7 @@ depends_on: [event-bus-kafka]
 used_by: [recon]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149]
 last_reviewed: 2026-11-09
 ---
 
@@ -228,11 +228,18 @@ none yet.
 
 **Its parts** (each field: dictionary §2):
 
-| Part | Fixed | Holds |
+Each part's fields sit in groups one level deep, each answering one
+question (FS-1149):
+
+| Part | Fixed | Its groups, and what they hold |
 |---|---|---|
-| Header | At creation | txid, reference, model_version, kind, institution, channel, rail, created_at, initiated_by, idempotency_key, product_version, account, links |
-| Body | At approval, under the hash | amount, amount_type, direction, payer, payee, destination, purpose, charges, instrument, expires_at |
-| Footer | Never: appended to | approval, status_history, checks, external_ids, dates, settled, rail_charges, allocation, ledger_entries, recon, linked_by, changes |
+| Header | At creation | **id** (txid, reference, idempotency_key); **what** (kind, institution, account, product_version); **origin** (channel, rail, created_at, initiated_by); with model_version and links beside them |
+| Body | At approval, under the hash | **money** (amount, amount_type, direction, charges); **parties** (payer, payee, destination); **terms** (purpose, instrument, expires_at) |
+| Footer | Never: appended to | **progress** (status_history, checks); **settlement** (settled, rail_charges, dates); **books** (allocation, ledger_entries, recon); with approval, ids, linked_by and changes beside them |
+
+The footer's groups follow who writes them (§7): the approval engine its
+approval, the rails its progress and settlement, the core adapter and
+reconciliation its books.
 
 It travels in the CloudEvents envelope (event-bus-kafka §4), whose `txid`
 is the header's and whose `prevhash` and `sig` prove each footer entry's

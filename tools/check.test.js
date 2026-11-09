@@ -1555,7 +1555,7 @@ const TX_SCHEMA = path.join('code', 'transactions', 'transaction.schema.json');
 const TX_EXAMPLES = path.join('code', 'transactions', 'examples.json');
 
 test('transactions: a field in the dictionary that is not in the schema fails', () => {
-  const f = runWith((d) => patch(d, TX_DICT, (t) => t.replace('| TF-37 | created_at | header |', '| TF-37 | created_on | header |')));
+  const f = runWith((d) => patch(d, TX_DICT, (t) => t.replace('| TF-40 | origin.created_at | header |', '| TF-40 | origin.created_on | header |')));
   assert.deepStrictEqual(names(f), ['transactions']);
 });
 
@@ -1567,14 +1567,14 @@ test('transactions: a field in the schema that is not in the dictionary fails', 
 test('transactions: a worked transaction that breaks a rule fails', () => {
   const f = runWith((d) => patch(d, TX_EXAMPLES, (t) => {
     const e = JSON.parse(t);
-    e.worked[0].transaction.footer.settled.minor = 1;
+    e.worked[0].transaction.footer.settlement.settled.minor = 1;
     return JSON.stringify(e, null, 1);
   }));
   assert.deepStrictEqual(names(f), ['transactions']);
 });
 
 test('transactions: a component map to a field the dictionary lacks fails', () => {
-  const f = runWith((d) => patch(d, TX_DICT, (t) => t.replace('| M-Pesa B2C (Daraja) | Occasion | `header.reference` |', '| M-Pesa B2C (Daraja) | Occasion | `header.remarks` |')));
+  const f = runWith((d) => patch(d, TX_DICT, (t) => t.replace('| M-Pesa B2C (Daraja) | Occasion | `header.id.reference` |', '| M-Pesa B2C (Daraja) | Occasion | `header.id.remarks` |')));
   assert.deepStrictEqual(names(f), ['transactions']);
 });
 
