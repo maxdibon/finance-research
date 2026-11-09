@@ -6,7 +6,7 @@ status: living
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150]
 last_reviewed: 2026-11-09
 ---
 
@@ -49,7 +49,7 @@ The types the fields are made of.
 | TF-11 | account | A loan, deposit, share or ledger account of the institution's, by its id | An address outside the institution (TF-14) | `{kind: "loan", id: "L00042"}` | — | DbtrAcct, CdtrAcct (Othr) |
 | TF-12 | alias | A pointer to an address: a phone number, a paybill and account reference, a till | The address it resolves to (TF-14); an identifier (TF-13) | `{type, value, sub_id}`, the types in §3 | Mojaloop PartyIdType and PartySubIdOrType | Prxy (Tp, Id) |
 | TF-13 | identifier | Who or what a party or instrument is, by a scheme and a value | An alias (TF-12); a government ID number of a person, never held here (spec rule 6) | `{scheme, value, issuer}`, the schemes in §3; issuer an ISO 3166 code for a national scheme | ISO 9362, ISO 17442, ISO 6166; ISO 20022 code lists | GenericIdentification (Id, SchmeNm, Issr) |
-| TF-14 | address | Where money lands: a Kenyan bank account (bank code, branch code, account), a wallet (its E.164 number, provider, network), an IBAN abroad, or a book account | An alias (TF-12) | One of four forms | E.164; ITU-T E.212 for a network, Kenya's country code 639 and the network code CAK assigns (`639-02`; §3); ISO 13616 for an IBAN, which Kenya does not use (to confirm) | CdtrAcct, CdtrAgt (BICFI, ClrSysMmbId) |
+| TF-14 | address | Where money leaves from or lands: a Kenyan bank account (bank code, branch code, account), a wallet (its E.164 number, provider, network), a mobile money shortcode (a paybill, till or B2C shortcode), an IBAN abroad, or a book account | An alias (TF-12) | One of five forms | E.164; ITU-T E.212 for a network, Kenya's country code 639 and the network code CAK assigns (`639-02`; §3); ISO 13616 for an IBAN, which Kenya does not use (to confirm) | CdtrAcct, CdtrAgt (BICFI, ClrSysMmbId) |
 | TF-15 | resolution | What a directory returned for an alias: the name, how well it matched the payee's, who asked and when | The address itself | `{directory, name_returned, name_match, resolved_by, resolved_at}` | Mojaloop's party lookup | acmt.023/024, in part |
 | TF-16 | destination | The address money goes to, with the alias as entered and its resolution | The payee (a party, TF-18) | `{address, alias, resolution}` | — | CdtrAcct with Prxy |
 | TF-17 | charge | One line of what is charged: a fee, a tax on a fee, or the rail's charge; whether it is deducted from the amount | The amount; a ledger posting | `{line, kind, code, amount, deducted, on}` | — | ChrgsInf; TaxRmt for a tax |
@@ -78,7 +78,7 @@ its part, so `id.txid` in the header is `header.id.txid`.
 | what | header | What is it, and in whose books? | kind, institution, account, product_version |
 | origin | header | Where did it come from? | channel, rail, created_at, initiated_by |
 | money | body | How much, which way, and what is charged? | amount, amount_type, direction, charges |
-| parties | body | Who pays, who is paid, and where does it land? | payer, payee, destination |
+| parties | body | Who pays, who is paid, and from and to which accounts? | payer, payee, source, destination |
 | terms | body | Why, for what, and until when? | purpose, instrument, expires_at |
 | progress | footer | Where is it now? | status_history, checks |
 | settlement | footer | What actually moved? | settled, rail_charges, dates |
@@ -110,25 +110,26 @@ added, none changed). **Class** is the architecture's (README §7).
 | TF-43 | money.amount | body | The amount as instructed or as received | The settled amount; the charges | money | minor units | The requester; for money in, the rail | approval | Confidential | InstdAmt | FS-1123 decision 2 |
 | TF-44 | money.amount_type | body | Which side the amount is fixed on: `send`, what leaves the payer, deducted charges taken out of it; `receive`, what the payee gets, charges on top | Who bears a charge | code | — | The requester, from the product | approval | Internal | ChrgBr, in part | FS-1129; LQ-37 |
 | TF-45 | money.direction | body | `out` of the institution, `in` to it, or `internal` within its books | The kind | code | — | The requester | approval | Internal | CdtDbtInd | FS-1123 |
-| TF-46 | money.charges | body | The charges known before approval, each its own line, a tax on its own line | The rail's charges as reported (TF-57) | charge list | minor units | The product version; the rail's tariff | approval | Confidential | ChrgsInf, TaxRmt | FS-1126, FS-1129 |
-| TF-47 | parties.payer | body | Who pays | The account debited | party | — | The requester | approval | Confidential | Dbtr | FS-1123 |
+| TF-46 | money.charges | body | The charges known before approval, each its own line, a tax on its own line | The rail's charges as reported (TF-58) | charge list | minor units | The product version; the rail's tariff | approval | Confidential | ChrgsInf, TaxRmt | FS-1126, FS-1129 |
+| TF-47 | parties.payer | body | Who pays | The account it leaves from (TF-49) | party | — | The requester | approval | Confidential | Dbtr | FS-1123 |
 | TF-48 | parties.payee | body | Who is paid | The destination | party | — | The requester | approval | Confidential | Cdtr | FS-1123 |
-| TF-49 | parties.destination | body | Where the money lands, the alias as entered, and what the directory returned | The payee | destination | — | The requester; the rails resolve the alias before approval | approval | Confidential | CdtrAcct, Prxy | FS-1122 |
-| TF-50 | terms.purpose | body | Why the money moves, as an ISO purpose code (§3) | The kind | iso_code | — | The requester | approval | Internal | Purp/Cd | FS-1126 |
-| TF-51 | terms.instrument | body | The security or fund unit traded, by its ISIN; not used in R1 | The party | identifier | — | The requester | approval | Internal | FinInstrmId | FS-1120 |
-| TF-52 | terms.expires_at | body | When an unapproved or unsent request lapses | The created time | time | UTC | The requester, from the product | approval | Internal | ReqdExctnDt, in part | FS-1129 |
-| TF-53 | approval | footer | The approval of the body, with the hash it approved | Its status | approval | — | The approval engine | appended | Internal | — | FS-588 |
-| TF-54 | progress.status_history | footer | Every state it entered, in order | A change | status entry list | — | The service that saw the state | appended | Internal | TxSts | FS-1126; RL-10 |
-| TF-55 | progress.checks | footer | The checks made before money moved | The approval | check list | — | The rails | appended | Internal | — | FS-1122; ID-12, RL-22 |
-| TF-56 | settlement.settled | footer | The amount the rail moved to the payee | The amount | money | minor units | The rails; the core for a book transfer | appended | Confidential | IntrBkSttlmAmt | FS-1123 decision 2 |
-| TF-57 | settlement.rail_charges | footer | The rail's charges as it reported them | The charges approved (TF-46) | charge list | minor units | The rails | appended | Confidential | ChrgsInf | FS-1126 |
-| TF-58 | settlement.dates | footer | Its value date, business date and booking time | `created_at` | dates | — | The core adapter, at posting | appended | Internal | ValDt, BookgDt | architecture §10 |
-| TF-59 | books.allocation | footer | How what was settled was split across principal, interest, fees, penalties and the rest | The charges | allocation list | minor units | The core adapter, from the core | appended | Confidential | RmtInf/Strd | FS-1124; MF-22 |
-| TF-60 | books.ledger_entries | footer | The balanced entries it caused | The transaction | ledger entry list | — | The core adapter | appended | Internal | — | FS-1126 |
-| TF-61 | books.recon | footer | Reconciliation's match | A break | recon match | — | Reconciliation | appended | Internal | — | RO-02 |
-| TF-62 | ids | footer | Every other party's id for it, by issuer and scheme | The txid | external id list | — | Whoever receives the id | appended | Internal | TxId, AcctSvcrRef | FS-1127 |
-| TF-63 | linked_by | footer | The forward facts later transactions left on it | Its own links | linked by list | — | The service that creates the linking transaction | appended | Internal | — | FS-1124, FS-1131 |
-| TF-64 | changes | footer | Facts entered after creation, with who, role, reason and approval | Statuses; an edit, which never happens | change list | — | Whoever enters it | appended | Internal | — | FS-1119 |
+| TF-49 | parties.source | body | The account the money leaves from: for money out, the institution's own (its shortcode, float or bank account), named before approval; for money in, the payer's, as the rail reports it | The payer, a party; the destination | address and alias | — | The requester, from the product and the rail; for money in, the rail | approval | Confidential | DbtrAcct | FS-1150 |
+| TF-50 | parties.destination | body | Where the money lands, the alias as entered, and what the directory returned | The payee | destination | — | The requester; the rails resolve the alias before approval | approval | Confidential | CdtrAcct, Prxy | FS-1122 |
+| TF-51 | terms.purpose | body | Why the money moves, as an ISO purpose code (§3) | The kind | iso_code | — | The requester | approval | Internal | Purp/Cd | FS-1126 |
+| TF-52 | terms.instrument | body | The security or fund unit traded, by its ISIN; not used in R1 | The party | identifier | — | The requester | approval | Internal | FinInstrmId | FS-1120 |
+| TF-53 | terms.expires_at | body | When an unapproved or unsent request lapses | The created time | time | UTC | The requester, from the product | approval | Internal | ReqdExctnDt, in part | FS-1129 |
+| TF-54 | approval | footer | The approval of the body, with the hash it approved | Its status | approval | — | The approval engine | appended | Internal | — | FS-588 |
+| TF-55 | progress.status_history | footer | Every state it entered, in order | A change | status entry list | — | The service that saw the state | appended | Internal | TxSts | FS-1126; RL-10 |
+| TF-56 | progress.checks | footer | The checks made before money moved | The approval | check list | — | The rails | appended | Internal | — | FS-1122; ID-12, RL-22 |
+| TF-57 | settlement.settled | footer | The amount the rail moved to the payee | The amount | money | minor units | The rails; the core for a book transfer | appended | Confidential | IntrBkSttlmAmt | FS-1123 decision 2 |
+| TF-58 | settlement.rail_charges | footer | The rail's charges as it reported them | The charges approved (TF-46) | charge list | minor units | The rails | appended | Confidential | ChrgsInf | FS-1126 |
+| TF-59 | settlement.dates | footer | Its value date, business date and booking time | `created_at` | dates | — | The core adapter, at posting | appended | Internal | ValDt, BookgDt | architecture §10 |
+| TF-60 | books.allocation | footer | How what was settled was split across principal, interest, fees, penalties and the rest | The charges | allocation list | minor units | The core adapter, from the core | appended | Confidential | RmtInf/Strd | FS-1124; MF-22 |
+| TF-61 | books.ledger_entries | footer | The balanced entries it caused | The transaction | ledger entry list | — | The core adapter | appended | Internal | — | FS-1126 |
+| TF-62 | books.recon | footer | Reconciliation's match | A break | recon match | — | Reconciliation | appended | Internal | — | RO-02 |
+| TF-63 | ids | footer | Every other party's id for it, by issuer and scheme | The txid | external id list | — | Whoever receives the id | appended | Internal | TxId, AcctSvcrRef | FS-1127 |
+| TF-64 | linked_by | footer | The forward facts later transactions left on it | Its own links | linked by list | — | The service that creates the linking transaction | appended | Internal | — | FS-1124, FS-1131 |
+| TF-65 | changes | footer | Facts entered after creation, with who, role, reason and approval | Statuses; an edit, which never happens | change list | — | Whoever enters it | appended | Internal | — | FS-1119 |
 
 **Computed, never stored** (spec §5; FS-1137): shown wherever the status
 is, worked out from the footer's forward facts, so it is never a second
@@ -295,6 +296,7 @@ version we run.
 |---|---|---|---|
 | M-Pesa B2C (Daraja) | OriginatorConversationID | `header.id.txid` | Without hyphens, 32 characters |
 | M-Pesa B2C (Daraja) | Amount | `body.money.amount` | Whole shillings, so the minor units divided by 100 |
+| M-Pesa B2C (Daraja) | PartyA | `body.parties.source` | The institution's B2C shortcode |
 | M-Pesa B2C (Daraja) | PartyB | `body.parties.destination` | The wallet's number, without the + |
 | M-Pesa B2C (Daraja) | Occasion | `header.id.reference` | |
 | M-Pesa B2C (Daraja) | ConversationID | `footer.ids` | issuer safaricom, scheme conversation-id |
@@ -307,7 +309,8 @@ version we run.
 | M-Pesa C2B (Daraja) | TransAmount | `body.money.amount` | |
 | M-Pesa C2B (Daraja) | BusinessShortCode | `body.parties.destination` | alias type BUSINESS |
 | M-Pesa C2B (Daraja) | BillRefNumber | `body.parties.destination` | the alias's `sub_id`: the account reference |
-| M-Pesa C2B (Daraja) | MSISDN, FirstName | `body.parties.payer` | as Safaricom sends it, which may be masked |
+| M-Pesa C2B (Daraja) | MSISDN | `body.parties.source` | The payer's wallet, as Safaricom sends it, which may be masked |
+| M-Pesa C2B (Daraja) | FirstName | `body.parties.payer` | The payer's name, as Safaricom sends it |
 | M-Pesa C2B (Daraja) | TransTime | `footer.progress.status_history` | `reported_at`, local time with no zone |
 | Kapu Core (Fineract) | transactionAmount | `body.money.amount` | A decimal: our minor units divided by 100 |
 | Kapu Core (Fineract) | externalId | `header.id.txid` | |
@@ -322,6 +325,8 @@ version we run.
 | A bank, by ISO 20022 | EndToEndId | `header.id.txid` | 32 characters without hyphens, within its 35 |
 | A bank, by ISO 20022 | UETR | `footer.ids` | The bank's, a version-4 UUID |
 | A bank, by ISO 20022 | InstdAmt | `body.money.amount` | |
+| A bank, by ISO 20022 | DbtrAcct | `body.parties.source` | The account debited |
+| A bank, by ISO 20022 | CdtrAcct | `body.parties.destination` | The account credited |
 | A bank, by ISO 20022 | ValDt, BookgDt | `footer.settlement.dates` | |
 | A bank, by ISO 20022 | AcctSvcrRef | `footer.ids` | The institution's reference (architecture §2) |
 

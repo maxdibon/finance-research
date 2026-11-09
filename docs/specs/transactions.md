@@ -11,7 +11,7 @@ depends_on: [event-bus-kafka]
 used_by: [recon]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150]
 last_reviewed: 2026-11-09
 ---
 
@@ -23,8 +23,8 @@ reconciliation (FS-1119). It sets the transaction's shape (a header fixed
 at creation, a body fixed at approval, a footer only ever appended to),
 its kinds, its links, its ids and its versions, and the standards it uses.
 Each field is defined once in [the field dictionary](../transaction-fields.md);
-the typed form, the rules a schema cannot say and nine worked
-transactions (W1 to W9) are in
+the typed form, the rules a schema cannot say and twelve worked
+transactions (W1 to W12) are in
 [code/transactions](../../code/transactions/README.md). Decided by the
 owner in FS-1123 (decisions 1 to 4) and FS-1131 (5 to 10, with the amount
 type). Nothing is built: every behaviour here is **designed**.
@@ -43,7 +43,7 @@ component names, links, identifies and changes it.
 | RL-14 | Idempotency: a repeat never pays twice | Yes |
 | RO-02 | Matching one to one, one to many, many to many | Yes |
 
-**Out of R1:** the `instrument` field (TF-51), for an investment product
+**Out of R1:** the `instrument` field (TF-52), for an investment product
 (FS-1120, LQ-38); card payments, which never reach us (RL-08); IBANs and
 other countries' schemes, defined so that nothing changes when they come.
 
@@ -96,7 +96,8 @@ none yet.
   what is fixed when it is approved, and what is appended after (§4).
 - **Identifier, address, alias** (FS-1122), kept apart: an *identifier*
   says who or what (a BIC, an LEI, a registration number); an *address*
-  says where money lands (a bank account, a wallet); an *alias* points to
+  says where money leaves from or lands (a bank account, a wallet, a
+  shortcode); an *alias* points to
   an address (a phone number, a paybill and account reference). A phone
   number is a wallet's address and may be an alias; it is never an
   identity (ID-12).
@@ -107,6 +108,10 @@ none yet.
   payments to one loan* are each linked to the loan's account, not to each
   other; a *batch* is a container for a run, each item its own
   transaction.
+- **Source and destination** (FS-1150): every transaction moves money
+  from one account to one account, as a rail does: its *source*, the
+  account it leaves from, and its *destination*, where it lands. The payer
+  and payee are who; the source and destination are where.
 - **Amount type** (FS-1129, from Mojaloop): `send` fixes what leaves the
   payer, charges marked deducted coming out of it; `receive` fixes what
   the payee gets, charges on top.
@@ -180,7 +185,18 @@ none yet.
    reversal is created (W8). A reversal is a new transaction in the
    opposite direction, never an edit; reversals and refunds together
    never exceed the original; a split's parts sum to their parent (W2 to
-   W4) (FS-1124, FS-1131).
+   W4) (FS-1124, FS-1131). **Money out names its source** before
+   approval: the institution's shortcode, float or bank account. Money
+   paid from, or to, more than one account is one parent and a part per
+   account (FS-1150): the parent posts the whole to the loan or account
+   and moves no money itself (its rail `none`); each part is its own
+   instruction, with its own source and destination, and `part_of` the
+   parent; the parts sum to what the parent pays on (its amount, less
+   charges deducted from a send amount). One approval covers the plan:
+   the parent and each part carry its reference, each with its own hash,
+   and no transaction outside the plan may share it. The parent settles
+   only when every part has, and a failed part is replaced (`replaces`),
+   never edited (W10 to W12).
 6. **Identifiers: international first.** An identifier is a scheme and a
    value: international schemes first (BIC, LEI, ISIN), then Kenya's
    where Kenya is the authority (a company's BRS number, an
@@ -249,7 +265,7 @@ order and author.
 
 | Kind | Direction | Approved before it moves | Must link | Minted by | Worked |
 |---|---|---|---|---|---|
-| disbursement | out | Yes | — | Lending service | W1, W7 |
+| disbursement | out | Yes | `part_of`, when paid from or to more than one account | Lending service | W1, W7, W10 to W12 |
 | repayment | in; a part internal | No | `part_of`, when split | Rails on first sight; the lending service for the parts | W2 to W5 |
 | deposit | in | No | — | Deposits service, or the rails for money arriving | — |
 | withdrawal | out | Yes | — | Deposits service | — |
@@ -270,6 +286,7 @@ order and author.
 | W3, W4 | Its two parts, KES 8,000 and KES 4,000, each allocated | Parts sum to the parent; allocation sums to what settled |
 | W5, W6 | A payment made twice; the duplicate refunded, reason DUPL | A refund approved before it moves; `refunded_by` on W5 |
 | W7, W8 | A bank payout returned for a closed account (AC04); its reversal | `returned` appended by the rail, then `reversed_by` on W7 |
+| W10 to W12 | A KES 100,000 loan paid from two of the institution's accounts: KES 60,000 from its B2C shortcode to the borrower's M-Pesa (W11), KES 40,000 from its bank to the borrower's bank (W12) | One parent and a part per account; each part its own source; one approval for the three; the parent settled once both parts have |
 | W9 | A month's interest on a deposit, withholding tax deducted, in the run's batch | Tax as its own line; one txid per account in a batch |
 
 ## 5 · States
@@ -288,6 +305,7 @@ order and author.
 | sent, unknown | rejected | The rail refuses, with its reason |
 | settled | returned | The receiving side sends it back (W7) |
 | created | settled | Money in, as the rail reports it, or a book entry (W2, W9) |
+| approved | settled | A parent with parts: once every part has settled (W10) |
 
 Each state is a footer entry, with who and when and the ISO reason; its
 ISO 20022 status is in dictionary §3.
@@ -306,7 +324,7 @@ payout that settled and came back.
 |---|---|---|
 | Resolve an alias | Rails | An alias in; the address, the name returned and the directory out, in Mojaloop's two steps (rule 4) |
 | Quote | The lending or deposits service, with the rails' tariff | The charges and the settled amount, before approval (rule 8) |
-| Approve | Approval engine | The body's hash in; the approval's reference out (rule 2) |
+| Approve | Approval engine | The body's hash in, or a plan's hashes (a parent and its parts) together; one approval reference out (rules 2, 5) |
 | Events | Every minter | Each existing money event in the catalogue (event-bus-kafka §5) carries, as its data, the transaction or the footer entries it appends, against the schema at the version in `dataschema`; no family of transaction events beside them (FS-1142) |
 | Find by any id | Reconciliation | A scheme, a value and an issuer in; the txid out (rule 7) |
 | Confirm a number's operator | Rails, over our connections to each operator | A number in; whether it is on that operator's network now (rule 4) |
@@ -389,6 +407,9 @@ it adds these:
 | A22 | A reversal whose original lacks its forward fact | The night's checks run | A break, owned and worked as recon §4.7 sets | §9 |
 | A23 | A number in NDC 722, ported from Safaricom to Airtel | A payout to it is about to be sent | Safaricom does not confirm it; held, the operator check failed | rule 4 |
 | A24 | W1's reference, 8YCC826SG20 | A borrower types 8YCC862SG20 (two characters swapped), or 8YCC826SG21 | Its check digits fail; asked for again, never matched to another transaction; 8YCC826SG2O, a letter O, is read as the zero Crockford's alphabet takes it for | rule 7 |
+| A25 | A loan to be paid from two accounts | It is approved | One approval; W10, W11 and W12 carry its reference, each with its own hash; each part sent from its own source | rule 5 |
+| A26 | W12, the bank part, rejected | The night's checks run | W10 not settled; W12 replaced by a new part, approved, never edited | rule 5 |
+| A27 | A payout with no source | It is put for approval | Refused: the account it leaves from is named first | rule 5 |
 
 ## 12 · Open questions
 

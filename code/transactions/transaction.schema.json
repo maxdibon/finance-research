@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://dibon.co.ke/schemas/transactions/1.0",
   "title": "Transaction, model 1.0",
-  "description": "One money movement, as every component means it (docs/specs/transactions.md, FS-1131; grouped, FS-1149). Each field is defined once in docs/transaction-fields.md; this file is its typed form. Written in the subset tools/products/validate.js reads.",
+  "description": "One money movement, as every component means it (docs/specs/transactions.md, FS-1131; grouped, FS-1149; a source on every transaction, FS-1150). Each field is defined once in docs/transaction-fields.md; this file is its typed form. Written in the subset tools/products/validate.js reads.",
   "type": "object",
   "required": ["header", "body", "footer"],
   "additionalProperties": false,
@@ -87,13 +87,19 @@
           }
         },
         "parties": {
-          "description": "Who pays, who is paid, and where it lands.",
+          "description": "Who pays, who is paid, and the accounts the money leaves and reaches.",
           "type": "object",
           "required": ["payer", "payee"],
           "additionalProperties": false,
           "properties": {
             "payer": {"$ref": "#/$defs/party"},
             "payee": {"$ref": "#/$defs/party"},
+            "source": {
+              "type": "object",
+              "required": ["address"],
+              "additionalProperties": false,
+              "properties": {"address": {"$ref": "#/$defs/address"}, "alias": {"$ref": "#/$defs/alias"}}
+            },
             "destination": {"$ref": "#/$defs/destination"}
           }
         },
@@ -243,6 +249,16 @@
             "msisdn": {"$ref": "#/$defs/msisdn"},
             "provider": {"enum": ["mpesa", "airtel_money", "t_kash"]},
             "network": {"type": "string", "pattern": "^[0-9]{3}-[0-9]{2,3}$"}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "provider", "shortcode"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {"const": "shortcode"},
+            "provider": {"enum": ["mpesa", "airtel_money"]},
+            "shortcode": {"type": "string", "pattern": "^[0-9]{5,7}$"}
           }
         },
         {

@@ -44,6 +44,11 @@ const MOVED = ['sent', 'settled'];
 
 const sum = (lines) => lines.reduce((n, l) => n + l.amount.minor, 0);
 const firstAt = (t, statuses) => (t.footer.progress.status_history.find((s) => statuses.includes(s.status)) || {}).at;
+const lastStatus = (t) => t.footer.progress.status_history[t.footer.progress.status_history.length - 1].status;
+// What a transaction pays on: its amount, less any charges deducted from a
+// send amount (rule 3); its parts sum to this.
+const net = (t) => t.body.money.amount.minor - (t.body.money.amount_type === 'send' ? sum(t.body.money.charges.filter((c) => c.deducted)) : 0);
+const parentOf = (t) => (t.header.links.find((l) => l.rel === 'part_of') || {}).txid;
 
 const RULES = [
   {
@@ -126,9 +131,38 @@ const RULES = [
     all: (ts, by) => {
       const parts = new Map();
       for (const t of ts) for (const l of t.header.links) if (l.rel === 'part_of') parts.set(l.txid, (parts.get(l.txid) || 0) + t.body.money.amount.minor);
-      return [...parts].filter(([id, n]) => by.has(id) && n !== by.get(id).body.money.amount.minor)
-        .map(([id, n]) => [by.get(id), `its parts sum to ${n} minor units, not its ${by.get(id).body.money.amount.minor}`]);
+      return [...parts].filter(([id, n]) => by.has(id) && n !== net(by.get(id)))
+        .map(([id, n]) => [by.get(id), `its parts sum to ${n} minor units, not the ${net(by.get(id))} it pays on`]);
     },
+  },
+  {
+    id: 'parent-settles-with-parts',
+    source: 'transactions rule 5',
+    all: (ts, by) => ts.filter((t) => lastStatus(t) === 'settled').flatMap((p) => {
+      const open = ts.filter((t) => parentOf(t) === p.header.id.txid && lastStatus(t) !== 'settled');
+      return open.length ? [[p, `settled while its part ${open[0].header.id.txid} is ${lastStatus(open[0])}`]] : [];
+    }),
+  },
+  {
+    id: 'one-approval-per-plan',
+    source: 'transactions rule 5',
+    all: (ts) => {
+      const byRef = new Map();
+      for (const t of ts) if (t.footer.approval) byRef.set(t.footer.approval.ref, [...(byRef.get(t.footer.approval.ref) || []), t]);
+      const out = [];
+      for (const [ref, set] of byRef) {
+        if (set.length < 2) continue;
+        const parents = new Set(set.map((t) => parentOf(t) || t.header.id.txid));
+        if (parents.size > 1) out.push([set[1], `shares approval ${ref} with a transaction that is neither its parent nor a part of the same parent`]);
+      }
+      return out;
+    },
+  },
+  {
+    id: 'source-named',
+    source: 'transactions rule 5',
+    each: (t) => (t.body.money.direction === 'out' && t.header.origin.rail !== 'none' && !t.body.parties.source
+      ? 'money out with no source: the account it leaves from is named before approval' : null),
   },
   {
     id: 'forward-links-recorded',
