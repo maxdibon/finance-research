@@ -6,7 +6,7 @@ status: living
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1053, FS-1118, FS-1122]
+review_ids: [FS-1053, FS-1118, FS-1122, FS-1151]
 last_reviewed: 2026-11-09
 ---
 
@@ -140,3 +140,15 @@ two: the trap, then what to do.
   asked again what they already told us (FS-1044).
 - **The SBM deck is an artifact on claude.ai,** not a file here; its PDF
   is rebuilt locally into build/proposals/.
+- **The repository's git user is the owner's:** a plain `git commit` puts
+  Claude's work under his name. Commit as `git config --get dibon.claude`
+  names, with `-c user.name=... -c user.email=...` on every commit, and
+  check `git log --format=%an main..HEAD` before any merge. On 9 November
+  six commits made after a context summary went in under his name and were
+  rewritten before the push (FS-1151).
+- **Two sessions on one register:** the register check fails on any gap in
+  the FS, LQ or DR ids, so a session cannot hold an id in reserve. Agree
+  each id by message before writing it, commit in id order, and
+  fast-forward to the other session's commit before writing the next row;
+  never merge a branch built on history that has since been rewritten
+  (FS-1151).

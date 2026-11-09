@@ -40,25 +40,40 @@ here.
 
 ## Where I left off
 
-As at 5 November 2026. Main pushed with FS-1079 to FS-1117; `origin` is
+As at 9 November 2026. Main pushed with FS-1119 to FS-1151; `origin` is
 still github.com/eric-mokaya/finance.
 
-- **Roan Capital's CBK resubmission, due Friday 6 November at 14:00**
-  (FS-1079 to FS-1117). Its first DCP submission was rejected; it is
-  going for a licence under Part II (FS-1098, FS-1107). Six documents and
-  two diagrams, built in its look from docs/templates/ and its values
-  (clients/roan-capital/working/cbk/values.json) by tools/policies/build.js;
-  the current versions in clients/roan-capital/working/, and copies in
-  its folder "For Roan Capital, CBK pack" to share. The cover note to its
-  CEO is v0.4 there; the Cc is still to fill.
-  **Next:** its answers to the note's eight questions, the M-Pesa payout
-  proposal (FS-1113, open answer 42: a B2C shortcode and its float, and
-  its products' payout terms) and the four proposals (cooling-off,
-  grace, cure, end of relationship); then the final rebuild that clears
-  every yellow "[To confirm]", and the folder refreshed. Ours, shown "to
-  follow, before launch": the hosting contract (Liquid), the identity
-  providers, the penetration test, the website's domain (FS-1105), the
-  Airtel Money and T-Kash dates.
+- **The transaction model** (FS-1119 to FS-1151), decided and documented:
+  docs/specs/transactions.md, its field dictionary
+  docs/transaction-fields.md (TF ids), and the schema, rules and twelve
+  worked transactions in `code/transactions/`, held together by the
+  "transactions" check. Settled: money in minor units and ISO 4217; the
+  amount with its amount type; identifiers international first;
+  identifier, address and alias apart, Mojaloop's party types; links
+  back, each leaving its forward fact, and a position computed from them;
+  recon's night checks (recon §4.8); the txid a UUIDv7 minted once, the
+  reference nine Crockford symbols and ISO 7064 MOD 97-10 check digits;
+  a number's operator from its NDC (CAK's plan, October 2025) and
+  confirmed with the operator; the ISO 20022 codes checked; the fields
+  in groups; a source on every transaction, and several accounts as a
+  parent and its parts.
+  **Open** (transactions §12): each money spec to adopt it when next
+  revised, and the rails spec written on it; how each operator confirms
+  a number; Daraja's, Fineract's and Odoo's field names against the
+  versions we run; for Roan Capital, whether fees are deducted at payout
+  (LQ-37).
+- **Roan Capital's CBK pack:** its answers to the pack's blanks recorded
+  and the documents rebuilt (FS-1132 to FS-1148), by the "Roan Capital
+  docs review" session, which worked beside this one on its own branch;
+  its handover is that session's own, and its rows say what is left.
+- **Two sessions at once:** ids were agreed by message, each committed in
+  id order and fast-forwarded to the other's commit (traps). Before the
+  push I rewrote six of my commits that had gone in under his name; the
+  contents are unchanged.
+
+**Carried from 5 November** (check each against the Roan Capital
+session's rows, FS-1132 to FS-1148, which may have settled some):
+
 - **Decided on 5 November:** every rail and every bank, both ways
   (FS-1108, FS-1109); WhatsApp out of R1 (FS-1110); Dibon the SMS
   provider under its PRSP licence (FS-1111); M-Pesa payouts proposed to
@@ -97,7 +112,7 @@ still github.com/eric-mokaya/finance.
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric: Critical, High, and waiting on Eric's word (74 of 198)
+### Rows with Eric: Critical, High, and waiting on Eric's word (75 of 200)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -167,6 +182,7 @@ still github.com/eric-mokaya/finance.
 | FS-1105 | Include delivering Roan Capital's website | High |
 | FS-1107 | Roan Capital is applying as a digital credit provider: its first submission was rejected, and what we are prep | High |
 | FS-1108 | The delivery channels document is too narrow, repayments by M-Pesa and payouts by NCBA: how do we include the  | High |
+| FS-1135 | Roan Capital asks for the definitions of the cooling-off period (its credit policy, A.6) and of the grace peri | High |
 | FS-819 | Do we store, for instance, all M-Pesa transactions in the companion? In the same database as Fineract? | Medium, waiting |
 | FS-820 | FS-791 is answered by FS-792, unless something is missing. FS-819's one copy of the M-Pesa records: is the gen | Medium, waiting |
 | FS-821 | Seven years at the scale target is large: how do we store it, like AWS S3's storage classes, to keep costs dow | Medium, waiting |
@@ -176,7 +192,7 @@ still github.com/eric-mokaya/finance.
 | FS-424 | Should we consider SWIFT? Which other rails should we look at? | Low, waiting |
 | FS-513 | The Apr 2025 RFP notes asked for network devices (firewalls, switches) watched through SNMP and syslog, and fo | Low, waiting |
 
-And 124 more, Medium or Low: the Board, filtered by name, or the Review page.
+And 125 more, Medium or Low: the Board, filtered by name, or the Review page.
 
 ### Work started
 
@@ -184,4 +200,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-1117-cover-note`: 1 save, last 16 minutes ago, not uploaded; here now, 4 files unsaved
+- `claude/emokaya/FS-1119-transaction-model`: 4 saves, last 3 minutes ago, not uploaded; here now, 5 files unsaved

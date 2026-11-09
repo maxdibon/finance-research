@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://dibon.co.ke/schemas/transactions/1.0",
   "title": "Transaction, model 1.0",
-  "description": "One money movement, as every component means it (docs/specs/transactions.md, FS-1131). Each field is defined once in docs/transaction-fields.md; this file is its typed form. Written in the subset tools/products/validate.js reads.",
+  "description": "One money movement, as every component means it (docs/specs/transactions.md, FS-1131; grouped, FS-1149; a source on every transaction, FS-1150). Each field is defined once in docs/transaction-fields.md; this file is its typed form. Written in the subset tools/products/validate.js reads.",
   "type": "object",
   "required": ["header", "body", "footer"],
   "additionalProperties": false,
@@ -10,58 +10,150 @@
     "header": {
       "description": "Fixed when the transaction is created.",
       "type": "object",
-      "required": ["txid", "reference", "model_version", "kind", "institution", "channel", "rail", "created_at", "initiated_by", "idempotency_key", "links"],
+      "required": ["model_version", "id", "what", "origin", "links"],
       "additionalProperties": false,
       "properties": {
-        "txid": {"$ref": "#/$defs/txid"},
-        "reference": {"$ref": "#/$defs/reference"},
         "model_version": {"const": "1.0"},
-        "kind": {"enum": ["disbursement", "repayment", "deposit", "withdrawal", "transfer", "interest", "fee", "reversal", "refund", "write_off", "adjustment"]},
-        "institution": {"$ref": "#/$defs/code"},
-        "channel": {"enum": ["customer_pages", "app", "ussd", "staff_workspace", "kapu_console", "api", "rail", "end_of_day"]},
-        "rail": {"enum": ["mpesa", "airtel_money", "pesalink", "eft", "rtgs", "cash", "book", "none"]},
-        "created_at": {"$ref": "#/$defs/time"},
-        "initiated_by": {"$ref": "#/$defs/actor"},
-        "idempotency_key": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{8,64}$"},
-        "product_version": {"type": "string", "pattern": "^[a-z0-9-]+-v[0-9]+$"},
-        "account": {"$ref": "#/$defs/account"},
+        "id": {
+          "description": "What it is called.",
+          "type": "object",
+          "required": ["txid", "reference", "idempotency_key"],
+          "additionalProperties": false,
+          "properties": {
+            "txid": {"$ref": "#/$defs/txid"},
+            "reference": {"$ref": "#/$defs/reference"},
+            "idempotency_key": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{8,64}$"}
+          }
+        },
+        "what": {
+          "description": "What it is, and in whose books.",
+          "type": "object",
+          "required": ["kind", "institution"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "enum": [
+                "disbursement",
+                "repayment",
+                "deposit",
+                "withdrawal",
+                "transfer",
+                "interest",
+                "fee",
+                "reversal",
+                "refund",
+                "write_off",
+                "adjustment"
+              ]
+            },
+            "institution": {"$ref": "#/$defs/code"},
+            "account": {"$ref": "#/$defs/account"},
+            "product_version": {"type": "string", "pattern": "^[a-z0-9-]+-v[0-9]+$"}
+          }
+        },
+        "origin": {
+          "description": "Where it came from.",
+          "type": "object",
+          "required": ["channel", "rail", "created_at", "initiated_by"],
+          "additionalProperties": false,
+          "properties": {
+            "channel": {
+              "enum": ["customer_pages", "app", "ussd", "staff_workspace", "kapu_console", "api", "rail", "end_of_day"]
+            },
+            "rail": {"enum": ["mpesa", "airtel_money", "pesalink", "eft", "rtgs", "cash", "book", "none"]},
+            "created_at": {"$ref": "#/$defs/time"},
+            "initiated_by": {"$ref": "#/$defs/actor"}
+          }
+        },
         "links": {"type": "array", "items": {"$ref": "#/$defs/link"}}
       }
     },
     "body": {
       "description": "Fixed when approved; the approval's hash covers it.",
       "type": "object",
-      "required": ["amount", "amount_type", "direction", "payer", "payee", "purpose", "charges"],
+      "required": ["money", "parties", "terms"],
       "additionalProperties": false,
       "properties": {
-        "amount": {"$ref": "#/$defs/money"},
-        "amount_type": {"enum": ["send", "receive"]},
-        "direction": {"enum": ["out", "in", "internal"]},
-        "payer": {"$ref": "#/$defs/party"},
-        "payee": {"$ref": "#/$defs/party"},
-        "destination": {"$ref": "#/$defs/destination"},
-        "purpose": {"$ref": "#/$defs/iso_code"},
-        "charges": {"type": "array", "items": {"$ref": "#/$defs/charge"}},
-        "instrument": {"$ref": "#/$defs/identifier"},
-        "expires_at": {"$ref": "#/$defs/time"}
+        "money": {
+          "description": "How much, which way, and what is charged.",
+          "type": "object",
+          "required": ["amount", "amount_type", "direction", "charges"],
+          "additionalProperties": false,
+          "properties": {
+            "amount": {"$ref": "#/$defs/money"},
+            "amount_type": {"enum": ["send", "receive"]},
+            "direction": {"enum": ["out", "in", "internal"]},
+            "charges": {"type": "array", "items": {"$ref": "#/$defs/charge"}}
+          }
+        },
+        "parties": {
+          "description": "Who pays, who is paid, and the accounts the money leaves and reaches.",
+          "type": "object",
+          "required": ["payer", "payee"],
+          "additionalProperties": false,
+          "properties": {
+            "payer": {"$ref": "#/$defs/party"},
+            "payee": {"$ref": "#/$defs/party"},
+            "source": {
+              "type": "object",
+              "required": ["address"],
+              "additionalProperties": false,
+              "properties": {"address": {"$ref": "#/$defs/address"}, "alias": {"$ref": "#/$defs/alias"}}
+            },
+            "destination": {"$ref": "#/$defs/destination"}
+          }
+        },
+        "terms": {
+          "description": "Why, for what, and until when.",
+          "type": "object",
+          "required": ["purpose"],
+          "additionalProperties": false,
+          "properties": {
+            "purpose": {"$ref": "#/$defs/iso_code"},
+            "instrument": {"$ref": "#/$defs/identifier"},
+            "expires_at": {"$ref": "#/$defs/time"}
+          }
+        }
       }
     },
     "footer": {
       "description": "Appended to, never changed: each entry a signed event.",
       "type": "object",
-      "required": ["status_history", "external_ids", "linked_by", "changes"],
+      "required": ["progress", "ids", "linked_by", "changes"],
       "additionalProperties": false,
       "properties": {
         "approval": {"$ref": "#/$defs/approval"},
-        "status_history": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/status_entry"}},
-        "checks": {"type": "array", "items": {"$ref": "#/$defs/check"}},
-        "external_ids": {"type": "array", "items": {"$ref": "#/$defs/external_id"}},
-        "dates": {"$ref": "#/$defs/dates"},
-        "settled": {"$ref": "#/$defs/money"},
-        "rail_charges": {"type": "array", "items": {"$ref": "#/$defs/charge"}},
-        "allocation": {"type": "array", "items": {"$ref": "#/$defs/allocation_line"}},
-        "ledger_entries": {"type": "array", "items": {"$ref": "#/$defs/ledger_entry"}},
-        "recon": {"$ref": "#/$defs/recon_match"},
+        "progress": {
+          "description": "Where it is now.",
+          "type": "object",
+          "required": ["status_history"],
+          "additionalProperties": false,
+          "properties": {
+            "status_history": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/status_entry"}},
+            "checks": {"type": "array", "items": {"$ref": "#/$defs/check"}}
+          }
+        },
+        "settlement": {
+          "description": "What actually moved.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "settled": {"$ref": "#/$defs/money"},
+            "rail_charges": {"type": "array", "items": {"$ref": "#/$defs/charge"}},
+            "dates": {"$ref": "#/$defs/dates"}
+          }
+        },
+        "books": {
+          "description": "How it was recorded.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "allocation": {"type": "array", "items": {"$ref": "#/$defs/allocation_line"}},
+            "ledger_entries": {"type": "array", "items": {"$ref": "#/$defs/ledger_entry"}},
+            "recon": {"$ref": "#/$defs/recon_match"}
+          }
+        },
+        "ids": {"type": "array", "items": {"$ref": "#/$defs/external_id"}},
         "linked_by": {"type": "array", "items": {"$ref": "#/$defs/linked_by"}},
         "changes": {"type": "array", "items": {"$ref": "#/$defs/change"}}
       }
@@ -72,10 +164,7 @@
       "type": "object",
       "required": ["minor", "currency"],
       "additionalProperties": false,
-      "properties": {
-        "minor": {"type": "integer", "minimum": 0},
-        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"}
-      }
+      "properties": {"minor": {"type": "integer", "minimum": 0}, "currency": {"type": "string", "pattern": "^[A-Z]{3}$"}}
     },
     "txid": {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
     "reference": {"type": "string", "pattern": "^[0-9A-HJKMNP-TV-Z]{9}[0-9]{2}$"},
@@ -164,6 +253,16 @@
         },
         {
           "type": "object",
+          "required": ["kind", "provider", "shortcode"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {"const": "shortcode"},
+            "provider": {"enum": ["mpesa", "airtel_money"]},
+            "shortcode": {"type": "string", "pattern": "^[0-9]{5,7}$"}
+          }
+        },
+        {
+          "type": "object",
           "required": ["kind", "iban"],
           "additionalProperties": false,
           "properties": {
@@ -176,10 +275,7 @@
           "type": "object",
           "required": ["kind", "account"],
           "additionalProperties": false,
-          "properties": {
-            "kind": {"const": "book"},
-            "account": {"$ref": "#/$defs/account"}
-          }
+          "properties": {"kind": {"const": "book"}, "account": {"$ref": "#/$defs/account"}}
         }
       ]
     },
@@ -252,7 +348,21 @@
       "required": ["status", "at", "by"],
       "additionalProperties": false,
       "properties": {
-        "status": {"enum": ["created", "awaiting_approval", "approved", "held", "sent", "unknown", "settled", "rejected", "returned", "cancelled", "expired"]},
+        "status": {
+          "enum": [
+            "created",
+            "awaiting_approval",
+            "approved",
+            "held",
+            "sent",
+            "unknown",
+            "settled",
+            "rejected",
+            "returned",
+            "cancelled",
+            "expired"
+          ]
+        },
         "at": {"$ref": "#/$defs/time"},
         "by": {"$ref": "#/$defs/actor"},
         "reason": {"$ref": "#/$defs/iso_code"},

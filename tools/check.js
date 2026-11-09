@@ -1525,8 +1525,17 @@ function checkTransactions(root) {
   same('building block', col(blocks, 1), Object.keys(schema.$defs || {}), TX_DICT);
   const parts = ['header', 'body', 'footer'];
   const dictFields = fields.rows.map((r) => `${r.cells[2]}.${r.cells[1]}`);
-  const schemaFields = parts.flatMap((p) => Object.keys(((schema.properties || {})[p] || {}).properties || {}).map((f) => `${p}.${f}`));
+  // FS-1149: each part's fields sit in groups, one level deep; a group is a
+  // property that is itself an object of properties.
+  const schemaGroups = [];
+  const schemaFields = parts.flatMap((p) => Object.entries(((schema.properties || {})[p] || {}).properties || {}).flatMap(([k, v]) => {
+    if (v && v.type === 'object' && v.properties) { schemaGroups.push(`${p}.${k}`); return Object.keys(v.properties).map((f) => `${p}.${k}.${f}`); }
+    return [`${p}.${k}`];
+  }));
   same('field', dictFields, schemaFields, TX_DICT);
+  const groups = table('Group', 'Part');
+  if (!groups) at(TX_DICT, 0, 'no table of the groups (| Group | Part |)');
+  else same('group', groups.rows.map((r) => `${r.cells[1]}.${r.cells[0]}`), schemaGroups, TX_DICT);
   // The model's version, in the dictionary, the schema's id and its const.
   const ver = (dict.match(/\*\*Model version: (\d+\.\d+)\.\*\*/) || [])[1];
   const sv = ((((schema.properties || {}).header || {}).properties || {}).model_version || {}).const;
@@ -1545,24 +1554,25 @@ function checkTransactions(root) {
   if (fs.existsSync(path.join(root, TX_SPEC))) {
     const kinds = tablesOf(read(root, TX_SPEC)).find((t) => t.head[0] === 'Kind');
     if (!kinds) at(TX_SPEC, 0, '§4 has no table of the kinds (| Kind |)');
-    else same('kind', col(kinds, 0), enumOf((((schema.properties || {}).header || {}).properties || {}).kind), TX_SPEC);
+    else same('kind', col(kinds, 0), enumOf(((((schema.properties || {}).header || {}).properties || {}).what || { properties: {} }).properties.kind), TX_SPEC);
   }
   // Every component map names a field the dictionary has.
   const maps = table('Component, version');
   for (const r of maps ? maps.rows : []) {
-    const f = (r.cells[2].match(/`([a-z_]+\.[a-z_]+)/) || [])[1];
-    if (!f || !dictFields.includes(f)) at(TX_DICT, r.line, `${r.cells[0]} ${r.cells[1]}: "${r.cells[2]}" is not a field of the dictionary`);
+    const f = (r.cells[2].match(/`([a-z_]+(?:\.[a-z_]+)+)/) || [])[1];
+    const known = f && dictFields.some((d) => d === f || f.startsWith(`${d}.`));
+    if (!known) at(TX_DICT, r.line, `${r.cells[0]} ${r.cells[1]}: "${r.cells[2]}" is not a field of the dictionary`);
   }
   // The worked set: valid, its codes listed, breaking no rule.
   const worked = (examples.worked || []).map((w) => w.transaction);
   (examples.worked || []).forEach((w) => {
     for (const e of validate(schema, w.transaction)) at(path.join(TX_DIR, 'examples.json'), 0, `${w.id}: ${e}`);
-    const used = [w.transaction.body.purpose, ...w.transaction.footer.status_history.map((s) => s.reason), ...w.transaction.footer.changes.map((c) => c.reason)].filter(Boolean);
+    const used = [w.transaction.body.terms.purpose, ...w.transaction.footer.progress.status_history.map((s) => s.reason), ...w.transaction.footer.changes.map((c) => c.reason)].filter(Boolean);
     for (const c of used) if (!codes.has(c)) at(path.join(TX_DIR, 'examples.json'), 0, `${w.id}: code ${c} is not listed in the dictionary §3`);
   });
   for (const b of apply(worked)) at(path.join(TX_DIR, 'examples.json'), 0, `the worked set breaks ${b.id} (${b.source}): ${b.txid}: ${b.message}`);
   // FS-1137: each worked transaction's position, as computed from its forward facts.
-  const byId = new Map(worked.map((t) => [t.header.txid, t]));
+  const byId = new Map(worked.map((t) => [t.header.id.txid, t]));
   (examples.worked || []).forEach((w) => {
     const p = position(w.transaction, byId);
     if (w.position !== p) at(path.join(TX_DIR, 'examples.json'), 0, `${w.id}: its position is ${p}, not ${w.position}`);

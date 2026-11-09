@@ -1,5 +1,5 @@
 // Rules across a transaction's fields, and across linked transactions
-// (FS-1131): what the schema cannot say. Each is named, cites its place in
+// (FS-1131; grouped, FS-1149): what the schema cannot say. Each is named, cites its place in
 // docs/specs/transactions.md, and has worked examples in examples.json that
 // any implementation must pass, ours (the docs' check) and the code's.
 //
@@ -39,11 +39,16 @@ const INVERSE = { reverses: 'reversed_by', refunds: 'refunded_by', corrects: 'co
 // What each kind must link to (spec §4, the kinds).
 const MUST_LINK = { reversal: 'reverses', refund: 'refunds', adjustment: 'corrects' };
 // Money leaving, or a ledger entry changed by hand: approved before it moves.
-const NEEDS_APPROVAL = (t) => t.body.direction === 'out' || ['reversal', 'refund', 'write_off', 'adjustment'].includes(t.header.kind);
+const NEEDS_APPROVAL = (t) => t.body.money.direction === 'out' || ['reversal', 'refund', 'write_off', 'adjustment'].includes(t.header.what.kind);
 const MOVED = ['sent', 'settled'];
 
 const sum = (lines) => lines.reduce((n, l) => n + l.amount.minor, 0);
-const firstAt = (t, statuses) => (t.footer.status_history.find((s) => statuses.includes(s.status)) || {}).at;
+const firstAt = (t, statuses) => (t.footer.progress.status_history.find((s) => statuses.includes(s.status)) || {}).at;
+const lastStatus = (t) => t.footer.progress.status_history[t.footer.progress.status_history.length - 1].status;
+// What a transaction pays on: its amount, less any charges deducted from a
+// send amount (rule 3); its parts sum to this.
+const net = (t) => t.body.money.amount.minor - (t.body.money.amount_type === 'send' ? sum(t.body.money.charges.filter((c) => c.deducted)) : 0);
+const parentOf = (t) => (t.header.links.find((l) => l.rel === 'part_of') || {}).txid;
 
 const RULES = [
   {
@@ -55,7 +60,7 @@ const RULES = [
   {
     id: 'reference-checks',
     source: 'transactions rule 7',
-    each: (t) => (referenceValid(t.header.reference) ? null : `reference ${t.header.reference} fails its check digits`),
+    each: (t) => (referenceValid(t.header.id.reference) ? null : `reference ${t.header.id.reference} fails its check digits`),
   },
   {
     id: 'one-txid-per-request',
@@ -64,9 +69,9 @@ const RULES = [
       const seen = new Map();
       const out = [];
       for (const t of ts) {
-        const k = `${t.header.institution}|${t.header.idempotency_key}`;
-        if (seen.has(k) && seen.get(k) !== t.header.txid) out.push([t, `idempotency key ${t.header.idempotency_key} already belongs to ${seen.get(k)}: a retry is the same transaction`]);
-        else seen.set(k, t.header.txid);
+        const k = `${t.header.what.institution}|${t.header.id.idempotency_key}`;
+        if (seen.has(k) && seen.get(k) !== t.header.id.txid) out.push([t, `idempotency key ${t.header.id.idempotency_key} already belongs to ${seen.get(k)}: a retry is the same transaction`]);
+        else seen.set(k, t.header.id.txid);
       }
       return out;
     },
@@ -81,9 +86,9 @@ const RULES = [
           if (l.rel === 'in_batch') continue; // a batch is a container, not a transaction
           const o = by.get(l.txid);
           if (!o) { out.push([t, `${l.rel} ${l.txid}, which does not exist`]); continue; }
-          if (o.header.institution !== t.header.institution) out.push([t, `${l.rel} a transaction of another institution`]);
-          if (o.body.amount.currency !== t.body.amount.currency) out.push([t, `${l.rel} a transaction in ${o.body.amount.currency}`]);
-          if (o.header.created_at > t.header.created_at) out.push([t, `${l.rel} a later transaction: links point back only`]);
+          if (o.header.what.institution !== t.header.what.institution) out.push([t, `${l.rel} a transaction of another institution`]);
+          if (o.body.money.amount.currency !== t.body.money.amount.currency) out.push([t, `${l.rel} a transaction in ${o.body.money.amount.currency}`]);
+          if (o.header.origin.created_at > t.header.origin.created_at) out.push([t, `${l.rel} a later transaction: links point back only`]);
         }
       }
       return out;
@@ -93,21 +98,21 @@ const RULES = [
     id: 'kind-links',
     source: 'transactions §4, the kinds',
     each: (t) => {
-      const need = MUST_LINK[t.header.kind];
+      const need = MUST_LINK[t.header.what.kind];
       const rels = t.header.links.map((l) => l.rel);
-      if (need && rels.filter((r) => r === need).length !== 1) return `a ${t.header.kind} ${need} exactly one transaction`;
-      for (const [kind, rel] of Object.entries(MUST_LINK)) if (kind !== t.header.kind && rels.includes(rel)) return `only a ${kind} ${rel} another transaction`;
-      if (t.header.kind === 'write_off' && t.header.rail !== 'none') return 'a write-off moves no money: its rail is none';
+      if (need && rels.filter((r) => r === need).length !== 1) return `a ${t.header.what.kind} ${need} exactly one transaction`;
+      for (const [kind, rel] of Object.entries(MUST_LINK)) if (kind !== t.header.what.kind && rels.includes(rel)) return `only a ${kind} ${rel} another transaction`;
+      if (t.header.what.kind === 'write_off' && t.header.origin.rail !== 'none') return 'a write-off moves no money: its rail is none';
       return null;
     },
   },
   {
     id: 'reversal-opposite',
     source: 'transactions rule 5',
-    all: (ts, by) => ts.filter((t) => t.header.kind === 'reversal').flatMap((t) => {
+    all: (ts, by) => ts.filter((t) => t.header.what.kind === 'reversal').flatMap((t) => {
       const o = by.get((t.header.links.find((l) => l.rel === 'reverses') || {}).txid);
       const flip = { out: 'in', in: 'out', internal: 'internal' };
-      return o && t.body.direction !== flip[o.body.direction] ? [[t, `a reversal runs opposite to the original (${o.body.direction})`]] : [];
+      return o && t.body.money.direction !== flip[o.body.money.direction] ? [[t, `a reversal runs opposite to the original (${o.body.money.direction})`]] : [];
     }),
   },
   {
@@ -115,9 +120,9 @@ const RULES = [
     source: 'transactions rule 5',
     all: (ts, by) => {
       const back = new Map();
-      for (const t of ts) for (const l of t.header.links) if (l.rel === 'reverses' || l.rel === 'refunds') back.set(l.txid, (back.get(l.txid) || 0) + t.body.amount.minor);
-      return [...back].filter(([id, n]) => by.has(id) && n > by.get(id).body.amount.minor)
-        .map(([id, n]) => [by.get(id), `reversed and refunded ${n} minor units, more than its ${by.get(id).body.amount.minor}`]);
+      for (const t of ts) for (const l of t.header.links) if (l.rel === 'reverses' || l.rel === 'refunds') back.set(l.txid, (back.get(l.txid) || 0) + t.body.money.amount.minor);
+      return [...back].filter(([id, n]) => by.has(id) && n > by.get(id).body.money.amount.minor)
+        .map(([id, n]) => [by.get(id), `reversed and refunded ${n} minor units, more than its ${by.get(id).body.money.amount.minor}`]);
     },
   },
   {
@@ -125,10 +130,39 @@ const RULES = [
     source: 'transactions rule 5',
     all: (ts, by) => {
       const parts = new Map();
-      for (const t of ts) for (const l of t.header.links) if (l.rel === 'part_of') parts.set(l.txid, (parts.get(l.txid) || 0) + t.body.amount.minor);
-      return [...parts].filter(([id, n]) => by.has(id) && n !== by.get(id).body.amount.minor)
-        .map(([id, n]) => [by.get(id), `its parts sum to ${n} minor units, not its ${by.get(id).body.amount.minor}`]);
+      for (const t of ts) for (const l of t.header.links) if (l.rel === 'part_of') parts.set(l.txid, (parts.get(l.txid) || 0) + t.body.money.amount.minor);
+      return [...parts].filter(([id, n]) => by.has(id) && n !== net(by.get(id)))
+        .map(([id, n]) => [by.get(id), `its parts sum to ${n} minor units, not the ${net(by.get(id))} it pays on`]);
     },
+  },
+  {
+    id: 'parent-settles-with-parts',
+    source: 'transactions rule 5',
+    all: (ts, by) => ts.filter((t) => lastStatus(t) === 'settled').flatMap((p) => {
+      const open = ts.filter((t) => parentOf(t) === p.header.id.txid && lastStatus(t) !== 'settled');
+      return open.length ? [[p, `settled while its part ${open[0].header.id.txid} is ${lastStatus(open[0])}`]] : [];
+    }),
+  },
+  {
+    id: 'one-approval-per-plan',
+    source: 'transactions rule 5',
+    all: (ts) => {
+      const byRef = new Map();
+      for (const t of ts) if (t.footer.approval) byRef.set(t.footer.approval.ref, [...(byRef.get(t.footer.approval.ref) || []), t]);
+      const out = [];
+      for (const [ref, set] of byRef) {
+        if (set.length < 2) continue;
+        const parents = new Set(set.map((t) => parentOf(t) || t.header.id.txid));
+        if (parents.size > 1) out.push([set[1], `shares approval ${ref} with a transaction that is neither its parent nor a part of the same parent`]);
+      }
+      return out;
+    },
+  },
+  {
+    id: 'source-named',
+    source: 'transactions rule 5',
+    each: (t) => (t.body.money.direction === 'out' && t.header.origin.rail !== 'none' && !t.body.parties.source
+      ? 'money out with no source: the account it leaves from is named before approval' : null),
   },
   {
     id: 'forward-links-recorded',
@@ -139,14 +173,14 @@ const RULES = [
         for (const l of t.header.links) {
           const o = by.get(l.txid);
           if (!o || !INVERSE[l.rel]) continue;
-          const f = o.footer.linked_by.find((x) => x.rel === INVERSE[l.rel] && x.txid === t.header.txid);
-          if (!f) out.push([o, `its footer lacks ${INVERSE[l.rel]} ${t.header.txid}`]);
-          else if (f.at < t.header.created_at) out.push([o, `${INVERSE[l.rel]} ${t.header.txid} is dated before that transaction was created`]);
+          const f = o.footer.linked_by.find((x) => x.rel === INVERSE[l.rel] && x.txid === t.header.id.txid);
+          if (!f) out.push([o, `its footer lacks ${INVERSE[l.rel]} ${t.header.id.txid}`]);
+          else if (f.at < t.header.origin.created_at) out.push([o, `${INVERSE[l.rel]} ${t.header.id.txid} is dated before that transaction was created`]);
         }
         for (const f of t.footer.linked_by) {
           const o = by.get(f.txid);
           const rel = Object.keys(INVERSE).find((k) => INVERSE[k] === f.rel);
-          if (!o || !o.header.links.some((l) => l.rel === rel && l.txid === t.header.txid)) out.push([t, `${f.rel} ${f.txid}, which does not link to it`]);
+          if (!o || !o.header.links.some((l) => l.rel === rel && l.txid === t.header.id.txid)) out.push([t, `${f.rel} ${f.txid}, which does not link to it`]);
         }
       }
       return out;
@@ -156,14 +190,14 @@ const RULES = [
     id: 'charges-in-order',
     source: 'transactions rule 8',
     each: (t) => {
-      const cur = t.body.amount.currency;
-      const all = [...t.body.charges, ...(t.footer.rail_charges || [])];
+      const cur = t.body.money.amount.currency;
+      const all = [...t.body.money.charges, ...(t.footer.settlement?.rail_charges || [])];
       if (all.some((c) => c.amount.currency !== cur)) return `a charge is not in ${cur}`;
-      const lines = t.body.charges.map((c) => c.line);
+      const lines = t.body.money.charges.map((c) => c.line);
       if (new Set(lines).size !== lines.length) return 'two charges share a line number';
-      for (const c of t.body.charges) {
+      for (const c of t.body.money.charges) {
         if (c.on !== undefined && c.kind !== 'tax') return `line ${c.line}: only a tax is charged on another line`;
-        if (c.on !== undefined && !t.body.charges.some((x) => x.line === c.on && x.kind === 'fee')) return `line ${c.line}: a tax on line ${c.on}, which is not a fee`;
+        if (c.on !== undefined && !t.body.money.charges.some((x) => x.line === c.on && x.kind === 'fee')) return `line ${c.line}: a tax on line ${c.on}, which is not a fee`;
       }
       return null;
     },
@@ -172,20 +206,20 @@ const RULES = [
     id: 'settled-as-approved',
     source: 'transactions rule 3',
     each: (t) => {
-      const s = t.footer.settled;
+      const s = t.footer.settlement?.settled;
       if (!s) return null;
-      if (s.currency !== t.body.amount.currency) return `settled in ${s.currency}, instructed in ${t.body.amount.currency}`;
-      const want = t.body.amount_type === 'receive' ? t.body.amount.minor : t.body.amount.minor - sum(t.body.charges.filter((c) => c.deducted));
-      return s.minor !== want ? `settled ${s.minor} minor units; a ${t.body.amount_type} amount with these charges settles ${want}` : null;
+      if (s.currency !== t.body.money.amount.currency) return `settled in ${s.currency}, instructed in ${t.body.money.amount.currency}`;
+      const want = t.body.money.amount_type === 'receive' ? t.body.money.amount.minor : t.body.money.amount.minor - sum(t.body.money.charges.filter((c) => c.deducted));
+      return s.minor !== want ? `settled ${s.minor} minor units; a ${t.body.money.amount_type} amount with these charges settles ${want}` : null;
     },
   },
   {
     id: 'allocation-sums',
     source: 'transactions rule 8',
     each: (t) => {
-      const a = t.footer.allocation;
+      const a = t.footer.books?.allocation;
       if (!a || !a.length) return null;
-      const total = (t.footer.settled || t.body.amount).minor;
+      const total = (t.footer.settlement?.settled || t.body.money.amount).minor;
       return sum(a) !== total ? `its allocation sums to ${sum(a)} minor units, not ${total}` : null;
     },
   },
@@ -193,10 +227,10 @@ const RULES = [
     id: 'statuses-in-order',
     source: 'transactions §5, the states',
     each: (t) => {
-      const h = t.footer.status_history;
+      const h = t.footer.progress.status_history;
       if (h[0].status !== 'created') return 'its first status is not created';
       for (let i = 1; i < h.length; i++) if (h[i].at < h[i - 1].at) return `${h[i].status} is dated before ${h[i - 1].status}`;
-      if (h.some((s) => s.status === 'settled') && !t.footer.settled) return 'settled, with no settled amount';
+      if (h.some((s) => s.status === 'settled') && !t.footer.settlement?.settled) return 'settled, with no settled amount';
       return null;
     },
   },
@@ -215,10 +249,10 @@ const RULES = [
     id: 'checked-before-sending',
     source: 'transactions rule 4',
     each: (t) => {
-      const d = t.body.destination;
+      const d = t.body.parties.destination;
       const sent = firstAt(t, MOVED);
-      if (!d || !sent || t.body.direction !== 'out') return null;
-      const passed = (c) => (t.footer.checks || []).some((x) => x.check === c && x.result === 'pass' && x.at <= sent);
+      if (!d || !sent || t.body.money.direction !== 'out') return null;
+      const passed = (c) => (t.footer.progress.checks || []).some((x) => x.check === c && x.result === 'pass' && x.at <= sent);
       if (d.alias && !passed('resolved_again')) return 'sent to an alias not resolved again before sending';
       if (d.address.kind === 'wallet') for (const c of ['operator', 'number_binding', 'sim_swap']) if (!passed(c)) return `sent to a wallet without a passed ${c} check`;
       return null;
@@ -230,22 +264,22 @@ const RULES = [
 // returned, what its reversals and refunds leave of it. Computed from the
 // forward facts on its footer, never stored.
 function position(t, by) {
-  const status = t.footer.status_history[t.footer.status_history.length - 1].status;
+  const status = t.footer.progress.status_history[t.footer.progress.status_history.length - 1].status;
   if (!['settled', 'returned'].includes(status)) return status;
   const total = (rel) => t.footer.linked_by.filter((f) => f.rel === rel && by.has(f.txid))
-    .reduce((n, f) => n + by.get(f.txid).body.amount.minor, 0);
+    .reduce((n, f) => n + by.get(f.txid).body.money.amount.minor, 0);
   const reversed = total('reversed_by');
   const refunded = total('refunded_by');
   if (!reversed && !refunded) return status;
-  const whole = reversed + refunded >= t.body.amount.minor;
+  const whole = reversed + refunded >= t.body.money.amount.minor;
   const word = reversed ? 'reversed' : 'refunded';
   return whole ? word : `partly_${word}`;
 }
 
 function apply(transactions) {
-  const by = new Map(transactions.map((t) => [t.header.txid, t]));
+  const by = new Map(transactions.map((t) => [t.header.id.txid, t]));
   const out = [];
-  const push = (r, t, message) => out.push({ id: r.id, source: r.source, txid: t.header.txid, message });
+  const push = (r, t, message) => out.push({ id: r.id, source: r.source, txid: t.header.id.txid, message });
   for (const r of RULES) {
     if (r.each) for (const t of transactions) { const m = r.each(t); if (m) push(r, t, m); }
     if (r.all) for (const [t, m] of r.all(transactions, by)) push(r, t, m);
