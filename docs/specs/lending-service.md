@@ -8,11 +8,11 @@ law: LR-03
 released: unreleased
 release: R1
 implements: [mfi, sacco]
-depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, deposits-service, product-versions, vault, transactions]
+depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, deposits-service, product-versions, vault, transactions, rails]
 used_by: [staff-workspace, kapu-console, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070, FS-1071, FS-1073, FS-1140, FS-1148, FS-1154]
+review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070, FS-1071, FS-1073, FS-1140, FS-1148, FS-1154, FS-1155]
 last_reviewed: 2026-11-09
 ---
 
@@ -78,7 +78,7 @@ the whole instance, in layers, is architecture/instance.md.
 [kapu-core-fineract](kapu-core-fineract.md),
 [approval-engine](approval-engine.md), [lender-rules](lender-rules.md),
 [back-office](back-office.md), [deposits-service](deposits-service.md), [vault](vault.md) and
-[transactions](transactions.md), the model of every money movement it starts;
+[transactions](transactions.md), the model of every money movement it starts, and [rails](rails.md), through which it pays out;
 used by [staff-workspace](staff-workspace.md) and
 [kapu-console](kapu-console.md); journeys
 [JN-04](../journeys/loan-to-disbursement.md),

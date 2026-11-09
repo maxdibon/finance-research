@@ -9,10 +9,10 @@ released: 2026.10.16
 release: R1
 implements: [mandates]
 depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka, transactions]
-used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console, product-versions]
+used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console, product-versions, rails]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032, FS-1053, FS-1054, FS-1056, FS-1058, FS-1154]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032, FS-1053, FS-1054, FS-1056, FS-1058, FS-1154, FS-1155]
 last_reviewed: 2026-11-09
 ---
 
@@ -82,7 +82,7 @@ extra: the engine holds the facts already.
 **Related:** implements [mandates](../modules/mandates.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
 [access-keycloak](access-keycloak.md), [event-bus-kafka](event-bus-kafka.md) and
-[transactions](transactions.md), whose body it approves by its hash; used by [kapu-console](kapu-console.md), [deposits-service](deposits-service.md), [lending-service](lending-service.md), [recon](recon.md), which compares approvals with the ledger (rails, to write, will be too), and [staff-workspace](staff-workspace.md), where staff decide; journeys
+[transactions](transactions.md), whose body it approves by its hash; used by [kapu-console](kapu-console.md), [deposits-service](deposits-service.md), [lending-service](lending-service.md), [recon](recon.md), which compares approvals with the ledger, [rails](rails.md), which checks each approval's hash before sending, and [staff-workspace](staff-workspace.md), where staff decide; journeys
 [JN-02](../journeys/manual-identity-check.md),
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and

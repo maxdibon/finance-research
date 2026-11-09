@@ -8,10 +8,10 @@ released: unreleased
 release: R1
 implements: [rails, recon-observability, core]
 depends_on: [event-bus-kafka]
-used_by: [recon, lending-service, deposits-service, approval-engine, kapu-core-fineract]
+used_by: [recon, lending-service, deposits-service, approval-engine, kapu-core-fineract, rails]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153, FS-1154]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153, FS-1154, FS-1155]
 last_reviewed: 2026-11-09
 ---
 
@@ -89,8 +89,8 @@ used by [recon](recon.md), whose night checks run the link rules (§9),
 [deposits-service](deposits-service.md), which mint and write
 transactions, [approval-engine](approval-engine.md), which approves their
 bodies, and [kapu-core-fineract](kapu-core-fineract.md), whose fields map to
-them; the rails spec, still to write, is written on it; journeys none
-yet.
+them, and [rails](rails.md), which carries them to each rail and mints
+money arriving; journeys none yet.
 
 ## 2 · Concepts
 
@@ -471,14 +471,10 @@ it adds these:
 
 **For the owner:**
 
-1. **The rails spec,** still to write, is written on this one: the
-   adapters that mint money arriving, resolve aliases, confirm operators
-   and carry our ids to each rail (FS-1154; the other money specs have
-   adopted it).
-2. **How each operator confirms a number:** the query each offers over
+1. **How each operator confirms a number:** the query each offers over
    our connections (a portability or HLR lookup, or its own API), to
    confirm with each.
-3. **To confirm:** Daraja's, Fineract's and Odoo's field names against the
+2. **To confirm:** Daraja's, Fineract's and Odoo's field names against the
    versions we run; the ISO 20022 code sets and CAK's plan once more at
    release.
 

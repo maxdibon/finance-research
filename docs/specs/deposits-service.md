@@ -7,11 +7,11 @@ status: draft
 released: unreleased
 release: R4
 implements: [core, sacco]
-depends_on: [kapu-core-fineract, approval-engine, transactions]
+depends_on: [kapu-core-fineract, approval-engine, transactions, rails]
 used_by: [lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-066, FS-178, FS-179, FS-185, FS-985, FS-991, FS-1058, FS-1154]
+review_ids: [FS-066, FS-178, FS-179, FS-185, FS-985, FS-991, FS-1058, FS-1154, FS-1155]
 last_reviewed: 2026-11-09
 ---
 
@@ -63,8 +63,9 @@ approvals around the core, not this service.
 **Related:** implements [core](../modules/core.md) and
 [sacco](../modules/sacco.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
-[approval-engine](approval-engine.md) and [transactions](transactions.md),
-the model of every movement it starts; used by
+[approval-engine](approval-engine.md), [transactions](transactions.md),
+the model of every movement it starts, and [rails](rails.md), through which
+it pays and collects; used by
 [lending-service](lending-service.md); journeys
 [JN-10](../journeys/deposit.md), [JN-11](../journeys/transfer-out.md)
 and [JN-12](../journeys/transfer-in.md).

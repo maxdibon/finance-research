@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053, FS-1070, FS-1131]
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053, FS-1070, FS-1131, FS-1155]
 last_reviewed: 2026-11-09
 ---
 
@@ -96,6 +96,7 @@ By layer, as [the instance](../architecture/instance.md) is drawn (FS-1053).
 | [event-bus-kafka](event-bus-kafka.md) | Component | Kafka as the event bus: the CloudEvents envelope, signing and the audit chain, one catalogue of event names, delivery rules | recon-observability | R1 |
 | [messaging](messaging.md) | Build | The messaging service and the R1 template catalogue: what each event sends, to whom, with which fields, and who approves the words | messaging | R1 |
 | [transactions](transactions.md) | Build | The transaction model: one money movement as every component means it; a header fixed at creation, a body fixed at approval, a footer only appended to; kinds, links, ids, aliases, versions and the standards they follow; its field dictionary and schema | rails, recon-observability, core | R1 |
+| [rails](rails.md) | Build | The rails: one interface for every payment rail and bank, an adapter per rail behind it; what is approved is what is sent, unknown a state, callbacks proved, money arriving minted; written on the transaction model | rails | R1 |
 | [observability-grafana](observability-grafana.md) | Component | Grafana and its stack: metrics, logs, dashboards, alerts, and the on-call rota that takes a phone call | recon-observability | R1 |
 | [vault](vault.md) | Build | The document vault: every document carrying personal data, one vault per institution; checked and scanned on arrival, never changed, encrypted under the institution's keys, every read logged, out only by link, deleted when its retention ends | identity | R1 |
 
@@ -106,11 +107,11 @@ By layer, as [the instance](../architecture/instance.md) is drawn (FS-1053).
 | [github](github.md) | Component | GitHub: the organisation, teams and roles, rulesets on main, code owners, push rulesets, Actions with runners in Kenya, secrets from OpenBao, deploys by pull request and the change calendar, planning in Projects; plans checked | platform-security | R1 |
 | [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
 
-**To write, in the order R1 needs them:** rails (M-Pesa and bank instructions, their lifecycle and signing); customer pages (consents, signing, statements, without the app); odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries).
+**To write, in the order R1 needs them:** customer pages (consents, signing, statements, without the app); odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries).
 
 ## How they connect
 
-RAILS has a spec still to write; the table below
+The table below
 says what crosses each line.
 
 ```
@@ -153,7 +154,7 @@ says what crosses each line.
 | end-of-day-runner | observability-grafana | The run's metrics and failures, routed by severity |
 | approval-engine | access-keycloak | Roles resolved to people (MD-04); step-up at each decision (MD-10) |
 | kapu-core-fineract | access-keycloak | Sign-in by OAuth, the service account, read-only staff roles |
-| approval-engine | rails (to write) | An approved payment's content hash; nothing is sent without it (RL-01) |
+| approval-engine | rails | An approved payment's content hash; nothing is sent without it (RL-01) |
 | every spec | event-bus-kafka | Event names, the envelope and signing (RO-23) |
 | kapu-core-fineract | recon | Postings and signed checkpoints, as events; balances read by API; recon never writes back |
 | recon | end-of-day-runner | The intake and break checks (C3 to C6, P5) and the morning's breaks and match rate |
@@ -197,7 +198,7 @@ its id is how the component is named wherever a name is an identifier
 | ON-CALL | Rotas, escalation, phone calls and acknowledgement | `[goalert]` | `goalert` | [observability-grafana](observability-grafana.md) |
 | ACCESS | Sign-in, roles, step-up | `[keycloak]` | `keycloak` | [access-keycloak](access-keycloak.md) |
 | EVENT BUS | Carries signed events between services | `[kafka]` | `kafka` | [event-bus-kafka](event-bus-kafka.md) |
-| RAILS | Sends and receives money on M-Pesa and banks | `[kapu_service]` | `rails` | to write |
+| RAILS | Sends and receives money on M-Pesa and banks | `[kapu_service]` | `rails` | [rails](rails.md) |
 | MESSAGING | SMS, WhatsApp and email to people | `[kapu_service]` | `messaging` | [messaging](messaging.md) |
 | RECONCILIATION | Matches the ledger with the rails, proves completeness, compares the three ledgers | `[kapu_service]` | `recon` | [recon](recon.md) |
 | SHADOW LEDGER | Rebuilds the master's ledger from its postings, near real time, in memory | `[kapu_service]` | `shadow-ledger` | [recon](recon.md) |
