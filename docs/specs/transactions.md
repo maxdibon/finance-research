@@ -124,7 +124,7 @@ none yet.
 | ITU-T E.164, E.212 | A mobile number; a network, by its country and network codes; Kenya's national destination codes and network codes as the Communications Authority assigns them (dictionary §3; rule 4) |
 | ISO 13616 | An IBAN, for an account abroad; Kenya does not use them (to confirm) |
 | RFC 9562 | The txid, a UUIDv7 (rule 7) |
-| Crockford base 32, ISO 7064 | The short reference and its check symbol (rule 7) |
+| Crockford base 32, ISO 7064 MOD 97-10 | The short reference and its two check digits, as in IBANs and LEIs (rule 7) |
 | RFC 3339, ISO 8601 | Times in UTC and dates (rule 9) |
 | RFC 8785, SHA-256 | The body's canonical form and its hash (rule 2) |
 | CloudEvents 1.0, W3C trace context | The envelope every part travels in (event-bus-kafka §4) |
@@ -193,8 +193,10 @@ none yet.
    lending or deposits service for a request, cash at a counter or a
    run of the end-of-day runner; the rails when money arrives; the core
    adapter for a posting made in an institution's own core in the split
-   mode (FS-1127, FS-1128). Its short reference is ten Crockford base-32
-   symbols and a check symbol. A retry with the same idempotency key is
+   mode (FS-1127, FS-1128). Its short reference is nine Crockford base-32
+   symbols and two check digits by ISO 7064 MOD 97-10, the method IBANs
+   and LEIs use (FS-1143): eleven characters, a mistyped character or two
+   swapped ones caught before a payment is matched. A retry with the same idempotency key is
    the same transaction (RL-14). Outbound, our id goes where each rail
    allows (dictionary §4); every other party's id is appended to the
    footer by its issuer and scheme, and one index finds the transaction
@@ -379,6 +381,7 @@ it adds these:
 | A21 | W5, refunded in full by W6 | Staff open W5 | Settled, refunded by W6: its position, beside its status | §5 |
 | A22 | A reversal whose original lacks its forward fact | The night's checks run | A break, owned and worked as recon §4.7 sets | §9 |
 | A23 | A number in NDC 722, ported from Safaricom to Airtel | A payout to it is about to be sent | Safaricom does not confirm it; held, the operator check failed | rule 4 |
+| A24 | W1's reference, 8YCC826SG20 | A borrower types 8YCC862SG20 (two characters swapped), or 8YCC826SG21 | Its check digits fail; asked for again, never matched to another transaction; 8YCC826SG2O, a letter O, is read as the zero Crockford's alphabet takes it for | rule 7 |
 
 ## 12 · Open questions
 
@@ -387,16 +390,10 @@ it adds these:
 1. **Adoption:** the lending service, deposits service, approval engine
    and Kapu Core specs name this one in `depends_on` when each is next
    revised, and the rails spec is written on it (recon has).
-2. **The check symbol** (FS-1143): ISO 7064 is the standard, but none of
-   its named systems gives one check symbol in Crockford's alphabet.
-   Recommended: its MOD 97-10, two check digits, as IBANs (ISO 13616) and
-   LEIs (ISO 17442) use, after nine Crockford symbols: eleven characters
-   still. Waiting for go; until then rule 7 and the examples keep the
-   hybrid method over 32 symbols.
-3. **How each operator confirms a number:** the query each offers over
+2. **How each operator confirms a number:** the query each offers over
    our connections (a portability or HLR lookup, or its own API), to
    confirm with each.
-4. **To confirm:** Daraja's, Fineract's and Odoo's field names against the
+3. **To confirm:** Daraja's, Fineract's and Odoo's field names against the
    versions we run; the ISO 20022 code sets and CAK's plan once more at
    release.
 

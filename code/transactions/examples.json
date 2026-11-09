@@ -7,7 +7,7 @@
    "transaction": {
     "header": {
      "txid": "01a1bf1b-4d80-7001-8001-000000000001",
-     "reference": "8YCC826SGYJ",
+     "reference": "8YCC826SG20",
      "model_version": "1.0",
      "kind": "disbursement",
      "institution": "example-mfi",
@@ -233,7 +233,7 @@
    "transaction": {
     "header": {
      "txid": "01a1bf96-e620-7002-8002-000000000002",
-     "reference": "QEWH92HWHY3",
+     "reference": "QEWH92HWH59",
      "model_version": "1.0",
      "kind": "repayment",
      "institution": "example-mfi",
@@ -341,7 +341,7 @@
    "transaction": {
     "header": {
      "txid": "01a1bf96-ea08-7003-8003-000000000003",
-     "reference": "6XBPB3W0JZB",
+     "reference": "6XBPB3W0J03",
      "model_version": "1.0",
      "kind": "repayment",
      "institution": "example-mfi",
@@ -449,7 +449,7 @@
    "transaction": {
     "header": {
      "txid": "01a1bf96-ea08-7004-8004-000000000004",
-     "reference": "NDVWD474MZY",
+     "reference": "NDVWD474M65",
      "model_version": "1.0",
      "kind": "repayment",
      "institution": "example-mfi",
@@ -557,7 +557,7 @@
    "transaction": {
     "header": {
      "txid": "01a1bf9b-7a00-7005-8005-000000000005",
-     "reference": "4XB1F4J7N0W",
+     "reference": "4XB1F4J7N32",
      "model_version": "1.0",
      "kind": "repayment",
      "institution": "example-mfi",
@@ -656,7 +656,7 @@
    "transaction": {
     "header": {
      "txid": "01a1bff7-0780-7006-8006-000000000006",
-     "reference": "KCV6G5XBP0Q",
+     "reference": "KCV6G5XBP60",
      "model_version": "1.0",
      "kind": "refund",
      "institution": "example-mfi",
@@ -807,7 +807,7 @@
    "transaction": {
     "header": {
      "txid": "01a1bf52-3c00-7007-8007-000000000007",
-     "reference": "2WBCJ57EQ0M",
+     "reference": "2WBCJ57EQ66",
      "model_version": "1.0",
      "kind": "disbursement",
      "institution": "example-mfi",
@@ -941,7 +941,7 @@
    "transaction": {
     "header": {
      "txid": "01a1c441-ad68-7008-8008-000000000008",
-     "reference": "HCVHM6JJR1A",
+     "reference": "HCVHM6JJR49",
      "model_version": "1.0",
      "kind": "reversal",
      "institution": "example-mfi",
@@ -952,7 +952,7 @@
       "kind": "service",
       "id": "rails"
      },
-     "idempotency_key": "return-2WBCJ57EQ0M",
+     "idempotency_key": "return-2WBCJ57EQ66",
      "links": [
       {
        "rel": "reverses",
@@ -1051,7 +1051,7 @@
    "transaction": {
     "header": {
      "txid": "01a22e41-f808-700a-800a-000000000010",
-     "reference": "FBVWR78SV2F",
+     "reference": "FBVWR78SV44",
      "model_version": "1.0",
      "kind": "interest",
      "institution": "example-mfi",
@@ -1162,7 +1162,7 @@
     {
      "tx": "W1",
      "path": "header.reference",
-     "set": "8YCC826SGY0"
+     "set": "8YCC826SG21"
     }
    ],
    "change_breaks": true

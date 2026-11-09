@@ -22,21 +22,17 @@ function canonical(v) {
 }
 const bodyHash = (body) => `sha256:${crypto.createHash('sha256').update(canonical(body)).digest('hex')}`;
 
-// The short reference: ten of Crockford's base-32 symbols and a check
-// symbol, by ISO 7064's hybrid method (MOD 33,32) over the same symbols.
+// The short reference: nine of Crockford's base-32 symbols and two check
+// digits by ISO 7064 MOD 97-10, as IBANs (ISO 13616) and LEIs (ISO 17442)
+// carry them (FS-1143): each letter read as its number (A is 10, Z 35),
+// the whole taken modulo 97; a valid reference leaves 1.
 const SYMBOLS = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
-function hybrid(chars) {
-  let p = 32;
-  let s = 0;
-  for (const c of chars) {
-    s = (p + SYMBOLS.indexOf(c)) % 32;
-    p = (2 * (s === 0 ? 32 : s)) % 33;
-  }
-  return { p, s };
-}
-const checkSymbol = (data) => SYMBOLS[(((1 - hybrid(data).p) % 32) + 32) % 32];
-const referenceValid = (ref) => typeof ref === 'string' && ref.length === 11
-  && [...ref].every((c) => SYMBOLS.includes(c)) && hybrid(ref).s === 1;
+const mod97 = (chars) => [...chars].reduce((r, c) => {
+  const n = String(parseInt(c, 36));
+  return [...n].reduce((x, d) => (x * 10 + Number(d)) % 97, r);
+}, 0);
+const checkDigits = (data) => String(98 - mod97(`${data}00`)).padStart(2, '0');
+const referenceValid = (ref) => typeof ref === 'string' && /^[0-9A-HJKMNP-TV-Z]{9}[0-9]{2}$/.test(ref) && mod97(ref) === 1;
 
 // Each link's forward fact, appended to the target's footer.
 const INVERSE = { reverses: 'reversed_by', refunds: 'refunded_by', corrects: 'corrected_by', part_of: 'has_part', replaces: 'replaced_by', fee_for: 'has_fee' };
@@ -59,7 +55,7 @@ const RULES = [
   {
     id: 'reference-checks',
     source: 'transactions rule 7',
-    each: (t) => (referenceValid(t.header.reference) ? null : `reference ${t.header.reference} fails its check symbol`),
+    each: (t) => (referenceValid(t.header.reference) ? null : `reference ${t.header.reference} fails its check digits`),
   },
   {
     id: 'one-txid-per-request',
@@ -257,4 +253,4 @@ function apply(transactions) {
   return out;
 }
 
-module.exports = { RULES, apply, position, bodyHash, canonical, checkSymbol, referenceValid, INVERSE };
+module.exports = { RULES, apply, position, bodyHash, canonical, checkDigits, referenceValid, INVERSE };

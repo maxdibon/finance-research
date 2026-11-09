@@ -6,7 +6,7 @@ status: living
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1144, FS-1145, FS-1146]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1143, FS-1144, FS-1145, FS-1146]
 last_reviewed: 2026-11-09
 ---
 
@@ -38,7 +38,7 @@ The types the fields are made of.
 |---|---|---|---|---|---|---|
 | TF-01 | money | An amount: an integer of the currency's minor units, and the currency | A decimal amount; a balance | `{minor: 250000, currency: "KES"}` is KES 2,500.00 | ISO 4217 (currency and its minor units) | ActiveCurrencyAndAmount |
 | TF-02 | txid | Our id for one money movement, end to end | The event's id; a rail's id; ISO 20022's TXID code, a tax number | A UUIDv7, lower case, hyphenated | RFC 9562 | UETR's place, but UETR is a version-4 UUID a bank mints |
-| TF-03 | reference | The txid's short form, for people and small rail fields | The payment reference a payer types, which is an alias (TF-12) | 10 Crockford base-32 symbols and a check symbol | Crockford base 32; ISO 7064 hybrid method (MOD 33,32) | RmtInf/Ustrd, where a rail has room |
+| TF-03 | reference | The txid's short form, for people and small rail fields | The payment reference a payer types, which is an alias (TF-12) | 9 Crockford base-32 symbols and 2 check digits, `8YCC826SG20` | Crockford base 32; ISO 7064 MOD 97-10, as in IBANs (ISO 13616) and LEIs (ISO 17442) | RmtInf/Ustrd, where a rail has room |
 | TF-04 | code | Our own name for a thing in a closed list | A display name | lower case, digits, hyphens | — | — |
 | TF-05 | time | An instant | A business date (TF-06) | RFC 3339 in UTC, ending Z | RFC 3339, ISO 8601 | ISODateTime |
 | TF-06 | date | A calendar day in Africa/Nairobi | An instant | YYYY-MM-DD | ISO 8601 | ISODate |
