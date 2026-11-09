@@ -7,8 +7,8 @@ law: LR-17
 released: 2026.10.16
 owner: Compliance and risk officer
 classification: Internal
-review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532, FS-582, FS-591, FS-620, FS-689, FS-763, FS-768, FS-769, FS-995, FS-1004, FS-1018, FS-1071]
-last_reviewed: 2026-11-01
+review_ids: [FS-063, FS-480, FS-485, FS-497, FS-532, FS-582, FS-591, FS-620, FS-689, FS-763, FS-768, FS-769, FS-995, FS-1004, FS-1018, FS-1071, FS-1147, FS-1148]
+last_reviewed: 2026-11-09
 ---
 
 # Privacy register — what personal data we process, why, and for how long
@@ -68,7 +68,7 @@ officer and the institution (FS-063).
 | PR-04 | Credit bureau submissions and lookups | crb; mfi MF-19 | Borrowers | Confidential | Legal obligation (CRB regulations, LR-06; LR-03 reg 33) | As the bureau regulations set | Needed | No |
 | PR-05 | Sanctions and PEP screening, monitoring, cases and reports | financial-crime FC-01 to FC-15 | Customers, members, counterparties | Restricted (suspicion about a person) | Legal obligation (POCAMLA; Prevention of Terrorism Act) | 7 years (POCAMLA s.46, LR-13) | Needed (watch lists) | Only if a PEP data vendor processes abroad: named when chosen |
 | PR-06 | Phone-number and SIM checks: operator name match, IMSI binding | identity ID-05, ID-12 to ID-14; rails RL-22 | Customers, members | Confidential | Legal obligation and legitimate interest (fraud prevention) | Open (FS-063) | Needed | No |
-| PR-07 | Messages: one-time codes, reminders, receipts, campaigns | messaging | Customers, members | Confidential (phone numbers, message content) | Contract; consent for marketing (messaging MS-11) | Open (FS-063) | Not needed | No |
+| PR-07 | Messages: one-time codes, reminders, receipts, campaigns | messaging | Customers, members | Confidential (phone numbers, message content) | Contract; consent for marketing (messaging MS-11), lasting until withdrawn, beyond the relationship (FS-1147) | Open (FS-063) | Not needed | No |
 | PR-08 | Field captures: visits, photos of collateral, location | omni-channel OC-17 to OC-19 | Borrowers, members, field officers | Confidential (location, photos) | Contract; legitimate interest (verifying collateral) | Open (FS-063) | Needed (location) | No |
 | PR-09 | Bank channel: a business's reconciled cash flow shared with its bank | sme-recon; docs/market/bank-channel.md | SME owners and their counterparties | Confidential | Consent, separate and per purpose | Until consent is withdrawn | Needed | No |
 | PR-10 | Analysis and AI questions over governed metrics | insights | Customers, members, staff | As the source; Restricted never reaches a model (IN-10) | Legitimate interest (running the institution) | As the source | Needed (models) | Only a hosted model, for data classes allowed to leave (IN-08) |

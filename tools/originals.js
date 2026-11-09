@@ -68,8 +68,12 @@ function verify(dir) {
     if (!isReadOnly(f)) problems.push(`${e.file}: not read-only`);
   }
   if (fs.existsSync(odir)) {
-    for (const f of fs.readdirSync(odir)) {
-      if (f === 'MANIFEST.json' || f.startsWith('~$')) continue;
+    // Into subfolders too, named as the manifest names them ("drive-2026-11-05/x.docx"; FS-1148).
+    const walk = (d, pre) => fs.readdirSync(d, { withFileTypes: true })
+      .flatMap((x) => (x.isDirectory() ? walk(path.join(d, x.name), `${pre}${x.name}/`) : [`${pre}${x.name}`]));
+    for (const f of walk(odir, '')) {
+      const base = path.basename(f);
+      if (f === 'MANIFEST.json' || base.startsWith('~$')) continue;
       if (!m.some((e) => e.file === f)) problems.push(`${f}: in originals/ but not in the manifest`);
     }
   }

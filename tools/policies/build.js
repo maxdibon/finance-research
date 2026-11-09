@@ -17,11 +17,6 @@
 const fs = require('fs');
 const path = require('path');
 const ROOT = path.join(__dirname, '..', '..');
-let docx;
-try { docx = require(process.env.DOCX_MODULE || 'docx'); } catch (e) {
-  console.error('The docx package was not found: `npm install docx` somewhere, then set DOCX_MODULE to its folder.');
-  process.exit(1);
-}
 
 const [template, valuesFile, out] = process.argv.slice(2);
 if (!template || !valuesFile || !out) { console.error('Say the template, the values and where to write: node tools/policies/build.js <template.md> <values.json> <out.docx>'); process.exit(1); }
@@ -31,8 +26,6 @@ const templateId = (fs.readFileSync(template, 'utf8').match(/^id: *(.+)$/m) || [
 if (values.versions && values.versions[templateId]) values.version = values.versions[templateId];
 // And its own number, in the institution's scheme (design-system §7): "numbers" by template id, else "number".
 if (values.numbers && values.numbers[templateId]) values.number = values.numbers[templateId];
-const theme = values.theme ? JSON.parse(fs.readFileSync(path.resolve(ROOT, values.theme), 'utf8')) : {};
-const t = require(path.join(ROOT, 'design', 'system', 'institution-docx.js'))(docx, theme);
 const assets = path.resolve(path.dirname(valuesFile), values.assets || '.');
 
 const text = fs.readFileSync(template, 'utf8').replace(/\r\n/g, '\n');
@@ -42,6 +35,19 @@ if (a < 0 || b < 0) { console.error(`${template}: no <!-- document --> … <!-- 
 const fill = (s) => s.replace(/\{\{([a-z_]+)\}\}/g, (m, k) => (values[k] !== undefined ? String(values[k]) : `[To confirm: ${k.replace(/_/g, ' ')}]`));
 const plain = (s) => s.replace(/`/g, '');
 const lines = fill(text.slice(a + '<!-- document -->'.length, b)).split('\n');
+
+// FS-1148: no register id reaches an institution's document, from the
+// template or its values (FS-1082 did, inside a "To confirm", on 5 November).
+const ids = [...new Set(lines.join('\n').match(/\b(?:FS|LQ|DR|RC|MF|ID|RL|MS|SE|OB-[A-Z]+)-\d{2,4}\b/g) || [])];
+if (ids.length) { console.error(`${template}: register ids in the document: ${ids.join(', ')}; none may reach the institution`); process.exit(1); }
+
+let docx;
+try { docx = require(process.env.DOCX_MODULE || 'docx'); } catch (e) {
+  console.error('The docx package was not found: `npm install docx` somewhere, then set DOCX_MODULE to its folder.');
+  process.exit(1);
+}
+const theme = values.theme ? JSON.parse(fs.readFileSync(path.resolve(ROOT, values.theme), 'utf8')) : {};
+const t = require(path.join(ROOT, 'design', 'system', 'institution-docx.js'))(docx, theme);
 
 const sections = [];
 let cur = { orientation: 'portrait', children: [] };
