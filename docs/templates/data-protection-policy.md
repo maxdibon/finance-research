@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1092, FS-1100, FS-1103, FS-1108, FS-1110, FS-1111]
-last_reviewed: 2026-11-05
+review_ids: [FS-1080, FS-1087, FS-1092, FS-1100, FS-1103, FS-1108, FS-1110, FS-1111, FS-1140]
+last_reviewed: 2026-11-09
 ---
 
 # Data protection policy · template DC-FS-TM-DPR-004
@@ -32,7 +32,6 @@ controller with the Data Commissioner; no template stands in for it.
 | `message_channels` | The messaging channels it uses with customers | SMS and email |
 | `privacy_lead` | The person or position responsible for data protection | To confirm |
 | `registration` | Its registration with the Data Commissioner: number and date | To confirm |
-| `relationship_end` | When a customer stops being its customer, for retention (OB-COM-26) | One year with nothing live, proposed |
 | `contact` | Where customers write about their data | To confirm |
 | `sms_provider` | Who carries its SMS to the mobile operators | Dibon itself, a licensed premium rate service provider |
 | `processors` | Its processors, beyond the provider and the SMS provider | To confirm |
@@ -110,7 +109,7 @@ Personal data is kept in Kenya. It is transferred out of Kenya only where approp
 
 ## 10. Retention and deletion
 
-Personal data is kept only as long as its purpose and the law require (Data Protection Act s.39): transaction and customer due diligence records seven years from the end of the relationship or the transaction, and twelve years from default for a secured loan written off or sent to recovery. A customer relationship ends when the person has had no live loan or guarantee for {{relationship_end}}. At the end of the period the data is deleted, with its copies and backups, by the system itself; a legal hold stops the clock while a dispute or investigation lasts.
+Personal data is kept only as long as its purpose and the law require (Data Protection Act s.39): transaction and customer due diligence records seven years from the end of the relationship or the transaction, and twelve years from default for a secured loan written off or sent to recovery. A customer relationship ends when the person's last loan or guarantee is repaid, or written off, and closed, with no application open; the period runs from then, and a customer who returns starts a new relationship. At the end of the period the data is deleted, with its copies and backups, by the system itself; a legal hold stops the clock while a dispute or investigation lasts.
 
 ## 11. Security
 

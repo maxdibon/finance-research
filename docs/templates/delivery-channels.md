@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103, FS-1105, FS-1106, FS-1108, FS-1109, FS-1110]
-last_reviewed: 2026-11-05
+review_ids: [FS-1095, FS-1097, FS-1100, FS-1102, FS-1103, FS-1105, FS-1106, FS-1108, FS-1109, FS-1110, FS-1133]
+last_reviewed: 2026-11-09
 ---
 
 # Delivery channels · template DC-FS-TM-CHN-007
@@ -25,7 +25,7 @@ FS-1095). From the institution's deployment and our
 |---|---|---|
 | `institution`, `institution_legal`, `number`, `version`, `date`, `owner`, `approved_by`, `provider` | As in the ICT policy template | ROAN-DSC-CHN-001 |
 | `launch` | When the channels start, and how | A soft launch on 30 November 2026, the current process in parallel for about a month |
-| `mpesa`, `airtel`, `tkash`, `banks` | What is live at launch on each rail, both ways, and what follows | M-Pesa live both ways; Airtel Money and T-Kash both ways once integrated; NCBA Bank both ways, and further banks as accounts open |
+| `mpesa`, `airtel`, `tkash`, `banks` | What is live at launch on each rail, both ways, and what follows | M-Pesa repayments through its bank's paybill, payouts once it has its own B2C shortcode; Airtel Money and T-Kash both ways once the operators issue short codes and they are tested; NCBA Bank both ways, and further banks as accounts open |
 | `field_visits` | How officers record a visit | On a work-profile phone, in the browser; photos through the secure upload link, into the vault |
 | `not_offered` | The channels not used at launch. An institution that uses WhatsApp adds its row to the table: notifications and links only, through the official WhatsApp Business service | No WhatsApp, mobile app, USSD menu or agent network is used at launch. |
 | `website` | Its website's address, and who builds and hosts it | Built by Dibon on Odoo Website, hosted in Kenya; the address to confirm |
@@ -54,7 +54,7 @@ FS-1095). From the institution's deployment and our
 | Customer pages (web, on the customer's phone) | Borrowers and guarantors | Consent, the key facts and the agreement to read and sign, statements, documents, the amount to settle | Opened from a link, with a code from an authenticator app or by SMS to the phone bound at enrolment; each opening recorded |
 | SMS | Borrowers and guarantors, on Safaricom, Airtel and Telkom | Reminders, receipts, one-time codes, links to their own pages; never a balance, a document or an ID number | Under {{institution}}'s registered sender ID, from approved templates, within quiet hours |
 | Email | Borrowers, guarantors and business customers who give an address | Notices and links to their own pages, never documents | From approved templates |
-| Mobile money | Borrowers | Both ways: repayments into {{institution}}'s own paybill or till; disbursements to the borrower's own wallet | Each payment confirmed by the operator's authenticated callback, or by a status query, and matched to the loan; each payout only to the approved number, for the approved amount, released by a second person |
+| Mobile money | Borrowers | Both ways: repayments into {{institution}}'s own paybill or till, or its bank's paybill with its account number; disbursements to the borrower's own wallet | Each payment confirmed by the operator's authenticated callback, or by a status query, or through a bank's paybill by the bank's own record, and matched to the loan; each payout only to the approved number, for the approved amount, released by a second person |
 | Bank transfer | Borrowers and business borrowers | Both ways: disbursements to the borrower's own account; repayments by transfer into {{institution}}'s accounts | Through {{institution}}'s own banks, under maker-checker: prepared by one person, released by another, only to the approved account for the approved amount; every bank's statement reconciled |
 | Field visits | Loan officers, at borrowers' business premises and homes | Seeing the business and the collateral; notes of the visit; photos of the premises, the collateral and documents | {{field_visits}} |
 | The office | Borrowers, guarantors | Applications, collateral originals, collecting released documents | Identity checked against the record; originals kept in a locked cabinet, each movement recorded |
@@ -65,7 +65,7 @@ The platform reaches every payment rail through one interface, with an adapter f
 
 | Rail | What it carries | At launch |
 |---|---|---|
-| M-Pesa (Safaricom) | Repayments to {{institution}}'s paybill or till; disbursements to wallets | {{mpesa}} |
+| M-Pesa (Safaricom) | Repayments to {{institution}}'s paybill or till, or to its bank's paybill with its account number; disbursements to wallets | {{mpesa}} |
 | Airtel Money (Airtel) | The same | {{airtel}} |
 | T-Kash (Telkom) | The same | {{tkash}} |
 | Bank transfers: EFT, RTGS and PesaLink | Disbursements to bank accounts; repayments by transfer | {{banks}} |

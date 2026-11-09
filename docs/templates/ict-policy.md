@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106, FS-1109, FS-1110, FS-1111, FS-1116]
-last_reviewed: 2026-11-05
+review_ids: [FS-1080, FS-1087, FS-1089, FS-1090, FS-1092, FS-1094, FS-1100, FS-1099, FS-1101, FS-1102, FS-1103, FS-1106, FS-1109, FS-1110, FS-1111, FS-1116, FS-1133, FS-1134, FS-1138, FS-1139]
+last_reviewed: 2026-11-09
 ---
 
 # ICT policy · template DC-FS-TM-ICT-003
@@ -287,7 +287,7 @@ How data and requests flow from the front-end applications to the databases, one
 | 4 | Decision | The request; each decision | Re-authentication at each decision; no one decides two steps in a row |
 | 5 | Agreement signed | The agreement; the key facts | Read before signing; signed with a one-time code; the signed copy kept in the vault |
 | 6 | Disbursement | The payout instruction | Only the approved amount to the approved account, checked by its hash; a second person approves |
-| 7 | Repayment | The payment and its reference | From the mobile money operator's authenticated callback; matched to the loan; applied in the regulated order |
+| 7 | Repayment | The payment and its reference | From the mobile money operator's authenticated callback, or, paid through a bank's paybill, from the bank's own record; matched to the loan; applied in the regulated order |
 | 8 | Checks and audit | Every change; statements | Each change signed and chained; money, ledger and statements compared every cycle |
 
 ## Annex D. Independent assurance
