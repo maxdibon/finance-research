@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1053, FS-1100]
-last_reviewed: 2026-11-05
+review_ids: [FS-1053, FS-1100, FS-1131]
+last_reviewed: 2026-11-09
 ---
 
 # Ids
@@ -67,6 +67,7 @@ is listed under its table with where it went.
 | PR | Processing of personal data | privacy.md | PR-01 |
 | DT | Kinds of document an institution keeps, and for how long | documents.md | DT-01 |
 | DR | Documents held with a party: received, sent, worked on | document-register.md | DR-001 |
+| TF | Transaction fields: every building block and field of a money movement | transaction-fields.md | TF-01 |
 | DC-FS | Our own documents sent outside: DC-FS, then the kind (PF, PR, DK, LT, AG, QN, RP, TM), the type (design-system §7) and a serial; an institution's own documents its code, the kind, the type and a serial (ROAN-POL-ICT-001) | document-register.md, "Our documents"; design-system §7 | DC-FS-QN-ROL-004 |
 
 ## Ids that live inside one document

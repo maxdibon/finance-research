@@ -1516,3 +1516,37 @@ test('words: session start and end keep a personal handover, in a pretend reposi
     fs.rmSync(where, { recursive: true, force: true });
   }
 });
+
+// FS-1131: the transaction model's dictionary, schema, examples and kinds.
+const TX_DICT = path.join('docs', 'transaction-fields.md');
+const TX_SCHEMA = path.join('code', 'transactions', 'transaction.schema.json');
+const TX_EXAMPLES = path.join('code', 'transactions', 'examples.json');
+
+test('transactions: a field in the dictionary that is not in the schema fails', () => {
+  const f = runWith((d) => patch(d, TX_DICT, (t) => t.replace('| TF-37 | created_at | header |', '| TF-37 | created_on | header |')));
+  assert.deepStrictEqual(names(f), ['transactions']);
+});
+
+test('transactions: a field in the schema that is not in the dictionary fails', () => {
+  const f = runWith((d) => patch(d, TX_SCHEMA, (t) => t.replace('"links": {"type": "array", "items": {"$ref": "#/$defs/link"}}', '"links": {"type": "array", "items": {"$ref": "#/$defs/link"}},\n        "branch": {"$ref": "#/$defs/code"}')));
+  assert.deepStrictEqual(names(f), ['transactions']);
+});
+
+test('transactions: a worked transaction that breaks a rule fails', () => {
+  const f = runWith((d) => patch(d, TX_EXAMPLES, (t) => {
+    const e = JSON.parse(t);
+    e.worked[0].transaction.footer.settled.minor = 1;
+    return JSON.stringify(e, null, 1);
+  }));
+  assert.deepStrictEqual(names(f), ['transactions']);
+});
+
+test('transactions: a component map to a field the dictionary lacks fails', () => {
+  const f = runWith((d) => patch(d, TX_DICT, (t) => t.replace('| M-Pesa B2C (Daraja) | Occasion | `header.reference` |', '| M-Pesa B2C (Daraja) | Occasion | `header.remarks` |')));
+  assert.deepStrictEqual(names(f), ['transactions']);
+});
+
+test('transactions: a kind in the spec that is not in the schema fails', () => {
+  const f = runWith((d) => patch(d, path.join('docs', 'specs', 'transactions.md'), (t) => t.replace('| write_off | internal, no rail |', '| charge_off | internal, no rail |')));
+  assert.deepStrictEqual(names(f), ['transactions']);
+});

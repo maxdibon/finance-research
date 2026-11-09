@@ -8,11 +8,11 @@ released: 2026.10.15
 release: R1
 implements: [recon-observability]
 depends_on: [observability-grafana]
-used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, messaging, recon, back-office, vault]
+used_by: [approval-engine, lender-rules, kapu-core-fineract, end-of-day-runner, messaging, recon, back-office, vault, transactions]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970, FS-1053, FS-1057, FS-1054, FS-1069, FS-1070, FS-1073]
-last_reviewed: 2026-11-01
+review_ids: [FS-453, FS-584, FS-627, FS-667, FS-674, FS-675, FS-680, FS-684, FS-693, FS-694, FS-697, FS-700, FS-702, FS-703, FS-763, FS-768, FS-782, FS-783, FS-784, FS-792, FS-793, FS-802, FS-970, FS-1053, FS-1057, FS-1054, FS-1069, FS-1070, FS-1073, FS-1131]
+last_reviewed: 2026-11-09
 ---
 
 # The event bus on Kafka — component specification
@@ -76,7 +76,8 @@ shared with institutions' own systems.
 [approval-engine](approval-engine.md), [lender-rules](lender-rules.md),
 [kapu-core-fineract](kapu-core-fineract.md),
 [end-of-day-runner](end-of-day-runner.md), [messaging](messaging.md),
-[recon](recon.md), [back-office](back-office.md) and [vault](vault.md); the rules every event follows are also in
+[recon](recon.md), [back-office](back-office.md), [vault](vault.md) and
+[transactions](transactions.md), whose model each money event's data follows; the rules every event follows are also in
 [interfaces](../architecture/interfaces.md).
 
 ## 2 · Version and hosting
