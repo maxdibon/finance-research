@@ -37,6 +37,7 @@
                 "repayment",
                 "deposit",
                 "withdrawal",
+                "payment",
                 "transfer",
                 "interest",
                 "fee",
