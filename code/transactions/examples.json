@@ -1,8 +1,9 @@
 {
- "description": "Worked transactions for docs/specs/transactions.md (FS-1131): W1 to W9 are the instances the spec's tables show; each rule in rules.js has a case where the worked set does not break it and one where a change does. Generated, with hashes and check symbols computed; fictional people, numbers and receipts.",
+ "description": "Worked transactions for docs/specs/transactions.md (FS-1131, FS-1137, FS-1144): W1 to W9, each with its position computed from its forward facts, are the instances the spec's tables show; each rule in rules.js has a case where the worked set does not break it and one where a change does. Generated, with hashes and check symbols computed; fictional people, numbers and receipts.",
  "worked": [
   {
    "id": "W1",
+   "position": "settled",
    "transaction": {
     "header": {
      "txid": "01a1bf1b-4d80-7001-8001-000000000001",
@@ -174,6 +175,12 @@
        "at": "2026-11-09T07:40:05Z"
       },
       {
+       "check": "operator",
+       "result": "pass",
+       "at": "2026-11-09T07:40:05Z",
+       "detail": "NDC 700 assigned to Safaricom; Safaricom confirmed the number is on its network"
+      },
+      {
        "check": "number_binding",
        "result": "pass",
        "at": "2026-11-09T07:40:05Z"
@@ -222,6 +229,7 @@
   },
   {
    "id": "W2",
+   "position": "settled",
    "transaction": {
     "header": {
      "txid": "01a1bf96-e620-7002-8002-000000000002",
@@ -329,6 +337,7 @@
   },
   {
    "id": "W3",
+   "position": "settled",
    "transaction": {
     "header": {
      "txid": "01a1bf96-ea08-7003-8003-000000000003",
@@ -436,6 +445,7 @@
   },
   {
    "id": "W4",
+   "position": "settled",
    "transaction": {
     "header": {
      "txid": "01a1bf96-ea08-7004-8004-000000000004",
@@ -543,6 +553,7 @@
   },
   {
    "id": "W5",
+   "position": "refunded",
    "transaction": {
     "header": {
      "txid": "01a1bf9b-7a00-7005-8005-000000000005",
@@ -641,6 +652,7 @@
   },
   {
    "id": "W6",
+   "position": "settled",
    "transaction": {
     "header": {
      "txid": "01a1bff7-0780-7006-8006-000000000006",
@@ -755,6 +767,11 @@
      },
      "checks": [
       {
+       "check": "operator",
+       "result": "pass",
+       "at": "2026-11-09T11:30:01Z"
+      },
+      {
        "check": "number_binding",
        "result": "pass",
        "at": "2026-11-09T11:30:02Z"
@@ -786,6 +803,7 @@
   },
   {
    "id": "W7",
+   "position": "reversed",
    "transaction": {
     "header": {
      "txid": "01a1bf52-3c00-7007-8007-000000000007",
@@ -919,6 +937,7 @@
   },
   {
    "id": "W8",
+   "position": "settled",
    "transaction": {
     "header": {
      "txid": "01a1c441-ad68-7008-8008-000000000008",
@@ -1028,6 +1047,7 @@
   },
   {
    "id": "W9",
+   "position": "settled",
    "transaction": {
     "header": {
      "txid": "01a22e41-f808-700a-800a-000000000010",
@@ -1344,6 +1364,12 @@
        "check": "resolved_again",
        "result": "pass",
        "at": "2026-11-09T07:40:05Z"
+      },
+      {
+       "check": "operator",
+       "result": "pass",
+       "at": "2026-11-09T07:40:05Z",
+       "detail": "NDC 700 assigned to Safaricom; Safaricom confirmed the number is on its network"
       },
       {
        "check": "number_binding",

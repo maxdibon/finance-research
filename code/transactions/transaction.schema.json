@@ -264,7 +264,7 @@
       "required": ["check", "result", "at"],
       "additionalProperties": false,
       "properties": {
-        "check": {"enum": ["resolved_again", "name_match", "number_binding", "sim_swap", "limits", "sanctions"]},
+        "check": {"enum": ["resolved_again", "name_match", "operator", "number_binding", "sim_swap", "limits", "sanctions"]},
         "result": {"enum": ["pass", "hold", "fail"]},
         "at": {"$ref": "#/$defs/time"},
         "detail": {"type": "string", "pattern": "^.{1,200}$"}

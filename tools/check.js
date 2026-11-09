@@ -1501,7 +1501,7 @@ function checkTransactions(root) {
   let examples;
   try { schema = JSON.parse(read(root, SCHEMA_FILE)); } catch (e) { at(SCHEMA_FILE, 0, `cannot be read: ${e.message}`); return out; }
   try { examples = JSON.parse(read(root, path.join(TX_DIR, 'examples.json'))); } catch (e) { at(path.join(TX_DIR, 'examples.json'), 0, `cannot be read: ${e.message}`); return out; }
-  const { RULES, apply } = require(path.join(root, TX_DIR, 'rules.js'));
+  const { RULES, apply, position } = require(path.join(root, TX_DIR, 'rules.js'));
   for (const m of subsetProblems(schema)) at(SCHEMA_FILE, 0, m);
   const dict = read(root, TX_DICT);
   const tables = tablesOf(dict);
@@ -1561,6 +1561,12 @@ function checkTransactions(root) {
     for (const c of used) if (!codes.has(c)) at(path.join(TX_DIR, 'examples.json'), 0, `${w.id}: code ${c} is not listed in the dictionary §3`);
   });
   for (const b of apply(worked)) at(path.join(TX_DIR, 'examples.json'), 0, `the worked set breaks ${b.id} (${b.source}): ${b.txid}: ${b.message}`);
+  // FS-1137: each worked transaction's position, as computed from its forward facts.
+  const byId = new Map(worked.map((t) => [t.header.txid, t]));
+  (examples.worked || []).forEach((w) => {
+    const p = position(w.transaction, byId);
+    if (w.position !== p) at(path.join(TX_DIR, 'examples.json'), 0, `${w.id}: its position is ${p}, not ${w.position}`);
+  });
   // Each rule has a change that breaks it.
   const ids = (examples.worked || []).map((w) => w.id);
   for (const r of RULES) {

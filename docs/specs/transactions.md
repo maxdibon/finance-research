@@ -8,10 +8,10 @@ released: unreleased
 release: R1
 implements: [rails, recon-observability, core]
 depends_on: [event-bus-kafka]
-used_by: []
+used_by: [recon]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146]
 last_reviewed: 2026-11-09
 ---
 
@@ -84,8 +84,9 @@ reads them all and keeps the index that finds a transaction by any id.
 **Related:** implements [rails](../modules/rails.md),
 [recon-observability](../modules/recon-observability.md) and
 [core](../modules/core.md); depends on [event-bus-kafka](event-bus-kafka.md);
-used by none yet (each money spec adopts it when next revised, §12);
-journeys none yet.
+used by [recon](recon.md), whose night checks run the link rules (§9);
+the other money specs adopt it when each is next revised (§12); journeys
+none yet.
 
 ## 2 · Concepts
 
@@ -120,7 +121,7 @@ journeys none yet.
 | ISO 3166-1 alpha-2 | Every country: a party's, a bank account's, the issuer of a national identifier (rule 6) |
 | ISO 20022 | Status, reason and purpose codes, the identifier schemes, and the name of each field's equivalent (dictionary §3) |
 | ISO 9362, ISO 17442, ISO 6166 | BIC, LEI and ISIN, the international identifiers (rule 6) |
-| ITU-T E.164, E.212 | A mobile number; a network, by its country and network codes (rule 4) |
+| ITU-T E.164, E.212 | A mobile number; a network, by its country and network codes; Kenya's national destination codes and network codes as the Communications Authority assigns them (dictionary §3; rule 4) |
 | ISO 13616 | An IBAN, for an account abroad; Kenya does not use them (to confirm) |
 | RFC 9562 | The txid, a UUIDv7 (rule 7) |
 | Crockford base 32, ISO 7064 | The short reference and its check symbol (rule 7) |
@@ -158,10 +159,14 @@ journeys none yet.
    returned and matched against the payee's (BE01 when it does not
    match). The body holds the address it resolved to, the alias as
    entered and the resolution; the hash covers them. At sending the alias
-   is resolved again, and a wallet's number is checked still bound to the
-   payee (ID-12) and its SIM unchanged (RL-22): a different address or a
-   failed check holds the payout, and it goes only as a new transaction
-   that `replaces` it, approved again (FS-1122).
+   is resolved again, and a wallet's number is checked: its operator,
+   still bound to the payee (ID-12), its SIM unchanged (RL-22). The
+   operator is taken from the number's national destination code, as the
+   Communications Authority assigns them (dictionary §3), and confirmed
+   with that operator over our own connections to it, since a ported
+   number keeps its code (FS-1144). A different address or a failed check
+   holds the payout, and it goes only as a new transaction that
+   `replaces` it, approved again (FS-1122).
 5. **Links point back; the target's footer records them.** A link sits in
    the header, is fixed at creation, points to an earlier transaction of
    the same institution and currency, and comes from a closed list
@@ -169,7 +174,8 @@ journeys none yet.
    footer (`reversed_by`, `refunded_by`, `has_part`) in the same step, by
    the service creating the link; the target's own status does not change
    because of it, so a settled payout that is reversed stays settled, and
-   its net is read from its `linked_by`. A rail's return is the rail's
+   what is left of it is its *position*, computed from its `linked_by`
+   (§5). A rail's return is the rail's
    fact: it appends `returned` to the original first (W7), then the
    reversal is created (W8). A reversal is a new transaction in the
    opposite direction, never an edit; reversals and refunds together
@@ -277,6 +283,14 @@ order and author.
 Each state is a footer entry, with who and when and the ISO reason; its
 ISO 20022 status is in dictionary §3.
 
+**The position** (FS-1137). What a reversal or refund leaves of a
+transaction is computed from its footer's forward facts, never stored, and
+shown wherever the status is: W5 is *refunded* by W6; W7 is *reversed* by
+W8; a refund of part of a payment leaves it *partly refunded*. Its
+values are dictionary §2's. The status stays the rail's fact, so
+reconciliation still matches W7 against the bank's statement as a
+payout that settled and came back.
+
 ## 6 · Interfaces
 
 | What | Who offers it | What crosses |
@@ -284,8 +298,10 @@ ISO 20022 status is in dictionary §3.
 | Resolve an alias | Rails | An alias in; the address, the name returned and the directory out, in Mojaloop's two steps (rule 4) |
 | Quote | The lending or deposits service, with the rails' tariff | The charges and the settled amount, before approval (rule 8) |
 | Approve | Approval engine | The body's hash in; the approval's reference out (rule 2) |
-| Events | Every minter | Each existing money event in the catalogue (event-bus-kafka §5) carries, as its data, the transaction or the footer entries it appends, against the schema at the version in `dataschema`; which events carry which part is §12's first question |
+| Events | Every minter | Each existing money event in the catalogue (event-bus-kafka §5) carries, as its data, the transaction or the footer entries it appends, against the schema at the version in `dataschema`; no family of transaction events beside them (FS-1142) |
 | Find by any id | Reconciliation | A scheme, a value and an issuer in; the txid out (rule 7) |
+| Confirm a number's operator | Rails, over our connections to each operator | A number in; whether it is on that operator's network now (rule 4) |
+| The night's link checks | Reconciliation | The link rules over the day's transactions: forward facts, reversals within the original, parts summing (recon §4.8) |
 | The schema, rules and examples | code/transactions | Read by the docs' check today, by each service's contract tests when built |
 
 ## 7 · Security and audit
@@ -320,7 +336,7 @@ it adds these:
 | Events whose data fails the schema | Any: the producer is stopped from publishing the version |
 | Transactions in unknown | One older than its rail's window (RL-10) |
 | Payouts held at sending | A rise above the day's usual rate |
-| Links whose target lacks the forward fact | Any, in the night's checks |
+| Links whose target lacks the forward fact, reversals above the original, parts not summing | Any, in the night's checks (recon §4.8) |
 | Finding by an id | 95% within 100 ms |
 
 ## 10 · Threats
@@ -360,27 +376,29 @@ it adds these:
 | A18 | Model 1.1 adds a field | A reader written for 1.0 reads a 1.1 event | It validates against 1.1, reads what it knows, holds the rest | rule 10 |
 | A19 | A producer | It publishes data with a field outside the dictionary | Its contract test fails in the pipeline | rule 1 |
 | A20 | The dictionary, the schema and the examples | One changes without the others | The docs' check fails | rule 1 |
+| A21 | W5, refunded in full by W6 | Staff open W5 | Settled, refunded by W6: its position, beside its status | §5 |
+| A22 | A reversal whose original lacks its forward fact | The night's checks run | A break, owned and worked as recon §4.7 sets | §9 |
+| A23 | A number in NDC 722, ported from Safaricom to Airtel | A payout to it is about to be sent | Safaricom does not confirm it; held, the operator check failed | rule 4 |
 
 ## 12 · Open questions
 
 **For the owner:**
 
-1. **Which events carry which part:** each existing money event carries
-   the transaction or the footer entries it appends (recommended), or one
-   new family of transaction events beside them.
-2. **Adoption:** the lending service, deposits service, approval engine,
-   recon and Kapu Core specs name this one in `depends_on` when each is
-   next revised, and the rails spec is written on it.
-3. **The check symbol:** ISO 7064's hybrid method applied to Crockford's
-   32 symbols (MOD 33,32) is not one of the standard's named systems; the
-   alternative is its MOD 37,36 over 0 to 9 and A to Z, which can give a
-   check symbol Crockford's alphabet leaves out (I, L, O, U).
-4. **The operator behind a number:** since number portability, a prefix
-   does not tell the operator, so the rails must look it up (FS-1121, a
-   gap in FS-1103's chain).
-5. **To confirm:** the ISO 20022 codes in dictionary §3 against the lists
-   current at release; Daraja's, Fineract's and Odoo's field names
-   against the versions we run; the network codes of each operator.
+1. **Adoption:** the lending service, deposits service, approval engine
+   and Kapu Core specs name this one in `depends_on` when each is next
+   revised, and the rails spec is written on it (recon has).
+2. **The check symbol** (FS-1143): ISO 7064 is the standard, but none of
+   its named systems gives one check symbol in Crockford's alphabet.
+   Recommended: its MOD 97-10, two check digits, as IBANs (ISO 13616) and
+   LEIs (ISO 17442) use, after nine Crockford symbols: eleven characters
+   still. Waiting for go; until then rule 7 and the examples keep the
+   hybrid method over 32 symbols.
+3. **How each operator confirms a number:** the query each offers over
+   our connections (a portability or HLR lookup, or its own API), to
+   confirm with each.
+4. **To confirm:** Daraja's, Fineract's and Odoo's field names against the
+   versions we run; the ISO 20022 code sets and CAK's plan once more at
+   release.
 
 **For the customer:** whether its fees are deducted at payout, which
 decides each disbursement's amount and amount type (LQ-37).

@@ -1550,3 +1550,12 @@ test('transactions: a kind in the spec that is not in the schema fails', () => {
   const f = runWith((d) => patch(d, path.join('docs', 'specs', 'transactions.md'), (t) => t.replace('| write_off | internal, no rail |', '| charge_off | internal, no rail |')));
   assert.deepStrictEqual(names(f), ['transactions']);
 });
+
+test('transactions: a worked position that is not what its forward facts give fails', () => {
+  const f = runWith((d) => patch(d, TX_EXAMPLES, (t) => {
+    const e = JSON.parse(t);
+    e.worked[4].position = 'settled';
+    return JSON.stringify(e, null, 1);
+  }));
+  assert.deepStrictEqual(names(f), ['transactions']);
+});

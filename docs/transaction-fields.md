@@ -6,7 +6,7 @@ status: living
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1144, FS-1145, FS-1146]
 last_reviewed: 2026-11-09
 ---
 
@@ -22,9 +22,13 @@ the three together: a field in one and not the others fails.
 
 Ids are TF-01 onwards, never reused ([ids](ids.md)). ISO 20022 names are
 the closest element in pain.001, pacs.002, pacs.004, pacs.008 and
-camt.053/054, a guide for mapping and not a claim of conformance; the
-codes in §3 are from its external code lists, **to confirm against the
-lists current at release**.
+camt.053/054, a guide for mapping and not a claim of conformance. The
+codes in §3 are from its external code sets, each checked on 2026-11-09
+against a published copy of them (the npm package
+`@taprsvp/iso20022_external_codes` 1.0.1), because iso20022.org's own
+download refuses a script; the quarterly release current at go-live is
+read once more before release (FS-1146). Kenya's number blocks and
+network codes are the Communications Authority's (§3; FS-1145).
 
 ## 1 · Building blocks
 
@@ -40,12 +44,12 @@ The types the fields are made of.
 | TF-06 | date | A calendar day in Africa/Nairobi | An instant | YYYY-MM-DD | ISO 8601 | ISODate |
 | TF-07 | iso_code | A four-character ISO 20022 external code: a status reason, a return reason, a purpose (§3) | Our own codes (TF-04) | `AC04` | ISO 20022 external code lists | the Cd elements |
 | TF-08 | country | A country | A currency | Two capital letters, `KE` | ISO 3166-1 alpha-2 | CountryCode |
-| TF-09 | msisdn | A mobile number | The identity of its holder (ID-12) | `+254` then the national number | ITU-T E.164 | MobNb |
+| TF-09 | msisdn | A mobile number: in Kenya `+254`, a three-digit national destination code and six more digits, nine in all after 254 (§3) | The identity of its holder (ID-12); its operator, which the NDC suggests but portability can change | `+254700000001` | ITU-T E.164; CAK's numbering plan | MobNb |
 | TF-10 | actor | Who did a thing: a person (by user id and role), a service, or a rail | The payer or payee | `{kind, id, role}` | — | InitgPty, in part |
 | TF-11 | account | A loan, deposit, share or ledger account of the institution's, by its id | An address outside the institution (TF-14) | `{kind: "loan", id: "L00042"}` | — | DbtrAcct, CdtrAcct (Othr) |
 | TF-12 | alias | A pointer to an address: a phone number, a paybill and account reference, a till | The address it resolves to (TF-14); an identifier (TF-13) | `{type, value, sub_id}`, the types in §3 | Mojaloop PartyIdType and PartySubIdOrType | Prxy (Tp, Id) |
 | TF-13 | identifier | Who or what a party or instrument is, by a scheme and a value | An alias (TF-12); a government ID number of a person, never held here (spec rule 6) | `{scheme, value, issuer}`, the schemes in §3; issuer an ISO 3166 code for a national scheme | ISO 9362, ISO 17442, ISO 6166; ISO 20022 code lists | GenericIdentification (Id, SchmeNm, Issr) |
-| TF-14 | address | Where money lands: a Kenyan bank account (bank code, branch code, account), a wallet (its E.164 number, provider, network), an IBAN abroad, or a book account | An alias (TF-12) | One of four forms | E.164; ITU-T E.212 for a network (`639-02`, to confirm per operator); ISO 13616 for an IBAN, which Kenya does not use (to confirm) | CdtrAcct, CdtrAgt (BICFI, ClrSysMmbId) |
+| TF-14 | address | Where money lands: a Kenyan bank account (bank code, branch code, account), a wallet (its E.164 number, provider, network), an IBAN abroad, or a book account | An alias (TF-12) | One of four forms | E.164; ITU-T E.212 for a network, Kenya's country code 639 and the network code CAK assigns (`639-02`; §3); ISO 13616 for an IBAN, which Kenya does not use (to confirm) | CdtrAcct, CdtrAgt (BICFI, ClrSysMmbId) |
 | TF-15 | resolution | What a directory returned for an alias: the name, how well it matched the payee's, who asked and when | The address itself | `{directory, name_returned, name_match, resolved_by, resolved_at}` | Mojaloop's party lookup | acmt.023/024, in part |
 | TF-16 | destination | The address money goes to, with the alias as entered and its resolution | The payee (a party, TF-18) | `{address, alias, resolution}` | — | CdtrAcct with Prxy |
 | TF-17 | charge | One line of what is charged: a fee, a tax on a fee, or the rail's charge; whether it is deducted from the amount | The amount; a ledger posting | `{line, kind, code, amount, deducted, on}` | — | ChrgsInf; TaxRmt for a tax |
@@ -54,7 +58,7 @@ The types the fields are made of.
 | TF-20 | linked_by | The forward fact a link leaves on its target: reversed by, refunded by, has part | The link itself (TF-19) | `{rel, txid, at}` | — | — |
 | TF-21 | approval | The approval of the body: its reference in the approval engine and the hash of what was approved | A status (TF-22) | `{ref, body_hash, at}`, the hash `sha256:` and hex | SHA-256 over RFC 8785 canonical JSON | — |
 | TF-22 | status_entry | One state the transaction entered, when, by whom, with an ISO reason and the rail's own time as reported | A change (TF-29) | `{status, at, by, reason, reported_at}` | ISO 20022 status codes (§3) | TxSts, StsRsnInf |
-| TF-23 | check | One check made before money moved: resolved again, name match, number binding, SIM swap, limits, sanctions | An approval | `{check, result, at, detail}` | — | — |
+| TF-23 | check | One check made before money moved: resolved again, name match, the operator behind a number, number binding, SIM swap, limits, sanctions | An approval | `{check, result, at, detail}` | — | — |
 | TF-24 | external_id | Another party's id for this transaction: a rail's, a bank's, a component's | Our txid | `{issuer, scheme, value, at}` | — | TxId, InstrId, ClrSysRef, AcctSvcrRef |
 | TF-25 | dates | The value date and the business date (architecture §10), and when it was booked | The created time (`header.created_at`) | `{value_date, business_date, booked_at}` | ISO 8601 | ValDt, BookgDt, IntrBkSttlmDt |
 | TF-26 | allocation_line | One part of what a payment settled: principal, interest, fee, penalty, tax, deposit, overpayment | A charge (TF-17) | `{part, amount}` | — | RmtInf/Strd, in part |
@@ -106,6 +110,18 @@ added, none changed). **Class** is the architecture's (README §7).
 | TF-63 | linked_by | footer | The forward facts later transactions left on it | Its own links | linked by list | — | The service that creates the linking transaction | appended | Internal | — | FS-1124, FS-1131 |
 | TF-64 | changes | footer | Facts entered after creation, with who, role, reason and approval | Statuses; an edit, which never happens | change list | — | Whoever enters it | appended | Internal | — | FS-1119 |
 
+**Computed, never stored** (spec §5; FS-1137): shown wherever the status
+is, worked out from the footer's forward facts, so it is never a second
+truth to keep in step.
+
+| Position | When |
+|---|---|
+| The status | Nothing reverses or refunds it, or it has not settled |
+| partly_refunded | Settled or returned; refunds total less than its amount |
+| refunded | Refunds total its amount |
+| partly_reversed | Reversals, with any refunds, total less than its amount |
+| reversed | Reversals, with any refunds, total its amount |
+
 ## 3 · Codes
 
 **Statuses** (spec §5), each beside its ISO 20022 transaction status
@@ -119,44 +135,51 @@ where one exists:
 | held | Stopped before sending: a check held it (spec rule 4) | PDNG |
 | sent | Given to the rail | ACSP |
 | unknown | The rail has not answered; settled only by a status query or a statement (RL-10) | PDNG |
-| settled | The rail or the core confirmed it | ACSC |
+| settled | The rail or the core confirmed it | ACSC; ACCC once the payee's account is known credited |
 | rejected | Refused, before or by the rail | RJCT |
 | returned | Settled, then sent back by the receiving side | pacs.004 return |
 | cancelled | Withdrawn before sending | CANC |
 | expired | Lapsed at `expires_at` | RJCT with a reason |
 
 **Reasons**, for a status, a return or a change: ISO 20022's external
-codes, only these until the dictionary adds more.
+codes, only these until the dictionary adds more. Each is used only where
+its code set has it: S, a status reason (ExternalStatusReason1Code); R, a
+return (ExternalReturnReason1Code); C, a cancellation
+(ExternalCancellationReason1Code). A change cites the code of the status,
+return or cancellation it acts on.
 
-| Code | Meaning |
-|---|---|
-| AB05 | Timeout at the receiving side |
-| AC01 | Incorrect account number |
-| AC03 | Invalid creditor account number |
-| AC04 | Account closed |
-| AC06 | Account blocked |
-| AM04 | Insufficient funds |
-| AM05 | Duplication |
-| AM09 | Wrong amount |
-| BE01 | Inconsistent with the end customer: the name does not match |
-| CUST | Requested by the customer |
-| DUPL | Duplicate payment |
-| FOCR | Following a cancellation request |
-| FRAD | Fraudulent origin |
-| MS03 | Reason not specified |
-| NARR | Reason given in the note |
-| TECH | Technical problem |
-| UPAY | Undue payment |
+| Code | Meaning | Sets |
+|---|---|---|
+| AB05 | Timed out at the receiving side | S |
+| AC01 | Account number invalid, missing or wrongly formed | S, R |
+| AC03 | The payee's account number invalid or missing | S, R, C |
+| AC04 | Account closed | S, R |
+| AC06 | Account blocked | S, R |
+| AM04 | Insufficient funds | S, R |
+| AM05 | Duplication | S, R |
+| AM09 | Not the amount agreed or expected | S, R, C |
+| BE01 | The end customer's identification does not match the account: our use, the name returned does not match the payee's | S, R |
+| CUST | Requested by the payer | S, R, C |
+| DUPL | A duplicate of another payment | S, R, C |
+| FOCR | Returned after a cancellation request | S, R |
+| FRAD | Originated fraudulently | S, C |
+| MS03 | Reason not specified | S, R |
+| NARR | Reason given in the note | S, R, C |
+| TECH | Technical problem | C |
+| UPAY | Payment not justified | S, R, C |
 
 **Purposes:** ISO 20022's external purpose codes.
 
 | Code | Meaning |
 |---|---|
-| LOAN | A loan paid out |
-| LOAR | A loan repaid |
+| LOAN | A loan paid out to the borrower |
+| LOAR | A loan repaid to the lender |
 | INTE | Interest |
-| CASH | A cash deposit, withdrawal or transfer between accounts |
+| FEES | A fee or charge |
 | TAXS | Tax |
+| WHLD | Withholding tax |
+| SAVG | A deposit to or withdrawal from savings |
+| ACCT | A transfer between two accounts of the same holder in the institution |
 
 **Alias types:** Mojaloop's party id types.
 
@@ -183,6 +206,52 @@ national schemes, each with its ISO 3166 issuer.
 | TXID | An organisation's tax number: in Kenya its KRA PIN; never a person's | ISO 20022 organisation code |
 | CUST | The institution's customer number | ISO 20022 code |
 | BANK | A bank's own party id | ISO 20022 code |
+
+**Kenya's mobile numbers** (FS-1145), from the Communications Authority's
+*Telecommunication Numbering Plan for Kenya*, October 2025
+(CA/SRM/S&N/NNP/OCT/2025), §1.1 and §7.3, read 2026-11-09. A mobile
+number is nine digits after 254, the first three its national destination
+code. Since number portability the NDC says only who was assigned the
+block, so the rails take it as the likely operator and confirm it with the
+operators before money moves (spec rule 4; FS-1144). The plan changes as
+blocks are assigned: it is read again at each release and at onboarding.
+
+| NDC | Assigned to |
+|---|---|
+| 100 to 108 | Airtel Networks Kenya |
+| 110 to 119 | Safaricom |
+| 120 | Jambo Telcoms |
+| 124 | Infura |
+| 126 | Hidiga Investments |
+| 128 | Webtribe |
+| 130 | NRG Media |
+| 140 | Safaricom |
+| 199 | Shared, for network testing and research |
+| 700 to 729 | Safaricom |
+| 730 to 739 | Airtel Networks Kenya |
+| 740 to 743 | Safaricom |
+| 744 | Homelands Media |
+| 745 to 746 | Safaricom |
+| 747 | Jamii Telecoms |
+| 748 | Safaricom |
+| 749 | The IEBC, for its KIEMS kits |
+| 750 to 756 | Airtel Networks Kenya |
+| 757 to 759 | Safaricom |
+| 760 | Mobile Pay |
+| 761 | Eferio Kenya |
+| 762 | Airtel Networks Kenya |
+| 763 to 766 | Finserve Africa |
+| 768 to 769 | Safaricom |
+| 770 to 779 | Telkom Kenya |
+| 780 to 789 | Airtel Networks Kenya |
+| 790 to 799 | Safaricom |
+
+The plan's 300 block is for machine-to-machine services, twelve digits
+long: never a person's wallet. Its network codes (MCC 639): 01 and 02
+Safaricom; 03 and 05 Airtel Networks Kenya; 04 Mobile Pay Kenya; 06
+Finserve Africa; 07 Telkom Kenya; 08 Webtribe; 09 Homeland Media; 10
+Jamii Telecommunications; 11 Jambo Telcoms; 12 Infura; 13 Hidiga
+Investments; 14 NRG Media.
 
 **Links** and the forward fact each leaves (spec rule 5):
 

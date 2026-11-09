@@ -224,11 +224,27 @@ const RULES = [
       if (!d || !sent || t.body.direction !== 'out') return null;
       const passed = (c) => (t.footer.checks || []).some((x) => x.check === c && x.result === 'pass' && x.at <= sent);
       if (d.alias && !passed('resolved_again')) return 'sent to an alias not resolved again before sending';
-      if (d.address.kind === 'wallet') for (const c of ['number_binding', 'sim_swap']) if (!passed(c)) return `sent to a wallet without a passed ${c} check`;
+      if (d.address.kind === 'wallet') for (const c of ['operator', 'number_binding', 'sim_swap']) if (!passed(c)) return `sent to a wallet without a passed ${c} check`;
       return null;
     },
   },
 ];
+
+// A transaction's position (spec §5): its own status, or, once settled or
+// returned, what its reversals and refunds leave of it. Computed from the
+// forward facts on its footer, never stored.
+function position(t, by) {
+  const status = t.footer.status_history[t.footer.status_history.length - 1].status;
+  if (!['settled', 'returned'].includes(status)) return status;
+  const total = (rel) => t.footer.linked_by.filter((f) => f.rel === rel && by.has(f.txid))
+    .reduce((n, f) => n + by.get(f.txid).body.amount.minor, 0);
+  const reversed = total('reversed_by');
+  const refunded = total('refunded_by');
+  if (!reversed && !refunded) return status;
+  const whole = reversed + refunded >= t.body.amount.minor;
+  const word = reversed ? 'reversed' : 'refunded';
+  return whole ? word : `partly_${word}`;
+}
 
 function apply(transactions) {
   const by = new Map(transactions.map((t) => [t.header.txid, t]));
@@ -241,4 +257,4 @@ function apply(transactions) {
   return out;
 }
 
-module.exports = { RULES, apply, bodyHash, canonical, checkSymbol, referenceValid, INVERSE };
+module.exports = { RULES, apply, position, bodyHash, canonical, checkSymbol, referenceValid, INVERSE };
