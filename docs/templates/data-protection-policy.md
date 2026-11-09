@@ -7,7 +7,7 @@ law: LR-03
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1080, FS-1087, FS-1092, FS-1100, FS-1103, FS-1108, FS-1110, FS-1111, FS-1140]
+review_ids: [FS-1080, FS-1087, FS-1092, FS-1100, FS-1103, FS-1108, FS-1110, FS-1111, FS-1140, FS-1147]
 last_reviewed: 2026-11-09
 ---
 
@@ -85,7 +85,7 @@ Personal data is collected from the person directly where possible, and from ano
 
 ## 5. Consent
 
-Where {{institution}} relies on consent, it is express, specific, asked for separately on its own form, recorded, and as easy to withdraw as to give; a privacy notice is never taken as consent (reg 58; Data Protection Act s.32). Consent to marketing is separate from the loan, and refusing it never affects a loan.
+Where {{institution}} relies on consent, it is express, specific, asked for separately on its own form, recorded, and as easy to withdraw as to give; a privacy notice is never taken as consent (reg 58; Data Protection Act s.32). Consent to marketing is separate from the loan, and refusing it never affects a loan. It lasts until it is withdrawn, not until the loan ends: a former customer who agreed may still receive offers, and one who did not never does (Data Protection Act s.37; Data Protection (General) Regulations reg 15). Every marketing message says how to stop it, free, by a one-word reply or a link, and an opt-out is honoured (Data Protection (General) Regulations reg 16; Data Protection (General) Regulations reg 17), as the lender regulations also require (reg 27). Consent to marketing is confirmed again whenever contact details are updated, at least every two years (reg 45).
 
 ## 6. Sensitive data and automated decisions
 
@@ -109,7 +109,7 @@ Personal data is kept in Kenya. It is transferred out of Kenya only where approp
 
 ## 10. Retention and deletion
 
-Personal data is kept only as long as its purpose and the law require (Data Protection Act s.39): transaction and customer due diligence records seven years from the end of the relationship or the transaction, and twelve years from default for a secured loan written off or sent to recovery. A customer relationship ends when the person's last loan or guarantee is repaid, or written off, and closed, with no application open; the period runs from then, and a customer who returns starts a new relationship. At the end of the period the data is deleted, with its copies and backups, by the system itself; a legal hold stops the clock while a dispute or investigation lasts.
+Personal data is kept only as long as its purpose and the law require (Data Protection Act s.39): transaction and customer due diligence records seven years from the end of the relationship or the transaction, and twelve years from default for a secured loan written off or sent to recovery. A customer relationship ends when the person's last loan or guarantee is repaid, or written off, and closed, with no application open; the period runs from then, and a customer who returns starts a new relationship. A former customer's name, contact details and marketing preferences are kept for marketing only while their consent stands, apart from the records the law requires, and deleted when it is withdrawn (Data Protection Act s.39). At the end of the period the data is deleted, with its copies and backups, by the system itself; a legal hold stops the clock while a dispute or investigation lasts.
 
 ## 11. Security
 
@@ -132,6 +132,7 @@ Staff are trained in data protection when they join and every year. Compliance i
 
 | Provision | Cited here as | What it requires |
 |---|---|---|
+| reg 27 | reg 27 | Thirty days' notice to the Central Bank before a new delivery channel rolls out, with the mobile money account, apps and bank accounts to be used; a way to opt out of marketing messages; channels that are available, safe, protected from fraud, easy to use and affordable |
 | reg 28 | reg 28 | Applications considered under the credit policy, ability to repay assessed and no reckless lending (28(1)); a refusal given at once, with reasons (28(2)); a loan may be restructured on the borrower's request or with prior notice (28(3)) |
 | reg 30 | reg 30 | No harassing, shaming or threatening collection: nothing posted to shame a borrower (30(1)(d)), no messages to their contacts (30(1)(e)), no calls outside working hours, no taking of essential personal effects (30(1)(k)); no charges not disclosed in the contract (30(2)); land security recovered under the Land Act (30(3)); thirty days' notice before selling movable security (30(4)) |
 | reg 33 | reg 33 | Customers' credit information shared with licensed credit reference bureaus, timely, complete and accurate; no negative listing for an amount of one thousand shillings or less (33(3)) |
@@ -151,6 +152,15 @@ Staff are trained in data protection when they join and every year. Compliance i
 | s. 31 | s. 31 | An impact assessment before processing likely to put people's rights at high risk, describing the processing, its necessity, the risks and the safeguards |
 | s. 32 | s. 32 | Whoever relies on consent proves it was given for the purpose; consent can be withdrawn at any time; it is not freely given where a service is made to depend on consent to processing it does not need |
 | s. 35 | s. 35 | A person may refuse a decision based solely on automated processing, profiling included, that has legal effects on them or significantly affects them, unless it is needed for a contract, authorised by law with safeguards, or consented to; then they are told, and may ask for a person to reconsider it |
+| s. 37 | s. 37 | Personal data used for commercial purposes only with the person's express consent, or where a written law allows it and the person was told when the data was collected; anonymised where possible |
 | s. 39 | s. 39 | Personal data kept only as long as needed for its purpose, unless the law, a lawful purpose or the person's consent requires longer; then deleted, erased, anonymised or pseudonymised |
 | s. 43 | s. 43 | A breach with a real risk of harm notified to the Data Commissioner within seventy-two hours, and to the person affected; a processor tells the controller within forty-eight hours where practicable (43(3)) |
 | s. 48 | s. 48 | Personal data transferred out of Kenya only with proof of appropriate safeguards given to the Data Commissioner, or where the transfer is necessary on a ground the section lists |
+
+**[LR-18](../law/LR-18.md) The Data Protection (General) Regulations, 2021, Legal Notice No. 263 of 2021.** Regulator: Office of the Data Protection Commissioner. Made under: The Data Protection Act (Cap. 411C). In force: Yes. Version read: as at 2022-12-31, [Kenya Law](https://new.kenyalaw.org/akn/ke/act/ln/2021/263/eng@2022-12-31).
+
+| Provision | Cited here as | What it requires |
+|---|---|---|
+| reg 15 | reg 15 | Direct marketing with personal data, never sensitive data, only where it was collected from the person, they were told marketing is a purpose, they consented, a simple way to opt out is offered and they have not opted out (15(1)); every message says where to ask, free, for it to stop (15(2)); marketing by email never hides the sender, always gives an address to stop it, and uses no automated calls (15(3)); commercial use without consent is an offence (15(4)) |
+| reg 16 | reg 16 | An opt-out clearly explained, quick, through a direct channel, free or at a nominal cost, and accessible to persons with a disability; once a person opts out, no more direct marketing to them |
+| reg 17 | reg 17 | Each direct marketing message says prominently that the person may opt out, for example by a one-word reply to a text or a link in an email; preferences may be offered, but always with an option to opt out of everything |
