@@ -12,7 +12,7 @@ depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka, transactions]
 used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console, product-versions, rails]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032, FS-1053, FS-1054, FS-1056, FS-1058, FS-1154, FS-1155]
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032, FS-1053, FS-1054, FS-1056, FS-1058, FS-1154, FS-1155, FS-1157]
 last_reviewed: 2026-11-09
 ---
 
@@ -391,7 +391,10 @@ each part's hash under the one approval reference (transactions rule 5;
 FS-1150). A customer's own instruction (a payment, a withdrawal, a
 transfer) is approved by the customer's step-up, which the engine records
 under the product's policy, so every movement out has its approval
-recorded (FS-1152).
+recorded (FS-1152). A change to a rail setting (a shortcode, a callback
+address, a bank's channel or limit, a float threshold) is a request of
+subject type `rail.setting`, its chain at least two people, the one who
+asks never the one who approves (rails rule 13; FS-1157).
 
 ## 11 · Data
 

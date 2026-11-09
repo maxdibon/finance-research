@@ -11,7 +11,7 @@ depends_on: [transactions, approval-engine, event-bus-kafka]
 used_by: [lending-service, deposits-service, recon]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-056, FS-093, FS-127, FS-208, FS-209, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-1109, FS-1113, FS-1122, FS-1127, FS-1133, FS-1143, FS-1144, FS-1150, FS-1152, FS-1155]
+review_ids: [FS-056, FS-093, FS-127, FS-208, FS-209, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-1109, FS-1113, FS-1122, FS-1127, FS-1133, FS-1143, FS-1144, FS-1150, FS-1152, FS-1155, FS-1156, FS-1157, FS-1158]
 last_reviewed: 2026-11-09
 ---
 
@@ -163,10 +163,17 @@ statements through it; journeys none yet.
    its number's binding and SIM are checked (ID-12, RL-22). A payment to
    someone else is screened for sanctions and limits first (FS-1152).
    Each check is a footer entry; a failure holds the payout.
-8. **Keys and credentials never leave OpenBao** (RL-12). Each
-   institution's rail credentials are held there, per institution and
-   rail; instructions to banks are signed inside it with the
-   institution's key or its bank's certificate, never exported.
+8. **Keys and credentials never leave OpenBao, and are rotated** (RL-12;
+   FS-1156). Each institution's rail credentials are held there, per
+   institution and rail; instructions to banks are signed inside it with
+   the institution's key or its bank's certificate, never exported. A
+   credential that can pay anyone, M-Pesa's B2C and B2B initiator above
+   all, is released only to the rails' own service identity, and is
+   usable at the rail only from the addresses registered with it. Each
+   credential has a rotation schedule, set per rail in §6's terms and
+   kept as a rail setting (rule 13): renewed before it lapses, with an
+   alert ahead of the date; rotated at once when anyone who could reach
+   it leaves, or when it may have been seen.
 9. **Money returns only to where it came from** (RL-01). A reversal or a
    recall is a new transaction linked to the original (transactions rule
    5), back to the original's source; a return from the receiving side is
@@ -176,6 +183,38 @@ statements through it; journeys none yet.
     failures or latency pass its limits, new instructions to it wait,
     their products are told, and on-call is alerted; nothing is switched
     to another rail without a new transaction and its approval.
+11. **The rails reach out only to the rails** (FS-1156). Their calls to
+    every rail and bank leave through one egress gateway, from the fixed
+    addresses registered with each rail, and are allowed only to that
+    rail's own hosts, named in its adapter's configuration; every other
+    destination is refused and alerted. No other service reaches a rail.
+12. **A callback endpoint is hardened** (FS-1156). Each institution and
+    rail has its own callback address, its path holding a secret that is
+    rotated like a credential (rule 8); the gateway limits its rate, and
+    refuses a callback whose rail id it has seen before, so a replay finds
+    nothing to do. A rail that offers fixed source addresses has them
+    allowed, and only them.
+13. **A rail setting changes only through the approval engine** (FS-1156,
+    FS-1157). Every setting that could redirect money or hide it (a
+    shortcode, a callback address, a bank account, a bank's channel, its
+    straight-through limit, a float threshold, a rotation schedule, a
+    rail's hosts) is a request of subject type `rail.setting` on the
+    approval engine: a chain of at least two people, the one who asks
+    never the one who approves, more where the institution's mandate says;
+    effective-dated, and each change an event. This is what the rails
+    module's maker-checker means (RL-07, FS-611): the engine's smallest
+    chain.
+14. **Each paying account has float limits, at several thresholds**
+    (FS-1156, FS-1158). The balance of every account the institution pays
+    from (a B2C shortcode, a bank account) is read after every payout and
+    on a schedule, and worked forward between reads from what was sent.
+    Each account has thresholds, set as rail settings (rule 13), each with
+    what happens and who is told (§6's float thresholds); and velocity
+    limits, what may leave in an hour and in a day, so a drain made of
+    payouts each valid on its own is stopped. A threshold crossed is a
+    footer entry on the payout that crossed it, and an alert; at the
+    floor, new payouts wait. Customers' own limits stay financial
+    crime's (FC-16).
 
 ## 4 · The interface
 
@@ -226,7 +265,35 @@ each rail's answer maps to them.
 A bank's channel is configuration, per institution and bank account, and
 so is its straight-through limit from the bank's mandate letter, above
 which the institution's signatories also release the file (RL-07,
-FS-594, FS-611).
+FS-594, FS-611); each is a rail setting, changed only through the
+approval engine (rule 13).
+
+**Float thresholds** (rule 14). Each paying account's levels, set by the
+institution at onboarding in amounts and checked against its usual day;
+the defaults below are where it starts, in hours of its usual payouts:
+
+| Level | When | What happens | Who is told, and how |
+|---|---|---|---|
+| Plenty | Above the top-up level | Nothing | — |
+| Top up | Below about two days of payouts | Payouts go on | The institution's finance role, by email and in the console, once a day until topped up |
+| Low | Below about one day | Payouts go on; their products warned that the float is low | Finance and the operations lead, by SMS and email, at once |
+| Critical | Below about four hours | Payouts go on; any above a set size held for a person to release | Finance, the operations lead and our on-call, by SMS and a call |
+| Floor | Below the largest payout waiting, or a set amount | New payouts wait; nothing is rejected; they go once topped up, in the order approved | All of the above; the products tell the customers their payout is waiting |
+| Velocity | More left in an hour or a day than its limit | Further payouts wait for a person to release them | Finance, the operations lead and our on-call, at once: a possible drain |
+
+A collections account may have an upper level too, above which the
+institution sweeps it to its bank; whether it does is its choice.
+
+**Credentials, by rail** (rule 8): each one's rotation is set when the
+rail is connected, to the rail's own rules where it has them, else every
+ninety days, and to confirm with each rail:
+
+| Rail | Credentials | Renewed |
+|---|---|---|
+| M-Pesa (Daraja) | The app's consumer key and secret; the initiator's name and password, sent encrypted with Safaricom's certificate; the push prompt's passkey | On the schedule, and at once when anyone who could reach them leaves |
+| A bank by API | Its client certificate for mutual TLS; its API keys | Before the certificate lapses; keys on the schedule |
+| A bank by files | The SFTP key; the institution's signing key or the bank's certificate | As above |
+| A bank by internet banking | The institution's signatories' own logins: theirs, never held by us | By the bank's own rules |
 
 ## 7 · Interfaces
 
@@ -275,6 +342,11 @@ add:
 | A rail's failure rate or latency past its limit | The rail paused (rule 10); on-call alerted |
 | Money arriving minted from a statement line, not a callback | A rise above the day's usual: callbacks are being missed |
 | An instruction refused for a hash that differs | Any: someone changed an approved payment |
+| A float threshold crossed | Each level as §6 sets it |
+| Outflow past a velocity limit | Any: payouts wait; on-call called |
+| A call to a host outside a rail's list | Any: refused at the egress gateway |
+| A callback replayed, or past its rate limit | A rise above the usual |
+| A credential within its warning period | Each, until renewed |
 
 ## 11 · Threats
 
@@ -288,6 +360,11 @@ add:
 | Elevation of privilege | A service sends a payout it has no approval for | Rule 3: no approval, no instruction |
 | Linkability (LINDDUN) | A reference that reveals a borrower | Our ids carry no personal data (transactions rule 7) |
 | Identifiability (LINDDUN) | A phone number in a rail's log | Masked in every log (§8) |
+| Tampering | A callback address changed to an attacker's | Rule 13: every rail setting through the approval engine, two people at least |
+| Spoofing | A captured callback replayed | Rule 12: a secret path, a rate limit, a rail id seen once |
+| Information disclosure | A compromised service sends data to an outside host | Rule 11: one egress gateway, only each rail's hosts |
+| Elevation of privilege | The B2C initiator's password used to pay from elsewhere | Rule 8: released only to the rails' identity, usable only from registered addresses, rotated |
+| Denial of service | The float drained by many small payouts, each approved | Rule 14: velocity limits; payouts wait at the floor |
 
 ## 12 · Acceptance tests
 
@@ -305,6 +382,13 @@ add:
 | A10 | M-Pesa failing past its limit | New payouts come | They wait; their products are told; on-call alerted | rule 10 |
 | A11 | A paybill payment at the institution's bank | The bank's statement arrives | Minted from the line, matched by the reference the bank passes on | RL-07, FS-1133 |
 | A12 | Any rail's adapter | Its simulator produces every outcome, silence included | Each maps to its state in §5 | RL-17, §5 |
+| A13 | The B2C shortcode's float | A payout takes it below the low level | Payouts go on; finance and the operations lead told by SMS and email; the crossing on that payout's footer | rule 14 |
+| A14 | The float below the largest payout waiting | A new payout is approved | It waits, is not rejected, and goes once the float is topped up | rule 14 |
+| A15 | KES 2 million paid out in an hour against a limit of 1 million | The next payout comes | It waits for a person; on-call called | rule 14 |
+| A16 | A request to change the callback address | The one who asked approves it | Refused: a second person must | rule 13 |
+| A17 | The rails | A call to a host not in the rail's list | Refused at the egress gateway, and alerted | rule 11 |
+| A18 | A C2B confirmation already received | It arrives again | Nothing done a second time | rule 12 |
+| A19 | The initiator's password | Its rotation date nears | An alert ahead; renewed before it lapses | rule 8 |
 
 ## 13 · Open questions
 
@@ -325,4 +409,6 @@ add:
    reference.
 
 **For the customer:** which of its banks offers an API or host-to-host
-files, and the straight-through limit in each mandate letter (RL-07).
+files, and the straight-through limit in each mandate letter (RL-07);
+its float thresholds and velocity limits for each paying account, and who
+in finance is told at each level (rule 14).
