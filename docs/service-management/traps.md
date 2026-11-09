@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1053, FS-1118]
-last_reviewed: 2026-11-05
+review_ids: [FS-1053, FS-1118, FS-1122]
+last_reviewed: 2026-11-09
 ---
 
 # Traps
@@ -41,6 +41,11 @@ two: the trap, then what to do.
 - **An environment variable set for a builder** (DOCX_MODULE) must be set
   in the same PowerShell call as the build; a call chained after a
   failure never sets it, and the build fails on the missing package.
+- **PowerShell 5.1's `Set-Content -Encoding utf8` writes a byte-order
+  mark,** and the file tool keeps it when it rewrites the file: a commit
+  message so written fails the commit-msg hook, its subject no longer
+  starting "FS-". Write message files with the file tool from the start
+  (FS-1122).
 - **The phase-1 cap is full**; adding a capability trips scope,
   references, dependencies, customers and obligations at once.
 - **A break test goes stale** when the design catches up with it: run the
