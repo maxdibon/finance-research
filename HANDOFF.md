@@ -1,7 +1,7 @@
 # Dibon financial services — session handoff
 
     release: 2026.10.16 · minor
-    updated: 2026-11-05
+    updated: 2026-11-09
     the release is the documentation's, moved by each release (FS-842);
     this file has no version of its own
     purpose: hand this repository to a session that knows nothing about it;
@@ -206,6 +206,13 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   data as well as words, every value checked wherever it enters against
   the schema and rules in `code/lender-rules/` (FS-823, FS-825); answers
   come back in form fields, never by email (FS-817).
+- **Transactions:** one model of a money movement for every component
+  (docs/specs/transactions.md): a header fixed at creation, a body fixed at
+  approval under its hash, a footer only appended to, each in groups;
+  every field defined once in docs/transaction-fields.md (TF ids), typed
+  in `code/transactions/`, and held together by the "transactions" check
+  (FS-1131, FS-1149, FS-1150). A component maps its own names to it; it
+  never adds a field of its own.
 - **Kapu Core** is Fineract 1.15.x, pinned, never forked (FS-626).
 - **Outages:** Dibon restores the platform; the institution runs its
   business by its own fallback, and Dibon never touches its money
@@ -321,7 +328,8 @@ say "proposal in chat".
 every id once, open rows in REVIEW.md, closed rows in their hundred's
 file) and review ids, markup (no Markdown file over 200 KB, which a
 preview may show as raw text; no word in angle brackets outside code),
-citations (each card in docs/law/ complete; in a document naming its main
+transactions (the dictionary, the schema, the rules and the worked examples
+in `code/transactions/` against each other), citations (each card in docs/law/ complete; in a document naming its main
 instrument, every cite placed and on its card, and its "Regulations cited"
 current), the module template, capabilities, diagrams, partners, public, copy and claims,
 decisions, obligations, customers, regulation, assurance, references,
@@ -371,7 +379,7 @@ register row.
 ## Traps that have cost real time
 
 **Read [the traps](docs/service-management/traps.md) before your first
-edit** (FS-1053): 41 things that have cost a session real time, each
+edit** (FS-1053): 43 things that have cost a session real time, each
 with what to do instead. `dibon session start` hands them over with this
 page. When something costs you time, add it there, in the same pass.
 

@@ -11,7 +11,7 @@ depends_on: [event-bus-kafka]
 used_by: [recon]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151]
 last_reviewed: 2026-11-09
 ---
 
@@ -250,12 +250,42 @@ question (FS-1149):
 | Part | Fixed | Its groups, and what they hold |
 |---|---|---|
 | Header | At creation | **id** (txid, reference, idempotency_key); **what** (kind, institution, account, product_version); **origin** (channel, rail, created_at, initiated_by); with model_version and links beside them |
-| Body | At approval, under the hash | **money** (amount, amount_type, direction, charges); **parties** (payer, payee, destination); **terms** (purpose, instrument, expires_at) |
+| Body | At approval, under the hash | **money** (amount, amount_type, direction, charges); **parties** (payer, payee, source, destination); **terms** (purpose, instrument, expires_at) |
 | Footer | Never: appended to | **progress** (status_history, checks); **settlement** (settled, rail_charges, dates); **books** (allocation, ledger_entries, recon); with approval, ids, linked_by and changes beside them |
 
 The footer's groups follow who writes them (§7): the approval engine its
 approval, the rails its progress and settlement, the core adapter and
 reconciliation its books.
+
+**W1, as it is held** (cut down; every value in
+[examples.json](../../code/transactions/examples.json)):
+
+```
+  header   model_version  1.0
+           id        { txid 01a1bf1b-...-000000000001, reference 8YCC826SG20,
+                       idempotency_key loan-L00042-disburse-1 }
+           what      { kind disbursement, institution example-mfi, account loan L00042 }
+           origin    { channel staff_workspace, rail mpesa, created_at, initiated_by }
+           links     [ ]
+  ---------------------------------------------------------- fixed at creation
+  body     money     { amount KES 100,000, amount_type send, direction out,
+                       charges [ fee 5,000 deducted, excise 1,000 deducted ] }
+           parties   { payer the institution, payee the borrower,
+                       source its B2C shortcode, destination the borrower's wallet,
+                       with the alias as entered and the name returned }
+           terms     { purpose LOAN }
+  ---------------------------------------------------------- fixed at approval, hashed
+  footer   approval    { ref apr-000981, body_hash sha256:..., at }
+           progress    { status_history [ created, awaiting_approval, approved,
+                         sent, settled ], checks [ resolved_again, operator,
+                         number_binding, sim_swap ] }
+           settlement  { settled KES 94,000, rail_charges [ M-Pesa's B2C charge ],
+                         dates { value_date, business_date, booked_at } }
+           books       { ledger_entries [ Fineract's entry ], recon { match } }
+           ids         [ M-Pesa's conversation ids and receipt, Fineract's id ]
+           linked_by   [ ]    changes  [ ]
+  ---------------------------------------------------------- appended to, never changed
+```
 
 It travels in the CloudEvents envelope (event-bus-kafka §4), whose `txid`
 is the header's and whose `prevhash` and `sig` prove each footer entry's
