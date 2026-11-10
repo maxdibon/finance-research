@@ -39,17 +39,26 @@
                 "withdrawal",
                 "payment",
                 "transfer",
+                "treasury",
                 "interest",
+                "dividend",
                 "fee",
                 "reversal",
+                "chargeback",
                 "refund",
                 "write_off",
-                "adjustment"
+                "waiver",
+                "adjustment",
+                "subscription",
+                "redemption",
+                "distribution"
               ]
             },
             "institution": {"$ref": "#/$defs/code"},
             "account": {"$ref": "#/$defs/account"},
-            "product_version": {"type": "string", "pattern": "^[a-z0-9-]+-v[0-9]+$"}
+            "product_version": {"type": "string", "pattern": "^[a-z0-9-]+-v[0-9]+$"},
+            "mandate": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{1,64}$"},
+            "observed": {"type": "boolean"}
           }
         },
         "origin": {
@@ -59,9 +68,19 @@
           "additionalProperties": false,
           "properties": {
             "channel": {
-              "enum": ["customer_pages", "app", "ussd", "staff_workspace", "kapu_console", "api", "rail", "end_of_day"]
+              "enum": [
+                "customer_pages",
+                "app",
+                "ussd",
+                "staff_workspace",
+                "kapu_console",
+                "api",
+                "rail",
+                "end_of_day",
+                "statement"
+              ]
             },
-            "rail": {"enum": ["mpesa", "airtel_money", "pesalink", "eft", "rtgs", "cash", "book", "none"]},
+            "rail": {"enum": ["mpesa", "airtel_money", "pesalink", "card", "eft", "rtgs", "cash", "book", "none"]},
             "created_at": {"$ref": "#/$defs/time"},
             "initiated_by": {"$ref": "#/$defs/actor"}
           }
@@ -84,7 +103,8 @@
             "amount": {"$ref": "#/$defs/money"},
             "amount_type": {"enum": ["send", "receive"]},
             "direction": {"enum": ["out", "in", "internal"]},
-            "charges": {"type": "array", "items": {"$ref": "#/$defs/charge"}}
+            "charges": {"type": "array", "items": {"$ref": "#/$defs/charge"}},
+            "exchange": {"$ref": "#/$defs/exchange"}
           }
         },
         "parties": {
@@ -112,7 +132,9 @@
           "properties": {
             "purpose": {"$ref": "#/$defs/iso_code"},
             "instrument": {"$ref": "#/$defs/identifier"},
-            "expires_at": {"$ref": "#/$defs/time"}
+            "expires_at": {"$ref": "#/$defs/time"},
+            "units": {"$ref": "#/$defs/units"},
+            "execute_on": {"$ref": "#/$defs/date"}
           }
         }
       }
@@ -209,7 +231,7 @@
       "required": ["kind"],
       "additionalProperties": false,
       "properties": {
-        "kind": {"enum": ["person", "organisation", "institution"]},
+        "kind": {"enum": ["person", "organisation", "institution", "group"]},
         "ref": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{1,64}$"},
         "name": {"type": "string", "pattern": "^.{1,140}$"},
         "identifiers": {"type": "array", "items": {"$ref": "#/$defs/identifier"}},
@@ -320,7 +342,7 @@
       "required": ["rel", "txid"],
       "additionalProperties": false,
       "properties": {
-        "rel": {"enum": ["reverses", "refunds", "corrects", "part_of", "in_batch", "replaces", "fee_for"]},
+        "rel": {"enum": ["reverses", "refunds", "corrects", "part_of", "in_batch", "replaces", "recovers", "fee_for"]},
         "txid": {"$ref": "#/$defs/txid"}
       }
     },
@@ -329,7 +351,9 @@
       "required": ["rel", "txid", "at"],
       "additionalProperties": false,
       "properties": {
-        "rel": {"enum": ["reversed_by", "refunded_by", "corrected_by", "has_part", "replaced_by", "has_fee"]},
+        "rel": {
+          "enum": ["reversed_by", "refunded_by", "corrected_by", "has_part", "replaced_by", "recovered_by", "has_fee"]
+        },
         "txid": {"$ref": "#/$defs/txid"},
         "at": {"$ref": "#/$defs/time"}
       }
@@ -354,6 +378,8 @@
             "created",
             "awaiting_approval",
             "approved",
+            "authorised",
+            "captured",
             "held",
             "sent",
             "unknown",
@@ -442,6 +468,31 @@
         "what": {"type": "string", "pattern": "^.{1,200}$"},
         "note": {"type": "string", "pattern": "^.{1,500}$"},
         "approval_ref": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{1,64}$"}
+      }
+    },
+    "decimal": {"type": "string", "pattern": "^[0-9]{1,18}(\\.[0-9]{1,8})?$"},
+    "exchange": {
+      "type": "object",
+      "required": ["from", "to", "rate", "rate_source", "rate_at"],
+      "additionalProperties": false,
+      "properties": {
+        "from": {"$ref": "#/$defs/money"},
+        "to": {"$ref": "#/$defs/money"},
+        "rate": {"$ref": "#/$defs/decimal"},
+        "rate_source": {"$ref": "#/$defs/code"},
+        "rate_at": {"$ref": "#/$defs/time"}
+      }
+    },
+    "units": {
+      "type": "object",
+      "required": ["quantity", "price", "currency", "priced_on", "settles_on"],
+      "additionalProperties": false,
+      "properties": {
+        "quantity": {"$ref": "#/$defs/decimal"},
+        "price": {"$ref": "#/$defs/decimal"},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "priced_on": {"$ref": "#/$defs/date"},
+        "settles_on": {"$ref": "#/$defs/date"}
       }
     }
   }

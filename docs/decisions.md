@@ -53,4 +53,4 @@ check reads them all.
 | [800 to 899](decisions/800-899.md) | 6 | FS-803 to FS-896 |
 | [900 to 999](decisions/900-999.md) | 15 | FS-900 to FS-996 |
 | [1000 to 1099](decisions/1000-1099.md) | 15 | FS-1004 to FS-1103 |
-| [1100 to 1199](decisions/1100-1199.md) | 15 | FS-1109 to FS-1162 |
+| [1100 to 1199](decisions/1100-1199.md) | 17 | FS-1109 to FS-1164 |
