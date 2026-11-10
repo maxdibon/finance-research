@@ -11,7 +11,7 @@ depends_on: [transactions, approval-engine, event-bus-kafka]
 used_by: [lending-service, deposits-service, recon]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-056, FS-093, FS-127, FS-208, FS-209, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-1109, FS-1113, FS-1122, FS-1127, FS-1133, FS-1143, FS-1144, FS-1150, FS-1152, FS-1155, FS-1156, FS-1157, FS-1158, FS-1160, FS-1161, FS-1162, FS-1164]
+review_ids: [FS-056, FS-093, FS-127, FS-208, FS-209, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-1109, FS-1113, FS-1122, FS-1127, FS-1133, FS-1143, FS-1144, FS-1150, FS-1152, FS-1155, FS-1156, FS-1157, FS-1158, FS-1160, FS-1161, FS-1162, FS-1164, FS-1159, FS-1167]
 last_reviewed: 2026-11-10
 ---
 
@@ -44,9 +44,9 @@ what is sent, and every outcome, or its absence, is recorded truthfully.
 | RL-20 | M-Pesa Pull Transactions, so a missed callback is found | Yes |
 | RL-21 | M-Pesa's registered name before a payout | Yes |
 | RL-29 | A bank account holder's name before a bank payout | Yes |
-| RL-02 | One normalised event per call | Not yet: §13 question 1 |
-| RL-11 | A callback the rail does not sign confirmed before it counts | Not yet: §13 question 1 |
-| RL-22 | Safaricom's SIM-swap and IMSI check before money moves | Not yet: §13 question 1 |
+| RL-02 | One normalised event per call | Yes |
+| RL-11 | A callback the rail does not sign confirmed before it counts | Yes |
+| RL-22 | Safaricom's SIM-swap and IMSI check before money moves | Yes |
 
 **Out of R1:** Airtel Money and T-Kash (RL-04, RL-05: designed, their
 dates to follow, FS-1109); PesaLink (RL-06, phase 2); cards and
@@ -188,12 +188,20 @@ statements through it; journeys none yet.
     addresses registered with each rail, and are allowed only to that
     rail's own hosts, named in its adapter's configuration; every other
     destination is refused and alerted. No other service reaches a rail.
-12. **A callback endpoint is hardened** (FS-1156). Each institution and
-    rail has its own callback address, its path holding a secret that is
-    rotated like a credential (rule 8); the gateway limits its rate, and
-    refuses a callback whose rail id it has seen before, so a replay finds
-    nothing to do. A rail that offers fixed source addresses has them
-    allowed, and only them.
+12. **A callback endpoint is hardened** (FS-1156, FS-1159). Each
+    institution and rail has its own callback address, holding an
+    unguessable token of at least 128 random bits, given to the rail only
+    when the address is registered, so a request without it is refused at
+    the gateway before anything reads it. The token is a filter, not
+    proof, since an address can reach a log: whether a callback counts is
+    still rule 6's. It is masked in every log like a credential, and
+    rotated as each rail allows: M-Pesa's B2C result address is sent with
+    each request, so it changes freely; its C2B addresses are registered
+    once and may need Safaricom to change (to confirm). Where a rail signs
+    its callbacks or offers mutual TLS, those are used instead. The gateway
+    limits each address's rate, and refuses a callback whose rail id it
+    has seen before, so a replay finds nothing to do; a rail that offers
+    fixed source addresses has them allowed, and only them.
 13. **A rail setting changes only through the approval engine** (FS-1156,
     FS-1157). Every setting that could redirect money or hide it (a
     shortcode, a callback address, a bank account, a bank's channel, its
@@ -239,7 +247,7 @@ What every adapter offers, and what each writes to the transaction.
 |---|---|---|---|
 | resolve | An alias (transaction-fields §3) | The address, the name returned, the directory; `parties.destination.resolution` | M-Pesa (registered name, RL-21); banks (account validation, RL-29) |
 | confirm_operator | A wallet's number | Whether it is on the operator its code suggests now; a `progress.checks` entry | M-Pesa, when the query is agreed (§13 question 2) |
-| check_sim | A wallet's number | Whether its SIM changed since enrolment; a `progress.checks` entry | M-Pesa, when RL-22 is in R1 |
+| check_sim | A wallet's number | Whether its SIM changed since enrolment; a `progress.checks` entry | M-Pesa (RL-22) |
 | quote | A source, a destination, an amount | The rail's charge, for the product's quote before approval (transactions rule 8) | Each, from its tariff |
 | pay_out | An approved transaction | `sent`, then `settled`, `rejected` or `unknown`; the rail's ids | M-Pesa B2C and B2B; banks |
 | collect | A transaction asking a payer to pay (a push prompt) | The prompt's outcome; the payment as a settled transaction | M-Pesa Express |
@@ -385,7 +393,7 @@ add:
 | Linkability (LINDDUN) | A reference that reveals a borrower | Our ids carry no personal data (transactions rule 7) |
 | Identifiability (LINDDUN) | A phone number in a rail's log | Masked in every log (§8) |
 | Tampering | A callback address changed to an attacker's | Rule 13: every rail setting through the approval engine, two people at least |
-| Spoofing | A captured callback replayed | Rule 12: a secret path, a rate limit, a rail id seen once |
+| Spoofing | A captured callback replayed | Rule 12: an unguessable token in the address, a rate limit, a rail id seen once |
 | Information disclosure | A compromised service sends data to an outside host | Rule 11: one egress gateway, only each rail's hosts |
 | Elevation of privilege | The B2C initiator's password used to pay from elsewhere | Rule 8: released only to the rails' identity, usable only from registered addresses, rotated |
 | Denial of service | The float drained by many small payouts, each approved | Rule 14: velocity limits; payouts wait at the floor |
@@ -421,17 +429,12 @@ add:
 
 **For the owner:**
 
-1. **R1's scope:** RL-02 (the normalised event), RL-11 (an unsigned
-   callback confirmed) and RL-22 (the SIM-swap check) are used by this
-   spec's rules and by the transactions spec, but are not in the delivery
-   plan's R1. Bring them into R1, which the scope check counts, or say
-   what holds in R1 without them.
-2. **How each operator confirms a number** (FS-1144): the query each
+1. **How each operator confirms a number** (FS-1144): the query each
    offers over our connections.
-3. **Each rail's callbacks** (FS-209): whether Daraja signs its callbacks
+2. **Each rail's callbacks** (FS-209): whether Daraja signs its callbacks
    now, the source addresses it publishes, and each bank's mechanism;
    read from each rail's documentation, not from memory.
-4. **Field limits:** Daraja's account reference, occasion and remarks
+3. **Field limits:** Daraja's account reference, occasion and remarks
    lengths, and each bank's narration, against our eleven-character
    reference.
 
