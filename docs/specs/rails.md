@@ -11,8 +11,8 @@ depends_on: [transactions, approval-engine, event-bus-kafka]
 used_by: [lending-service, deposits-service, recon]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-056, FS-093, FS-127, FS-208, FS-209, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-1109, FS-1113, FS-1122, FS-1127, FS-1133, FS-1143, FS-1144, FS-1150, FS-1152, FS-1155, FS-1156, FS-1157, FS-1158]
-last_reviewed: 2026-11-09
+review_ids: [FS-056, FS-093, FS-127, FS-208, FS-209, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-1109, FS-1113, FS-1122, FS-1127, FS-1133, FS-1143, FS-1144, FS-1150, FS-1152, FS-1155, FS-1156, FS-1157, FS-1158, FS-1160, FS-1161, FS-1162]
+last_reviewed: 2026-11-10
 ---
 
 # Rails — build specification
@@ -211,10 +211,21 @@ statements through it; journeys none yet.
     Each account has thresholds, set as rail settings (rule 13), each with
     what happens and who is told (§6's float thresholds); and velocity
     limits, what may leave in an hour and in a day, so a drain made of
-    payouts each valid on its own is stopped. A threshold crossed is a
+    payouts each valid on its own is stopped. The velocity limits are
+    financial crime's transaction rules (FC-16) scoped to the paying
+    account, one shape for every limit: a measure, a scope, a window and a
+    threshold, against the usual for that type of day, looking below as
+    well as above (FS-1160, FS-1162). A threshold crossed is a
     footer entry on the payout that crossed it, and an alert; at the
     floor, new payouts wait. Customers' own limits stay financial
     crime's (FC-16).
+
+15. **Each rail is paced to what it takes** (FS-1161). The rails send to
+    each rail no faster than its agreed rate (a shortcode's throughput, a
+    bank's batch size and cut-offs), and queue the rest in the order
+    approved; a peak raises the queue, never the rate past what the rail
+    agreed. Each rail's rate is a rail setting (rule 13), raised with the
+    rail ahead of a known peak (runbooks, peak and slow days).
 
 ## 4 · The interface
 
@@ -279,7 +290,12 @@ the defaults below are where it starts, in hours of its usual payouts:
 | Low | Below about one day | Payouts go on; their products warned that the float is low | Finance and the operations lead, by SMS and email, at once |
 | Critical | Below about four hours | Payouts go on; any above a set size held for a person to release | Finance, the operations lead and our on-call, by SMS and a call |
 | Floor | Below the largest payout waiting, or a set amount | New payouts wait; nothing is rejected; they go once topped up, in the order approved | All of the above; the products tell the customers their payout is waiting |
-| Velocity | More left in an hour or a day than its limit | Further payouts wait for a person to release them | Finance, the operations lead and our on-call, at once: a possible drain |
+| Velocity | More left in an hour or a day than its limit, an FC-16 rule on the paying account | Further payouts wait for a person to release them | Finance, the operations lead and our on-call, at once: a possible drain |
+
+The usual each level and limit is measured against is the usual for that
+type of day (core KC-15): a month-end against month-ends, a public holiday
+against holidays, so a known peak or a slow day does not alert falsely
+(FS-1161, FS-1162).
 
 A collections account may have an upper level too, above which the
 institution sweeps it to its bank; whether it does is its choice.
@@ -347,6 +363,10 @@ add:
 | A call to a host outside a rail's list | Any: refused at the egress gateway |
 | A callback replayed, or past its rate limit | A rise above the usual |
 | A credential within its warning period | Each, until renewed |
+| Collections far below the usual for the hour and type of day | Any: a rail or its callbacks may be failing silently; recon pulls the rail's transactions at once (FS-1162) |
+| Requests on a channel far below the usual | Any: the channel may be down (FS-1162) |
+| Payouts sent far below payouts approved | Any: holds too strict, or a rail paused (FS-1162) |
+| A rail's queue longer than its rate clears before its cut-off | Any: the rail asked for more, or the institution told (rule 15) |
 
 ## 11 · Threats
 
@@ -389,6 +409,9 @@ add:
 | A17 | The rails | A call to a host not in the rail's list | Refused at the egress gateway, and alerted | rule 11 |
 | A18 | A C2B confirmation already received | It arrives again | Nothing done a second time | rule 12 |
 | A19 | The initiator's password | Its rotation date nears | An alert ahead; renewed before it lapses | rule 8 |
+| A20 | A month-end, its usual three times an ordinary day | Payouts run at twice an ordinary day | No velocity alert: the month-end's usual is the baseline | rule 14, KC-15 |
+| A21 | M-Pesa's agreed rate for the shortcode | Payouts arrive faster than it | They queue in the order approved; none is sent faster than the rate | rule 15 |
+| A22 | An ordinary weekday at noon | C2B collections in the last hour are a tenth of the usual | An alert; recon pulls the shortcode's transactions | §10, FS-1162 |
 
 ## 13 · Open questions
 

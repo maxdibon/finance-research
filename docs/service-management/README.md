@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757, FS-780, FS-896, FS-1046, FS-1050, FS-1053]
-last_reviewed: 2026-10-30
+review_ids: [FS-365, FS-633, FS-639, FS-640, FS-641, FS-645, FS-688, FS-695, FS-701, FS-703, FS-747, FS-750, FS-753, FS-756, FS-757, FS-780, FS-896, FS-1046, FS-1050, FS-1053, FS-1161, FS-1162]
+last_reviewed: 2026-11-10
 ---
 
 # Service management
@@ -106,7 +106,9 @@ the merged pull requests.
 
 - during the night's close, 21:00 to 03:00 Africa/Nairobi
   ([end-of-day runner](../specs/end-of-day-runner.md));
-- in the last and first working days of a month;
+- in the last and first working days of a month, and on each
+  institution's peak days (core KC-15; FS-1161); slow days are preferred
+  for changes that need a quiet window (FS-1162);
 - in the freeze before a customer's go-live;
 - outside the windows agreed with each customer.
 

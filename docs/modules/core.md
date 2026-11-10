@@ -10,8 +10,8 @@ classification: Internal
 audience: [mfi, sacco, bank]
 depends_on: [access, identity, mandates, messaging, rails, recon-observability, financial-crime]
 consumed_by: [mfi, sacco, collect, omni-channel, insights, financial-crime, decisioning]
-review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431, FS-450, FS-453, FS-574, FS-578, FS-626, FS-633, FS-985, FS-1053]
-last_reviewed: 2026-10-29
+review_ids: [FS-062, FS-066, FS-178, FS-179, FS-180, FS-184, FS-185, FS-303, FS-311, FS-316, FS-319, FS-320, FS-321, FS-354, FS-390, FS-431, FS-450, FS-453, FS-574, FS-578, FS-626, FS-633, FS-985, FS-1053, FS-1161, FS-1162]
+last_reviewed: 2026-11-10
 ---
 
 # Kapu Core
@@ -82,7 +82,7 @@ in the MFI PRD; the rest is **Planned** until a deployment is live.
 | KC-12 | Hosted per institution, isolated, on Liquid's Azure Stack | Planned | FS-032 | 1 |
 | KC-13 | Open APIs for the institution's own apps and partners | Planned | FS-316 | 1 |
 | KC-14 | Field-officer app with offline capture | Planned | FS-320: moved up to phase 2. Outside launch scope in MFI PRD §6; the benchmark leads with one. Specified as omni-channel OC-17 to OC-19 (FS-450). Owner, 2026-10-05: in v1 (FS-453) | 1 |
-| KC-15 | The institution's business calendar: weekdays and weekends, its working hours, and its own closures; Kenya's public holidays (Public Holidays Act, law register LR-36), with a holiday on a Sunday moved to the Monday (s.4), the dates that depend on the moon, and the days the Cabinet Secretary declares by gazette, national or for a sub-county (s.3), entered under maker-checker as each is announced; election and swearing-in days (s.2(4), (5)). Faith-specific days (Part II and III of the Schedule) are recorded, not closures. One source for every rule that counts days or windows (financial-crime FC-16 first), and Fineract's working days and holidays are set from it, so a loan schedule and a rule never disagree about a day (to confirm against Fineract) | Planned | Owner, 2026-10-06 (FS-574, FS-578) | 1 |
+| KC-15 | The institution's business calendar: weekdays and weekends, its working hours, and its own closures; Kenya's public holidays (Public Holidays Act, law register LR-36), with a holiday on a Sunday moved to the Monday (s.4), the dates that depend on the moon, and the days the Cabinet Secretary declares by gazette, national or for a sub-county (s.3), entered under maker-checker as each is announced; election and swearing-in days (s.2(4), (5)). Faith-specific days (Part II and III of the Schedule) are recorded, not closures. Peak days and slow days are types of day too (FS-1161, FS-1162): the institution's month-ends, paydays, school-fee openings, December, and for a merchant Black Friday; and its public holidays, Sundays and January's first weeks; each with its expected multiple of the usual from its own history, reviewed after each, so a limit compares a day with its own kind (runbooks, peak and slow days). One source for every rule that counts days or windows (financial-crime FC-16 first), and Fineract's working days and holidays are set from it, so a loan schedule and a rule never disagree about a day (to confirm against Fineract) | Planned | Owner, 2026-10-06 (FS-574, FS-578) | 1 |
 
 ## 4 · Where it sits
 

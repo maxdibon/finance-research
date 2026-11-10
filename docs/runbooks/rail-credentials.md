@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037]
-last_reviewed: 2026-10-27
+review_ids: [FS-1037, FS-1156]
+last_reviewed: 2026-11-10
 ---
 
 # Rotating a rail's credentials
@@ -16,7 +16,7 @@ last_reviewed: 2026-10-27
 A rail's credentials (for M-Pesa, Daraja's keys and the initiator's
 password; for a bank, its API keys or certificates) live in OpenBao
 only, never in a file, a message or a laptop (rules, Dibon 2). The rails
-spec, still to write, sets each rail's schedule.
+spec sets each rail's schedule (rails rule 8, §6).
 
 ## 1 · When to use it
 
