@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974, FS-965, FS-987, FS-1020]
-last_reviewed: 2026-10-30
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974, FS-965, FS-987, FS-1020, FS-1167]
+last_reviewed: 2026-11-10
 ---
 
 # Delivery plan — phase 1 in releases
@@ -67,7 +67,10 @@ the check keeps the two in step):
   confirmed), RL-10 (an unanswered payment is a state) and RL-14 (a
   repeat never pays twice) (FS-570); RL-01 (each payout one instruction,
   cancellable, recallable, reversible) and RL-29 (a bank account holder's
-  name confirmed) (FS-586).
+  name confirmed) (FS-586); RL-02 (one normalised event per call), RL-11
+  (a callback the rail does not sign confirmed before it counts) and RL-22
+  (Safaricom's SIM-swap and IMSI check before money moves), which the
+  rails' and the transactions' rules rely on (FS-1167).
 - **Reconciliation and evidence:** RO-01 (statement files only: NCBA's
   statement email forwarded whole or uploaded, checked before matching;
   its API later, FS-767), RO-02, RO-04 (the end-of-day cycle; intraday
