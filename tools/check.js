@@ -1571,6 +1571,20 @@ function checkTransactions(root) {
     for (const c of used) if (!codes.has(c)) at(path.join(TX_DIR, 'examples.json'), 0, `${w.id}: code ${c} is not listed in the dictionary §3`);
   });
   for (const b of apply(worked)) at(path.join(TX_DIR, 'examples.json'), 0, `the worked set breaks ${b.id} (${b.source}): ${b.txid}: ${b.message}`);
+  // FS-1163: the hold, a companion record: its schema in the subset, its
+  // fields the dictionary's hold table, and every worked hold valid.
+  const HOLD_FILE = path.join(TX_DIR, 'hold.schema.json');
+  if (fs.existsSync(path.join(root, HOLD_FILE))) {
+    let hold = null;
+    try { hold = JSON.parse(read(root, HOLD_FILE)); } catch (e) { at(HOLD_FILE, 0, `cannot be read: ${e.message}`); }
+    if (hold) {
+      for (const m of subsetProblems(hold)) at(HOLD_FILE, 0, m);
+      const ht = table('Hold field');
+      if (!ht) at(TX_DICT, 0, 'no table of the hold\'s fields (| Hold field |)');
+      else same('hold field', col(ht, 0), Object.keys(hold.properties || {}), TX_DICT);
+      for (const h of examples.holds || []) for (const e of validate(hold, h.hold)) at(path.join(TX_DIR, 'examples.json'), 0, `${h.id}: ${e}`);
+    }
+  }
   // FS-1137: each worked transaction's position, as computed from its forward facts.
   const byId = new Map(worked.map((t) => [t.header.id.txid, t]));
   (examples.worked || []).forEach((w) => {

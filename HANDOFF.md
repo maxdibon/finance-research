@@ -1,7 +1,7 @@
 # Dibon financial services — session handoff
 
     release: 2026.10.16 · minor
-    updated: 2026-11-09
+    updated: 2026-11-10
     the release is the documentation's, moved by each release (FS-842);
     this file has no version of its own
     purpose: hand this repository to a session that knows nothing about it;
@@ -211,8 +211,9 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   approval under its hash, a footer only appended to, each in groups;
   every field defined once in docs/transaction-fields.md (TF ids), typed
   in `code/transactions/`, and held together by the "transactions" check
-  (FS-1131, FS-1149, FS-1150). A component maps its own names to it; it
-  never adds a field of its own.
+  (FS-1131, FS-1149, FS-1150, FS-1163); a hold is its companion record.
+  A component maps its own names to it; it never adds a field of its own.
+  The rails (docs/specs/rails.md) carry it to every rail and bank.
 - **Kapu Core** is Fineract 1.15.x, pinned, never forked (FS-626).
 - **Outages:** Dibon restores the platform; the institution runs its
   business by its own fallback, and Dibon never touches its money
@@ -301,6 +302,9 @@ in `docs/decisions.md` saying what it cost, and the standing rules are in
   uploaded as they are, never converted, so questionnaires keep their
   answer fields; a customer gets clean copies rebuilt from the sources,
   never the reviewed files (FS-1042).
+- **The reader's look** is design/reader/ (page.html, reader.css), in git
+  and read by `node tools/site.js` on every rebuild; change it there,
+  never in build/ or in the tool (FS-1165).
 - **Binary files** are refused by the pre-commit hook unless listed in
   `.githooks/allowed-binaries`. **Logos:** `design/brand/` (FS-524).
 

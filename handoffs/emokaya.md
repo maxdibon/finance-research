@@ -40,28 +40,35 @@ here.
 
 ## Where I left off
 
-As at 9 November 2026. Main pushed with FS-1119 to FS-1151; `origin` is
+As at 10 November 2026. Main pushed with FS-1119 to FS-1166; `origin` is
 still github.com/eric-mokaya/finance.
 
-- **The transaction model** (FS-1119 to FS-1151), decided and documented:
-  docs/specs/transactions.md, its field dictionary
-  docs/transaction-fields.md (TF ids), and the schema, rules and twelve
-  worked transactions in `code/transactions/`, held together by the
-  "transactions" check. Settled: money in minor units and ISO 4217; the
-  amount with its amount type; identifiers international first;
-  identifier, address and alias apart, Mojaloop's party types; links
-  back, each leaving its forward fact, and a position computed from them;
-  recon's night checks (recon §4.8); the txid a UUIDv7 minted once, the
-  reference nine Crockford symbols and ISO 7064 MOD 97-10 check digits;
-  a number's operator from its NDC (CAK's plan, October 2025) and
-  confirmed with the operator; the ISO 20022 codes checked; the fields
-  in groups; a source on every transaction, and several accounts as a
-  parent and its parts.
-  **Open** (transactions §12): each money spec to adopt it when next
-  revised, and the rails spec written on it; how each operator confirms
-  a number; Daraja's, Fineract's and Odoo's field names against the
-  versions we run; for Roan Capital, whether fees are deducted at payout
-  (LQ-37).
+- **The transaction model** (FS-1119 to FS-1164), decided and documented:
+  docs/specs/transactions.md, its dictionary docs/transaction-fields.md
+  (TF-01 to TF-73, renumbered before release), and in `code/transactions/`
+  the transaction and hold schemas, 23 rules and 28 worked transactions
+  with two holds, held together by the "transactions" check. Since 9
+  November: payments and transfers (FS-1152); every money spec on it
+  (FS-1154); the seven gaps across the products (FS-1163: dividends,
+  waivers, recoveries, groups, mandates and the day asked, holds, two
+  currencies, cards, investments, observed records); treasury a function
+  of its own (FS-1164).
+- **The rails spec** (FS-1155 to FS-1162): docs/specs/rails.md, fifteen
+  rules: one interface, what is approved is sent, unknown a state,
+  callbacks proved, the payee checked, keys in OpenBao, an egress
+  gateway, hardened callbacks, rail settings through the approval engine
+  (`rail.setting`), float levels at several thresholds, each rail paced.
+  One shape for every limit (financial crime FC-16), peak and slow days
+  on the business calendar, and a runbook for them.
+  **Waiting on his word:** rails §13 (bring RL-02, RL-11 and RL-22 into
+  R1, which the scope check counts; each operator's number check; each
+  rail's callback proof, FS-209; field limits); FS-1159 (rule 12's secret
+  path, worded more precisely); a treasury module of its own, out of
+  recon-observability, when R2's scope is set (FS-1164); transactions §12
+  (exchange rates' source, investments with a fund's administrator);
+  LQ-37 for counsel.
+- **The reader's template** is design/reader/ (FS-1165): its frame and
+  styles, read by tools/site.js on every rebuild.
 - **Roan Capital's CBK pack:** its answers to the pack's blanks recorded
   and the documents rebuilt (FS-1132 to FS-1148), by the "Roan Capital
   docs review" session, which worked beside this one on its own branch;
@@ -112,7 +119,7 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric: Critical, High, and waiting on Eric's word (75 of 200)
+### Rows with Eric: Critical, High, and waiting on Eric's word (74 of 200)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -127,7 +134,6 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 | FS-016 | Compliance one-pager pricing: "Kshs 500,000 / USD 386.97" is off by 10×. At the rate the same sheet uses for O | High |
 | FS-049 | Odoo Sign is a simple electronic signature. Confirm which financial documents Kenyan law requires an advanced  | High |
 | FS-127 | Ask Safaricom whether a third party may operate on a client's shortcode with the client's consent (delegated a | High |
-| FS-208 | The rail adapter interface needs a specification: operations, the normalised event, error and pending semantic | High |
 | FS-209 | How each rail authenticates its callbacks: signatures, fixed source addresses, mutual TLS, or nothing. Where n | High |
 | FS-279 | The undated compliance one-pager with the 10× pricing error (FS-016) should be withdrawn before this portfolio | High |
 | FS-329 | Onboarding: IPRS covers Kenyan citizens only. How do Collect, Sacco and MFI onboard foreigners, refugees and c | High |
@@ -192,7 +198,7 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 | FS-424 | Should we consider SWIFT? Which other rails should we look at? | Low, waiting |
 | FS-513 | The Apr 2025 RFP notes asked for network devices (firewalls, switches) watched through SNMP and syslog, and fo | Low, waiting |
 
-And 125 more, Medium or Low: the Board, filtered by name, or the Review page.
+And 126 more, Medium or Low: the Board, filtered by name, or the Review page.
 
 ### Work started
 
@@ -200,4 +206,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-1119-transaction-model`: 4 saves, last 3 minutes ago, not uploaded; here now, 5 files unsaved
+- `claude/emokaya/FS-1119-transaction-model`: 10 saves, last 41 seconds ago, not uploaded; here now, 3 files unsaved

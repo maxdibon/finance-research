@@ -8,11 +8,11 @@ released: unreleased
 release: R1
 implements: [rails, recon-observability, core]
 depends_on: [event-bus-kafka]
-used_by: [recon]
+used_by: [recon, lending-service, deposits-service, approval-engine, kapu-core-fineract, rails]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153]
-last_reviewed: 2026-11-09
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153, FS-1154, FS-1155, FS-1163, FS-1164]
+last_reviewed: 2026-11-10
 ---
 
 # Transactions — build specification
@@ -23,8 +23,8 @@ reconciliation (FS-1119). It sets the transaction's shape (a header fixed
 at creation, a body fixed at approval, a footer only ever appended to),
 its kinds, its links, its ids and its versions, and the standards it uses.
 Each field is defined once in [the field dictionary](../transaction-fields.md);
-the typed form, the rules a schema cannot say and fifteen worked
-transactions (W1 to W15) are in
+the typed form, the rules a schema cannot say and twenty-eight worked
+transactions (W1 to W28), with two holds, are in
 [code/transactions](../../code/transactions/README.md). Decided by the
 owner in FS-1123 (decisions 1 to 4) and FS-1131 (5 to 10, with the amount
 type). Nothing is built: every behaviour here is **designed**.
@@ -43,9 +43,14 @@ component names, links, identifies and changes it.
 | RL-14 | Idempotency: a repeat never pays twice | Yes |
 | RO-02 | Matching one to one, one to many, many to many | Yes |
 
-**Out of R1:** the `instrument` field (TF-52), for an investment product
-(FS-1120, LQ-38); card payments, which never reach us (RL-08); IBANs and
-other countries' schemes, defined so that nothing changes when they come.
+**Out of R1, designed now so that nothing changes when they come**
+(FS-1163): two currencies in one movement (escrow ES-11, rails RL-28);
+cards, authorised then captured, and their chargebacks (gateway GW-03,
+omni-channel OC-25; card numbers never reach us, RL-08); investments, by
+units and price (`instrument`, TF-58, and `units`; Lofty Corban, LQ-38);
+holds (sacco SC-08, escrow); records observed in books not the
+institution's with us (sme-recon SR-06 to SR-08); IBANs and other
+countries' schemes.
 
 **Where it sits.**
 
@@ -84,9 +89,13 @@ reads them all and keeps the index that finds a transaction by any id.
 **Related:** implements [rails](../modules/rails.md),
 [recon-observability](../modules/recon-observability.md) and
 [core](../modules/core.md); depends on [event-bus-kafka](event-bus-kafka.md);
-used by [recon](recon.md), whose night checks run the link rules (§9);
-the other money specs adopt it when each is next revised (§12); journeys
-none yet.
+used by [recon](recon.md), whose night checks run the link rules (§9),
+[lending-service](lending-service.md) and
+[deposits-service](deposits-service.md), which mint and write
+transactions, [approval-engine](approval-engine.md), which approves their
+bodies, and [kapu-core-fineract](kapu-core-fineract.md), whose fields map to
+them, and [rails](rails.md), which carries them to each rail and mints
+money arriving; journeys none yet.
 
 ## 2 · Concepts
 
@@ -127,6 +136,18 @@ none yet.
 - **Amount type** (FS-1129, from Mojaloop): `send` fixes what leaves the
   payer, charges marked deducted coming out of it; `receive` fixes what
   the payee gets, charges on top.
+- **Hold** (FS-1163): an amount held on an account without moving it (a
+  guarantor's pledge, an escrow's hold, a lien, a card's authorisation,
+  funds not yet cleared). A companion record, never a kind of
+  transaction (dictionary §6); what it holds moves, if it moves, as a
+  transaction of its own.
+- **Observed** (FS-1163): a record read from books not the institution's
+  with us, such as an SME's own bank account, for reconciliation; never
+  instructed by us, so never approved or sent (`what.observed`).
+- **Treasury** (FS-1164): the institution's own money between its own
+  accounts (a float topped up from its bank, a sweep back), a function of
+  its own (recon-observability RO-09), with a kind of its own; never a
+  customer's money.
 - **Component map:** a component's own field names, by its version, against
   the dictionary's (dictionary §4).
 
@@ -165,7 +186,11 @@ none yet.
    grant an approval automatically, but the approval is always recorded.
    A customer's own instruction (a payment, a withdrawal, a transfer) is
    approved by the customer, stepped up (MD-10), and recorded by the
-   approval engine under the product's policy (FS-1152).
+   approval engine under the product's policy (FS-1152). A pull under a
+   debit mandate or standing order names it (`what.mandate`), and a
+   movement asked for a day (`terms.execute_on`) never moves before it
+   (W20). An observed record needs no approval: we never instruct it
+   (FS-1163).
 3. **Money.** Every amount is an integer of the currency's minor units
    and an ISO 4217 code: `{minor: 250000, currency: "KES"}`. The `amount`
    is as instructed or as received; charges, the settled amount and the
@@ -173,7 +198,13 @@ none yet.
    the amount is fixed on, so the settled amount follows from the amount
    and the deducted charges (FS-1123 decision 2, FS-1129; LQ-37). W1:
    KES 100,000 sent, a KES 5,000 fee and KES 1,000 excise duty on it
-   deducted, KES 94,000 settled.
+   deducted, KES 94,000 settled. **Two currencies** are one parent with
+   its `exchange` (from, to, the rate, its source and time) and a part in
+   each currency; the parent's amount is the `from`, the parts in the
+   other currency sum to the `to`, and the rate is exact decimal text,
+   never a float (W21 to W23). **Units** of a fund are a quantity and a
+   price in decimal text, priced on one day and settling on another, and
+   their product is the amount (W26; FS-1163).
 4. **Aliases.** An alias is resolved before approval, in Mojaloop's two
    steps: which provider holds it, then who the party is, with the name
    returned and matched against the payee's (BE01 when it does not
@@ -213,7 +244,9 @@ none yet.
    the parent and each part carry its reference, each with its own hash,
    and no transaction outside the plan may share it. The parent settles
    only when every part has, and a failed part is replaced (`replaces`),
-   never edited (W10 to W12).
+   never edited (W10 to W12). Money recovered on a written-off loan
+   `recovers` the write-off (W18, W19); a chargeback, like a reversal,
+   `reverses` what it undoes (W24, W25) (FS-1163).
 6. **Identifiers: international first.** An identifier is a scheme and a
    value: international schemes first (BIC, LEI, ISIN), then Kenya's
    where Kenya is the authority (a company's BRS number, an
@@ -324,6 +357,13 @@ order and author.
 | refund | out | Yes | `refunds`, exactly one | The service of the account | W6 |
 | write_off | internal, no rail | Yes | — | Lending service | — |
 | adjustment | internal | Yes | `corrects`, exactly one | The service of the account | — |
+| treasury | internal, between the institution's own accounts | Yes | — | Treasury (RO-09), through the console | W28 |
+| dividend | internal, on a share account | No: the year's dividend is approved at the general meeting, the run under it | `in_batch` | Deposits service, in the run | W16 |
+| waiver | internal, no rail | Yes, by the product's policy where automatic (the cap's sweep) | — | Lending service | W17 |
+| chargeback | in, opposite to the card payment | No: the card network's decision | `reverses`, exactly one | The rails, from the card's processor | W25 |
+| subscription | internal or in: money to a fund | No, beyond the customer's own step-up | — | The deposits service, or the fund's administrator | W26 |
+| redemption | out of a fund | Yes | — | The fund's administrator | — |
+| distribution | out of a fund: income paid on units | No: the fund's declaration | `in_batch` | The fund's administrator | — |
 
 **The worked set** ([examples.json](../../code/transactions/examples.json)):
 
@@ -338,6 +378,16 @@ order and author.
 | W10 to W12 | A KES 100,000 loan paid from two of the institution's accounts: KES 60,000 from its B2C shortcode to the borrower's M-Pesa (W11), KES 40,000 from its bank to the borrower's bank (W12) | One parent and a part per account; each part its own source; one approval for the three; the parent settled once both parts have |
 | W13 | A member pays a school's paybill KES 15,000 from savings, a KES 50 fee and its excise on top | A payment: the member's step-up its approval; the paybill and admission number an alias, resolved; sanctions and limits checked before it goes |
 | W14, W15 | KES 5,000 from the member's savings to their loan | A transfer within the books, its parent the deposits service's; the loan's repayment its part, allocated |
+| W16 | A share dividend, withholding tax deducted, credited to the member's savings | A dividend; tax as its own line |
+| W17 | Capped interest waived on a loan by the night's sweep | A waiver, apart from a write-off |
+| W18, W19 | A loan written off; KES 15,000 recovered from its collateral's sale | `recovers`, and its forward fact on the write-off |
+| W20 | A group's repayment pulled under its standing order on the day asked | `what.mandate`, `terms.execute_on`, a group as payer |
+| W21 to W23 | USD 1,000 from a buyer abroad into an escrow, credited as KES 129,000 | An exchange: the parent and a leg in each currency |
+| W24, W25 | A virtual card payment, authorised then captured, its hold H1; charged back | `authorised`, `captured`; a chargeback reverses it |
+| W26 | 1,000 units of a money market fund at 10.5000 | Units and price, settling two days after pricing |
+| W27 | An SME's customer pays an invoice into the SME's own bank | Observed: read from the statement, never approved or sent |
+| W28 | Treasury tops up the B2C float from the bank before a month-end | Treasury: the institution's own money, approved |
+| H1, H2 | A card's authorisation, captured; a guarantor's pledge, reduced, then released | Holds, beside the transactions |
 
 ## 5 · States
 
@@ -356,6 +406,9 @@ order and author.
 | settled | returned | The receiving side sends it back (W7) |
 | created | settled | Money in, as the rail reports it, or a book entry (W2, W9) |
 | approved | settled | A parent with parts: once every part has settled (W10) |
+| created | authorised | A card payment authorised, its amount held (W24, H1) |
+| authorised | captured | The merchant captures it |
+| captured | settled | The processor settles it |
 
 Each state is a footer entry, with who and when and the ISO reason; its
 ISO 20022 status is in dictionary §3.
@@ -462,20 +515,31 @@ it adds these:
 | A27 | A payout with no source | It is put for approval | Refused: the account it leaves from is named first | rule 5 |
 | A28 | W13 | Sanctions screening has not passed when it is about to be sent | Held; not sent | rule 4 |
 | A29 | W14 | The member approves it by step-up | The transfer and its loan part posted together; W14 settled once W15 has | rule 2, rule 5 |
+| A30 | W19 | It is linked to recover a waiver, not a write-off | Refused | rule 5 |
+| A31 | W21 | Its shilling leg is KES 128,000 | Refused: the legs do not sum to what was exchanged | rule 3 |
+| A32 | W26 | Its price is changed to 11.0000 | Refused: units times price is not the amount | rule 3 |
+| A33 | W20 | The standing order runs a day early | Not sent before the day asked | rule 2 |
+| A34 | W27 | Anything tries to send it | Refused: an observed record is never sent | rule 7 |
+| A35 | W24 | The card network charges it back | W25 reverses it; W24's position reversed; H1 already captured | rule 5 |
+| A36 | H2, a guarantor's pledge | The loan is repaid | The hold reduced, then released; nothing moves for it | §2, dictionary §6 |
+| A37 | W28 | Treasury asks without a second approver | Refused: approved like every movement of the institution's own money | rule 2 |
 
 ## 12 · Open questions
 
 **For the owner:**
 
-1. **Adoption:** the lending service, deposits service, approval engine
-   and Kapu Core specs name this one in `depends_on` when each is next
-   revised, and the rails spec is written on it (recon has).
-2. **How each operator confirms a number:** the query each offers over
+1. **How each operator confirms a number:** the query each offers over
    our connections (a portability or HLR lookup, or its own API), to
    confirm with each.
-3. **To confirm:** Daraja's, Fineract's and Odoo's field names against the
+2. **To confirm:** Daraja's, Fineract's and Odoo's field names against the
    versions we run; the ISO 20022 code sets and CAK's plan once more at
    release.
+3. **Exchange rates** (FS-1163): whose rate an institution uses (its
+   bank's, the central bank's), and whether a currency other than one with
+   two minor digits is ever in scope (the rule assumes two).
+4. **Investments** (FS-1163): the fund's administrator and its own
+   records, when a fund product is in scope; units here are designed, not
+   agreed with one.
 
 **For the customer:** whether its fees are deducted at payout, which
 decides each disbursement's amount and amount type (LQ-37).

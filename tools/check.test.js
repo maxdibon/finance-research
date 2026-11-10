@@ -1555,7 +1555,7 @@ const TX_SCHEMA = path.join('code', 'transactions', 'transaction.schema.json');
 const TX_EXAMPLES = path.join('code', 'transactions', 'examples.json');
 
 test('transactions: a field in the dictionary that is not in the schema fails', () => {
-  const f = runWith((d) => patch(d, TX_DICT, (t) => t.replace('| TF-40 | origin.created_at | header |', '| TF-40 | origin.created_on | header |')));
+  const f = runWith((d) => patch(d, TX_DICT, (t) => t.replace('| TF-45 | origin.created_at | header |', '| TF-45 | origin.created_on | header |')));
   assert.deepStrictEqual(names(f), ['transactions']);
 });
 
@@ -1589,5 +1589,10 @@ test('transactions: a worked position that is not what its forward facts give fa
     e.worked[4].position = 'settled';
     return JSON.stringify(e, null, 1);
   }));
+  assert.deepStrictEqual(names(f), ['transactions']);
+});
+
+test('transactions: a hold field missing from the dictionary fails', () => {
+  const f = runWith((d) => patch(d, TX_DICT, (t) => t.replace('| approval_ref | The approval behind it,', '| approval_reference | The approval behind it,')));
   assert.deepStrictEqual(names(f), ['transactions']);
 });

@@ -35,11 +35,12 @@ const checkDigits = (data) => String(98 - mod97(`${data}00`)).padStart(2, '0');
 const referenceValid = (ref) => typeof ref === 'string' && /^[0-9A-HJKMNP-TV-Z]{9}[0-9]{2}$/.test(ref) && mod97(ref) === 1;
 
 // Each link's forward fact, appended to the target's footer.
-const INVERSE = { reverses: 'reversed_by', refunds: 'refunded_by', corrects: 'corrected_by', part_of: 'has_part', replaces: 'replaced_by', fee_for: 'has_fee' };
+const INVERSE = { reverses: 'reversed_by', refunds: 'refunded_by', corrects: 'corrected_by', part_of: 'has_part', replaces: 'replaced_by', recovers: 'recovered_by', fee_for: 'has_fee' };
 // What each kind must link to (spec §4, the kinds).
-const MUST_LINK = { reversal: 'reverses', refund: 'refunds', adjustment: 'corrects' };
+const MUST_LINK = { reversal: 'reverses', chargeback: 'reverses', refund: 'refunds', adjustment: 'corrects' };
 // Money leaving, or a ledger entry changed by hand: approved before it moves.
-const NEEDS_APPROVAL = (t) => t.body.money.direction === 'out' || ['transfer', 'reversal', 'refund', 'write_off', 'adjustment'].includes(t.header.what.kind);
+// An observed record is someone else's books, read, never instructed (FS-1163).
+const NEEDS_APPROVAL = (t) => !t.header.what.observed && (t.body.money.direction === 'out' || ['transfer', 'treasury', 'reversal', 'refund', 'write_off', 'waiver', 'adjustment', 'redemption'].includes(t.header.what.kind));
 const MOVED = ['sent', 'settled'];
 
 const sum = (lines) => lines.reduce((n, l) => n + l.amount.minor, 0);
@@ -87,7 +88,9 @@ const RULES = [
           const o = by.get(l.txid);
           if (!o) { out.push([t, `${l.rel} ${l.txid}, which does not exist`]); continue; }
           if (o.header.what.institution !== t.header.what.institution) out.push([t, `${l.rel} a transaction of another institution`]);
-          if (o.body.money.amount.currency !== t.body.money.amount.currency) out.push([t, `${l.rel} a transaction in ${o.body.money.amount.currency}`]);
+          const ex = l.rel === 'part_of' && o.body.money.exchange;
+          const ok = ex ? [ex.from.currency, ex.to.currency].includes(t.body.money.amount.currency) : o.body.money.amount.currency === t.body.money.amount.currency;
+          if (!ok) out.push([t, `${l.rel} a transaction in ${o.body.money.amount.currency}`]);
           if (o.header.origin.created_at > t.header.origin.created_at) out.push([t, `${l.rel} a later transaction: links point back only`]);
         }
       }
@@ -101,8 +104,9 @@ const RULES = [
       const need = MUST_LINK[t.header.what.kind];
       const rels = t.header.links.map((l) => l.rel);
       if (need && rels.filter((r) => r === need).length !== 1) return `a ${t.header.what.kind} ${need} exactly one transaction`;
-      for (const [kind, rel] of Object.entries(MUST_LINK)) if (kind !== t.header.what.kind && rels.includes(rel)) return `only a ${kind} ${rel} another transaction`;
-      if (t.header.what.kind === 'write_off' && t.header.origin.rail !== 'none') return 'a write-off moves no money: its rail is none';
+      const may = (rel) => Object.entries(MUST_LINK).filter(([, r]) => r === rel).map(([k]) => k);
+      for (const rel of new Set(Object.values(MUST_LINK))) if (rels.includes(rel) && !may(rel).includes(t.header.what.kind)) return `only a ${may(rel).join(' or ')} ${rel} another transaction`;
+      if (['write_off', 'waiver'].includes(t.header.what.kind) && t.header.origin.rail !== 'none') return `a ${t.header.what.kind.replace('_', '-')} moves no money: its rail is none`;
       return null;
     },
   },
@@ -130,7 +134,7 @@ const RULES = [
     source: 'transactions rule 5',
     all: (ts, by) => {
       const parts = new Map();
-      for (const t of ts) for (const l of t.header.links) if (l.rel === 'part_of') parts.set(l.txid, (parts.get(l.txid) || 0) + t.body.money.amount.minor);
+      for (const t of ts) for (const l of t.header.links) if (l.rel === 'part_of' && (!by.has(l.txid) || by.get(l.txid).body.money.amount.currency === t.body.money.amount.currency)) parts.set(l.txid, (parts.get(l.txid) || 0) + t.body.money.amount.minor);
       return [...parts].filter(([id, n]) => by.has(id) && n !== net(by.get(id)))
         .map(([id, n]) => [by.get(id), `its parts sum to ${n} minor units, not the ${net(by.get(id))} it pays on`]);
     },
@@ -161,7 +165,7 @@ const RULES = [
   {
     id: 'source-named',
     source: 'transactions rule 5',
-    each: (t) => (t.body.money.direction === 'out' && t.header.origin.rail !== 'none' && !t.body.parties.source
+    each: (t) => ((t.body.money.direction === 'out' || t.header.what.kind === 'treasury') && !t.header.what.observed && t.header.origin.rail !== 'none' && !t.body.parties.source
       ? 'money out with no source: the account it leaves from is named before approval' : null),
   },
   {
@@ -244,6 +248,53 @@ const RULES = [
       if (!t.footer.approval) return 'money moved with no approval';
       return t.footer.approval.at > moved ? 'money moved before its approval' : null;
     },
+  },
+  {
+    id: 'recovers-a-write-off',
+    source: 'transactions rule 5',
+    all: (ts, by) => ts.flatMap((t) => t.header.links.filter((l) => l.rel === 'recovers' && by.has(l.txid) && by.get(l.txid).header.what.kind !== 'write_off')
+      .map((l) => [t, `recovers ${l.txid}, which is not a write-off`])),
+  },
+  {
+    id: 'exchange-legs',
+    source: 'transactions rule 3',
+    all: (ts, by) => ts.filter((p) => p.body.money.exchange).flatMap((p) => {
+      const ex = p.body.money.exchange;
+      const out = [];
+      if (ex.from.currency !== p.body.money.amount.currency || ex.from.minor !== p.body.money.amount.minor) out.push([p, 'its exchange does not start from its own amount']);
+      const legs = ts.filter((t) => parentOf(t) === p.header.id.txid);
+      const to = legs.filter((t) => t.body.money.amount.currency === ex.to.currency).reduce((n, t) => n + t.body.money.amount.minor, 0);
+      if (legs.length && to !== ex.to.minor) out.push([p, `its legs in ${ex.to.currency} sum to ${to}, not the ${ex.to.minor} exchanged`]);
+      const want = Math.round((ex.from.minor * Number(ex.rate)));
+      if (Math.abs(want - ex.to.minor) > 1) out.push([p, `${ex.from.minor} at ${ex.rate} is ${want}, not ${ex.to.minor}`]);
+      return out;
+    }),
+  },
+  {
+    id: 'units-priced',
+    source: 'transactions rule 3',
+    each: (t) => {
+      const u = t.body.terms.units;
+      if (!u) return null;
+      if (u.currency !== t.body.money.amount.currency) return `units priced in ${u.currency}, the amount in ${t.body.money.amount.currency}`;
+      const want = Math.round(Number(u.quantity) * Number(u.price) * 100);
+      return Math.abs(want - t.body.money.amount.minor) > 1 ? `${u.quantity} units at ${u.price} are ${want} minor units, not ${t.body.money.amount.minor}` : null;
+    },
+  },
+  {
+    id: 'not-before-asked',
+    source: 'transactions rule 2',
+    each: (t) => {
+      const on = t.body.terms.execute_on;
+      const moved = firstAt(t, MOVED);
+      return on && moved && moved.slice(0, 10) < on ? `moved on ${moved.slice(0, 10)}, before the ${on} asked for` : null;
+    },
+  },
+  {
+    id: 'observed-never-sent',
+    source: 'transactions rule 7',
+    each: (t) => (t.header.what.observed && t.footer.progress.status_history.some((x) => x.status === 'sent')
+      ? 'an observed record is read from its books, never sent by us' : null),
   },
   {
     id: 'checked-before-sending',

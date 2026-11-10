@@ -8,12 +8,12 @@ law: LR-17
 released: 2026.10.16
 release: R1
 implements: [mandates]
-depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka]
-used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console, product-versions]
+depends_on: [kapu-core-fineract, access-keycloak, event-bus-kafka, transactions]
+used_by: [recon, staff-workspace, lending-service, deposits-service, kapu-console, product-versions, rails]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032, FS-1053, FS-1054, FS-1056, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-492, FS-494, FS-495, FS-498, FS-516, FS-532, FS-547, FS-586, FS-587, FS-588, FS-606, FS-622, FS-625, FS-627, FS-642, FS-661, FS-667, FS-769, FS-770, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1018, FS-1032, FS-1053, FS-1054, FS-1056, FS-1058, FS-1154, FS-1155, FS-1157]
+last_reviewed: 2026-11-09
 ---
 
 # Approval engine — build specification
@@ -81,7 +81,8 @@ extra: the engine holds the facts already.
 
 **Related:** implements [mandates](../modules/mandates.md); depends on
 [kapu-core-fineract](kapu-core-fineract.md),
-[access-keycloak](access-keycloak.md) and [event-bus-kafka](event-bus-kafka.md); used by [kapu-console](kapu-console.md), [deposits-service](deposits-service.md), [lending-service](lending-service.md), [recon](recon.md), which compares approvals with the ledger (rails, to write, will be too), and [staff-workspace](staff-workspace.md), where staff decide; journeys
+[access-keycloak](access-keycloak.md), [event-bus-kafka](event-bus-kafka.md) and
+[transactions](transactions.md), whose body it approves by its hash; used by [kapu-console](kapu-console.md), [deposits-service](deposits-service.md), [lending-service](lending-service.md), [recon](recon.md), which compares approvals with the ledger, [rails](rails.md), which checks each approval's hash before sending, and [staff-workspace](staff-workspace.md), where staff decide; journeys
 [JN-02](../journeys/manual-identity-check.md),
 [JN-04](../journeys/loan-to-disbursement.md),
 [JN-05](../journeys/guarantor.md) and
@@ -379,7 +380,21 @@ approval records side by side that can disagree. So:
 Supplier bills, and payment once a bill is approved, are phase 2 and
 designed in the mandates module (MD-19, MD-20; FS-1058): a subject type,
 `bill.payment`, with a chain by amount tier like any other; nothing in
-R1 depends on them.
+R1 depends on them. Each such payment is a transaction of kind
+`payment` (transactions §4).
+
+**Money approved, on the transaction model** (FS-1154). An approval of
+money binds the transaction's body by its hash (transactions rule 2);
+the engine writes the approval to the transaction's footer, and no other
+identity may. It approves a plan as one request: a parent and its parts,
+each part's hash under the one approval reference (transactions rule 5;
+FS-1150). A customer's own instruction (a payment, a withdrawal, a
+transfer) is approved by the customer's step-up, which the engine records
+under the product's policy, so every movement out has its approval
+recorded (FS-1152). A change to a rail setting (a shortcode, a callback
+address, a bank's channel or limit, a float threshold) is a request of
+subject type `rail.setting`, its chain at least two people, the one who
+asks never the one who approves (rails rule 13; FS-1157).
 
 ## 11 · Data
 

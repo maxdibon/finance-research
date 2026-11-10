@@ -7,8 +7,8 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1058]
-last_reviewed: 2026-10-30
+review_ids: [FS-1037, FS-1058, FS-1161]
+last_reviewed: 2026-11-10
 ---
 
 # Runbooks
@@ -27,6 +27,7 @@ Each deployment's continuity section names the runbooks it uses
 | [Restore from backup](restore-from-backup.md) | Data is lost or corrupted, the quarterly restore test, a drill | On-call engineer; three key holders; two approvers | Draft |
 | [Close of business](close-of-business.md) | The night's close is held, fails or overruns | On-call engineer; the institution's accountant | Draft |
 | [OpenBao unseal](openbao-unseal.md) | An instance's OpenBao is sealed: a restart, a failover | On-call engineer | Draft |
+| [Peak and slow days](peak-and-slow-days.md) | Two weeks before a peak day, on the day; and when traffic falls far below the usual | Operations lead; on-call lead; the institution's finance role and rail owner | Draft |
 | [Rotating a rail's credentials](rail-credentials.md) | On schedule, when someone leaves, or when they may be exposed | On-call engineer; the institution's rail owner | Draft |
 | [Upgrading Odoo](odoo-upgrade.md) | A new major version, once a year | Back-office engineer; the institution's staff check | Draft |
 | [Setting up GitHub](github-setup.md) | Once: the organisation created and this repository moved into it | The team lead and the CEO; each person | Draft |

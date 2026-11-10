@@ -1,5 +1,5 @@
 {
- "description": "Worked transactions for docs/specs/transactions.md (FS-1131, FS-1137, FS-1144; grouped, FS-1149; sources and a two-account payout, FS-1150; a payment and a transfer, FS-1152): W1 to W15, each with its position computed from its forward facts, are the instances the spec's tables show; each rule in rules.js has a case where the worked set does not break it and one where a change does. Generated, with hashes and check digits computed; fictional people, numbers and receipts.",
+ "description": "Worked transactions for docs/specs/transactions.md (FS-1131, FS-1137, FS-1144; grouped, FS-1149; sources and a two-account payout, FS-1150; a payment and a transfer, FS-1152; the product landscape, FS-1163; treasury, FS-1164): W1 to W28, each with its position computed from its forward facts, are the instances the spec's tables show; each rule in rules.js has a case where the worked set does not break it and one where a change does. Generated, with hashes and check digits computed; fictional people, numbers and receipts.",
  "worked": [
   {
    "id": "W1",
@@ -2162,6 +2162,1496 @@
      "changes": []
     }
    }
+  },
+  {
+   "id": "W16",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a27b81-4880-7011-8011-000000000017",
+      "reference": "RSA14BMK341",
+      "idempotency_key": "eod-2026-12-15-dividend-S00310"
+     },
+     "what": {
+      "kind": "dividend",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "share",
+       "id": "S00310"
+      }
+     },
+     "origin": {
+      "channel": "end_of_day",
+      "rail": "book",
+      "created_at": "2026-12-15T21:00:00Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "deposits-service"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 200000,
+       "currency": "KES"
+      },
+      "amount_type": "send",
+      "direction": "internal",
+      "charges": [
+       {
+        "line": 1,
+        "kind": "tax",
+        "code": "withholding-tax",
+        "amount": {
+         "minor": 10000,
+         "currency": "KES"
+        },
+        "deducted": true
+       }
+      ]
+     },
+     "parties": {
+      "payer": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "destination": {
+       "address": {
+        "kind": "book",
+        "account": {
+         "kind": "deposit",
+         "id": "D00310"
+        }
+       }
+      }
+     },
+     "terms": {
+      "purpose": "DIVD"
+     }
+    },
+    "footer": {
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-12-15T21:00:00Z",
+        "by": {
+         "kind": "service",
+         "id": "deposits-service"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-12-15T21:00:01Z",
+        "by": {
+         "kind": "service",
+         "id": "deposits-service"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 190000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W17",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1cc84-87c0-7012-8012-000000000018",
+      "reference": "78T66CZP457",
+      "idempotency_key": "eod-2026-11-11-cap-L00042"
+     },
+     "what": {
+      "kind": "waiver",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00042"
+      }
+     },
+     "origin": {
+      "channel": "end_of_day",
+      "rail": "none",
+      "created_at": "2026-11-11T21:30:00Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "lending-service"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 70000,
+       "currency": "KES"
+      },
+      "amount_type": "send",
+      "direction": "internal",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "INTE"
+     }
+    },
+    "footer": {
+     "approval": {
+      "ref": "apr-001020",
+      "body_hash": "sha256:1ce2ed1e7bb570bfa3ebf7d46c8ed2d336e06d8ffc5bf094f6ed48edeef2f624",
+      "at": "2026-11-11T21:30:01Z"
+     },
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-11T21:30:00Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
+       },
+       {
+        "status": "approved",
+        "at": "2026-11-11T21:30:01Z",
+        "by": {
+         "kind": "service",
+         "id": "approval-engine"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-11T21:30:02Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 70000,
+       "currency": "KES"
+      }
+     },
+     "books": {
+      "allocation": [
+       {
+        "part": "interest",
+        "amount": {
+         "minor": 70000,
+         "currency": "KES"
+        }
+       }
+      ]
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W18",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1f866-0d00-7013-8013-000000000019",
+      "reference": "PRAB7CAT627",
+      "idempotency_key": "writeoff-L00057"
+     },
+     "what": {
+      "kind": "write_off",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00057"
+      }
+     },
+     "origin": {
+      "channel": "staff_workspace",
+      "rail": "none",
+      "created_at": "2026-11-20T10:00:00Z",
+      "initiated_by": {
+       "kind": "person",
+       "id": "u-0009",
+       "role": "credit-manager"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 2000000,
+       "currency": "KES"
+      },
+      "amount_type": "send",
+      "direction": "internal",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "LOAN"
+     }
+    },
+    "footer": {
+     "approval": {
+      "ref": "apr-001021",
+      "body_hash": "sha256:695bc183d56857d45f266076ad44d89d1e994d5deae8ca7dd45db074e753084e",
+      "at": "2026-11-20T11:00:00Z"
+     },
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-20T10:00:00Z",
+        "by": {
+         "kind": "person",
+         "id": "u-0009",
+         "role": "credit-manager"
+        }
+       },
+       {
+        "status": "approved",
+        "at": "2026-11-20T11:00:00Z",
+        "by": {
+         "kind": "service",
+         "id": "approval-engine"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-20T11:00:01Z",
+        "by": {
+         "kind": "service",
+         "id": "lending-service"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 2000000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [
+      {
+       "rel": "recovered_by",
+       "txid": "01a2456e-8280-7014-8014-000000000020",
+       "at": "2026-12-05T09:00:00Z"
+      }
+     ],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W19",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a2456e-8280-7014-8014-000000000020",
+      "reference": "58TH9DNY736",
+      "idempotency_key": "bank-RECOVERY-0001"
+     },
+     "what": {
+      "kind": "repayment",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00057"
+      }
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "eft",
+      "created_at": "2026-12-05T09:00:00Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "rails"
+      }
+     },
+     "links": [
+      {
+       "rel": "recovers",
+       "txid": "01a1f866-0d00-7013-8013-000000000019"
+      }
+     ]
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 1500000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "in",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "organisation",
+       "name": "Example Auctioneers",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "LOAR"
+     }
+    },
+    "footer": {
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-12-05T09:00:00Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-12-05T09:00:00Z",
+        "by": {
+         "kind": "rail",
+         "id": "bank"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 1500000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W20",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a23030-4700-7015-8015-000000000021",
+      "reference": "MQ9PBE01819",
+      "idempotency_key": "ratiba-mdt-000501-2026-12"
+     },
+     "what": {
+      "kind": "repayment",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "loan",
+       "id": "L00042"
+      },
+      "mandate": "mdt-000501"
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "mpesa",
+      "created_at": "2026-12-01T06:00:00Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "rails"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 300000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "in",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "group",
+       "ref": "grp-0007",
+       "name": "Example Women Group",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "LOAR",
+      "execute_on": "2026-12-01"
+     }
+    },
+    "footer": {
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-12-01T06:00:00Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-12-01T06:00:05Z",
+        "by": {
+         "kind": "rail",
+         "id": "mpesa"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 300000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W21",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1cec5-5000-7016-8016-000000000022",
+      "reference": "37SVDEA5919",
+      "idempotency_key": "swift-ESC-E00012-0001"
+     },
+     "what": {
+      "kind": "deposit",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "deposit",
+       "id": "E00012"
+      }
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "rtgs",
+      "created_at": "2026-11-12T08:00:00Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "rails"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 100000,
+       "currency": "USD"
+      },
+      "amount_type": "receive",
+      "direction": "in",
+      "charges": [],
+      "exchange": {
+       "from": {
+        "minor": 100000,
+        "currency": "USD"
+       },
+       "to": {
+        "minor": 12900000,
+        "currency": "KES"
+       },
+       "rate": "129.00",
+       "rate_source": "partner-bank",
+       "rate_at": "2026-11-12T08:00:00Z"
+      }
+     },
+     "parties": {
+      "payer": {
+       "kind": "organisation",
+       "name": "Example Buyer LLC",
+       "country": "US"
+      },
+      "payee": {
+       "kind": "organisation",
+       "name": "Example Seller Ltd",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "GDDS"
+     }
+    },
+    "footer": {
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-12T08:00:00Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-12T08:00:03Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 100000,
+       "currency": "USD"
+      }
+     },
+     "ids": [],
+     "linked_by": [
+      {
+       "rel": "has_part",
+       "txid": "01a1cec5-53e8-7017-8017-000000000023",
+       "at": "2026-11-12T08:00:01Z"
+      },
+      {
+       "rel": "has_part",
+       "txid": "01a1cec5-53e8-7018-8018-000000000024",
+       "at": "2026-11-12T08:00:01Z"
+      }
+     ],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W22",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1cec5-53e8-7017-8017-000000000023",
+      "reference": "JQ90EFN8A47",
+      "idempotency_key": "swift-ESC-E00012-0001-usd"
+     },
+     "what": {
+      "kind": "deposit",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "ledger",
+       "id": "usd-settlement"
+      }
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "rtgs",
+      "created_at": "2026-11-12T08:00:01Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "rails"
+      }
+     },
+     "links": [
+      {
+       "rel": "part_of",
+       "txid": "01a1cec5-5000-7016-8016-000000000022"
+      }
+     ]
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 100000,
+       "currency": "USD"
+      },
+      "amount_type": "receive",
+      "direction": "in",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "organisation",
+       "name": "Example Buyer LLC",
+       "country": "US"
+      },
+      "payee": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "GDDS"
+     }
+    },
+    "footer": {
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-12T08:00:01Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-12T08:00:02Z",
+        "by": {
+         "kind": "rail",
+         "id": "bank"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 100000,
+       "currency": "USD"
+      }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W23",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1cec5-53e8-7018-8018-000000000024",
+      "reference": "16S6GF0CC66",
+      "idempotency_key": "swift-ESC-E00012-0001-kes"
+     },
+     "what": {
+      "kind": "deposit",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "deposit",
+       "id": "E00012"
+      }
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "book",
+      "created_at": "2026-11-12T08:00:01Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "deposits-service"
+      }
+     },
+     "links": [
+      {
+       "rel": "part_of",
+       "txid": "01a1cec5-5000-7016-8016-000000000022"
+      }
+     ]
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 12900000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "internal",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "organisation",
+       "name": "Example Seller Ltd",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "GDDS"
+     }
+    },
+    "footer": {
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-12T08:00:01Z",
+        "by": {
+         "kind": "service",
+         "id": "deposits-service"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-12T08:00:02Z",
+        "by": {
+         "kind": "service",
+         "id": "deposits-service"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 12900000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W24",
+   "position": "reversed",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1d4c7-6600-7019-8019-000000000025",
+      "reference": "GP9BJGBGD63",
+      "idempotency_key": "card-auth-000777"
+     },
+     "what": {
+      "kind": "payment",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "deposit",
+       "id": "D00310"
+      }
+     },
+     "origin": {
+      "channel": "app",
+      "rail": "card",
+      "created_at": "2026-11-13T12:00:00Z",
+      "initiated_by": {
+       "kind": "person",
+       "id": "cust-000123",
+       "role": "member"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 250000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "out",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "organisation",
+       "name": "Example Shop",
+       "country": "KE"
+      },
+      "source": {
+       "address": {
+        "kind": "book",
+        "account": {
+         "kind": "ledger",
+         "id": "card-settlement"
+        }
+       }
+      },
+      "destination": {
+       "address": {
+        "kind": "book",
+        "account": {
+         "kind": "ledger",
+         "id": "card-network"
+        }
+       }
+      }
+     },
+     "terms": {
+      "purpose": "GDDS"
+     }
+    },
+    "footer": {
+     "approval": {
+      "ref": "apr-card-000777",
+      "body_hash": "sha256:c95a5810b0969f457e8079778406d4a2d29fd2372c54fd59ed473e2534a27b03",
+      "at": "2026-11-13T12:00:01Z"
+     },
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-13T12:00:00Z",
+        "by": {
+         "kind": "person",
+         "id": "cust-000123",
+         "role": "member"
+        }
+       },
+       {
+        "status": "authorised",
+        "at": "2026-11-13T12:00:01Z",
+        "by": {
+         "kind": "rail",
+         "id": "card"
+        }
+       },
+       {
+        "status": "captured",
+        "at": "2026-11-13T18:00:00Z",
+        "by": {
+         "kind": "rail",
+         "id": "card"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-14T06:00:00Z",
+        "by": {
+         "kind": "rail",
+         "id": "card"
+        }
+       }
+      ],
+      "checks": [
+       {
+        "check": "sanctions",
+        "result": "pass",
+        "at": "2026-11-13T12:00:01Z"
+       },
+       {
+        "check": "limits",
+        "result": "pass",
+        "at": "2026-11-13T12:00:01Z"
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 250000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [
+      {
+       "rel": "reversed_by",
+       "txid": "01a1f82f-1e80-701a-801a-000000000026",
+       "at": "2026-11-20T09:00:00Z"
+      }
+     ],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W25",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1f82f-1e80-701a-801a-000000000026",
+      "reference": "Z6SGMHPKE35",
+      "idempotency_key": "chargeback-000777"
+     },
+     "what": {
+      "kind": "chargeback",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "deposit",
+       "id": "D00310"
+      }
+     },
+     "origin": {
+      "channel": "rail",
+      "rail": "card",
+      "created_at": "2026-11-20T09:00:00Z",
+      "initiated_by": {
+       "kind": "rail",
+       "id": "card"
+      }
+     },
+     "links": [
+      {
+       "rel": "reverses",
+       "txid": "01a1d4c7-6600-7019-8019-000000000025"
+      }
+     ]
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 250000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "in",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "organisation",
+       "name": "Example Shop",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "GDDS"
+     }
+    },
+    "footer": {
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-20T09:00:00Z",
+        "by": {
+         "kind": "rail",
+         "id": "card"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-20T09:00:01Z",
+        "by": {
+         "kind": "rail",
+         "id": "card"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 250000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": [
+      {
+       "at": "2026-11-20T09:00:00Z",
+       "by": {
+        "kind": "rail",
+        "id": "card"
+       },
+       "reason": "FRAD",
+       "what": "charged back by the card network: the member did not make the payment"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "W26",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1c4e6-7500-701b-801b-000000000027",
+      "reference": "EN9PPH1QF56",
+      "idempotency_key": "sub-D00310-MMF-0001"
+     },
+     "what": {
+      "kind": "subscription",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "deposit",
+       "id": "D00310"
+      }
+     },
+     "origin": {
+      "channel": "app",
+      "rail": "book",
+      "created_at": "2026-11-10T10:00:00Z",
+      "initiated_by": {
+       "kind": "person",
+       "id": "cust-000123",
+       "role": "member"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 1050000,
+       "currency": "KES"
+      },
+      "amount_type": "send",
+      "direction": "internal",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "person",
+       "ref": "cust-000123",
+       "name": "A. Borrower",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "organisation",
+       "name": "Example Money Market Fund",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "INVS",
+      "instrument": {
+       "scheme": "ISIN",
+       "value": "KE9999999990"
+      },
+      "units": {
+       "quantity": "1000.000000",
+       "price": "10.5000",
+       "currency": "KES",
+       "priced_on": "2026-11-10",
+       "settles_on": "2026-11-12"
+      }
+     }
+    },
+    "footer": {
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-10T10:00:00Z",
+        "by": {
+         "kind": "person",
+         "id": "cust-000123",
+         "role": "member"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-12T08:00:00Z",
+        "by": {
+         "kind": "service",
+         "id": "deposits-service"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 1050000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W27",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a1c45d-20c0-701c-801c-000000000028",
+      "reference": "X5SVQJCVH84",
+      "idempotency_key": "stmt-SME0001-2026-11-09-0042"
+     },
+     "what": {
+      "kind": "deposit",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "ledger",
+       "id": "sme-bank-0001"
+      },
+      "observed": true
+     },
+     "origin": {
+      "channel": "statement",
+      "rail": "eft",
+      "created_at": "2026-11-10T07:30:00Z",
+      "initiated_by": {
+       "kind": "service",
+       "id": "sme-recon"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 4500000,
+       "currency": "KES"
+      },
+      "amount_type": "receive",
+      "direction": "in",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "organisation",
+       "name": "Example Customer Ltd",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "organisation",
+       "name": "Example SME Ltd",
+       "country": "KE"
+      }
+     },
+     "terms": {
+      "purpose": "IVPT"
+     }
+    },
+    "footer": {
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-10T07:30:00Z",
+        "by": {
+         "kind": "service",
+         "id": "sme-recon"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-10T07:30:00Z",
+        "by": {
+         "kind": "service",
+         "id": "sme-recon"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 4500000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  },
+  {
+   "id": "W28",
+   "position": "settled",
+   "transaction": {
+    "header": {
+     "model_version": "1.0",
+     "id": {
+      "txid": "01a21c3b-a280-701d-801d-000000000029",
+      "reference": "CN90SJPYJ65",
+      "idempotency_key": "treasury-float-b2c-2026-11-27"
+     },
+     "what": {
+      "kind": "treasury",
+      "institution": "example-mfi",
+      "account": {
+       "kind": "ledger",
+       "id": "float-b2c"
+      }
+     },
+     "origin": {
+      "channel": "kapu_console",
+      "rail": "eft",
+      "created_at": "2026-11-27T09:00:00Z",
+      "initiated_by": {
+       "kind": "person",
+       "id": "u-0011",
+       "role": "treasurer"
+      }
+     },
+     "links": []
+    },
+    "body": {
+     "money": {
+      "amount": {
+       "minor": 50000000,
+       "currency": "KES"
+      },
+      "amount_type": "send",
+      "direction": "internal",
+      "charges": []
+     },
+     "parties": {
+      "payer": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "payee": {
+       "kind": "institution",
+       "ref": "example-mfi",
+       "name": "Example MFI",
+       "country": "KE"
+      },
+      "source": {
+       "address": {
+        "kind": "bank_account",
+        "bank_code": "07",
+        "branch_code": "000",
+        "account": "0000000099",
+        "country": "KE"
+       }
+      },
+      "destination": {
+       "address": {
+        "kind": "shortcode",
+        "provider": "mpesa",
+        "shortcode": "600000"
+       }
+      }
+     },
+     "terms": {
+      "purpose": "CASH"
+     }
+    },
+    "footer": {
+     "approval": {
+      "ref": "apr-001030",
+      "body_hash": "sha256:4fc52bb28dc8be5262a081b551304dff5f7b849bdc3979e2cc18d8dcdd564507",
+      "at": "2026-11-27T09:30:00Z"
+     },
+     "progress": {
+      "status_history": [
+       {
+        "status": "created",
+        "at": "2026-11-27T09:00:00Z",
+        "by": {
+         "kind": "person",
+         "id": "u-0011",
+         "role": "treasurer"
+        }
+       },
+       {
+        "status": "approved",
+        "at": "2026-11-27T09:30:00Z",
+        "by": {
+         "kind": "service",
+         "id": "approval-engine"
+        }
+       },
+       {
+        "status": "sent",
+        "at": "2026-11-27T09:31:00Z",
+        "by": {
+         "kind": "service",
+         "id": "rails"
+        }
+       },
+       {
+        "status": "settled",
+        "at": "2026-11-27T11:00:00Z",
+        "by": {
+         "kind": "rail",
+         "id": "bank"
+        }
+       }
+      ]
+     },
+     "settlement": {
+      "settled": {
+       "minor": 50000000,
+       "currency": "KES"
+      }
+     },
+     "ids": [],
+     "linked_by": [],
+     "changes": []
+    }
+   }
+  }
+ ],
+ "holds": [
+  {
+   "id": "H1",
+   "hold": {
+    "hold_id": "01a1d4c7-69e8-701e-801e-000000000030",
+    "institution": "example-mfi",
+    "account": {
+     "kind": "deposit",
+     "id": "D00310"
+    },
+    "amount": {
+     "minor": 250000,
+     "currency": "KES"
+    },
+    "reason": "card_authorisation",
+    "txid": "01a1d4c7-6600-7019-8019-000000000025",
+    "placed_by": {
+     "kind": "rail",
+     "id": "card"
+    },
+    "placed_at": "2026-11-13T12:00:01Z",
+    "status_history": [
+     {
+      "status": "placed",
+      "at": "2026-11-13T12:00:01Z"
+     },
+     {
+      "status": "captured",
+      "at": "2026-11-13T18:00:00Z",
+      "remaining": {
+       "minor": 0,
+       "currency": "KES"
+      },
+      "txid": "01a1d4c7-6600-7019-8019-000000000025"
+     }
+    ]
+   }
+  },
+  {
+   "id": "H2",
+   "hold": {
+    "hold_id": "01a1bf1b-4d80-701f-801f-000000000031",
+    "institution": "example-mfi",
+    "account": {
+     "kind": "deposit",
+     "id": "D00310"
+    },
+    "amount": {
+     "minor": 2000000,
+     "currency": "KES"
+    },
+    "reason": "guarantee",
+    "secures": "L00042",
+    "placed_by": {
+     "kind": "service",
+     "id": "lending-service"
+    },
+    "placed_at": "2026-11-09T07:00:00Z",
+    "approval_ref": "apr-000981",
+    "status_history": [
+     {
+      "status": "placed",
+      "at": "2026-11-09T07:00:00Z"
+     },
+     {
+      "status": "reduced",
+      "at": "2026-11-10T09:00:12Z",
+      "remaining": {
+       "minor": 1500000,
+       "currency": "KES"
+      }
+     },
+     {
+      "status": "released",
+      "at": "2026-12-31T21:00:00Z",
+      "remaining": {
+       "minor": 0,
+       "currency": "KES"
+      }
+     }
+    ]
+   }
   }
  ],
  "cases": [
@@ -2431,6 +3921,91 @@
      "tx": "W6",
      "path": "footer.approval",
      "remove": true
+    }
+   ],
+   "change_breaks": true
+  },
+  {
+   "rule": "recovers-a-write-off",
+   "worked_set_breaks": false,
+   "change": [
+    {
+     "tx": "W19",
+     "path": "header.links.0.txid",
+     "set": "01a1cc84-87c0-7012-8012-000000000018"
+    }
+   ],
+   "change_breaks": true
+  },
+  {
+   "rule": "exchange-legs",
+   "worked_set_breaks": false,
+   "change": [
+    {
+     "tx": "W23",
+     "path": "body.money.amount.minor",
+     "set": 12800000
+    }
+   ],
+   "change_breaks": true
+  },
+  {
+   "rule": "units-priced",
+   "worked_set_breaks": false,
+   "change": [
+    {
+     "tx": "W26",
+     "path": "body.terms.units.price",
+     "set": "11.0000"
+    }
+   ],
+   "change_breaks": true
+  },
+  {
+   "rule": "not-before-asked",
+   "worked_set_breaks": false,
+   "change": [
+    {
+     "tx": "W20",
+     "path": "body.terms.execute_on",
+     "set": "2026-12-02"
+    }
+   ],
+   "change_breaks": true
+  },
+  {
+   "rule": "observed-never-sent",
+   "worked_set_breaks": false,
+   "change": [
+    {
+     "tx": "W27",
+     "path": "footer.progress.status_history",
+     "set": [
+      {
+       "status": "created",
+       "at": "2026-11-10T07:30:00Z",
+       "by": {
+        "kind": "service",
+        "id": "sme-recon"
+       }
+      },
+      {
+       "status": "sent",
+       "at": "2026-11-10T07:30:00Z",
+       "by": {
+        "kind": "service",
+        "id": "rails"
+       }
+      },
+      {
+       "status": "settled",
+       "at": "2026-11-10T07:30:00Z",
+       "by": {
+        "kind": "service",
+        "id": "sme-recon"
+       }
+      }
+     ]
     }
    ],
    "change_breaks": true
