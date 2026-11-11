@@ -40,44 +40,58 @@ here.
 
 ## Where I left off
 
-As at 10 November 2026. Main pushed with FS-1119 to FS-1167; `origin` is
-still github.com/eric-mokaya/finance.
+As at 11 November 2026. Main pushed at 8f35fab with FS-1168 to FS-1189;
+on the branch since, not merged: FS-1190 (the market and pricing review,
+by the other session) and FS-1191 to FS-1193. `origin` is still
+github.com/eric-mokaya/finance.
 
-- **The transaction model** (FS-1119 to FS-1164), decided and documented:
-  docs/specs/transactions.md, its dictionary docs/transaction-fields.md
-  (TF-01 to TF-73, renumbered before release), and in `code/transactions/`
-  the transaction and hold schemas, 23 rules and 28 worked transactions
-  with two holds, held together by the "transactions" check. Since 9
-  November: payments and transfers (FS-1152); every money spec on it
-  (FS-1154); the seven gaps across the products (FS-1163: dividends,
-  waivers, recoveries, groups, mandates and the day asked, holds, two
-  currencies, cards, investments, observed records); treasury a function
-  of its own (FS-1164).
-- **The rails spec** (FS-1155 to FS-1162): docs/specs/rails.md, fifteen
-  rules: one interface, what is approved is sent, unknown a state,
-  callbacks proved, the payee checked, keys in OpenBao, an egress
-  gateway, hardened callbacks, rail settings through the approval engine
-  (`rail.setting`), float levels at several thresholds, each rail paced.
-  One shape for every limit (financial crime FC-16), peak and slow days
-  on the business calendar, and a runbook for them.
-  RL-02, RL-11 and RL-22 brought into R1, and rule 12's callback token
-  worded as a filter, not a proof (FS-1167, FS-1159).
-  **Waiting on his word:** rails §13 (each operator's number check; each
-  rail's callback proof, FS-209; field limits); Safaricom's SIM-swap
-  query granted to us as an authorised partner (FS-386); a treasury module of its own, out of
-  recon-observability, when R2's scope is set (FS-1164); transactions §12
-  (exchange rates' source, investments with a fund's administrator);
-  LQ-37 for counsel.
+- **Building starts** (FS-1192): the MVP on the public Azure sandbox,
+  made-up data only, while Liquid is settled. Roan Capital's soft launch
+  on 30 November with real borrowers needs a site in Kenya by then or
+  counsel's answer to LQ-46. **Waiting on his word:** the hackathon plan
+  (FS-1193, proposal in chat): one cycle for every client, a client's
+  configuration as data, the environments, the team as channels, backend
+  and ops beside the Odoo team, and the change advisory board.
+- **Kapu Treasury** (FS-1164 to FS-1182): docs/modules/treasury.md. Books
+  of its own money and of money held for others, never mixed; rulebooks
+  as data (TR-14 to TR-17); packages for every kind of customer, from a
+  remittance operator or forex bureau to a microfinance bank, a Sacco, a
+  fund manager and a bank; TR-01 in phase 1, the rest later.
+  **Waiting:** the Flex Money treasury team's notes (FS-1169); the RBA's,
+  CMA's and CBK's documents he will provide (FS-1180), then his untracked
+  RBA regulations PDF filed with them and the rulebooks' values filled;
+  law cards for the capital and liquidity rules (FS-1173); a module of
+  its own when R2's scope is set.
+- **Kapu Business** (FS-1183, FS-1186): SME Recon, treasury's Business
+  package, the gateway and the business suite sold as one;
+  docs/products/briefs/kapu-business.md. **Waiting:** its external
+  version (FS-1174); LQ-42.
+- **One writer per kind of account** (FS-1184): loans by the lending
+  service, deposits and shares by the deposits service, the institution's
+  own accounts by treasury, enforced by the core adapter. **The
+  architecture reviewed** (docs/reviews/architecture-2026-11-11.md, A1 to
+  A16 applied, FS-1187) and six diagrams brought up to it (FS-1188,
+  FS-1189).
+- **The transaction model** (FS-1119 to FS-1166): docs/specs/transactions.md,
+  its dictionary docs/transaction-fields.md (TF-01 to TF-73), and in
+  `code/transactions/` the schemas, 23 rules and the worked transactions,
+  held together by the "transactions" check. **Waiting on his word:**
+  transactions §12 (exchange rates' source; investments with a fund's
+  administrator); LQ-37, LQ-38 for counsel.
+- **The rails spec** (FS-1155 to FS-1162, FS-1167): docs/specs/rails.md,
+  fifteen rules; RL-02, RL-11 and RL-22 in R1. **Waiting on his word:**
+  rails §13 (each operator's number check; each rail's callback proof,
+  FS-209; field limits); Safaricom's SIM-swap query for us as an
+  authorised partner (FS-386).
 - **The reader's template** is design/reader/ (FS-1165): its frame and
   styles, read by tools/site.js on every rebuild.
-- **Roan Capital's CBK pack:** its answers to the pack's blanks recorded
-  and the documents rebuilt (FS-1132 to FS-1148), by the "Roan Capital
-  docs review" session, which worked beside this one on its own branch;
-  its handover is that session's own, and its rows say what is left.
-- **Two sessions at once:** ids were agreed by message, each committed in
-  id order and fast-forwarded to the other's commit (traps). Before the
-  push I rewrote six of my commits that had gone in under his name; the
-  contents are unchanged.
+- **Roan Capital's CBK pack:** its answers recorded and the documents
+  rebuilt (FS-1132 to FS-1148), by the "Roan Capital docs review"
+  session; its rows say what is left.
+- **Two sessions at once:** "Back-office spec: multiple ERP versions"
+  worked in this same checkout. Ids agreed by message (it takes those after FS-1193,
+  and LQ-47); REVIEW.md shared, so each committed only its own lines, one
+  after the other.
 
 **Carried from 5 November** (check each against the Roan Capital
 session's rows, FS-1132 to FS-1148, which may have settled some):
@@ -120,7 +134,7 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric: Critical, High, and waiting on Eric's word (74 of 199)
+### Rows with Eric: Critical, High, and waiting on Eric's word (79 of 206)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -190,6 +204,11 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 | FS-1107 | Roan Capital is applying as a digital credit provider: its first submission was rejected, and what we are prep | High |
 | FS-1108 | The delivery channels document is too narrow, repayments by M-Pesa and payouts by NCBA: how do we include the  | High |
 | FS-1135 | Roan Capital asks for the definitions of the cooling-off period (its credit policy, A.6) and of the grace peri | High |
+| FS-1169 | Treasury, which Flex Money has spoken of as a department: what it is, what it does, and how we handle it for e | High |
+| FS-1178 | Applying for Android Enterprise device management: why we are applying, and whether Dibon manages phones itsel | High |
+| FS-1185 | Pricing, reopened (FS-024 parked it): what options can we explore? Eric's two models: 1% of the transaction am | High |
+| FS-1190 | Review all our assumptions about market data, such as sizing, and all our pricing | High |
+| FS-1193 | The hackathons' goal is the team building, maintaining and operating the platform: how do we prepare? The deli | High, waiting |
 | FS-819 | Do we store, for instance, all M-Pesa transactions in the companion? In the same database as Fineract? | Medium, waiting |
 | FS-820 | FS-791 is answered by FS-792, unless something is missing. FS-819's one copy of the M-Pesa records: is the gen | Medium, waiting |
 | FS-821 | Seven years at the scale target is large: how do we store it, like AWS S3's storage classes, to keep costs dow | Medium, waiting |
@@ -199,7 +218,7 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 | FS-424 | Should we consider SWIFT? Which other rails should we look at? | Low, waiting |
 | FS-513 | The Apr 2025 RFP notes asked for network devices (firewalls, switches) watched through SNMP and syslog, and fo | Low, waiting |
 
-And 125 more, Medium or Low: the Board, filtered by name, or the Review page.
+And 127 more, Medium or Low: the Board, filtered by name, or the Review page.
 
 ### Work started
 
@@ -207,4 +226,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-1119-transaction-model`: nothing saved yet; here now, 2 files unsaved
+- `claude/emokaya/FS-1119-transaction-model`: 1 save, last 3 minutes ago, not uploaded; here now, 8 files unsaved

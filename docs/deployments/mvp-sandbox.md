@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079, FS-1093, FS-1115]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079, FS-1093, FS-1115, FS-1192]
 last_reviewed: 2026-11-11
 ---
 
@@ -15,6 +15,11 @@ last_reviewed: 2026-11-11
 
 Where the team builds the MVP (FS-929, FS-932; the MVP day). Its code is
 code/platform/azure-sandbox; what it makes is in that README.
+
+**Built on until production is in Kenya** (FS-1192): from 11 November
+the team builds the MVP here, while hosting in Kenya with Liquid is
+settled. Made-up data only still holds; a real customer's data waits for
+a site in Kenya (LQ-46).
 
 ## 1 · The deployment
 
@@ -25,7 +30,7 @@ code/platform/azure-sandbox; what it makes is in that README.
 | Sites | One: public Azure, South Africa North; Azure has no region in Kenya, so nothing real goes here |
 | Who runs it | Dibon's platform workstream; each person their own group |
 | Availability | None: rebuilt from code; personal and workstream groups removed at the end of the day |
-| Release | The MVP day, Friday 6 November (FS-962, FS-1074, FS-1079) |
+| Release | The MVP day, Friday 6 November (FS-962, FS-1074, FS-1079); built on from 11 November until production is in Kenya (FS-1192) |
 | Go-live | Not applicable |
 
 ## 2 · Components
@@ -176,6 +181,7 @@ Nothing to return: `tofu destroy` removes everything.
 | 2026-10-27 | The page written from the design | FS-1037 |
 | 2026-10-28 | How the components interact, in two diagrams (§2) | FS-1045 |
 | 2026-10-28 | Its settings (§3) | FS-1046 |
+| 2026-11-11 | Built on from 11 November, until production is in Kenya | FS-1192 |
 
 ## Regulations cited
 
