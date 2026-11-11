@@ -8,8 +8,8 @@ released: 2026.10.15
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-633, FS-634, FS-668, FS-765, FS-766, FS-767, FS-778]
-last_reviewed: 2026-10-12
+review_ids: [FS-548, FS-633, FS-634, FS-668, FS-765, FS-766, FS-767, FS-778, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # JN-17 · The accountant's morning, from the night's report to a day signed off
@@ -124,7 +124,7 @@ someone with a date.
 | BS-08, the core's daily totals posted to Odoo's general ledger | phase 2 | The accountant takes the day's totals from Kapu Core's reports into Roan Capital's books by hand, or its books stay where they are | Ask Roan Capital where its books are kept (§5) before deciding |
 | NCBA's statement and status by API (RL-07; FS-344) | Open: Roan Capital's request to the bank | Its statement email forwarded whole, or uploaded, and checked (RO-01); bank items settle a day behind M-Pesa's | Accept for R1 (FS-767) |
 | RO-08, suspense holding exactly the open breaks | phase 1, not in R1 | A suspense account reconciled by hand each morning (as JN-16) | Accept for R1 |
-| RO-09, the disbursement account's balance against payouts queued | phase 1, not in R1 | The finance officer checks the bank balance before releasing a file; the balance API is among our requests to the banks | Accept for R1 |
+| TR-01, the disbursement account's balance against payouts queued | phase 1, not in R1 | The finance officer checks the bank balance before releasing a file; the balance API is among our requests to the banks | Accept for R1 |
 | RO-11, duplicate and anomaly detection | phase 1, not in R1 | The matching engine's duplicate outcome, and the accountant's eye | Accept for R1 |
 
 ## 5 · Open questions

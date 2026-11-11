@@ -45,8 +45,9 @@ Fineract), Collect and the Pay Gateway (which ran in production at Onit
 Bank), Escrow, SME Recon, and the business suite on Odoo; under them the
 shared services (access, identity and the vault, mandates, messaging,
 rails, reconciliation, financial crime, decisioning, insights, platform
-security). **Around Fineract** (FS-970 to FS-988): the lending service,
-the only writer to the core, and the deposits service; Odoo the staff's
+security). **Around Fineract** (FS-970 to FS-988): the lending service and
+the deposits service, one writer per kind of account through the core
+adapter, treasury the writer of the institution's own accounts (FS-1184); Odoo the staff's
 interface only, behind the back-office gateway; the Kapu Console for
 Dibon's own operators. **R1 is Roan Capital's pilot** (customers CU-01). **Lofty
 Corban** (CU-05), a fund manager regulated by the CMA, RBA and IRA, is

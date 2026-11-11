@@ -12,8 +12,8 @@ depends_on: [access-keycloak, event-bus-kafka, transactions]
 used_by: [approval-engine, lender-rules, end-of-day-runner, recon, lending-service, deposits-service, product-versions]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050, FS-1053, FS-1054, FS-1056, FS-1058, FS-1069, FS-1154]
-last_reviewed: 2026-11-09
+review_ids: [FS-136, FS-139, FS-185, FS-625, FS-626, FS-630, FS-634, FS-642, FS-667, FS-674, FS-792, FS-793, FS-802, FS-965, FS-983, FS-1050, FS-1053, FS-1054, FS-1056, FS-1058, FS-1069, FS-1154, FS-1188]
+last_reviewed: 2026-11-11
 ---
 
 # Kapu Core on Apache Fineract — component specification
@@ -58,7 +58,7 @@ FS-185. Groups (KC-01, later).
         v                                        v
   +----------------+   +--------------------------------+   +-------------------+
   | ACCESS         |-->| LENDING SERVICE                |<->| APPROVAL ENGINE   |
-  | signs in       |   | the only writer, by its core   |   | decides           |
+  | signs in       |   | writes loans, by its core      |   | decides           |
   | [keycloak]     |   | adapter        [kapu_service]  |   | [kapu_service]    |
   +----------------+   +--------------------------------+   +-------------------+
         | OAuth          | commands, by the  ^ waivers

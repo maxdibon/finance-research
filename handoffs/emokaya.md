@@ -40,7 +40,7 @@ here.
 
 ## Where I left off
 
-As at 10 November 2026. Main pushed with FS-1119 to FS-1166; `origin` is
+As at 10 November 2026. Main pushed with FS-1119 to FS-1167; `origin` is
 still github.com/eric-mokaya/finance.
 
 - **The transaction model** (FS-1119 to FS-1164), decided and documented:
@@ -60,10 +60,11 @@ still github.com/eric-mokaya/finance.
   (`rail.setting`), float levels at several thresholds, each rail paced.
   One shape for every limit (financial crime FC-16), peak and slow days
   on the business calendar, and a runbook for them.
-  **Waiting on his word:** rails §13 (bring RL-02, RL-11 and RL-22 into
-  R1, which the scope check counts; each operator's number check; each
-  rail's callback proof, FS-209; field limits); FS-1159 (rule 12's secret
-  path, worded more precisely); a treasury module of its own, out of
+  RL-02, RL-11 and RL-22 brought into R1, and rule 12's callback token
+  worded as a filter, not a proof (FS-1167, FS-1159).
+  **Waiting on his word:** rails §13 (each operator's number check; each
+  rail's callback proof, FS-209; field limits); Safaricom's SIM-swap
+  query granted to us as an authorised partner (FS-386); a treasury module of its own, out of
   recon-observability, when R2's scope is set (FS-1164); transactions §12
   (exchange rates' source, investments with a fund's administrator);
   LQ-37 for counsel.
@@ -119,7 +120,7 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric: Critical, High, and waiting on Eric's word (74 of 200)
+### Rows with Eric: Critical, High, and waiting on Eric's word (74 of 199)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -198,7 +199,7 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 | FS-424 | Should we consider SWIFT? Which other rails should we look at? | Low, waiting |
 | FS-513 | The Apr 2025 RFP notes asked for network devices (firewalls, switches) watched through SNMP and syslog, and fo | Low, waiting |
 
-And 126 more, Medium or Low: the Board, filtered by name, or the Review page.
+And 125 more, Medium or Low: the Board, filtered by name, or the Review page.
 
 ### Work started
 
@@ -206,4 +207,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-1119-transaction-model`: 10 saves, last 41 seconds ago, not uploaded; here now, 3 files unsaved
+- `claude/emokaya/FS-1119-transaction-model`: nothing saved yet; here now, 2 files unsaved

@@ -11,8 +11,8 @@ depends_on: [messaging]
 used_by: [approval-engine, kapu-core-fineract, end-of-day-runner, observability-grafana, messaging, endpoints, github, recon, back-office, staff-workspace, kapu-console, vault]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018, FS-1050, FS-1054, FS-1055, FS-1056, FS-1070, FS-1094, FS-1101]
-last_reviewed: 2026-11-05
+review_ids: [FS-194, FS-198, FS-498, FS-503, FS-588, FS-618, FS-642, FS-643, FS-645, FS-646, FS-648, FS-667, FS-674, FS-675, FS-695, FS-711, FS-750, FS-769, FS-770, FS-777, FS-792, FS-896, FS-970, FS-965, FS-983, FS-1018, FS-1050, FS-1054, FS-1055, FS-1056, FS-1070, FS-1094, FS-1101, FS-1184]
+last_reviewed: 2026-11-11
 ---
 
 # Access on Keycloak — component specification
@@ -181,7 +181,7 @@ their bound phone for those without one (S18); tokens of 5 minutes
 | Client | Kind | Notes |
 |---|---|---|
 | `approval-engine` | Confidential; people and step-up | Asks for `loa3` at each decision; accepts the staff workspace's exchanged tokens for reads and a person's open steps, never for a decision (§7) |
-| `lending-service` | Service account; resource server | The only writer to the core, through the core adapter (lending-service rule 2); accepts the staff workspace's exchanged tokens (§7) |
+| `lending-service` | Service account; resource server | The writer of loans to the core, through the core adapter, one writer per kind of account (lending-service rule 2); accepts the staff workspace's exchanged tokens (§7) |
 | `end-of-day-runner` | Service account | Runs only its jobs (end-of-day-runner §8) |
 | `provisioning` | Service account | The only identity that may map approval roles (§6) |
 | `fineract` | Resource server | Accepts `staff` tokens addressed to it |

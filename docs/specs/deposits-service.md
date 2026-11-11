@@ -11,8 +11,8 @@ depends_on: [kapu-core-fineract, approval-engine, transactions, rails]
 used_by: [lending-service]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-066, FS-178, FS-179, FS-185, FS-985, FS-991, FS-1058, FS-1154, FS-1155]
-last_reviewed: 2026-11-09
+review_ids: [FS-066, FS-178, FS-179, FS-185, FS-985, FS-991, FS-1058, FS-1154, FS-1155, FS-1184]
+last_reviewed: 2026-11-11
 ---
 
 # The Kapu deposits service — build specification
@@ -87,7 +87,9 @@ and [JN-12](../journeys/transfer-in.md).
    (FS-056).
 2. **One ledger of record per account:** the institution's core or Kapu
    Core, never both.
-3. **The only writer of deposit postings,** through the core adapter;
+3. **The only writer of deposit postings,** through the core adapter,
+   under the rule of one writer per kind of account (lending-service
+   rule 2; FS-1184);
    tellers' cash (KC-06) and mobile money (KC-09) post through it.
 4. **Money out is guarded:** step-up, limits by channel, the SIM-swap
    check before money moves (OC-06). Every movement out, and every

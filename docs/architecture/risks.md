@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-649, FS-695, FS-744]
-last_reviewed: 2026-10-12
+review_ids: [FS-649, FS-695, FS-744, FS-1187]
+last_reviewed: 2026-11-11
 ---
 
 # Risks and technical debt
@@ -33,3 +33,11 @@ Each row points to its register row, where its status lives.
 | One AGPL module inside Odoo | A change to it would have to be published | Never modified | FS-646 |
 | Event names drift from the catalogue | Services diverge again | Every name from the event bus catalogue; a name not in it is not published | FS-667 |
 | Counsel's answers on restructuring | Relief delayed thirty days | Ask counsel: LQ-06, LQ-07 (docs/governance/legal-questions.md) | FS-624 |
+| Rulebooks read from CBK's 2013 guidelines | A ratio computed on rules since revised | Check for a revision before tier 2 is specified; every value cited, so a change is found | FS-1173 |
+| Kenya Law and the RBA refuse scripts | Texts fetched late, or by hand only | The regulators' own copies where they allow it; the browser, with the owner, for the rest | FS-1177, FS-1180 |
+| A business's payments through us may need a licence | Kapu Business's payments held back | Offered through institutions first, under their names; counsel on LQ-42 | FS-1183 |
+| Investors' pools at a lender | An investor portal promised that may not be lawful | Counsel on LQ-38 before it is offered | FS-1084 |
+| Safaricom's SIM-swap check for an authorised partner, now in R1 | Payouts to a swapped SIM | Ask Safaricom early; the identity binding (ID-12) meanwhile | FS-386, FS-1167 |
+| No known query for an operator to confirm a number's network | A ported number paid on the wrong network | Ask each operator; the payout held when unconfirmed | FS-1144 |
+| Daraja's callbacks may be unsigned | A forged callback counted | Every callback confirmed by status query first (rails rule 6) | FS-209 |
+| The core adapter's list of writers | Every posting waits on it | Kept small, replicated, and its list changed only by approval | FS-1184 |

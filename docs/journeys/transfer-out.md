@@ -9,8 +9,8 @@ released: 2026.10.16
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-585, FS-586, FS-668, FS-783]
-last_reviewed: 2026-10-16
+review_ids: [FS-548, FS-585, FS-586, FS-668, FS-783, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # JN-11 · A transfer out through a larger bank, by EFT or RTGS
@@ -100,7 +100,7 @@ PesaLink and SWIFT follow the same steps and are phase 2 (§4).
 | 2 | The platform checks the instruction: the available balance and any holds; the customer's limits and the bank's transaction rules; the rail's cut-off on the business calendar; and the recipient's name, through the larger bank's account-validation service where it offers one | Platform | — | FC-16, KC-15, RL-29 |
 | 3 | A second person approves it, never the one who entered it, re-authenticated at the act, by the amount tier the bank's chain sets | Approver | T26 | MD-01, MD-06, MD-10 |
 | 4 | The customer's account is debited with the amount and the bank's fee, the instruction keeping one id from here to settlement | Platform | — | RL-01, RL-27 |
-| 5 | The settlement account at the larger bank must cover this transfer and every other queued for release; the balance comes from that bank's API or its latest statement | Platform | — | RL-27, RO-09 |
+| 5 | The settlement account at the larger bank must cover this transfer and every other queued for release; the balance comes from that bank's API or its latest statement | Platform | — | RL-27, TR-01 |
 | 6 | Released before the larger bank's cut-off for the rail, carrying the sender's name, account and identity and the recipient's name and account, as reg 32 requires; by the larger bank's API or host-to-host, signed with the bank's key inside OpenBao, or as a file its signatories release in internet banking | Platform; signatories | — | RL-27, RL-07, RL-12, RL-14 |
 | 7 | The larger bank accepts the instruction; the customer is told it was sent, with the reference to give the recipient and the day it should arrive | Platform | T45 | RL-01, RL-10, MS-12 |
 | 8 | The larger bank's statement shows the transfer leaving the settlement account; it is matched to its instruction, and the instruction closes as settled | Platform | — | RO-01, RO-02, RL-27 |
@@ -113,7 +113,7 @@ PesaLink and SWIFT follow the same steps and are phase 2 (§4).
 | a | 2 | **Not enough in the account,** or a hold on it. Refused at entry; the officer tells the customer what is available | FC-16 |
 | b | 2 | **The recipient's name does not match** the account. Held, never sent on a mismatch; the customer confirms the details, or the instruction is cancelled | RL-29 |
 | c | 6 | **After the larger bank's cut-off** for the rail. The transfer waits for its next window, the next business day, and the customer is told the day it will go | FC-16, KC-15 |
-| d | 5 | **The settlement account does not cover it.** Held, with every transfer behind it; the treasury team is alerted with the shortfall and funds the account, and the transfers go in order once covered | RO-09, RL-27 |
+| d | 5 | **The settlement account does not cover it.** Held, with every transfer behind it; the treasury team is alerted with the shortfall and funds the account, and the transfers go in order once covered | TR-01, RL-27 |
 | e | 7 | **The larger bank rejects it:** a format, a closed account, a rail refusing it. The customer's posting is reversed on its original date, the fee by the bank's rule, and they are told why in plain words (T46) | RL-01, RL-27 |
 | f | 8 | **The recipient's bank returns it later.** The return is matched to its instruction; the customer's account is credited back, dated as the original debit, so nothing runs on money they never parted with; they are told (T46) | RL-01, RO-02 |
 | g | 7 | **No answer from the larger bank.** Pending, not failed: a status query or the statement settles it; it is never resent blind | RL-10, RL-14 |

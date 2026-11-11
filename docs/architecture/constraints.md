@@ -7,8 +7,8 @@ law: LR-11
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-649]
-last_reviewed: 2026-10-16
+review_ids: [FS-649, FS-1187]
+last_reviewed: 2026-11-11
 ---
 
 # Constraints we design within

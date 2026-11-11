@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974, FS-965, FS-987, FS-1020, FS-1167]
-last_reviewed: 2026-11-10
+review_ids: [FS-453, FS-470, FS-473, FS-477, FS-490, FS-492, FS-495, FS-500, FS-503, FS-516, FS-517, FS-531, FS-532, FS-539, FS-638, FS-674, FS-675, FS-680, FS-767, FS-769, FS-775, FS-777, FS-781, FS-793, FS-808, FS-974, FS-965, FS-987, FS-1020, FS-1167, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # Delivery plan — phase 1 in releases
@@ -29,7 +29,7 @@ release that needs it.
 | Release | Started by | Scope | Size |
 |---|---|---|---|
 | **R1 · Roan Capital's pilot** | Now: Roan Capital is in delivery (customers CU-01) | Everything Roan Capital's delivery map depends on, plus the platform and security minimum for a lender to go live (below) | 103 capabilities from the map (1 Built, 38 Designed, 64 Planned), plus 30 further platform, security and testing capabilities (computed 2026-10-14, FS-808) |
-| **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); for a microfinance bank, rails through a larger bank and its settlement account's float (RL-27, RO-09; FS-585); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability; the companion ledger for deposits and bank transfers, expected payments (RO-03), duplicate detection (RO-11), matching by leg against the rails' tariffs, change-data capture from the bank's own core, and the load test before a bank of scale (FS-793); Roan Capital's public pages, its website with the "Request a loan" form, the calculator and its published products (BS-20), since it has no website yet (FS-808) | Mostly Built or Designed: the Onit record |
+| **R2 · Collect and the Gateway with a partner bank** | A partner bank signs (partners SD-04, PT-34) | Collect and the Gateway re-platformed from what ran at Onit Bank; deposits to the institution's paybill and tills (CO-21); for a microfinance bank, rails through a larger bank and its settlement account's float (RL-27, TR-01; FS-585); Airtel Money and T-Kash; Hakikisha and Pull Transactions; the SIM controls; traceability; the companion ledger for deposits and bank transfers, expected payments (RO-03), duplicate detection (RO-11), matching by leg against the rails' tariffs, change-data capture from the bank's own core, and the load test before a bank of scale (FS-793); Roan Capital's public pages, its website with the "Request a loan" form, the calculator and its published products (BS-20), since it has no website yet (FS-808) | Mostly Built or Designed: the Onit record |
 | **R3 · SME Recon and the bank channel** | A bank agrees the referral pilot (docs/market/bank-channel.md) | SME Recon on Odoo and Zoho with bank statement feeds; the business suite for SMEs | SME Recon's phase-1 rows; bank APIs and files (rails RL-07) |
 | **R4 · Saccos and Kapu Core** | The first Sacco or core customer signs | Kapu Sacco, Kapu Core, member apps and USSD, the field-officer app | Sacco, Core and omni-channel phase-1 rows |
 | **R5 · The rest of v1** | After R1, in the order sales ask | Escrow, CRB, financial crime beyond R1, insights, the remaining platform services | What is left of phase 1 |

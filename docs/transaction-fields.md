@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1163, FS-1164, FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1152]
-last_reviewed: 2026-11-10
+review_ids: [FS-1163, FS-1164, FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1152, FS-1187]
+last_reviewed: 2026-11-11
 ---
 
 # Transaction fields
@@ -369,7 +369,8 @@ authorisation, funds not yet cleared, a court's order. It is a companion
 record, not a kind of transaction, typed in
 [hold.schema.json](../code/transactions/hold.schema.json); the money it
 holds moves, if it ever does, as a transaction of its own, named in the
-hold's history (H1, a card's authorisation captured as W24).
+hold's history (H1, a card's authorisation captured as W24). The service
+that owns the account keeps its holds (FS-1187).
 
 | Hold field | Meaning | Type | Set by |
 |---|---|---|---|

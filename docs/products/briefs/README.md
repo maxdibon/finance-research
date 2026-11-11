@@ -7,8 +7,8 @@ law: LR-03
 released: unreleased
 owner: Product lead, lending
 classification: Internal
-review_ids: [FS-1029, FS-1031]
-last_reviewed: 2026-10-27
+review_ids: [FS-1029, FS-1031, FS-1186]
+last_reviewed: 2026-11-11
 ---
 
 # Product briefs
@@ -40,6 +40,7 @@ same headings, in the same order, which the check holds every brief to.
 | Wallet savings and loans, the M-Shwari kind | [wallet-lending.md](wallet-lending.md) | Loans phase 2; savings once their schema exists |
 | Virtual cards, through a sponsor bank and an issuer processor | [virtual-cards.md](virtual-cards.md) | Designed, later |
 | Asset finance with title: a vehicle, land, or paid to a dealer | [asset-finance.md](asset-finance.md) | R1 for Roan Capital; dealer-paid phase 2 |
+| Kapu Business: corporate treasury for a small or medium business, through its institution or directly | [kapu-business.md](kapu-business.md) | SME Recon designed; the forecast and payments phase 2, the rest later |
 
 ## Regulations cited
 

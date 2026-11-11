@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759, FS-792, FS-896, FS-932, FS-970, FS-1041, FS-1042, FS-1093]
-last_reviewed: 2026-11-05
+review_ids: [FS-217, FS-403, FS-464, FS-693, FS-694, FS-695, FS-697, FS-698, FS-699, FS-700, FS-701, FS-703, FS-705, FS-712, FS-750, FS-759, FS-792, FS-896, FS-932, FS-970, FS-1041, FS-1042, FS-1093, FS-1187]
+last_reviewed: 2026-11-11
 ---
 
 # Technology: the register of components we run
@@ -114,6 +114,7 @@ yet tried) · *Bought* (commercial, chosen with its supplier). All checked
 | RKE2 | Kubernetes (SE-04) | Apache-2.0 | SUSE | Keep | Talos Linux (MPL-2.0); kubeadm | Hardened to the CIS Benchmarks by default |
 | OpenTofu, with cloud-init | Infrastructure as code: networks, machines, clusters, permissions and budgets, on Azure and Azure Stack; cloud-init installs RKE2 on the machines | MPL-2.0 (OpenTofu); Apache-2.0 or GPL-3.0 (cloud-init) | Linux Foundation; Canonical | Keep (FS-932) | Terraform (Business Source License since 2023, as Vault); Bicep (Azure only); Pulumi | Terraform's language and providers, under an open licence; its state never in git, kept in Azure storage signed into with Entra |
 | Cilium | Network, policy, encryption between services (SE-05) | Apache-2.0 | CNCF (graduated) | Keep | Calico | Default deny, with Envoy inside |
+| Cilium's egress gateway | The rails' calls to each rail, from fixed addresses and to that rail's hosts only (rails rule 11) | Apache-2.0 | CNCF (Cilium, graduated) | Trial, with Cilium | An Envoy egress proxy | Cilium is already the network layer; a second proxy only if per-host policy needs one (FS-1187) |
 | cert-manager | Certificates, issued and renewed (SE-09) | Apache-2.0 | CNCF (graduated) | Keep | — | The standard |
 | Velero | Cluster objects and volumes (SE-10) | Apache-2.0 | CNCF (sandbox, since 2026) | Keep | — | Databases go through Barman instead |
 

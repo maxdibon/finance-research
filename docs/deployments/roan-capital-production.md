@@ -8,7 +8,7 @@ released: unreleased
 owner: Solution architect
 classification: Internal
 review_ids: [FS-1037, FS-1045, FS-1046, FS-1050, FS-1053, FS-1058, FS-1088, FS-1093, FS-1094, FS-1096, FS-1109, FS-1110, FS-1114, FS-1115, FS-1133, FS-1148]
-last_reviewed: 2026-11-09
+last_reviewed: 2026-11-11
 ---
 
 # Roan Capital · production
@@ -40,6 +40,7 @@ Written from the design (FS-1037); generated from the code once it exists
 | CUSTOMER PAGES | Yes | R1 | services | — | 2 | to write |
 | LENDING SERVICE | Yes, as Kapu MFI | R1 | services | Services: lending | 2 | lending-service |
 | DEPOSITS SERVICE | No: Roan Capital takes no deposits | — | — | — | — | deposits-service |
+| TREASURY | No: designed for R2; its float watched by the rails' levels meanwhile (rails rule 14) | — | — | — | — | treasury |
 | CORE ADAPTER | Yes, to Kapu Core | R1 | services | — | 2 | lending-service |
 | BACK-OFFICE GATEWAY | Yes, Odoo Enterprise's adapter | R1 | services | Services: gateway | 2 | back-office |
 | VAULT | Yes | R1 | services | Services: identity | 2 | identity ID-15 |

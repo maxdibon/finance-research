@@ -9,8 +9,8 @@ released: 2026.10.16
 validated_with: not yet
 owner: Solution architect
 classification: Internal
-review_ids: [FS-548, FS-585, FS-668, FS-784]
-last_reviewed: 2026-10-16
+review_ids: [FS-548, FS-585, FS-668, FS-784, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # JN-12 · A transfer in through a larger bank, identified and applied or returned
@@ -97,7 +97,7 @@ through the larger bank, and through its own customer.
 | 4 | Identified on evidence: the account number in the beneficiary details exists, is open, and its holder's name agrees with the beneficiary name within the matching rule's tolerance. Anything less is an exception, never a guess | Platform | — | RO-02, RL-27 |
 | 5 | Applied to the customer's account in the bank's core, dated by the larger bank's credit, once only for each credit | Platform | — | RL-27, RL-14 |
 | 6 | The customer is told: the amount, the sender's name, the reference, the account's last four digits; never the balance | Platform | T47 | MS-12 |
-| 7 | The reconciliation cycle matches the settlement account's credit to the customer's posting; the settlement account and the customers' accounts tie out | Platform; accountant | — | RO-02, RO-04, RO-09 |
+| 7 | The reconciliation cycle matches the settlement account's credit to the customer's posting; the settlement account and the customers' accounts tie out | Platform; accountant | — | RO-02, RO-04, TR-01 |
 
 ## 3 · When it goes wrong
 

@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-649, FS-650, FS-1053]
-last_reviewed: 2026-10-29
+review_ids: [FS-649, FS-650, FS-1053, FS-1187, FS-1188]
+last_reviewed: 2026-11-11
 ---
 
 # Context: who and what the platform connects to
@@ -34,8 +34,8 @@ the licence line is).
   | pay out, hold      |<---->| the ledger, the back office (Odoo) |<---->| credit records     |
   | [rail]             |money | behind its gateway, the Kapu       |credit| [external]         |
   | PesaLink, RTGS,    |      | Console; collect . gateway . core  |      | lookups now;       |
-  | SWIFT via a bank   |      | mfi . sacco . escrow . sme-recon   |      | submissions in R5  |
-  +--------------------+      |                                    |      +--------------------+
+  | SWIFT via a bank   |      | mfi . sacco . escrow . sme-recon . |      | submissions in R5  |
+  +--------------------+      | treasury                           |      +--------------------+
                               | shared services, channels: the     |
   +--------------------+      | customer app, internet banking,    |      +--------------------+
   | MOBILE NETWORKS    |      | USSD, WhatsApp, the partner portal |      | PROVIDERS          |
@@ -46,16 +46,16 @@ the licence line is).
   +--------------------+      |                                    |      +--------------------+
                               |                                    |
   +--------------------+      |                                    |      +--------------------+
-  | PARTNERS           |      |                                    |      | CARDS AND BOOKS    |
+  | PARTNERS           |      |                                    |      | CARDS, BOOKS, FUNDS|
   | distributors,      |<---->|                                    |<---->| sponsor bank and   |
   | dealers, schools;  |data, |                                    |cards,| issuer processor   |
   | operators, for     |pay-  |                                    |books | (later); a busi-   |
-  | wallets [partner]  |outs  |                                    |      | ness's own Zoho or |
+  | wallets [partner]  |outs  |                                    |funds,| ness's own Zoho or |
   +--------------------+      +------------------------------------+      | QuickBooks         |
-                                                |                         +--------------------+
-                                                v
-                              +------------------------------------+
-                              | THE INSTITUTION                    |
+                                                |                         | and its banks; a   |
+                                                v                         | fund's system, its |
+                              +------------------------------------+      | custodian; rates   |
+                              | THE INSTITUTION                    |      +--------------------+
                               | holds licence, money, records      |
                               | [customer]                         |
                               | its core and identity provider,    |
@@ -67,7 +67,8 @@ the licence line is).
   the institution files;      | REGULATORS                         |
   we prepare (FC-13)          | license, supervise                 |
                               | [external]                         |
-                              | CBK, SASRA, ODPC, FRC (goAML)      |
+                              | CBK, SASRA, CMA, RBA, IRA, ODPC,   |
+                              | FRC (goAML)                        |
                               +------------------------------------+
 ```
 
@@ -76,13 +77,17 @@ the licence line is).
 | The institution's staff and approvers | Sign-in, decisions, back-office work | Both | — | access, mandates |
 | Borrowers, guarantors, members | Codes, links, messages, payments | Both | Confidential, to them only | messaging, omni-channel |
 | Safaricom M-Pesa, Airtel Money, T-Kash | Payment prompts, confirmations, payouts, status, statements | Both | Confidential | rails RL-03 to RL-05 |
-| Mobile network operators: Safaricom, Airtel, Telkom | SMS by direct connection (SMPP); SIM-swap and IMSI checks; the phone number checked against the registered name | Both | Confidential; a phone number to check | messaging MS-02; rails RL-22; identity ID-12, ID-13; compliance LC-03, LC-13 |
+| Mobile network operators: Safaricom, Airtel, Telkom | SMS by direct connection (SMPP); SIM-swap and IMSI checks; the phone number checked against the registered name; whether a number is on its network now, before a payout (FS-1144) | Both | Confidential; a phone number to check | messaging MS-02; rails RL-22; identity ID-12, ID-13; compliance LC-03, LC-13 |
 | Banks, PesaLink, RTGS, SWIFT through a larger bank | Instructions, status, statements | Both | Confidential | rails RL-06, RL-07, RL-27, RL-28 |
 | The institution's core banking system, where it keeps one | Postings and reads, through its API | Both | Confidential | [README](README.md) §4 |
 | The institution's identity provider, where it keeps one | Federated sign-in | In | — | access AC-07 |
 | NPDM (formerly IPRS), the business registry, KRA | Identity and business checks | Both | Restricted out (an ID number to check) | identity |
 | Licensed credit bureaux | Lookups now; submissions from release R5, "the rest of v1" in the delivery plan | Both | Confidential | crb; mfi MF-19 |
-| CBK, SASRA, ODPC, FRC (goAML) | Returns and reports, filed by the institution; we prepare | Out, through the institution | Confidential | financial-crime FC-13 |
+| CBK, SASRA, the CMA, the RBA, the IRA, ODPC, FRC (goAML) | Returns and reports, filed by the institution; we prepare, from treasury's rulebooks where they are prudential | Out, through the institution | Confidential | financial-crime FC-13; treasury TR-16 |
+| A fund's system and its custodian (a fund manager's, such as UnitMaster) | Units and prices at the dealing cut-off; the custodian's holdings and cash | In | — | treasury TR-33, TR-34 |
+| Rate sources: the institution's banks, the Central Bank's indicative rates | Exchange rates, with their source and time | In | — | treasury TR-09 |
+| A business's own banks (Kapu Business) | Its balances and statements, with its consent; its payments, on its approval | Both | Confidential | treasury TR-36, TR-37; LQ-42 |
+| The Communications Authority | Its numbering plan: which network each code was assigned to, read at each release | In | — | transaction-fields §3 |
 | Liquid (hosting), the managed security service | Hosting; security telemetry | Both | Internal telemetry | [deployment](deployment.md) |
 | Meta (WhatsApp), Twilio (on-call calls), our email relay | Messages and calls | Out | Notifications and links only | messaging; observability |
 | Odoo S.A. | Licences | — | None | business-suite |

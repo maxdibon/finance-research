@@ -8,9 +8,9 @@ owner: Solution architect
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [access, rails, messaging, mandates]
-consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime, core, escrow, crb, rails, insights, platform-security, decisioning]
-review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618, FS-101, FS-633, FS-634, FS-635, FS-699, FS-700, FS-767, FS-792, FS-793, FS-812]
-last_reviewed: 2026-10-14
+consumed_by: [collect, gateway, mfi, sacco, sme-recon, financial-crime, core, escrow, crb, rails, insights, platform-security, decisioning, treasury]
+review_ids: [FS-011, FS-012, FS-038, FS-063, FS-095, FS-096, FS-097, FS-098, FS-099, FS-100, FS-101, FS-102, FS-103, FS-388, FS-390, FS-405, FS-418, FS-421, FS-431, FS-445, FS-453, FS-532, FS-509, FS-510, FS-585, FS-618, FS-101, FS-633, FS-634, FS-635, FS-699, FS-700, FS-767, FS-792, FS-793, FS-812, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # Recon & Observability
@@ -76,8 +76,6 @@ reconciliation, is Planned (FS-405).
 | RO-06 | Transaction trace: every hop, with both sides' evidence | Designed | Prototype: Transaction Trace | 1 |
 | RO-07 | Remediation: status query, retry, repost, reversal — each audited. An item in transit is chased automatically: its source's status query or statement, as onboarding records it, asked on a schedule until the item clears or its clear-by day passes; matched only on a reference and the amount, never on time alone | Designed | Proposal: actors and corrective workflows. Prototype: status query that completes a break. Control rule in §8 — FS-097. Chasing in transit: FS-635. R1: for M-Pesa; Airtel Money with rails RL-04; a bank's items by its next statement (owner, 2026-10-12, FS-767) | 1 |
 | RO-08 | Ledger replica, checked two ways: real-time assertions from posting events, and a nightly batch proof that subledgers sum to their parents. Suspense holds exactly the open breaks. Designed as three ledgers that must agree: the master, a shadow rebuilt from the master's postings near real time, and a companion that computes on its own from the source events (docs/specs/recon.md §3) | Designed | Prototype: GL & Subledger. Three ledgers: the owner's notes (FS-790, FS-791, FS-792). In R1: the shadow at go-live, the companion for Roan Capital's product within the first 30 days (FS-793) | 1 |
-| RO-09 | Treasury and float: where the money sits, and hours of float left at the current burn; for an institution that reaches the rails through a larger bank, the settlement account's balance against the transfers queued for release (rails RL-27) | Designed | Prototype: Treasury & Float. Owner, 2026-10-06: phase 1, in R2 (FS-585) | 1 |
-| RO-10 | Branch and till cash by currency and denomination | Designed | Prototype: Branches & Tellers. For institutions with cash; not every customer | 2 |
 | RO-11 | Duplicate and anomaly detection | Designed | Proposal: fraud detection and risk mitigation. Rule-based in the specification; nothing learned | 1 |
 | RO-13 | Evidence for a period, assembled from traces rather than retyped | Designed | Prototype: Recon Attestation | 2 |
 | RO-16 | Observability: metrics (Prometheus), logs (Loki), traces (Tempo), dashboards (Grafana) | Designed | Proposal: Observability. Kapu technical documentation uses the same stack. Metrics, logs and dashboards ran at Onit Bank in Collect (collect CO-11, FS-390); traces are not evidenced there, so the row stays Designed | 1 |
@@ -94,7 +92,7 @@ reconciliation, is Planned (FS-405).
 | RO-28 | A catalogue of proven extensions, built, tested and signed by Dibon, which an institution switches on and configures, never codes: tickets in Odoo or Zoho, alerts, pausing a rail, notifying a customer, proposing a reversal for approval (docs/specs/recon.md §7) | Planned | Owner, 2026-10-13 (FS-791, FS-793). R1 and R2 run the same actions built in | 2 |
 | RO-27 | One audit trail across modules: every action, inside a transaction or not (sign-ins, role and product changes, approvals, document views), published as a signed event (architecture §6) and indexed, searchable by user, account, date and action by the institution's auditors under their own role, exportable for an auditor or the regulator, and never editable | Planned | Owner, 2026-10-08 (FS-618); Roan Capital RC-33 | 1 |
 
-**Retired ids:** RO-12, moved to financial-crime FC-03; RO-14, to FC-09 and FC-13; RO-15, to FC-05 and FC-07 (FS-431). A retired id is never reused.
+**Retired ids:** RO-09, moved to treasury TR-01 (FS-1171); RO-10, moved to treasury TR-11 (FS-1171); RO-12, moved to financial-crime FC-03; RO-14, to FC-09 and FC-13; RO-15, to FC-05 and FC-07 (FS-431). A retired id is never reused.
 
 ## 4 · Where it sits
 
@@ -106,8 +104,9 @@ merchant payment), mfi and sacco (repayments against Fineract), sme-recon
 (the same engine behind an ERP), core (it ties to its own rails every
 day), escrow, crb, rails (events in, health out), insights (data feeds)
 and financial-crime (duplicate and anomaly detection, RO-11, as a feed;
-FS-431). Also platform-security, and decisioning (RO-01's statement
-parsers, for appraisal).
+FS-431). Also platform-security, decisioning (RO-01's statement
+parsers, for appraisal), and treasury (statements and the three ledgers'
+balances, for its positions).
 
 **Does this cover the SME use case?** The engine does; the product does
 not (FS-095).

@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-915, FS-916, FS-917, FS-918, FS-919, FS-1053, FS-1091]
-last_reviewed: 2026-11-05
+review_ids: [FS-915, FS-916, FS-917, FS-918, FS-919, FS-1053, FS-1091, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # Lofty Corban · delivery map
@@ -66,7 +66,7 @@ Corban is working towards.
 | LF-01 | Every collection matched and its customer's account in the fund system credited, across its account types (money market, stock market and others) | RO-01, RO-02 | Partial | Matching covered; the credit into UnitMaster depends on its interface (open answer 1) |
 | LF-02 | Bank payments whose notice lacks the payer's details (KCB's PesaLink notices omit the narration) matched on amount, time and payer, the rest owned and followed up | RO-02, RO-05 | Covered | The payer asked to confirm, as in the unplaced-payment journey |
 | LF-03 | Less left in suspense: anything unmatched visible, owned and aged, never parked | RO-05, RO-06 | Covered | |
-| LF-04 | A payout that failed caught the same day: money left on the M-Pesa payout account at the end of the day traced to the payouts that did not land, the sweep back prompted and the customer's account re-credited, the customer told | RO-07, RO-09, MS-01 | Covered | Today found the next day and moved by request to treasury |
+| LF-04 | A payout that failed caught the same day: money left on the M-Pesa payout account at the end of the day traced to the payouts that did not land, the sweep back prompted and the customer's account re-credited, the customer told | RO-07, TR-01, MS-01 | Covered | Today found the next day and moved by request to treasury |
 | LF-05 | The morning M-Pesa sweep matched as an internal transfer, not as new money | RO-21, RO-04 | Covered | |
 | LF-06 | Collection and payout fees at Equity, charged and then refunded under the trustee fee, checked both ways | RO-26 | Covered | Who the trustee is: open answer 3 |
 | LF-07 | Payouts approved in three levels, by role and amount, never by the one who prepared them, every step recorded | MD-01, MD-03, MD-05, MD-06 | Partial | Today a file prepared from the fund system and loaded to Equity's internet banking with three approvals there; whether approvals move to us, or are recorded beside the bank's, is open answer 4 |
