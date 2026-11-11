@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053, FS-1070, FS-1131, FS-1155]
-last_reviewed: 2026-11-09
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053, FS-1070, FS-1131, FS-1155, FS-1178]
+last_reviewed: 2026-11-11
 ---
 
 # Specifications
@@ -108,6 +108,16 @@ By layer, as [the instance](../architecture/instance.md) is drawn (FS-1053).
 | [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
 
 **To write, in the order R1 needs them:** customer pages (consents, signing, statements, without the app); odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries).
+
+**To write before an institution moves onto Dibon's device-management
+service** (endpoints §4, FS-1178): device-management, a component spec of
+what this project needs from that service, as olp is for OLP: a tenant
+per institution, its data in Kenya; enrolment and wipe driven by our
+people records and access; a compliance signal for sign-in and step-up;
+work profiles for staff's own phones, and iPhones covered too; no
+location tracking on institutions' staff phones; the console protected
+as endpoints §4 says; and the checks to run before an institution
+relies on it.
 
 ## How they connect
 
