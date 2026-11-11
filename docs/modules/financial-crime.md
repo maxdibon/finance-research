@@ -9,9 +9,9 @@ owner: Compliance lead
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, fintech]
 depends_on: [identity, recon-observability, rails, mandates, messaging, access, core]
-consumed_by: [collect, gateway, mfi, sacco, core, omni-channel, identity]
-review_ids: [FS-098, FS-418, FS-422, FS-428, FS-431, FS-433, FS-435, FS-448, FS-453, FS-574, FS-577, FS-580, FS-588, FS-1160, FS-1162]
-last_reviewed: 2026-11-10
+consumed_by: [collect, gateway, mfi, sacco, core, omni-channel, identity, treasury]
+review_ids: [FS-098, FS-418, FS-422, FS-428, FS-431, FS-433, FS-435, FS-448, FS-453, FS-574, FS-577, FS-580, FS-588, FS-1160, FS-1162, FS-1181]
+last_reviewed: 2026-11-11
 ---
 
 # Financial Crime and Compliance
@@ -92,7 +92,8 @@ second person), messaging (contacting the customer on a second channel),
 access (attribution), core (the business calendar, KC-15, for the
 transaction rules, FC-16).
 **Used by:** collect, gateway, mfi, sacco, core, omni-channel; identity,
-whose IMSI-change holds (ID-13) run through FC-02.
+whose IMSI-change holds (ID-13) run through FC-02; and treasury, whose
+limits are rules of FC-16's shape and whose figures FC-13's returns use.
 
 **Who holds which record** (docs/architecture/README.md §2):
 

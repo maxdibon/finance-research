@@ -7,8 +7,8 @@ law: LR-03
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056, FS-1068, FS-1070, FS-1072, FS-1077, FS-1078]
-last_reviewed: 2026-11-01
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056, FS-1068, FS-1070, FS-1072, FS-1077, FS-1078, FS-1182]
+last_reviewed: 2026-11-11
 ---
 
 # Platform architecture — who holds what
@@ -73,7 +73,7 @@ index, with the entries by hundreds in docs/decisions/.
 | Layer | Contents |
 |---|---|
 | **Channels** | omni-channel — mobile apps, internet banking, USSD, the field-officer app; every one, by person, in [channels](../market/channels.md) |
-| **Products** | collect · gateway · escrow · core (Kapu Core: hosted core banking on Apache Fineract) · mfi and sacco (deposit-taking and credit-only), both run by the lending service, with the deposits service where a Sacco takes deposits · sme-recon (wrappers for a business's own Odoo, Zoho or QuickBooks Online, SR-15) · business-suite (Odoo or Zoho, implemented by Dibon) |
+| **Products** | collect · gateway · escrow · treasury (Kapu Treasury: each book's positions, forecast, float, funding, investments and its regulator's rulebook, read from the systems of record, never holding money; FS-1182) · core (Kapu Core: hosted core banking on Apache Fineract) · mfi and sacco (deposit-taking and credit-only), both run by the lending service, with the deposits service where a Sacco takes deposits · sme-recon (wrappers for a business's own Odoo, Zoho or QuickBooks Online, SR-15) · business-suite (Odoo or Zoho, implemented by Dibon) |
 | **Shared services** | the lending service and the deposits service, the only writers to the core, through the core adapter · recon-observability · mandates (signing and debit, run by the approval engine) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification, and the document vault) · messaging (SMS, WhatsApp, app; Telegram later; transactional and campaigns; Flowza for conversations) · rails · insights · financial-crime (fraud, AML/CFT, transaction rules, reporting) · decisioning (appraisal, scores, risk classes) · the back-office gateway · the end-of-day runner · platform-security |
 | **Systems of record** | the institution's core, or Kapu Core · Odoo · recon engine — §2 |
 
@@ -84,7 +84,7 @@ index, with the entries by hundreds in docs/decisions/.
  +--------------------------------------------------------------------+
                                   |
  +--------------------------------------------------------------------+
- | PRODUCTS     collect . gateway . escrow . mfi . sacco .            |
+ | PRODUCTS     collect . gateway . escrow . treasury . mfi . sacco . |
  |              sme-recon . core . business-suite                     |
  +--------------------------------------------------------------------+
                                   |
