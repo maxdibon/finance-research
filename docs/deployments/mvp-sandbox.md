@@ -8,7 +8,7 @@ released: unreleased
 owner: Solution architect
 classification: Internal
 review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079, FS-1093, FS-1115]
-last_reviewed: 2026-11-05
+last_reviewed: 2026-11-11
 ---
 
 # The MVP sandbox
@@ -39,6 +39,7 @@ code/platform/azure-sandbox; what it makes is in that README.
 | CUSTOMER PAGES | No: the borrower signs in Odoo Sign | — | — | — | — | to write |
 | LENDING SERVICE | No: the walk-through keys into Kapu Core | — | — | — | — | lending-service |
 | DEPOSITS SERVICE | No | — | — | — | — | deposits-service |
+| TREASURY | No: designed for R2 | — | — | — | — | treasury |
 | CORE ADAPTER | No | — | — | — | — | lending-service |
 | BACK-OFFICE GATEWAY | No | — | — | — | — | back-office |
 | VAULT | No | — | — | — | — | identity ID-15 |

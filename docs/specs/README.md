@@ -6,7 +6,7 @@ status: living
 released: 2026.10.15
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053, FS-1070, FS-1131, FS-1155, FS-1178]
+review_ids: [FS-627, FS-628, FS-632, FS-642, FS-648, FS-667, FS-711, FS-750, FS-792, FS-896, FS-970, FS-973, FS-965, FS-983, FS-985, FS-987, FS-1052, FS-1054, FS-1056, FS-1058, FS-1053, FS-1070, FS-1131, FS-1155, FS-1178, FS-1184, FS-1187]
 last_reviewed: 2026-11-11
 ---
 
@@ -107,7 +107,7 @@ By layer, as [the instance](../architecture/instance.md) is drawn (FS-1053).
 | [github](github.md) | Component | GitHub: the organisation, teams and roles, rulesets on main, code owners, push rulesets, Actions with runners in Kenya, secrets from OpenBao, deploys by pull request and the change calendar, planning in Projects; plans checked | platform-security | R1 |
 | [endpoints](endpoints.md) | Component | Devices and their protection: the rule that no customer data lives on a device, baselines by class, two tiers (Sophos and Intune through Liquid, or our own on Wazuh), a lost laptop | platform-security | R1 |
 
-**To write, in the order R1 needs them:** customer pages (consents, signing, statements, without the app); odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries).
+**To write, in the order R1 needs them:** customer pages (more now waits on them: the investor portal, a reversed payment's position shown to its customer, a payout waiting for float; FS-1187) (consents, signing, statements, without the app); odoo (Sign, HR, Helpdesk, Project, the general-ledger summaries).
 
 **To write before an institution moves onto Dibon's device-management
 service** (endpoints §4, FS-1178): device-management, a component spec of
@@ -177,7 +177,7 @@ says what crosses each line.
 | staff-workspace | lending-service | Reads and commands, as the person |
 | kapu-console | lending-service | Read-only views, as the person |
 | kapu-console | approval-engine | Decisions, with step-up |
-| lending-service | kapu-core-fineract | Postings and settings, through the core adapter, as the only writer |
+| lending-service | kapu-core-fineract | Postings and settings, through the core adapter, as the writer of loans (one writer per kind of account, lending-service rule 2) |
 | lending-service | approval-engine | Requests to decide; acts only on the engine's yes |
 | lending-service | lender-rules | Every rule a loan or product is checked against |
 | lending-service | back-office | Leads, signatures, tickets |
@@ -195,7 +195,7 @@ its id is how the component is named wherever a name is an identifier
 |---|---|---|---|---|
 | APPROVAL ENGINE | Decides whether an act may happen | `[kapu_service]` | `approval-engine` | [approval-engine](approval-engine.md) |
 | LENDER RULES | Applies the lender regulations to each loan, inside the lending service (FS-629) | `[kapu_service]` | `lender-rules` | [lender-rules](lender-rules.md) |
-| LENDING SERVICE | Lends for MFI and Sacco: applications, collateral, vetting, product versions; the only writer to the core | `[kapu_service]` | `lending-service` | [lending-service](lending-service.md) |
+| LENDING SERVICE | Lends for MFI and Sacco: applications, collateral, vetting, product versions; the writer of loans to the core | `[kapu_service]` | `lending-service` | [lending-service](lending-service.md) |
 | KAPU MFI | The lending service configured for lenders, with lender rules beside it | `[kapu_service]` | — (a configuration of `lending-service`) | [lending-service](lending-service.md) |
 | DEPOSITS SERVICE | Keeps deposit accounts in native mode | `[kapu_service]` | `deposits-service` | [deposits-service](deposits-service.md) |
 | CORE ADAPTER | One interface to the core: Kapu Core, or the institution's own | `[kapu_service]` | `core-adapter` | [lending-service](lending-service.md) |
@@ -210,6 +210,7 @@ its id is how the component is named wherever a name is an identifier
 | EVENT BUS | Carries signed events between services | `[kafka]` | `kafka` | [event-bus-kafka](event-bus-kafka.md) |
 | RAILS | Sends and receives money on M-Pesa and banks | `[kapu_service]` | `rails` | [rails](rails.md) |
 | MESSAGING | SMS, WhatsApp and email to people | `[kapu_service]` | `messaging` | [messaging](messaging.md) |
+| TREASURY | Each book's positions, forecast, float, funding and investments, and its regulator's rulebook | `[kapu_service]` | `treasury` | to write (treasury module) |
 | RECONCILIATION | Matches the ledger with the rails, proves completeness, compares the three ledgers | `[kapu_service]` | `recon` | [recon](recon.md) |
 | SHADOW LEDGER | Rebuilds the master's ledger from its postings, near real time, in memory | `[kapu_service]` | `shadow-ledger` | [recon](recon.md) |
 | COMPANION LEDGER | Computes, on its own, what every account should hold, from the source events and the product's terms | `[kapu_service]` | `companion-ledger` | [recon](recon.md) |

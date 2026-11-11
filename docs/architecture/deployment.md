@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896, FS-1032, FS-1037, FS-1094]
-last_reviewed: 2026-11-05
+review_ids: [FS-032, FS-359, FS-466, FS-491, FS-645, FS-649, FS-651, FS-655, FS-656, FS-657, FS-658, FS-659, FS-660, FS-691, FS-692, FS-693, FS-694, FS-701, FS-703, FS-775, FS-896, FS-1032, FS-1037, FS-1094, FS-1187]
+last_reviewed: 2026-11-11
 ---
 
 # Deployment: sites, the fleet, and what is central
@@ -190,8 +190,10 @@ the contract measures a site disaster by its own objectives, not by the
 monthly figure. An institution that needs a site's loss inside the 99.9%
 chooses hot, automatic standby.
 
-**Ready before go-live:** site B's outbound addresses registered with
-Safaricom and with each bank that allowlists callers; M-Pesa callbacks
+**Ready before go-live:** the rails' egress gateway at each site, every
+call to a rail leaving through it (rails rule 11); site B's outbound
+addresses registered with Safaricom and with each bank that allowlists
+callers; M-Pesa callbacks
 and bank endpoints addressed by name, never by site A's address; site B's
 OpenBao unseal key held at site B; the runbook rehearsed once.
 

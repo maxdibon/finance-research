@@ -11,7 +11,7 @@ depends_on: [event-bus-kafka]
 used_by: [recon, lending-service, deposits-service, approval-engine, kapu-core-fineract, rails]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153, FS-1154, FS-1155, FS-1163, FS-1164, FS-1171]
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153, FS-1154, FS-1155, FS-1163, FS-1164, FS-1171, FS-1187, FS-1188]
 last_reviewed: 2026-11-11
 ---
 
@@ -70,18 +70,18 @@ countries' schemes.
   | mints, money in   |------------------------->| carries, signed   |
   | [kapu_service]    |  entries, as events      | [kafka]           |
   +-------------------+                          +-------------------+
-                                                           |
-                                                           | every entry
-                                                           v
-                                                 +-------------------+
-                                                 | RECONCILIATION    |
+  +-------------------+                                    |
+  | TREASURY          |  the same, for the                 | every entry
+  | mints, own money  |  institution's own                 v
+  | [kapu_service]    |  accounts                +-------------------+
+  +-------------------+                          | RECONCILIATION    |
                                                  | matches, by any id|
                                                  | [kapu_service]    |
                                                  +-------------------+
 ```
 
 **Reading it:** each arrow from the left is drawn from one minter but
-holds for all three. Whichever mints a transaction (rule 7) asks the
+holds for all four. Whichever mints a transaction (rule 7) asks the
 approval engine to approve its body when money goes out, posts it through
 the core adapter, and publishes every part as an event; reconciliation
 reads them all and keeps the index that finds a transaction by any id.
@@ -140,7 +140,8 @@ money arriving; journeys none yet.
   guarantor's pledge, an escrow's hold, a lien, a card's authorisation,
   funds not yet cleared). A companion record, never a kind of
   transaction (dictionary §6); what it holds moves, if it moves, as a
-  transaction of its own.
+  transaction of its own. It is kept by the service that owns the account
+  it is on, as that service writes the account's postings (FS-1187).
 - **Observed** (FS-1163): a record read from books not the institution's
   with us, such as an SME's own bank account, for reconciliation; never
   instructed by us, so never approved or sent (`what.observed`).
@@ -257,7 +258,8 @@ money arriving; journeys none yet.
 7. **Ids: minted once, others kept by issuer.** The txid is a UUIDv7,
    minted by the first of our components to know of the movement: the
    lending or deposits service for a request, cash at a counter or a
-   run of the end-of-day runner; the rails when money arrives; the core
+   run of the end-of-day runner; treasury for the institution's own money
+   between its own accounts (FS-1188); the rails when money arrives; the core
    adapter for a posting made in an institution's own core in the split
    mode (FS-1127, FS-1128). Its short reference is nine Crockford base-32
    symbols and two check digits by ISO 7064 MOD 97-10, the method IBANs

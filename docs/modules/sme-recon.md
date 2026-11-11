@@ -8,9 +8,9 @@ owner: Product lead, recon
 classification: Internal
 audience: [sme, fintech]
 depends_on: [access, recon-observability, rails, mandates, messaging, gateway, crb]
-consumed_by: [business-suite, insights, mfi, identity]
-review_ids: [FS-026, FS-027, FS-028, FS-033, FS-036, FS-037, FS-038, FS-095, FS-124, FS-125, FS-127, FS-130, FS-131, FS-132, FS-133, FS-134, FS-135, FS-439, FS-441, FS-522, FS-1033]
-last_reviewed: 2026-10-27
+consumed_by: [business-suite, insights, mfi, identity, treasury]
+review_ids: [FS-026, FS-027, FS-028, FS-033, FS-036, FS-037, FS-038, FS-095, FS-124, FS-125, FS-127, FS-130, FS-131, FS-132, FS-133, FS-134, FS-135, FS-439, FS-441, FS-522, FS-1033, FS-1186]
+last_reviewed: 2026-11-11
 ---
 
 # SME Recon
@@ -87,8 +87,11 @@ card feeds), mandates (approval of payments, SR-11), messaging, gateway
 (incoming merchant payments, for businesses that collect through it). Also crb (individual lookups from the ERP).
 **Used by:** business-suite (statement feeds into accounting), insights
 (its metrics), mfi (confirmed invoices for LPO and invoice financing,
-MF-32) and identity (statements from source, with consent, ID-18). Otherwise it is the product an SME buys, directly
-or through its bank (docs/market/bank-channel.md).
+MF-32) identity (statements from source, with consent, ID-18) and treasury
+(the Business package's positions and payments build on it, TR-36,
+TR-37). Otherwise it is the product an SME buys, directly
+or through its bank (docs/market/bank-channel.md), alone or as the way into
+Kapu Business (FS-1186).
 
 **Who holds which record** (docs/architecture/README.md §2):
 

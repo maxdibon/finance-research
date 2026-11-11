@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-584, FS-649]
-last_reviewed: 2026-10-08
+review_ids: [FS-584, FS-649, FS-1187]
+last_reviewed: 2026-11-11
 ---
 
 # The rules every interface follows
@@ -36,6 +36,10 @@ this page puts them in one place.
   between the two, and never sent for a change that did not happen.
 - **Consumers tolerate repeats and order:** delivery is at least once;
   each consumer records what it has applied.
+- **A money event's data is a transaction** (FS-1142): validated against
+  the schema at the version its `dataschema` names, every field from the
+  dictionary ([transactions](../specs/transactions.md) rules 1 and 10); a
+  reader holds what it does not know, never guesses.
 - **Events are CloudEvents, signed** with the service's identity (RO-23);
   names are in the event bus catalogue
   ([event-bus-kafka](../specs/event-bus-kafka.md) §5).
@@ -48,6 +52,10 @@ this page puts them in one place.
   keeps failing is paused, not hammered (RL-15).
 - **Money is never retried blind:** a payout is retried only after its
   status is known.
+- **A callback counts only when it is proved** (rails rule 6): by the
+  rail's signature, or confirmed by a status query, its source checked;
+  its address holds an unguessable token, and a replay finds nothing to do
+  (rails rule 12).
 
 **Who may call**
 
@@ -56,3 +64,9 @@ this page puts them in one place.
 - **People's acts at the act:** anything that moves money, approves or
   reveals a person asks for step-up (README §7).
 - **No credential in an app, a browser or a USSD gateway** (README §3).
+- **Out to the rails only through their egress gateway** (rails rule 11):
+  from the addresses registered with each rail, to its own hosts only.
+- **A setting that could redirect money changes only by approval:** a
+  rail setting through the approval engine, two people at least (rails
+  rule 13).
+- **Every limit has one shape** (FC-16; README §7).

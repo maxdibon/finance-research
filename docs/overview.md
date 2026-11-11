@@ -168,7 +168,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
 | How it should feel to use, and how we make it intuitive | [experience.md](company/experience.md) |
 | How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](delivery/testing.md) |
-| Reviews: OLP as it stands (26 October 2026), what we need from it being the [OLP spec](specs/olp.md); the architecture, its databases and namespaces counted (27 October); the specs against their template (29 October) | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [reviews/architecture-2026-10-27.md](reviews/architecture-2026-10-27.md); [reviews/specs-2026-10-29.md](reviews/specs-2026-10-29.md) |
+| Reviews: OLP as it stands (26 October 2026), what we need from it being the [OLP spec](specs/olp.md); the architecture, its databases and namespaces counted (27 October); the specs against their template (29 October); the architecture against the transaction model, rails, treasury and Kapu Business (11 November) | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [reviews/architecture-2026-10-27.md](reviews/architecture-2026-10-27.md); [reviews/specs-2026-10-29.md](reviews/specs-2026-10-29.md); [reviews/architecture-2026-11-11.md](reviews/architecture-2026-11-11.md) |
 
 **Customers and delivery**
 

@@ -7,9 +7,9 @@ released: unreleased
 owner: Product lead
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
-depends_on: [rails, core, recon-observability, mandates, financial-crime]
+depends_on: [rails, core, recon-observability, mandates, financial-crime, sme-recon, business-suite]
 consumed_by: []
-review_ids: [FS-1164, FS-1169, FS-1170, FS-1171, FS-1172, FS-1173, FS-1175, FS-1176, FS-1181, FS-1182]
+review_ids: [FS-1164, FS-1169, FS-1170, FS-1171, FS-1172, FS-1173, FS-1175, FS-1176, FS-1181, FS-1182, FS-1183, FS-1184, FS-1186]
 last_reviewed: 2026-11-11
 ---
 
@@ -135,11 +135,22 @@ where each belongs (FS-1181).
 | TR-34 | Units at the cut-off: each subscription and redemption priced in units at the day's NAV from the fund system (the transaction's units, FS-1163), the fund system staying the source of NAV | Planned | FS-1175; Lofty Corban LF-01 | later |
 | TR-35 | Retirement schemes: employers' contributions by schedule, split per member as check-off is, and benefits paid | Planned | FS-1175 | later |
 
-**Business · an institution's business clients, under its name**
+**Business · corporate treasury for an institution's business clients, and for businesses directly**
+
+A business is a book's owner like any other (TR-13). This group builds on
+SME Recon, which already gathers its statements, shows its balances in one
+view and sends the payments its ERP approves (sme-recon SR-01 to SR-05,
+SR-11, SR-12), and on the business suite's books; it adds what makes it
+treasury. Sold as part of Kapu Business (FS-1186; the brief).
 
 | Id | Capability | Status | Evidence | Phase |
 |---|---|---|---|---|
-| TR-36 | A business's own book: its positions across its bank, till and paybill, and a forecast from its receivables and payables in its own books (business-suite), offered by its institution under the institution's name, as the gateway is white-labelled (GW-15) | Planned | FS-1174 | later |
+| TR-36 | A business's own book: every account it holds (its banks, by statement or API; its tills, paybills and Pochi) in one position, with its consent, and a thirteen-week forecast from the receivables and payables in its own books (Odoo, Zoho, QuickBooks Online: business-suite, sme-recon SR-15), the gap explained | Planned | FS-1174, FS-1183 | 2 |
+| TR-37 | A business's payments: suppliers, payroll and the statutory payments (KRA, NSSF, SHIF, the housing levy) in bulk, approved by its own chain, each payee verified and a changed payee held, each paid from its own account on its own credentials (mandates MD-19, business-suite BS-19, financial crime FC-16, sme-recon SR-11 and SR-12; LQ-42) | Planned | FS-1183 | 2 |
+| TR-38 | A business's working capital: a shortfall in its forecast offered the finance the institutions on the platform lend (invoice and order finance, mfi MF-32; a line, MF-40; an overdraft), with its consent to share the forecast | Planned | FS-1183 | later |
+| TR-39 | A business's surplus put to work: what it does not need swept, by its own rule, into a money market fund or Treasury bills through a fund manager or bank on the platform, and back when the forecast needs it | Planned | FS-1183 | later |
+| TR-40 | A business's foreign currency: rates and payments abroad through its bank, for importers and exporters (TR-09, rails RL-28) | Planned | FS-1183 | later |
+| TR-41 | A group of businesses: several companies of one owner seen and forecast together, each its own book, nothing moved between them but by a transaction both approve | Planned | FS-1183 | later |
 
 **A bank with its own treasury system**
 
@@ -156,13 +167,16 @@ where each belongs (FS-1181).
 | Deposit-taker | Essentials and the rulebooks' liquidity, capital, returns, ALM and stress | Microfinance banks, deposit-taking Saccos |
 | Transfer and FX | Essentials and the FX group | Remittance operators, payment providers, forex bureaus |
 | Funds | Essentials and the funds group | Fund managers, retirement schemes, later insurers |
-| Business | A business's own book | An institution's business clients, under its name |
+| Business | TR-36 to TR-41, with SME Recon, the gateway and the business suite: Kapu Business | An institution's business clients, under its name; a business directly |
 | Bank | Deposit-taker, Transfer and FX, and the bank group | Banks, beside their own treasury systems |
 
 ## 4 · Where it sits
 
 **Depends on:** rails (balances of every account on a rail; treasury
 movements sent), core (the ledger and the business calendar, KC-15),
+sme-recon (a business's statements, balances and payments, SR-01 to
+SR-05, SR-11, SR-12), business-suite (a business's receivables and
+payables),
 recon-observability (statements, matches and the three ledgers'
 balances), mandates (every movement, level, limit, rate and policy
 approved), financial-crime (limits in its rule shape, FC-16; returns
@@ -175,10 +189,13 @@ escrow (architecture README §1), run by a treasury service of its own
 that reads every system of record and never holds money. It reads the
 funds ledger through the core adapter, the rails' balances, the recon
 engine's statements and three ledgers, Odoo's funding agreements, a fund
-system's units and a custodian's statements. It writes nothing straight
-to a ledger: each movement it asks for is a transaction, approved by the
-approval engine, sent by the rails and posted by the service that owns
-the account. Its rulebooks live beside lender rules, as data in code
+system's units and a custodian's statements. It posts only to the
+institution's own operating, float, funding and investment accounts,
+through the core adapter, under the rule of one writer per kind of
+account (FS-1184; lending-service rule 2); each movement it asks for is a
+transaction, approved by the approval engine and sent by the rails. A
+book held for others is never posted to by it: a fund's or scheme's
+ledger is its fund system's. Its rulebooks live beside lender rules, as data in code
 with a schema and worked examples.
 
 **Who holds which record** (docs/architecture/README.md §2):
@@ -299,8 +316,8 @@ the rails reach banks.
 ## 11 · Open questions
 
 FS-1169 (what Flex Money's treasury team needs, after the meeting),
-FS-1170, FS-1174, FS-1180 (the documents to provide), FS-1182 (who posts a
-treasury movement), LQ-38.
+FS-1170, FS-1180 (the documents to provide), LQ-38, LQ-42 (a business's
+payments and accounts, through us).
 
 ## 12 · Sources
 

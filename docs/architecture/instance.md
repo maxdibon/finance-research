@@ -6,8 +6,8 @@ status: draft
 released: 2026.10.15
 owner: Solution architect
 classification: Internal
-review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032, FS-1053, FS-1055, FS-1070, FS-1093, FS-1094]
-last_reviewed: 2026-11-05
+review_ids: [FS-491, FS-649, FS-663, FS-698, FS-704, FS-976, FS-1032, FS-1053, FS-1055, FS-1070, FS-1093, FS-1094, FS-1187, FS-1188]
+last_reviewed: 2026-11-11
 ---
 
 # One instance, as R1 deploys it
@@ -43,7 +43,7 @@ sites is in [deployment](deployment.md).
             +--------------------------------------------------------+  +--------------------------+
   CORE      | LENDING SERVICE   Kapu MFI's service:                  |  | DEPOSITS SERVICE         |
   SERVICES  | applications, collateral, product versions,            |  | deposit accounts,        |
-            | partners; the only writer to the ledger;               |  | native mode              |
+            | partners; writes loans to the ledger;                  |  | native mode              |
             | LENDER RULES beside it        [kapu_service]           |  | [kapu_service]           |
             +--------------------------------------------------------+  +--------------------------+
                           |     asks                    |                             |
@@ -60,6 +60,12 @@ sites is in [deployment](deployment.md).
             | BACK-OFFICE GATEWAY      |  | CORE ADAPTER             |  | VAULT                    |
             | the ERP's jobs           |  | posts to the core        |  | signed documents         |
             +--------------------------+  +--------------------------+  +--------------------------+
+            +--------------------------+
+            | TREASURY                 |
+            | books, float, rulebooks; |
+            | the institution's own    |
+            | accounts  [kapu_service] |
+            +--------------------------+
                           |                             |
             +--------------------------+  +--------------------------+
   RECORDS   | ODOO                     |  | KAPU CORE                |
@@ -91,7 +97,7 @@ Each layer asks only the one below it, as the arrows show; every change goes on 
 | KAPU CONSOLE | Our operators' approvals, the read-only fallback, products read-only, outside Odoo | [kapu-console](../specs/kapu-console.md) |
 | STAFF WORKSPACE | Staff's screens for daily lending, inside Odoo | [staff-workspace](../specs/staff-workspace.md) |
 | CUSTOMER PAGES | Borrowers' and members' own pages: consents, signing, statements | to write |
-| LENDING SERVICE | Applications, collateral, vetting, product versions, partners; the only writer to the core; Kapu MFI is it configured for lenders | [lending-service](../specs/lending-service.md) |
+| LENDING SERVICE | Applications, collateral, vetting, product versions, partners; the writer of loans to the core, one writer per kind of account (FS-1184); Kapu MFI is it configured for lenders | [lending-service](../specs/lending-service.md) |
 | DEPOSITS SERVICE | Deposit accounts, in native mode | [deposits-service](../specs/deposits-service.md) |
 | CORE ADAPTER | One interface to the core: Kapu Core, or the institution's own | [lending-service](../specs/lending-service.md) |
 | BACK-OFFICE GATEWAY | The back office's jobs, through one adapter per ERP | [back-office](../specs/back-office.md) |
@@ -99,7 +105,8 @@ Each layer asks only the one below it, as the arrows show; every change goes on 
 | APPROVAL ENGINE | Approval chains and decisions, step-up at each | [approval-engine](../specs/approval-engine.md) |
 | LENDER RULES | The CBK lender regulations applied to each loan | [lender-rules](../specs/lender-rules.md) |
 | END-OF-DAY RUNNER | The night's close: checks, Fineract's close, ours | [end-of-day-runner](../specs/end-of-day-runner.md) |
-| RAILS | M-Pesa and bank instructions, confirmations and status | rails |
+| RAILS | M-Pesa and bank instructions, confirmations and status | [rails](../specs/rails.md) |
+| TREASURY | Each book's positions, forecast, float, funding and investments, and its regulator's rulebook; writes only the institution's own accounts | treasury (module; its spec to write) |
 | RECONCILIATION | Matches rail events with the ledger; exceptions | recon-observability |
 | FLOWZA | The team inbox for two-way conversations, sending through messaging; Dibon's own product (FS-663) | [messaging](../specs/messaging.md) §5 |
 | MESSAGING | SMS, WhatsApp and email to people, from approved templates | [messaging](../specs/messaging.md) |
@@ -119,7 +126,7 @@ Counted so they cannot drift (FS-1032; the review of
 [27 October](../reviews/architecture-2026-10-27.md)). **The clusters and
 namespaces are proposed, for the owner to decide (FS-1036).**
 
-**Databases: 16 in an instance** (15 without deposits, as R1), each its
+**Databases: 17 in an instance** (16 without deposits; R1 has neither deposits nor treasury, so 15), each its
 own, reached only by its component's role. **Proposed: five PostgreSQL
 clusters,** by tier, each a primary and a synchronous standby:
 
@@ -129,7 +136,7 @@ clusters,** by tier, each a primary and a synchronous standby:
 | Access | Keycloak | Restricted as a whole (access-keycloak) |
 | Back office | Odoo | Large, and upgraded on its own cadence (back-office §9.4) |
 | Secrets | OpenBao | First up on failover; nothing else waits on it |
-| Services | Lending, deposits, approvals, lender rules, rails, recon, companion, messaging, identity and the vault, end-of-day, back-office gateway, Flowza | A database and a role each; their outboxes with them |
+| Services | Lending, deposits, treasury, approvals, lender rules, rails, recon, companion, messaging, identity and the vault, end-of-day, back-office gateway, Flowza | A database and a role each; their outboxes with them |
 
 Without a database: the core adapter, the Kapu Console (sessions only),
 customer pages, the shadow ledger (in memory), the staff workspace (in

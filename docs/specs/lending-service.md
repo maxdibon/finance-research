@@ -12,8 +12,8 @@ depends_on: [kapu-core-fineract, approval-engine, lender-rules, back-office, dep
 used_by: [staff-workspace, kapu-console, lending-partners]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070, FS-1071, FS-1073, FS-1140, FS-1148, FS-1154, FS-1155]
-last_reviewed: 2026-11-09
+review_ids: [FS-629, FS-965, FS-970, FS-983, FS-984, FS-985, FS-995, FS-996, FS-1000, FS-1002, FS-1004, FS-1005, FS-1057, FS-1058, FS-1054, FS-581, FS-619, FS-1069, FS-1070, FS-1071, FS-1073, FS-1140, FS-1148, FS-1154, FS-1155, FS-1184]
+last_reviewed: 2026-11-11
 ---
 
 # The Kapu lending service — build specification
@@ -115,8 +115,14 @@ and shares (FS-985); this service lends against them, under Sacco rules.
 
 1. **Thin by design.** What Fineract does is configured; what Odoo does is
    used through the gateway; this service builds only what neither does.
-2. **The only writer to the core,** through the core adapter; no screen,
-   service or person writes to the core directly (FS-626).
+2. **One writer per kind of account,** through the core adapter (FS-626,
+   FS-1184): this service writes loans, their payouts and repayments; the
+   deposits service, deposit and share accounts; treasury, the
+   institution's own operating, float, funding and investment accounts.
+   The core adapter holds the list of which service may post to which
+   accounts and, for an account two share (the payout float, which a
+   payout debits and a top-up credits), which movements each may post;
+   no screen, service or person writes to the core outside it.
 3. **No rule in Odoo** (back-office rule 1): every rule that decides
    money, eligibility or conduct is here or in its rule set.
 4. **Decisions are the approval engine's;** this service acts only on the

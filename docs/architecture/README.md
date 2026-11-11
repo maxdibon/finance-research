@@ -7,7 +7,7 @@ law: LR-03
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056, FS-1068, FS-1070, FS-1072, FS-1077, FS-1078, FS-1182]
+review_ids: [FS-025, FS-026, FS-027, FS-031, FS-032, FS-034, FS-036, FS-037, FS-038, FS-043, FS-056, FS-061, FS-062, FS-063, FS-403, FS-410, FS-428, FS-431, FS-444, FS-446, FS-448, FS-449, FS-453, FS-464, FS-490, FS-491, FS-500, FS-525, FS-527, FS-532, FS-584, FS-588, FS-590, FS-612, FS-630, FS-634, FS-635, FS-636, FS-644, FS-645, FS-646, FS-649, FS-661, FS-662, FS-699, FS-700, FS-703, FS-712, FS-793, FS-970, FS-984, FS-985, FS-1032, FS-1033, FS-1034, FS-1035, FS-1036, FS-1037, FS-1050, FS-1051, FS-1053, FS-1056, FS-1068, FS-1070, FS-1072, FS-1077, FS-1078, FS-1182, FS-1184, FS-1187]
 last_reviewed: 2026-11-11
 ---
 
@@ -74,8 +74,13 @@ index, with the entries by hundreds in docs/decisions/.
 |---|---|
 | **Channels** | omni-channel — mobile apps, internet banking, USSD, the field-officer app; every one, by person, in [channels](../market/channels.md) |
 | **Products** | collect · gateway · escrow · treasury (Kapu Treasury: each book's positions, forecast, float, funding, investments and its regulator's rulebook, read from the systems of record, never holding money; FS-1182) · core (Kapu Core: hosted core banking on Apache Fineract) · mfi and sacco (deposit-taking and credit-only), both run by the lending service, with the deposits service where a Sacco takes deposits · sme-recon (wrappers for a business's own Odoo, Zoho or QuickBooks Online, SR-15) · business-suite (Odoo or Zoho, implemented by Dibon) |
-| **Shared services** | the lending service and the deposits service, the only writers to the core, through the core adapter · recon-observability · mandates (signing and debit, run by the approval engine) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification, and the document vault) · messaging (SMS, WhatsApp, app; Telegram later; transactional and campaigns; Flowza for conversations) · rails · insights · financial-crime (fraud, AML/CFT, transaction rules, reporting) · decisioning (appraisal, scores, risk classes) · the back-office gateway · the end-of-day runner · platform-security |
+| **Shared services** | the lending service and the deposits service, writing to the core through the core adapter, one writer per kind of account: loans the lending service's, deposit and share accounts the deposits service's, the institution's own operating, float, funding and investment accounts treasury's (FS-1184) · recon-observability · mandates (signing and debit, run by the approval engine) · crb (batch, and individual from the ERP) · access (Keycloak) · identity (verification, and the document vault) · messaging (SMS, WhatsApp, app; Telegram later; transactional and campaigns; Flowza for conversations) · rails · insights · financial-crime (fraud, AML/CFT, transaction rules, reporting) · decisioning (appraisal, scores, risk classes) · the back-office gateway · the end-of-day runner · platform-security |
 | **Systems of record** | the institution's core, or Kapu Core · Odoo · recon engine — §2 |
+
+**Sold as one** (FS-1186): Kapu Business, for a business, is SME Recon,
+treasury's Business package, the gateway and the business suite
+([the brief](../products/briefs/kapu-business.md)); the modules stay apart,
+as registers of what each builds.
 
 ```
  +--------------------------------------------------------------------+
@@ -218,7 +223,7 @@ adds what goes beyond it.
 |---|---|---|---|---|
 | Funds ledger (the core, or Kapu Core) | Accounts, balances, postings, loans; in native mode, the institution's customers and their KYC | Contact details beyond its need, tickets, matching state | Confidential; ID numbers Restricted | Written only by the lending service, and in native mode the deposits service, through the core adapter; no staff role can move a loan (kapu-core-fineract §4, §5; FS-1056); ID numbers encrypted field by field (SE-27, in R1) |
 | Odoo | Parties no core holds, obligations, tickets, contract records, HR | Balances, rail events, documents with personal data | Confidential | Staff sign in through Keycloak (AC-02); reached by our services only through the back-office gateway (§8) |
-| Recon engine | Rail and bank events, statements, matches, exceptions; the shadow ledger, in memory, rebuilt from the bus | Parties, obligations | Confidential | Append-only; each role sees only its fields (RO-19) |
+| Recon engine | Rail and bank events, statements, matches, exceptions; the shadow ledger, in memory, rebuilt from the bus; the index that finds a transaction by any party's id (transactions §6) | Parties, obligations | Confidential | Append-only; each role sees only its fields (RO-19) |
 | Companion ledger (recon) | Its own postings and totals, computed from the rail events and the product's terms | Anything copied from the master | Confidential | Its own database, apart from recon's; account references only (recon §11, FS-793) |
 | Keycloak (access) | Logins, hashed credentials, roles, devices, step-ups | KYC, balances | Restricted | Security events kept (SE-18); engineers on hardware keys (SE-26) |
 | Lending service | Applications, collateral records and their evidence, overrides, product versions, partners | The loan, its schedule and balances, which are the core's | Confidential | Its events from an outbox (lending-service §8) |
@@ -238,6 +243,8 @@ adds what goes beyond it.
 | Audit chain | Signed event hashes and their anchors | Content beyond the event | Internal | Hash-chained, anchored in an append-only log (RO-24, RO-25) |
 | OpenBao | Keys and secrets | Data | Restricted | Signing keys never leave it; backup keys split between two people (SE-21) |
 | Observability | Metrics, logs and traces, by id | Personal data | Internal | Restricted values never in a log (SE-18) |
+| Treasury | Books and which accounts each holds; positions and forecasts, each day's kept; rulebooks and the regulatory map of the chart of accounts; funding lines, investments, levels and limits (treasury §4) | Anyone's money; a balance as an authority, which is its system of record's | Confidential | Each day's positions, forecast and rulebook version kept as they were, so a decision can be shown later (treasury §8) |
+| Holds | An amount held on an account without moving it: a guarantor's pledge, an escrow's hold, a card's authorisation (dictionary §6) | The money, which the account's ledger keeps | Confidential | Kept by the service that owns the account, as it writes its postings (FS-1184, FS-1187), to the one hold schema |
 | Insights | Nothing of its own: it reads | — | As read | Never writes; a bulk export needs its own permission (§7) |
 
 ### The institution's reference is a first-class field
@@ -272,6 +279,9 @@ whether we caused a payment.
 | sme-recon | Pass-through for matching; initiation for execution | FS-037 |
 | mandates (debit) | Initiation | FS-046 |
 | escrow | Initiation: the partner bank holds each escrow in its own sub-account; we instruct release on the agreed approvals | FS-107, FS-108 — if Dibon held the funds, it would be aggregation |
+| treasury | Initiation, between the institution's own accounts, on its approval: a float topped up, a sweep, a placement | — |
+| treasury's Business package, in Kapu Business | Initiation, as SME Recon's: a business's payments from its own accounts, its banks read with its consent | FS-037; LQ-42 |
+| Payments to someone else (transactions, kind payment) | The institution's: its customer's instruction from an account at the institution | — |
 
 **Custody is not the only test.** The National Payment System Act defines
 a payment service provider to include whoever processes or stores data on
@@ -408,6 +418,9 @@ Matching rules that hold on every rail:
   | core adapter: the only way   | | financial crime: screening,  | | quiet hours                  |
   | to the core                  | | rules, cases, reports        | | Flowza: conversations,       |
   |                              | | crb: lookups, submissions    | | through messaging            |
+  |                              | |                              | | treasury: books, float,      |
+  |                              | |                              | | funding, rulebooks; reads,   |
+  |                              | |                              | | holds no money               |
   +------------------------------+ +------------------------------+ +------------------------------+
   +------------------------------+ +------------------------------+ +------------------------------+
   | PEOPLE AND DOCUMENTS         | | BACK OFFICE AND THE NIGHT    | | CHECKS                       |
@@ -428,6 +441,20 @@ Matching rules that hold on every rail:
 Products ask shared services to act by API, and every state change is
 published once on the bus as a signed event, so reconciliation, financial
 crime and insights read the same facts without asking each product.
+
+**Every money event carries a transaction** (FS-1119, FS-1142): one model
+of a money movement for every component ([transactions](../specs/transactions.md)),
+a header fixed at creation, a body fixed at approval under its hash, a
+footer only appended to; each field defined once in
+[the dictionary](../transaction-fields.md) and typed in `code/transactions/`;
+a component maps its own names to it, never adds one. The rails carry it
+to every rail and bank ([rails](../specs/rails.md)).
+
+**Rules as data** (FS-1187): where a body of rules must be the same in the
+documents and in the code, it is data in `code/`, a schema, its rules and
+worked examples, checked on every commit and read by the code at a pinned
+version: lender rules' product vocabulary, the transaction model, and
+treasury's rulebooks (TR-14). A fourth is built the same way.
 
 **Every component is replaceable behind a stable contract** (FS-584). A
 service exposes a versioned contract and owns its own records; what sits
@@ -551,6 +578,17 @@ are the default where they fit (FS-217).
   in, a customer may download their own documents and share them as they
   choose:** the rule binds what we send, not what a customer does with
   their own copy.
+- **Money held for others stays apart, and is proved whole.** Where an
+  institution holds or manages money for others (customers' money in
+  trust, a fund's assets with its custodian, another bank's vostro), it
+  is a book of its own, never mixed with the holder's, and treasury
+  proves it whole each day: what is owed against what its accounts hold
+  (treasury TR-13; the money remittance regulations, LR-50). We hold none of it
+  (§3).
+- **Every limit has one shape** (FS-1160): a measure, over a scope, in a
+  window, against a threshold, looking above or below the usual for the
+  type of day; financial crime's transaction rules (FC-16), the rails'
+  velocity limits and treasury's limits are all rules of it.
 - **Data classes travel with the data.**
 
 | Class | Examples |
@@ -688,6 +726,11 @@ the audit trail and matches in reconciliation agree (FS-634).
   date). The *business date*: the ledger day it belongs to, Africa/Nairobi,
   moved only by the end-of-day runner (docs/specs/end-of-day-runner.md).
   The *created time*: our clock, for audit.
+- **Types of day,** on each institution's business calendar (core
+  KC-15): weekdays, weekends, holidays and its closures, and its peak and
+  slow days with their expected multiples (FS-1161, FS-1162), so a limit
+  compares a day with its own kind; the regulators' returns sit on the
+  same calendar (treasury TR-16).
 - **Times are stored in UTC,** as ISO 8601 with the zone; business dates
   and anything shown to people are Africa/Nairobi, which has no daylight
   saving (UTC+3 all year). Fineract's tenant time zone is Africa/Nairobi.

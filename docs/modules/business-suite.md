@@ -9,9 +9,9 @@ owner: Product lead, business suite
 classification: Internal
 audience: [bank, sacco, mfi, psp, imt, sme, fintech]
 depends_on: [access, messaging, sme-recon, mandates, insights, sacco, mfi, identity]
-consumed_by: [insights, mfi]
-review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518, FS-521, FS-527, FS-532, FS-606, FS-608, FS-618, FS-644, FS-769, FS-770, FS-772, FS-777, FS-805, FS-970, FS-965, FS-996, FS-1011, FS-1021, FS-1056, FS-1058]
-last_reviewed: 2026-10-30
+consumed_by: [insights, mfi, treasury]
+review_ids: [FS-293, FS-294, FS-295, FS-296, FS-002, FS-025, FS-026, FS-036, FS-131, FS-145, FS-156, FS-172, FS-280, FS-281, FS-282, FS-288, FS-289, FS-290, FS-291, FS-292, FS-336, FS-499, FS-522, FS-518, FS-521, FS-527, FS-532, FS-606, FS-608, FS-618, FS-644, FS-769, FS-770, FS-772, FS-777, FS-805, FS-970, FS-965, FS-996, FS-1011, FS-1021, FS-1056, FS-1058, FS-1183]
+last_reviewed: 2026-11-11
 ---
 
 # Business Suite, on Odoo and Zoho
@@ -95,7 +95,8 @@ hosting on OLP, is **Built** (FS-293).
 identity (company registers checked against the business registry,
 BS-18).
 **Used by:** customers directly; insights, for questions and dashboards
-over Odoo data; mfi (confirmed purchase orders and invoices, MF-32). In the architecture, Odoo is also one of the three
+over Odoo data; mfi (confirmed purchase orders and invoices, MF-32); treasury (a
+business's receivables and payables, for its forecast, TR-36). In the architecture, Odoo is also one of the three
 authorities (docs/architecture/README.md §2).
 
 **Who holds which record** (docs/architecture/README.md §2):
