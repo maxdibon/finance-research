@@ -60,12 +60,12 @@ sites is in [deployment](deployment.md).
             | BACK-OFFICE GATEWAY      |  | CORE ADAPTER             |  | VAULT                    |
             | the ERP's jobs           |  | posts to the core        |  | signed documents         |
             +--------------------------+  +--------------------------+  +--------------------------+
-            +--------------------------+
-            | TREASURY                 |
-            | books, float, rulebooks; |
-            | the institution's own    |
-            | accounts  [kapu_service] |
-            +--------------------------+
+                          |                             |               +--------------------------+
+                          |                             |               | TREASURY                 |
+                          |                             |               | books, float, rulebooks; |
+                          |                             |               | the institution's own    |
+                          |                             |               | accounts  [kapu_service] |
+                          |                             |               +--------------------------+
                           |                             |
             +--------------------------+  +--------------------------+
   RECORDS   | ODOO                     |  | KAPU CORE                |
