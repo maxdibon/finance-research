@@ -12,8 +12,8 @@ depends_on: [access-keycloak, observability-grafana]
 used_by: []
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777, FS-896, FS-1054, FS-1100, FS-1099, FS-1101, FS-1102]
-last_reviewed: 2026-11-05
+review_ids: [FS-458, FS-459, FS-464, FS-708, FS-709, FS-710, FS-711, FS-712, FS-769, FS-777, FS-896, FS-1054, FS-1100, FS-1099, FS-1101, FS-1102, FS-1178]
+last_reviewed: 2026-11-11
 ---
 
 # Endpoints — devices, their protection, and a lost device
@@ -132,6 +132,15 @@ own estate and as the default for institutions (FS-712). The own tier is
 offered only when a client asks or cannot pay, and stated plainly:
 outside business hours it depends on someone answering a page, not on
 someone already watching.
+
+**Device management is a Dibon service** (FS-1178), offered to
+institutions and to other customers, through a partner such as Liquid or
+run by Dibon itself: each customer its own tenant and its own managed
+Google Play account, a financial institution's phones and data kept in
+its own instance. This project uses it as a component, as it uses OLP:
+an institution stays on the managed tier until the service meets this
+spec's checks, and location tracking is never switched on for an
+institution's staff phones.
 
 ## 5 · A lost, stolen or damaged laptop
 
