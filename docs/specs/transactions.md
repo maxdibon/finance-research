@@ -11,8 +11,8 @@ depends_on: [event-bus-kafka]
 used_by: [recon, lending-service, deposits-service, approval-engine, kapu-core-fineract, rails]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153, FS-1154, FS-1155, FS-1163, FS-1164]
-last_reviewed: 2026-11-10
+review_ids: [FS-1119, FS-1120, FS-1121, FS-1122, FS-1123, FS-1124, FS-1125, FS-1126, FS-1127, FS-1128, FS-1129, FS-1131, FS-1137, FS-1142, FS-1143, FS-1144, FS-1145, FS-1146, FS-1149, FS-1150, FS-1151, FS-1152, FS-1153, FS-1154, FS-1155, FS-1163, FS-1164, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # Transactions — build specification
@@ -146,7 +146,7 @@ money arriving; journeys none yet.
   instructed by us, so never approved or sent (`what.observed`).
 - **Treasury** (FS-1164): the institution's own money between its own
   accounts (a float topped up from its bank, a sweep back), a function of
-  its own (recon-observability RO-09), with a kind of its own; never a
+  its own (treasury TR-01), with a kind of its own; never a
   customer's money.
 - **Component map:** a component's own field names, by its version, against
   the dictionary's (dictionary §4).
@@ -357,7 +357,7 @@ order and author.
 | refund | out | Yes | `refunds`, exactly one | The service of the account | W6 |
 | write_off | internal, no rail | Yes | — | Lending service | — |
 | adjustment | internal | Yes | `corrects`, exactly one | The service of the account | — |
-| treasury | internal, between the institution's own accounts | Yes | — | Treasury (RO-09), through the console | W28 |
+| treasury | internal, between the institution's own accounts | Yes | — | Treasury (TR-01), through the console | W28 |
 | dividend | internal, on a share account | No: the year's dividend is approved at the general meeting, the run under it | `in_batch` | Deposits service, in the run | W16 |
 | waiver | internal, no rail | Yes, by the product's policy where automatic (the cap's sweep) | — | Lending service | W17 |
 | chargeback | in, opposite to the card payment | No: the card network's decision | `reverses`, exactly one | The rails, from the card's processor | W25 |

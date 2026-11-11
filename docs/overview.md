@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973, FS-1006, FS-1012, FS-1021, FS-1032, FS-1037, FS-1047, FS-1045, FS-1050, FS-1053, FS-1074, FS-1076, FS-1079, FS-1087, FS-1097]
-last_reviewed: 2026-11-09
+review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973, FS-1006, FS-1012, FS-1021, FS-1032, FS-1037, FS-1047, FS-1045, FS-1050, FS-1053, FS-1074, FS-1076, FS-1079, FS-1087, FS-1097, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # Overview — what we offer, and where everything is
@@ -100,6 +100,9 @@ what each person goes through is in [the journeys](journeys/README.md).
   for every rail a merchant takes
 - [Kapu Escrow](modules/escrow.md) — funds held at a bank until the agreed
   conditions are met
+- [Kapu Treasury](modules/treasury.md) — an institution's own money:
+  positions, forecast, float, funding and investments; liquidity ratios
+  and currencies where it needs them
 - [Kapu Core](modules/core.md) — hosted core banking on Apache Fineract
 - [Kapu MFI](modules/mfi.md) — loan management for non-deposit-taking
   lenders, licensed or registered with CBK or applying

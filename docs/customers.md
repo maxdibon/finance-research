@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420, FS-443, FS-612, FS-674, FS-680, FS-720, FS-721, FS-835, FS-837, FS-838, FS-915, FS-991, FS-1000]
-last_reviewed: 2026-10-27
+review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420, FS-443, FS-612, FS-674, FS-680, FS-720, FS-721, FS-835, FS-837, FS-838, FS-915, FS-991, FS-1000, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # Customers — who we deliver to, and what each depends on
@@ -107,4 +107,4 @@ each capability's status beside it, read from its module.
 |---|---|
 | [mandates](modules/mandates.md) | MD-01, MD-03, MD-05, MD-06 |
 | [messaging](modules/messaging.md) | MS-01 |
-| [recon-observability](modules/recon-observability.md) | RO-01, RO-02, RO-04, RO-05, RO-06, RO-07, RO-09, RO-21, RO-26 |
+| [recon-observability](modules/recon-observability.md) | RO-01, RO-02, RO-04, RO-05, RO-06, RO-07, TR-01, RO-21, RO-26 |

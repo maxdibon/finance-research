@@ -11,8 +11,8 @@ depends_on: [transactions, approval-engine, event-bus-kafka]
 used_by: [lending-service, deposits-service, recon]
 owner: Solution architect
 classification: Internal
-review_ids: [FS-056, FS-093, FS-127, FS-208, FS-209, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-1109, FS-1113, FS-1122, FS-1127, FS-1133, FS-1143, FS-1144, FS-1150, FS-1152, FS-1155, FS-1156, FS-1157, FS-1158, FS-1160, FS-1161, FS-1162, FS-1164, FS-1159, FS-1167]
-last_reviewed: 2026-11-10
+review_ids: [FS-056, FS-093, FS-127, FS-208, FS-209, FS-586, FS-587, FS-588, FS-594, FS-611, FS-661, FS-1109, FS-1113, FS-1122, FS-1127, FS-1133, FS-1143, FS-1144, FS-1150, FS-1152, FS-1155, FS-1156, FS-1157, FS-1158, FS-1160, FS-1161, FS-1162, FS-1164, FS-1159, FS-1167, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # Rails — build specification
@@ -217,7 +217,7 @@ statements through it; journeys none yet.
     from (a B2C shortcode, a bank account) is read after every payout and
     on a schedule, and worked forward between reads from what was sent.
     The levels and the top-ups are treasury's, a function of its own
-    (recon-observability RO-09: where the money sits, and hours of float
+    (treasury TR-01: where the money sits, and hours of float
     left at the current burn), and a top-up is a transaction of kind
     `treasury` (transactions W28; FS-1164); the rails enforce the levels.
     Each account has thresholds, set as rail settings (rule 13), each with

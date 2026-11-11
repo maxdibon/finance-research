@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1053, FS-1100, FS-1131]
-last_reviewed: 2026-11-09
+review_ids: [FS-1053, FS-1100, FS-1131, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # Ids
@@ -41,6 +41,7 @@ is listed under its table with where it went.
 | FC | financial-crime | | SC | sacco |
 | GW | gateway | | SE | platform-security |
 | ID | identity | | SR | sme-recon |
+| TR | treasury | | | |
 | IN | insights | | KC | core (Kapu Core) |
 
 ## Customers, partners and the market

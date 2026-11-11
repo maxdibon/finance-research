@@ -12,8 +12,8 @@ depends_on: [kapu-core-fineract, event-bus-kafka, observability-grafana, access-
 used_by: [end-of-day-runner]
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809, FS-970, FS-1053, FS-1058, FS-1054, FS-1137, FS-1155]
-last_reviewed: 2026-11-09
+review_ids: [FS-095, FS-388, FS-509, FS-635, FS-766, FS-767, FS-785, FS-788, FS-789, FS-790, FS-791, FS-792, FS-793, FS-794, FS-796, FS-802, FS-809, FS-970, FS-1053, FS-1058, FS-1054, FS-1137, FS-1155, FS-1171]
+last_reviewed: 2026-11-11
 ---
 
 # Reconciliation platform — build specification
@@ -44,7 +44,7 @@ happened?*
 | RO-06 | Transaction trace | No: phase 1; R1 traces through RO-23 to RO-25 |
 | RO-07 | Remediation and the automatic chase of items in transit | Yes, for M-Pesa |
 | RO-08 | The ledger replica: here the shadow and the companion (§3) | Yes: the shadow at go-live; the companion for Roan Capital's product within the first 30 days (FS-793) |
-| RO-09 | Treasury and float | No: R2 |
+| TR-01 | Treasury and float | No: R2 |
 | RO-11 | Duplicate and anomaly detection | No: phase 1 |
 | RO-17 | Alerting and SLOs, the match rate among them | Yes |
 | RO-19 | Masking by role, access audit | Yes |
