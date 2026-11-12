@@ -1,7 +1,7 @@
 # Dibon financial services — session handoff
 
     release: 2026.10.16 · minor
-    updated: 2026-11-10
+    updated: 2026-11-11
     the release is the documentation's, moved by each release (FS-842);
     this file has no version of its own
     purpose: hand this repository to a session that knows nothing about it;
@@ -38,7 +38,10 @@ editions built from Markdown), a module file per product and shared
 service, registers, the delivery plan, the architecture, build
 specifications, user journeys, the handbook, service management, and the
 checks that keep all of them true. The software is built elsewhere; the
-first files of one code repository wait in `code/lender-rules/`.
+first of its code waits in `code/`: the lender rules, the transaction
+model, the Azure sandbox. **Building has started** (FS-1192): the team
+builds the MVP on public Azure, made-up data only, while hosting in Kenya
+with Liquid is settled; production and real data stay in Kenya.
 
 **The products:** Kapu MFI, Kapu Sacco and Kapu Core (on Apache
 Fineract), Collect and the Pay Gateway (which ran in production at Onit

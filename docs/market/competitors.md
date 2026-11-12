@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-456, FS-464, FS-508, FS-612, FS-924, FS-958, FS-998, FS-1009]
-last_reviewed: 2026-10-27
+review_ids: [FS-456, FS-464, FS-508, FS-612, FS-924, FS-958, FS-998, FS-1009, FS-1190]
+last_reviewed: 2026-11-11
 ---
 
 # Competitors — who we meet, and what we learn from each
@@ -70,7 +70,7 @@ it. Ours is the design as it stands: much of it designed, not yet built.
 | Mobile money | M-Pesa built (Collect at Onit Bank); Airtel designed | M-Pesa, Airtel | Yes | Yes | Coretec: mobile apps | Partners |
 | USSD | Built: ran a bank's digital lending 2022 to 2025 | Not stated | Yes (Elma) | Yes | Not stated | Partners |
 | Partner and supply-chain finance | Designed (MF-40 to MF-42) | Not stated | Not stated | Not stated | Not stated | Not stated |
-| Price | Per institution, with Odoo priced in | From about EUR 15,000 a year (listed) | Setup, then per transaction (as a microfinance bank's contract shows) | Not stated | Not stated | Subscription |
+| Price | Per institution, with Odoo priced in | From about EUR 15,000 a year (listed) | Setup, then per transaction (as a microfinance bank's contract shows); a quote of about KES 150 million to a microfinance bank for a new platform, reported and unverified (FS-1190) | Not stated | Not stated | Subscription |
 
 **Who else to compare ourselves with, and why:**
 
