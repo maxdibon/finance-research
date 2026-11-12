@@ -7,7 +7,7 @@ released: 2026.10.16
 owner: Solution architect
 classification: Internal
 review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973, FS-1006, FS-1012, FS-1021, FS-1032, FS-1037, FS-1047, FS-1045, FS-1050, FS-1053, FS-1074, FS-1076, FS-1079, FS-1087, FS-1097, FS-1171]
-last_reviewed: 2026-11-11
+last_reviewed: 2026-11-12
 ---
 
 # Overview — what we offer, and where everything is
@@ -179,6 +179,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | The MVP day, 6 November 2026: the goal, the plan and who does what | [mvp-day.md](delivery/mvp-day.md) |
 | Prembly in production, week of 2 November 2026: what we test, with whose details, and how Smile ID compares | [prembly-production-test.md](delivery/prembly-production-test.md) |
 | What a customer and each product need to go live | [onboarding.md](delivery/onboarding.md) |
+| Each client's cycle, from a first conversation to production; the environments; the hackathons | [client-cycle.md](delivery/client-cycle.md) |
 | Starter templates for onboarding a business or a partner, and where every document is kept and seen | [templates/onboarding-pack.md](templates/onboarding-pack.md) |
 | The CBK licence pack: what a lender submits with its licence application, and the template for each | [templates/cbk-licence-pack.md](templates/cbk-licence-pack.md) |
 | The ICT policy template, with the system description, the two diagrams and the plan for assurance | [templates/ict-policy.md](templates/ict-policy.md) |

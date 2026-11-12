@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892, FS-922, FS-931, FS-1053]
-last_reviewed: 2026-11-01
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892, FS-922, FS-931, FS-1053, FS-1193]
+last_reviewed: 2026-11-12
 ---
 
 # Ways of working
@@ -116,6 +116,21 @@ code owners name teams, so the approval follows the role, and a code owner
 needs Write on the repository to approve. Until single sign-on (GitHub
 Enterprise Cloud) fills the teams from Keycloak, the security lead keeps
 them by hand, against this table, each month.
+
+**Squads** (FS-1193): the team builds in squads, each owning its services
+end to end: it builds them, deploys them, is woken by them and fixes them
+(client-cycle §5). A squad is a GitHub team, named in `CODEOWNERS` for
+its code, and a workstream group in the sandbox. Roles still approve; a
+squad is who does the work. Each member confirms their squad as they
+confirm their row above.
+
+| Squad | Owns | Members, to confirm |
+|---|---|---|
+| Channels | The mobile apps, web, USSD, the customer and staff portals | Cliff; Abel, mentored by the dev lead |
+| Backend | The lending and deposits services, the rails, the transaction model, treasury, the approval engine | Lillian (leads), Gasine |
+| Ops | The platform, CI/CD, observability, security operations, on-call | Allan (leads), Max |
+| Odoo | The back office and each customer's Odoo | Gibeon (leads), Daniel |
+| Delivery | Each client's cycle (client-cycle §1), its pack and its people | Betty, with Carol |
 
 ## 2 · A pull request, step by step
 
@@ -240,6 +255,13 @@ weekly slot of the weekly meeting.
 | Compliance | The compliance and risk officer | Regulatory notice and approval: a price change's (LR-03 reg 55), a new channel's (LR-03 reg 27) |
 | Commercial | The commercial lead, for a major release or a go-live | What we have promised customers |
 | Secretary, no vote | Claude | Prepares the release pack; records the decision |
+
+**The team lead and the commercial lead on the board** (FS-1193): while
+the team learns to run the platform, both sit every slot, the team lead
+in the architecture and security seat. They advise and may ask the
+board to defer a release; neither approves a normal change, which stays
+with the operations lead, so the team owns what it ships. The team lead
+still approves a change to a security control, as security lead.
 
 **Quorum:** the chair, engineering and delivery; security and compliance
 whenever their area is touched. No one approves their own release: their

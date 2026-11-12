@@ -40,18 +40,18 @@ here.
 
 ## Where I left off
 
-As at 11 November 2026. Main pushed at 8f35fab with FS-1168 to FS-1189;
-on the branch since, not merged: FS-1190 (the market and pricing review,
-by the other session) and FS-1191 to FS-1193. `origin` is still
+As at 12 November 2026. Main pushed with FS-1168 to FS-1193, FS-1190
+the other session's market and pricing review. `origin` is still
 github.com/eric-mokaya/finance.
 
 - **Building starts** (FS-1192): the MVP on the public Azure sandbox,
   made-up data only, while Liquid is settled. Roan Capital's soft launch
   on 30 November with real borrowers needs a site in Kenya by then or
-  counsel's answer to LQ-46. **Waiting on his word:** the hackathon plan
-  (FS-1193, proposal in chat): one cycle for every client, a client's
-  configuration as data, the environments, the team as channels, backend
-  and ops beside the Odoo team, and the change advisory board.
+  counsel's answer to LQ-46. **The hackathons** (FS-1193):
+  docs/delivery/client-cycle.md, each client's six stages, its
+  configuration pack, the environments, four hackathons; squads and the
+  board in ways-of-working §1, §4. **Open:** the hackathons' dates, the
+  pack's schema, how long a demo lives; each member to confirm a squad.
 - **Kapu Treasury** (FS-1164 to FS-1182): docs/modules/treasury.md. Books
   of its own money and of money held for others, never mixed; rulebooks
   as data (TR-14 to TR-17); packages for every kind of customer, from a
