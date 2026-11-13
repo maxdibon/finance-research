@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Solution architect
 classification: Internal
-review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973, FS-1006, FS-1012, FS-1021, FS-1032, FS-1037, FS-1047, FS-1045, FS-1050, FS-1053, FS-1074, FS-1076, FS-1079, FS-1087, FS-1097, FS-1171]
-last_reviewed: 2026-11-12
+review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973, FS-1006, FS-1012, FS-1021, FS-1032, FS-1037, FS-1047, FS-1045, FS-1050, FS-1053, FS-1074, FS-1076, FS-1079, FS-1087, FS-1097, FS-1171, FS-1194, FS-1200, FS-1201, FS-1203, FS-1204]
+last_reviewed: 2026-11-13
 ---
 
 # Overview — what we offer, and where everything is
@@ -168,7 +168,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
 | How it should feel to use, and how we make it intuitive | [experience.md](company/experience.md) |
 | How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](delivery/testing.md) |
-| Reviews: OLP as it stands (26 October 2026), what we need from it being the [OLP spec](specs/olp.md); the architecture, its databases and namespaces counted (27 October); the specs against their template (29 October); the architecture against the transaction model, rails, treasury and Kapu Business (11 November); market sizing and pricing, every assumption and every price (11 November) | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [reviews/architecture-2026-10-27.md](reviews/architecture-2026-10-27.md); [reviews/specs-2026-10-29.md](reviews/specs-2026-10-29.md); [reviews/architecture-2026-11-11.md](reviews/architecture-2026-11-11.md); [reviews/market-and-pricing-2026-11-11.md](reviews/market-and-pricing-2026-11-11.md) |
+| Reviews: OLP as it stands (26 October 2026), what we need from it being the [OLP spec](specs/olp.md); the architecture, its databases and namespaces counted (27 October); the specs against their template (29 October); the architecture against the transaction model, rails, treasury and Kapu Business (11 November); market sizing and pricing, every assumption and every price (11 November); Max's research: Dibon's current CI/CD, eleven practices to adopt, what odoolaunchpad and kapu-pay miss, and how dibon-consulting was set up (30 October to 5 November); investors, their record, their money and where it is lent (3 November); a client's portfolio, and the book shown to incoming investors (3 November); how we deploy once development starts (5 November); the ICT pack for the Central Bank, for Kapu MFI and Roan Capital (5 November) | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [reviews/architecture-2026-10-27.md](reviews/architecture-2026-10-27.md); [reviews/specs-2026-10-29.md](reviews/specs-2026-10-29.md); [reviews/architecture-2026-11-11.md](reviews/architecture-2026-11-11.md); [reviews/market-and-pricing-2026-11-11.md](reviews/market-and-pricing-2026-11-11.md); [reviews/cicd-2026-10-30.md](reviews/cicd-2026-10-30.md); [reviews/investors-2026-11-03.md](reviews/investors-2026-11-03.md); [reviews/portfolio-showcase-2026-11-03.md](reviews/portfolio-showcase-2026-11-03.md); [reviews/deployment-plan-2026-11-05.md](reviews/deployment-plan-2026-11-05.md); [reviews/cbk-ict-pack-2026-11-05.md](reviews/cbk-ict-pack-2026-11-05.md) |
 
 **Customers and delivery**
 
