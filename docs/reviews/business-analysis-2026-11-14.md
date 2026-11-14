@@ -6,7 +6,7 @@ status: draft
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1194]
+review_ids: [FS-1194, FS-1195, FS-1196]
 last_reviewed: 2026-11-14
 ---
 
@@ -15,9 +15,13 @@ last_reviewed: 2026-11-14
 **What was reviewed:** the business this repository describes, from what
 it records: the customers and partners, the competitors page, the market
 and pricing review of 11 November, the risks, the licences, the delivery
-plan and the registers (FS-1194). **Not reviewed:** Dibon's accounts,
-cash and runway, which are not in the repository; what any customer would
-pay; and anything a competitor has not published. Where a point is a
+plan and the registers (FS-1194); and, added the same day, Dibon's 2026
+budget, payroll, CVs and client references, which are kept out of the
+repository and whose conclusions are here in aggregate, without figures
+(FS-1195). **Not reviewed:** an income statement, a cash balance or a
+forecast, which do not exist in what was supplied, so runway cannot be
+stated; what any customer would pay; and anything a competitor has not
+published. Where a point is a
 judgement and not a record, it says so.
 
 **The short answer:** the market is hard in the middle and open at the
@@ -28,7 +32,9 @@ most. Inside, the one advantage that lasts is a record of running in
 production for banks and on M-Pesa; the design is a head start that
 expires, and it is worth nothing until it runs. So the business turns on
 one thing: **Roan Capital live, in Kenya, as the first reference.**
-Five gaps stand between here and that, and none of them is design.
+Six gaps stand between here and that, and none of them is design. And
+the banks we serve are more than the advantage: their work pays for the
+build.
 
 ## 1 · Which analyses, and why
 
@@ -86,7 +92,7 @@ operators asked early.
 | What we have | Valuable | Rare | Costly to copy | Organised to use it | So |
 |---|---|---|---|---|---|
 | A record in production: M-Pesa collections and payouts at a microfinance bank; USSD lending and SMS for two banks since 2021 | Yes | Yes, among firms our size | Yes: years and trust | Partly: one engagement has ended, and the knowledge sits with few people | **The one that can last**, if it is written into the build and kept current |
-| Banks that already buy from us | Yes | Yes | Yes | Not yet for Kapu: the bank channel is a proposal | Unused |
+| Banks that already buy from us | Yes | Yes | Yes | Not yet for Kapu: the bank channel is a proposal | Unused for Kapu, and today what funds it: the build is paid for from services to a few customers, two banks foremost (FS-1195) |
 | The regulations as data: the law register, the lender rules, the rulebooks, the transaction model | Yes | Yes: rivals do not state it | Partly: it is diligence, and a funded rival could do it in a year or two | No: designed, not running | A head start, worth nothing until built |
 | The architecture: Fineract unforked, an instance per institution in Kenya, integrated mode | Yes | Integrated mode, yes | No: a choice others can make | No | Early, not lasting |
 | Licences held: PRSP, data processor | Yes | Somewhat | No | Yes | Parity |
@@ -102,8 +108,8 @@ designing a further module is a month of that time used.
 
 | | Helps | Hurts |
 |---|---|---|
-| **Inside** | **Strengths:** a production record with banks and M-Pesa; the regulations already written as data; integrated mode; licences held; a first customer in delivery | **Weaknesses:** nothing of Kapu in production; no price for any customer and no cost per institution (market review P1, P6); one seller, who is also the CEO (M3); the CTIO holding five roles; a rota of three (risks); hosting not contracted; ten or more products designed for a team of about fourteen |
-| **Outside** | **Opportunities:** every lender now under CBK; small banks joining up before 2029; businesses reached through institutions (Kapu Business); reconciliation as the first sale; the banks we already serve; assurance services (market/assurance) | **Threats:** established cores with bases and budgets; a buyer building its own; a licence of our own, or the Bill's capital (LQ-09, LC-07); two suppliers we cannot replace quickly; real data with nowhere lawful to run (LQ-46); the first delivery slipping, and with it the reference |
+| **Inside** | **Strengths:** a production record with banks and M-Pesa; the regulations already written as data; integrated mode; licences held; a first customer in delivery; a team strong in channels, Odoo and running containers (team-skills) | **Weaknesses:** nothing of Kapu in production; no price for any customer and no cost per institution (market review P1, P6); one seller, who is also the CEO (M3); the CTIO holding five roles; a rota of three (risks); hosting not contracted; ten or more products designed for a team of about fourteen; the build paid for from services income that rests on a few customers, with no budget line or forecast of its own (FS-1195); the platform's core (Fineract, Keycloak, Kafka, Flux) still to be learnt (team-skills) |
+| **Outside** | **Opportunities:** every lender now under CBK; small banks joining up before 2029; businesses reached through institutions (Kapu Business); reconciliation as the first sale; the banks we already serve; assurance services (market/assurance) | **Threats:** established cores with bases and budgets; a buyer building its own, where that buyer's work also funds the build; a licence of our own, or the Bill's capital (LQ-09, LC-07); two suppliers we cannot replace quickly; real data with nowhere lawful to run (LQ-46); the first delivery slipping, and with it the reference |
 
 ## 6 · Gap: from here to a business
 
@@ -112,9 +118,10 @@ designing a further module is a month of that time used.
 | 1 · A place to run | The public Azure sandbox, made-up data only | Two sites in Kenya before real borrowers | A host contracted, or a second named; counsel on running abroad meanwhile | FS-032, FS-775, FS-1192; LQ-46 |
 | 2 · Something running | Building began on 11 November; the soft launch is 30 November | Roan Capital's contracted first phase, which is narrower than our R1 (FS-735), built and tested | Sixteen days. A date and a scope to agree with Roan Capital now, on what the team can show | FS-735, FS-1193 |
 | 3 · A price | None on record for anyone | Roan Capital's price; a floor per tier | What an institution costs us a month, then the floor (market review §4) | FS-1185, FS-1190 |
-| 4 · People | One seller part-time; the CTIO in five roles; a rota of three | Squads that own what they run; a rota of four or five; a seller with time | The hackathons; the hire already decided (FS-474); roles handed on as squads take them | FS-1193, FS-474 |
+| 4 · People | One seller part-time; the CTIO in five roles; a rota of three | Squads that own what they run; a rota of four or five; a seller with time | The hackathons, the first of them teaching the core no CV yet names (team-skills); the hire already decided (FS-474); roles handed on as squads take them | FS-1193, FS-474, FS-1196 |
 | 5 · Permission | A data processor and a PRSP | Data controller registration; the answer on being a payment service provider; SASRA's vendor terms before any Sacco; ISO 27001 before banks | Counsel, and a compliance officer in the seat | FS-367, LQ-09, LC-02, LC-04, LC-05 |
-| 6 · Proof | A record in channels and collections | One regulated lender live on Kapu | Gaps 1 to 5 | CU-01 |
+| 6 · Money | A monthly record of spending; income from services to a few customers; no line for the build | A budget for the build (hosting, attestation, counsel, the hire, training) and a thirteen-week cash forecast, the same that Kapu Business offers its customers | Both to write; the income's reliance on a few customers to reduce | FS-1195 |
+| 7 · Proof | A record in channels and collections | One regulated lender live on Kapu | Gaps 1 to 6 | CU-01 |
 
 ## 7 · What follows
 
@@ -132,3 +139,6 @@ Judgements, for the owner to accept or not:
    Leave replacing a Sacco's core until there is a reference.
 6. **Hold new design** (treasury beyond TR-01, Kapu Business) as
    designed, until R1 is live.
+7. **A budget and a cash forecast for the build,** before the next host
+   or hire is signed; and the banks' work protected while Kapu is built,
+   since it pays for it.

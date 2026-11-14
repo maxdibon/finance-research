@@ -180,6 +180,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | Prembly in production, week of 2 November 2026: what we test, with whose details, and how Smile ID compares | [prembly-production-test.md](delivery/prembly-production-test.md) |
 | What a customer and each product need to go live | [onboarding.md](delivery/onboarding.md) |
 | Each client's cycle, from a first conversation to production; the environments; the hackathons | [client-cycle.md](delivery/client-cycle.md) |
+| What the team is strong in, and the skills each of us is to acquire | [team-skills.md](service-management/team-skills.md) |
 | Starter templates for onboarding a business or a partner, and where every document is kept and seen | [templates/onboarding-pack.md](templates/onboarding-pack.md) |
 | The CBK licence pack: what a lender submits with its licence application, and the template for each | [templates/cbk-licence-pack.md](templates/cbk-licence-pack.md) |
 | The ICT policy template, with the system description, the two diagrams and the plan for assurance | [templates/ict-policy.md](templates/ict-policy.md) |
@@ -223,6 +224,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 |---|---|
 | Every word of the portfolio PDF | [marketing/portfolio.md](marketing/portfolio.md) |
 | Every word of the two-page bank channel proposal | [marketing/bank-channel-proposal.md](marketing/bank-channel-proposal.md) |
+| Our prices for USSD codes, SMS shortcodes, sender IDs and bulk SMS | [market/messaging-prices.md](market/messaging-prices.md) |
 | How banks can offer SME Recon and the business suite to their customers | [bank-channel.md](market/bank-channel.md) |
 | Drafts to partners, operators and regulators | [outreach](outreach/README.md) |
 | How our documents look: tokens, components, templates, numbers and a little whimsy | [design-system.md](company/design-system.md) |
