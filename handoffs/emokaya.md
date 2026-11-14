@@ -40,9 +40,36 @@ here.
 
 ## Where I left off
 
-As at 12 November 2026. Main pushed with FS-1168 to FS-1193, FS-1190
-the other session's market and pricing review. `origin` is still
-github.com/eric-mokaya/finance.
+As at 14 November 2026. Main pushed with FS-1168 to FS-1193. On the
+branch since, uploaded but not merged: FS-1194 to FS-1198. `origin` is
+still github.com/eric-mokaya/finance. The next ids are the one after FS-1198, and LQ-47.
+
+- **The business analysed** (FS-1194):
+  docs/reviews/business-analysis-2026-11-14.md: PESTLE, Five Forces,
+  VRIO and gap, SWOT as their summary, SOAR left for a workshop. The
+  market hard at the centre and open at three edges; the lasting
+  advantage a record in production; the banks' work funds the build;
+  seven gaps. **Waiting on his word:** its seven judgements (§7), the
+  first of them one reference before anything else, and holding new
+  design until R1 is live.
+- **Dibon's financials and team** (FS-1195): his budget, payroll, CVs,
+  client references and price list are in
+  `sources/dibon/financials and team/`, ignored by git. Never copy pay,
+  tax, identity or bank details, or a contact's name, out of it: the
+  documents carry its conclusions in aggregate only. From it:
+  docs/market/messaging-prices.md (not docs/marketing/, which is for
+  prospects); customers CU-06, unnamed because its name is on the
+  protected list, and CU-07. **Waiting on his word:** the price list's
+  date, VAT and owner, and which price a platform customer pays
+  (FS-331); whether October's and November's statutory lines are paid;
+  whether the two project invoices belong in customers.md; a budget and
+  a thirteen-week forecast for the build.
+- **The team's skills** (FS-1196):
+  docs/service-management/team-skills.md, the team against the platform
+  and a row for each member, "strong here" and "skills to acquire".
+  Daniel's CV is under the name Emmanuel. **Open:** each person to
+  confirm their row; CVs for Abel, Chan and Cage; a second person for
+  each skill that rests on one.
 
 - **Building starts** (FS-1192): the MVP on the public Azure sandbox,
   made-up data only, while Liquid is settled. Roan Capital's soft launch
@@ -88,10 +115,10 @@ github.com/eric-mokaya/finance.
 - **Roan Capital's CBK pack:** its answers recorded and the documents
   rebuilt (FS-1132 to FS-1148), by the "Roan Capital docs review"
   session; its rows say what is left.
-- **Two sessions at once:** "Back-office spec: multiple ERP versions"
-  worked in this same checkout. Ids agreed by message (it takes those after FS-1193,
-  and LQ-47); REVIEW.md shared, so each committed only its own lines, one
-  after the other.
+- **Two sessions at once** until 12 November: "Back-office spec: multiple
+  ERP versions" worked in this same checkout and has ended; its last
+  commit was FS-1190. Ids were agreed by message, and each committed only
+  its own lines of REVIEW.md, one after the other.
 
 **Carried from 5 November** (check each against the Roan Capital
 session's rows, FS-1132 to FS-1148, which may have settled some):
@@ -121,7 +148,11 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
   FS-935 and FS-367 (Critical), FS-1036, FS-1038, FS-1051, FS-1034,
   FS-1035, FS-1059; SBM Bank (FS-911 to FS-913, FS-920) and Lofty Corban
   (CU-05, FS-918).
-- **On his machine:** Poppler for scanned PDFs, unpacked outside the
+- **On his machine:** Python is `py -I`, with no openpyxl: a workbook is
+  read as a zip of XML; PDFs and Word files through pdf-parse (its
+  `PDFParse` class) and mammoth in another local project's node_modules
+  (E:/Agents/Claude/DialysisWater). A script with a regular expression is
+  written with the Write tool, never a heredoc (traps). Poppler for scanned PDFs, unpacked outside the
   repository and not on PATH; confidential scans rendered inside their
   folder and deleted after. No LibreOffice: Word files are rendered to PDF
   through Word itself, closing only the Word it started. The docx package
@@ -134,7 +165,7 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric: Critical, High, and waiting on Eric's word (79 of 206)
+### Rows with Eric: Critical, High, and waiting on Eric's word (81 of 208)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -208,7 +239,9 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 | FS-1178 | Applying for Android Enterprise device management: why we are applying, and whether Dibon manages phones itsel | High |
 | FS-1185 | Pricing, reopened (FS-024 parked it): what options can we explore? Eric's two models: 1% of the transaction am | High |
 | FS-1190 | Review all our assumptions about market data, such as sizing, and all our pricing | High |
-| FS-1193 | The hackathons' goal is the team building, maintaining and operating the platform: how do we prepare? The deli | High, waiting |
+| FS-1194 | Run a business analysis on this project: SWOT, PESTLE, Porter's Five Forces, VRIO, SOAR and gap; which make se | High |
+| FS-1195 | Dibon's financials and team added to sources/dibon: the 2026 budget, the payroll, the team's CVs, client refer | High |
+| FS-1196 | The team's skills: at team level against what the platform is built on, and for each member "strong here" and  | High |
 | FS-819 | Do we store, for instance, all M-Pesa transactions in the companion? In the same database as Fineract? | Medium, waiting |
 | FS-820 | FS-791 is answered by FS-792, unless something is missing. FS-819's one copy of the M-Pesa records: is the gen | Medium, waiting |
 | FS-821 | Seven years at the scale target is large: how do we store it, like AWS S3's storage classes, to keep costs dow | Medium, waiting |
@@ -226,4 +259,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-1119-transaction-model`: 1 save, last 3 minutes ago, not uploaded; here now, 8 files unsaved
+- `claude/emokaya/FS-1119-transaction-model`: 4 saves, last 2 minutes ago, not uploaded; here now, 2 files unsaved
