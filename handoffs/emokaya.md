@@ -30,8 +30,16 @@ here.
 - **Downloads need his word;** never sign in, or enter a password, for him.
 - **Visibility:** he prefers the team's work in the cloud and on a shared
   board (FS-929, FS-930); meetings are in person, no chat tool yet.
-- **Document, don't build** (FS-1016): design and write it down; frame
-  choices as design decisions, never as steps "before building".
+- **Building has started** (FS-1192; "document, don't build", FS-1016, no
+  longer holds): the MVP on public Azure, made-up data only. A change to
+  the design still goes through its document first, never a code file.
+- **Two sessions** (FS-1206): pricing and Flex Money in one, the build in
+  another, in a working copy and branch of its own. Each agrees a register
+  id by message before writing it, commits only its own rows, and stays
+  out of the other's documents (traps, "two sessions on one register").
+- **A customer's real data never reaches an AI tool** (rules, rule 1;
+  LQ-47): of a customer's files Claude sees headings, counts and totals
+  worked out on the machine, and nothing else.
 - **Track legal concerns** (FS-1023): every legal uncertainty becomes an
   LQ row in docs/governance/legal-questions.md in the same pass; name the new LQ ids
   in the reply.
@@ -40,9 +48,78 @@ here.
 
 ## Where I left off
 
-As at 12 November 2026. Main pushed with FS-1168 to FS-1193, FS-1190
-the other session's market and pricing review. `origin` is still
-github.com/eric-mokaya/finance.
+As at 16 November 2026. Main merged and pushed with FS-1194 to FS-1208.
+`origin` is still github.com/eric-mokaya/finance. The next ids are the
+one after FS-1208, and LQ-51. The break tests pass, all of them (FS-1199).
+
+**For the build session** (it reads this first):
+
+- **Write the standards you need** (FS-1207), from
+  docs/reviews/gatekeepr-standards-2026-11-14.md: six rules to adopt as
+  they stand, eight to adapt. Each rule names what enforces it. Its steps
+  2 to 5 (an ordering of laws, the access and notification rules, a
+  standards registry, the apps' framework, FS-1059) wait on his word.
+- **Where the code lives is not settled** (FS-1208): proposed, a
+  repository of its own, one for all the code, as the GitHub spec designs;
+  he creates it. Until he says, code stays in code/.
+- **The pricing session keeps** FS-1185, FS-1202, FS-1203 and everything
+  on Flex Money; leave those documents alone.
+
+**For the pricing session:**
+
+- **Flex Money, meeting its senior management on Tuesday 17 November**
+  (FS-1200, FS-1201, FS-1205): the review is clients/flexmoney/review.md,
+  outside git. Before the meeting: our copy of the NDA lacks its
+  signature; two months of its real files are held on the NDA alone; the
+  roles draft names Dibon wrongly and the briefing misnames a payout
+  partner; the roadmap and recommended solution promised at discovery
+  are not written; ask who its Drive link is open to. Lillian holds the
+  June and July results: lead with those. The tool is a prototype, to be
+  absorbed into the platform (his word). **Open:** whether to file its
+  documents as Roan Capital's are and add it to the customers register.
+- **The price for Flex Money** (FS-1202, FS-1203): July's statements,
+  totalled on the machine, show about KES 14 billion paid out in 399,000
+  remittances, and fees of about KES 60 to 65 million a month. 0.1% as
+  defined is about 45% of those fees; 0.01% about 4.5%; Claude's model, a
+  platform fee and a banded price per remittance, about KES 1.65 million
+  a month. **Waiting on his word:** which reading of "money moved" he
+  meant, and which model goes to the meeting. To confirm with Flex Money:
+  that the statements' charge column is its own fee, and each
+  statement's currency.
+- **Legal questions raised:** LQ-47 (an AI assistant and a customer's
+  confidential documents), LQ-48 (real data on an NDA alone), LQ-49 (its
+  Uganda office's data), LQ-50 (who owns what is built).
+- **GateKeepr's files** are in sources/gatekeepr/, outside git; his
+  untracked RBA regulations PDF still waits to be filed (FS-1180).
+
+**From 14 November and before:**
+
+- **The business analysed** (FS-1194):
+  docs/reviews/business-analysis-2026-11-14.md: PESTLE, Five Forces,
+  VRIO and gap, SWOT as their summary, SOAR left for a workshop. The
+  market hard at the centre and open at three edges; the lasting
+  advantage a record in production; the banks' work funds the build;
+  seven gaps. **Waiting on his word:** its seven judgements (§7), the
+  first of them one reference before anything else, and holding new
+  design until R1 is live.
+- **Dibon's financials and team** (FS-1195): his budget, payroll, CVs,
+  client references and price list are in
+  `sources/dibon/financials and team/`, ignored by git. Never copy pay,
+  tax, identity or bank details, or a contact's name, out of it: the
+  documents carry its conclusions in aggregate only. From it:
+  docs/market/messaging-prices.md (not docs/marketing/, which is for
+  prospects); customers CU-06, unnamed because its name is on the
+  protected list, and CU-07. **Waiting on his word:** the price list's
+  date, VAT and owner, and which price a platform customer pays
+  (FS-331); whether October's and November's statutory lines are paid;
+  whether the two project invoices belong in customers.md; a budget and
+  a thirteen-week forecast for the build.
+- **The team's skills** (FS-1196):
+  docs/service-management/team-skills.md, the team against the platform
+  and a row for each member, "strong here" and "skills to acquire".
+  Daniel's CV is under the name Emmanuel. **Open:** each person to
+  confirm their row; CVs for Abel, Chan and Cage; a second person for
+  each skill that rests on one.
 
 - **Building starts** (FS-1192): the MVP on the public Azure sandbox,
   made-up data only, while Liquid is settled. Roan Capital's soft launch
@@ -88,10 +165,10 @@ github.com/eric-mokaya/finance.
 - **Roan Capital's CBK pack:** its answers recorded and the documents
   rebuilt (FS-1132 to FS-1148), by the "Roan Capital docs review"
   session; its rows say what is left.
-- **Two sessions at once:** "Back-office spec: multiple ERP versions"
-  worked in this same checkout. Ids agreed by message (it takes those after FS-1193,
-  and LQ-47); REVIEW.md shared, so each committed only its own lines, one
-  after the other.
+- **Two sessions at once** until 12 November: "Back-office spec: multiple
+  ERP versions" worked in this same checkout and has ended; its last
+  commit was FS-1190. Ids were agreed by message, and each committed only
+  its own lines of REVIEW.md, one after the other.
 
 **Carried from 5 November** (check each against the Roan Capital
 session's rows, FS-1132 to FS-1148, which may have settled some):
@@ -121,7 +198,11 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
   FS-935 and FS-367 (Critical), FS-1036, FS-1038, FS-1051, FS-1034,
   FS-1035, FS-1059; SBM Bank (FS-911 to FS-913, FS-920) and Lofty Corban
   (CU-05, FS-918).
-- **On his machine:** Poppler for scanned PDFs, unpacked outside the
+- **On his machine:** Python is `py -I`, with no openpyxl: a workbook is
+  read as a zip of XML; PDFs and Word files through pdf-parse (its
+  `PDFParse` class) and mammoth in another local project's node_modules
+  (E:/Agents/Claude/DialysisWater). A script with a regular expression is
+  written with the Write tool, never a heredoc (traps). Poppler for scanned PDFs, unpacked outside the
   repository and not on PATH; confidential scans rendered inside their
   folder and deleted after. No LibreOffice: Word files are rendered to PDF
   through Word itself, closing only the Word it started. The docx package
@@ -134,7 +215,7 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 
 *Made by dibon session start and end, from the register and the branches: never edit it by hand.*
 
-### Rows with Eric: Critical, High, and waiting on Eric's word (79 of 206)
+### Rows with Eric: Critical, High, and waiting on Eric's word (89 of 216)
 
 | Row | Point | Criticality |
 |---|---|---|
@@ -208,7 +289,17 @@ session's rows, FS-1132 to FS-1148, which may have settled some):
 | FS-1178 | Applying for Android Enterprise device management: why we are applying, and whether Dibon manages phones itsel | High |
 | FS-1185 | Pricing, reopened (FS-024 parked it): what options can we explore? Eric's two models: 1% of the transaction am | High |
 | FS-1190 | Review all our assumptions about market data, such as sizing, and all our pricing | High |
-| FS-1193 | The hackathons' goal is the team building, maintaining and operating the platform: how do we prepare? The deli | High, waiting |
+| FS-1194 | Run a business analysis on this project: SWOT, PESTLE, Porter's Five Forces, VRIO, SOAR and gap; which make se | High |
+| FS-1195 | Dibon's financials and team added to sources/dibon: the 2026 budget, the payroll, the team's CVs, client refer | High |
+| FS-1196 | The team's skills: at team level against what the platform is built on, and for each member "strong here" and  | High |
+| FS-1200 | Review clients/flexmoney/docs; we meet Flex Money's senior management on Tuesday 17 November | High, waiting |
+| FS-1201 | What was first built for Flex Money is a prototype, which will be absorbed into the larger platform | High |
+| FS-1202 | With the 0.1% model, what do our revenues look like for Flex Money? | High, waiting |
+| FS-1203 | How much revenue does a typical remittance operator like Flex Money make, from published, known or projected c | High, waiting |
+| FS-1204 | Review the four Markdown files in sources/dibon (STANDARDS, DESIGN_STANDARD, ENGINEERING_STANDARD, OBLIGATIONS | High |
+| FS-1205 | Review clients/flexmoney/docs/email_excerpt_sep.txt for additional context | High |
+| FS-1207 | The build session should write the standards it needs | High |
+| FS-1208 | Should the build stay in this repository or move to a separate one? | High, waiting |
 | FS-819 | Do we store, for instance, all M-Pesa transactions in the companion? In the same database as Fineract? | Medium, waiting |
 | FS-820 | FS-791 is answered by FS-792, unless something is missing. FS-819's one copy of the M-Pesa records: is the gen | Medium, waiting |
 | FS-821 | Seven years at the scale target is large: how do we store it, like AWS S3's storage classes, to keep costs dow | Medium, waiting |
@@ -226,4 +317,4 @@ None.
 
 ### Eric's Claude's work waiting
 
-- `claude/emokaya/FS-1119-transaction-model`: 1 save, last 3 minutes ago, not uploaded; here now, 8 files unsaved
+- `claude/emokaya/FS-1119-transaction-model`: 5 saves, last 2 days ago, uploaded; here now, 6 files unsaved

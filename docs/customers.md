@@ -6,8 +6,8 @@ status: living
 released: 2026.10.15
 owner: Delivery lead
 classification: Internal
-review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420, FS-443, FS-612, FS-674, FS-680, FS-720, FS-721, FS-835, FS-837, FS-838, FS-915, FS-991, FS-1000, FS-1171]
-last_reviewed: 2026-11-11
+review_ids: [FS-390, FS-395, FS-413, FS-414, FS-416, FS-419, FS-420, FS-443, FS-612, FS-674, FS-680, FS-720, FS-721, FS-835, FS-837, FS-838, FS-915, FS-991, FS-1000, FS-1171, FS-1195]
+last_reviewed: 2026-11-14
 ---
 
 # Customers — who we deliver to, and what each depends on
@@ -54,6 +54,8 @@ together.
 | CU-03 | KCB | Bank | Since 2021: MobiReg (Meliora's CRM) and its maintenance; the Tiara SMS gateway (Meliora's), its upgrade and migration; USSD and digital lending (retailer finance, KOPA float, term loans, SAHL) on Dibon's menu platform; the Sopra loan engine; the bank's cores, Temenos T24 and Sopra Banking, worked with (FS-612); an account mandate API (tested, not live). Ongoing in 2026: Tiara enhancements, CVM integration, migration from Sopra to GDP APIs, MobiReg Project X and e-mobility | Live | 2026-10-05: project list read: 20 engagements since 2021, 5 of them active or ongoing (FS-443). KCB moved USSD to a platform of its own; the lending and SMS work continued. 2026-10-27: KCB is moving its digital lending, retailer finance among it, to a platform it built itself (FS-1000) | Confirm that the contract lets us name KCB (FS-420); owner compiling the details of the supply | Commercial lead | — | FS-416, FS-418, FS-419, FS-420; partners PT-19, PT-20, FS-443 |
 | CU-04 | National Bank of Kenya (NBK) | Bank | Since 2021: an SMS gateway system, supplied, installed and upgraded (with international SMS termination), with support and maintenance; transactional and promotional SMS (SDP and SMPP); SMS and email templates; shortcodes and a USSD code in 2026 | Live | 2026-10-05: project list read: 6 engagements since 2021, 5 of them active or ongoing (FS-443) | Confirm that the contract lets us name NBK (FS-420) | Commercial lead | — | FS-417, FS-419, FS-420; partners PT-20, FS-443 |
 | CU-05 | Lofty Corban | Fund manager (investments, retirement benefits; insurance a new line), regulated by CMA, RBA and IRA | Reconciliation & Observability, then approval chains; messaging for its notices | In discussion | 2026-10-14: introduction and a demo of the reconciliation platform; Dibon's NDA sent 16 October | Its answers to the open questions (its fund system's interface, volumes, statement access); a short follow-up from Dibon | Commercial lead | [customers/lofty-corban.md](customers/lofty-corban.md) | FS-915 to FS-919 |
+| CU-06 | An interiors business (named in Dibon's client references, kept out of the repository) | Business | The business suite: Odoo as its ERP, implemented and supported | Live | 2026-11-14: read from Dibon's client references, where it is ongoing (FS-1195) | What is installed and under what agreement; whether it may be named | Odoo lead | — | FS-1195; business-suite |
+| CU-07 | Standard Investment Bank | Investment bank | Its website, built and maintained; no Kapu product yet | Live | 2026-11-14: read from Dibon's client references, where it is ongoing (FS-1195) | Confirm that we may name it; whether reconciliation or messaging is worth a conversation, as with Lofty Corban | Commercial lead | — | FS-1195 |
 
 ## What each customer depends on
 
@@ -108,3 +110,13 @@ each capability's status beside it, read from its module.
 | [mandates](modules/mandates.md) | MD-01, MD-03, MD-05, MD-06 |
 | [messaging](modules/messaging.md) | MS-01 |
 | [recon-observability](modules/recon-observability.md) | RO-01, RO-02, RO-04, RO-05, RO-06, RO-07, TR-01, RO-21, RO-26 |
+
+### CU-06 · An interiors business
+
+| Module | Capabilities |
+|---|---|
+| [business-suite](modules/business-suite.md) | BS-01 |
+
+### CU-07 · Standard Investment Bank
+
+No capability of the portfolio yet: its website, built and maintained.

@@ -7,7 +7,7 @@ released: 2026.10.16
 owner: Solution architect
 classification: Internal
 review_ids: [FS-572, FS-627, FS-631, FS-633, FS-639, FS-641, FS-647, FS-660, FS-714, FS-719, FS-720, FS-744, FS-745, FS-753, FS-771, FS-806, FS-960, FS-962, FS-973, FS-1006, FS-1012, FS-1021, FS-1032, FS-1037, FS-1047, FS-1045, FS-1050, FS-1053, FS-1074, FS-1076, FS-1079, FS-1087, FS-1097, FS-1171]
-last_reviewed: 2026-11-12
+last_reviewed: 2026-11-16
 ---
 
 # Overview — what we offer, and where everything is
@@ -168,7 +168,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | What a person goes through, step by step, and the gaps it shows | [journeys/](journeys/README.md) |
 | How it should feel to use, and how we make it intuitive | [experience.md](company/experience.md) |
 | How a capability is proven Built: acceptance items, tagged tests, user acceptance | [testing.md](delivery/testing.md) |
-| Reviews: OLP as it stands (26 October 2026), what we need from it being the [OLP spec](specs/olp.md); the architecture, its databases and namespaces counted (27 October); the specs against their template (29 October); the architecture against the transaction model, rails, treasury and Kapu Business (11 November); market sizing and pricing, every assumption and every price (11 November) | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [reviews/architecture-2026-10-27.md](reviews/architecture-2026-10-27.md); [reviews/specs-2026-10-29.md](reviews/specs-2026-10-29.md); [reviews/architecture-2026-11-11.md](reviews/architecture-2026-11-11.md); [reviews/market-and-pricing-2026-11-11.md](reviews/market-and-pricing-2026-11-11.md) |
+| Reviews: OLP as it stands (26 October 2026), what we need from it being the [OLP spec](specs/olp.md); the architecture, its databases and namespaces counted (27 October); the specs against their template (29 October); the architecture against the transaction model, rails, treasury and Kapu Business (11 November); market sizing and pricing, every assumption and every price (11 November); the business analysed: PESTLE, Five Forces, VRIO, SWOT and gap (14 November); GateKeepr's standards, read for what our build should adopt (14 November) | [reviews/olp-2026-10-26.md](reviews/olp-2026-10-26.md); [reviews/architecture-2026-10-27.md](reviews/architecture-2026-10-27.md); [reviews/specs-2026-10-29.md](reviews/specs-2026-10-29.md); [reviews/architecture-2026-11-11.md](reviews/architecture-2026-11-11.md); [reviews/market-and-pricing-2026-11-11.md](reviews/market-and-pricing-2026-11-11.md); [reviews/business-analysis-2026-11-14.md](reviews/business-analysis-2026-11-14.md); [reviews/gatekeepr-standards-2026-11-14.md](reviews/gatekeepr-standards-2026-11-14.md) |
 
 **Customers and delivery**
 
@@ -180,6 +180,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 | Prembly in production, week of 2 November 2026: what we test, with whose details, and how Smile ID compares | [prembly-production-test.md](delivery/prembly-production-test.md) |
 | What a customer and each product need to go live | [onboarding.md](delivery/onboarding.md) |
 | Each client's cycle, from a first conversation to production; the environments; the hackathons | [client-cycle.md](delivery/client-cycle.md) |
+| What the team is strong in, and the skills each of us is to acquire | [team-skills.md](service-management/team-skills.md) |
 | Starter templates for onboarding a business or a partner, and where every document is kept and seen | [templates/onboarding-pack.md](templates/onboarding-pack.md) |
 | The CBK licence pack: what a lender submits with its licence application, and the template for each | [templates/cbk-licence-pack.md](templates/cbk-licence-pack.md) |
 | The ICT policy template, with the system description, the two diagrams and the plan for assurance | [templates/ict-policy.md](templates/ict-policy.md) |
@@ -223,6 +224,7 @@ what each person goes through is in [the journeys](journeys/README.md).
 |---|---|
 | Every word of the portfolio PDF | [marketing/portfolio.md](marketing/portfolio.md) |
 | Every word of the two-page bank channel proposal | [marketing/bank-channel-proposal.md](marketing/bank-channel-proposal.md) |
+| Our prices for USSD codes, SMS shortcodes, sender IDs and bulk SMS | [market/messaging-prices.md](market/messaging-prices.md) |
 | How banks can offer SME Recon and the business suite to their customers | [bank-channel.md](market/bank-channel.md) |
 | Drafts to partners, operators and regulators | [outreach](outreach/README.md) |
 | How our documents look: tokens, components, templates, numbers and a little whimsy | [design-system.md](company/design-system.md) |
