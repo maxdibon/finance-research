@@ -1188,7 +1188,9 @@ test('links: a relative link to a file that does not exist fails', () => {
 });
 
 test('links: a docs path in the text that does not exist fails', () => {
-  const f = runWith((d) => patch(d, path.join('docs', 'delivery', 'testing.md'), (t) => `${t}\nAs docs/specs/rails.md says.\n`));
+  // A path no document will take: the first one named here, docs/specs/rails.md,
+  // became a real spec, and the test went stale with it (FS-1199).
+  const f = runWith((d) => patch(d, path.join('docs', 'delivery', 'testing.md'), (t) => `${t}\nAs docs/specs/no-such-spec.md says.\n`));
   assert.deepStrictEqual(names(f), ['links']);
 });
 
