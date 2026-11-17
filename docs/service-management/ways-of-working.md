@@ -6,8 +6,8 @@ status: living
 released: 2026.10.16
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892, FS-922, FS-931, FS-1053, FS-1193]
-last_reviewed: 2026-11-12
+review_ids: [FS-701, FS-743, FS-745, FS-746, FS-747, FS-749, FS-750, FS-751, FS-753, FS-755, FS-756, FS-757, FS-846, FS-847, FS-848, FS-849, FS-853, FS-865, FS-902, FS-903, FS-904, FS-905, FS-896, FS-888, FS-889, FS-890, FS-891, FS-892, FS-922, FS-931, FS-1053, FS-1193, FS-1196]
+last_reviewed: 2026-11-14
 ---
 
 # Ways of working
@@ -131,6 +131,9 @@ confirm their row above.
 | Ops | The platform, CI/CD, observability, security operations, on-call | Allan (leads), Max |
 | Odoo | The back office and each customer's Odoo | Gibeon (leads), Daniel |
 | Delivery | Each client's cycle (client-cycle §1), its pack and its people | Betty, with Carol |
+
+What each of us is strong in, and the skills each is to acquire, are in
+[the team's skills](team-skills.md) (FS-1196).
 
 ## 2 · A pull request, step by step
 

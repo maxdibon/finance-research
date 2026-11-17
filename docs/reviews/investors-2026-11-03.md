@@ -7,7 +7,7 @@ released: unreleased
 owner: Solution architect
 classification: Internal
 review_ids: [MX-007, MX-006, MX-005, FS-497]
-last_reviewed: 2026-11-13
+last_reviewed: 2026-11-17
 ---
 
 # Investors: their record, their money, and where it is lent · 3 November 2026

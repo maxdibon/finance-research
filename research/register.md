@@ -5,6 +5,9 @@ the two never compete for numbers. They are numbered **MX-001** upwards; Eric's 
 FS ids, so these are not checked against REVIEW.md. A row that becomes project work is raised in
 REVIEW.md as an FS row by Eric's process, and this row then points to it.
 
+The change notes for these rows are in `research/changes/`, outside the project's `changes/`,
+whose check requires FS rows.
+
 Earlier numbers, for anything that cites them: these rows were FS-1168 to FS-1178, then FS-1194
 to FS-1204, in order (MX-001 = FS-1194 = FS-1168, through MX-011 = FS-1204 = FS-1178). The
 `dibon-consulting/platform` pull requests #7 to #19 cite FS-1177: that is **MX-010**.

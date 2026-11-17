@@ -6,8 +6,8 @@ status: draft
 released: unreleased
 owner: Commercial lead
 classification: Internal
-review_ids: [FS-1190]
-last_reviewed: 2026-11-11
+review_ids: [FS-1190, FS-1195]
+last_reviewed: 2026-11-14
 ---
 
 # Market sizing and pricing, reviewed · 11 November 2026
@@ -57,6 +57,7 @@ No customer has a price on record, Roan Capital included.
 | Identity checks: KES 20 a check from the national register; USD 1.35 a check from Smile ID, USD 149 a month minimum | market/partners.md | Known; pass-through at cost (FS-331) |
 | Odoo Enterprise per user; SMS per message; managed security per endpoint; hosting | deployments/roan-capital-production §9 | Unpriced, and for Odoo, whose to pay is open (FS-529) |
 | A price agreed with any customer | docs/customers/ | None |
+| USSD codes, SMS shortcodes, sender IDs and bulk SMS | [messaging-prices](../market/messaging-prices.md), added 14 November (FS-1195) | In use: Dibon's own list; its date, VAT and owner to confirm |
 
 ## 3 · Findings
 
@@ -78,6 +79,7 @@ No customer has a price on record, Roan Capital included.
 | P7 | **The bands are mine, and untested** (FS-1185) | Tested against two or three institutions' real monthly volumes from their statements, a bank among them |
 | P8 | **Benchmarks are thin:** two competitors' prices, one from a list and one from a single contract; and one quote reported but unseen, Craft Silicon's KES 150 million to a microfinance bank for a new platform. If it holds, a bank-sized institution budgets in the hundreds of millions for a platform, paid largely up front: far above anything our bands give in a year, and a different shape of payment | The quote confirmed, and what it covered (licence, implementation, years of support), before it anchors a bank tier; three to five more benchmarks: a quote, a published price, or a contract a customer shares |
 | P9 | **Tax and law are open** for every model: equity in a customer (LQ-43), a fund manager charging our fee to a scheme (LQ-44), whether a fee on money moved is a processing fee for VAT (LQ-45), whether Dibon is a payment service provider (LQ-09), and VAT against withholding (FS-434) | The finance lead and counsel before a price is quoted |
+| P10 | **A price list was in use and not in the repository** (added 14 November, FS-1195): messaging, by code, shortcode and message. It carries a margin, where the platform passes messages through at cost (FS-331) | One rule for an institution that buys both; each line's cost to us set beside its price |
 
 ## 4 · What would settle it
 

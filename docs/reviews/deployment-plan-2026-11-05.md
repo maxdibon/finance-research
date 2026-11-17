@@ -7,7 +7,7 @@ released: unreleased
 owner: Solution architect
 classification: Internal
 review_ids: [MX-010, MX-001, MX-002, FS-1036, FS-775, FS-032]
-last_reviewed: 2026-11-13
+last_reviewed: 2026-11-17
 ---
 
 # From design to running code · 5 November 2026

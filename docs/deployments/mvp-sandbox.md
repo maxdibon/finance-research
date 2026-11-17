@@ -8,7 +8,7 @@ released: unreleased
 owner: Solution architect
 classification: Internal
 review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079, FS-1093, FS-1115, FS-1192, MX-010]
-last_reviewed: 2026-11-13
+last_reviewed: 2026-11-17
 ---
 
 # The MVP sandbox

@@ -6,8 +6,8 @@ status: living
 released: unreleased
 owner: Chief Technology and Innovation Officer
 classification: Internal
-review_ids: [FS-1192, FS-1193]
-last_reviewed: 2026-11-12
+review_ids: [FS-1192, FS-1193, FS-1196]
+last_reviewed: 2026-11-14
 ---
 
 # Each client's cycle
@@ -118,7 +118,7 @@ itself:
 
 | | The hackathon | Done when |
 |---|---|---|
-| 1 | **Walking skeleton** | Each squad ships a small service through the whole chain of §4, with an alert and a runbook |
+| 1 | **Walking skeleton** | Each squad ships a small service through the whole chain of §4, with an alert and a runbook; Fineract, Keycloak and Flux learnt together on the way, as no one yet holds them (team-skills §3) |
 | 2 | **A client's demo from its pack** | Roan Capital's products, made-up data, one loan journey end to end, from a channel to Fineract and back |
 | 3 | **Game day** | Things broken on purpose and put right: a rollback, an emergency change, a rail's key rotated (rail-credentials), a peak day carried (peak-and-slow-days) |
 | 4 | **A second client from configuration alone** | Flex Money's or Lofty Corban's demo from its own pack, with no change to the code |
@@ -137,6 +137,8 @@ first. A hackathon that ends with only a demo has taught a demo.
 - The squads confirmed by their members (ways-of-working §1), and the
   sandbox's workstreams renamed to them.
 - The planning board split by squad, each hackathon a milestone.
+- Each person's "skills to acquire" (team-skills §2) made their piece of
+  the first two hackathons.
 
 ## 8 · Open
 

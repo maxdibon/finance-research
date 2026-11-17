@@ -7,7 +7,7 @@ released: unreleased
 owner: Solution architect
 classification: Internal
 review_ids: [MX-011, MX-010, MX-001]
-last_reviewed: 2026-11-13
+last_reviewed: 2026-11-17
 ---
 
 # The ICT pack for the Central Bank · 5 November 2026

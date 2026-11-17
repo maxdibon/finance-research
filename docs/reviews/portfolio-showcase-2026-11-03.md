@@ -7,7 +7,7 @@ released: unreleased
 owner: Solution architect
 classification: Internal
 review_ids: [MX-008, MX-007, FS-497]
-last_reviewed: 2026-11-13
+last_reviewed: 2026-11-17
 ---
 
 # A client's portfolio, and the book shown to incoming investors · 3 November 2026

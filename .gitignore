@@ -25,6 +25,11 @@ sources/dibon/recon-notes/
 # law, and large: they stay out.
 sources/regulation/ke/reports/
 
+# Dibon's own budget, payroll, CVs and client references (FS-1195): pay,
+# identity and bank details, and named contacts. Read, never committed;
+# only what the owner agrees is carried into the documents, in aggregate.
+sources/dibon/financials and team/
+
 # Tooling state.
 .superpowers/
 *.tmp
