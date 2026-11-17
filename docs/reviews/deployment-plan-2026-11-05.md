@@ -6,14 +6,14 @@ status: draft
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1203, FS-1194, FS-1195, FS-1036, FS-775, FS-032]
+review_ids: [MX-010, MX-001, MX-002, FS-1036, FS-775, FS-032]
 last_reviewed: 2026-11-13
 ---
 
 # From design to running code · 5 November 2026
 
 **Research by Max (CI/CD engineer, the operations lead's deputy),**
-drafted with his Claude (FS-1203). Max: "what we have in the repo is
+drafted with his Claude (MX-010). Max: "what we have in the repo is
 just the design, let me know how we approach deployment and how the
 ci/cd pipeline will work once dev starts". It answers two questions:
 how does a change travel from a developer's branch to production, and
@@ -70,7 +70,7 @@ pull request in platform, applied by Flux from inside the cluster.
 | D1 | Development and staging | One cluster (RKE2 or k3s): Flux pointed at platform; a registry (Harbor, or the provider's as a stopgap); cert-manager; PostgreSQL through CloudNativePG; Kafka (Strimzi); Keycloak; OpenBao; Grafana | `DIBON_PUBLISH_ENABLED`, `DIBON_PROMOTE_ENABLED` for staging | Integration, demos, the institution's acceptance |
 | D2 | Dibon central | Self-hosted GitHub runners in Kenya; Harbor; Rekor; Dibon's Keycloak with hardware keys; the fleet's Grafana and on-call (GoAlert) | `DIBON_SECURE_RUNNER`, `DIBON_HARBOR_REGISTRY`, `DIBON_OPENBAO_ADDR`, `DIBON_REKOR_URL` | Signing and secrets off GitHub's hosted runners before anything reaches production (SE-12) |
 | D3 | Production sites | The Kenyan provider contracted for sites A and B (FS-032, FS-775); Roan Capital's instance from platform's templates: its namespaces, its database clusters (FS-1036), the replica at site B, backups, the offline copy | `DIBON_PROMOTE_ENABLED` for production | Roan Capital's go-live |
-| D4 | Evidence for go-live | Penetration test (SE-17); a restore test (SE-10); a failover rehearsal (deployment §2); the independent assurance for CBK; the Team plan, then rulesets that make reviews and checks binding (FS-1195) | `DIBON_DAST_TARGET` for staging | CBK's pack, Annex 1; the go-live checklist |
+| D4 | Evidence for go-live | Penetration test (SE-17); a restore test (SE-10); a failover rehearsal (deployment §2); the independent assurance for CBK; the Team plan, then rulesets that make reviews and checks binding (MX-002) | `DIBON_DAST_TARGET` for staging | CBK's pack, Annex 1; the go-live checklist |
 
 D1 can start at once and does not wait for D2 or D3; D3 waits on the
 provider's contract.
@@ -110,11 +110,11 @@ self-hosted runners run on machines we choose, in Dibon central
 | 5 | Network | Outbound HTTPS only, to GitHub, Harbor, OpenBao, Rekor and the package mirrors; nothing inbound; no credential for any production cluster, since Flux pulls (§1) |
 | 6 | Secrets | Jobs sign in to OpenBao with GitHub's OIDC token, so no long-lived secret sits on a runner |
 | 7 | Turn it on | Organisation variable `DIBON_SECURE_RUNNER` set to `"dibon-kenya"` (a scale set is named in runs-on, not by labels; ci reads the variable as JSON); a test workflow run and its pod seen to start and end |
-| 8 | Who may use them | On the Free plan every private repository may; on the Team plan a runner group limits them to chosen repositories and workflows (FS-1195). Workflows from forks never run on them |
+| 8 | Who may use them | On the Free plan every private repository may; on the Team plan a runner group limits them to chosen repositories and workflows (MX-002). Workflows from forks never run on them |
 
 Watched like the rest of the fleet: runner pods, queue time and failed
 jobs in Grafana; the cluster's nodes under runtime detection (SE-07).
-After the October intrusion (FS-1196), ephemeral runners and the
+After the October intrusion (MX-003), ephemeral runners and the
 closed network matter most: a compromised job dies with its pod and
 reaches nothing it was not given.
 
@@ -155,8 +155,7 @@ the same mistake earlier, on the developer's own machine.
 
 ## Numbering
 
-This review's rows were renumbered as Eric's register grew, most recently on 13 November from
-FS-1168 to FS-1178 to FS-1194 to FS-1204. The `dibon-consulting/platform` pull
-requests #7 to #19 (OpenBao, External Secrets, Harbor) cite **FS-1177**, which is **FS-1203** here;
-in Eric's register FS-1177 is a different row. Their history cannot change, so later pull requests
-cite FS-1203.
+This review's rows are Max's own, numbered MX-001 upwards in `research/register.md`, apart from
+the project's FS register. The `dibon-consulting/platform` pull requests #7 to #19 (OpenBao,
+External Secrets, Harbor) cite FS-1177, an earlier number for **MX-010**; in the FS register
+FS-1177 is a different row. The register lists every earlier number.

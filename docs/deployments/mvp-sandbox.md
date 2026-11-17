@@ -7,7 +7,7 @@ law: LR-17
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079, FS-1093, FS-1115, FS-1192, FS-1203]
+review_ids: [FS-1037, FS-1045, FS-1046, FS-1074, FS-1079, FS-1093, FS-1115, FS-1192, MX-010]
 last_reviewed: 2026-11-13
 ---
 
@@ -60,9 +60,9 @@ a site in Kenya (LQ-46).
 | ODOO | Yes: CRM, Sign, Helpdesk, Employees (FS-945, FS-946) | Enterprise | services | Back office: odoo | 1 | business-suite |
 | ACCESS | Yes: the staff realm, Roan Capital's positions as roles (FS-942) | Keycloak 26.x | services | Access: keycloak | 1 | access-keycloak |
 | EVENT BUS | No | — | — | — | — | event-bus-kafka |
-| DATABASE | Yes: one each for Fineract, Keycloak and Odoo; and Secrets, OpenBao's storage (FS-1203) | PostgreSQL | data | Ledger, Access, Back office, Secrets | 1 | architecture instance |
+| DATABASE | Yes: one each for Fineract, Keycloak and Odoo; and Secrets, OpenBao's storage (MX-010) | PostgreSQL | data | Ledger, Access, Back office, Secrets | 1 | architecture instance |
 | OBJECT STORAGE | Yes, Azure Blob, for Odoo's files | Azure | data | — | 1 | identity ID-15 |
-| OPENBAO | Yes, since 12 November: three pods, internal only (no ingress, no public name); unsealed by hand, 3 of 5 shares; the audit device declared in its configuration; Kubernetes auth and a KV store; the root token revoked (FS-1203) | OpenBao 2.7.2 | data | Secrets | 3 | architecture README §6; settings/openbao |
+| OPENBAO | Yes, since 12 November: three pods, internal only (no ingress, no public name); unsealed by hand, 3 of 5 shares; the audit device declared in its configuration; Kubernetes auth and a KV store; the root token revoked (MX-010) | OpenBao 2.7.2 | data | Secrets | 3 | architecture README §6; settings/openbao |
 | OBSERVABILITY | No | — | — | — | — | observability-grafana |
 
 ### How the components interact
@@ -182,7 +182,7 @@ Nothing to return: `tofu destroy` removes everything.
 | 2026-10-28 | How the components interact, in two diagrams (§2) | FS-1045 |
 | 2026-10-28 | Its settings (§3) | FS-1046 |
 | 2026-11-11 | Built on from 11 November, until production is in Kenya | FS-1192 |
-| 2026-11-12 | OpenBao installed on the sandbox, with the Secrets cluster for its storage (§2); platform #7, #8 | FS-1203 |
+| 2026-11-12 | OpenBao installed on the sandbox, with the Secrets cluster for its storage (§2); platform #7, #8 | MX-010 |
 
 ## Regulations cited
 

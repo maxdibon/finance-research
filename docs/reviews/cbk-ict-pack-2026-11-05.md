@@ -6,14 +6,14 @@ status: draft
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1204, FS-1203, FS-1194]
+review_ids: [MX-011, MX-010, MX-001]
 last_reviewed: 2026-11-13
 ---
 
 # The ICT pack for the Central Bank · 5 November 2026
 
 **Research by Max (CI/CD engineer, the operations lead's deputy),**
-drafted with his Claude (FS-1204). Max asked for "two separate
+drafted with his Claude (MX-011). Max asked for "two separate
 documents in dibon colors brand that we can share with CBK", one for
 the MFI platform and one for Roan Capital, answering item c(iv) of
 CBK's list of policies and documents to be submitted (Bank Supervision

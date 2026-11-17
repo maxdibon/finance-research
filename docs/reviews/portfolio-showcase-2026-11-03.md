@@ -6,14 +6,14 @@ status: draft
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1201, FS-1200, FS-497]
+review_ids: [MX-008, MX-007, FS-497]
 last_reviewed: 2026-11-13
 ---
 
 # A client's portfolio, and the book shown to incoming investors · 3 November 2026
 
 **Research by Max (CI/CD engineer, the operations lead's deputy),**
-drafted with his Claude (FS-1201). Max asked for "drilling down on the
+drafted with his Claude (MX-008). Max asked for "drilling down on the
 performance of a loan per client as a portfolio per client, based on
 the loan and its details, for Roan admins to be able to use the
 portfolio as a sales showcase for incoming investors". It answers two
@@ -23,7 +23,7 @@ investor?
 
 **What was read:** mfi MF-14 and MF-15; insights IN-04, IN-16 and
 IN-17; privacy PR-17; FS-497; the investors research
-([investors-2026-11-03](investors-2026-11-03.md), FS-1200); in Roan
+([investors-2026-11-03](investors-2026-11-03.md), MX-007); in Roan
 Capital's back office, the client page, the reports and each funding
 line's loans.
 
@@ -46,7 +46,7 @@ incoming investor (S6 to S12).
 | Portfolio dashboard and reports | mfi MF-14, MF-15 (designed, R1) | Arrears by age, PAR 1, 7 and 30, income, collections, classification; a statement per loan | Staff |
 | Funder view and investor pack | insights IN-16, IN-17 (phase 2) | The book's totals; a signed monthly pack; a pseudonymised loan tape under a data-sharing agreement | Investors under contract |
 | The client page | Roan Capital's back office | A client's loans, as a list | Staff |
-| A funding line's loans | Roan Capital's back office (FS-1200) | The loans one investor's line funds | Staff |
+| A funding line's loans | Roan Capital's back office (MX-007) | The loans one investor's line funds | Staff |
 
 ## 2 · A client as a portfolio: for staff
 
@@ -56,7 +56,7 @@ incoming investor (S6 to S12).
 | S2 | How they repay | Instalments paid on time, late and missed, as a share; the longest run late; days late, month by month |
 | S3 | How they grew | Each repeat loan's amount against the last; the time between loans; limit changes and any override (MF-06) |
 | S4 | What they paid | Interest, fees and default interest paid, in total and per loan; what remains owed |
-| S5 | Their exposure now | Principal outstanding, security held, guarantors, and the lines that fund their loans (FS-1200) |
+| S5 | Their exposure now | Principal outstanding, security held, guarantors, and the lines that fund their loans (MX-007) |
 
 The client page grows a **Portfolio** tab. It is staff's, and is useful
 for credit as much as for sales: the same view decides a repeat loan.

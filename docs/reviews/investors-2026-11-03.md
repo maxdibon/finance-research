@@ -6,14 +6,14 @@ status: draft
 released: unreleased
 owner: Solution architect
 classification: Internal
-review_ids: [FS-1200, FS-1199, FS-1198, FS-497]
+review_ids: [MX-007, MX-006, MX-005, FS-497]
 last_reviewed: 2026-11-13
 ---
 
 # Investors: their record, their money, and where it is lent · 3 November 2026
 
 **Research by Max (CI/CD engineer, the operations lead's deputy),**
-drafted with his Claude (FS-1200). Max asked for "an investors dashboard
+drafted with his Claude (MX-007). Max asked for "an investors dashboard
 that captures their data, source of funds and tracking their invested
 amount, how it is being loaned out, in addition to the reporting". It
 answers: what must an institution hold about each investor, how does
@@ -26,7 +26,7 @@ privacy PR-17; identity (ID-01, ID-07, ID-15, ID-17, ID-19) and
 financial crime (FC-05, FC-06, FC-08, FC-12, FC-16); the lending
 service, the back office, recon (RO-09) and the Sacco module (SC-02,
 SC-11); the instrument cards for the AML Act and Regulations (LR-13,
-LR-14) and the lender regulations (LR-03); FS-1198 and FS-1199.
+LR-14) and the lender regulations (LR-03); MX-005 and MX-006.
 
 **Not read:** Roan Capital's Business Requirement Document, which is
 outside git; the Capital Markets Act (LR-44, unread in the register);
@@ -50,7 +50,7 @@ the investor. Borrowers' personal data never reaches an investor.
 | A Sacco's members | Share capital and the annual dividend | sacco SC-02, SC-11 | Phases 1 and 2 |
 | A deposit-taker's depositors | Savings and fixed deposits | core KC-02 | R4 |
 | The institution's own cash | Treasury and float | recon RO-09 | R2 |
-| **A lender's funders: shareholders, bank lines, impact investors, notes** | **Nothing** | — | — (FS-1199) |
+| **A lender's funders: shareholders, bank lines, impact investors, notes** | **Nothing** | — | — (MX-006) |
 
 ## 2 · Who an investor is here
 
@@ -154,19 +154,19 @@ agreement and for the AML duties: a new row in privacy, beside PR-17.
 money lawfully and know where it is (F1 to F7, F11, F13, F14); then
 what the investor sees and is paid without staff (F8 to F10, F12). The
 first could come forward for Roan Capital if its funders need it at
-go-live (FS-1198).
+go-live (MX-005).
 
 ## 9 · Open questions
 
 **For the owner:**
 
-1. Funders' money in scope, and in which release (FS-1199)?
+1. Funders' money in scope, and in which release (MX-006)?
 2. Its home: the lending service, as §8 proposes, or a module of its own
    with its own capability ids?
 3. Both allocation methods, or pooled only to begin?
 4. The investor's dashboard in R1 for anyone, or the staff dashboard
    only?
 
-**For Roan Capital (FS-1198):** who funds its book today, under what
+**For Roan Capital (MX-005):** who funds its book today, under what
 agreements; what each funder is owed and shown; and whether any is a
 participation in named loans.
